@@ -1,0 +1,8 @@
+overlay: 1.0.0
+info:
+  title: Overlay File to fix issues in OAS
+  version: 0.0.1
+actions:
+  - target: $["components"]["schemas"]["Oauth"]["properties"]["strategy"]["enum"]
+    update:
+      - "from_oauth_google"
