@@ -1,9 +1,10 @@
 [tool.poetry]
 name = "clerk"
-version = "0.5.0-alpha.5"
+version = "0.5.0-alpha.6"
 description = "Python Client SDK for clerk.dev"
 authors = ["Clerk",]
 readme = "README.md"
+repository = "https://github.com/clerk/clerk-sdk-python.git"
 packages = [
     { include = "clerk", from = "src" }
 ]
