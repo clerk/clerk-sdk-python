@@ -35,6 +35,6 @@ python:
   maxMethodParams: 4
   methodArguments: infer-optional-args
   outputModelSuffix: output
-  packageName: clerk
+  packageName: clerk-backend-api
   responseFormat: flat
   templateVersion: v2
