@@ -15,7 +15,7 @@ Create a new email address
 ### Example Usage
 
 ```python
-from clerk import Clerk
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(
@@ -59,7 +59,7 @@ Returns the details of an email address.
 ### Example Usage
 
 ```python
-from clerk import Clerk
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(
@@ -100,7 +100,7 @@ Delete the email address with the given ID
 ### Example Usage
 
 ```python
-from clerk import Clerk
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(
@@ -141,7 +141,7 @@ Updates an email address.
 ### Example Usage
 
 ```python
-from clerk import Clerk
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(

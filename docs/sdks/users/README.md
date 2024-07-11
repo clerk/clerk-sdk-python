@@ -30,7 +30,7 @@ The users are returned sorted by creation date, with the newest users appearing 
 ### Example Usage
 
 ```python
-from clerk import Clerk
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(
@@ -102,8 +102,8 @@ A rate limit rule of 20 requests per 10 seconds is applied to this endpoint.
 ### Example Usage
 
 ```python
-import clerk
-from clerk import Clerk
+import clerk_backend_api
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(
@@ -117,7 +117,7 @@ res = s.users.create(external_id="ext-id-001", first_name="John", last_name="Doe
     "+12345678901",
 ], web3_wallet=[
     "0x123456789abcdef0x123456789abcdef",
-], username="johndoe123", password="Secure*Pass4", password_digest="$argon2i$v=19$m=4096,t=3,p=1$4t6CL3P7YiHBtwESXawI8Hm20zJj4cs7/4/G3c187e0$m7RQFczcKr5bIR0IIxbpO2P0tyrLjf3eUW3M3QSwnLc", password_hasher=clerk.PasswordHasher.ARGON2I, skip_password_checks=False, skip_password_requirement=False, totp_secret="base32totpsecretkey", backup_codes=[
+], username="johndoe123", password="Secure*Pass4", password_digest="$argon2i$v=19$m=4096,t=3,p=1$4t6CL3P7YiHBtwESXawI8Hm20zJj4cs7/4/G3c187e0$m7RQFczcKr5bIR0IIxbpO2P0tyrLjf3eUW3M3QSwnLc", password_hasher=clerk_backend_api.PasswordHasher.ARGON2I, skip_password_checks=False, skip_password_requirement=False, totp_secret="base32totpsecretkey", backup_codes=[
     "123456",
     "654321",
 ], public_metadata={}, private_metadata={}, unsafe_metadata={}, created_at="2023-03-15T07:15:20.902Z")
@@ -170,7 +170,7 @@ Returns a total count of all users that match the given filtering criteria.
 ### Example Usage
 
 ```python
-from clerk import Clerk
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(
@@ -229,7 +229,7 @@ Retrieve the details of a user
 ### Example Usage
 
 ```python
-from clerk import Clerk
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(
@@ -281,8 +281,8 @@ You can also choose to sign the user out of all their active sessions on any dev
 ### Example Usage
 
 ```python
-import clerk
-from clerk import Clerk
+import clerk_backend_api
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(
@@ -290,7 +290,7 @@ s = Clerk(
 )
 
 
-res = s.users.update(user_id="usr_1", external_id="ext_123", first_name="Jane", last_name="Doe", primary_email_address_id="eml_12345", notify_primary_email_address_changed=True, primary_phone_number_id="phn_67890", primary_web3_wallet_id="wlt_123", username="janedoe", profile_image_id="img_789", password="secretPass123!", password_digest="$argon2i$v=19$m=4096,t=3,p=1$4t6CL3P7YiHBtwESXawI8Hm20zJj4cs7/4/G3c187e0$m7RQFczcKr5bIR0IIxbpO2P0tyrLjf3eUW3M3QSwnLc", password_hasher=clerk.UpdateUserPasswordHasher.ARGON2I, skip_password_checks=False, sign_out_of_other_sessions=True, totp_secret="ABCD1234EFGH5678", backup_codes=[
+res = s.users.update(user_id="usr_1", external_id="ext_123", first_name="Jane", last_name="Doe", primary_email_address_id="eml_12345", notify_primary_email_address_changed=True, primary_phone_number_id="phn_67890", primary_web3_wallet_id="wlt_123", username="janedoe", profile_image_id="img_789", password="secretPass123!", password_digest="$argon2i$v=19$m=4096,t=3,p=1$4t6CL3P7YiHBtwESXawI8Hm20zJj4cs7/4/G3c187e0$m7RQFczcKr5bIR0IIxbpO2P0tyrLjf3eUW3M3QSwnLc", password_hasher=clerk_backend_api.UpdateUserPasswordHasher.ARGON2I, skip_password_checks=False, sign_out_of_other_sessions=True, totp_secret="ABCD1234EFGH5678", backup_codes=[
     "123456",
     "654321",
 ], public_metadata={}, private_metadata={}, unsafe_metadata={}, delete_self_enabled=True, create_organization_enabled=False, created_at="2021-04-05T14:30:00.000Z")
@@ -348,7 +348,7 @@ Delete the specified user
 ### Example Usage
 
 ```python
-from clerk import Clerk
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(
@@ -389,7 +389,7 @@ Marks the given user as banned, which means that all their sessions are revoked 
 ### Example Usage
 
 ```python
-from clerk import Clerk
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(
@@ -430,7 +430,7 @@ Removes the ban mark from the given user.
 ### Example Usage
 
 ```python
-from clerk import Clerk
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(
@@ -472,7 +472,7 @@ Lock duration can be configured in the instance's restrictions settings.
 ### Example Usage
 
 ```python
-from clerk import Clerk
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(
@@ -513,7 +513,7 @@ Removes the lock from the given user.
 ### Example Usage
 
 ```python
-from clerk import Clerk
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(
@@ -554,7 +554,7 @@ Update a user's profile image
 ### Example Usage
 
 ```python
-from clerk import Clerk
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(
@@ -600,7 +600,7 @@ Delete a user's profile image
 ### Example Usage
 
 ```python
-from clerk import Clerk
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(
@@ -648,7 +648,7 @@ You can remove metadata keys at any level by setting their value to `null`.
 ### Example Usage
 
 ```python
-from clerk import Clerk
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(
@@ -695,7 +695,7 @@ For OAuth 2.0, if the access token has expired and we have a corresponding refre
 ### Example Usage
 
 ```python
-from clerk import Clerk
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(
@@ -737,7 +737,7 @@ Retrieve a paginated list of the user's organization memberships
 ### Example Usage
 
 ```python
-from clerk import Clerk
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(
@@ -786,7 +786,7 @@ Useful for custom auth flows and re-verification.
 ### Example Usage
 
 ```python
-from clerk import Clerk
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(
@@ -831,7 +831,7 @@ Useful for custom auth flows and re-verification.
 ### Example Usage
 
 ```python
-from clerk import Clerk
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(
@@ -873,7 +873,7 @@ Disable all of a user's MFA methods (e.g. OTP sent via SMS, TOTP on their authen
 ### Example Usage
 
 ```python
-from clerk import Clerk
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(

@@ -14,7 +14,7 @@ Get a list of all identifiers which are not allowed to access an instance
 ### Example Usage
 
 ```python
-from clerk import Clerk
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(
@@ -54,7 +54,7 @@ Create an identifier that is blocked from accessing an instance
 ### Example Usage
 
 ```python
-from clerk import Clerk
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(
@@ -95,7 +95,7 @@ Delete an identifier from the instance block-list
 ### Example Usage
 
 ```python
-from clerk import Clerk
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(

@@ -16,7 +16,7 @@ Adds a user as a member to the given organization.
 ### Example Usage
 
 ```python
-from clerk import Clerk
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(
@@ -59,7 +59,7 @@ Retrieves all user memberships for the given organization
 ### Example Usage
 
 ```python
-from clerk import Clerk
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(
@@ -108,7 +108,7 @@ Updates the properties of an existing organization membership
 ### Example Usage
 
 ```python
-from clerk import Clerk
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(
@@ -151,7 +151,7 @@ Removes the given membership from the organization
 ### Example Usage
 
 ```python
-from clerk import Clerk
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(
@@ -195,7 +195,7 @@ You can remove metadata keys at any level by setting their value to `null`.
 ### Example Usage
 
 ```python
-from clerk import Clerk
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(

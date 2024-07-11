@@ -15,7 +15,7 @@ You can optionally supply a different duration in seconds using the `expires_in_
 ### Example Usage
 
 ```python
-from clerk import Clerk
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(
@@ -57,7 +57,7 @@ Revokes a pending sign-in token
 ### Example Usage
 
 ```python
-from clerk import Clerk
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(

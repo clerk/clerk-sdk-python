@@ -19,8 +19,8 @@ moving forward at least one of `client_id` or `user_id` parameters should be pro
 ### Example Usage
 
 ```python
-import clerk
-from clerk import Clerk
+import clerk_backend_api
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(
@@ -28,7 +28,7 @@ s = Clerk(
 )
 
 
-res = s.sessions.list(client_id="client_123", user_id="user_456", status=clerk.QueryParamStatus.ACTIVE, limit=20, offset=10)
+res = s.sessions.list(client_id="client_123", user_id="user_456", status=clerk_backend_api.QueryParamStatus.ACTIVE, limit=20, offset=10)
 
 if res is not None:
     # handle response
@@ -65,7 +65,7 @@ Retrieve the details of a session
 ### Example Usage
 
 ```python
-from clerk import Clerk
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(
@@ -107,7 +107,7 @@ In multi-session mode, a revoked session will still be returned along with its c
 ### Example Usage
 
 ```python
-from clerk import Clerk
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(
@@ -153,7 +153,7 @@ WARNING: This endpoint is deprecated and will be removed in future versions. We 
 ### Example Usage
 
 ```python
-from clerk import Clerk
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(
@@ -195,7 +195,7 @@ Creates a JSON Web Token(JWT) based on a session and a JWT Template name defined
 ### Example Usage
 
 ```python
-from clerk import Clerk
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(

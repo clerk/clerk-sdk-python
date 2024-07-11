@@ -15,7 +15,7 @@ Lists all whitelisted redirect_urls for the instance
 ### Example Usage
 
 ```python
-from clerk import Clerk
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(
@@ -54,7 +54,7 @@ Create a redirect URL
 ### Example Usage
 
 ```python
-from clerk import Clerk
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(
@@ -95,7 +95,7 @@ Retrieve the details of the redirect URL with the given ID
 ### Example Usage
 
 ```python
-from clerk import Clerk
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(
@@ -136,7 +136,7 @@ Remove the selected redirect URL from the whitelist of the instance
 ### Example Usage
 
 ```python
-from clerk import Clerk
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(

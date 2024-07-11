@@ -18,8 +18,8 @@ The templates are returned sorted by position.
 ### Example Usage
 
 ```python
-import clerk
-from clerk import Clerk
+import clerk_backend_api
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(
@@ -27,7 +27,7 @@ s = Clerk(
 )
 
 
-res = s.templates.list(template_type=clerk.TemplateType.EMAIL)
+res = s.templates.list(template_type=clerk_backend_api.TemplateType.EMAIL)
 
 if res is not None:
     # handle response
@@ -60,8 +60,8 @@ Returns the details of a template
 ### Example Usage
 
 ```python
-import clerk
-from clerk import Clerk
+import clerk_backend_api
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(
@@ -69,7 +69,7 @@ s = Clerk(
 )
 
 
-res = s.templates.get(template_type=clerk.PathParamTemplateType.EMAIL, slug="welcome-email")
+res = s.templates.get(template_type=clerk_backend_api.PathParamTemplateType.EMAIL, slug="welcome-email")
 
 if res is not None:
     # handle response
@@ -103,8 +103,8 @@ Updates the existing template of the given type and slug
 ### Example Usage
 
 ```python
-import clerk
-from clerk import Clerk
+import clerk_backend_api
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(
@@ -112,7 +112,7 @@ s = Clerk(
 )
 
 
-res = s.templates.upsert(template_type=clerk.UpsertTemplatePathParamTemplateType.SMS, slug="verification-code", name="Verification Code", subject="Your Verification Code", markup="<p>Your code: {{code}}</p>", body="Use this code to verify your email: {{code}}", delivered_by_clerk=True, from_email_name="hello", reply_to_email_name="support")
+res = s.templates.upsert(template_type=clerk_backend_api.UpsertTemplatePathParamTemplateType.SMS, slug="verification-code", name="Verification Code", subject="Your Verification Code", markup="<p>Your code: {{code}}</p>", body="Use this code to verify your email: {{code}}", delivered_by_clerk=True, from_email_name="hello", reply_to_email_name="support")
 
 if res is not None:
     # handle response
@@ -153,8 +153,8 @@ Reverts an updated template to its default state
 ### Example Usage
 
 ```python
-import clerk
-from clerk import Clerk
+import clerk_backend_api
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(
@@ -162,7 +162,7 @@ s = Clerk(
 )
 
 
-res = s.templates.revert(template_type=clerk.RevertTemplatePathParamTemplateType.EMAIL, slug="welcome-email")
+res = s.templates.revert(template_type=clerk_backend_api.RevertTemplatePathParamTemplateType.EMAIL, slug="welcome-email")
 
 if res is not None:
     # handle response
@@ -196,7 +196,7 @@ Returns a preview of a template for a given template_type, slug and body
 ### Example Usage
 
 ```python
-from clerk import Clerk
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(
@@ -244,8 +244,8 @@ The app developer will need to listen to the `email.created` or `sms.created` we
 ### Example Usage
 
 ```python
-import clerk
-from clerk import Clerk
+import clerk_backend_api
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(
@@ -253,7 +253,7 @@ s = Clerk(
 )
 
 
-res = s.templates.toggle_delivery(template_type=clerk.ToggleTemplateDeliveryPathParamTemplateType.EMAIL, slug="welcome-email", delivered_by_clerk=True)
+res = s.templates.toggle_delivery(template_type=clerk_backend_api.ToggleTemplateDeliveryPathParamTemplateType.EMAIL, slug="welcome-email", delivered_by_clerk=True)
 
 if res is not None:
     # handle response

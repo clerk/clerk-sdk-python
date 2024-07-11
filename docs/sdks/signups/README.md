@@ -12,7 +12,7 @@ Update the sign-up with the given ID
 ### Example Usage
 
 ```python
-from clerk import Clerk
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(

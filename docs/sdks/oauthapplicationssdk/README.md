@@ -20,7 +20,7 @@ Most recent OAuth applications will be returned first.
 ### Example Usage
 
 ```python
-from clerk import Clerk
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(
@@ -69,7 +69,7 @@ All URL schemes are allowed such as `http://`, `https://`, `myapp://`, etc...
 ### Example Usage
 
 ```python
-from clerk import Clerk
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(
@@ -113,7 +113,7 @@ Fetches the OAuth application whose ID matches the provided `id` in the path.
 ### Example Usage
 
 ```python
-from clerk import Clerk
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(
@@ -154,7 +154,7 @@ Updates an existing OAuth application
 ### Example Usage
 
 ```python
-from clerk import Clerk
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(
@@ -199,7 +199,7 @@ This is not reversible.
 ### Example Usage
 
 ```python
-from clerk import Clerk
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(
@@ -241,7 +241,7 @@ When the client secret is rotated, make sure to update it in authorized OAuth cl
 ### Example Usage
 
 ```python
-from clerk import Clerk
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(

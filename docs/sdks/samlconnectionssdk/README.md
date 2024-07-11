@@ -18,7 +18,7 @@ The SAML Connections are ordered by descending creation date and the most recent
 ### Example Usage
 
 ```python
-from clerk import Clerk
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(
@@ -65,8 +65,8 @@ Create a new SAML Connection.
 ### Example Usage
 
 ```python
-import clerk
-from clerk import Clerk
+import clerk_backend_api
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(
@@ -74,7 +74,7 @@ s = Clerk(
 )
 
 
-res = s.saml_connections.create(name="My SAML Connection", domain="example.org", provider=clerk.Provider.SAML_CUSTOM, idp_entity_id="http://idp.example.org/", idp_sso_url="http://idp.example.org/sso", idp_certificate="MIIDdzCCAl+gAwIBAgIJAKcyBaiiz+DT...", idp_metadata_url="http://idp.example.org/metadata.xml", idp_metadata="<EntityDescriptor ...", attribute_mapping={
+res = s.saml_connections.create(name="My SAML Connection", domain="example.org", provider=clerk_backend_api.Provider.SAML_CUSTOM, idp_entity_id="http://idp.example.org/", idp_sso_url="http://idp.example.org/sso", idp_certificate="MIIDdzCCAl+gAwIBAgIJAKcyBaiiz+DT...", idp_metadata_url="http://idp.example.org/metadata.xml", idp_metadata="<EntityDescriptor ...", attribute_mapping={
     "user_id": "nameid",
     "email_address": "mail",
     "first_name": "givenName",
@@ -120,7 +120,7 @@ Fetches the SAML Connection whose ID matches the provided `saml_connection_id` i
 ### Example Usage
 
 ```python
-from clerk import Clerk
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(
@@ -161,7 +161,7 @@ Updates the SAML Connection whose ID matches the provided `id` in the path.
 ### Example Usage
 
 ```python
-from clerk import Clerk
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(
@@ -219,7 +219,7 @@ Deletes the SAML Connection whose ID matches the provided `id` in the path.
 ### Example Usage
 
 ```python
-from clerk import Clerk
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(
