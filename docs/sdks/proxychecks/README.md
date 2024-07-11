@@ -19,7 +19,7 @@ a different proxy URL than the one provided. It can also be used to re-validate 
 ### Example Usage
 
 ```python
-from clerk import Clerk
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(

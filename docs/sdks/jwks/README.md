@@ -12,7 +12,7 @@ Retrieve the JSON Web Key Set of the instance
 ### Example Usage
 
 ```python
-from clerk import Clerk
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(

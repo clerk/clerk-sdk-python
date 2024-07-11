@@ -18,7 +18,7 @@ Warning: the endpoint is being deprecated and will be removed in future versions
 ### Example Usage
 
 ```python
-from clerk import Clerk
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(
@@ -65,7 +65,7 @@ Verifies the client in the provided token
 ### Example Usage
 
 ```python
-from clerk import Clerk
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(
@@ -106,7 +106,7 @@ Returns the details of a client.
 ### Example Usage
 
 ```python
-from clerk import Clerk
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(

@@ -13,7 +13,7 @@ It is used by Clerk SDKs when the user's authentication state cannot be immediat
 ### Example Usage
 
 ```python
-from clerk import Clerk
+from clerk_backend_api import Clerk
 
 s = Clerk()
 

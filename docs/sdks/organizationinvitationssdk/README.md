@@ -32,7 +32,7 @@ When the organization invitation is accepted, the metadata will be transferred t
 ### Example Usage
 
 ```python
-from clerk import Clerk
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(
@@ -84,8 +84,8 @@ Any invitations created as a result of an Organization Domain are not included i
 ### Example Usage
 
 ```python
-import clerk
-from clerk import Clerk
+import clerk_backend_api
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(
@@ -93,7 +93,7 @@ s = Clerk(
 )
 
 
-res = s.organization_invitations.list(organization_id="org_12345", limit=20, offset=10, status=clerk.ListOrganizationInvitationsQueryParamStatus.PENDING)
+res = s.organization_invitations.list(organization_id="org_12345", limit=20, offset=10, status=clerk_backend_api.ListOrganizationInvitationsQueryParamStatus.PENDING)
 
 if res is not None:
     while True:
@@ -146,7 +146,7 @@ When the organization invitation is accepted, the metadata will be transferred t
 ### Example Usage
 
 ```python
-from clerk import Clerk
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(
@@ -204,7 +204,7 @@ Any invitations created as a result of an Organization Domain are not included i
 ### Example Usage
 
 ```python
-from clerk import Clerk
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(
@@ -252,7 +252,7 @@ Use this request to get an existing organization invitation by ID.
 ### Example Usage
 
 ```python
-from clerk import Clerk
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(
@@ -298,7 +298,7 @@ Only users with "admin" role can revoke invitations.
 ### Example Usage
 
 ```python
-from clerk import Clerk
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(

@@ -14,7 +14,7 @@ The `actor` parameter needs to include at least a "sub" key whose value is the I
 ### Example Usage
 
 ```python
-from clerk import Clerk
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(
@@ -60,7 +60,7 @@ Revokes a pending actor token.
 ### Example Usage
 
 ```python
-from clerk import Clerk
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(

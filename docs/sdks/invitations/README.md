@@ -16,7 +16,7 @@ Also, trying to create an invitation for an email address that already exists in
 ### Example Usage
 
 ```python
-from clerk import Clerk
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(
@@ -61,8 +61,8 @@ Returns all non-revoked invitations for your application, sorted by creation dat
 ### Example Usage
 
 ```python
-import clerk
-from clerk import Clerk
+import clerk_backend_api
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(
@@ -70,7 +70,7 @@ s = Clerk(
 )
 
 
-res = s.invitations.list(limit=20, offset=10, status=clerk.ListInvitationsQueryParamStatus.PENDING)
+res = s.invitations.list(limit=20, offset=10, status=clerk_backend_api.ListInvitationsQueryParamStatus.PENDING)
 
 if res is not None:
     while True:
@@ -112,7 +112,7 @@ Only active (i.e. non-revoked) invitations can be revoked.
 ### Example Usage
 
 ```python
-from clerk import Clerk
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(

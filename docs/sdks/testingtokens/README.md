@@ -12,7 +12,7 @@ Retrieve a new testing token. Only available for development instances.
 ### Example Usage
 
 ```python
-from clerk import Clerk
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(

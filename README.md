@@ -13,12 +13,12 @@ The Clerk Python library provides convenient access to the Clerk REST API from a
 
 PIP
 ```bash
-pip install clerk
+pip install clerk-backend-api
 ```
 
 Poetry
 ```bash
-poetry add clerk
+poetry add clerk-backend-api
 ```
 <!-- End SDK Installation [installation] -->
 
@@ -29,7 +29,7 @@ poetry add clerk
 
 ```python
 # Synchronous Example
-from clerk import Clerk
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(
@@ -50,7 +50,7 @@ The same SDK client can also be used to make asychronous requests by importing a
 ```python
 # Asynchronous Example
 import asyncio
-from clerk import Clerk
+from clerk_backend_api import Clerk
 import os
 
 async def main():
@@ -270,7 +270,7 @@ return value of `Next` is `None`, then there are no more pages to be fetched.
 
 Here's an example of one such pagination call:
 ```python
-from clerk import Clerk
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(
@@ -303,7 +303,7 @@ Certain SDK methods accept file objects as part of a request body or multi-part 
 >
 
 ```python
-from clerk import Clerk
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(
@@ -331,8 +331,8 @@ Some of the endpoints in this SDK support retries. If you use the SDK without an
 
 To change the default retry strategy for a single API call, simply provide a `RetryConfig` object to the call:
 ```python
-from clerk import Clerk
 from clerk.utils import BackoffStrategy, RetryConfig
+from clerk_backend_api import Clerk
 
 s = Clerk()
 
@@ -346,8 +346,8 @@ s.misc.get_public_interstitial(frontend_api="frontend-api_1a2b3c4d", publishable
 
 If you'd like to override the default retry strategy for all operations that support retries, you can use the `retry_config` optional parameter when initializing the SDK:
 ```python
-from clerk import Clerk
 from clerk.utils import BackoffStrategy, RetryConfig
+from clerk_backend_api import Clerk
 
 s = Clerk(
     retry_config=RetryConfig("backoff", BackoffStrategy(1, 50, 1.1, 100), False),
@@ -374,7 +374,7 @@ Handling errors in this SDK should largely match your expectations.  All operati
 ### Example
 
 ```python
-from clerk import Clerk, models
+from clerk_backend_api import Clerk, models
 import os
 
 s = Clerk(
@@ -418,7 +418,7 @@ You can override the default server globally by passing a server index to the `s
 #### Example
 
 ```python
-from clerk import Clerk
+from clerk_backend_api import Clerk
 
 s = Clerk(
     server_idx=0,
@@ -436,7 +436,7 @@ s.misc.get_public_interstitial(frontend_api="frontend-api_1a2b3c4d", publishable
 
 The default server can also be overridden globally by passing a URL to the `server_url: str` optional parameter when initializing the SDK client instance. For example:
 ```python
-from clerk import Clerk
+from clerk_backend_api import Clerk
 
 s = Clerk(
     server_url="https://api.clerk.com/v1",
@@ -459,7 +459,7 @@ This allows you to wrap the client with your own custom logic, such as adding cu
 
 For example, you could specify a header for every request that this sdk makes as follows:
 ```python
-from clerk import Clerk
+from clerk_backend_api import Clerk
 import httpx
 
 http_client = httpx.Client(headers={"x-custom-header": "someValue"})
@@ -468,8 +468,8 @@ s = Clerk(client=http_client)
 
 or you could wrap the client with your own custom logic:
 ```python
-from clerk import Clerk
-from clerk.httpclient import AsyncHttpClient
+from clerk_backend_api import Clerk
+from clerk_backend_api.httpclient import AsyncHttpClient
 import httpx
 
 class CustomClient(AsyncHttpClient):
@@ -544,7 +544,7 @@ This SDK supports the following security scheme globally:
 
 To authenticate with the API the `bearer_auth` parameter must be set when initializing the SDK client instance. For example:
 ```python
-from clerk import Clerk
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(

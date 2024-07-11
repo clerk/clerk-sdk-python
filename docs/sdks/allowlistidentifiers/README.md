@@ -14,7 +14,7 @@ Get a list of all identifiers allowed to sign up to an instance
 ### Example Usage
 
 ```python
-from clerk import Clerk
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(
@@ -54,7 +54,7 @@ Create an identifier allowed to sign up to an instance
 ### Example Usage
 
 ```python
-from clerk import Clerk
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(
@@ -96,7 +96,7 @@ Delete an identifier from the instance allow-list
 ### Example Usage
 
 ```python
-from clerk import Clerk
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(

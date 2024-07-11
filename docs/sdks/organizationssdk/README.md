@@ -22,7 +22,7 @@ Most recent organizations will be returned first.
 ### Example Usage
 
 ```python
-from clerk import Clerk
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(
@@ -75,7 +75,7 @@ Public metadata can be accessed from the Backend API, and are read-only from the
 ### Example Usage
 
 ```python
-from clerk import Clerk
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(
@@ -121,7 +121,7 @@ Fetches the organization whose ID or slug matches the provided `id_or_slug` URL 
 ### Example Usage
 
 ```python
-from clerk import Clerk
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(
@@ -162,7 +162,7 @@ Updates an existing organization
 ### Example Usage
 
 ```python
-from clerk import Clerk
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(
@@ -211,7 +211,7 @@ This is not reversible.
 ### Example Usage
 
 ```python
-from clerk import Clerk
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(
@@ -255,7 +255,7 @@ You can remove metadata keys at any level by setting their value to `null`.
 ### Example Usage
 
 ```python
-from clerk import Clerk
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(
@@ -301,7 +301,7 @@ Only the following file content types are supported: `image/jpeg`, `image/png`, 
 ### Example Usage
 
 ```python
-from clerk import Clerk
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(
@@ -348,7 +348,7 @@ Delete the organization's logo.
 ### Example Usage
 
 ```python
-from clerk import Clerk
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(

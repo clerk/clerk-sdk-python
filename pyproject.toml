@@ -1,12 +1,12 @@
 [tool.poetry]
-name = "clerk"
-version = "0.5.0-alpha.6"
+name = "clerk-backend-api"
+version = "0.5.0-alpha.7"
 description = "Python Client SDK for clerk.dev"
 authors = ["Clerk",]
 readme = "README.md"
 repository = "https://github.com/clerk/clerk-sdk-python.git"
 packages = [
-    { include = "clerk", from = "src" }
+    { include = "clerk_backend_api", from = "src" }
 ]
 include = ["py.typed"]
 

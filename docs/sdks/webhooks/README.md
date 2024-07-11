@@ -14,7 +14,7 @@ Create a Svix app and associate it with the current instance
 ### Example Usage
 
 ```python
-from clerk import Clerk
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(
@@ -54,7 +54,7 @@ Delete a Svix app and disassociate it from the current instance
 ### Example Usage
 
 ```python
-from clerk import Clerk
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(
@@ -88,7 +88,7 @@ Generate a new url for accessing the Svix's management dashboard for that partic
 ### Example Usage
 
 ```python
-from clerk import Clerk
+from clerk_backend_api import Clerk
 import os
 
 s = Clerk(
