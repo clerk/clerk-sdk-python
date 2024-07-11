@@ -14,3 +14,6 @@ targets:
         target: python
         source: clerk-openapi
         output: .
+        publish:
+            pypi:
+                token: $pypi_token
