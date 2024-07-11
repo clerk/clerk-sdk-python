@@ -1,0 +1,16 @@
+workflowVersion: 1.0.0
+speakeasyVersion: latest
+sources:
+    clerk-openapi:
+        inputs:
+            - location: openapi.yaml
+        overlays:
+            - location: ./fixes.yaml
+            - location: ./examples.yaml
+        registry:
+            location: registry.speakeasyapi.dev/clerk/clerk/clerk-openapi
+targets:
+    clerk-sdk-python:
+        target: python
+        source: clerk-openapi
+        output: .

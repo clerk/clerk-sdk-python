@@ -1,0 +1,9 @@
+# UpdatePhoneNumberRequest
+
+
+## Fields
+
+| Field                                                                                      | Type                                                                                       | Required                                                                                   | Description                                                                                | Example                                                                                    |
+| ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ |
+| `phone_number_id`                                                                          | *str*                                                                                      | :heavy_check_mark:                                                                         | The ID of the phone number to update                                                       | phone_12345                                                                                |
+| `request_body`                                                                             | [Optional[models.UpdatePhoneNumberRequestBody]](../models/updatephonenumberrequestbody.md) | :heavy_minus_sign:                                                                         | N/A                                                                                        |                                                                                            |

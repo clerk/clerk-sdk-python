@@ -1,0 +1,9 @@
+# VerifySessionRequest
+
+
+## Fields
+
+| Field                                                                              | Type                                                                               | Required                                                                           | Description                                                                        | Example                                                                            |
+| ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
+| `session_id`                                                                       | *str*                                                                              | :heavy_check_mark:                                                                 | The ID of the session                                                              | sess_w8q4g9s60j28fghv00f3                                                          |
+| `request_body`                                                                     | [Optional[models.VerifySessionRequestBody]](../models/verifysessionrequestbody.md) | :heavy_minus_sign:                                                                 | Parameters.                                                                        |                                                                                    |

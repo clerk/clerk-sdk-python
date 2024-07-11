@@ -1,0 +1,9 @@
+# UpdateUserMetadataRequest
+
+
+## Fields
+
+| Field                                                                                        | Type                                                                                         | Required                                                                                     | Description                                                                                  | Example                                                                                      |
+| -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| `user_id`                                                                                    | *str*                                                                                        | :heavy_check_mark:                                                                           | The ID of the user whose metadata will be updated and merged                                 | user_123456789                                                                               |
+| `request_body`                                                                               | [Optional[models.UpdateUserMetadataRequestBody]](../models/updateusermetadatarequestbody.md) | :heavy_minus_sign:                                                                           | N/A                                                                                          |                                                                                              |

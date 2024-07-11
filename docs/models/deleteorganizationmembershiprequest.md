@@ -1,0 +1,9 @@
+# DeleteOrganizationMembershipRequest
+
+
+## Fields
+
+| Field                                                | Type                                                 | Required                                             | Description                                          | Example                                              |
+| ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- |
+| `organization_id`                                    | *str*                                                | :heavy_check_mark:                                   | The ID of the organization the membership belongs to | org_12345                                            |
+| `user_id`                                            | *str*                                                | :heavy_check_mark:                                   | The ID of the user that this membership belongs to   | user_67890                                           |

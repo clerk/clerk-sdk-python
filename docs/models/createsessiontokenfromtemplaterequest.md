@@ -1,0 +1,9 @@
+# CreateSessionTokenFromTemplateRequest
+
+
+## Fields
+
+| Field                                                                         | Type                                                                          | Required                                                                      | Description                                                                   | Example                                                                       |
+| ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
+| `session_id`                                                                  | *str*                                                                         | :heavy_check_mark:                                                            | The ID of the session                                                         | ses_123abcd4567                                                               |
+| `template_name`                                                               | *str*                                                                         | :heavy_check_mark:                                                            | The name of the JWT Template defined in your instance (e.g. `custom_hasura`). | custom_hasura                                                                 |

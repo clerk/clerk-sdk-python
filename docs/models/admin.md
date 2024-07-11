@@ -1,0 +1,11 @@
+# Admin
+
+
+## Fields
+
+| Field                                                                  | Type                                                                   | Required                                                               | Description                                                            | Example                                                                |
+| ---------------------------------------------------------------------- | ---------------------------------------------------------------------- | ---------------------------------------------------------------------- | ---------------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| `status`                                                               | [models.AdminVerificationStatus](../models/adminverificationstatus.md) | :heavy_check_mark:                                                     | N/A                                                                    | verified                                                               |
+| `strategy`                                                             | [models.VerificationStrategy](../models/verificationstrategy.md)       | :heavy_check_mark:                                                     | N/A                                                                    | admin                                                                  |
+| `attempts`                                                             | *Optional[Nullable[int]]*                                              | :heavy_minus_sign:                                                     | N/A                                                                    | 0                                                                      |
+| `expire_at`                                                            | *Optional[Nullable[int]]*                                              | :heavy_minus_sign:                                                     | N/A                                                                    | 1620000000                                                             |

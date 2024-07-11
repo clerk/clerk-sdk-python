@@ -1,0 +1,9 @@
+# SetUserProfileImageRequest
+
+
+## Fields
+
+| Field                                                                                | Type                                                                                 | Required                                                                             | Description                                                                          | Example                                                                              |
+| ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ |
+| `user_id`                                                                            | *str*                                                                                | :heavy_check_mark:                                                                   | The ID of the user to update the profile image for                                   | usr_test123                                                                          |
+| `request_body`                                                                       | [models.SetUserProfileImageRequestBody](../models/setuserprofileimagerequestbody.md) | :heavy_check_mark:                                                                   | N/A                                                                                  |                                                                                      |

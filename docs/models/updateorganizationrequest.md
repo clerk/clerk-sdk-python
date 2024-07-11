@@ -1,0 +1,9 @@
+# UpdateOrganizationRequest
+
+
+## Fields
+
+| Field                                                                              | Type                                                                               | Required                                                                           | Description                                                                        | Example                                                                            |
+| ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
+| `organization_id`                                                                  | *str*                                                                              | :heavy_check_mark:                                                                 | The ID of the organization to update                                               | org_123_update                                                                     |
+| `request_body`                                                                     | [models.UpdateOrganizationRequestBody](../models/updateorganizationrequestbody.md) | :heavy_check_mark:                                                                 | N/A                                                                                |                                                                                    |
