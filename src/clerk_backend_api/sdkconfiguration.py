@@ -24,11 +24,11 @@ class SDKConfiguration:
     server_idx: Optional[int] = 0
     language: str = "python"
     openapi_doc_version: str = "v1"
-    sdk_version: str = "0.5.0-alpha.7"
-    gen_version: str = "2.366.1"
-    user_agent: str = "speakeasy-sdk/python 0.5.0-alpha.7 2.366.1 v1 clerk-backend-api"
+    sdk_version: str = "0.5.0-alpha.8"
+    gen_version: str = "2.370.2"
+    user_agent: str = "speakeasy-sdk/python 0.5.0-alpha.8 2.370.2 v1 clerk-backend-api"
     retry_config: Optional[Nullable[RetryConfig]] = UNSET
-    timeout_config: Optional[int] = None
+    timeout_ms: Optional[int] = None
 
     def __post_init__(self):
         self._hooks = SDKHooks()

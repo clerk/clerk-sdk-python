@@ -34,7 +34,6 @@ class CodeType(str, Enum):
     TOTP = "totp"
     BACKUP_CODE = "backup_code"
 
-
 class VerifyTOTPResponseBodyTypedDict(TypedDict):
     r"""The provided TOTP or backup code was correct."""
     

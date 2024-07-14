@@ -9,7 +9,6 @@ from typing import TypedDict
 class ProxyCheckObject(str, Enum):
     PROXY_CHECK = "proxy_check"
 
-
 class ProxyCheckTypedDict(TypedDict):
     object: ProxyCheckObject
     id: str

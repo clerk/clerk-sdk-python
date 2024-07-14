@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: bfe29c99-6e67-43fe-b928-64d6a5ed6aa8
 management:
-  docChecksum: 86f1bd95298826763a948a4e2aa58f0f
+  docChecksum: 0ce7312d7709dddba448d3fb4b927bb6
   docVersion: v1
-  speakeasyVersion: 1.331.2
-  generationVersion: 2.366.1
-  releaseVersion: 0.5.0-alpha.7
-  configChecksum: 2d94b80871c84384d32f0c2f89c26d3f
+  speakeasyVersion: 1.335.0
+  generationVersion: 2.370.2
+  releaseVersion: 0.5.0-alpha.8
+  configChecksum: 6933af57af894f683ab29b51e56dff2c
   repoURL: https://github.com/clerk/clerk-sdk-python.git
   installationURL: https://github.com/clerk/clerk-sdk-python.git
   published: true
@@ -64,6 +64,7 @@ generatedFiles:
   - src/clerk_backend_api/samlconnections_sdk.py
   - src/clerk_backend_api/testingtokens.py
   - src/clerk_backend_api/sdk.py
+  - .vscode/settings.json
   - py.typed
   - pylintrc
   - pyproject.toml

@@ -2,16 +2,15 @@
 
 from __future__ import annotations
 from .cnametarget import CNameTarget, CNameTargetTypedDict
-from clerk_backend_api.types import BaseModel, Nullable
+from clerk_backend_api.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
 from enum import Enum
 from pydantic import model_serializer
-from typing import List, Optional, TypedDict
+from typing import List, TypedDict
 from typing_extensions import NotRequired
 
 
 class DomainObject(str, Enum):
     DOMAIN = "domain"
-
 
 class DomainTypedDict(TypedDict):
     object: DomainObject
@@ -35,17 +34,17 @@ class Domain(BaseModel):
     is_satellite: bool
     frontend_api_url: str
     development_origin: str
-    accounts_portal_url: Optional[Nullable[str]] = None
+    accounts_portal_url: OptionalNullable[str] = UNSET
     r"""Null for satellite domains.
 
     """
-    proxy_url: Optional[Nullable[str]] = None
-    cname_targets: Optional[Nullable[List[CNameTarget]]] = None
+    proxy_url: OptionalNullable[str] = UNSET
+    cname_targets: OptionalNullable[List[CNameTarget]] = UNSET
     
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["accounts_portal_url", "proxy_url", "cname_targets"]
-        nullable_fields = ["accounts_portal_url", "proxy_url", "cname_targets"]
+        optional_fields = ["nullableOptional", "optional"]
+        nullable_fields = ["nullableRequired", "nullableOptional"]
         null_default_fields = []
 
         serialized = handler(self)
@@ -56,13 +55,19 @@ class Domain(BaseModel):
             k = f.alias or n
             val = serialized.get(k)
 
-            if val is not None:
+            if val is not None and val != UNSET_SENTINEL:
                 m[k] = val
-            elif not k in optional_fields or (
+            elif val != UNSET_SENTINEL and (
+                not k in optional_fields
+                or (
                     k in optional_fields
                     and k in nullable_fields
-                    and (self.__pydantic_fields_set__.intersection({n}) or k in null_default_fields) # pylint: disable=no-member
-                ):
+                    and (
+                        self.__pydantic_fields_set__.intersection({n})
+                        or k in null_default_fields
+                    )  # pylint: disable=no-member
+                )
+            ):
                 m[k] = val
 
         return m

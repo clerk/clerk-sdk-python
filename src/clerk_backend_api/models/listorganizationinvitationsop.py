@@ -15,7 +15,6 @@ class ListOrganizationInvitationsQueryParamStatus(str, Enum):
     ACCEPTED = "accepted"
     REVOKED = "revoked"
 
-
 class ListOrganizationInvitationsRequestTypedDict(TypedDict):
     organization_id: str
     r"""The organization ID."""

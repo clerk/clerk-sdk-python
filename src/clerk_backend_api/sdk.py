@@ -87,7 +87,7 @@ class Clerk(BaseSDK):
         client: Optional[HttpClient] = None,
         async_client: Optional[AsyncHttpClient] = None,
         retry_config: Optional[Nullable[RetryConfig]] = UNSET,
-        timeout_config: Optional[int] = None
+        timeout_ms: Optional[int] = None
     ) -> None:
         r"""Instantiates the SDK configuring it with the provided parameters.
 
@@ -98,7 +98,7 @@ class Clerk(BaseSDK):
         :param client: The HTTP client to use for all synchronous methods
         :param async_client: The Async HTTP client to use for all asynchronous methods
         :param retry_config: The retry configuration to use for all supported methods
-        :param timeout_config: Optional request timeout applied to each operation in milliseconds
+        :param timeout_ms: Optional request timeout applied to each operation in milliseconds
         """
         if client is None:
             client = httpx.Client()
@@ -132,7 +132,7 @@ class Clerk(BaseSDK):
             server_url=server_url,
             server_idx=server_idx,
             retry_config=retry_config,
-            timeout_config=timeout_config
+            timeout_ms=timeout_ms
         ))
 
         hooks = SDKHooks()

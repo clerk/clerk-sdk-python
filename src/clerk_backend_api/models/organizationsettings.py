@@ -11,12 +11,10 @@ class OrganizationSettingsObject(str, Enum):
     r"""String representing the object's type. Objects of the same type share the same value."""
     ORGANIZATION_SETTINGS = "organization_settings"
 
-
 class DomainsEnrollmentModes(str, Enum):
     MANUAL_INVITATION = "manual_invitation"
     AUTOMATIC_INVITATION = "automatic_invitation"
     AUTOMATIC_SUGGESTION = "automatic_suggestion"
-
 
 class OrganizationSettingsTypedDict(TypedDict):
     object: OrganizationSettingsObject

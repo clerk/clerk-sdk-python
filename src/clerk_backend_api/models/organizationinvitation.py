@@ -13,7 +13,6 @@ class OrganizationInvitationObject(str, Enum):
     """
     ORGANIZATION_INVITATION = "organization_invitation"
 
-
 class OrganizationInvitationPublicMetadataTypedDict(TypedDict):
     pass
     

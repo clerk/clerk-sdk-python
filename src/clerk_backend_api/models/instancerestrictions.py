@@ -11,7 +11,6 @@ class InstanceRestrictionsObject(str, Enum):
     r"""String representing the object's type. Objects of the same type share the same value."""
     INSTANCE_RESTRICTIONS = "instance_restrictions"
 
-
 class InstanceRestrictionsTypedDict(TypedDict):
     object: NotRequired[InstanceRestrictionsObject]
     r"""String representing the object's type. Objects of the same type share the same value."""
