@@ -6,3 +6,4 @@ actions:
   - target: $["components"]["schemas"]["Oauth"]["properties"]["strategy"]["enum"]
     update:
       - "from_oauth_google"
+      - "from_oauth_apple"
