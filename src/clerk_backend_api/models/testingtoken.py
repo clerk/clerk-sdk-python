@@ -9,7 +9,6 @@ from typing import TypedDict
 class TestingTokenObject(str, Enum):
     TESTING_TOKEN = "testing_token"
 
-
 class TestingTokenTypedDict(TypedDict):
     __test__ = False
     

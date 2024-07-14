@@ -10,7 +10,6 @@ from typing_extensions import NotRequired
 class OAuthApplicationWithSecretObject(str, Enum):
     OAUTH_APPLICATION = "oauth_application"
 
-
 class OAuthApplicationWithSecretTypedDict(TypedDict):
     object: OAuthApplicationWithSecretObject
     id: str

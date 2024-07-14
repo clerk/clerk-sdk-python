@@ -3,7 +3,7 @@
 from .basesdk import BaseSDK
 from clerk_backend_api import models
 from clerk_backend_api._hooks import HookContext
-from clerk_backend_api.types import BaseModel, Nullable, UNSET
+from clerk_backend_api.types import BaseModel, OptionalNullable, UNSET
 import clerk_backend_api.utils as utils
 from jsonpath import JSONPath
 from typing import Any, Dict, Optional, Union
@@ -15,9 +15,9 @@ class SamlConnectionsSDK(BaseSDK):
         self, *,
         limit: Optional[float] = None,
         offset: Optional[float] = None,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> models.ListSAMLConnectionsResponse:
         r"""Get a list of SAML Connections for an instance
 
@@ -29,12 +29,12 @@ class SamlConnectionsSDK(BaseSDK):
         :param offset: Skip the first `offset` results when paginating. Needs to be an integer greater or equal to zero. To be used in conjunction with `limit`.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -56,7 +56,7 @@ class SamlConnectionsSDK(BaseSDK):
             user_agent_header="user-agent",
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -120,9 +120,9 @@ class SamlConnectionsSDK(BaseSDK):
         self, *,
         limit: Optional[float] = None,
         offset: Optional[float] = None,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> models.ListSAMLConnectionsResponse:
         r"""Get a list of SAML Connections for an instance
 
@@ -134,12 +134,12 @@ class SamlConnectionsSDK(BaseSDK):
         :param offset: Skip the first `offset` results when paginating. Needs to be an integer greater or equal to zero. To be used in conjunction with `limit`.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -161,7 +161,7 @@ class SamlConnectionsSDK(BaseSDK):
             user_agent_header="user-agent",
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -226,15 +226,15 @@ class SamlConnectionsSDK(BaseSDK):
         name: str,
         domain: str,
         provider: models.Provider,
-        idp_entity_id: Optional[Nullable[str]] = None,
-        idp_sso_url: Optional[Nullable[str]] = None,
-        idp_certificate: Optional[Nullable[str]] = None,
-        idp_metadata_url: Optional[Nullable[str]] = None,
-        idp_metadata: Optional[Nullable[str]] = None,
-        attribute_mapping: Optional[Union[Nullable[models.CreateSAMLConnectionAttributeMapping], Nullable[models.CreateSAMLConnectionAttributeMappingTypedDict]]] = None,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        idp_entity_id: OptionalNullable[str] = UNSET,
+        idp_sso_url: OptionalNullable[str] = UNSET,
+        idp_certificate: OptionalNullable[str] = UNSET,
+        idp_metadata_url: OptionalNullable[str] = UNSET,
+        idp_metadata: OptionalNullable[str] = UNSET,
+        attribute_mapping: OptionalNullable[Union[models.CreateSAMLConnectionAttributeMapping, models.CreateSAMLConnectionAttributeMappingTypedDict]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> models.SAMLConnection:
         r"""Create a SAML Connection
 
@@ -251,12 +251,12 @@ class SamlConnectionsSDK(BaseSDK):
         :param attribute_mapping: Define the attribute name mapping between Identity Provider and Clerk's user properties
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -286,7 +286,7 @@ class SamlConnectionsSDK(BaseSDK):
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(request, False, True, "json", Optional[models.CreateSAMLConnectionRequestBody]),
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -328,15 +328,15 @@ class SamlConnectionsSDK(BaseSDK):
         name: str,
         domain: str,
         provider: models.Provider,
-        idp_entity_id: Optional[Nullable[str]] = None,
-        idp_sso_url: Optional[Nullable[str]] = None,
-        idp_certificate: Optional[Nullable[str]] = None,
-        idp_metadata_url: Optional[Nullable[str]] = None,
-        idp_metadata: Optional[Nullable[str]] = None,
-        attribute_mapping: Optional[Union[Nullable[models.CreateSAMLConnectionAttributeMapping], Nullable[models.CreateSAMLConnectionAttributeMappingTypedDict]]] = None,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        idp_entity_id: OptionalNullable[str] = UNSET,
+        idp_sso_url: OptionalNullable[str] = UNSET,
+        idp_certificate: OptionalNullable[str] = UNSET,
+        idp_metadata_url: OptionalNullable[str] = UNSET,
+        idp_metadata: OptionalNullable[str] = UNSET,
+        attribute_mapping: OptionalNullable[Union[models.CreateSAMLConnectionAttributeMapping, models.CreateSAMLConnectionAttributeMappingTypedDict]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> models.SAMLConnection:
         r"""Create a SAML Connection
 
@@ -353,12 +353,12 @@ class SamlConnectionsSDK(BaseSDK):
         :param attribute_mapping: Define the attribute name mapping between Identity Provider and Clerk's user properties
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -388,7 +388,7 @@ class SamlConnectionsSDK(BaseSDK):
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(request, False, True, "json", Optional[models.CreateSAMLConnectionRequestBody]),
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -428,9 +428,9 @@ class SamlConnectionsSDK(BaseSDK):
     def get(
         self, *,
         saml_connection_id: str,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> models.SAMLConnection:
         r"""Retrieve a SAML Connection by ID
 
@@ -439,12 +439,12 @@ class SamlConnectionsSDK(BaseSDK):
         :param saml_connection_id: The ID of the SAML Connection
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -465,7 +465,7 @@ class SamlConnectionsSDK(BaseSDK):
             user_agent_header="user-agent",
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -505,9 +505,9 @@ class SamlConnectionsSDK(BaseSDK):
     async def get_async(
         self, *,
         saml_connection_id: str,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> models.SAMLConnection:
         r"""Retrieve a SAML Connection by ID
 
@@ -516,12 +516,12 @@ class SamlConnectionsSDK(BaseSDK):
         :param saml_connection_id: The ID of the SAML Connection
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -542,7 +542,7 @@ class SamlConnectionsSDK(BaseSDK):
             user_agent_header="user-agent",
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -582,21 +582,21 @@ class SamlConnectionsSDK(BaseSDK):
     def update(
         self, *,
         saml_connection_id: str,
-        name: Optional[Nullable[str]] = None,
-        domain: Optional[Nullable[str]] = None,
-        idp_entity_id: Optional[Nullable[str]] = None,
-        idp_sso_url: Optional[Nullable[str]] = None,
-        idp_certificate: Optional[Nullable[str]] = None,
-        idp_metadata_url: Optional[Nullable[str]] = None,
-        idp_metadata: Optional[Nullable[str]] = None,
-        attribute_mapping: Optional[Union[Nullable[models.UpdateSAMLConnectionAttributeMapping], Nullable[models.UpdateSAMLConnectionAttributeMappingTypedDict]]] = None,
-        active: Optional[Nullable[bool]] = None,
-        sync_user_attributes: Optional[Nullable[bool]] = None,
-        allow_subdomains: Optional[Nullable[bool]] = None,
-        allow_idp_initiated: Optional[Nullable[bool]] = None,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        name: OptionalNullable[str] = UNSET,
+        domain: OptionalNullable[str] = UNSET,
+        idp_entity_id: OptionalNullable[str] = UNSET,
+        idp_sso_url: OptionalNullable[str] = UNSET,
+        idp_certificate: OptionalNullable[str] = UNSET,
+        idp_metadata_url: OptionalNullable[str] = UNSET,
+        idp_metadata: OptionalNullable[str] = UNSET,
+        attribute_mapping: OptionalNullable[Union[models.UpdateSAMLConnectionAttributeMapping, models.UpdateSAMLConnectionAttributeMappingTypedDict]] = UNSET,
+        active: OptionalNullable[bool] = UNSET,
+        sync_user_attributes: OptionalNullable[bool] = UNSET,
+        allow_subdomains: OptionalNullable[bool] = UNSET,
+        allow_idp_initiated: OptionalNullable[bool] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> models.SAMLConnection:
         r"""Update a SAML Connection
 
@@ -617,12 +617,12 @@ class SamlConnectionsSDK(BaseSDK):
         :param allow_idp_initiated: Enable or deactivate IdP-initiated flows
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -658,7 +658,7 @@ class SamlConnectionsSDK(BaseSDK):
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(request.request_body, False, False, "json", models.UpdateSAMLConnectionRequestBody),
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -698,21 +698,21 @@ class SamlConnectionsSDK(BaseSDK):
     async def update_async(
         self, *,
         saml_connection_id: str,
-        name: Optional[Nullable[str]] = None,
-        domain: Optional[Nullable[str]] = None,
-        idp_entity_id: Optional[Nullable[str]] = None,
-        idp_sso_url: Optional[Nullable[str]] = None,
-        idp_certificate: Optional[Nullable[str]] = None,
-        idp_metadata_url: Optional[Nullable[str]] = None,
-        idp_metadata: Optional[Nullable[str]] = None,
-        attribute_mapping: Optional[Union[Nullable[models.UpdateSAMLConnectionAttributeMapping], Nullable[models.UpdateSAMLConnectionAttributeMappingTypedDict]]] = None,
-        active: Optional[Nullable[bool]] = None,
-        sync_user_attributes: Optional[Nullable[bool]] = None,
-        allow_subdomains: Optional[Nullable[bool]] = None,
-        allow_idp_initiated: Optional[Nullable[bool]] = None,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        name: OptionalNullable[str] = UNSET,
+        domain: OptionalNullable[str] = UNSET,
+        idp_entity_id: OptionalNullable[str] = UNSET,
+        idp_sso_url: OptionalNullable[str] = UNSET,
+        idp_certificate: OptionalNullable[str] = UNSET,
+        idp_metadata_url: OptionalNullable[str] = UNSET,
+        idp_metadata: OptionalNullable[str] = UNSET,
+        attribute_mapping: OptionalNullable[Union[models.UpdateSAMLConnectionAttributeMapping, models.UpdateSAMLConnectionAttributeMappingTypedDict]] = UNSET,
+        active: OptionalNullable[bool] = UNSET,
+        sync_user_attributes: OptionalNullable[bool] = UNSET,
+        allow_subdomains: OptionalNullable[bool] = UNSET,
+        allow_idp_initiated: OptionalNullable[bool] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> models.SAMLConnection:
         r"""Update a SAML Connection
 
@@ -733,12 +733,12 @@ class SamlConnectionsSDK(BaseSDK):
         :param allow_idp_initiated: Enable or deactivate IdP-initiated flows
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -774,7 +774,7 @@ class SamlConnectionsSDK(BaseSDK):
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(request.request_body, False, False, "json", models.UpdateSAMLConnectionRequestBody),
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -814,9 +814,9 @@ class SamlConnectionsSDK(BaseSDK):
     def delete(
         self, *,
         saml_connection_id: str,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> models.DeletedObject:
         r"""Delete a SAML Connection
 
@@ -825,12 +825,12 @@ class SamlConnectionsSDK(BaseSDK):
         :param saml_connection_id: The ID of the SAML Connection to delete
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -851,7 +851,7 @@ class SamlConnectionsSDK(BaseSDK):
             user_agent_header="user-agent",
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -891,9 +891,9 @@ class SamlConnectionsSDK(BaseSDK):
     async def delete_async(
         self, *,
         saml_connection_id: str,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> models.DeletedObject:
         r"""Delete a SAML Connection
 
@@ -902,12 +902,12 @@ class SamlConnectionsSDK(BaseSDK):
         :param saml_connection_id: The ID of the SAML Connection to delete
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -928,7 +928,7 @@ class SamlConnectionsSDK(BaseSDK):
             user_agent_header="user-agent",
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:

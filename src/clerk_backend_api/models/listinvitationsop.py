@@ -15,7 +15,6 @@ class ListInvitationsQueryParamStatus(str, Enum):
     ACCEPTED = "accepted"
     REVOKED = "revoked"
 
-
 class ListInvitationsRequestTypedDict(TypedDict):
     limit: NotRequired[float]
     r"""Applies a limit to the number of results returned.

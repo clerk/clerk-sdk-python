@@ -13,12 +13,10 @@ class AllowlistIdentifierObject(str, Enum):
     """
     ALLOWLIST_IDENTIFIER = "allowlist_identifier"
 
-
 class IdentifierType(str, Enum):
     EMAIL_ADDRESS = "email_address"
     PHONE_NUMBER = "phone_number"
     WEB3_WALLET = "web3_wallet"
-
 
 class AllowlistIdentifierTypedDict(TypedDict):
     object: NotRequired[AllowlistIdentifierObject]

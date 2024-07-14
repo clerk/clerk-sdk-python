@@ -25,7 +25,6 @@ class CreateSessionTokenFromTemplateRequest(BaseModel):
 class CreateSessionTokenFromTemplateObject(str, Enum):
     TOKEN = "token"
 
-
 class CreateSessionTokenFromTemplateResponseBodyTypedDict(TypedDict):
     r"""OK"""
     

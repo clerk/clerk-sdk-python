@@ -3,7 +3,7 @@
 from .basesdk import BaseSDK
 from clerk_backend_api import models
 from clerk_backend_api._hooks import HookContext
-from clerk_backend_api.types import BaseModel, Nullable, UNSET
+from clerk_backend_api.types import BaseModel, OptionalNullable, UNSET
 import clerk_backend_api.utils as utils
 from jsonpath import JSONPath
 from typing import Any, Dict, List, Optional, Union
@@ -16,11 +16,11 @@ class Invitations(BaseSDK):
         email_address: str,
         public_metadata: Optional[Union[models.CreateInvitationPublicMetadata, models.CreateInvitationPublicMetadataTypedDict]] = None,
         redirect_url: Optional[str] = None,
-        notify: Optional[Nullable[bool]] = None,
-        ignore_existing: Optional[Nullable[bool]] = None,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        notify: OptionalNullable[bool] = UNSET,
+        ignore_existing: OptionalNullable[bool] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> models.Invitation:
         r"""Create an invitation
 
@@ -35,12 +35,12 @@ class Invitations(BaseSDK):
         :param ignore_existing: Whether an invitation should be created if there is already an existing invitation for this email address, or it's claimed by another user.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -66,7 +66,7 @@ class Invitations(BaseSDK):
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(request, False, True, "json", Optional[models.CreateInvitationRequestBody]),
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -108,11 +108,11 @@ class Invitations(BaseSDK):
         email_address: str,
         public_metadata: Optional[Union[models.CreateInvitationPublicMetadata, models.CreateInvitationPublicMetadataTypedDict]] = None,
         redirect_url: Optional[str] = None,
-        notify: Optional[Nullable[bool]] = None,
-        ignore_existing: Optional[Nullable[bool]] = None,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        notify: OptionalNullable[bool] = UNSET,
+        ignore_existing: OptionalNullable[bool] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> models.Invitation:
         r"""Create an invitation
 
@@ -127,12 +127,12 @@ class Invitations(BaseSDK):
         :param ignore_existing: Whether an invitation should be created if there is already an existing invitation for this email address, or it's claimed by another user.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -158,7 +158,7 @@ class Invitations(BaseSDK):
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(request, False, True, "json", Optional[models.CreateInvitationRequestBody]),
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -200,9 +200,9 @@ class Invitations(BaseSDK):
         limit: Optional[float] = None,
         offset: Optional[float] = None,
         status: Optional[models.ListInvitationsQueryParamStatus] = None,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> models.ListInvitationsResponse:
         r"""List all invitations
 
@@ -213,12 +213,12 @@ class Invitations(BaseSDK):
         :param status: Filter invitations based on their status
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -241,7 +241,7 @@ class Invitations(BaseSDK):
             user_agent_header="user-agent",
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -304,9 +304,9 @@ class Invitations(BaseSDK):
         limit: Optional[float] = None,
         offset: Optional[float] = None,
         status: Optional[models.ListInvitationsQueryParamStatus] = None,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> models.ListInvitationsResponse:
         r"""List all invitations
 
@@ -317,12 +317,12 @@ class Invitations(BaseSDK):
         :param status: Filter invitations based on their status
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -345,7 +345,7 @@ class Invitations(BaseSDK):
             user_agent_header="user-agent",
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -406,9 +406,9 @@ class Invitations(BaseSDK):
     def revoke(
         self, *,
         invitation_id: str,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> models.InvitationRevoked:
         r"""Revokes an invitation
 
@@ -420,12 +420,12 @@ class Invitations(BaseSDK):
         :param invitation_id: The ID of the invitation to be revoked
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -446,7 +446,7 @@ class Invitations(BaseSDK):
             user_agent_header="user-agent",
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -486,9 +486,9 @@ class Invitations(BaseSDK):
     async def revoke_async(
         self, *,
         invitation_id: str,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> models.InvitationRevoked:
         r"""Revokes an invitation
 
@@ -500,12 +500,12 @@ class Invitations(BaseSDK):
         :param invitation_id: The ID of the invitation to be revoked
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -526,7 +526,7 @@ class Invitations(BaseSDK):
             user_agent_header="user-agent",
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:

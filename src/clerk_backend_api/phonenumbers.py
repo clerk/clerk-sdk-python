@@ -3,7 +3,7 @@
 from .basesdk import BaseSDK
 from clerk_backend_api import models
 from clerk_backend_api._hooks import HookContext
-from clerk_backend_api.types import Nullable, UNSET
+from clerk_backend_api.types import OptionalNullable, UNSET
 import clerk_backend_api.utils as utils
 from typing import Optional
 
@@ -14,12 +14,12 @@ class PhoneNumbers(BaseSDK):
         self, *,
         user_id: Optional[str] = None,
         phone_number: Optional[str] = None,
-        verified: Optional[Nullable[bool]] = None,
-        primary: Optional[Nullable[bool]] = None,
-        reserved_for_second_factor: Optional[Nullable[bool]] = None,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        verified: OptionalNullable[bool] = UNSET,
+        primary: OptionalNullable[bool] = UNSET,
+        reserved_for_second_factor: OptionalNullable[bool] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> models.PhoneNumber:
         r"""Create a phone number
 
@@ -32,12 +32,12 @@ class PhoneNumbers(BaseSDK):
         :param reserved_for_second_factor: Create this phone number as reserved for multi-factor authentication. The phone number must also be verified. If there are no other reserved second factors, the phone number will be set as the default second factor.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -63,7 +63,7 @@ class PhoneNumbers(BaseSDK):
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(request, False, True, "json", Optional[models.CreatePhoneNumberRequestBody]),
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -104,12 +104,12 @@ class PhoneNumbers(BaseSDK):
         self, *,
         user_id: Optional[str] = None,
         phone_number: Optional[str] = None,
-        verified: Optional[Nullable[bool]] = None,
-        primary: Optional[Nullable[bool]] = None,
-        reserved_for_second_factor: Optional[Nullable[bool]] = None,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        verified: OptionalNullable[bool] = UNSET,
+        primary: OptionalNullable[bool] = UNSET,
+        reserved_for_second_factor: OptionalNullable[bool] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> models.PhoneNumber:
         r"""Create a phone number
 
@@ -122,12 +122,12 @@ class PhoneNumbers(BaseSDK):
         :param reserved_for_second_factor: Create this phone number as reserved for multi-factor authentication. The phone number must also be verified. If there are no other reserved second factors, the phone number will be set as the default second factor.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -153,7 +153,7 @@ class PhoneNumbers(BaseSDK):
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(request, False, True, "json", Optional[models.CreatePhoneNumberRequestBody]),
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -193,9 +193,9 @@ class PhoneNumbers(BaseSDK):
     def get(
         self, *,
         phone_number_id: str,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> models.PhoneNumber:
         r"""Retrieve a phone number
 
@@ -204,12 +204,12 @@ class PhoneNumbers(BaseSDK):
         :param phone_number_id: The ID of the phone number to retrieve
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -230,7 +230,7 @@ class PhoneNumbers(BaseSDK):
             user_agent_header="user-agent",
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -270,9 +270,9 @@ class PhoneNumbers(BaseSDK):
     async def get_async(
         self, *,
         phone_number_id: str,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> models.PhoneNumber:
         r"""Retrieve a phone number
 
@@ -281,12 +281,12 @@ class PhoneNumbers(BaseSDK):
         :param phone_number_id: The ID of the phone number to retrieve
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -307,7 +307,7 @@ class PhoneNumbers(BaseSDK):
             user_agent_header="user-agent",
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -347,9 +347,9 @@ class PhoneNumbers(BaseSDK):
     def delete(
         self, *,
         phone_number_id: str,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> models.DeletedObject:
         r"""Delete a phone number
 
@@ -358,12 +358,12 @@ class PhoneNumbers(BaseSDK):
         :param phone_number_id: The ID of the phone number to delete
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -384,7 +384,7 @@ class PhoneNumbers(BaseSDK):
             user_agent_header="user-agent",
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -424,9 +424,9 @@ class PhoneNumbers(BaseSDK):
     async def delete_async(
         self, *,
         phone_number_id: str,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> models.DeletedObject:
         r"""Delete a phone number
 
@@ -435,12 +435,12 @@ class PhoneNumbers(BaseSDK):
         :param phone_number_id: The ID of the phone number to delete
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -461,7 +461,7 @@ class PhoneNumbers(BaseSDK):
             user_agent_header="user-agent",
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -501,12 +501,12 @@ class PhoneNumbers(BaseSDK):
     def update(
         self, *,
         phone_number_id: str,
-        verified: Optional[Nullable[bool]] = None,
-        primary: Optional[Nullable[bool]] = None,
-        reserved_for_second_factor: Optional[Nullable[bool]] = None,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        verified: OptionalNullable[bool] = UNSET,
+        primary: OptionalNullable[bool] = UNSET,
+        reserved_for_second_factor: OptionalNullable[bool] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> models.PhoneNumber:
         r"""Update a phone number
 
@@ -518,12 +518,12 @@ class PhoneNumbers(BaseSDK):
         :param reserved_for_second_factor: Set this phone number as reserved for multi-factor authentication. The phone number must also be verified. If there are no other reserved second factors, the phone number will be set as the default second factor.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -550,7 +550,7 @@ class PhoneNumbers(BaseSDK):
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(request.request_body, False, True, "json", Optional[models.UpdatePhoneNumberRequestBody]),
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -590,12 +590,12 @@ class PhoneNumbers(BaseSDK):
     async def update_async(
         self, *,
         phone_number_id: str,
-        verified: Optional[Nullable[bool]] = None,
-        primary: Optional[Nullable[bool]] = None,
-        reserved_for_second_factor: Optional[Nullable[bool]] = None,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        verified: OptionalNullable[bool] = UNSET,
+        primary: OptionalNullable[bool] = UNSET,
+        reserved_for_second_factor: OptionalNullable[bool] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> models.PhoneNumber:
         r"""Update a phone number
 
@@ -607,12 +607,12 @@ class PhoneNumbers(BaseSDK):
         :param reserved_for_second_factor: Set this phone number as reserved for multi-factor authentication. The phone number must also be verified. If there are no other reserved second factors, the phone number will be set as the default second factor.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -639,7 +639,7 @@ class PhoneNumbers(BaseSDK):
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(request.request_body, False, True, "json", Optional[models.UpdatePhoneNumberRequestBody]),
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:

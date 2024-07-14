@@ -9,7 +9,6 @@ from typing import TypedDict
 class OAuthApplicationObject(str, Enum):
     OAUTH_APPLICATION = "oauth_application"
 
-
 class OAuthApplicationTypedDict(TypedDict):
     object: OAuthApplicationObject
     id: str

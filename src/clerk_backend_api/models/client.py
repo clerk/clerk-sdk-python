@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 from .session import Session, SessionTypedDict
-from clerk_backend_api.types import BaseModel, Nullable
+from clerk_backend_api.types import BaseModel, Nullable, UNSET_SENTINEL
 from enum import Enum
 from pydantic import model_serializer
 from typing import List, TypedDict
@@ -13,7 +13,6 @@ class Object(str, Enum):
 
     """
     CLIENT = "client"
-
 
 class ClientTypedDict(TypedDict):
     object: Object
@@ -70,8 +69,8 @@ class Client(BaseModel):
     
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = []
-        nullable_fields = ["sign_in_id", "sign_up_id", "last_active_session_id"]
+        optional_fields = ["nullableOptional", "optional"]
+        nullable_fields = ["nullableRequired", "nullableOptional"]
         null_default_fields = []
 
         serialized = handler(self)
@@ -82,13 +81,19 @@ class Client(BaseModel):
             k = f.alias or n
             val = serialized.get(k)
 
-            if val is not None:
+            if val is not None and val != UNSET_SENTINEL:
                 m[k] = val
-            elif not k in optional_fields or (
+            elif val != UNSET_SENTINEL and (
+                not k in optional_fields
+                or (
                     k in optional_fields
                     and k in nullable_fields
-                    and (self.__pydantic_fields_set__.intersection({n}) or k in null_default_fields) # pylint: disable=no-member
-                ):
+                    and (
+                        self.__pydantic_fields_set__.intersection({n})
+                        or k in null_default_fields
+                    )  # pylint: disable=no-member
+                )
+            ):
                 m[k] = val
 
         return m

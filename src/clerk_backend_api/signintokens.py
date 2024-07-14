@@ -3,7 +3,7 @@
 from .basesdk import BaseSDK
 from clerk_backend_api import models
 from clerk_backend_api._hooks import HookContext
-from clerk_backend_api.types import Nullable, UNSET
+from clerk_backend_api.types import OptionalNullable, UNSET
 import clerk_backend_api.utils as utils
 from typing import Optional
 
@@ -14,9 +14,9 @@ class SignInTokens(BaseSDK):
         self, *,
         user_id: Optional[str] = None,
         expires_in_seconds: Optional[int] = None,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> models.SignInToken:
         r"""Create sign-in token
 
@@ -28,12 +28,12 @@ class SignInTokens(BaseSDK):
         :param expires_in_seconds: Optional parameter to specify the life duration of the sign in token in seconds. By default, the duration is 30 days.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -56,7 +56,7 @@ class SignInTokens(BaseSDK):
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(request, False, True, "json", Optional[models.CreateSignInTokenRequestBody]),
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -97,9 +97,9 @@ class SignInTokens(BaseSDK):
         self, *,
         user_id: Optional[str] = None,
         expires_in_seconds: Optional[int] = None,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> models.SignInToken:
         r"""Create sign-in token
 
@@ -111,12 +111,12 @@ class SignInTokens(BaseSDK):
         :param expires_in_seconds: Optional parameter to specify the life duration of the sign in token in seconds. By default, the duration is 30 days.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -139,7 +139,7 @@ class SignInTokens(BaseSDK):
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(request, False, True, "json", Optional[models.CreateSignInTokenRequestBody]),
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -179,9 +179,9 @@ class SignInTokens(BaseSDK):
     def revoke(
         self, *,
         sign_in_token_id: str,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> models.SignInToken:
         r"""Revoke the given sign-in token
 
@@ -190,12 +190,12 @@ class SignInTokens(BaseSDK):
         :param sign_in_token_id: The ID of the sign-in token to be revoked
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -216,7 +216,7 @@ class SignInTokens(BaseSDK):
             user_agent_header="user-agent",
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -256,9 +256,9 @@ class SignInTokens(BaseSDK):
     async def revoke_async(
         self, *,
         sign_in_token_id: str,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> models.SignInToken:
         r"""Revoke the given sign-in token
 
@@ -267,12 +267,12 @@ class SignInTokens(BaseSDK):
         :param sign_in_token_id: The ID of the sign-in token to be revoked
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -293,7 +293,7 @@ class SignInTokens(BaseSDK):
             user_agent_header="user-agent",
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:

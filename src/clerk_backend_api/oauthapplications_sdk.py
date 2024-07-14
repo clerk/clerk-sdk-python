@@ -3,7 +3,7 @@
 from .basesdk import BaseSDK
 from clerk_backend_api import models
 from clerk_backend_api._hooks import HookContext
-from clerk_backend_api.types import Nullable, UNSET
+from clerk_backend_api.types import OptionalNullable, UNSET
 import clerk_backend_api.utils as utils
 from jsonpath import JSONPath
 from typing import Any, Dict, Optional
@@ -15,9 +15,9 @@ class OAuthApplicationsSDK(BaseSDK):
         self, *,
         limit: Optional[float] = None,
         offset: Optional[float] = None,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> models.ListOAuthApplicationsResponse:
         r"""Get a list of OAuth applications for an instance
 
@@ -30,12 +30,12 @@ class OAuthApplicationsSDK(BaseSDK):
         :param offset: Skip the first `offset` results when paginating. Needs to be an integer greater or equal to zero. To be used in conjunction with `limit`.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -57,7 +57,7 @@ class OAuthApplicationsSDK(BaseSDK):
             user_agent_header="user-agent",
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -121,9 +121,9 @@ class OAuthApplicationsSDK(BaseSDK):
         self, *,
         limit: Optional[float] = None,
         offset: Optional[float] = None,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> models.ListOAuthApplicationsResponse:
         r"""Get a list of OAuth applications for an instance
 
@@ -136,12 +136,12 @@ class OAuthApplicationsSDK(BaseSDK):
         :param offset: Skip the first `offset` results when paginating. Needs to be an integer greater or equal to zero. To be used in conjunction with `limit`.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -163,7 +163,7 @@ class OAuthApplicationsSDK(BaseSDK):
             user_agent_header="user-agent",
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -229,9 +229,9 @@ class OAuthApplicationsSDK(BaseSDK):
         callback_url: str,
         scopes: Optional[str] = None,
         public: Optional[bool] = None,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> models.OAuthApplicationWithSecret:
         r"""Create an OAuth application
 
@@ -245,12 +245,12 @@ class OAuthApplicationsSDK(BaseSDK):
         :param public: If true, this client is public and cannot securely store a client secret. Only the authorization code flow with proof key for code exchange (PKCE) may be used. Public clients cannot be updated to be confidential clients, and vice versa.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -275,7 +275,7 @@ class OAuthApplicationsSDK(BaseSDK):
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(request, False, True, "json", Optional[models.CreateOAuthApplicationRequestBody]),
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -318,9 +318,9 @@ class OAuthApplicationsSDK(BaseSDK):
         callback_url: str,
         scopes: Optional[str] = None,
         public: Optional[bool] = None,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> models.OAuthApplicationWithSecret:
         r"""Create an OAuth application
 
@@ -334,12 +334,12 @@ class OAuthApplicationsSDK(BaseSDK):
         :param public: If true, this client is public and cannot securely store a client secret. Only the authorization code flow with proof key for code exchange (PKCE) may be used. Public clients cannot be updated to be confidential clients, and vice versa.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -364,7 +364,7 @@ class OAuthApplicationsSDK(BaseSDK):
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(request, False, True, "json", Optional[models.CreateOAuthApplicationRequestBody]),
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -404,9 +404,9 @@ class OAuthApplicationsSDK(BaseSDK):
     def get(
         self, *,
         oauth_application_id: str,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> models.OAuthApplication:
         r"""Retrieve an OAuth application by ID
 
@@ -415,12 +415,12 @@ class OAuthApplicationsSDK(BaseSDK):
         :param oauth_application_id: The ID of the OAuth application
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -441,7 +441,7 @@ class OAuthApplicationsSDK(BaseSDK):
             user_agent_header="user-agent",
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -481,9 +481,9 @@ class OAuthApplicationsSDK(BaseSDK):
     async def get_async(
         self, *,
         oauth_application_id: str,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> models.OAuthApplication:
         r"""Retrieve an OAuth application by ID
 
@@ -492,12 +492,12 @@ class OAuthApplicationsSDK(BaseSDK):
         :param oauth_application_id: The ID of the OAuth application
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -518,7 +518,7 @@ class OAuthApplicationsSDK(BaseSDK):
             user_agent_header="user-agent",
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -561,9 +561,9 @@ class OAuthApplicationsSDK(BaseSDK):
         name: Optional[str] = None,
         callback_url: Optional[str] = None,
         scopes: Optional[str] = None,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> models.OAuthApplication:
         r"""Update an OAuth application
 
@@ -575,12 +575,12 @@ class OAuthApplicationsSDK(BaseSDK):
         :param scopes: Define the allowed scopes for the new OAuth applications that dictate the user payload of the OAuth user info endpoint. Available scopes are `profile`, `email`, `public_metadata`, `private_metadata`. Provide the requested scopes as a string, separated by spaces.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -607,7 +607,7 @@ class OAuthApplicationsSDK(BaseSDK):
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(request.request_body, False, False, "json", models.UpdateOAuthApplicationRequestBody),
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -650,9 +650,9 @@ class OAuthApplicationsSDK(BaseSDK):
         name: Optional[str] = None,
         callback_url: Optional[str] = None,
         scopes: Optional[str] = None,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> models.OAuthApplication:
         r"""Update an OAuth application
 
@@ -664,12 +664,12 @@ class OAuthApplicationsSDK(BaseSDK):
         :param scopes: Define the allowed scopes for the new OAuth applications that dictate the user payload of the OAuth user info endpoint. Available scopes are `profile`, `email`, `public_metadata`, `private_metadata`. Provide the requested scopes as a string, separated by spaces.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -696,7 +696,7 @@ class OAuthApplicationsSDK(BaseSDK):
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(request.request_body, False, False, "json", models.UpdateOAuthApplicationRequestBody),
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -736,9 +736,9 @@ class OAuthApplicationsSDK(BaseSDK):
     def delete(
         self, *,
         oauth_application_id: str,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> models.DeletedObject:
         r"""Delete an OAuth application
 
@@ -748,12 +748,12 @@ class OAuthApplicationsSDK(BaseSDK):
         :param oauth_application_id: The ID of the OAuth application to delete
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -774,7 +774,7 @@ class OAuthApplicationsSDK(BaseSDK):
             user_agent_header="user-agent",
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -814,9 +814,9 @@ class OAuthApplicationsSDK(BaseSDK):
     async def delete_async(
         self, *,
         oauth_application_id: str,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> models.DeletedObject:
         r"""Delete an OAuth application
 
@@ -826,12 +826,12 @@ class OAuthApplicationsSDK(BaseSDK):
         :param oauth_application_id: The ID of the OAuth application to delete
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -852,7 +852,7 @@ class OAuthApplicationsSDK(BaseSDK):
             user_agent_header="user-agent",
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -892,9 +892,9 @@ class OAuthApplicationsSDK(BaseSDK):
     def rotate_secret(
         self, *,
         oauth_application_id: str,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> models.OAuthApplicationWithSecret:
         r"""Rotate the client secret of the given OAuth application
 
@@ -904,12 +904,12 @@ class OAuthApplicationsSDK(BaseSDK):
         :param oauth_application_id: The ID of the OAuth application for which to rotate the client secret
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -930,7 +930,7 @@ class OAuthApplicationsSDK(BaseSDK):
             user_agent_header="user-agent",
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -970,9 +970,9 @@ class OAuthApplicationsSDK(BaseSDK):
     async def rotate_secret_async(
         self, *,
         oauth_application_id: str,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> models.OAuthApplicationWithSecret:
         r"""Rotate the client secret of the given OAuth application
 
@@ -982,12 +982,12 @@ class OAuthApplicationsSDK(BaseSDK):
         :param oauth_application_id: The ID of the OAuth application for which to rotate the client secret
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -1008,7 +1008,7 @@ class OAuthApplicationsSDK(BaseSDK):
             user_agent_header="user-agent",
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:

@@ -3,7 +3,7 @@
 from .basesdk import BaseSDK
 from clerk_backend_api import models
 from clerk_backend_api._hooks import HookContext
-from clerk_backend_api.types import Nullable, UNSET
+from clerk_backend_api.types import OptionalNullable, UNSET
 import clerk_backend_api.utils as utils
 from typing import Optional
 from typing_extensions import deprecated
@@ -13,15 +13,15 @@ class BetaFeatures(BaseSDK):
     
     def update_instance_auth_config(
         self, *,
-        restricted_to_allowlist: Optional[Nullable[bool]] = None,
-        from_email_address: Optional[Nullable[str]] = None,
-        progressive_sign_up: Optional[Nullable[bool]] = None,
-        session_token_template: Optional[Nullable[str]] = None,
-        enhanced_email_deliverability: Optional[Nullable[bool]] = None,
-        test_mode: Optional[Nullable[bool]] = None,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        restricted_to_allowlist: OptionalNullable[bool] = UNSET,
+        from_email_address: OptionalNullable[str] = UNSET,
+        progressive_sign_up: OptionalNullable[bool] = UNSET,
+        session_token_template: OptionalNullable[str] = UNSET,
+        enhanced_email_deliverability: OptionalNullable[bool] = UNSET,
+        test_mode: OptionalNullable[bool] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> models.InstanceSettings:
         r"""Update instance settings
 
@@ -35,12 +35,12 @@ class BetaFeatures(BaseSDK):
         :param test_mode: Toggles test mode for this instance, allowing the use of test email addresses and phone numbers. Defaults to true for development instances.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -67,7 +67,7 @@ class BetaFeatures(BaseSDK):
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(request, False, True, "json", Optional[models.UpdateInstanceAuthConfigRequestBody]),
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -106,15 +106,15 @@ class BetaFeatures(BaseSDK):
     
     async def update_instance_auth_config_async(
         self, *,
-        restricted_to_allowlist: Optional[Nullable[bool]] = None,
-        from_email_address: Optional[Nullable[str]] = None,
-        progressive_sign_up: Optional[Nullable[bool]] = None,
-        session_token_template: Optional[Nullable[str]] = None,
-        enhanced_email_deliverability: Optional[Nullable[bool]] = None,
-        test_mode: Optional[Nullable[bool]] = None,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        restricted_to_allowlist: OptionalNullable[bool] = UNSET,
+        from_email_address: OptionalNullable[str] = UNSET,
+        progressive_sign_up: OptionalNullable[bool] = UNSET,
+        session_token_template: OptionalNullable[str] = UNSET,
+        enhanced_email_deliverability: OptionalNullable[bool] = UNSET,
+        test_mode: OptionalNullable[bool] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> models.InstanceSettings:
         r"""Update instance settings
 
@@ -128,12 +128,12 @@ class BetaFeatures(BaseSDK):
         :param test_mode: Toggles test mode for this instance, allowing the use of test email addresses and phone numbers. Defaults to true for development instances.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -160,7 +160,7 @@ class BetaFeatures(BaseSDK):
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(request, False, True, "json", Optional[models.UpdateInstanceAuthConfigRequestBody]),
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -201,9 +201,9 @@ class BetaFeatures(BaseSDK):
     def update_production_instance_domain(
         self, *,
         home_url: Optional[str] = None,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ):
         r"""Update production instance domain
 
@@ -216,12 +216,12 @@ class BetaFeatures(BaseSDK):
         :param home_url: The new home URL of the production instance e.g. https://www.example.com
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -243,7 +243,7 @@ class BetaFeatures(BaseSDK):
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(request, False, True, "json", Optional[models.UpdateProductionInstanceDomainRequestBody]),
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -284,9 +284,9 @@ class BetaFeatures(BaseSDK):
     async def update_production_instance_domain_async(
         self, *,
         home_url: Optional[str] = None,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ):
         r"""Update production instance domain
 
@@ -299,12 +299,12 @@ class BetaFeatures(BaseSDK):
         :param home_url: The new home URL of the production instance e.g. https://www.example.com
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -326,7 +326,7 @@ class BetaFeatures(BaseSDK):
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(request, False, True, "json", Optional[models.UpdateProductionInstanceDomainRequestBody]),
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -366,9 +366,9 @@ class BetaFeatures(BaseSDK):
     def change_production_instance_domain(
         self, *,
         home_url: Optional[str] = None,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ):
         r"""Update production instance domain
 
@@ -381,12 +381,12 @@ class BetaFeatures(BaseSDK):
         :param home_url: The new home URL of the production instance e.g. https://www.example.com
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -408,7 +408,7 @@ class BetaFeatures(BaseSDK):
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(request, False, True, "json", Optional[models.ChangeProductionInstanceDomainRequestBody]),
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -448,9 +448,9 @@ class BetaFeatures(BaseSDK):
     async def change_production_instance_domain_async(
         self, *,
         home_url: Optional[str] = None,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ):
         r"""Update production instance domain
 
@@ -463,12 +463,12 @@ class BetaFeatures(BaseSDK):
         :param home_url: The new home URL of the production instance e.g. https://www.example.com
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -490,7 +490,7 @@ class BetaFeatures(BaseSDK):
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(request, False, True, "json", Optional[models.ChangeProductionInstanceDomainRequestBody]),
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:

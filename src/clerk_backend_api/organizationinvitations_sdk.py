@@ -3,7 +3,7 @@
 from .basesdk import BaseSDK
 from clerk_backend_api import models
 from clerk_backend_api._hooks import HookContext
-from clerk_backend_api.types import BaseModel, Nullable, UNSET
+from clerk_backend_api.types import BaseModel, OptionalNullable, UNSET
 import clerk_backend_api.utils as utils
 from jsonpath import JSONPath
 from typing import Any, Dict, List, Optional, Union
@@ -21,9 +21,9 @@ class OrganizationInvitationsSDK(BaseSDK):
         public_metadata: Optional[Union[models.CreateOrganizationInvitationPublicMetadata, models.CreateOrganizationInvitationPublicMetadataTypedDict]] = None,
         private_metadata: Optional[Union[models.CreateOrganizationInvitationPrivateMetadata, models.CreateOrganizationInvitationPrivateMetadataTypedDict]] = None,
         redirect_url: Optional[str] = None,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> models.OrganizationInvitation:
         r"""Create and send an organization invitation
 
@@ -53,12 +53,12 @@ class OrganizationInvitationsSDK(BaseSDK):
         :param redirect_url: Optional URL that the invitee will be redirected to once they accept the invitation by clicking the join link in the invitation email.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -88,7 +88,7 @@ class OrganizationInvitationsSDK(BaseSDK):
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(request.request_body, False, False, "json", models.CreateOrganizationInvitationRequestBody),
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -134,9 +134,9 @@ class OrganizationInvitationsSDK(BaseSDK):
         public_metadata: Optional[Union[models.CreateOrganizationInvitationPublicMetadata, models.CreateOrganizationInvitationPublicMetadataTypedDict]] = None,
         private_metadata: Optional[Union[models.CreateOrganizationInvitationPrivateMetadata, models.CreateOrganizationInvitationPrivateMetadataTypedDict]] = None,
         redirect_url: Optional[str] = None,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> models.OrganizationInvitation:
         r"""Create and send an organization invitation
 
@@ -166,12 +166,12 @@ class OrganizationInvitationsSDK(BaseSDK):
         :param redirect_url: Optional URL that the invitee will be redirected to once they accept the invitation by clicking the join link in the invitation email.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -201,7 +201,7 @@ class OrganizationInvitationsSDK(BaseSDK):
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(request.request_body, False, False, "json", models.CreateOrganizationInvitationRequestBody),
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -244,9 +244,9 @@ class OrganizationInvitationsSDK(BaseSDK):
         limit: Optional[float] = None,
         offset: Optional[float] = None,
         status: Optional[models.ListOrganizationInvitationsQueryParamStatus] = None,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> models.ListOrganizationInvitationsResponse:
         r"""Get a list of organization invitations
 
@@ -263,12 +263,12 @@ class OrganizationInvitationsSDK(BaseSDK):
         :param status: Filter organization invitations based on their status
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -292,7 +292,7 @@ class OrganizationInvitationsSDK(BaseSDK):
             user_agent_header="user-agent",
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -360,9 +360,9 @@ class OrganizationInvitationsSDK(BaseSDK):
         limit: Optional[float] = None,
         offset: Optional[float] = None,
         status: Optional[models.ListOrganizationInvitationsQueryParamStatus] = None,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> models.ListOrganizationInvitationsResponse:
         r"""Get a list of organization invitations
 
@@ -379,12 +379,12 @@ class OrganizationInvitationsSDK(BaseSDK):
         :param status: Filter organization invitations based on their status
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -408,7 +408,7 @@ class OrganizationInvitationsSDK(BaseSDK):
             user_agent_header="user-agent",
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -474,9 +474,9 @@ class OrganizationInvitationsSDK(BaseSDK):
         self, *,
         organization_id: str,
         request_body: Union[List[models.RequestBody], List[models.RequestBodyTypedDict]],
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> models.OrganizationInvitations:
         r"""Bulk create and send organization invitations
 
@@ -498,12 +498,12 @@ class OrganizationInvitationsSDK(BaseSDK):
         :param request_body: 
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -526,7 +526,7 @@ class OrganizationInvitationsSDK(BaseSDK):
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(request.request_body, False, False, "json", List[models.RequestBody]),
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -567,9 +567,9 @@ class OrganizationInvitationsSDK(BaseSDK):
         self, *,
         organization_id: str,
         request_body: Union[List[models.RequestBody], List[models.RequestBodyTypedDict]],
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> models.OrganizationInvitations:
         r"""Bulk create and send organization invitations
 
@@ -591,12 +591,12 @@ class OrganizationInvitationsSDK(BaseSDK):
         :param request_body: 
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -619,7 +619,7 @@ class OrganizationInvitationsSDK(BaseSDK):
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(request.request_body, False, False, "json", List[models.RequestBody]),
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -662,9 +662,9 @@ class OrganizationInvitationsSDK(BaseSDK):
         organization_id: str,
         limit: Optional[float] = None,
         offset: Optional[float] = None,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> models.ListPendingOrganizationInvitationsResponse:
         r"""Get a list of pending organization invitations
 
@@ -680,12 +680,12 @@ class OrganizationInvitationsSDK(BaseSDK):
         :param offset: Skip the first `offset` results when paginating. Needs to be an integer greater or equal to zero. To be used in conjunction with `limit`.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -708,7 +708,7 @@ class OrganizationInvitationsSDK(BaseSDK):
             user_agent_header="user-agent",
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -775,9 +775,9 @@ class OrganizationInvitationsSDK(BaseSDK):
         organization_id: str,
         limit: Optional[float] = None,
         offset: Optional[float] = None,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> models.ListPendingOrganizationInvitationsResponse:
         r"""Get a list of pending organization invitations
 
@@ -793,12 +793,12 @@ class OrganizationInvitationsSDK(BaseSDK):
         :param offset: Skip the first `offset` results when paginating. Needs to be an integer greater or equal to zero. To be used in conjunction with `limit`.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -821,7 +821,7 @@ class OrganizationInvitationsSDK(BaseSDK):
             user_agent_header="user-agent",
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -886,9 +886,9 @@ class OrganizationInvitationsSDK(BaseSDK):
         self, *,
         organization_id: str,
         invitation_id: str,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> models.OrganizationInvitation:
         r"""Retrieve an organization invitation by ID
 
@@ -898,12 +898,12 @@ class OrganizationInvitationsSDK(BaseSDK):
         :param invitation_id: The organization invitation ID.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -925,7 +925,7 @@ class OrganizationInvitationsSDK(BaseSDK):
             user_agent_header="user-agent",
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -966,9 +966,9 @@ class OrganizationInvitationsSDK(BaseSDK):
         self, *,
         organization_id: str,
         invitation_id: str,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> models.OrganizationInvitation:
         r"""Retrieve an organization invitation by ID
 
@@ -978,12 +978,12 @@ class OrganizationInvitationsSDK(BaseSDK):
         :param invitation_id: The organization invitation ID.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -1005,7 +1005,7 @@ class OrganizationInvitationsSDK(BaseSDK):
             user_agent_header="user-agent",
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -1047,9 +1047,9 @@ class OrganizationInvitationsSDK(BaseSDK):
         organization_id: str,
         invitation_id: str,
         requesting_user_id: str,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> models.OrganizationInvitation:
         r"""Revoke a pending organization invitation
 
@@ -1064,12 +1064,12 @@ class OrganizationInvitationsSDK(BaseSDK):
         :param requesting_user_id: The ID of the user that revokes the invitation. Must be an administrator in the organization.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -1095,7 +1095,7 @@ class OrganizationInvitationsSDK(BaseSDK):
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(request.request_body, False, False, "json", models.RevokeOrganizationInvitationRequestBody),
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -1137,9 +1137,9 @@ class OrganizationInvitationsSDK(BaseSDK):
         organization_id: str,
         invitation_id: str,
         requesting_user_id: str,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> models.OrganizationInvitation:
         r"""Revoke a pending organization invitation
 
@@ -1154,12 +1154,12 @@ class OrganizationInvitationsSDK(BaseSDK):
         :param requesting_user_id: The ID of the user that revokes the invitation. Must be an administrator in the organization.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -1185,7 +1185,7 @@ class OrganizationInvitationsSDK(BaseSDK):
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(request.request_body, False, False, "json", models.RevokeOrganizationInvitationRequestBody),
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:

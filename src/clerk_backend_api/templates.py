@@ -3,7 +3,7 @@
 from .basesdk import BaseSDK
 from clerk_backend_api import models
 from clerk_backend_api._hooks import HookContext
-from clerk_backend_api.types import Nullable, UNSET
+from clerk_backend_api.types import OptionalNullable, UNSET
 import clerk_backend_api.utils as utils
 from typing import List, Optional
 
@@ -13,9 +13,9 @@ class Templates(BaseSDK):
     def list(
         self, *,
         template_type: models.TemplateType,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> List[models.Template]:
         r"""List all templates
 
@@ -25,12 +25,12 @@ class Templates(BaseSDK):
         :param template_type: The type of templates to list (email or SMS)
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -51,7 +51,7 @@ class Templates(BaseSDK):
             user_agent_header="user-agent",
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -91,9 +91,9 @@ class Templates(BaseSDK):
     async def list_async(
         self, *,
         template_type: models.TemplateType,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> List[models.Template]:
         r"""List all templates
 
@@ -103,12 +103,12 @@ class Templates(BaseSDK):
         :param template_type: The type of templates to list (email or SMS)
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -129,7 +129,7 @@ class Templates(BaseSDK):
             user_agent_header="user-agent",
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -170,9 +170,9 @@ class Templates(BaseSDK):
         self, *,
         template_type: models.PathParamTemplateType,
         slug: str,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> models.Template:
         r"""Retrieve a template
 
@@ -182,12 +182,12 @@ class Templates(BaseSDK):
         :param slug: The slug (i.e. machine-friendly name) of the template to retrieve
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -209,7 +209,7 @@ class Templates(BaseSDK):
             user_agent_header="user-agent",
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -250,9 +250,9 @@ class Templates(BaseSDK):
         self, *,
         template_type: models.PathParamTemplateType,
         slug: str,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> models.Template:
         r"""Retrieve a template
 
@@ -262,12 +262,12 @@ class Templates(BaseSDK):
         :param slug: The slug (i.e. machine-friendly name) of the template to retrieve
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -289,7 +289,7 @@ class Templates(BaseSDK):
             user_agent_header="user-agent",
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -331,15 +331,15 @@ class Templates(BaseSDK):
         template_type: models.UpsertTemplatePathParamTemplateType,
         slug: str,
         name: Optional[str] = None,
-        subject: Optional[Nullable[str]] = None,
-        markup: Optional[Nullable[str]] = None,
+        subject: OptionalNullable[str] = UNSET,
+        markup: OptionalNullable[str] = UNSET,
         body: Optional[str] = None,
-        delivered_by_clerk: Optional[Nullable[bool]] = None,
+        delivered_by_clerk: OptionalNullable[bool] = UNSET,
         from_email_name: Optional[str] = None,
         reply_to_email_name: Optional[str] = None,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> models.Template:
         r"""Update a template for a given type and slug
 
@@ -356,12 +356,12 @@ class Templates(BaseSDK):
         :param reply_to_email_name: The local part of the Reply To email address that will be used for emails. For example, in the address 'hello@example.com', the local part is 'hello'. Applicable only to email templates.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -393,7 +393,7 @@ class Templates(BaseSDK):
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(request.request_body, False, True, "json", Optional[models.UpsertTemplateRequestBody]),
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -435,15 +435,15 @@ class Templates(BaseSDK):
         template_type: models.UpsertTemplatePathParamTemplateType,
         slug: str,
         name: Optional[str] = None,
-        subject: Optional[Nullable[str]] = None,
-        markup: Optional[Nullable[str]] = None,
+        subject: OptionalNullable[str] = UNSET,
+        markup: OptionalNullable[str] = UNSET,
         body: Optional[str] = None,
-        delivered_by_clerk: Optional[Nullable[bool]] = None,
+        delivered_by_clerk: OptionalNullable[bool] = UNSET,
         from_email_name: Optional[str] = None,
         reply_to_email_name: Optional[str] = None,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> models.Template:
         r"""Update a template for a given type and slug
 
@@ -460,12 +460,12 @@ class Templates(BaseSDK):
         :param reply_to_email_name: The local part of the Reply To email address that will be used for emails. For example, in the address 'hello@example.com', the local part is 'hello'. Applicable only to email templates.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -497,7 +497,7 @@ class Templates(BaseSDK):
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(request.request_body, False, True, "json", Optional[models.UpsertTemplateRequestBody]),
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -538,9 +538,9 @@ class Templates(BaseSDK):
         self, *,
         template_type: models.RevertTemplatePathParamTemplateType,
         slug: str,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> models.Template:
         r"""Revert a template
 
@@ -550,12 +550,12 @@ class Templates(BaseSDK):
         :param slug: The slug of the template to revert
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -577,7 +577,7 @@ class Templates(BaseSDK):
             user_agent_header="user-agent",
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -618,9 +618,9 @@ class Templates(BaseSDK):
         self, *,
         template_type: models.RevertTemplatePathParamTemplateType,
         slug: str,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> models.Template:
         r"""Revert a template
 
@@ -630,12 +630,12 @@ class Templates(BaseSDK):
         :param slug: The slug of the template to revert
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -657,7 +657,7 @@ class Templates(BaseSDK):
             user_agent_header="user-agent",
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -698,13 +698,13 @@ class Templates(BaseSDK):
         self, *,
         template_type: str,
         slug: str,
-        subject: Optional[Nullable[str]] = None,
+        subject: OptionalNullable[str] = UNSET,
         body: Optional[str] = None,
         from_email_name: Optional[str] = None,
         reply_to_email_name: Optional[str] = None,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> models.PreviewTemplateResponseBody:
         r"""Preview changes to a template
 
@@ -718,12 +718,12 @@ class Templates(BaseSDK):
         :param reply_to_email_name: The local part of the Reply To email address that will be used for emails. For example, in the address 'hello@example.com', the local part is 'hello'. Applicable only to email templates.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -752,7 +752,7 @@ class Templates(BaseSDK):
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(request.request_body, False, True, "json", Optional[models.PreviewTemplateRequestBody]),
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -793,13 +793,13 @@ class Templates(BaseSDK):
         self, *,
         template_type: str,
         slug: str,
-        subject: Optional[Nullable[str]] = None,
+        subject: OptionalNullable[str] = UNSET,
         body: Optional[str] = None,
         from_email_name: Optional[str] = None,
         reply_to_email_name: Optional[str] = None,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> models.PreviewTemplateResponseBody:
         r"""Preview changes to a template
 
@@ -813,12 +813,12 @@ class Templates(BaseSDK):
         :param reply_to_email_name: The local part of the Reply To email address that will be used for emails. For example, in the address 'hello@example.com', the local part is 'hello'. Applicable only to email templates.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -847,7 +847,7 @@ class Templates(BaseSDK):
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(request.request_body, False, True, "json", Optional[models.PreviewTemplateRequestBody]),
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -888,10 +888,10 @@ class Templates(BaseSDK):
         self, *,
         template_type: models.ToggleTemplateDeliveryPathParamTemplateType,
         slug: str,
-        delivered_by_clerk: Optional[Nullable[bool]] = None,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        delivered_by_clerk: OptionalNullable[bool] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> models.Template:
         r"""Toggle the delivery by Clerk for a template of a given type and slug
 
@@ -904,12 +904,12 @@ class Templates(BaseSDK):
         :param delivered_by_clerk: Whether Clerk should deliver emails or SMS messages based on the current template
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -935,7 +935,7 @@ class Templates(BaseSDK):
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(request.request_body, False, True, "json", Optional[models.ToggleTemplateDeliveryRequestBody]),
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -976,10 +976,10 @@ class Templates(BaseSDK):
         self, *,
         template_type: models.ToggleTemplateDeliveryPathParamTemplateType,
         slug: str,
-        delivered_by_clerk: Optional[Nullable[bool]] = None,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        delivered_by_clerk: OptionalNullable[bool] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> models.Template:
         r"""Toggle the delivery by Clerk for a template of a given type and slug
 
@@ -992,12 +992,12 @@ class Templates(BaseSDK):
         :param delivered_by_clerk: Whether Clerk should deliver emails or SMS messages based on the current template
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -1023,7 +1023,7 @@ class Templates(BaseSDK):
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(request.request_body, False, True, "json", Optional[models.ToggleTemplateDeliveryRequestBody]),
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:

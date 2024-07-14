@@ -8,7 +8,7 @@ from pydantic import ConfigDict, create_model
 from pydantic_core import from_json
 from typing_inspect import is_optional_type
 
-from ..types.basemodel import Nullable
+from ..types.basemodel import Nullable, OptionalNullable
 
 
 def serialize_decimal(as_str: bool):
@@ -146,14 +146,15 @@ def marshal_json(val, typ):
 
 
 def is_nullable(field):
-    if get_origin(field) is Nullable:
+    origin = get_origin(field)
+    if origin is Nullable or origin is OptionalNullable:
         return True
 
-    if not get_origin(field) is Union or type(None) not in get_args(field):
+    if not origin is Union or type(None) not in get_args(field):
         return False
 
     for arg in get_args(field):
-        if get_origin(arg) is Nullable:
+        if get_origin(arg) is Nullable or get_origin(arg) is OptionalNullable:
             return True
 
     return False

@@ -13,7 +13,6 @@ class TemplateType(str, Enum):
     EMAIL = "email"
     SMS = "sms"
 
-
 class GetTemplateListRequestTypedDict(TypedDict):
     template_type: TemplateType
     r"""The type of templates to list (email or SMS)"""

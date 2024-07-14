@@ -12,7 +12,6 @@ class TotalCountObject(str, Enum):
     """
     TOTAL_COUNT = "total_count"
 
-
 class TotalCountTypedDict(TypedDict):
     object: TotalCountObject
     r"""String representing the object's type. Objects of the same type share the same value.

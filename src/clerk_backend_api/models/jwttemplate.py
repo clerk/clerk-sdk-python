@@ -10,7 +10,6 @@ from typing_extensions import NotRequired
 class JWTTemplateObject(str, Enum):
     JWT_TEMPLATE = "jwt_template"
 
-
 class ClaimsTypedDict(TypedDict):
     pass
     

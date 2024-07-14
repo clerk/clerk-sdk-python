@@ -9,7 +9,6 @@ from typing import TypedDict
 class RedirectURLObject(str, Enum):
     REDIRECT_URL = "redirect_url"
 
-
 class RedirectURLTypedDict(TypedDict):
     object: RedirectURLObject
     id: str

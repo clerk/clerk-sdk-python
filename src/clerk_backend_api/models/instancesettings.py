@@ -11,7 +11,6 @@ class InstanceSettingsObject(str, Enum):
     r"""String representing the object's type. Objects of the same type share the same value."""
     INSTANCE_SETTINGS = "instance_settings"
 
-
 class InstanceSettingsTypedDict(TypedDict):
     object: NotRequired[InstanceSettingsObject]
     r"""String representing the object's type. Objects of the same type share the same value."""

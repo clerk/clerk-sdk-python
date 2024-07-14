@@ -12,7 +12,7 @@ generation:
   auth:
     oAuth2ClientCredentialsEnabled: true
 python:
-  version: 0.5.0-alpha.7
+  version: 0.5.0-alpha.8
   additionalDependencies:
     dev: {}
     main: {}
@@ -21,6 +21,7 @@ python:
     - Clerk
   clientServerStatusCodesAsErrors: true
   description: Python Client SDK for clerk.dev
+  enumFormat: enum
   flattenGlobalSecurity: true
   flattenRequests: true
   imports:

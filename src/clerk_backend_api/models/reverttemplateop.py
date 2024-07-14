@@ -13,7 +13,6 @@ class RevertTemplatePathParamTemplateType(str, Enum):
     EMAIL = "email"
     SMS = "sms"
 
-
 class RevertTemplateRequestTypedDict(TypedDict):
     template_type: RevertTemplatePathParamTemplateType
     r"""The type of template to revert"""

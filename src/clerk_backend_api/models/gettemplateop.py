@@ -13,7 +13,6 @@ class PathParamTemplateType(str, Enum):
     EMAIL = "email"
     SMS = "sms"
 
-
 class GetTemplateRequestTypedDict(TypedDict):
     template_type: PathParamTemplateType
     r"""The type of templates to retrieve (email or SMS)"""

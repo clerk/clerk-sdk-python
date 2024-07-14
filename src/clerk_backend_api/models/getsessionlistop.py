@@ -18,7 +18,6 @@ class QueryParamStatus(str, Enum):
     REPLACED = "replaced"
     REVOKED = "revoked"
 
-
 class GetSessionListRequestTypedDict(TypedDict):
     client_id: NotRequired[str]
     r"""List sessions for the given client"""

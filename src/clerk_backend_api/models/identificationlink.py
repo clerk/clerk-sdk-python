@@ -12,7 +12,6 @@ class Type(str, Enum):
     SAML = "saml"
     OAUTH_DISCORD = "oauth_discord"
 
-
 class IdentificationLinkTypedDict(TypedDict):
     type: Type
     id: str

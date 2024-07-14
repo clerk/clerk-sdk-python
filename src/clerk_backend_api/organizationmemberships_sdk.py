@@ -3,7 +3,7 @@
 from .basesdk import BaseSDK
 from clerk_backend_api import models
 from clerk_backend_api._hooks import HookContext
-from clerk_backend_api.types import BaseModel, Nullable, UNSET
+from clerk_backend_api.types import BaseModel, OptionalNullable, UNSET
 import clerk_backend_api.utils as utils
 from jsonpath import JSONPath
 from typing import Any, Dict, Optional, Union
@@ -16,9 +16,9 @@ class OrganizationMembershipsSDK(BaseSDK):
         organization_id: str,
         user_id: str,
         role: str,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> models.OrganizationMembership:
         r"""Create a new organization membership
 
@@ -29,12 +29,12 @@ class OrganizationMembershipsSDK(BaseSDK):
         :param role: The role that the new member will have in the organization.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -60,7 +60,7 @@ class OrganizationMembershipsSDK(BaseSDK):
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(request.request_body, False, False, "json", models.CreateOrganizationMembershipRequestBody),
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -102,9 +102,9 @@ class OrganizationMembershipsSDK(BaseSDK):
         organization_id: str,
         user_id: str,
         role: str,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> models.OrganizationMembership:
         r"""Create a new organization membership
 
@@ -115,12 +115,12 @@ class OrganizationMembershipsSDK(BaseSDK):
         :param role: The role that the new member will have in the organization.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -146,7 +146,7 @@ class OrganizationMembershipsSDK(BaseSDK):
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(request.request_body, False, False, "json", models.CreateOrganizationMembershipRequestBody),
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -189,9 +189,9 @@ class OrganizationMembershipsSDK(BaseSDK):
         limit: Optional[float] = None,
         offset: Optional[float] = None,
         order_by: Optional[str] = None,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> models.ListOrganizationMembershipsResponse:
         r"""Get a list of all members of an organization
 
@@ -203,12 +203,12 @@ class OrganizationMembershipsSDK(BaseSDK):
         :param order_by: Sorts organizations memberships by phone_number, email_address, created_at, first_name, last_name or username. By prepending one of those values with + or -, we can choose to sort in ascending (ASC) or descending (DESC) order.\" 
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -232,7 +232,7 @@ class OrganizationMembershipsSDK(BaseSDK):
             user_agent_header="user-agent",
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -300,9 +300,9 @@ class OrganizationMembershipsSDK(BaseSDK):
         limit: Optional[float] = None,
         offset: Optional[float] = None,
         order_by: Optional[str] = None,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> models.ListOrganizationMembershipsResponse:
         r"""Get a list of all members of an organization
 
@@ -314,12 +314,12 @@ class OrganizationMembershipsSDK(BaseSDK):
         :param order_by: Sorts organizations memberships by phone_number, email_address, created_at, first_name, last_name or username. By prepending one of those values with + or -, we can choose to sort in ascending (ASC) or descending (DESC) order.\" 
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -343,7 +343,7 @@ class OrganizationMembershipsSDK(BaseSDK):
             user_agent_header="user-agent",
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -410,9 +410,9 @@ class OrganizationMembershipsSDK(BaseSDK):
         organization_id: str,
         user_id: str,
         role: str,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> models.OrganizationMembership:
         r"""Update an organization membership
 
@@ -423,12 +423,12 @@ class OrganizationMembershipsSDK(BaseSDK):
         :param role: The new role of the given membership.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -454,7 +454,7 @@ class OrganizationMembershipsSDK(BaseSDK):
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(request.request_body, False, False, "json", models.UpdateOrganizationMembershipRequestBody),
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -496,9 +496,9 @@ class OrganizationMembershipsSDK(BaseSDK):
         organization_id: str,
         user_id: str,
         role: str,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> models.OrganizationMembership:
         r"""Update an organization membership
 
@@ -509,12 +509,12 @@ class OrganizationMembershipsSDK(BaseSDK):
         :param role: The new role of the given membership.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -540,7 +540,7 @@ class OrganizationMembershipsSDK(BaseSDK):
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(request.request_body, False, False, "json", models.UpdateOrganizationMembershipRequestBody),
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -581,9 +581,9 @@ class OrganizationMembershipsSDK(BaseSDK):
         self, *,
         organization_id: str,
         user_id: str,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> models.OrganizationMembership:
         r"""Remove a member from an organization
 
@@ -593,12 +593,12 @@ class OrganizationMembershipsSDK(BaseSDK):
         :param user_id: The ID of the user that this membership belongs to
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -620,7 +620,7 @@ class OrganizationMembershipsSDK(BaseSDK):
             user_agent_header="user-agent",
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -661,9 +661,9 @@ class OrganizationMembershipsSDK(BaseSDK):
         self, *,
         organization_id: str,
         user_id: str,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> models.OrganizationMembership:
         r"""Remove a member from an organization
 
@@ -673,12 +673,12 @@ class OrganizationMembershipsSDK(BaseSDK):
         :param user_id: The ID of the user that this membership belongs to
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -700,7 +700,7 @@ class OrganizationMembershipsSDK(BaseSDK):
             user_agent_header="user-agent",
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -743,9 +743,9 @@ class OrganizationMembershipsSDK(BaseSDK):
         user_id: str,
         public_metadata: Optional[Union[models.UpdateOrganizationMembershipMetadataPublicMetadata, models.UpdateOrganizationMembershipMetadataPublicMetadataTypedDict]] = None,
         private_metadata: Optional[Union[models.UpdateOrganizationMembershipMetadataPrivateMetadata, models.UpdateOrganizationMembershipMetadataPrivateMetadataTypedDict]] = None,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> models.OrganizationMembership:
         r"""Merge and update organization membership metadata
 
@@ -759,12 +759,12 @@ class OrganizationMembershipsSDK(BaseSDK):
         :param private_metadata: Metadata saved on the organization membership that is only visible to your backend. The new object will be merged with the existing value.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -791,7 +791,7 @@ class OrganizationMembershipsSDK(BaseSDK):
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(request.request_body, False, False, "json", models.UpdateOrganizationMembershipMetadataRequestBody),
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -834,9 +834,9 @@ class OrganizationMembershipsSDK(BaseSDK):
         user_id: str,
         public_metadata: Optional[Union[models.UpdateOrganizationMembershipMetadataPublicMetadata, models.UpdateOrganizationMembershipMetadataPublicMetadataTypedDict]] = None,
         private_metadata: Optional[Union[models.UpdateOrganizationMembershipMetadataPrivateMetadata, models.UpdateOrganizationMembershipMetadataPrivateMetadataTypedDict]] = None,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> models.OrganizationMembership:
         r"""Merge and update organization membership metadata
 
@@ -850,12 +850,12 @@ class OrganizationMembershipsSDK(BaseSDK):
         :param private_metadata: Metadata saved on the organization membership that is only visible to your backend. The new object will be merged with the existing value.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -882,7 +882,7 @@ class OrganizationMembershipsSDK(BaseSDK):
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(request.request_body, False, False, "json", models.UpdateOrganizationMembershipMetadataRequestBody),
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:

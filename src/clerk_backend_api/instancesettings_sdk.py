@@ -3,7 +3,7 @@
 from .basesdk import BaseSDK
 from clerk_backend_api import models
 from clerk_backend_api._hooks import HookContext
-from clerk_backend_api.types import Nullable, UNSET
+from clerk_backend_api.types import OptionalNullable, UNSET
 import clerk_backend_api.utils as utils
 from typing import List, Optional
 
@@ -12,18 +12,18 @@ class InstanceSettingsSDK(BaseSDK):
     
     def update(
         self, *,
-        test_mode: Optional[Nullable[bool]] = None,
-        hibp: Optional[Nullable[bool]] = None,
-        enhanced_email_deliverability: Optional[Nullable[bool]] = None,
-        support_email: Optional[Nullable[str]] = None,
-        clerk_js_version: Optional[Nullable[str]] = None,
-        development_origin: Optional[Nullable[str]] = None,
+        test_mode: OptionalNullable[bool] = UNSET,
+        hibp: OptionalNullable[bool] = UNSET,
+        enhanced_email_deliverability: OptionalNullable[bool] = UNSET,
+        support_email: OptionalNullable[str] = UNSET,
+        clerk_js_version: OptionalNullable[str] = UNSET,
+        development_origin: OptionalNullable[str] = UNSET,
         allowed_origins: Optional[List[str]] = None,
         cookieless_dev: Optional[bool] = None,
         url_based_session_syncing: Optional[bool] = None,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ):
         r"""Update instance settings
 
@@ -40,12 +40,12 @@ class InstanceSettingsSDK(BaseSDK):
         :param url_based_session_syncing: Whether the instance should use URL-based session syncing in development mode (i.e. without third-party cookies).
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -75,7 +75,7 @@ class InstanceSettingsSDK(BaseSDK):
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(request, False, True, "json", Optional[models.UpdateInstanceRequestBody]),
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -114,18 +114,18 @@ class InstanceSettingsSDK(BaseSDK):
     
     async def update_async(
         self, *,
-        test_mode: Optional[Nullable[bool]] = None,
-        hibp: Optional[Nullable[bool]] = None,
-        enhanced_email_deliverability: Optional[Nullable[bool]] = None,
-        support_email: Optional[Nullable[str]] = None,
-        clerk_js_version: Optional[Nullable[str]] = None,
-        development_origin: Optional[Nullable[str]] = None,
+        test_mode: OptionalNullable[bool] = UNSET,
+        hibp: OptionalNullable[bool] = UNSET,
+        enhanced_email_deliverability: OptionalNullable[bool] = UNSET,
+        support_email: OptionalNullable[str] = UNSET,
+        clerk_js_version: OptionalNullable[str] = UNSET,
+        development_origin: OptionalNullable[str] = UNSET,
         allowed_origins: Optional[List[str]] = None,
         cookieless_dev: Optional[bool] = None,
         url_based_session_syncing: Optional[bool] = None,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ):
         r"""Update instance settings
 
@@ -142,12 +142,12 @@ class InstanceSettingsSDK(BaseSDK):
         :param url_based_session_syncing: Whether the instance should use URL-based session syncing in development mode (i.e. without third-party cookies).
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -177,7 +177,7 @@ class InstanceSettingsSDK(BaseSDK):
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(request, False, True, "json", Optional[models.UpdateInstanceRequestBody]),
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -216,14 +216,14 @@ class InstanceSettingsSDK(BaseSDK):
     
     def update_restrictions(
         self, *,
-        allowlist: Optional[Nullable[bool]] = None,
-        blocklist: Optional[Nullable[bool]] = None,
-        block_email_subaddresses: Optional[Nullable[bool]] = None,
-        block_disposable_email_domains: Optional[Nullable[bool]] = None,
-        ignore_dots_for_gmail_addresses: Optional[Nullable[bool]] = None,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        allowlist: OptionalNullable[bool] = UNSET,
+        blocklist: OptionalNullable[bool] = UNSET,
+        block_email_subaddresses: OptionalNullable[bool] = UNSET,
+        block_disposable_email_domains: OptionalNullable[bool] = UNSET,
+        ignore_dots_for_gmail_addresses: OptionalNullable[bool] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> models.InstanceRestrictions:
         r"""Update instance restrictions
 
@@ -236,12 +236,12 @@ class InstanceSettingsSDK(BaseSDK):
         :param ignore_dots_for_gmail_addresses: 
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -267,7 +267,7 @@ class InstanceSettingsSDK(BaseSDK):
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(request, False, True, "json", Optional[models.UpdateInstanceRestrictionsRequestBody]),
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -306,14 +306,14 @@ class InstanceSettingsSDK(BaseSDK):
     
     async def update_restrictions_async(
         self, *,
-        allowlist: Optional[Nullable[bool]] = None,
-        blocklist: Optional[Nullable[bool]] = None,
-        block_email_subaddresses: Optional[Nullable[bool]] = None,
-        block_disposable_email_domains: Optional[Nullable[bool]] = None,
-        ignore_dots_for_gmail_addresses: Optional[Nullable[bool]] = None,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        allowlist: OptionalNullable[bool] = UNSET,
+        blocklist: OptionalNullable[bool] = UNSET,
+        block_email_subaddresses: OptionalNullable[bool] = UNSET,
+        block_disposable_email_domains: OptionalNullable[bool] = UNSET,
+        ignore_dots_for_gmail_addresses: OptionalNullable[bool] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> models.InstanceRestrictions:
         r"""Update instance restrictions
 
@@ -326,12 +326,12 @@ class InstanceSettingsSDK(BaseSDK):
         :param ignore_dots_for_gmail_addresses: 
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -357,7 +357,7 @@ class InstanceSettingsSDK(BaseSDK):
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(request, False, True, "json", Optional[models.UpdateInstanceRestrictionsRequestBody]),
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -396,16 +396,16 @@ class InstanceSettingsSDK(BaseSDK):
     
     def update_organization_settings(
         self, *,
-        enabled: Optional[Nullable[bool]] = None,
-        max_allowed_memberships: Optional[Nullable[int]] = None,
-        admin_delete_enabled: Optional[Nullable[bool]] = None,
-        domains_enabled: Optional[Nullable[bool]] = None,
+        enabled: OptionalNullable[bool] = UNSET,
+        max_allowed_memberships: OptionalNullable[int] = UNSET,
+        admin_delete_enabled: OptionalNullable[bool] = UNSET,
+        domains_enabled: OptionalNullable[bool] = UNSET,
         domains_enrollment_modes: Optional[List[str]] = None,
         creator_role_id: Optional[str] = None,
         domains_default_role_id: Optional[str] = None,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> models.OrganizationSettings:
         r"""Update instance organization settings
 
@@ -420,12 +420,12 @@ class InstanceSettingsSDK(BaseSDK):
         :param domains_default_role_id: Specify what the default organization role is for the organization domains.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -453,7 +453,7 @@ class InstanceSettingsSDK(BaseSDK):
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(request, False, True, "json", Optional[models.UpdateInstanceOrganizationSettingsRequestBody]),
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -492,16 +492,16 @@ class InstanceSettingsSDK(BaseSDK):
     
     async def update_organization_settings_async(
         self, *,
-        enabled: Optional[Nullable[bool]] = None,
-        max_allowed_memberships: Optional[Nullable[int]] = None,
-        admin_delete_enabled: Optional[Nullable[bool]] = None,
-        domains_enabled: Optional[Nullable[bool]] = None,
+        enabled: OptionalNullable[bool] = UNSET,
+        max_allowed_memberships: OptionalNullable[int] = UNSET,
+        admin_delete_enabled: OptionalNullable[bool] = UNSET,
+        domains_enabled: OptionalNullable[bool] = UNSET,
         domains_enrollment_modes: Optional[List[str]] = None,
         creator_role_id: Optional[str] = None,
         domains_default_role_id: Optional[str] = None,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> models.OrganizationSettings:
         r"""Update instance organization settings
 
@@ -516,12 +516,12 @@ class InstanceSettingsSDK(BaseSDK):
         :param domains_default_role_id: Specify what the default organization role is for the organization domains.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -549,7 +549,7 @@ class InstanceSettingsSDK(BaseSDK):
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(request, False, True, "json", Optional[models.UpdateInstanceOrganizationSettingsRequestBody]),
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:

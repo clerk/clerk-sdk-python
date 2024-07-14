@@ -3,7 +3,7 @@
 from .basesdk import BaseSDK
 from clerk_backend_api import models
 from clerk_backend_api._hooks import HookContext
-from clerk_backend_api.types import BaseModel, Nullable, UNSET
+from clerk_backend_api.types import BaseModel, OptionalNullable, UNSET
 import clerk_backend_api.utils as utils
 from typing import List, Optional, Union
 
@@ -12,20 +12,20 @@ class JwtTemplates(BaseSDK):
     
     def list(
         self, *,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> List[models.JWTTemplate]:
         r"""List all templates
 
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -41,7 +41,7 @@ class JwtTemplates(BaseSDK):
             user_agent_header="user-agent",
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -77,20 +77,20 @@ class JwtTemplates(BaseSDK):
     
     async def list_async(
         self, *,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> List[models.JWTTemplate]:
         r"""List all templates
 
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -106,7 +106,7 @@ class JwtTemplates(BaseSDK):
             user_agent_header="user-agent",
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -144,14 +144,14 @@ class JwtTemplates(BaseSDK):
         self, *,
         name: Optional[str] = None,
         claims: Optional[Union[models.CreateJWTTemplateClaims, models.CreateJWTTemplateClaimsTypedDict]] = None,
-        lifetime: Optional[Nullable[float]] = None,
-        allowed_clock_skew: Optional[Nullable[float]] = None,
+        lifetime: OptionalNullable[float] = UNSET,
+        allowed_clock_skew: OptionalNullable[float] = UNSET,
         custom_signing_key: Optional[bool] = None,
-        signing_algorithm: Optional[Nullable[str]] = None,
-        signing_key: Optional[Nullable[str]] = None,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        signing_algorithm: OptionalNullable[str] = UNSET,
+        signing_key: OptionalNullable[str] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> models.JWTTemplate:
         r"""Create a JWT template
 
@@ -166,12 +166,12 @@ class JwtTemplates(BaseSDK):
         :param signing_key: The custom signing private key to use when minting JWTs
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -199,7 +199,7 @@ class JwtTemplates(BaseSDK):
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(request, False, True, "json", Optional[models.CreateJWTTemplateRequestBody]),
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -240,14 +240,14 @@ class JwtTemplates(BaseSDK):
         self, *,
         name: Optional[str] = None,
         claims: Optional[Union[models.CreateJWTTemplateClaims, models.CreateJWTTemplateClaimsTypedDict]] = None,
-        lifetime: Optional[Nullable[float]] = None,
-        allowed_clock_skew: Optional[Nullable[float]] = None,
+        lifetime: OptionalNullable[float] = UNSET,
+        allowed_clock_skew: OptionalNullable[float] = UNSET,
         custom_signing_key: Optional[bool] = None,
-        signing_algorithm: Optional[Nullable[str]] = None,
-        signing_key: Optional[Nullable[str]] = None,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        signing_algorithm: OptionalNullable[str] = UNSET,
+        signing_key: OptionalNullable[str] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> models.JWTTemplate:
         r"""Create a JWT template
 
@@ -262,12 +262,12 @@ class JwtTemplates(BaseSDK):
         :param signing_key: The custom signing private key to use when minting JWTs
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -295,7 +295,7 @@ class JwtTemplates(BaseSDK):
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(request, False, True, "json", Optional[models.CreateJWTTemplateRequestBody]),
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -335,9 +335,9 @@ class JwtTemplates(BaseSDK):
     def get(
         self, *,
         template_id: str,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> models.JWTTemplate:
         r"""Retrieve a template
 
@@ -346,12 +346,12 @@ class JwtTemplates(BaseSDK):
         :param template_id: JWT Template ID
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -372,7 +372,7 @@ class JwtTemplates(BaseSDK):
             user_agent_header="user-agent",
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -412,9 +412,9 @@ class JwtTemplates(BaseSDK):
     async def get_async(
         self, *,
         template_id: str,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> models.JWTTemplate:
         r"""Retrieve a template
 
@@ -423,12 +423,12 @@ class JwtTemplates(BaseSDK):
         :param template_id: JWT Template ID
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -449,7 +449,7 @@ class JwtTemplates(BaseSDK):
             user_agent_header="user-agent",
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -491,14 +491,14 @@ class JwtTemplates(BaseSDK):
         template_id: str,
         name: Optional[str] = None,
         claims: Optional[Union[models.UpdateJWTTemplateClaims, models.UpdateJWTTemplateClaimsTypedDict]] = None,
-        lifetime: Optional[Nullable[float]] = None,
-        allowed_clock_skew: Optional[Nullable[float]] = None,
+        lifetime: OptionalNullable[float] = UNSET,
+        allowed_clock_skew: OptionalNullable[float] = UNSET,
         custom_signing_key: Optional[bool] = None,
-        signing_algorithm: Optional[Nullable[str]] = None,
-        signing_key: Optional[Nullable[str]] = None,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        signing_algorithm: OptionalNullable[str] = UNSET,
+        signing_key: OptionalNullable[str] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> models.JWTTemplate:
         r"""Update a JWT template
 
@@ -514,12 +514,12 @@ class JwtTemplates(BaseSDK):
         :param signing_key: The custom signing private key to use when minting JWTs
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -550,7 +550,7 @@ class JwtTemplates(BaseSDK):
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(request.request_body, False, True, "json", Optional[models.UpdateJWTTemplateRequestBody]),
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -592,14 +592,14 @@ class JwtTemplates(BaseSDK):
         template_id: str,
         name: Optional[str] = None,
         claims: Optional[Union[models.UpdateJWTTemplateClaims, models.UpdateJWTTemplateClaimsTypedDict]] = None,
-        lifetime: Optional[Nullable[float]] = None,
-        allowed_clock_skew: Optional[Nullable[float]] = None,
+        lifetime: OptionalNullable[float] = UNSET,
+        allowed_clock_skew: OptionalNullable[float] = UNSET,
         custom_signing_key: Optional[bool] = None,
-        signing_algorithm: Optional[Nullable[str]] = None,
-        signing_key: Optional[Nullable[str]] = None,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        signing_algorithm: OptionalNullable[str] = UNSET,
+        signing_key: OptionalNullable[str] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> models.JWTTemplate:
         r"""Update a JWT template
 
@@ -615,12 +615,12 @@ class JwtTemplates(BaseSDK):
         :param signing_key: The custom signing private key to use when minting JWTs
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -651,7 +651,7 @@ class JwtTemplates(BaseSDK):
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(request.request_body, False, True, "json", Optional[models.UpdateJWTTemplateRequestBody]),
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -691,21 +691,21 @@ class JwtTemplates(BaseSDK):
     def delete(
         self, *,
         template_id: str,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> models.DeletedObject:
         r"""Delete a Template
 
         :param template_id: JWT Template ID
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -726,7 +726,7 @@ class JwtTemplates(BaseSDK):
             user_agent_header="user-agent",
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
@@ -766,21 +766,21 @@ class JwtTemplates(BaseSDK):
     async def delete_async(
         self, *,
         template_id: str,
-        retries: Optional[Nullable[utils.RetryConfig]] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
-        timeout_config: Optional[int] = None,
+        timeout_ms: Optional[int] = None,
     ) -> models.DeletedObject:
         r"""Delete a Template
 
         :param template_id: JWT Template ID
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
-        :param timeout_config: Override the default request timeout configuration for this method in milliseconds
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         """
         base_url = None
         url_variables = None
-        if timeout_config is None:
-            timeout_config = self.sdk_configuration.timeout_config
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
         
         if server_url is not None:
             base_url = server_url
@@ -801,7 +801,7 @@ class JwtTemplates(BaseSDK):
             user_agent_header="user-agent",
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
-            timeout_config=timeout_config,
+            timeout_ms=timeout_ms,
         )
         
         if retries == UNSET:
