@@ -1,9 +1,21 @@
 overlay: 1.0.0
 info:
   title: Overlay File to fix issues in OAS
-  version: 0.0.1
+  version: 0.0.0
 actions:
-  - target: $["components"]["schemas"]["Oauth"]["properties"]["strategy"]["enum"]
+  - target: $["components"]["schemas"]["OTP"]["properties"]["strategy"]["enum"][*]
+    remove: true
+  - target: $["components"]["schemas"]["OTP"]["properties"]["strategy"]["enum"]
     update:
+      - "phone_code"
+      - "email_code"
+      - "reset_password_email_code"
+      - "from_oauth_discord"
       - "from_oauth_google"
       - "from_oauth_apple"
+  - target: $["components"]["schemas"]["Oauth"]["properties"]["strategy"]["enum"]
+    update:
+      - "oauth_apple"
+  - target: $["components"]["schemas"]["IdentificationLink"]["properties"]["type"]["enum"]
+    update:
+      - "oauth_apple"
