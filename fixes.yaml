@@ -13,8 +13,14 @@ actions:
       - "from_oauth_discord"
       - "from_oauth_google"
       - "from_oauth_apple"
+  - target: $["components"]["schemas"]["Oauth"]["properties"]["strategy"]["enum"][*]
+    remove: true
   - target: $["components"]["schemas"]["Oauth"]["properties"]["strategy"]["enum"]
     update:
+      - "oauth_google"
+      - "oauth_mock"
+      - "from_oauth_google"
+      - "from_oauth_discord"
       - "oauth_apple"
   - target: $["components"]["schemas"]["IdentificationLink"]["properties"]["type"]["enum"]
     update:
