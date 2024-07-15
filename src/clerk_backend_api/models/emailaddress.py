@@ -25,9 +25,9 @@ class OauthVerificationStatus(str, Enum):
 class OauthVerificationStrategy(str, Enum):
     OAUTH_GOOGLE = "oauth_google"
     OAUTH_MOCK = "oauth_mock"
-    FROM_OAUTH_DISCORD = "from_oauth_discord"
     FROM_OAUTH_GOOGLE = "from_oauth_google"
-    FROM_OAUTH_APPLE = "from_oauth_apple"
+    FROM_OAUTH_DISCORD = "from_oauth_discord"
+    OAUTH_APPLE = "oauth_apple"
 
 class ErrorMetaTypedDict(TypedDict):
     pass
@@ -165,6 +165,8 @@ class Strategy(str, Enum):
     EMAIL_CODE = "email_code"
     RESET_PASSWORD_EMAIL_CODE = "reset_password_email_code"
     FROM_OAUTH_DISCORD = "from_oauth_discord"
+    FROM_OAUTH_GOOGLE = "from_oauth_google"
+    FROM_OAUTH_APPLE = "from_oauth_apple"
 
 class OtpTypedDict(TypedDict):
     status: VerificationStatus

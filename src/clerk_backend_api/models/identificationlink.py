@@ -11,6 +11,7 @@ class Type(str, Enum):
     OAUTH_MOCK = "oauth_mock"
     SAML = "saml"
     OAUTH_DISCORD = "oauth_discord"
+    OAUTH_APPLE = "oauth_apple"
 
 class IdentificationLinkTypedDict(TypedDict):
     type: Type
