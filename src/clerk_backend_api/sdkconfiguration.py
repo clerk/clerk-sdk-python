@@ -7,6 +7,7 @@ from .utils import RetryConfig, remove_suffix
 from clerk_backend_api import models
 from clerk_backend_api.types import Nullable, UNSET
 from dataclasses import dataclass
+from pydantic import Field
 from typing import Callable, Dict, Optional, Tuple, Union
 
 
@@ -24,10 +25,10 @@ class SDKConfiguration:
     server_idx: Optional[int] = 0
     language: str = "python"
     openapi_doc_version: str = "v1"
-    sdk_version: str = "0.5.0-alpha.8"
-    gen_version: str = "2.370.2"
-    user_agent: str = "speakeasy-sdk/python 0.5.0-alpha.8 2.370.2 v1 clerk-backend-api"
-    retry_config: Optional[Nullable[RetryConfig]] = UNSET
+    sdk_version: str = "0.5.0-alpha.9"
+    gen_version: str = "2.372.3"
+    user_agent: str = "speakeasy-sdk/python 0.5.0-alpha.9 2.372.3 v1 clerk-backend-api"
+    retry_config: Optional[Nullable[RetryConfig]] = Field(default_factory=lambda: UNSET)
     timeout_ms: Optional[int] = None
 
     def __post_init__(self):
