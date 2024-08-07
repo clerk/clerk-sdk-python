@@ -20,14 +20,16 @@ a different proxy URL than the one provided. It can also be used to re-validate 
 
 ```python
 from clerk_backend_api import Clerk
-import os
 
 s = Clerk(
-    bearer_auth=os.getenv("BEARER_AUTH", ""),
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 
-res = s.proxy_checks.verify(domain_id="domain_32hfu3e", proxy_url="https://example.com/__clerk")
+res = s.proxy_checks.verify(request={
+    "domain_id": "domain_32hfu3e",
+    "proxy_url": "https://example.com/__clerk",
+})
 
 if res is not None:
     # handle response
@@ -37,11 +39,10 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                                                                                                         | Type                                                                                                                              | Required                                                                                                                          | Description                                                                                                                       | Example                                                                                                                           |
-| --------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
-| `domain_id`                                                                                                                       | *Optional[str]*                                                                                                                   | :heavy_minus_sign:                                                                                                                | The ID of the domain that will be updated.                                                                                        | domain_32hfu3e                                                                                                                    |
-| `proxy_url`                                                                                                                       | *Optional[str]*                                                                                                                   | :heavy_minus_sign:                                                                                                                | The full URL of the proxy which will forward requests to the Clerk Frontend API for this domain. e.g. https://example.com/__clerk | https://example.com/__clerk                                                                                                       |
-| `retries`                                                                                                                         | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                  | :heavy_minus_sign:                                                                                                                | Configuration to override the default retry behavior of the client.                                                               |                                                                                                                                   |
+| Parameter                                                                           | Type                                                                                | Required                                                                            | Description                                                                         |
+| ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| `request`                                                                           | [models.VerifyDomainProxyRequestBody](../../models/verifydomainproxyrequestbody.md) | :heavy_check_mark:                                                                  | The request object to use for the request.                                          |
+| `retries`                                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                    | :heavy_minus_sign:                                                                  | Configuration to override the default retry behavior of the client.                 |
 
 
 ### Response

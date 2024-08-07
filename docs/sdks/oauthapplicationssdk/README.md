@@ -21,10 +21,9 @@ Most recent OAuth applications will be returned first.
 
 ```python
 from clerk_backend_api import Clerk
-import os
 
 s = Clerk(
-    bearer_auth=os.getenv("BEARER_AUTH", ""),
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 
@@ -70,14 +69,18 @@ All URL schemes are allowed such as `http://`, `https://`, `myapp://`, etc...
 
 ```python
 from clerk_backend_api import Clerk
-import os
 
 s = Clerk(
-    bearer_auth=os.getenv("BEARER_AUTH", ""),
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 
-res = s.o_auth_applications.create(name="Example App", callback_url="https://example.com/oauth/callback", scopes="profile email public_metadata", public=True)
+res = s.o_auth_applications.create(request={
+    "name": "Example App",
+    "callback_url": "https://example.com/oauth/callback",
+    "scopes": "profile email public_metadata",
+    "public": True,
+})
 
 if res is not None:
     # handle response
@@ -87,13 +90,10 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                                                                                                                                                                                                                                              | Type                                                                                                                                                                                                                                                                   | Required                                                                                                                                                                                                                                                               | Description                                                                                                                                                                                                                                                            | Example                                                                                                                                                                                                                                                                |
-| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `name`                                                                                                                                                                                                                                                                 | *str*                                                                                                                                                                                                                                                                  | :heavy_check_mark:                                                                                                                                                                                                                                                     | The name of the new OAuth application                                                                                                                                                                                                                                  | Example App                                                                                                                                                                                                                                                            |
-| `callback_url`                                                                                                                                                                                                                                                         | *str*                                                                                                                                                                                                                                                                  | :heavy_check_mark:                                                                                                                                                                                                                                                     | The callback URL of the new OAuth application                                                                                                                                                                                                                          | https://example.com/oauth/callback                                                                                                                                                                                                                                     |
-| `scopes`                                                                                                                                                                                                                                                               | *Optional[str]*                                                                                                                                                                                                                                                        | :heavy_minus_sign:                                                                                                                                                                                                                                                     | Define the allowed scopes for the new OAuth applications that dictate the user payload of the OAuth user info endpoint. Available scopes are `profile`, `email`, `public_metadata`, `private_metadata`. Provide the requested scopes as a string, separated by spaces. | profile email public_metadata                                                                                                                                                                                                                                          |
-| `public`                                                                                                                                                                                                                                                               | *Optional[bool]*                                                                                                                                                                                                                                                       | :heavy_minus_sign:                                                                                                                                                                                                                                                     | If true, this client is public and cannot securely store a client secret.<br/>Only the authorization code flow with proof key for code exchange (PKCE) may be used.<br/>Public clients cannot be updated to be confidential clients, and vice versa.                   | true                                                                                                                                                                                                                                                                   |
-| `retries`                                                                                                                                                                                                                                                              | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                                                                                                                                                       | :heavy_minus_sign:                                                                                                                                                                                                                                                     | Configuration to override the default retry behavior of the client.                                                                                                                                                                                                    |                                                                                                                                                                                                                                                                        |
+| Parameter                                                                                     | Type                                                                                          | Required                                                                                      | Description                                                                                   |
+| --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| `request`                                                                                     | [models.CreateOAuthApplicationRequestBody](../../models/createoauthapplicationrequestbody.md) | :heavy_check_mark:                                                                            | The request object to use for the request.                                                    |
+| `retries`                                                                                     | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                              | :heavy_minus_sign:                                                                            | Configuration to override the default retry behavior of the client.                           |
 
 
 ### Response
@@ -114,10 +114,9 @@ Fetches the OAuth application whose ID matches the provided `id` in the path.
 
 ```python
 from clerk_backend_api import Clerk
-import os
 
 s = Clerk(
-    bearer_auth=os.getenv("BEARER_AUTH", ""),
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 
@@ -155,10 +154,9 @@ Updates an existing OAuth application
 
 ```python
 from clerk_backend_api import Clerk
-import os
 
 s = Clerk(
-    bearer_auth=os.getenv("BEARER_AUTH", ""),
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 
@@ -200,10 +198,9 @@ This is not reversible.
 
 ```python
 from clerk_backend_api import Clerk
-import os
 
 s = Clerk(
-    bearer_auth=os.getenv("BEARER_AUTH", ""),
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 
@@ -242,10 +239,9 @@ When the client secret is rotated, make sure to update it in authorized OAuth cl
 
 ```python
 from clerk_backend_api import Clerk
-import os
 
 s = Clerk(
-    bearer_auth=os.getenv("BEARER_AUTH", ""),
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 

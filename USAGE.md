@@ -2,10 +2,9 @@
 ```python
 # Synchronous Example
 from clerk_backend_api import Clerk
-import os
 
 s = Clerk(
-    bearer_auth=os.getenv("BEARER_AUTH", ""),
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 
@@ -23,11 +22,10 @@ The same SDK client can also be used to make asychronous requests by importing a
 # Asynchronous Example
 import asyncio
 from clerk_backend_api import Clerk
-import os
 
 async def main():
     s = Clerk(
-        bearer_auth=os.getenv("BEARER_AUTH", ""),
+        bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
     )
     res = await s.email_addresses.get_async(email_address_id="email_address_id_example")
     if res is not None:

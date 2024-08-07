@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "clerk-backend-api"
-version = "0.5.0-alpha.10"
+version = "0.5.0-alpha.11"
 description = "Python Client SDK for clerk.dev"
 authors = ["Clerk",]
 readme = "README.md"
@@ -8,7 +8,13 @@ repository = "https://github.com/clerk/clerk-sdk-python.git"
 packages = [
     { include = "clerk_backend_api", from = "src" }
 ]
-include = ["py.typed"]
+include = ["py.typed", "src/clerk_backend_api/py.typed"]
+
+[tool.setuptools.package-data]
+"*" = ["py.typed", "src/clerk_backend_api/py.typed"]
+
+[virtualenvs]
+in-project = true
 
 [tool.poetry.dependencies]
 python = "^3.8"
@@ -19,7 +25,10 @@ python-dateutil = "^2.9.0.post0"
 typing-inspect = "^0.9.0"
 
 [tool.poetry.group.dev.dependencies]
+mypy = "==1.10.1"
 pylint = "==3.2.3"
+pyright = "==1.1.374"
+types-python-dateutil = "^2.9.0.20240316"
 
 [build-system]
 requires = ["poetry-core"]
@@ -27,3 +36,20 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.pytest.ini_options]
 pythonpath = ["src"]
+
+[tool.mypy]
+disable_error_code = "misc"
+
+[[tool.mypy.overrides]]
+module = "typing_inspect"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "jsonpath"
+ignore_missing_imports = true
+
+[tool.pyright]
+venvPath = "."
+venv = ".venv"
+
+

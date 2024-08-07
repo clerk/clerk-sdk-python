@@ -31,10 +31,9 @@ The users are returned sorted by creation date, with the newest users appearing 
 
 ```python
 from clerk_backend_api import Clerk
-import os
 
 s = Clerk(
-    bearer_auth=os.getenv("BEARER_AUTH", ""),
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 
@@ -104,10 +103,9 @@ A rate limit rule of 20 requests per 10 seconds is applied to this endpoint.
 ```python
 import clerk_backend_api
 from clerk_backend_api import Clerk
-import os
 
 s = Clerk(
-    bearer_auth=os.getenv("BEARER_AUTH", ""),
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 
@@ -171,10 +169,9 @@ Returns a total count of all users that match the given filtering criteria.
 
 ```python
 from clerk_backend_api import Clerk
-import os
 
 s = Clerk(
-    bearer_auth=os.getenv("BEARER_AUTH", ""),
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 
@@ -230,10 +227,9 @@ Retrieve the details of a user
 
 ```python
 from clerk_backend_api import Clerk
-import os
 
 s = Clerk(
-    bearer_auth=os.getenv("BEARER_AUTH", ""),
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 
@@ -283,10 +279,9 @@ You can also choose to sign the user out of all their active sessions on any dev
 ```python
 import clerk_backend_api
 from clerk_backend_api import Clerk
-import os
 
 s = Clerk(
-    bearer_auth=os.getenv("BEARER_AUTH", ""),
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 
@@ -349,10 +344,9 @@ Delete the specified user
 
 ```python
 from clerk_backend_api import Clerk
-import os
 
 s = Clerk(
-    bearer_auth=os.getenv("BEARER_AUTH", ""),
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 
@@ -390,10 +384,9 @@ Marks the given user as banned, which means that all their sessions are revoked 
 
 ```python
 from clerk_backend_api import Clerk
-import os
 
 s = Clerk(
-    bearer_auth=os.getenv("BEARER_AUTH", ""),
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 
@@ -431,10 +424,9 @@ Removes the ban mark from the given user.
 
 ```python
 from clerk_backend_api import Clerk
-import os
 
 s = Clerk(
-    bearer_auth=os.getenv("BEARER_AUTH", ""),
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 
@@ -473,10 +465,9 @@ Lock duration can be configured in the instance's restrictions settings.
 
 ```python
 from clerk_backend_api import Clerk
-import os
 
 s = Clerk(
-    bearer_auth=os.getenv("BEARER_AUTH", ""),
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 
@@ -514,10 +505,9 @@ Removes the lock from the given user.
 
 ```python
 from clerk_backend_api import Clerk
-import os
 
 s = Clerk(
-    bearer_auth=os.getenv("BEARER_AUTH", ""),
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 
@@ -555,10 +545,9 @@ Update a user's profile image
 
 ```python
 from clerk_backend_api import Clerk
-import os
 
 s = Clerk(
-    bearer_auth=os.getenv("BEARER_AUTH", ""),
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 
@@ -601,10 +590,9 @@ Delete a user's profile image
 
 ```python
 from clerk_backend_api import Clerk
-import os
 
 s = Clerk(
-    bearer_auth=os.getenv("BEARER_AUTH", ""),
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 
@@ -649,16 +637,19 @@ You can remove metadata keys at any level by setting their value to `null`.
 
 ```python
 from clerk_backend_api import Clerk
-import os
 
 s = Clerk(
-    bearer_auth=os.getenv("BEARER_AUTH", ""),
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 
-res = s.users.update_metadata(user_id="user_123456789", public_metadata={
-    "key": "<value>",
-}, private_metadata={}, unsafe_metadata={})
+res = s.users.update_metadata(user_id="user_123456789", request_body={
+    "public_metadata": {
+        "key": "<value>",
+    },
+    "private_metadata": {},
+    "unsafe_metadata": {},
+})
 
 if res is not None:
     # handle response
@@ -668,13 +659,11 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                                                                                                                                                                                                                  | Type                                                                                                                                                                                                                                       | Required                                                                                                                                                                                                                                   | Description                                                                                                                                                                                                                                | Example                                                                                                                                                                                                                                    |
-| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `user_id`                                                                                                                                                                                                                                  | *str*                                                                                                                                                                                                                                      | :heavy_check_mark:                                                                                                                                                                                                                         | The ID of the user whose metadata will be updated and merged                                                                                                                                                                               | user_123456789                                                                                                                                                                                                                             |
-| `public_metadata`                                                                                                                                                                                                                          | Dict[str, *Any*]                                                                                                                                                                                                                           | :heavy_minus_sign:                                                                                                                                                                                                                         | Metadata saved on the user, that is visible to both your frontend and backend.<br/>The new object will be merged with the existing value.                                                                                                  |                                                                                                                                                                                                                                            |
-| `private_metadata`                                                                                                                                                                                                                         | [Optional[models.UpdateUserMetadataPrivateMetadata]](../../models/updateusermetadataprivatemetadata.md)                                                                                                                                    | :heavy_minus_sign:                                                                                                                                                                                                                         | Metadata saved on the user that is only visible to your backend.<br/>The new object will be merged with the existing value.                                                                                                                |                                                                                                                                                                                                                                            |
-| `unsafe_metadata`                                                                                                                                                                                                                          | [Optional[models.UpdateUserMetadataUnsafeMetadata]](../../models/updateusermetadataunsafemetadata.md)                                                                                                                                      | :heavy_minus_sign:                                                                                                                                                                                                                         | Metadata saved on the user, that can be updated from both the Frontend and Backend APIs.<br/>The new object will be merged with the existing value.<br/><br/>Note: Since this data can be modified from the frontend, it is not guaranteed to be safe. |                                                                                                                                                                                                                                            |
-| `retries`                                                                                                                                                                                                                                  | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                                                                                                                           | :heavy_minus_sign:                                                                                                                                                                                                                         | Configuration to override the default retry behavior of the client.                                                                                                                                                                        |                                                                                                                                                                                                                                            |
+| Parameter                                                                                       | Type                                                                                            | Required                                                                                        | Description                                                                                     | Example                                                                                         |
+| ----------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| `user_id`                                                                                       | *str*                                                                                           | :heavy_check_mark:                                                                              | The ID of the user whose metadata will be updated and merged                                    | user_123456789                                                                                  |
+| `request_body`                                                                                  | [Optional[models.UpdateUserMetadataRequestBody]](../../models/updateusermetadatarequestbody.md) | :heavy_minus_sign:                                                                              | N/A                                                                                             |                                                                                                 |
+| `retries`                                                                                       | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                | :heavy_minus_sign:                                                                              | Configuration to override the default retry behavior of the client.                             |                                                                                                 |
 
 
 ### Response
@@ -696,10 +685,9 @@ For OAuth 2.0, if the access token has expired and we have a corresponding refre
 
 ```python
 from clerk_backend_api import Clerk
-import os
 
 s = Clerk(
-    bearer_auth=os.getenv("BEARER_AUTH", ""),
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 
@@ -738,10 +726,9 @@ Retrieve a paginated list of the user's organization memberships
 
 ```python
 from clerk_backend_api import Clerk
-import os
 
 s = Clerk(
-    bearer_auth=os.getenv("BEARER_AUTH", ""),
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 
@@ -787,14 +774,15 @@ Useful for custom auth flows and re-verification.
 
 ```python
 from clerk_backend_api import Clerk
-import os
 
 s = Clerk(
-    bearer_auth=os.getenv("BEARER_AUTH", ""),
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 
-res = s.users.verify_password(user_id="user_123", password="securepassword123")
+res = s.users.verify_password(user_id="user_123", request_body={
+    "password": "securepassword123",
+})
 
 if res is not None:
     # handle response
@@ -804,11 +792,11 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         | Example                                                             |
-| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| `user_id`                                                           | *str*                                                               | :heavy_check_mark:                                                  | The ID of the user for whom to verify the password                  | user_123                                                            |
-| `password`                                                          | *str*                                                               | :heavy_check_mark:                                                  | The user password to verify                                         | securepassword123                                                   |
-| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |                                                                     |
+| Parameter                                                                               | Type                                                                                    | Required                                                                                | Description                                                                             | Example                                                                                 |
+| --------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
+| `user_id`                                                                               | *str*                                                                                   | :heavy_check_mark:                                                                      | The ID of the user for whom to verify the password                                      | user_123                                                                                |
+| `request_body`                                                                          | [Optional[models.VerifyPasswordRequestBody]](../../models/verifypasswordrequestbody.md) | :heavy_minus_sign:                                                                      | N/A                                                                                     |                                                                                         |
+| `retries`                                                                               | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                        | :heavy_minus_sign:                                                                      | Configuration to override the default retry behavior of the client.                     |                                                                                         |
 
 
 ### Response
@@ -832,14 +820,15 @@ Useful for custom auth flows and re-verification.
 
 ```python
 from clerk_backend_api import Clerk
-import os
 
 s = Clerk(
-    bearer_auth=os.getenv("BEARER_AUTH", ""),
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 
-res = s.users.verify_totp(user_id="usr_1a2b3c", code="123456")
+res = s.users.verify_totp(user_id="usr_1a2b3c", request_body={
+    "code": "123456",
+})
 
 if res is not None:
     # handle response
@@ -849,11 +838,11 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         | Example                                                             |
-| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| `user_id`                                                           | *str*                                                               | :heavy_check_mark:                                                  | The ID of the user for whom to verify the TOTP                      | usr_1a2b3c                                                          |
-| `code`                                                              | *str*                                                               | :heavy_check_mark:                                                  | The TOTP or backup code to verify                                   | 123456                                                              |
-| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |                                                                     |
+| Parameter                                                                       | Type                                                                            | Required                                                                        | Description                                                                     | Example                                                                         |
+| ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| `user_id`                                                                       | *str*                                                                           | :heavy_check_mark:                                                              | The ID of the user for whom to verify the TOTP                                  | usr_1a2b3c                                                                      |
+| `request_body`                                                                  | [Optional[models.VerifyTOTPRequestBody]](../../models/verifytotprequestbody.md) | :heavy_minus_sign:                                                              | N/A                                                                             |                                                                                 |
+| `retries`                                                                       | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                | :heavy_minus_sign:                                                              | Configuration to override the default retry behavior of the client.             |                                                                                 |
 
 
 ### Response
@@ -874,10 +863,9 @@ Disable all of a user's MFA methods (e.g. OTP sent via SMS, TOTP on their authen
 
 ```python
 from clerk_backend_api import Clerk
-import os
 
 s = Clerk(
-    bearer_auth=os.getenv("BEARER_AUTH", ""),
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 
