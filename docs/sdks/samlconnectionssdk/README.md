@@ -19,10 +19,9 @@ The SAML Connections are ordered by descending creation date and the most recent
 
 ```python
 from clerk_backend_api import Clerk
-import os
 
 s = Clerk(
-    bearer_auth=os.getenv("BEARER_AUTH", ""),
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 
@@ -67,18 +66,27 @@ Create a new SAML Connection.
 ```python
 import clerk_backend_api
 from clerk_backend_api import Clerk
-import os
 
 s = Clerk(
-    bearer_auth=os.getenv("BEARER_AUTH", ""),
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 
-res = s.saml_connections.create(name="My SAML Connection", domain="example.org", provider=clerk_backend_api.Provider.SAML_CUSTOM, idp_entity_id="http://idp.example.org/", idp_sso_url="http://idp.example.org/sso", idp_certificate="MIIDdzCCAl+gAwIBAgIJAKcyBaiiz+DT...", idp_metadata_url="http://idp.example.org/metadata.xml", idp_metadata="<EntityDescriptor ...", attribute_mapping={
-    "user_id": "nameid",
-    "email_address": "mail",
-    "first_name": "givenName",
-    "last_name": "surname",
+res = s.saml_connections.create(request={
+    "name": "My SAML Connection",
+    "domain": "example.org",
+    "provider": clerk_backend_api.Provider.SAML_CUSTOM,
+    "idp_entity_id": "http://idp.example.org/",
+    "idp_sso_url": "http://idp.example.org/sso",
+    "idp_certificate": "MIIDdzCCAl+gAwIBAgIJAKcyBaiiz+DT...",
+    "idp_metadata_url": "http://idp.example.org/metadata.xml",
+    "idp_metadata": "<EntityDescriptor ...",
+    "attribute_mapping": {
+        "user_id": "nameid",
+        "email_address": "mail",
+        "first_name": "givenName",
+        "last_name": "surname",
+    },
 })
 
 if res is not None:
@@ -89,18 +97,10 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                                                                                             | Type                                                                                                                  | Required                                                                                                              | Description                                                                                                           | Example                                                                                                               |
-| --------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
-| `name`                                                                                                                | *str*                                                                                                                 | :heavy_check_mark:                                                                                                    | The name to use as a label for this SAML Connection                                                                   | My SAML Connection                                                                                                    |
-| `domain`                                                                                                              | *str*                                                                                                                 | :heavy_check_mark:                                                                                                    | The domain of your organization. Sign in flows using an email with this domain, will use this SAML Connection.        | example.org                                                                                                           |
-| `provider`                                                                                                            | [models.Provider](../../models/provider.md)                                                                           | :heavy_check_mark:                                                                                                    | The IdP provider of the connection.                                                                                   | saml_custom                                                                                                           |
-| `idp_entity_id`                                                                                                       | *OptionalNullable[str]*                                                                                               | :heavy_minus_sign:                                                                                                    | The Entity ID as provided by the IdP                                                                                  | http://idp.example.org/                                                                                               |
-| `idp_sso_url`                                                                                                         | *OptionalNullable[str]*                                                                                               | :heavy_minus_sign:                                                                                                    | The Single-Sign On URL as provided by the IdP                                                                         | http://idp.example.org/sso                                                                                            |
-| `idp_certificate`                                                                                                     | *OptionalNullable[str]*                                                                                               | :heavy_minus_sign:                                                                                                    | The X.509 certificate as provided by the IdP                                                                          | MIIDdzCCAl+gAwIBAgIJAKcyBaiiz+DT...                                                                                   |
-| `idp_metadata_url`                                                                                                    | *OptionalNullable[str]*                                                                                               | :heavy_minus_sign:                                                                                                    | The URL which serves the IdP metadata. If present, it takes priority over the corresponding individual properties     | http://idp.example.org/metadata.xml                                                                                   |
-| `idp_metadata`                                                                                                        | *OptionalNullable[str]*                                                                                               | :heavy_minus_sign:                                                                                                    | The XML content of the IdP metadata file. If present, it takes priority over the corresponding individual properties  | <EntityDescriptor ...                                                                                                 |
-| `attribute_mapping`                                                                                                   | [OptionalNullable[models.CreateSAMLConnectionAttributeMapping]](../../models/createsamlconnectionattributemapping.md) | :heavy_minus_sign:                                                                                                    | Define the attribute name mapping between Identity Provider and Clerk's user properties                               |                                                                                                                       |
-| `retries`                                                                                                             | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                      | :heavy_minus_sign:                                                                                                    | Configuration to override the default retry behavior of the client.                                                   |                                                                                                                       |
+| Parameter                                                                                 | Type                                                                                      | Required                                                                                  | Description                                                                               |
+| ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| `request`                                                                                 | [models.CreateSAMLConnectionRequestBody](../../models/createsamlconnectionrequestbody.md) | :heavy_check_mark:                                                                        | The request object to use for the request.                                                |
+| `retries`                                                                                 | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                          | :heavy_minus_sign:                                                                        | Configuration to override the default retry behavior of the client.                       |
 
 
 ### Response
@@ -121,10 +121,9 @@ Fetches the SAML Connection whose ID matches the provided `saml_connection_id` i
 
 ```python
 from clerk_backend_api import Clerk
-import os
 
 s = Clerk(
-    bearer_auth=os.getenv("BEARER_AUTH", ""),
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 
@@ -162,10 +161,9 @@ Updates the SAML Connection whose ID matches the provided `id` in the path.
 
 ```python
 from clerk_backend_api import Clerk
-import os
 
 s = Clerk(
-    bearer_auth=os.getenv("BEARER_AUTH", ""),
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 
@@ -220,10 +218,9 @@ Deletes the SAML Connection whose ID matches the provided `id` in the path.
 
 ```python
 from clerk_backend_api import Clerk
-import os
 
 s = Clerk(
-    bearer_auth=os.getenv("BEARER_AUTH", ""),
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 

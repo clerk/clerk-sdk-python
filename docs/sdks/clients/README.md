@@ -19,10 +19,9 @@ Warning: the endpoint is being deprecated and will be removed in future versions
 
 ```python
 from clerk_backend_api import Clerk
-import os
 
 s = Clerk(
-    bearer_auth=os.getenv("BEARER_AUTH", ""),
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 
@@ -66,14 +65,15 @@ Verifies the client in the provided token
 
 ```python
 from clerk_backend_api import Clerk
-import os
 
 s = Clerk(
-    bearer_auth=os.getenv("BEARER_AUTH", ""),
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 
-res = s.clients.verify(token="jwt_token_example")
+res = s.clients.verify(request={
+    "token": "jwt_token_example",
+})
 
 if res is not None:
     # handle response
@@ -83,10 +83,10 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         | Example                                                             |
-| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| `token`                                                             | *Optional[str]*                                                     | :heavy_minus_sign:                                                  | A JWT Token that represents the active client.                      | jwt_token_example                                                   |
-| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |                                                                     |
+| Parameter                                                                 | Type                                                                      | Required                                                                  | Description                                                               |
+| ------------------------------------------------------------------------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
+| `request`                                                                 | [models.VerifyClientRequestBody](../../models/verifyclientrequestbody.md) | :heavy_check_mark:                                                        | The request object to use for the request.                                |
+| `retries`                                                                 | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)          | :heavy_minus_sign:                                                        | Configuration to override the default retry behavior of the client.       |
 
 
 ### Response
@@ -107,10 +107,9 @@ Returns the details of a client.
 
 ```python
 from clerk_backend_api import Clerk
-import os
 
 s = Clerk(
-    bearer_auth=os.getenv("BEARER_AUTH", ""),
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 

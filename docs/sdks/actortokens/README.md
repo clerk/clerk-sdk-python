@@ -15,16 +15,20 @@ The `actor` parameter needs to include at least a "sub" key whose value is the I
 
 ```python
 from clerk_backend_api import Clerk
-import os
 
 s = Clerk(
-    bearer_auth=os.getenv("BEARER_AUTH", ""),
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 
-res = s.actor_tokens.create(user_id="user_1a2b3c", actor={
-    "sub": "user_2OEpKhcCN1Lat9NQ0G6puh7q5Rb",
-}, expires_in_seconds=3600, session_max_duration_in_seconds=1800)
+res = s.actor_tokens.create(request={
+    "user_id": "user_1a2b3c",
+    "actor": {
+        "sub": "user_2OEpKhcCN1Lat9NQ0G6puh7q5Rb",
+    },
+    "expires_in_seconds": 3600,
+    "session_max_duration_in_seconds": 1800,
+})
 
 if res is not None:
     # handle response
@@ -34,13 +38,10 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                                                                                                                                                                 | Type                                                                                                                                                                                      | Required                                                                                                                                                                                  | Description                                                                                                                                                                               | Example                                                                                                                                                                                   |
-| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `user_id`                                                                                                                                                                                 | *str*                                                                                                                                                                                     | :heavy_check_mark:                                                                                                                                                                        | The ID of the user that can use the newly created sign in token.                                                                                                                          | user_1a2b3c                                                                                                                                                                               |
-| `actor`                                                                                                                                                                                   | Dict[str, *Any*]                                                                                                                                                                          | :heavy_check_mark:                                                                                                                                                                        | The actor payload. It needs to include a sub property which should contain the ID of the actor.<br/>This whole payload will be also included in the JWT session token.                    | {<br/>"sub": "user_2OEpKhcCN1Lat9NQ0G6puh7q5Rb"<br/>}                                                                                                                                     |
-| `expires_in_seconds`                                                                                                                                                                      | *Optional[int]*                                                                                                                                                                           | :heavy_minus_sign:                                                                                                                                                                        | Optional parameter to specify the life duration of the actor token in seconds.<br/>By default, the duration is 1 hour.                                                                    | 3600                                                                                                                                                                                      |
-| `session_max_duration_in_seconds`                                                                                                                                                         | *Optional[int]*                                                                                                                                                                           | :heavy_minus_sign:                                                                                                                                                                        | The maximum duration that the session which will be created by the generated actor token should last.<br/>By default, the duration of a session created via an actor token, lasts 30 minutes. | 1800                                                                                                                                                                                      |
-| `retries`                                                                                                                                                                                 | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                                                                          | :heavy_minus_sign:                                                                                                                                                                        | Configuration to override the default retry behavior of the client.                                                                                                                       |                                                                                                                                                                                           |
+| Parameter                                                                         | Type                                                                              | Required                                                                          | Description                                                                       |
+| --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| `request`                                                                         | [models.CreateActorTokenRequestBody](../../models/createactortokenrequestbody.md) | :heavy_check_mark:                                                                | The request object to use for the request.                                        |
+| `retries`                                                                         | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                  | :heavy_minus_sign:                                                                | Configuration to override the default retry behavior of the client.               |
 
 
 ### Response
@@ -61,10 +62,9 @@ Revokes a pending actor token.
 
 ```python
 from clerk_backend_api import Clerk
-import os
 
 s = Clerk(
-    bearer_auth=os.getenv("BEARER_AUTH", ""),
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 

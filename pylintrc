@@ -440,7 +440,6 @@ disable=raw-checker-failed,
         broad-exception-raised,
         too-few-public-methods,
         too-many-branches,
-        chained-comparison,
         duplicate-code,
         trailing-newlines,
         too-many-public-methods,
@@ -455,7 +454,7 @@ disable=raw-checker-failed,
         bare-except,
         broad-exception-caught,
         fixme,
-        consider-using-from-import
+        relative-beyond-top-level
 
 # Enable the message, report, category or checker with the given id(s). You can
 # either give multiple identifier separated by comma (,) or put this option

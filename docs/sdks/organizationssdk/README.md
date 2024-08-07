@@ -23,10 +23,9 @@ Most recent organizations will be returned first.
 
 ```python
 from clerk_backend_api import Clerk
-import os
 
 s = Clerk(
-    bearer_auth=os.getenv("BEARER_AUTH", ""),
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 
@@ -76,14 +75,20 @@ Public metadata can be accessed from the Backend API, and are read-only from the
 
 ```python
 from clerk_backend_api import Clerk
-import os
 
 s = Clerk(
-    bearer_auth=os.getenv("BEARER_AUTH", ""),
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 
-res = s.organizations.create(name="NewOrg", created_by="user_123", private_metadata={}, public_metadata={}, slug="neworg", max_allowed_memberships=100)
+res = s.organizations.create(request={
+    "name": "NewOrg",
+    "created_by": "user_123",
+    "private_metadata": {},
+    "public_metadata": {},
+    "slug": "neworg",
+    "max_allowed_memberships": 100,
+})
 
 if res is not None:
     # handle response
@@ -93,15 +98,10 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                                                                                                              | Type                                                                                                                                   | Required                                                                                                                               | Description                                                                                                                            | Example                                                                                                                                |
-| -------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
-| `name`                                                                                                                                 | *str*                                                                                                                                  | :heavy_check_mark:                                                                                                                     | The name of the new organization                                                                                                       | NewOrg                                                                                                                                 |
-| `created_by`                                                                                                                           | *str*                                                                                                                                  | :heavy_check_mark:                                                                                                                     | The ID of the User who will become the administrator for the new organization                                                          | user_123                                                                                                                               |
-| `private_metadata`                                                                                                                     | [Optional[models.CreateOrganizationPrivateMetadata]](../../models/createorganizationprivatemetadata.md)                                | :heavy_minus_sign:                                                                                                                     | Metadata saved on the organization, accessible only from the Backend API                                                               | {<br/>"internal_code": "ABC123"<br/>}                                                                                                  |
-| `public_metadata`                                                                                                                      | [Optional[models.CreateOrganizationPublicMetadata]](../../models/createorganizationpublicmetadata.md)                                  | :heavy_minus_sign:                                                                                                                     | Metadata saved on the organization, read-only from the Frontend API and fully accessible (read/write) from the Backend API             | {<br/>"public_event": "Annual Summit"<br/>}                                                                                            |
-| `slug`                                                                                                                                 | *Optional[str]*                                                                                                                        | :heavy_minus_sign:                                                                                                                     | A slug for the new organization.<br/>Can contain only lowercase alphanumeric characters and the dash "-".<br/>Must be unique for the instance. | neworg                                                                                                                                 |
-| `max_allowed_memberships`                                                                                                              | *Optional[int]*                                                                                                                        | :heavy_minus_sign:                                                                                                                     | The maximum number of memberships allowed for this organization                                                                        | 100                                                                                                                                    |
-| `retries`                                                                                                                              | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                       | :heavy_minus_sign:                                                                                                                     | Configuration to override the default retry behavior of the client.                                                                    |                                                                                                                                        |
+| Parameter                                                                             | Type                                                                                  | Required                                                                              | Description                                                                           |
+| ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| `request`                                                                             | [models.CreateOrganizationRequestBody](../../models/createorganizationrequestbody.md) | :heavy_check_mark:                                                                    | The request object to use for the request.                                            |
+| `retries`                                                                             | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                      | :heavy_minus_sign:                                                                    | Configuration to override the default retry behavior of the client.                   |
 
 
 ### Response
@@ -122,10 +122,9 @@ Fetches the organization whose ID or slug matches the provided `id_or_slug` URL 
 
 ```python
 from clerk_backend_api import Clerk
-import os
 
 s = Clerk(
-    bearer_auth=os.getenv("BEARER_AUTH", ""),
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 
@@ -163,10 +162,9 @@ Updates an existing organization
 
 ```python
 from clerk_backend_api import Clerk
-import os
 
 s = Clerk(
-    bearer_auth=os.getenv("BEARER_AUTH", ""),
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 
@@ -212,10 +210,9 @@ This is not reversible.
 
 ```python
 from clerk_backend_api import Clerk
-import os
 
 s = Clerk(
-    bearer_auth=os.getenv("BEARER_AUTH", ""),
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 
@@ -256,10 +253,9 @@ You can remove metadata keys at any level by setting their value to `null`.
 
 ```python
 from clerk_backend_api import Clerk
-import os
 
 s = Clerk(
-    bearer_auth=os.getenv("BEARER_AUTH", ""),
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 
@@ -302,17 +298,19 @@ Only the following file content types are supported: `image/jpeg`, `image/png`, 
 
 ```python
 from clerk_backend_api import Clerk
-import os
 
 s = Clerk(
-    bearer_auth=os.getenv("BEARER_AUTH", ""),
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 
-res = s.organizations.upload_logo(organization_id="org_12345", uploader_user_id="user_67890", file={
-    "file_name": "your_file_here",
-    "content": open("<file_path>", "rb"),
-    "content_type": "<value>",
+res = s.organizations.upload_logo(organization_id="org_12345", request_body={
+    "uploader_user_id": "user_67890",
+    "file": {
+        "file_name": "your_file_here",
+        "content": open("<file_path>", "rb"),
+        "content_type": "<value>",
+    },
 })
 
 if res is not None:
@@ -323,12 +321,11 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                                                       | Type                                                                            | Required                                                                        | Description                                                                     | Example                                                                         |
-| ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
-| `organization_id`                                                               | *str*                                                                           | :heavy_check_mark:                                                              | The ID of the organization for which to upload a logo                           | org_12345                                                                       |
-| `uploader_user_id`                                                              | *str*                                                                           | :heavy_check_mark:                                                              | The ID of the user that will be credited with the image upload.                 | user_67890                                                                      |
-| `file`                                                                          | [models.UploadOrganizationLogoFile](../../models/uploadorganizationlogofile.md) | :heavy_check_mark:                                                              | N/A                                                                             |                                                                                 |
-| `retries`                                                                       | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                | :heavy_minus_sign:                                                              | Configuration to override the default retry behavior of the client.             |                                                                                 |
+| Parameter                                                                                               | Type                                                                                                    | Required                                                                                                | Description                                                                                             | Example                                                                                                 |
+| ------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| `organization_id`                                                                                       | *str*                                                                                                   | :heavy_check_mark:                                                                                      | The ID of the organization for which to upload a logo                                                   | org_12345                                                                                               |
+| `request_body`                                                                                          | [Optional[models.UploadOrganizationLogoRequestBody]](../../models/uploadorganizationlogorequestbody.md) | :heavy_minus_sign:                                                                                      | N/A                                                                                                     |                                                                                                         |
+| `retries`                                                                                               | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                        | :heavy_minus_sign:                                                                                      | Configuration to override the default retry behavior of the client.                                     |                                                                                                         |
 
 
 ### Response
@@ -349,10 +346,9 @@ Delete the organization's logo.
 
 ```python
 from clerk_backend_api import Clerk
-import os
 
 s = Clerk(
-    bearer_auth=os.getenv("BEARER_AUTH", ""),
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 

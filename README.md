@@ -30,10 +30,9 @@ poetry add clerk-backend-api
 ```python
 # Synchronous Example
 from clerk_backend_api import Clerk
-import os
 
 s = Clerk(
-    bearer_auth=os.getenv("BEARER_AUTH", ""),
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 
@@ -51,11 +50,10 @@ The same SDK client can also be used to make asychronous requests by importing a
 # Asynchronous Example
 import asyncio
 from clerk_backend_api import Clerk
-import os
 
 async def main():
     s = Clerk(
-        bearer_auth=os.getenv("BEARER_AUTH", ""),
+        bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
     )
     res = await s.email_addresses.get_async(email_address_id="email_address_id_example")
     if res is not None:
@@ -271,10 +269,9 @@ return value of `Next` is `None`, then there are no more pages to be fetched.
 Here's an example of one such pagination call:
 ```python
 from clerk_backend_api import Clerk
-import os
 
 s = Clerk(
-    bearer_auth=os.getenv("BEARER_AUTH", ""),
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 
@@ -304,10 +301,9 @@ Certain SDK methods accept file objects as part of a request body or multi-part 
 
 ```python
 from clerk_backend_api import Clerk
-import os
 
 s = Clerk(
-    bearer_auth=os.getenv("BEARER_AUTH", ""),
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 
@@ -375,10 +371,9 @@ Handling errors in this SDK should largely match your expectations.  All operati
 
 ```python
 from clerk_backend_api import Clerk, models
-import os
 
 s = Clerk(
-    bearer_auth=os.getenv("BEARER_AUTH", ""),
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 res = None
@@ -542,13 +537,12 @@ This SDK supports the following security scheme globally:
 | ------------- | ------------- | ------------- |
 | `bearer_auth` | http          | HTTP Bearer   |
 
-To authenticate with the API the `bearer_auth` parameter must be set when initializing the SDK client instance. For example:
+To authenticate with the API the `null` parameter must be set when initializing the SDK client instance. For example:
 ```python
 from clerk_backend_api import Clerk
-import os
 
 s = Clerk(
-    bearer_auth=os.getenv("BEARER_AUTH", ""),
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 
@@ -558,6 +552,20 @@ s.misc.get_public_interstitial(frontend_api="frontend-api_1a2b3c4d", publishable
 
 ```
 <!-- End Authentication [security] -->
+
+<!-- Start Debugging [debug] -->
+## Debugging
+
+To emit debug logs for SDK requests and responses you can pass a logger object directly into your SDK object.
+
+```python
+from clerk_backend_api import Clerk
+import logging
+
+logging.basicConfig(level=logging.DEBUG)
+s = Clerk(debug_logger=logging.getLogger("clerk_backend_api"))
+```
+<!-- End Debugging [debug] -->
 
 <!-- Placeholder for Future Speakeasy SDK Sections -->
 

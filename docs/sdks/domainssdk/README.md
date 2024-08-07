@@ -17,10 +17,9 @@ The response will contain the primary domain for the instance and any satellite 
 
 ```python
 from clerk_backend_api import Clerk
-import os
 
 s = Clerk(
-    bearer_auth=os.getenv("BEARER_AUTH", ""),
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 
@@ -60,14 +59,17 @@ If you're planning to configure the new satellite domain to run behind a proxy, 
 
 ```python
 from clerk_backend_api import Clerk
-import os
 
 s = Clerk(
-    bearer_auth=os.getenv("BEARER_AUTH", ""),
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 
-res = s.domains.add(name="example.com", is_satellite=True, proxy_url="https://proxy.example.com")
+res = s.domains.add(request={
+    "name": "example.com",
+    "is_satellite": True,
+    "proxy_url": "https://proxy.example.com",
+})
 
 if res is not None:
     # handle response
@@ -77,12 +79,10 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                                                                                                                 | Type                                                                                                                                      | Required                                                                                                                                  | Description                                                                                                                               | Example                                                                                                                                   |
-| ----------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| `name`                                                                                                                                    | *str*                                                                                                                                     | :heavy_check_mark:                                                                                                                        | The new domain name. Can contain the port for development instances.                                                                      | example.com                                                                                                                               |
-| `is_satellite`                                                                                                                            | *bool*                                                                                                                                    | :heavy_check_mark:                                                                                                                        | Marks the new domain as satellite. Only `true` is accepted at the moment.                                                                 | true                                                                                                                                      |
-| `proxy_url`                                                                                                                               | *Optional[str]*                                                                                                                           | :heavy_minus_sign:                                                                                                                        | The full URL of the proxy which will forward requests to the Clerk Frontend API for this domain. Applicable only to production instances. | https://proxy.example.com                                                                                                                 |
-| `retries`                                                                                                                                 | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                          | :heavy_minus_sign:                                                                                                                        | Configuration to override the default retry behavior of the client.                                                                       |                                                                                                                                           |
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `request`                                                           | [models.AddDomainRequestBody](../../models/adddomainrequestbody.md) | :heavy_check_mark:                                                  | The request object to use for the request.                          |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
 
 ### Response
@@ -104,10 +104,9 @@ It is currently not possible to delete the instance's primary domain.
 
 ```python
 from clerk_backend_api import Clerk
-import os
 
 s = Clerk(
-    bearer_auth=os.getenv("BEARER_AUTH", ""),
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 
@@ -152,10 +151,9 @@ update the instance's home origin, affecting the default application paths.
 
 ```python
 from clerk_backend_api import Clerk
-import os
 
 s = Clerk(
-    bearer_auth=os.getenv("BEARER_AUTH", ""),
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 

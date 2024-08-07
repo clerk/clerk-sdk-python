@@ -16,14 +16,16 @@ You can optionally supply a different duration in seconds using the `expires_in_
 
 ```python
 from clerk_backend_api import Clerk
-import os
 
 s = Clerk(
-    bearer_auth=os.getenv("BEARER_AUTH", ""),
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 
-res = s.sign_in_tokens.create(user_id="user_12345", expires_in_seconds=2592000)
+res = s.sign_in_tokens.create(request={
+    "user_id": "user_12345",
+    "expires_in_seconds": 2592000,
+})
 
 if res is not None:
     # handle response
@@ -33,11 +35,10 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                                                                                             | Type                                                                                                                  | Required                                                                                                              | Description                                                                                                           | Example                                                                                                               |
-| --------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
-| `user_id`                                                                                                             | *Optional[str]*                                                                                                       | :heavy_minus_sign:                                                                                                    | The ID of the user that can use the newly created sign in token                                                       | user_12345                                                                                                            |
-| `expires_in_seconds`                                                                                                  | *Optional[int]*                                                                                                       | :heavy_minus_sign:                                                                                                    | Optional parameter to specify the life duration of the sign in token in seconds.<br/>By default, the duration is 30 days. | 2592000                                                                                                               |
-| `retries`                                                                                                             | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                      | :heavy_minus_sign:                                                                                                    | Configuration to override the default retry behavior of the client.                                                   |                                                                                                                       |
+| Parameter                                                                           | Type                                                                                | Required                                                                            | Description                                                                         |
+| ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| `request`                                                                           | [models.CreateSignInTokenRequestBody](../../models/createsignintokenrequestbody.md) | :heavy_check_mark:                                                                  | The request object to use for the request.                                          |
+| `retries`                                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                    | :heavy_minus_sign:                                                                  | Configuration to override the default retry behavior of the client.                 |
 
 
 ### Response
@@ -58,10 +59,9 @@ Revokes a pending sign-in token
 
 ```python
 from clerk_backend_api import Clerk
-import os
 
 s = Clerk(
-    bearer_auth=os.getenv("BEARER_AUTH", ""),
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
 
