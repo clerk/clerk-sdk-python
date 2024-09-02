@@ -1,6 +1,8 @@
 # InstanceSettingsSDK
 (*instance_settings*)
 
+## Overview
+
 ### Available Operations
 
 * [update](#update) - Update instance settings
@@ -54,6 +56,7 @@ s.instance_settings.update(request={
 | models.ClerkErrors | 422                | application/json   |
 | models.SDKError    | 4xx-5xx            | */*                |
 
+
 ## update_restrictions
 
 Updates the restriction settings of an instance
@@ -89,16 +92,17 @@ if res is not None:
 | `request`                                                                                             | [models.UpdateInstanceRestrictionsRequestBody](../../models/updateinstancerestrictionsrequestbody.md) | :heavy_check_mark:                                                                                    | The request object to use for the request.                                                            |
 | `retries`                                                                                             | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                      | :heavy_minus_sign:                                                                                    | Configuration to override the default retry behavior of the client.                                   |
 
-
 ### Response
 
 **[models.InstanceRestrictions](../../models/instancerestrictions.md)**
+
 ### Errors
 
 | Error Object       | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
 | models.ClerkErrors | 402,422            | application/json   |
 | models.SDKError    | 4xx-5xx            | */*                |
+
 
 ## update_organization_settings
 
@@ -140,10 +144,10 @@ if res is not None:
 | `request`                                                                                                             | [models.UpdateInstanceOrganizationSettingsRequestBody](../../models/updateinstanceorganizationsettingsrequestbody.md) | :heavy_check_mark:                                                                                                    | The request object to use for the request.                                                                            |
 | `retries`                                                                                                             | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                      | :heavy_minus_sign:                                                                                                    | Configuration to override the default retry behavior of the client.                                                   |
 
-
 ### Response
 
 **[models.OrganizationSettings](../../models/organizationsettings.md)**
+
 ### Errors
 
 | Error Object       | Status Code        | Content Type       |

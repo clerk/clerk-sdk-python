@@ -65,11 +65,11 @@ class GetUserListRequestTypedDict(TypedDict):
     Providing a value with higher precision than day will result in an error.
     Example: use 1700690400000 to retrieve users that had session activity from 2023-11-23 until the current day.
     """
-    limit: NotRequired[float]
+    limit: NotRequired[int]
     r"""Applies a limit to the number of results returned.
     Can be used for paginating the results together with `offset`.
     """
-    offset: NotRequired[float]
+    offset: NotRequired[int]
     r"""Skip the first `offset` results when paginating.
     Needs to be an integer greater or equal to zero.
     To be used in conjunction with `limit`.
@@ -142,11 +142,11 @@ class GetUserListRequest(BaseModel):
     Providing a value with higher precision than day will result in an error.
     Example: use 1700690400000 to retrieve users that had session activity from 2023-11-23 until the current day.
     """
-    limit: Annotated[Optional[float], FieldMetadata(query=QueryParamMetadata(style="form", explode=True))] = 10
+    limit: Annotated[Optional[int], FieldMetadata(query=QueryParamMetadata(style="form", explode=True))] = 10
     r"""Applies a limit to the number of results returned.
     Can be used for paginating the results together with `offset`.
     """
-    offset: Annotated[Optional[float], FieldMetadata(query=QueryParamMetadata(style="form", explode=True))] = 0
+    offset: Annotated[Optional[int], FieldMetadata(query=QueryParamMetadata(style="form", explode=True))] = 0
     r"""Skip the first `offset` results when paginating.
     Needs to be an integer greater or equal to zero.
     To be used in conjunction with `limit`.

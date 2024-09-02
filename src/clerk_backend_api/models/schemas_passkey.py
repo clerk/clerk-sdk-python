@@ -65,6 +65,12 @@ class Passkey(BaseModel):
         return m
         
 
+SchemasPasskeyVerificationTypedDict = PasskeyTypedDict
+
+
+SchemasPasskeyVerification = Passkey
+
+
 class SchemasPasskeyTypedDict(TypedDict):
     object: SchemasPasskeyObject
     r"""String representing the object's type. Objects of the same type share the same value.
@@ -118,9 +124,3 @@ class SchemasPasskey(BaseModel):
 
         return m
         
-
-SchemasPasskeyVerificationTypedDict = PasskeyTypedDict
-
-
-SchemasPasskeyVerification = Passkey
-

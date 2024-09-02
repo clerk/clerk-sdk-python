@@ -242,8 +242,8 @@ class OrganizationInvitationsSDK(BaseSDK):
     def list(
         self, *,
         organization_id: str,
-        limit: Optional[float] = 10,
-        offset: Optional[float] = 0,
+        limit: Optional[int] = 10,
+        offset: Optional[int] = 0,
         status: Optional[models.ListOrganizationInvitationsQueryParamStatus] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -356,8 +356,8 @@ class OrganizationInvitationsSDK(BaseSDK):
     async def list_async(
         self, *,
         organization_id: str,
-        limit: Optional[float] = 10,
-        offset: Optional[float] = 0,
+        limit: Optional[int] = 10,
+        offset: Optional[int] = 0,
         status: Optional[models.ListOrganizationInvitationsQueryParamStatus] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -659,8 +659,8 @@ class OrganizationInvitationsSDK(BaseSDK):
     def list_pending(
         self, *,
         organization_id: str,
-        limit: Optional[float] = 10,
-        offset: Optional[float] = 0,
+        limit: Optional[int] = 10,
+        offset: Optional[int] = 0,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -770,8 +770,8 @@ class OrganizationInvitationsSDK(BaseSDK):
     async def list_pending_async(
         self, *,
         organization_id: str,
-        limit: Optional[float] = 10,
-        offset: Optional[float] = 0,
+        limit: Optional[int] = 10,
+        offset: Optional[int] = 0,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,

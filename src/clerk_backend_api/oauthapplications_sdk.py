@@ -12,8 +12,8 @@ class OAuthApplicationsSDK(BaseSDK):
     
     def list(
         self, *,
-        limit: Optional[float] = 10,
-        offset: Optional[float] = 0,
+        limit: Optional[int] = 10,
+        offset: Optional[int] = 0,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -116,8 +116,8 @@ class OAuthApplicationsSDK(BaseSDK):
     
     async def list_async(
         self, *,
-        limit: Optional[float] = 10,
-        offset: Optional[float] = 0,
+        limit: Optional[int] = 10,
+        offset: Optional[int] = 0,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,

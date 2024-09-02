@@ -1,6 +1,8 @@
 # Templates
 (*templates*)
 
+## Overview
+
 ### Available Operations
 
 * [list](#list) - List all templates
@@ -41,16 +43,17 @@ if res is not None:
 | `template_type`                                                     | [models.TemplateType](../../models/templatetype.md)                 | :heavy_check_mark:                                                  | The type of templates to list (email or SMS)                        | email                                                               |
 | `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |                                                                     |
 
-
 ### Response
 
 **[List[models.Template]](../../models/.md)**
+
 ### Errors
 
 | Error Object       | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
 | models.ClerkErrors | 400,401,422        | application/json   |
 | models.SDKError    | 4xx-5xx            | */*                |
+
 
 ## get
 
@@ -83,16 +86,17 @@ if res is not None:
 | `slug`                                                                | *str*                                                                 | :heavy_check_mark:                                                    | The slug (i.e. machine-friendly name) of the template to retrieve     | welcome-email                                                         |
 | `retries`                                                             | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)      | :heavy_minus_sign:                                                    | Configuration to override the default retry behavior of the client.   |                                                                       |
 
-
 ### Response
 
 **[models.Template](../../models/template.md)**
+
 ### Errors
 
 | Error Object       | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
 | models.ClerkErrors | 400,401,404        | application/json   |
 | models.SDKError    | 4xx-5xx            | */*                |
+
 
 ## upsert
 
@@ -134,16 +138,17 @@ if res is not None:
 | `request_body`                                                                                    | [Optional[models.UpsertTemplateRequestBody]](../../models/upserttemplaterequestbody.md)           | :heavy_minus_sign:                                                                                | N/A                                                                                               |                                                                                                   |
 | `retries`                                                                                         | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                  | :heavy_minus_sign:                                                                                | Configuration to override the default retry behavior of the client.                               |                                                                                                   |
 
-
 ### Response
 
 **[models.Template](../../models/template.md)**
+
 ### Errors
 
 | Error Object            | Status Code             | Content Type            |
 | ----------------------- | ----------------------- | ----------------------- |
 | models.ClerkErrors      | 400,401,402,403,404,422 | application/json        |
 | models.SDKError         | 4xx-5xx                 | */*                     |
+
 
 ## revert
 
@@ -176,16 +181,17 @@ if res is not None:
 | `slug`                                                                                            | *str*                                                                                             | :heavy_check_mark:                                                                                | The slug of the template to revert                                                                | welcome-email                                                                                     |
 | `retries`                                                                                         | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                  | :heavy_minus_sign:                                                                                | Configuration to override the default retry behavior of the client.                               |                                                                                                   |
 
-
 ### Response
 
 **[models.Template](../../models/template.md)**
+
 ### Errors
 
 | Error Object       | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
 | models.ClerkErrors | 400,401,402,404    | application/json   |
 | models.SDKError    | 4xx-5xx            | */*                |
+
 
 ## preview
 
@@ -223,16 +229,17 @@ if res is not None:
 | `request_body`                                                                            | [Optional[models.PreviewTemplateRequestBody]](../../models/previewtemplaterequestbody.md) | :heavy_minus_sign:                                                                        | Required parameters                                                                       |                                                                                           |
 | `retries`                                                                                 | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                          | :heavy_minus_sign:                                                                        | Configuration to override the default retry behavior of the client.                       |                                                                                           |
 
-
 ### Response
 
 **[models.PreviewTemplateResponseBody](../../models/previewtemplateresponsebody.md)**
+
 ### Errors
 
 | Error Object       | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
 | models.ClerkErrors | 400,401,404,422    | application/json   |
 | models.SDKError    | 4xx-5xx            | */*                |
+
 
 ## toggle_delivery
 
@@ -270,10 +277,10 @@ if res is not None:
 | `request_body`                                                                                                    | [Optional[models.ToggleTemplateDeliveryRequestBody]](../../models/toggletemplatedeliveryrequestbody.md)           | :heavy_minus_sign:                                                                                                | N/A                                                                                                               |                                                                                                                   |
 | `retries`                                                                                                         | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                  | :heavy_minus_sign:                                                                                                | Configuration to override the default retry behavior of the client.                                               |                                                                                                                   |
 
-
 ### Response
 
 **[models.Template](../../models/template.md)**
+
 ### Errors
 
 | Error Object       | Status Code        | Content Type       |

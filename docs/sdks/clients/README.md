@@ -1,6 +1,8 @@
 # Clients
 (*clients*)
 
+## Overview
+
 ### Available Operations
 
 * [~~list~~](#list) - List all clients :warning: **Deprecated**
@@ -42,20 +44,21 @@ if res is not None:
 
 | Parameter                                                                                                                                 | Type                                                                                                                                      | Required                                                                                                                                  | Description                                                                                                                               | Example                                                                                                                                   |
 | ----------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| `limit`                                                                                                                                   | *Optional[float]*                                                                                                                         | :heavy_minus_sign:                                                                                                                        | Applies a limit to the number of results returned.<br/>Can be used for paginating the results together with `offset`.                     | 20                                                                                                                                        |
-| `offset`                                                                                                                                  | *Optional[float]*                                                                                                                         | :heavy_minus_sign:                                                                                                                        | Skip the first `offset` results when paginating.<br/>Needs to be an integer greater or equal to zero.<br/>To be used in conjunction with `limit`. | 10                                                                                                                                        |
+| `limit`                                                                                                                                   | *Optional[int]*                                                                                                                           | :heavy_minus_sign:                                                                                                                        | Applies a limit to the number of results returned.<br/>Can be used for paginating the results together with `offset`.                     | 20                                                                                                                                        |
+| `offset`                                                                                                                                  | *Optional[int]*                                                                                                                           | :heavy_minus_sign:                                                                                                                        | Skip the first `offset` results when paginating.<br/>Needs to be an integer greater or equal to zero.<br/>To be used in conjunction with `limit`. | 10                                                                                                                                        |
 | `retries`                                                                                                                                 | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                          | :heavy_minus_sign:                                                                                                                        | Configuration to override the default retry behavior of the client.                                                                       |                                                                                                                                           |
-
 
 ### Response
 
 **[models.GetClientListResponse](../../models/getclientlistresponse.md)**
+
 ### Errors
 
 | Error Object       | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
 | models.ClerkErrors | 400,401,410,422    | application/json   |
 | models.SDKError    | 4xx-5xx            | */*                |
+
 
 ## verify
 
@@ -88,16 +91,17 @@ if res is not None:
 | `request`                                                                 | [models.VerifyClientRequestBody](../../models/verifyclientrequestbody.md) | :heavy_check_mark:                                                        | The request object to use for the request.                                |
 | `retries`                                                                 | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)          | :heavy_minus_sign:                                                        | Configuration to override the default retry behavior of the client.       |
 
-
 ### Response
 
 **[models.Client](../../models/client.md)**
+
 ### Errors
 
 | Error Object       | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
 | models.ClerkErrors | 400,401,404        | application/json   |
 | models.SDKError    | 4xx-5xx            | */*                |
+
 
 ## get
 
@@ -128,10 +132,10 @@ if res is not None:
 | `client_id`                                                         | *str*                                                               | :heavy_check_mark:                                                  | Client ID.                                                          | cli_123456789                                                       |
 | `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |                                                                     |
 
-
 ### Response
 
 **[models.Client](../../models/client.md)**
+
 ### Errors
 
 | Error Object       | Status Code        | Content Type       |

@@ -187,8 +187,8 @@ class OrganizationMembershipsSDK(BaseSDK):
     def list(
         self, *,
         organization_id: str,
-        limit: Optional[float] = 10,
-        offset: Optional[float] = 0,
+        limit: Optional[int] = 10,
+        offset: Optional[int] = 0,
         order_by: Optional[str] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -296,8 +296,8 @@ class OrganizationMembershipsSDK(BaseSDK):
     async def list_async(
         self, *,
         organization_id: str,
-        limit: Optional[float] = 10,
-        offset: Optional[float] = 0,
+        limit: Optional[int] = 10,
+        offset: Optional[int] = 0,
         order_by: Optional[str] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,

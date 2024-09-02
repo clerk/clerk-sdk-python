@@ -1,6 +1,8 @@
 # SamlConnectionsSDK
 (*saml_connections*)
 
+## Overview
+
 ### Available Operations
 
 * [list](#list) - Get a list of SAML Connections for an instance
@@ -42,20 +44,21 @@ if res is not None:
 
 | Parameter                                                                                                                                 | Type                                                                                                                                      | Required                                                                                                                                  | Description                                                                                                                               | Example                                                                                                                                   |
 | ----------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| `limit`                                                                                                                                   | *Optional[float]*                                                                                                                         | :heavy_minus_sign:                                                                                                                        | Applies a limit to the number of results returned.<br/>Can be used for paginating the results together with `offset`.                     | 20                                                                                                                                        |
-| `offset`                                                                                                                                  | *Optional[float]*                                                                                                                         | :heavy_minus_sign:                                                                                                                        | Skip the first `offset` results when paginating.<br/>Needs to be an integer greater or equal to zero.<br/>To be used in conjunction with `limit`. | 10                                                                                                                                        |
+| `limit`                                                                                                                                   | *Optional[int]*                                                                                                                           | :heavy_minus_sign:                                                                                                                        | Applies a limit to the number of results returned.<br/>Can be used for paginating the results together with `offset`.                     | 20                                                                                                                                        |
+| `offset`                                                                                                                                  | *Optional[int]*                                                                                                                           | :heavy_minus_sign:                                                                                                                        | Skip the first `offset` results when paginating.<br/>Needs to be an integer greater or equal to zero.<br/>To be used in conjunction with `limit`. | 10                                                                                                                                        |
 | `retries`                                                                                                                                 | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                          | :heavy_minus_sign:                                                                                                                        | Configuration to override the default retry behavior of the client.                                                                       |                                                                                                                                           |
-
 
 ### Response
 
 **[models.ListSAMLConnectionsResponse](../../models/listsamlconnectionsresponse.md)**
+
 ### Errors
 
 | Error Object       | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
 | models.ClerkErrors | 402,403,422        | application/json   |
 | models.SDKError    | 4xx-5xx            | */*                |
+
 
 ## create
 
@@ -102,16 +105,17 @@ if res is not None:
 | `request`                                                                                 | [models.CreateSAMLConnectionRequestBody](../../models/createsamlconnectionrequestbody.md) | :heavy_check_mark:                                                                        | The request object to use for the request.                                                |
 | `retries`                                                                                 | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                          | :heavy_minus_sign:                                                                        | Configuration to override the default retry behavior of the client.                       |
 
-
 ### Response
 
 **[models.SAMLConnection](../../models/samlconnection.md)**
+
 ### Errors
 
 | Error Object       | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
 | models.ClerkErrors | 402,403,422        | application/json   |
 | models.SDKError    | 4xx-5xx            | */*                |
+
 
 ## get
 
@@ -142,16 +146,17 @@ if res is not None:
 | `saml_connection_id`                                                | *str*                                                               | :heavy_check_mark:                                                  | The ID of the SAML Connection                                       | saml_conn_123                                                       |
 | `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |                                                                     |
 
-
 ### Response
 
 **[models.SAMLConnection](../../models/samlconnection.md)**
+
 ### Errors
 
 | Error Object       | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
 | models.ClerkErrors | 402,403,404        | application/json   |
 | models.SDKError    | 4xx-5xx            | */*                |
+
 
 ## update
 
@@ -199,16 +204,17 @@ if res is not None:
 | `allow_idp_initiated`                                                                                                               | *OptionalNullable[bool]*                                                                                                            | :heavy_minus_sign:                                                                                                                  | Enable or deactivate IdP-initiated flows                                                                                            | false                                                                                                                               |
 | `retries`                                                                                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                    | :heavy_minus_sign:                                                                                                                  | Configuration to override the default retry behavior of the client.                                                                 |                                                                                                                                     |
 
-
 ### Response
 
 **[models.SAMLConnection](../../models/samlconnection.md)**
+
 ### Errors
 
 | Error Object       | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
 | models.ClerkErrors | 402,403,404,422    | application/json   |
 | models.SDKError    | 4xx-5xx            | */*                |
+
 
 ## delete
 
@@ -239,10 +245,10 @@ if res is not None:
 | `saml_connection_id`                                                | *str*                                                               | :heavy_check_mark:                                                  | The ID of the SAML Connection to delete                             | saml_conn_123_delete                                                |
 | `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |                                                                     |
 
-
 ### Response
 
 **[models.DeletedObject](../../models/deletedobject.md)**
+
 ### Errors
 
 | Error Object       | Status Code        | Content Type       |

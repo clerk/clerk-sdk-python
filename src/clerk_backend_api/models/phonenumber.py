@@ -116,6 +116,12 @@ class VerificationOTP(BaseModel):
         return m
         
 
+PhoneNumberVerificationTypedDict = Union[VerificationOTPTypedDict, VerificationAdminTypedDict]
+
+
+PhoneNumberVerification = Union[VerificationOTP, VerificationAdmin]
+
+
 class PhoneNumberTypedDict(TypedDict):
     object: PhoneNumberObject
     r"""String representing the object's type. Objects of the same type share the same value.
@@ -187,9 +193,3 @@ class PhoneNumber(BaseModel):
 
         return m
         
-
-PhoneNumberVerificationTypedDict = Union[VerificationOTPTypedDict, VerificationAdminTypedDict]
-
-
-PhoneNumberVerification = Union[VerificationOTP, VerificationAdmin]
-

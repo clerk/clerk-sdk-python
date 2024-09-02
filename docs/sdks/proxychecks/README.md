@@ -1,6 +1,8 @@
 # ProxyChecks
 (*proxy_checks*)
 
+## Overview
+
 ### Available Operations
 
 * [verify](#verify) - Verify the proxy configuration for your domain
@@ -44,10 +46,10 @@ if res is not None:
 | `request`                                                                           | [models.VerifyDomainProxyRequestBody](../../models/verifydomainproxyrequestbody.md) | :heavy_check_mark:                                                                  | The request object to use for the request.                                          |
 | `retries`                                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                    | :heavy_minus_sign:                                                                  | Configuration to override the default retry behavior of the client.                 |
 
-
 ### Response
 
 **[models.ProxyCheck](../../models/proxycheck.md)**
+
 ### Errors
 
 | Error Object       | Status Code        | Content Type       |

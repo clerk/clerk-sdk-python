@@ -104,6 +104,12 @@ class SAMLErrorClerkError(BaseModel):
     clerk_trace_id: Optional[str] = None
     
 
+VerificationErrorTypedDict = SAMLErrorClerkErrorTypedDict
+
+
+VerificationError = SAMLErrorClerkError
+
+
 class SamlTypedDict(TypedDict):
     status: SAMLVerificationStatus
     strategy: SAMLVerificationStrategy
@@ -147,6 +153,12 @@ class Saml(BaseModel):
 
         return m
         
+
+SAMLAccountVerificationTypedDict = Union[TicketTypedDict, SamlTypedDict]
+
+
+SAMLAccountVerification = Union[Ticket, Saml]
+
 
 class SAMLAccountTypedDict(TypedDict):
     id: str
@@ -205,15 +217,3 @@ class SAMLAccount(BaseModel):
 
         return m
         
-
-VerificationErrorTypedDict = SAMLErrorClerkErrorTypedDict
-
-
-VerificationError = SAMLErrorClerkError
-
-
-SAMLAccountVerificationTypedDict = Union[TicketTypedDict, SamlTypedDict]
-
-
-SAMLAccountVerification = Union[Ticket, Saml]
-

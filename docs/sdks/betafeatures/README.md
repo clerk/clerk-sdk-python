@@ -1,6 +1,8 @@
 # BetaFeatures
 (*beta_features*)
 
+## Overview
+
 ### Available Operations
 
 * [update_instance_auth_config](#update_instance_auth_config) - Update instance settings
@@ -43,16 +45,17 @@ if res is not None:
 | `request`                                                                                         | [models.UpdateInstanceAuthConfigRequestBody](../../models/updateinstanceauthconfigrequestbody.md) | :heavy_check_mark:                                                                                | The request object to use for the request.                                                        |
 | `retries`                                                                                         | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                  | :heavy_minus_sign:                                                                                | Configuration to override the default retry behavior of the client.                               |
 
-
 ### Response
 
 **[models.InstanceSettings](../../models/instancesettings.md)**
+
 ### Errors
 
 | Error Object       | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
 | models.ClerkErrors | 402,422            | application/json   |
 | models.SDKError    | 4xx-5xx            | */*                |
+
 
 ## ~~update_production_instance_domain~~
 
@@ -95,6 +98,7 @@ s.beta_features.update_production_instance_domain(request={
 | ------------------ | ------------------ | ------------------ |
 | models.ClerkErrors | 400,422            | application/json   |
 | models.SDKError    | 4xx-5xx            | */*                |
+
 
 ## change_production_instance_domain
 
