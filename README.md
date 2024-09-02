@@ -8,19 +8,71 @@
 
 The Clerk Python library provides convenient access to the Clerk REST API from any Python application 3.0+. The library includes type definitions for all request params and response fields, and offers synchronous and asynchronous support powered by [httpx](https://www.python-httpx.org/)
 
+<!-- Start Summary [summary] -->
+## Summary
+
+Clerk Backend API: The Clerk REST Backend API, meant to be accessed by backend
+servers.
+
+### Versions
+
+When the API changes in a way that isn't compatible with older versions, a new version is released.
+Each version is identified by its release date, e.g. `2021-02-05`. For more information, please see [Clerk API Versions](https://clerk.com/docs/backend-requests/versioning/overview).
+
+
+Please see https://clerk.com/docs for more information.
+
+More information about the API can be found at https://clerk.com/docs
+<!-- End Summary [summary] -->
+
+<!-- Start Table of Contents [toc] -->
+## Table of Contents
+
+* [SDK Installation](#sdk-installation)
+* [IDE Support](#ide-support)
+* [SDK Example Usage](#sdk-example-usage)
+* [Available Resources and Operations](#available-resources-and-operations)
+* [Pagination](#pagination)
+* [File uploads](#file-uploads)
+* [Retries](#retries)
+* [Error Handling](#error-handling)
+* [Server Selection](#server-selection)
+* [Custom HTTP Client](#custom-http-client)
+* [Authentication](#authentication)
+* [Debugging](#debugging)
+<!-- End Table of Contents [toc] -->
+
 <!-- Start SDK Installation [installation] -->
 ## SDK Installation
 
-PIP
+The SDK can be installed with either *pip* or *poetry* package managers.
+
+### PIP
+
+*PIP* is the default package installer for Python, enabling easy installation and management of packages from PyPI via the command line.
+
 ```bash
 pip install clerk-backend-api
 ```
 
-Poetry
+### Poetry
+
+*Poetry* is a modern tool that simplifies dependency management and package publishing by using a single `pyproject.toml` file to handle project metadata and dependencies.
+
 ```bash
 poetry add clerk-backend-api
 ```
 <!-- End SDK Installation [installation] -->
+
+<!-- Start IDE Support [idesupport] -->
+## IDE Support
+
+### PyCharm
+
+Generally, the SDK will work well with most IDEs out of the box. However, when using PyCharm, you can enjoy much better integration with Pydantic by installing an additional plugin.
+
+- [PyCharm Pydantic Plugin](https://docs.pydantic.dev/latest/integrations/pycharm/)
+<!-- End IDE Support [idesupport] -->
 
 <!-- Start SDK Example Usage [usage] -->
 ## SDK Example Usage
@@ -381,7 +433,7 @@ try:
     res = s.clients.list(limit=20, offset=10)
 
 except models.ClerkErrors as e:
-    # handle exception
+    # handle e.data: models.ClerkErrorsData
     raise(e)
 except models.SDKError as e:
     # handle exception
@@ -537,7 +589,7 @@ This SDK supports the following security scheme globally:
 | ------------- | ------------- | ------------- |
 | `bearer_auth` | http          | HTTP Bearer   |
 
-To authenticate with the API the `null` parameter must be set when initializing the SDK client instance. For example:
+To authenticate with the API the `bearer_auth` parameter must be set when initializing the SDK client instance. For example:
 ```python
 from clerk_backend_api import Clerk
 
@@ -556,8 +608,9 @@ s.misc.get_public_interstitial(frontend_api="frontend-api_1a2b3c4d", publishable
 <!-- Start Debugging [debug] -->
 ## Debugging
 
-To emit debug logs for SDK requests and responses you can pass a logger object directly into your SDK object.
+You can setup your SDK to emit debug logs for SDK requests and responses.
 
+You can pass your own logger class directly into your SDK.
 ```python
 from clerk_backend_api import Clerk
 import logging

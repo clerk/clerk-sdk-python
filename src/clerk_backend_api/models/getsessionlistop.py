@@ -25,11 +25,11 @@ class GetSessionListRequestTypedDict(TypedDict):
     r"""List sessions for the given user"""
     status: NotRequired[QueryParamStatus]
     r"""Filter sessions by the provided status"""
-    limit: NotRequired[float]
+    limit: NotRequired[int]
     r"""Applies a limit to the number of results returned.
     Can be used for paginating the results together with `offset`.
     """
-    offset: NotRequired[float]
+    offset: NotRequired[int]
     r"""Skip the first `offset` results when paginating.
     Needs to be an integer greater or equal to zero.
     To be used in conjunction with `limit`.
@@ -43,11 +43,11 @@ class GetSessionListRequest(BaseModel):
     r"""List sessions for the given user"""
     status: Annotated[Optional[QueryParamStatus], FieldMetadata(query=QueryParamMetadata(style="form", explode=True))] = None
     r"""Filter sessions by the provided status"""
-    limit: Annotated[Optional[float], FieldMetadata(query=QueryParamMetadata(style="form", explode=True))] = 10
+    limit: Annotated[Optional[int], FieldMetadata(query=QueryParamMetadata(style="form", explode=True))] = 10
     r"""Applies a limit to the number of results returned.
     Can be used for paginating the results together with `offset`.
     """
-    offset: Annotated[Optional[float], FieldMetadata(query=QueryParamMetadata(style="form", explode=True))] = 0
+    offset: Annotated[Optional[int], FieldMetadata(query=QueryParamMetadata(style="form", explode=True))] = 0
     r"""Skip the first `offset` results when paginating.
     Needs to be an integer greater or equal to zero.
     To be used in conjunction with `limit`.

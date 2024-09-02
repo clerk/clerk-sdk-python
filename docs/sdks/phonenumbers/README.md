@@ -1,6 +1,8 @@
 # PhoneNumbers
 (*phone_numbers*)
 
+## Overview
+
 ### Available Operations
 
 * [create](#create) - Create a phone number
@@ -43,16 +45,17 @@ if res is not None:
 | `request`                                                                           | [models.CreatePhoneNumberRequestBody](../../models/createphonenumberrequestbody.md) | :heavy_check_mark:                                                                  | The request object to use for the request.                                          |
 | `retries`                                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                    | :heavy_minus_sign:                                                                  | Configuration to override the default retry behavior of the client.                 |
 
-
 ### Response
 
 **[models.PhoneNumber](../../models/phonenumber.md)**
+
 ### Errors
 
 | Error Object        | Status Code         | Content Type        |
 | ------------------- | ------------------- | ------------------- |
 | models.ClerkErrors  | 400,401,403,404,422 | application/json    |
 | models.SDKError     | 4xx-5xx             | */*                 |
+
 
 ## get
 
@@ -83,16 +86,17 @@ if res is not None:
 | `phone_number_id`                                                   | *str*                                                               | :heavy_check_mark:                                                  | The ID of the phone number to retrieve                              | phone_12345                                                         |
 | `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |                                                                     |
 
-
 ### Response
 
 **[models.PhoneNumber](../../models/phonenumber.md)**
+
 ### Errors
 
 | Error Object       | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
 | models.ClerkErrors | 400,401,403,404    | application/json   |
 | models.SDKError    | 4xx-5xx            | */*                |
+
 
 ## delete
 
@@ -123,16 +127,17 @@ if res is not None:
 | `phone_number_id`                                                   | *str*                                                               | :heavy_check_mark:                                                  | The ID of the phone number to delete                                | phone_12345                                                         |
 | `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |                                                                     |
 
-
 ### Response
 
 **[models.DeletedObject](../../models/deletedobject.md)**
+
 ### Errors
 
 | Error Object       | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
 | models.ClerkErrors | 400,401,403,404    | application/json   |
 | models.SDKError    | 4xx-5xx            | */*                |
+
 
 ## update
 
@@ -168,10 +173,10 @@ if res is not None:
 | `request_body`                                                                                | [Optional[models.UpdatePhoneNumberRequestBody]](../../models/updatephonenumberrequestbody.md) | :heavy_minus_sign:                                                                            | N/A                                                                                           |                                                                                               |
 | `retries`                                                                                     | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                              | :heavy_minus_sign:                                                                            | Configuration to override the default retry behavior of the client.                           |                                                                                               |
 
-
 ### Response
 
 **[models.PhoneNumber](../../models/phonenumber.md)**
+
 ### Errors
 
 | Error Object       | Status Code        | Content Type       |

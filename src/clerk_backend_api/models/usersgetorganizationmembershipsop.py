@@ -11,11 +11,11 @@ from typing_extensions import Annotated, NotRequired
 class UsersGetOrganizationMembershipsRequestTypedDict(TypedDict):
     user_id: str
     r"""The ID of the user whose organization memberships we want to retrieve"""
-    limit: NotRequired[float]
+    limit: NotRequired[int]
     r"""Applies a limit to the number of results returned.
     Can be used for paginating the results together with `offset`.
     """
-    offset: NotRequired[float]
+    offset: NotRequired[int]
     r"""Skip the first `offset` results when paginating.
     Needs to be an integer greater or equal to zero.
     To be used in conjunction with `limit`.
@@ -25,11 +25,11 @@ class UsersGetOrganizationMembershipsRequestTypedDict(TypedDict):
 class UsersGetOrganizationMembershipsRequest(BaseModel):
     user_id: Annotated[str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))]
     r"""The ID of the user whose organization memberships we want to retrieve"""
-    limit: Annotated[Optional[float], FieldMetadata(query=QueryParamMetadata(style="form", explode=True))] = 10
+    limit: Annotated[Optional[int], FieldMetadata(query=QueryParamMetadata(style="form", explode=True))] = 10
     r"""Applies a limit to the number of results returned.
     Can be used for paginating the results together with `offset`.
     """
-    offset: Annotated[Optional[float], FieldMetadata(query=QueryParamMetadata(style="form", explode=True))] = 0
+    offset: Annotated[Optional[int], FieldMetadata(query=QueryParamMetadata(style="form", explode=True))] = 0
     r"""Skip the first `offset` results when paginating.
     Needs to be an integer greater or equal to zero.
     To be used in conjunction with `limit`.

@@ -112,6 +112,12 @@ class Web3Signature(BaseModel):
         return m
         
 
+Web3WalletVerificationTypedDict = Union[Web3WalletVerificationAdminTypedDict, Web3SignatureTypedDict]
+
+
+Web3WalletVerification = Union[Web3WalletVerificationAdmin, Web3Signature]
+
+
 class Web3WalletTypedDict(TypedDict):
     object: Web3WalletObject
     r"""String representing the object's type. Objects of the same type share the same value.
@@ -173,9 +179,3 @@ class Web3Wallet(BaseModel):
 
         return m
         
-
-Web3WalletVerificationTypedDict = Union[Web3WalletVerificationAdminTypedDict, Web3SignatureTypedDict]
-
-
-Web3WalletVerification = Union[Web3WalletVerificationAdmin, Web3Signature]
-

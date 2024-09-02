@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: bfe29c99-6e67-43fe-b928-64d6a5ed6aa8
 management:
-  docChecksum: c41c5490f198f58506f13380ae55aa59
+  docChecksum: fae7f7a09c243660c1f412f56e7e9e5a
   docVersion: v1
-  speakeasyVersion: 1.355.0
-  generationVersion: 2.387.0
-  releaseVersion: 0.5.0-alpha.11
-  configChecksum: 1804e08e82b6b13125dccf9edf256490
+  speakeasyVersion: 1.385.0
+  generationVersion: 2.407.2
+  releaseVersion: 0.5.0-alpha.12
+  configChecksum: c58c5b116d09e439c6ce3b13dbe914da
   repoURL: https://github.com/clerk/clerk-sdk-python.git
   installationURL: https://github.com/clerk/clerk-sdk-python.git
   published: true
@@ -14,14 +14,14 @@ features:
   python:
     additionalDependencies: 1.0.0
     constsAndDefaults: 1.0.2
-    core: 5.3.4
+    core: 5.4.2
     defaultEnabledRetries: 0.2.0
     deprecations: 3.0.0
     envVarSecurityUsage: 0.3.1
     examples: 3.0.0
     flatRequests: 1.0.1
     flattening: 3.0.0
-    globalSecurity: 3.0.1
+    globalSecurity: 3.0.2
     globalSecurityCallbacks: 1.0.0
     globalSecurityFlattening: 1.0.0
     globalServerURLs: 3.0.0
@@ -33,7 +33,7 @@ features:
     responseFormat: 1.0.0
     retries: 3.0.0
     sdkHooks: 1.0.0
-    unions: 3.0.1
+    unions: 3.0.2
     uploadStreams: 1.0.0
 generatedFiles:
   - src/clerk_backend_api/sdkconfiguration.py
@@ -71,6 +71,7 @@ generatedFiles:
   - pylintrc
   - pyproject.toml
   - scripts/compile.sh
+  - scripts/prepare-readme.py
   - scripts/publish.sh
   - src/clerk_backend_api/__init__.py
   - src/clerk_backend_api/basesdk.py

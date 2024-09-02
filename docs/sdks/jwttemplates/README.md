@@ -1,6 +1,8 @@
 # JwtTemplates
 (*jwt_templates*)
 
+## Overview
+
 ### Available Operations
 
 * [list](#list) - List all templates
@@ -37,15 +39,16 @@ if res is not None:
 | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
 | `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
-
 ### Response
 
 **[List[models.JWTTemplate]](../../models/.md)**
+
 ### Errors
 
 | Error Object    | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
 | models.SDKError | 4xx-5xx         | */*             |
+
 
 ## create
 
@@ -84,16 +87,17 @@ if res is not None:
 | `request`                                                                           | [models.CreateJWTTemplateRequestBody](../../models/createjwttemplaterequestbody.md) | :heavy_check_mark:                                                                  | The request object to use for the request.                                          |
 | `retries`                                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                    | :heavy_minus_sign:                                                                  | Configuration to override the default retry behavior of the client.                 |
 
-
 ### Response
 
 **[models.JWTTemplate](../../models/jwttemplate.md)**
+
 ### Errors
 
 | Error Object       | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
 | models.ClerkErrors | 400,402,422        | application/json   |
 | models.SDKError    | 4xx-5xx            | */*                |
+
 
 ## get
 
@@ -124,16 +128,17 @@ if res is not None:
 | `template_id`                                                       | *str*                                                               | :heavy_check_mark:                                                  | JWT Template ID                                                     | template_123                                                        |
 | `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |                                                                     |
 
-
 ### Response
 
 **[models.JWTTemplate](../../models/jwttemplate.md)**
+
 ### Errors
 
 | Error Object       | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
 | models.ClerkErrors | 404                | application/json   |
 | models.SDKError    | 4xx-5xx            | */*                |
+
 
 ## update
 
@@ -173,16 +178,17 @@ if res is not None:
 | `request_body`                                                                                | [Optional[models.UpdateJWTTemplateRequestBody]](../../models/updatejwttemplaterequestbody.md) | :heavy_minus_sign:                                                                            | N/A                                                                                           |
 | `retries`                                                                                     | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                              | :heavy_minus_sign:                                                                            | Configuration to override the default retry behavior of the client.                           |
 
-
 ### Response
 
 **[models.JWTTemplate](../../models/jwttemplate.md)**
+
 ### Errors
 
 | Error Object       | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
 | models.ClerkErrors | 400,402,422        | application/json   |
 | models.SDKError    | 4xx-5xx            | */*                |
+
 
 ## delete
 
@@ -213,10 +219,10 @@ if res is not None:
 | `template_id`                                                       | *str*                                                               | :heavy_check_mark:                                                  | JWT Template ID                                                     |
 | `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
-
 ### Response
 
 **[models.DeletedObject](../../models/deletedobject.md)**
+
 ### Errors
 
 | Error Object       | Status Code        | Content Type       |

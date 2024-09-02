@@ -1,6 +1,8 @@
 # Webhooks
 (*webhooks*)
 
+## Overview
+
 ### Available Operations
 
 * [create_svix_app](#create_svix_app) - Create a Svix app
@@ -35,16 +37,17 @@ if res is not None:
 | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
 | `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
-
 ### Response
 
 **[models.SvixURL](../../models/svixurl.md)**
+
 ### Errors
 
 | Error Object       | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
 | models.ClerkErrors | 400                | application/json   |
 | models.SDKError    | 4xx-5xx            | */*                |
+
 
 ## delete_svix_app
 
@@ -79,6 +82,7 @@ s.webhooks.delete_svix_app()
 | models.ClerkErrors | 400                | application/json   |
 | models.SDKError    | 4xx-5xx            | */*                |
 
+
 ## generate_svix_auth_url
 
 Generate a new url for accessing the Svix's management dashboard for that particular instance
@@ -107,10 +111,10 @@ if res is not None:
 | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
 | `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
-
 ### Response
 
 **[models.SvixURL](../../models/svixurl.md)**
+
 ### Errors
 
 | Error Object       | Status Code        | Content Type       |

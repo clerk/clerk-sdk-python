@@ -11,8 +11,8 @@ class OrganizationsSDK(BaseSDK):
     
     def list(
         self, *,
-        limit: Optional[float] = 10,
-        offset: Optional[float] = 0,
+        limit: Optional[int] = 10,
+        offset: Optional[int] = 0,
         include_members_count: Optional[bool] = None,
         query: Optional[str] = None,
         order_by: Optional[str] = "-created_at",
@@ -104,8 +104,8 @@ class OrganizationsSDK(BaseSDK):
     
     async def list_async(
         self, *,
-        limit: Optional[float] = 10,
-        offset: Optional[float] = 0,
+        limit: Optional[int] = 10,
+        offset: Optional[int] = 0,
         include_members_count: Optional[bool] = None,
         query: Optional[str] = None,
         order_by: Optional[str] = "-created_at",

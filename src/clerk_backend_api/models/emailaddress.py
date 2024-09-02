@@ -53,6 +53,12 @@ class ErrorClerkError(BaseModel):
     clerk_trace_id: Optional[str] = None
     
 
+ErrorTypedDict = ErrorClerkErrorTypedDict
+
+
+Error = ErrorClerkError
+
+
 class OauthTypedDict(TypedDict):
     status: OauthVerificationStatus
     strategy: OauthVerificationStrategy
@@ -198,6 +204,12 @@ class Otp(BaseModel):
         return m
         
 
+VerificationTypedDict = Union[OtpTypedDict, AdminTypedDict, OauthTypedDict]
+
+
+Verification = Union[Otp, Admin, Oauth]
+
+
 class EmailAddressTypedDict(TypedDict):
     object: EmailAddressObject
     r"""String representing the object's type. Objects of the same type share the same value.
@@ -263,15 +275,3 @@ class EmailAddress(BaseModel):
 
         return m
         
-
-ErrorTypedDict = ErrorClerkErrorTypedDict
-
-
-Error = ErrorClerkError
-
-
-VerificationTypedDict = Union[OtpTypedDict, AdminTypedDict, OauthTypedDict]
-
-
-Verification = Union[Otp, Admin, Oauth]
-
