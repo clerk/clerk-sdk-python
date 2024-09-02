@@ -25,3 +25,9 @@ actions:
   - target: $["components"]["schemas"]["IdentificationLink"]["properties"]["type"]["enum"]
     update:
       - "oauth_apple"
+  - target: $["components"]["parameters"]["LimitParameter"]["schema"]
+    update:
+      type: integer
+  - target: $["components"]["parameters"]["OffsetParameter"]["schema"]
+    update:
+      type: integer
