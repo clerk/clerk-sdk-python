@@ -33,7 +33,7 @@ python:
       shared: ""
       webhooks: ""
   inputModelSuffix: input
-  maxMethodParams: 4
+  maxMethodParams: 20
   methodArguments: infer-optional-args
   outputModelSuffix: output
   packageName: clerk-backend-api
