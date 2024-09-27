@@ -31,29 +31,6 @@ class JwtHelper:
             self.authorized_parties = authorized_parties if authorized_parties else set()
             self.clock_skew_in_ms = clock_skew_in_ms
 
-    @staticmethod
-    def generate_token(
-            key,
-            subject = None,
-            audience = None,
-            expiration = None,
-            not_before = None,
-            issued_at = None,
-            azp = None
-    ):
-        """Generates a JWT token with the given claims."""
-
-        payload = {
-            k: v for k, v in {
-                'sub': subject,
-                'aud': audience,
-                'exp': expiration,
-                'nbf': not_before,
-                'iat': issued_at,
-                'azp': azp
-            }.items() if v is not None
-        }
-        return jwt.encode(payload, key, algorithm="HS256")
 
     @staticmethod
     def verify_jwt(token: str, options: VerifyJwtOptions) -> Dict[str, Any]:
@@ -105,12 +82,16 @@ if __name__ == "__main__":
         )
 
     # JWT token (example, use a real token in actual tests)
-    token = JwtHelper.generate_token(
-        key = key,
-        subject="1234567890",
-        audience="your-audience",
-        azp="your-authorized-party",
-        issued_at=time.time()
+    token = jwt.encode(
+        {
+            "sub": "1234567890",
+            "name": "John Doe",
+            "iat": time.time(),
+            "azp": "your-authorized-party",
+            "aud":"your-audience"
+        },
+        key,
+        algorithm="HS256"
     )
 
     try:

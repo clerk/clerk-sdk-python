@@ -3,9 +3,30 @@ import pytest
 from datetime import datetime, timedelta
 from helpers.jwthelper import JwtHelper, TokenVerificationException
 
+def generate_token(
+        key,
+        subject = None,
+        audience = None,
+        expiration = None,
+        not_before = None,
+        issued_at = None,
+        azp = None
+):
+    payload = {
+        k: v for k, v in {
+            'sub': subject,
+            'aud': audience,
+            'exp': expiration,
+            'nbf': not_before,
+            'iat': issued_at,
+            'azp': azp
+        }.items() if v is not None
+    }
+    return jwt.encode(payload, key, algorithm="HS256")
+
 def test_verifies_ok():
     key = "secret"
-    token = JwtHelper.generate_token(
+    token = generate_token(
         key=key,
         subject="Joe",
         audience="aud1",
@@ -33,7 +54,7 @@ def test_fails_null_key():
 
 def test_fails_verify_expired():
     key = "secret"
-    token = JwtHelper.generate_token(
+    token = generate_token(
         key=key,
         subject="Joe",
         expiration=datetime.utcnow() - timedelta(minutes=1)
@@ -47,7 +68,7 @@ def test_fails_verify_expired():
 
 def test_verify_does_not_expire_with_large_clock_skew():
     key = "secret"
-    token = JwtHelper.generate_token(
+    token = generate_token(
         key=key,
         subject="Joe",
         expiration=datetime.utcnow() - timedelta(minutes=1)
@@ -57,7 +78,7 @@ def test_verify_does_not_expire_with_large_clock_skew():
 
 def test_fails_verify_not_before():
     key = "secret"
-    token = JwtHelper.generate_token(
+    token = generate_token(
         key=key,
         subject="Joe",
         not_before=datetime.utcnow() + timedelta(minutes=1),
@@ -73,7 +94,7 @@ def test_fails_verify_not_before():
 
 def test_fails_issued_at():
     key = "secret"
-    token = JwtHelper.generate_token(
+    token = generate_token(
         key=key,
         subject="Joe",
         issued_at=datetime.utcnow() + timedelta(minutes=1)
@@ -90,7 +111,7 @@ def test_fails_issued_at():
 
 def test_fails_audience():
     key = "secret"
-    token = JwtHelper.generate_token(
+    token = generate_token(
         key=key,
         subject="Joe",
         audience=["aud1", "aud2"]
@@ -104,7 +125,7 @@ def test_fails_audience():
 
 def test_verifies_empty_authorized_parties():
     key = "secret"
-    token = JwtHelper.generate_token(
+    token = generate_token(
         key=key,
         subject="Joe",
         audience=["aud1", "aud2"],
@@ -115,7 +136,7 @@ def test_verifies_empty_authorized_parties():
 
 def test_verifies_non_empty_authorized_parties():
     key = "secret"
-    token = JwtHelper.generate_token(
+    token = generate_token(
         key=key,
         subject="Joe",
         audience=["aud1", "aud2"],
@@ -126,7 +147,7 @@ def test_verifies_non_empty_authorized_parties():
 
 def test_fails_authorized_parties():
     key = "secret"
-    token = JwtHelper.generate_token(
+    token = generate_token(
         key=key,
         subject="Joe",
         audience=["aud1", "aud2"],
