@@ -15,8 +15,7 @@ python:
   version: 0.5.0-alpha.12
   additionalDependencies:
     dev: {}
-    main:
-      - cryptography
+    main: {}
   author: Clerk
   authors:
     - Clerk
