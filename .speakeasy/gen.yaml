@@ -15,7 +15,9 @@ python:
   version: 0.5.0-alpha.12
   additionalDependencies:
     dev: {}
-    main: {}
+    main:
+      - PyJWT
+      - cryptography
   author: Clerk
   authors:
     - Clerk
