@@ -16,7 +16,6 @@ python:
   additionalDependencies:
     dev: {}
     main:
-      - PyJWT
       - cryptography
   author: Clerk
   authors:
