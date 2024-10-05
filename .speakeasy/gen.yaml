@@ -16,8 +16,8 @@ python:
   additionalDependencies:
     dev: {}
     main: 
-      - "jwt==2.3.0"
-      - "cryptography==3.4.7"
+      - PyJWT>=2.0.0
+      - cryptography>=3.4.0
   author: Clerk
   authors:
     - Clerk
