@@ -16,9 +16,9 @@ python:
   additionalDependencies:
     dev: {}
     main: 
-      - name: jwt
+      - name: "jwt"
         version: "2.3.0"
-      - name: cryptography
+      - name: "cryptography"
         version: "3.4.7"
   author: Clerk
   authors:
