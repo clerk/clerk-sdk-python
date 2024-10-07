@@ -2,10 +2,12 @@ import httpx
 import jwt
 import re
 from cryptography.hazmat.primitives import serialization
+from cryptography.hazmat.primitives.asymmetric.rsa import RSAPublicKey
+from jwt.algorithms import RSAAlgorithm
 from dataclasses import dataclass
 from datetime import timedelta
 from enum import Enum
-from typing import Any, Dict, List, Union, Optional
+from typing import Any, Dict, List, Union, Optional, cast
 
 
 class TokenVerificationErrorReason(Enum):
@@ -118,8 +120,8 @@ def fetch_jwks(options: VerifyTokenOptions) -> Dict[str, Any]:
 
         try:
             return http_res.json()
-        except:
-            raise TokenVerificationError(TokenVerificationErrorReason.JWK_FAILED_TO_LOAD)
+        except Exception as e:
+            raise TokenVerificationError(TokenVerificationErrorReason.JWK_FAILED_TO_LOAD) from e
 
 
 def get_remote_jwt_key(token: str, options: VerifyTokenOptions) -> str:
@@ -140,12 +142,14 @@ def get_remote_jwt_key(token: str, options: VerifyTokenOptions) -> str:
 
     for key in jwks:
         if key.get('kid') == kid:
-            public_key = jwt.algorithms.RSAAlgorithm.from_jwk(key)
-            pem = public_key.public_bytes(
-                encoding=serialization.Encoding.PEM,
-                format=serialization.PublicFormat.SubjectPublicKeyInfo
-            )
-            return pem.decode('utf-8')
+            public_key = RSAAlgorithm.from_jwk(key)
+            if isinstance(public_key, RSAPublicKey):
+                public_key = cast(RSAPublicKey, public_key)
+                pem = public_key.public_bytes(
+                    encoding=serialization.Encoding.PEM,
+                    format=serialization.PublicFormat.SubjectPublicKeyInfo
+                )
+                return pem.decode('utf-8')
 
     raise TokenVerificationError(TokenVerificationErrorReason.JWK_KID_MISMATCH)
 

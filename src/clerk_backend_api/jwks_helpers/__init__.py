@@ -1,9 +1,9 @@
-
 from ..sdk import Clerk
 from .authenticaterequest import (
     AuthErrorReason,
     AuthStatus,
     AuthenticateRequestOptions,
+    RequestState,
     authenticate_request
 )
 from .verifytoken import (
@@ -17,6 +17,7 @@ __all__ = [
     "AuthErrorReason",
     "AuthStatus",
     "AuthenticateRequestOptions",
+    "RequestState",
     "authenticate_request",
     "TokenVerificationError",
     "TokenVerificationErrorReason",
@@ -26,4 +27,4 @@ __all__ = [
 
 
 # Attach authenticate_request method to the Clerk class
-Clerk.authenticate_request = authenticate_request
+setattr(Clerk, 'authenticate_request', authenticate_request)
