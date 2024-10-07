@@ -19,7 +19,6 @@ from clerk_backend_api import Clerk
 
 s = Clerk()
 
-
 s.misc.get_public_interstitial(frontend_api="frontend-api_1a2b3c4d", publishable_key="pub_1a2b3c4d")
 
 # Use the SDK ...
@@ -36,6 +35,6 @@ s.misc.get_public_interstitial(frontend_api="frontend-api_1a2b3c4d", publishable
 
 ### Errors
 
-| Error Object    | Status Code     | Content Type    |
+| Error Type      | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
-| models.SDKError | 4xx-5xx         | */*             |
+| models.SDKError | 4XX, 5XX        | \*/\*           |

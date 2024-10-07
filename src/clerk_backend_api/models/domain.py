@@ -2,15 +2,22 @@
 
 from __future__ import annotations
 from .cnametarget import CNameTarget, CNameTargetTypedDict
-from clerk_backend_api.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
+from clerk_backend_api.types import (
+    BaseModel,
+    Nullable,
+    OptionalNullable,
+    UNSET,
+    UNSET_SENTINEL,
+)
 from enum import Enum
 from pydantic import model_serializer
-from typing import List, TypedDict
-from typing_extensions import NotRequired
+from typing import List
+from typing_extensions import NotRequired, TypedDict
 
 
 class DomainObject(str, Enum):
     DOMAIN = "domain"
+
 
 class DomainTypedDict(TypedDict):
     object: DomainObject
@@ -25,22 +32,30 @@ class DomainTypedDict(TypedDict):
     """
     proxy_url: NotRequired[Nullable[str]]
     cname_targets: NotRequired[Nullable[List[CNameTargetTypedDict]]]
-    
+
 
 class Domain(BaseModel):
     object: DomainObject
+
     id: str
+
     name: str
+
     is_satellite: bool
+
     frontend_api_url: str
+
     development_origin: str
+
     accounts_portal_url: OptionalNullable[str] = UNSET
     r"""Null for satellite domains.
 
     """
+
     proxy_url: OptionalNullable[str] = UNSET
+
     cname_targets: OptionalNullable[List[CNameTarget]] = UNSET
-    
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = ["accounts_portal_url", "proxy_url", "cname_targets"]
@@ -54,9 +69,13 @@ class Domain(BaseModel):
         for n, f in self.model_fields.items():
             k = f.alias or n
             val = serialized.get(k)
+            serialized.pop(k, None)
 
             optional_nullable = k in optional_fields and k in nullable_fields
-            is_set = (self.__pydantic_fields_set__.intersection({n}) or k in null_default_fields) # pylint: disable=no-member
+            is_set = (
+                self.__pydantic_fields_set__.intersection({n})
+                or k in null_default_fields
+            )  # pylint: disable=no-member
 
             if val is not None and val != UNSET_SENTINEL:
                 m[k] = val
@@ -66,4 +85,3 @@ class Domain(BaseModel):
                 m[k] = val
 
         return m
-        

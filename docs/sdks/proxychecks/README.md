@@ -27,7 +27,6 @@ s = Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
-
 res = s.proxy_checks.verify(request={
     "domain_id": "domain_32hfu3e",
     "proxy_url": "https://example.com/__clerk",
@@ -52,7 +51,7 @@ if res is not None:
 
 ### Errors
 
-| Error Object       | Status Code        | Content Type       |
-| ------------------ | ------------------ | ------------------ |
-| models.ClerkErrors | 400,422            | application/json   |
-| models.SDKError    | 4xx-5xx            | */*                |
+| Error Type                | Status Code               | Content Type              |
+| ------------------------- | ------------------------- | ------------------------- |
+| models.ClerkErrorsError74 | 400, 422                  | application/json          |
+| models.SDKError           | 4XX, 5XX                  | \*/\*                     |

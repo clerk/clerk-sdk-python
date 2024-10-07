@@ -1,5 +1,7 @@
 # OrganizationInvitations
 
+A list of organization invitations
+
 
 ## Fields
 

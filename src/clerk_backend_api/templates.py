@@ -4,13 +4,13 @@ from .basesdk import BaseSDK
 from clerk_backend_api import models, utils
 from clerk_backend_api._hooks import HookContext
 from clerk_backend_api.types import OptionalNullable, UNSET
-from typing import Any, List, Optional, Union
+from typing import Any, List, Optional
+
 
 class Templates(BaseSDK):
-    
-    
     def list(
-        self, *,
+        self,
+        *,
         template_type: models.TemplateType,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -30,14 +30,14 @@ class Templates(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
-        
+
         if server_url is not None:
             base_url = server_url
-        
+
         request = models.GetTemplateListRequest(
             template_type=template_type,
         )
-        
+
         req = self.build_request(
             method="GET",
             path="/templates/{template_type}",
@@ -52,44 +52,48 @@ class Templates(BaseSDK):
             security=self.sdk_configuration.security,
             timeout_ms=timeout_ms,
         )
-        
+
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, [
-                "429",
-                "500",
-                "502",
-                "503",
-                "504"
-            ])                
-        
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
         http_res = self.do_request(
-            hook_ctx=HookContext(operation_id="GetTemplateList", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            hook_ctx=HookContext(
+                operation_id="GetTemplateList",
+                oauth2_scopes=[],
+                security_source=self.sdk_configuration.security,
+            ),
             request=req,
-            error_status_codes=["400","401","422","4XX","5XX"],
-            retry_config=retry_config
+            error_status_codes=["400", "401", "422", "4XX", "5XX"],
+            retry_config=retry_config,
         )
-        
+
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[List[models.Template]])
-        if utils.match_response(http_res, ["400","401","422"], "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX","5XX"], "*"):
-            raise models.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
-        
-        content_type = http_res.headers.get("Content-Type")
-        raise models.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+        if utils.match_response(http_res, ["400", "401", "422"], "application/json"):
+            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsError16Data)
+            raise models.ClerkErrorsError16(data=data)
+        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res.text, http_res
+            )
 
-    
-    
+        content_type = http_res.headers.get("Content-Type")
+        raise models.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res.text,
+            http_res,
+        )
+
     async def list_async(
-        self, *,
+        self,
+        *,
         template_type: models.TemplateType,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -109,15 +113,15 @@ class Templates(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
-        
+
         if server_url is not None:
             base_url = server_url
-        
+
         request = models.GetTemplateListRequest(
             template_type=template_type,
         )
-        
-        req = self.build_request(
+
+        req = self.build_request_async(
             method="GET",
             path="/templates/{template_type}",
             base_url=base_url,
@@ -131,44 +135,48 @@ class Templates(BaseSDK):
             security=self.sdk_configuration.security,
             timeout_ms=timeout_ms,
         )
-        
+
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, [
-                "429",
-                "500",
-                "502",
-                "503",
-                "504"
-            ])                
-        
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
         http_res = await self.do_request_async(
-            hook_ctx=HookContext(operation_id="GetTemplateList", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            hook_ctx=HookContext(
+                operation_id="GetTemplateList",
+                oauth2_scopes=[],
+                security_source=self.sdk_configuration.security,
+            ),
             request=req,
-            error_status_codes=["400","401","422","4XX","5XX"],
-            retry_config=retry_config
+            error_status_codes=["400", "401", "422", "4XX", "5XX"],
+            retry_config=retry_config,
         )
-        
+
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[List[models.Template]])
-        if utils.match_response(http_res, ["400","401","422"], "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX","5XX"], "*"):
-            raise models.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
-        
-        content_type = http_res.headers.get("Content-Type")
-        raise models.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+        if utils.match_response(http_res, ["400", "401", "422"], "application/json"):
+            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsError16Data)
+            raise models.ClerkErrorsError16(data=data)
+        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res.text, http_res
+            )
 
-    
-    
+        content_type = http_res.headers.get("Content-Type")
+        raise models.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res.text,
+            http_res,
+        )
+
     def get(
-        self, *,
+        self,
+        *,
         template_type: models.PathParamTemplateType,
         slug: str,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -189,15 +197,15 @@ class Templates(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
-        
+
         if server_url is not None:
             base_url = server_url
-        
+
         request = models.GetTemplateRequest(
             template_type=template_type,
             slug=slug,
         )
-        
+
         req = self.build_request(
             method="GET",
             path="/templates/{template_type}/{slug}",
@@ -212,44 +220,48 @@ class Templates(BaseSDK):
             security=self.sdk_configuration.security,
             timeout_ms=timeout_ms,
         )
-        
+
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, [
-                "429",
-                "500",
-                "502",
-                "503",
-                "504"
-            ])                
-        
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
         http_res = self.do_request(
-            hook_ctx=HookContext(operation_id="GetTemplate", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            hook_ctx=HookContext(
+                operation_id="GetTemplate",
+                oauth2_scopes=[],
+                security_source=self.sdk_configuration.security,
+            ),
             request=req,
-            error_status_codes=["400","401","404","4XX","5XX"],
-            retry_config=retry_config
+            error_status_codes=["400", "401", "404", "4XX", "5XX"],
+            retry_config=retry_config,
         )
-        
+
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[models.Template])
-        if utils.match_response(http_res, ["400","401","404"], "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX","5XX"], "*"):
-            raise models.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
-        
-        content_type = http_res.headers.get("Content-Type")
-        raise models.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+        if utils.match_response(http_res, ["400", "401", "404"], "application/json"):
+            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsError17Data)
+            raise models.ClerkErrorsError17(data=data)
+        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res.text, http_res
+            )
 
-    
-    
+        content_type = http_res.headers.get("Content-Type")
+        raise models.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res.text,
+            http_res,
+        )
+
     async def get_async(
-        self, *,
+        self,
+        *,
         template_type: models.PathParamTemplateType,
         slug: str,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -270,16 +282,16 @@ class Templates(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
-        
+
         if server_url is not None:
             base_url = server_url
-        
+
         request = models.GetTemplateRequest(
             template_type=template_type,
             slug=slug,
         )
-        
-        req = self.build_request(
+
+        req = self.build_request_async(
             method="GET",
             path="/templates/{template_type}/{slug}",
             base_url=base_url,
@@ -293,47 +305,57 @@ class Templates(BaseSDK):
             security=self.sdk_configuration.security,
             timeout_ms=timeout_ms,
         )
-        
+
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, [
-                "429",
-                "500",
-                "502",
-                "503",
-                "504"
-            ])                
-        
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
         http_res = await self.do_request_async(
-            hook_ctx=HookContext(operation_id="GetTemplate", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            hook_ctx=HookContext(
+                operation_id="GetTemplate",
+                oauth2_scopes=[],
+                security_source=self.sdk_configuration.security,
+            ),
             request=req,
-            error_status_codes=["400","401","404","4XX","5XX"],
-            retry_config=retry_config
+            error_status_codes=["400", "401", "404", "4XX", "5XX"],
+            retry_config=retry_config,
         )
-        
+
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[models.Template])
-        if utils.match_response(http_res, ["400","401","404"], "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX","5XX"], "*"):
-            raise models.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
-        
-        content_type = http_res.headers.get("Content-Type")
-        raise models.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+        if utils.match_response(http_res, ["400", "401", "404"], "application/json"):
+            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsError17Data)
+            raise models.ClerkErrorsError17(data=data)
+        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res.text, http_res
+            )
 
-    
-    
+        content_type = http_res.headers.get("Content-Type")
+        raise models.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res.text,
+            http_res,
+        )
+
     def upsert(
-        self, *,
+        self,
+        *,
         template_type: models.UpsertTemplatePathParamTemplateType,
         slug: str,
-        request_body: Optional[Union[models.UpsertTemplateRequestBody, models.UpsertTemplateRequestBodyTypedDict]] = None,
+        name: Optional[str] = None,
+        subject: OptionalNullable[str] = UNSET,
+        markup: OptionalNullable[str] = UNSET,
+        body: Optional[str] = None,
+        delivered_by_clerk: OptionalNullable[bool] = UNSET,
+        from_email_name: Optional[str] = None,
+        reply_to_email_name: Optional[str] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -344,7 +366,13 @@ class Templates(BaseSDK):
 
         :param template_type: The type of template to update
         :param slug: The slug of the template to update
-        :param request_body: 
+        :param name: The user-friendly name of the template
+        :param subject: The email subject. Applicable only to email templates.
+        :param markup: The editor markup used to generate the body of the template
+        :param body: The template body before variable interpolation
+        :param delivered_by_clerk: Whether Clerk should deliver emails or SMS messages based on the current template
+        :param from_email_name: The local part of the From email address that will be used for emails. For example, in the address 'hello@example.com', the local part is 'hello'. Applicable only to email templates.
+        :param reply_to_email_name: The local part of the Reply To email address that will be used for emails. For example, in the address 'hello@example.com', the local part is 'hello'. Applicable only to email templates.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -353,16 +381,24 @@ class Templates(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
-        
+
         if server_url is not None:
             base_url = server_url
-        
+
         request = models.UpsertTemplateRequest(
             template_type=template_type,
             slug=slug,
-            request_body=utils.get_pydantic_model(request_body, Optional[models.UpsertTemplateRequestBody]),
+            request_body=models.UpsertTemplateRequestBody(
+                name=name,
+                subject=subject,
+                markup=markup,
+                body=body,
+                delivered_by_clerk=delivered_by_clerk,
+                from_email_name=from_email_name,
+                reply_to_email_name=reply_to_email_name,
+            ),
         )
-        
+
         req = self.build_request(
             method="PUT",
             path="/templates/{template_type}/{slug}",
@@ -375,50 +411,68 @@ class Templates(BaseSDK):
             user_agent_header="user-agent",
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
-            get_serialized_body=lambda: utils.serialize_request_body(request.request_body, False, True, "json", Optional[models.UpsertTemplateRequestBody]),
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request.request_body,
+                False,
+                True,
+                "json",
+                Optional[models.UpsertTemplateRequestBody],
+            ),
             timeout_ms=timeout_ms,
         )
-        
+
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, [
-                "429",
-                "500",
-                "502",
-                "503",
-                "504"
-            ])                
-        
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
         http_res = self.do_request(
-            hook_ctx=HookContext(operation_id="UpsertTemplate", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            hook_ctx=HookContext(
+                operation_id="UpsertTemplate",
+                oauth2_scopes=[],
+                security_source=self.sdk_configuration.security,
+            ),
             request=req,
-            error_status_codes=["400","401","402","403","404","422","4XX","5XX"],
-            retry_config=retry_config
+            error_status_codes=["400", "401", "402", "403", "404", "422", "4XX", "5XX"],
+            retry_config=retry_config,
         )
-        
+
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[models.Template])
-        if utils.match_response(http_res, ["400","401","402","403","404","422"], "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX","5XX"], "*"):
-            raise models.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
-        
-        content_type = http_res.headers.get("Content-Type")
-        raise models.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+        if utils.match_response(
+            http_res, ["400", "401", "402", "403", "404", "422"], "application/json"
+        ):
+            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsError18Data)
+            raise models.ClerkErrorsError18(data=data)
+        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res.text, http_res
+            )
 
-    
-    
+        content_type = http_res.headers.get("Content-Type")
+        raise models.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res.text,
+            http_res,
+        )
+
     async def upsert_async(
-        self, *,
+        self,
+        *,
         template_type: models.UpsertTemplatePathParamTemplateType,
         slug: str,
-        request_body: Optional[Union[models.UpsertTemplateRequestBody, models.UpsertTemplateRequestBodyTypedDict]] = None,
+        name: Optional[str] = None,
+        subject: OptionalNullable[str] = UNSET,
+        markup: OptionalNullable[str] = UNSET,
+        body: Optional[str] = None,
+        delivered_by_clerk: OptionalNullable[bool] = UNSET,
+        from_email_name: Optional[str] = None,
+        reply_to_email_name: Optional[str] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -429,7 +483,13 @@ class Templates(BaseSDK):
 
         :param template_type: The type of template to update
         :param slug: The slug of the template to update
-        :param request_body: 
+        :param name: The user-friendly name of the template
+        :param subject: The email subject. Applicable only to email templates.
+        :param markup: The editor markup used to generate the body of the template
+        :param body: The template body before variable interpolation
+        :param delivered_by_clerk: Whether Clerk should deliver emails or SMS messages based on the current template
+        :param from_email_name: The local part of the From email address that will be used for emails. For example, in the address 'hello@example.com', the local part is 'hello'. Applicable only to email templates.
+        :param reply_to_email_name: The local part of the Reply To email address that will be used for emails. For example, in the address 'hello@example.com', the local part is 'hello'. Applicable only to email templates.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -438,17 +498,25 @@ class Templates(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
-        
+
         if server_url is not None:
             base_url = server_url
-        
+
         request = models.UpsertTemplateRequest(
             template_type=template_type,
             slug=slug,
-            request_body=utils.get_pydantic_model(request_body, Optional[models.UpsertTemplateRequestBody]),
+            request_body=models.UpsertTemplateRequestBody(
+                name=name,
+                subject=subject,
+                markup=markup,
+                body=body,
+                delivered_by_clerk=delivered_by_clerk,
+                from_email_name=from_email_name,
+                reply_to_email_name=reply_to_email_name,
+            ),
         )
-        
-        req = self.build_request(
+
+        req = self.build_request_async(
             method="PUT",
             path="/templates/{template_type}/{slug}",
             base_url=base_url,
@@ -460,47 +528,59 @@ class Templates(BaseSDK):
             user_agent_header="user-agent",
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
-            get_serialized_body=lambda: utils.serialize_request_body(request.request_body, False, True, "json", Optional[models.UpsertTemplateRequestBody]),
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request.request_body,
+                False,
+                True,
+                "json",
+                Optional[models.UpsertTemplateRequestBody],
+            ),
             timeout_ms=timeout_ms,
         )
-        
+
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, [
-                "429",
-                "500",
-                "502",
-                "503",
-                "504"
-            ])                
-        
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
         http_res = await self.do_request_async(
-            hook_ctx=HookContext(operation_id="UpsertTemplate", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            hook_ctx=HookContext(
+                operation_id="UpsertTemplate",
+                oauth2_scopes=[],
+                security_source=self.sdk_configuration.security,
+            ),
             request=req,
-            error_status_codes=["400","401","402","403","404","422","4XX","5XX"],
-            retry_config=retry_config
+            error_status_codes=["400", "401", "402", "403", "404", "422", "4XX", "5XX"],
+            retry_config=retry_config,
         )
-        
+
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[models.Template])
-        if utils.match_response(http_res, ["400","401","402","403","404","422"], "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX","5XX"], "*"):
-            raise models.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
-        
-        content_type = http_res.headers.get("Content-Type")
-        raise models.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+        if utils.match_response(
+            http_res, ["400", "401", "402", "403", "404", "422"], "application/json"
+        ):
+            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsError18Data)
+            raise models.ClerkErrorsError18(data=data)
+        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res.text, http_res
+            )
 
-    
-    
+        content_type = http_res.headers.get("Content-Type")
+        raise models.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res.text,
+            http_res,
+        )
+
     def revert(
-        self, *,
+        self,
+        *,
         template_type: models.RevertTemplatePathParamTemplateType,
         slug: str,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -521,15 +601,15 @@ class Templates(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
-        
+
         if server_url is not None:
             base_url = server_url
-        
+
         request = models.RevertTemplateRequest(
             template_type=template_type,
             slug=slug,
         )
-        
+
         req = self.build_request(
             method="POST",
             path="/templates/{template_type}/{slug}/revert",
@@ -544,44 +624,50 @@ class Templates(BaseSDK):
             security=self.sdk_configuration.security,
             timeout_ms=timeout_ms,
         )
-        
+
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, [
-                "429",
-                "500",
-                "502",
-                "503",
-                "504"
-            ])                
-        
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
         http_res = self.do_request(
-            hook_ctx=HookContext(operation_id="RevertTemplate", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            hook_ctx=HookContext(
+                operation_id="RevertTemplate",
+                oauth2_scopes=[],
+                security_source=self.sdk_configuration.security,
+            ),
             request=req,
-            error_status_codes=["400","401","402","404","4XX","5XX"],
-            retry_config=retry_config
+            error_status_codes=["400", "401", "402", "404", "4XX", "5XX"],
+            retry_config=retry_config,
         )
-        
+
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[models.Template])
-        if utils.match_response(http_res, ["400","401","402","404"], "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX","5XX"], "*"):
-            raise models.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
-        
-        content_type = http_res.headers.get("Content-Type")
-        raise models.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+        if utils.match_response(
+            http_res, ["400", "401", "402", "404"], "application/json"
+        ):
+            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsError19Data)
+            raise models.ClerkErrorsError19(data=data)
+        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res.text, http_res
+            )
 
-    
-    
+        content_type = http_res.headers.get("Content-Type")
+        raise models.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res.text,
+            http_res,
+        )
+
     async def revert_async(
-        self, *,
+        self,
+        *,
         template_type: models.RevertTemplatePathParamTemplateType,
         slug: str,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -602,16 +688,16 @@ class Templates(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
-        
+
         if server_url is not None:
             base_url = server_url
-        
+
         request = models.RevertTemplateRequest(
             template_type=template_type,
             slug=slug,
         )
-        
-        req = self.build_request(
+
+        req = self.build_request_async(
             method="POST",
             path="/templates/{template_type}/{slug}/revert",
             base_url=base_url,
@@ -625,47 +711,56 @@ class Templates(BaseSDK):
             security=self.sdk_configuration.security,
             timeout_ms=timeout_ms,
         )
-        
+
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, [
-                "429",
-                "500",
-                "502",
-                "503",
-                "504"
-            ])                
-        
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
         http_res = await self.do_request_async(
-            hook_ctx=HookContext(operation_id="RevertTemplate", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            hook_ctx=HookContext(
+                operation_id="RevertTemplate",
+                oauth2_scopes=[],
+                security_source=self.sdk_configuration.security,
+            ),
             request=req,
-            error_status_codes=["400","401","402","404","4XX","5XX"],
-            retry_config=retry_config
+            error_status_codes=["400", "401", "402", "404", "4XX", "5XX"],
+            retry_config=retry_config,
         )
-        
+
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[models.Template])
-        if utils.match_response(http_res, ["400","401","402","404"], "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX","5XX"], "*"):
-            raise models.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
-        
-        content_type = http_res.headers.get("Content-Type")
-        raise models.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+        if utils.match_response(
+            http_res, ["400", "401", "402", "404"], "application/json"
+        ):
+            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsError19Data)
+            raise models.ClerkErrorsError19(data=data)
+        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res.text, http_res
+            )
 
-    
-    
+        content_type = http_res.headers.get("Content-Type")
+        raise models.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res.text,
+            http_res,
+        )
+
     def preview(
-        self, *,
+        self,
+        *,
         template_type: str,
         slug: str,
-        request_body: Optional[Union[models.PreviewTemplateRequestBody, models.PreviewTemplateRequestBodyTypedDict]] = None,
+        subject: OptionalNullable[str] = UNSET,
+        body: Optional[str] = None,
+        from_email_name: Optional[str] = None,
+        reply_to_email_name: Optional[str] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -676,7 +771,10 @@ class Templates(BaseSDK):
 
         :param template_type: The type of template to preview
         :param slug: The slug of the template to preview
-        :param request_body: Required parameters
+        :param subject: The email subject. Applicable only to email templates.
+        :param body: The template body before variable interpolation
+        :param from_email_name: The local part of the From email address that will be used for emails. For example, in the address 'hello@example.com', the local part is 'hello'. Applicable only to email templates.
+        :param reply_to_email_name: The local part of the Reply To email address that will be used for emails. For example, in the address 'hello@example.com', the local part is 'hello'. Applicable only to email templates.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -685,16 +783,21 @@ class Templates(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
-        
+
         if server_url is not None:
             base_url = server_url
-        
+
         request = models.PreviewTemplateRequest(
             template_type=template_type,
             slug=slug,
-            request_body=utils.get_pydantic_model(request_body, Optional[models.PreviewTemplateRequestBody]),
+            request_body=models.PreviewTemplateRequestBody(
+                subject=subject,
+                body=body,
+                from_email_name=from_email_name,
+                reply_to_email_name=reply_to_email_name,
+            ),
         )
-        
+
         req = self.build_request(
             method="POST",
             path="/templates/{template_type}/{slug}/preview",
@@ -707,50 +810,67 @@ class Templates(BaseSDK):
             user_agent_header="user-agent",
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
-            get_serialized_body=lambda: utils.serialize_request_body(request.request_body, False, True, "json", Optional[models.PreviewTemplateRequestBody]),
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request.request_body,
+                False,
+                True,
+                "json",
+                Optional[models.PreviewTemplateRequestBody],
+            ),
             timeout_ms=timeout_ms,
         )
-        
+
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, [
-                "429",
-                "500",
-                "502",
-                "503",
-                "504"
-            ])                
-        
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
         http_res = self.do_request(
-            hook_ctx=HookContext(operation_id="PreviewTemplate", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            hook_ctx=HookContext(
+                operation_id="PreviewTemplate",
+                oauth2_scopes=[],
+                security_source=self.sdk_configuration.security,
+            ),
             request=req,
-            error_status_codes=["400","401","404","422","4XX","5XX"],
-            retry_config=retry_config
+            error_status_codes=["400", "401", "404", "422", "4XX", "5XX"],
+            retry_config=retry_config,
         )
-        
+
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, Optional[models.PreviewTemplateResponseBody])
-        if utils.match_response(http_res, ["400","401","404","422"], "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX","5XX"], "*"):
-            raise models.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
-        
-        content_type = http_res.headers.get("Content-Type")
-        raise models.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+            return utils.unmarshal_json(
+                http_res.text, Optional[models.PreviewTemplateResponseBody]
+            )
+        if utils.match_response(
+            http_res, ["400", "401", "404", "422"], "application/json"
+        ):
+            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsError20Data)
+            raise models.ClerkErrorsError20(data=data)
+        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res.text, http_res
+            )
 
-    
-    
+        content_type = http_res.headers.get("Content-Type")
+        raise models.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res.text,
+            http_res,
+        )
+
     async def preview_async(
-        self, *,
+        self,
+        *,
         template_type: str,
         slug: str,
-        request_body: Optional[Union[models.PreviewTemplateRequestBody, models.PreviewTemplateRequestBodyTypedDict]] = None,
+        subject: OptionalNullable[str] = UNSET,
+        body: Optional[str] = None,
+        from_email_name: Optional[str] = None,
+        reply_to_email_name: Optional[str] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -761,7 +881,10 @@ class Templates(BaseSDK):
 
         :param template_type: The type of template to preview
         :param slug: The slug of the template to preview
-        :param request_body: Required parameters
+        :param subject: The email subject. Applicable only to email templates.
+        :param body: The template body before variable interpolation
+        :param from_email_name: The local part of the From email address that will be used for emails. For example, in the address 'hello@example.com', the local part is 'hello'. Applicable only to email templates.
+        :param reply_to_email_name: The local part of the Reply To email address that will be used for emails. For example, in the address 'hello@example.com', the local part is 'hello'. Applicable only to email templates.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -770,17 +893,22 @@ class Templates(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
-        
+
         if server_url is not None:
             base_url = server_url
-        
+
         request = models.PreviewTemplateRequest(
             template_type=template_type,
             slug=slug,
-            request_body=utils.get_pydantic_model(request_body, Optional[models.PreviewTemplateRequestBody]),
+            request_body=models.PreviewTemplateRequestBody(
+                subject=subject,
+                body=body,
+                from_email_name=from_email_name,
+                reply_to_email_name=reply_to_email_name,
+            ),
         )
-        
-        req = self.build_request(
+
+        req = self.build_request_async(
             method="POST",
             path="/templates/{template_type}/{slug}/preview",
             base_url=base_url,
@@ -792,50 +920,64 @@ class Templates(BaseSDK):
             user_agent_header="user-agent",
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
-            get_serialized_body=lambda: utils.serialize_request_body(request.request_body, False, True, "json", Optional[models.PreviewTemplateRequestBody]),
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request.request_body,
+                False,
+                True,
+                "json",
+                Optional[models.PreviewTemplateRequestBody],
+            ),
             timeout_ms=timeout_ms,
         )
-        
+
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, [
-                "429",
-                "500",
-                "502",
-                "503",
-                "504"
-            ])                
-        
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
         http_res = await self.do_request_async(
-            hook_ctx=HookContext(operation_id="PreviewTemplate", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            hook_ctx=HookContext(
+                operation_id="PreviewTemplate",
+                oauth2_scopes=[],
+                security_source=self.sdk_configuration.security,
+            ),
             request=req,
-            error_status_codes=["400","401","404","422","4XX","5XX"],
-            retry_config=retry_config
+            error_status_codes=["400", "401", "404", "422", "4XX", "5XX"],
+            retry_config=retry_config,
         )
-        
+
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, Optional[models.PreviewTemplateResponseBody])
-        if utils.match_response(http_res, ["400","401","404","422"], "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX","5XX"], "*"):
-            raise models.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
-        
-        content_type = http_res.headers.get("Content-Type")
-        raise models.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+            return utils.unmarshal_json(
+                http_res.text, Optional[models.PreviewTemplateResponseBody]
+            )
+        if utils.match_response(
+            http_res, ["400", "401", "404", "422"], "application/json"
+        ):
+            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsError20Data)
+            raise models.ClerkErrorsError20(data=data)
+        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res.text, http_res
+            )
 
-    
-    
+        content_type = http_res.headers.get("Content-Type")
+        raise models.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res.text,
+            http_res,
+        )
+
     def toggle_delivery(
-        self, *,
+        self,
+        *,
         template_type: models.ToggleTemplateDeliveryPathParamTemplateType,
         slug: str,
-        request_body: Optional[Union[models.ToggleTemplateDeliveryRequestBody, models.ToggleTemplateDeliveryRequestBodyTypedDict]] = None,
+        delivered_by_clerk: OptionalNullable[bool] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -848,7 +990,7 @@ class Templates(BaseSDK):
 
         :param template_type: The type of template to toggle delivery for
         :param slug: The slug of the template for which to toggle delivery
-        :param request_body: 
+        :param delivered_by_clerk: Whether Clerk should deliver emails or SMS messages based on the current template
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -857,16 +999,18 @@ class Templates(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
-        
+
         if server_url is not None:
             base_url = server_url
-        
+
         request = models.ToggleTemplateDeliveryRequest(
             template_type=template_type,
             slug=slug,
-            request_body=utils.get_pydantic_model(request_body, Optional[models.ToggleTemplateDeliveryRequestBody]),
+            request_body=models.ToggleTemplateDeliveryRequestBody(
+                delivered_by_clerk=delivered_by_clerk,
+            ),
         )
-        
+
         req = self.build_request(
             method="POST",
             path="/templates/{template_type}/{slug}/toggle_delivery",
@@ -879,50 +1023,60 @@ class Templates(BaseSDK):
             user_agent_header="user-agent",
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
-            get_serialized_body=lambda: utils.serialize_request_body(request.request_body, False, True, "json", Optional[models.ToggleTemplateDeliveryRequestBody]),
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request.request_body,
+                False,
+                True,
+                "json",
+                Optional[models.ToggleTemplateDeliveryRequestBody],
+            ),
             timeout_ms=timeout_ms,
         )
-        
+
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, [
-                "429",
-                "500",
-                "502",
-                "503",
-                "504"
-            ])                
-        
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
         http_res = self.do_request(
-            hook_ctx=HookContext(operation_id="ToggleTemplateDelivery", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            hook_ctx=HookContext(
+                operation_id="ToggleTemplateDelivery",
+                oauth2_scopes=[],
+                security_source=self.sdk_configuration.security,
+            ),
             request=req,
-            error_status_codes=["400","401","404","4XX","5XX"],
-            retry_config=retry_config
+            error_status_codes=["400", "401", "404", "4XX", "5XX"],
+            retry_config=retry_config,
         )
-        
+
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[models.Template])
-        if utils.match_response(http_res, ["400","401","404"], "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX","5XX"], "*"):
-            raise models.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
-        
-        content_type = http_res.headers.get("Content-Type")
-        raise models.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+        if utils.match_response(http_res, ["400", "401", "404"], "application/json"):
+            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsError21Data)
+            raise models.ClerkErrorsError21(data=data)
+        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res.text, http_res
+            )
 
-    
-    
+        content_type = http_res.headers.get("Content-Type")
+        raise models.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res.text,
+            http_res,
+        )
+
     async def toggle_delivery_async(
-        self, *,
+        self,
+        *,
         template_type: models.ToggleTemplateDeliveryPathParamTemplateType,
         slug: str,
-        request_body: Optional[Union[models.ToggleTemplateDeliveryRequestBody, models.ToggleTemplateDeliveryRequestBodyTypedDict]] = None,
+        delivered_by_clerk: OptionalNullable[bool] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -935,7 +1089,7 @@ class Templates(BaseSDK):
 
         :param template_type: The type of template to toggle delivery for
         :param slug: The slug of the template for which to toggle delivery
-        :param request_body: 
+        :param delivered_by_clerk: Whether Clerk should deliver emails or SMS messages based on the current template
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -944,17 +1098,19 @@ class Templates(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
-        
+
         if server_url is not None:
             base_url = server_url
-        
+
         request = models.ToggleTemplateDeliveryRequest(
             template_type=template_type,
             slug=slug,
-            request_body=utils.get_pydantic_model(request_body, Optional[models.ToggleTemplateDeliveryRequestBody]),
+            request_body=models.ToggleTemplateDeliveryRequestBody(
+                delivered_by_clerk=delivered_by_clerk,
+            ),
         )
-        
-        req = self.build_request(
+
+        req = self.build_request_async(
             method="POST",
             path="/templates/{template_type}/{slug}/toggle_delivery",
             base_url=base_url,
@@ -966,41 +1122,50 @@ class Templates(BaseSDK):
             user_agent_header="user-agent",
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
-            get_serialized_body=lambda: utils.serialize_request_body(request.request_body, False, True, "json", Optional[models.ToggleTemplateDeliveryRequestBody]),
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request.request_body,
+                False,
+                True,
+                "json",
+                Optional[models.ToggleTemplateDeliveryRequestBody],
+            ),
             timeout_ms=timeout_ms,
         )
-        
+
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, [
-                "429",
-                "500",
-                "502",
-                "503",
-                "504"
-            ])                
-        
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
         http_res = await self.do_request_async(
-            hook_ctx=HookContext(operation_id="ToggleTemplateDelivery", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            hook_ctx=HookContext(
+                operation_id="ToggleTemplateDelivery",
+                oauth2_scopes=[],
+                security_source=self.sdk_configuration.security,
+            ),
             request=req,
-            error_status_codes=["400","401","404","4XX","5XX"],
-            retry_config=retry_config
+            error_status_codes=["400", "401", "404", "4XX", "5XX"],
+            retry_config=retry_config,
         )
-        
+
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[models.Template])
-        if utils.match_response(http_res, ["400","401","404"], "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX","5XX"], "*"):
-            raise models.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
-        
-        content_type = http_res.headers.get("Content-Type")
-        raise models.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+        if utils.match_response(http_res, ["400", "401", "404"], "application/json"):
+            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsError21Data)
+            raise models.ClerkErrorsError21(data=data)
+        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res.text, http_res
+            )
 
-    
+        content_type = http_res.headers.get("Content-Type")
+        raise models.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res.text,
+            http_res,
+        )

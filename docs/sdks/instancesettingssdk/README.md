@@ -22,7 +22,6 @@ s = Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
-
 s.instance_settings.update(request={
     "test_mode": True,
     "hibp": False,
@@ -51,11 +50,10 @@ s.instance_settings.update(request={
 
 ### Errors
 
-| Error Object       | Status Code        | Content Type       |
-| ------------------ | ------------------ | ------------------ |
-| models.ClerkErrors | 422                | application/json   |
-| models.SDKError    | 4xx-5xx            | */*                |
-
+| Error Type                | Status Code               | Content Type              |
+| ------------------------- | ------------------------- | ------------------------- |
+| models.ClerkErrorsError49 | 422                       | application/json          |
+| models.SDKError           | 4XX, 5XX                  | \*/\*                     |
 
 ## update_restrictions
 
@@ -69,7 +67,6 @@ from clerk_backend_api import Clerk
 s = Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
-
 
 res = s.instance_settings.update_restrictions(request={
     "allowlist": False,
@@ -98,11 +95,10 @@ if res is not None:
 
 ### Errors
 
-| Error Object       | Status Code        | Content Type       |
-| ------------------ | ------------------ | ------------------ |
-| models.ClerkErrors | 402,422            | application/json   |
-| models.SDKError    | 4xx-5xx            | */*                |
-
+| Error Type                | Status Code               | Content Type              |
+| ------------------------- | ------------------------- | ------------------------- |
+| models.ClerkErrorsError49 | 402, 422                  | application/json          |
+| models.SDKError           | 4XX, 5XX                  | \*/\*                     |
 
 ## update_organization_settings
 
@@ -116,7 +112,6 @@ from clerk_backend_api import Clerk
 s = Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
-
 
 res = s.instance_settings.update_organization_settings(request={
     "enabled": True,
@@ -150,7 +145,7 @@ if res is not None:
 
 ### Errors
 
-| Error Object       | Status Code        | Content Type       |
-| ------------------ | ------------------ | ------------------ |
-| models.ClerkErrors | 402,404,422        | application/json   |
-| models.SDKError    | 4xx-5xx            | */*                |
+| Error Type                | Status Code               | Content Type              |
+| ------------------------- | ------------------------- | ------------------------- |
+| models.ClerkErrorsError51 | 402, 404, 422             | application/json          |
+| models.SDKError           | 4XX, 5XX                  | \*/\*                     |

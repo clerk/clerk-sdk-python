@@ -24,7 +24,6 @@ s = Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
-
 res = s.organization_memberships.create(organization_id="org_123", user_id="user_456", role="admin")
 
 if res is not None:
@@ -48,11 +47,10 @@ if res is not None:
 
 ### Errors
 
-| Error Object       | Status Code        | Content Type       |
-| ------------------ | ------------------ | ------------------ |
-| models.ClerkErrors | 400,403,404,422    | application/json   |
-| models.SDKError    | 4xx-5xx            | */*                |
-
+| Error Type                | Status Code               | Content Type              |
+| ------------------------- | ------------------------- | ------------------------- |
+| models.ClerkErrorsError69 | 400, 403, 404, 422        | application/json          |
+| models.SDKError           | 4XX, 5XX                  | \*/\*                     |
 
 ## list
 
@@ -67,17 +65,15 @@ s = Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
-
 res = s.organization_memberships.list(organization_id="org_789", limit=20, offset=10, order_by="+created_at")
 
 if res is not None:
     while True:
         # handle items
 
-        res = res.Next()
+        res = res.next()
         if res is None:
             break
-
 
 ```
 
@@ -97,11 +93,10 @@ if res is not None:
 
 ### Errors
 
-| Error Object       | Status Code        | Content Type       |
-| ------------------ | ------------------ | ------------------ |
-| models.ClerkErrors | 401,422            | application/json   |
-| models.SDKError    | 4xx-5xx            | */*                |
-
+| Error Type                | Status Code               | Content Type              |
+| ------------------------- | ------------------------- | ------------------------- |
+| models.ClerkErrorsError70 | 401, 422                  | application/json          |
+| models.SDKError           | 4XX, 5XX                  | \*/\*                     |
 
 ## update
 
@@ -115,7 +110,6 @@ from clerk_backend_api import Clerk
 s = Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
-
 
 res = s.organization_memberships.update(organization_id="org_12345", user_id="user_67890", role="admin")
 
@@ -140,11 +134,10 @@ if res is not None:
 
 ### Errors
 
-| Error Object       | Status Code        | Content Type       |
-| ------------------ | ------------------ | ------------------ |
-| models.ClerkErrors | 400,404,422        | application/json   |
-| models.SDKError    | 4xx-5xx            | */*                |
-
+| Error Type                | Status Code               | Content Type              |
+| ------------------------- | ------------------------- | ------------------------- |
+| models.ClerkErrorsError71 | 400, 404, 422             | application/json          |
+| models.SDKError           | 4XX, 5XX                  | \*/\*                     |
 
 ## delete
 
@@ -158,7 +151,6 @@ from clerk_backend_api import Clerk
 s = Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
-
 
 res = s.organization_memberships.delete(organization_id="org_12345", user_id="user_67890")
 
@@ -182,11 +174,10 @@ if res is not None:
 
 ### Errors
 
-| Error Object       | Status Code        | Content Type       |
-| ------------------ | ------------------ | ------------------ |
-| models.ClerkErrors | 400,401,404        | application/json   |
-| models.SDKError    | 4xx-5xx            | */*                |
-
+| Error Type                | Status Code               | Content Type              |
+| ------------------------- | ------------------------- | ------------------------- |
+| models.ClerkErrorsError72 | 400, 401, 404             | application/json          |
+| models.SDKError           | 4XX, 5XX                  | \*/\*                     |
 
 ## update_metadata
 
@@ -202,7 +193,6 @@ from clerk_backend_api import Clerk
 s = Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
-
 
 res = s.organization_memberships.update_metadata(organization_id="org_123456", user_id="user_654321", public_metadata={}, private_metadata={})
 
@@ -228,7 +218,7 @@ if res is not None:
 
 ### Errors
 
-| Error Object       | Status Code        | Content Type       |
-| ------------------ | ------------------ | ------------------ |
-| models.ClerkErrors | 400,404,422        | application/json   |
-| models.SDKError    | 4xx-5xx            | */*                |
+| Error Type                | Status Code               | Content Type              |
+| ------------------------- | ------------------------- | ------------------------- |
+| models.ClerkErrorsError73 | 400, 404, 422             | application/json          |
+| models.SDKError           | 4XX, 5XX                  | \*/\*                     |

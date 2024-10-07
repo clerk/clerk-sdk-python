@@ -2,17 +2,17 @@
 
 from __future__ import annotations
 from clerk_backend_api.types import BaseModel
-from typing import Optional, TypedDict
-from typing_extensions import NotRequired
+from typing import Optional
+from typing_extensions import NotRequired, TypedDict
 
 
 class MetaTypedDict(TypedDict):
     pass
-    
+
 
 class Meta(BaseModel):
     pass
-    
+
 
 class ClerkErrorTypedDict(TypedDict):
     message: str
@@ -20,12 +20,15 @@ class ClerkErrorTypedDict(TypedDict):
     code: str
     meta: NotRequired[MetaTypedDict]
     clerk_trace_id: NotRequired[str]
-    
+
 
 class ClerkError(BaseModel):
     message: str
+
     long_message: str
+
     code: str
+
     meta: Optional[Meta] = None
+
     clerk_trace_id: Optional[str] = None
-    

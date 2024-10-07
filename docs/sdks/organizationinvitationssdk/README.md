@@ -40,7 +40,6 @@ s = Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
-
 res = s.organization_invitations.create(organization_id="org_12345", email_address="user@example.com", inviter_user_id="user_67890", role="admin", public_metadata={}, private_metadata={}, redirect_url="https://example.com/welcome")
 
 if res is not None:
@@ -68,11 +67,10 @@ if res is not None:
 
 ### Errors
 
-| Error Object       | Status Code        | Content Type       |
-| ------------------ | ------------------ | ------------------ |
-| models.ClerkErrors | 400,403,404,422    | application/json   |
-| models.SDKError    | 4xx-5xx            | */*                |
-
+| Error Type                | Status Code               | Content Type              |
+| ------------------------- | ------------------------- | ------------------------- |
+| models.ClerkErrorsError63 | 400, 403, 404, 422        | application/json          |
+| models.SDKError           | 4XX, 5XX                  | \*/\*                     |
 
 ## list
 
@@ -93,17 +91,15 @@ s = Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
-
 res = s.organization_invitations.list(organization_id="org_12345", limit=20, offset=10, status=clerk_backend_api.ListOrganizationInvitationsQueryParamStatus.PENDING)
 
 if res is not None:
     while True:
         # handle items
 
-        res = res.Next()
+        res = res.next()
         if res is None:
             break
-
 
 ```
 
@@ -123,11 +119,10 @@ if res is not None:
 
 ### Errors
 
-| Error Object       | Status Code        | Content Type       |
-| ------------------ | ------------------ | ------------------ |
-| models.ClerkErrors | 400,404            | application/json   |
-| models.SDKError    | 4xx-5xx            | */*                |
-
+| Error Type                | Status Code               | Content Type              |
+| ------------------------- | ------------------------- | ------------------------- |
+| models.ClerkErrorsError64 | 400, 404                  | application/json          |
+| models.SDKError           | 4XX, 5XX                  | \*/\*                     |
 
 ## create_bulk
 
@@ -153,7 +148,6 @@ from clerk_backend_api import Clerk
 s = Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
-
 
 res = s.organization_invitations.create_bulk(organization_id="org_12345", request_body=[
     {
@@ -186,11 +180,10 @@ if res is not None:
 
 ### Errors
 
-| Error Object       | Status Code        | Content Type       |
-| ------------------ | ------------------ | ------------------ |
-| models.ClerkErrors | 400,403,404,422    | application/json   |
-| models.SDKError    | 4xx-5xx            | */*                |
-
+| Error Type                | Status Code               | Content Type              |
+| ------------------------- | ------------------------- | ------------------------- |
+| models.ClerkErrorsError65 | 400, 403, 404, 422        | application/json          |
+| models.SDKError           | 4XX, 5XX                  | \*/\*                     |
 
 ## ~~list_pending~~
 
@@ -212,17 +205,15 @@ s = Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
-
 res = s.organization_invitations.list_pending(organization_id="org_12345", limit=20, offset=10)
 
 if res is not None:
     while True:
         # handle items
 
-        res = res.Next()
+        res = res.next()
         if res is None:
             break
-
 
 ```
 
@@ -241,11 +232,10 @@ if res is not None:
 
 ### Errors
 
-| Error Object       | Status Code        | Content Type       |
-| ------------------ | ------------------ | ------------------ |
-| models.ClerkErrors | 400,404            | application/json   |
-| models.SDKError    | 4xx-5xx            | */*                |
-
+| Error Type                | Status Code               | Content Type              |
+| ------------------------- | ------------------------- | ------------------------- |
+| models.ClerkErrorsError66 | 400, 404                  | application/json          |
+| models.SDKError           | 4XX, 5XX                  | \*/\*                     |
 
 ## get
 
@@ -259,7 +249,6 @@ from clerk_backend_api import Clerk
 s = Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
-
 
 res = s.organization_invitations.get(organization_id="org_123456789", invitation_id="inv_987654321")
 
@@ -283,11 +272,10 @@ if res is not None:
 
 ### Errors
 
-| Error Object       | Status Code        | Content Type       |
-| ------------------ | ------------------ | ------------------ |
-| models.ClerkErrors | 400,403,404        | application/json   |
-| models.SDKError    | 4xx-5xx            | */*                |
-
+| Error Type                | Status Code               | Content Type              |
+| ------------------------- | ------------------------- | ------------------------- |
+| models.ClerkErrorsError67 | 400, 403, 404             | application/json          |
+| models.SDKError           | 4XX, 5XX                  | \*/\*                     |
 
 ## revoke
 
@@ -305,7 +293,6 @@ from clerk_backend_api import Clerk
 s = Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
-
 
 res = s.organization_invitations.revoke(organization_id="org_123456", invitation_id="inv_123456", requesting_user_id="usr_12345")
 
@@ -330,7 +317,7 @@ if res is not None:
 
 ### Errors
 
-| Error Object       | Status Code        | Content Type       |
-| ------------------ | ------------------ | ------------------ |
-| models.ClerkErrors | 400,403,404        | application/json   |
-| models.SDKError    | 4xx-5xx            | */*                |
+| Error Type                | Status Code               | Content Type              |
+| ------------------------- | ------------------------- | ------------------------- |
+| models.ClerkErrorsError68 | 400, 403, 404             | application/json          |
+| models.SDKError           | 4XX, 5XX                  | \*/\*                     |

@@ -3,22 +3,25 @@
 from __future__ import annotations
 from clerk_backend_api.types import BaseModel
 from enum import Enum
-from typing import Optional, TypedDict
-from typing_extensions import NotRequired
+from typing import Optional
+from typing_extensions import NotRequired, TypedDict
 
 
 class AllowlistIdentifierObject(str, Enum):
-    r"""String representing the object's type. Objects of the same type share the same value.
+    r"""String representing the object's type. Objects of the same type share the same value."""
 
-    """
     ALLOWLIST_IDENTIFIER = "allowlist_identifier"
+
 
 class IdentifierType(str, Enum):
     EMAIL_ADDRESS = "email_address"
     PHONE_NUMBER = "phone_number"
     WEB3_WALLET = "web3_wallet"
 
+
 class AllowlistIdentifierTypedDict(TypedDict):
+    r"""Success"""
+
     object: NotRequired[AllowlistIdentifierObject]
     r"""String representing the object's type. Objects of the same type share the same value.
 
@@ -39,27 +42,35 @@ class AllowlistIdentifierTypedDict(TypedDict):
     r"""Unix timestamp of last update.
 
     """
-    
+
 
 class AllowlistIdentifier(BaseModel):
+    r"""Success"""
+
     object: Optional[AllowlistIdentifierObject] = None
     r"""String representing the object's type. Objects of the same type share the same value.
 
     """
+
     id: Optional[str] = None
+
     invitation_id: Optional[str] = None
+
     identifier: Optional[str] = None
     r"""An email address or a phone number.
 
     """
+
     identifier_type: Optional[IdentifierType] = None
+
     instance_id: Optional[str] = None
+
     created_at: Optional[int] = None
     r"""Unix timestamp of creation
 
     """
+
     updated_at: Optional[int] = None
     r"""Unix timestamp of last update.
 
     """
-    

@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "clerk-backend-api"
-version = "0.5.0-alpha.12"
+version = "0.5.0-alpha.13"
 description = "Python Client SDK for clerk.dev"
 authors = ["Clerk",]
 readme = "README-PYPI.md"
@@ -18,20 +18,20 @@ in-project = true
 
 [tool.poetry.dependencies]
 python = "^3.8"
+cryptography = "^43.0.1"
 eval-type-backport = "^0.2.0"
 httpx = "^0.27.0"
 jsonpath-python = "^1.0.6"
-pydantic = "~2.8.2"
+pydantic = "~2.9.0"
+pyjwt = "^2.9.0"
 python-dateutil = "2.8.2"
 typing-inspect = "^0.9.0"
-cryptography = "^43.0.1"
 
 [tool.poetry.group.dev.dependencies]
 mypy = "==1.10.1"
 pylint = "==3.2.3"
-types-python-dateutil = "^2.9.0.20240316"
-pyjwt = "^2.9.0"
 pytest = "^8.3.3"
+types-python-dateutil = "^2.9.0.20240316"
 
 [build-system]
 requires = ["poetry-core"]

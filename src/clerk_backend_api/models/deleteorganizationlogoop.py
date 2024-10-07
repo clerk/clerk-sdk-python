@@ -3,16 +3,16 @@
 from __future__ import annotations
 from clerk_backend_api.types import BaseModel
 from clerk_backend_api.utils import FieldMetadata, PathParamMetadata
-from typing import TypedDict
-from typing_extensions import Annotated
+from typing_extensions import Annotated, TypedDict
 
 
 class DeleteOrganizationLogoRequestTypedDict(TypedDict):
     organization_id: str
     r"""The ID of the organization for which the logo will be deleted."""
-    
+
 
 class DeleteOrganizationLogoRequest(BaseModel):
-    organization_id: Annotated[str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))]
+    organization_id: Annotated[
+        str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))
+    ]
     r"""The ID of the organization for which the logo will be deleted."""
-    

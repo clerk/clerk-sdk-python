@@ -8,18 +8,20 @@ from jsonpath import JSONPath
 from typing import Any, Dict, List, Optional, Union, cast
 from typing_extensions import deprecated
 
+
 class Clients(BaseSDK):
-    
-    
-    @deprecated("warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible.")
+    @deprecated(
+        "warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
+    )
     def list(
-        self, *,
+        self,
+        *,
         limit: Optional[int] = 10,
         offset: Optional[int] = 0,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
-    ) -> models.GetClientListResponse:
+    ) -> Optional[models.GetClientListResponse]:
         r"""List all clients
 
         Returns a list of all clients. The clients are returned sorted by creation date,
@@ -36,15 +38,15 @@ class Clients(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
-        
+
         if server_url is not None:
             base_url = server_url
-        
+
         request = models.GetClientListRequest(
             limit=limit,
             offset=offset,
         )
-        
+
         req = self.build_request(
             method="GET",
             path="/clients",
@@ -59,28 +61,26 @@ class Clients(BaseSDK):
             security=self.sdk_configuration.security,
             timeout_ms=timeout_ms,
         )
-        
+
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, [
-                "429",
-                "500",
-                "502",
-                "503",
-                "504"
-            ])                
-        
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
         http_res = self.do_request(
-            hook_ctx=HookContext(operation_id="GetClientList", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            hook_ctx=HookContext(
+                operation_id="GetClientList",
+                oauth2_scopes=[],
+                security_source=self.sdk_configuration.security,
+            ),
             request=req,
-            error_status_codes=["400","401","410","422","4XX","5XX"],
-            retry_config=retry_config
+            error_status_codes=["400", "401", "410", "422", "4XX", "5XX"],
+            retry_config=retry_config,
         )
-        
+
         def next_func() -> Optional[models.GetClientListResponse]:
             body = utils.unmarshal_json(http_res.text, Dict[Any, Any])
             offset = request.offset if not request.offset is None else 0
@@ -100,30 +100,45 @@ class Clients(BaseSDK):
                 offset=next_offset,
                 retries=retries,
             )
-        
+
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return models.GetClientListResponse(result=utils.unmarshal_json(http_res.text, Optional[List[models.Client]]), next=next_func)
-        if utils.match_response(http_res, ["400","401","410","422"], "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX","5XX"], "*"):
-            raise models.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
-        
-        content_type = http_res.headers.get("Content-Type")
-        raise models.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+            return models.GetClientListResponse(
+                result=utils.unmarshal_json(
+                    http_res.text, Optional[List[models.Client]]
+                ),
+                next=next_func,
+            )
+        if utils.match_response(
+            http_res, ["400", "401", "410", "422"], "application/json"
+        ):
+            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsErrorData)
+            raise models.ClerkErrorsError(data=data)
+        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res.text, http_res
+            )
 
-    
-    
-    @deprecated("warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible.")
+        content_type = http_res.headers.get("Content-Type")
+        raise models.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res.text,
+            http_res,
+        )
+
+    @deprecated(
+        "warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
+    )
     async def list_async(
-        self, *,
+        self,
+        *,
         limit: Optional[int] = 10,
         offset: Optional[int] = 0,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
-    ) -> models.GetClientListResponse:
+    ) -> Optional[models.GetClientListResponse]:
         r"""List all clients
 
         Returns a list of all clients. The clients are returned sorted by creation date,
@@ -140,16 +155,16 @@ class Clients(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
-        
+
         if server_url is not None:
             base_url = server_url
-        
+
         request = models.GetClientListRequest(
             limit=limit,
             offset=offset,
         )
-        
-        req = self.build_request(
+
+        req = self.build_request_async(
             method="GET",
             path="/clients",
             base_url=base_url,
@@ -163,28 +178,26 @@ class Clients(BaseSDK):
             security=self.sdk_configuration.security,
             timeout_ms=timeout_ms,
         )
-        
+
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, [
-                "429",
-                "500",
-                "502",
-                "503",
-                "504"
-            ])                
-        
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
         http_res = await self.do_request_async(
-            hook_ctx=HookContext(operation_id="GetClientList", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            hook_ctx=HookContext(
+                operation_id="GetClientList",
+                oauth2_scopes=[],
+                security_source=self.sdk_configuration.security,
+            ),
             request=req,
-            error_status_codes=["400","401","410","422","4XX","5XX"],
-            retry_config=retry_config
+            error_status_codes=["400", "401", "410", "422", "4XX", "5XX"],
+            retry_config=retry_config,
         )
-        
+
         def next_func() -> Optional[models.GetClientListResponse]:
             body = utils.unmarshal_json(http_res.text, Dict[Any, Any])
             offset = request.offset if not request.offset is None else 0
@@ -204,24 +217,41 @@ class Clients(BaseSDK):
                 offset=next_offset,
                 retries=retries,
             )
-        
+
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return models.GetClientListResponse(result=utils.unmarshal_json(http_res.text, Optional[List[models.Client]]), next=next_func)
-        if utils.match_response(http_res, ["400","401","410","422"], "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX","5XX"], "*"):
-            raise models.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
-        
-        content_type = http_res.headers.get("Content-Type")
-        raise models.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+            return models.GetClientListResponse(
+                result=utils.unmarshal_json(
+                    http_res.text, Optional[List[models.Client]]
+                ),
+                next=next_func,
+            )
+        if utils.match_response(
+            http_res, ["400", "401", "410", "422"], "application/json"
+        ):
+            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsErrorData)
+            raise models.ClerkErrorsError(data=data)
+        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res.text, http_res
+            )
 
-    
-    
+        content_type = http_res.headers.get("Content-Type")
+        raise models.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res.text,
+            http_res,
+        )
+
     def verify(
-        self, *,
-        request: Optional[Union[models.VerifyClientRequestBody, models.VerifyClientRequestBodyTypedDict]] = None,
+        self,
+        *,
+        request: Optional[
+            Union[
+                models.VerifyClientRequestBody, models.VerifyClientRequestBodyTypedDict
+            ]
+        ] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -239,14 +269,14 @@ class Clients(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
-        
+
         if server_url is not None:
             base_url = server_url
-        
-        if not isinstance(request, BaseModel) and request is not None:
-            request = utils.unmarshal(request, models.VerifyClientRequestBody)
-        request = cast(models.VerifyClientRequestBody, request)
-        
+
+        if not isinstance(request, BaseModel):
+            request = utils.unmarshal(request, Optional[models.VerifyClientRequestBody])
+        request = cast(Optional[models.VerifyClientRequestBody], request)
+
         req = self.build_request(
             method="POST",
             path="/clients/verify",
@@ -259,48 +289,58 @@ class Clients(BaseSDK):
             user_agent_header="user-agent",
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
-            get_serialized_body=lambda: utils.serialize_request_body(request, False, True, "json", Optional[models.VerifyClientRequestBody]),
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request, False, True, "json", Optional[models.VerifyClientRequestBody]
+            ),
             timeout_ms=timeout_ms,
         )
-        
+
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, [
-                "429",
-                "500",
-                "502",
-                "503",
-                "504"
-            ])                
-        
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
         http_res = self.do_request(
-            hook_ctx=HookContext(operation_id="VerifyClient", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            hook_ctx=HookContext(
+                operation_id="VerifyClient",
+                oauth2_scopes=[],
+                security_source=self.sdk_configuration.security,
+            ),
             request=req,
-            error_status_codes=["400","401","404","4XX","5XX"],
-            retry_config=retry_config
+            error_status_codes=["400", "401", "404", "4XX", "5XX"],
+            retry_config=retry_config,
         )
-        
+
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[models.Client])
-        if utils.match_response(http_res, ["400","401","404"], "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX","5XX"], "*"):
-            raise models.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
-        
-        content_type = http_res.headers.get("Content-Type")
-        raise models.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+        if utils.match_response(http_res, ["400", "401", "404"], "application/json"):
+            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsError1Data)
+            raise models.ClerkErrorsError1(data=data)
+        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res.text, http_res
+            )
 
-    
-    
+        content_type = http_res.headers.get("Content-Type")
+        raise models.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res.text,
+            http_res,
+        )
+
     async def verify_async(
-        self, *,
-        request: Optional[Union[models.VerifyClientRequestBody, models.VerifyClientRequestBodyTypedDict]] = None,
+        self,
+        *,
+        request: Optional[
+            Union[
+                models.VerifyClientRequestBody, models.VerifyClientRequestBodyTypedDict
+            ]
+        ] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -318,15 +358,15 @@ class Clients(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
-        
+
         if server_url is not None:
             base_url = server_url
-        
-        if not isinstance(request, BaseModel) and request is not None:
-            request = utils.unmarshal(request, models.VerifyClientRequestBody)
-        request = cast(models.VerifyClientRequestBody, request)
-        
-        req = self.build_request(
+
+        if not isinstance(request, BaseModel):
+            request = utils.unmarshal(request, Optional[models.VerifyClientRequestBody])
+        request = cast(Optional[models.VerifyClientRequestBody], request)
+
+        req = self.build_request_async(
             method="POST",
             path="/clients/verify",
             base_url=base_url,
@@ -338,47 +378,53 @@ class Clients(BaseSDK):
             user_agent_header="user-agent",
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
-            get_serialized_body=lambda: utils.serialize_request_body(request, False, True, "json", Optional[models.VerifyClientRequestBody]),
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request, False, True, "json", Optional[models.VerifyClientRequestBody]
+            ),
             timeout_ms=timeout_ms,
         )
-        
+
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, [
-                "429",
-                "500",
-                "502",
-                "503",
-                "504"
-            ])                
-        
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
         http_res = await self.do_request_async(
-            hook_ctx=HookContext(operation_id="VerifyClient", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            hook_ctx=HookContext(
+                operation_id="VerifyClient",
+                oauth2_scopes=[],
+                security_source=self.sdk_configuration.security,
+            ),
             request=req,
-            error_status_codes=["400","401","404","4XX","5XX"],
-            retry_config=retry_config
+            error_status_codes=["400", "401", "404", "4XX", "5XX"],
+            retry_config=retry_config,
         )
-        
+
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[models.Client])
-        if utils.match_response(http_res, ["400","401","404"], "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX","5XX"], "*"):
-            raise models.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
-        
-        content_type = http_res.headers.get("Content-Type")
-        raise models.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+        if utils.match_response(http_res, ["400", "401", "404"], "application/json"):
+            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsError1Data)
+            raise models.ClerkErrorsError1(data=data)
+        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res.text, http_res
+            )
 
-    
-    
+        content_type = http_res.headers.get("Content-Type")
+        raise models.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res.text,
+            http_res,
+        )
+
     def get(
-        self, *,
+        self,
+        *,
         client_id: str,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -397,14 +443,14 @@ class Clients(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
-        
+
         if server_url is not None:
             base_url = server_url
-        
+
         request = models.GetClientRequest(
             client_id=client_id,
         )
-        
+
         req = self.build_request(
             method="GET",
             path="/clients/{client_id}",
@@ -419,44 +465,48 @@ class Clients(BaseSDK):
             security=self.sdk_configuration.security,
             timeout_ms=timeout_ms,
         )
-        
+
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, [
-                "429",
-                "500",
-                "502",
-                "503",
-                "504"
-            ])                
-        
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
         http_res = self.do_request(
-            hook_ctx=HookContext(operation_id="GetClient", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            hook_ctx=HookContext(
+                operation_id="GetClient",
+                oauth2_scopes=[],
+                security_source=self.sdk_configuration.security,
+            ),
             request=req,
-            error_status_codes=["400","401","404","4XX","5XX"],
-            retry_config=retry_config
+            error_status_codes=["400", "401", "404", "4XX", "5XX"],
+            retry_config=retry_config,
         )
-        
+
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[models.Client])
-        if utils.match_response(http_res, ["400","401","404"], "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX","5XX"], "*"):
-            raise models.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
-        
-        content_type = http_res.headers.get("Content-Type")
-        raise models.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+        if utils.match_response(http_res, ["400", "401", "404"], "application/json"):
+            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsError2Data)
+            raise models.ClerkErrorsError2(data=data)
+        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res.text, http_res
+            )
 
-    
-    
+        content_type = http_res.headers.get("Content-Type")
+        raise models.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res.text,
+            http_res,
+        )
+
     async def get_async(
-        self, *,
+        self,
+        *,
         client_id: str,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -475,15 +525,15 @@ class Clients(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
-        
+
         if server_url is not None:
             base_url = server_url
-        
+
         request = models.GetClientRequest(
             client_id=client_id,
         )
-        
-        req = self.build_request(
+
+        req = self.build_request_async(
             method="GET",
             path="/clients/{client_id}",
             base_url=base_url,
@@ -497,38 +547,41 @@ class Clients(BaseSDK):
             security=self.sdk_configuration.security,
             timeout_ms=timeout_ms,
         )
-        
+
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, [
-                "429",
-                "500",
-                "502",
-                "503",
-                "504"
-            ])                
-        
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
         http_res = await self.do_request_async(
-            hook_ctx=HookContext(operation_id="GetClient", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            hook_ctx=HookContext(
+                operation_id="GetClient",
+                oauth2_scopes=[],
+                security_source=self.sdk_configuration.security,
+            ),
             request=req,
-            error_status_codes=["400","401","404","4XX","5XX"],
-            retry_config=retry_config
+            error_status_codes=["400", "401", "404", "4XX", "5XX"],
+            retry_config=retry_config,
         )
-        
+
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[models.Client])
-        if utils.match_response(http_res, ["400","401","404"], "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX","5XX"], "*"):
-            raise models.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
-        
-        content_type = http_res.headers.get("Content-Type")
-        raise models.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+        if utils.match_response(http_res, ["400", "401", "404"], "application/json"):
+            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsError2Data)
+            raise models.ClerkErrorsError2(data=data)
+        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res.text, http_res
+            )
 
-    
+        content_type = http_res.headers.get("Content-Type")
+        raise models.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res.text,
+            http_res,
+        )

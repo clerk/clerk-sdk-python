@@ -6,12 +6,17 @@ from clerk_backend_api._hooks import HookContext
 from clerk_backend_api.types import BaseModel, OptionalNullable, UNSET
 from typing import Any, Optional, Union, cast
 
+
 class EmailAddresses(BaseSDK):
-    
-    
     def create(
-        self, *,
-        request: Optional[Union[models.CreateEmailAddressRequestBody, models.CreateEmailAddressRequestBodyTypedDict]] = None,
+        self,
+        *,
+        request: Optional[
+            Union[
+                models.CreateEmailAddressRequestBody,
+                models.CreateEmailAddressRequestBodyTypedDict,
+            ]
+        ] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -29,14 +34,16 @@ class EmailAddresses(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
-        
+
         if server_url is not None:
             base_url = server_url
-        
-        if not isinstance(request, BaseModel) and request is not None:
-            request = utils.unmarshal(request, models.CreateEmailAddressRequestBody)
-        request = cast(models.CreateEmailAddressRequestBody, request)
-        
+
+        if not isinstance(request, BaseModel):
+            request = utils.unmarshal(
+                request, Optional[models.CreateEmailAddressRequestBody]
+            )
+        request = cast(Optional[models.CreateEmailAddressRequestBody], request)
+
         req = self.build_request(
             method="POST",
             path="/email_addresses",
@@ -49,48 +56,65 @@ class EmailAddresses(BaseSDK):
             user_agent_header="user-agent",
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
-            get_serialized_body=lambda: utils.serialize_request_body(request, False, True, "json", Optional[models.CreateEmailAddressRequestBody]),
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request,
+                False,
+                True,
+                "json",
+                Optional[models.CreateEmailAddressRequestBody],
+            ),
             timeout_ms=timeout_ms,
         )
-        
+
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, [
-                "429",
-                "500",
-                "502",
-                "503",
-                "504"
-            ])                
-        
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
         http_res = self.do_request(
-            hook_ctx=HookContext(operation_id="CreateEmailAddress", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            hook_ctx=HookContext(
+                operation_id="CreateEmailAddress",
+                oauth2_scopes=[],
+                security_source=self.sdk_configuration.security,
+            ),
             request=req,
-            error_status_codes=["400","401","403","404","422","4XX","5XX"],
-            retry_config=retry_config
+            error_status_codes=["400", "401", "403", "404", "422", "4XX", "5XX"],
+            retry_config=retry_config,
         )
-        
+
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[models.EmailAddress])
-        if utils.match_response(http_res, ["400","401","403","404","422"], "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX","5XX"], "*"):
-            raise models.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
-        
-        content_type = http_res.headers.get("Content-Type")
-        raise models.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+        if utils.match_response(
+            http_res, ["400", "401", "403", "404", "422"], "application/json"
+        ):
+            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsError3Data)
+            raise models.ClerkErrorsError3(data=data)
+        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res.text, http_res
+            )
 
-    
-    
+        content_type = http_res.headers.get("Content-Type")
+        raise models.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res.text,
+            http_res,
+        )
+
     async def create_async(
-        self, *,
-        request: Optional[Union[models.CreateEmailAddressRequestBody, models.CreateEmailAddressRequestBodyTypedDict]] = None,
+        self,
+        *,
+        request: Optional[
+            Union[
+                models.CreateEmailAddressRequestBody,
+                models.CreateEmailAddressRequestBodyTypedDict,
+            ]
+        ] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -108,15 +132,17 @@ class EmailAddresses(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
-        
+
         if server_url is not None:
             base_url = server_url
-        
-        if not isinstance(request, BaseModel) and request is not None:
-            request = utils.unmarshal(request, models.CreateEmailAddressRequestBody)
-        request = cast(models.CreateEmailAddressRequestBody, request)
-        
-        req = self.build_request(
+
+        if not isinstance(request, BaseModel):
+            request = utils.unmarshal(
+                request, Optional[models.CreateEmailAddressRequestBody]
+            )
+        request = cast(Optional[models.CreateEmailAddressRequestBody], request)
+
+        req = self.build_request_async(
             method="POST",
             path="/email_addresses",
             base_url=base_url,
@@ -128,47 +154,59 @@ class EmailAddresses(BaseSDK):
             user_agent_header="user-agent",
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
-            get_serialized_body=lambda: utils.serialize_request_body(request, False, True, "json", Optional[models.CreateEmailAddressRequestBody]),
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request,
+                False,
+                True,
+                "json",
+                Optional[models.CreateEmailAddressRequestBody],
+            ),
             timeout_ms=timeout_ms,
         )
-        
+
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, [
-                "429",
-                "500",
-                "502",
-                "503",
-                "504"
-            ])                
-        
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
         http_res = await self.do_request_async(
-            hook_ctx=HookContext(operation_id="CreateEmailAddress", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            hook_ctx=HookContext(
+                operation_id="CreateEmailAddress",
+                oauth2_scopes=[],
+                security_source=self.sdk_configuration.security,
+            ),
             request=req,
-            error_status_codes=["400","401","403","404","422","4XX","5XX"],
-            retry_config=retry_config
+            error_status_codes=["400", "401", "403", "404", "422", "4XX", "5XX"],
+            retry_config=retry_config,
         )
-        
+
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[models.EmailAddress])
-        if utils.match_response(http_res, ["400","401","403","404","422"], "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX","5XX"], "*"):
-            raise models.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
-        
-        content_type = http_res.headers.get("Content-Type")
-        raise models.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+        if utils.match_response(
+            http_res, ["400", "401", "403", "404", "422"], "application/json"
+        ):
+            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsError3Data)
+            raise models.ClerkErrorsError3(data=data)
+        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res.text, http_res
+            )
 
-    
-    
+        content_type = http_res.headers.get("Content-Type")
+        raise models.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res.text,
+            http_res,
+        )
+
     def get(
-        self, *,
+        self,
+        *,
         email_address_id: str,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -187,14 +225,14 @@ class EmailAddresses(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
-        
+
         if server_url is not None:
             base_url = server_url
-        
+
         request = models.GetEmailAddressRequest(
             email_address_id=email_address_id,
         )
-        
+
         req = self.build_request(
             method="GET",
             path="/email_addresses/{email_address_id}",
@@ -209,44 +247,50 @@ class EmailAddresses(BaseSDK):
             security=self.sdk_configuration.security,
             timeout_ms=timeout_ms,
         )
-        
+
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, [
-                "429",
-                "500",
-                "502",
-                "503",
-                "504"
-            ])                
-        
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
         http_res = self.do_request(
-            hook_ctx=HookContext(operation_id="GetEmailAddress", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            hook_ctx=HookContext(
+                operation_id="GetEmailAddress",
+                oauth2_scopes=[],
+                security_source=self.sdk_configuration.security,
+            ),
             request=req,
-            error_status_codes=["400","401","403","404","4XX","5XX"],
-            retry_config=retry_config
+            error_status_codes=["400", "401", "403", "404", "4XX", "5XX"],
+            retry_config=retry_config,
         )
-        
+
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[models.EmailAddress])
-        if utils.match_response(http_res, ["400","401","403","404"], "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX","5XX"], "*"):
-            raise models.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
-        
-        content_type = http_res.headers.get("Content-Type")
-        raise models.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+        if utils.match_response(
+            http_res, ["400", "401", "403", "404"], "application/json"
+        ):
+            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsError4Data)
+            raise models.ClerkErrorsError4(data=data)
+        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res.text, http_res
+            )
 
-    
-    
+        content_type = http_res.headers.get("Content-Type")
+        raise models.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res.text,
+            http_res,
+        )
+
     async def get_async(
-        self, *,
+        self,
+        *,
         email_address_id: str,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -265,15 +309,15 @@ class EmailAddresses(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
-        
+
         if server_url is not None:
             base_url = server_url
-        
+
         request = models.GetEmailAddressRequest(
             email_address_id=email_address_id,
         )
-        
-        req = self.build_request(
+
+        req = self.build_request_async(
             method="GET",
             path="/email_addresses/{email_address_id}",
             base_url=base_url,
@@ -287,44 +331,50 @@ class EmailAddresses(BaseSDK):
             security=self.sdk_configuration.security,
             timeout_ms=timeout_ms,
         )
-        
+
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, [
-                "429",
-                "500",
-                "502",
-                "503",
-                "504"
-            ])                
-        
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
         http_res = await self.do_request_async(
-            hook_ctx=HookContext(operation_id="GetEmailAddress", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            hook_ctx=HookContext(
+                operation_id="GetEmailAddress",
+                oauth2_scopes=[],
+                security_source=self.sdk_configuration.security,
+            ),
             request=req,
-            error_status_codes=["400","401","403","404","4XX","5XX"],
-            retry_config=retry_config
+            error_status_codes=["400", "401", "403", "404", "4XX", "5XX"],
+            retry_config=retry_config,
         )
-        
+
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[models.EmailAddress])
-        if utils.match_response(http_res, ["400","401","403","404"], "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX","5XX"], "*"):
-            raise models.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
-        
-        content_type = http_res.headers.get("Content-Type")
-        raise models.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+        if utils.match_response(
+            http_res, ["400", "401", "403", "404"], "application/json"
+        ):
+            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsError4Data)
+            raise models.ClerkErrorsError4(data=data)
+        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res.text, http_res
+            )
 
-    
-    
+        content_type = http_res.headers.get("Content-Type")
+        raise models.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res.text,
+            http_res,
+        )
+
     def delete(
-        self, *,
+        self,
+        *,
         email_address_id: str,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -343,14 +393,14 @@ class EmailAddresses(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
-        
+
         if server_url is not None:
             base_url = server_url
-        
+
         request = models.DeleteEmailAddressRequest(
             email_address_id=email_address_id,
         )
-        
+
         req = self.build_request(
             method="DELETE",
             path="/email_addresses/{email_address_id}",
@@ -365,44 +415,50 @@ class EmailAddresses(BaseSDK):
             security=self.sdk_configuration.security,
             timeout_ms=timeout_ms,
         )
-        
+
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, [
-                "429",
-                "500",
-                "502",
-                "503",
-                "504"
-            ])                
-        
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
         http_res = self.do_request(
-            hook_ctx=HookContext(operation_id="DeleteEmailAddress", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            hook_ctx=HookContext(
+                operation_id="DeleteEmailAddress",
+                oauth2_scopes=[],
+                security_source=self.sdk_configuration.security,
+            ),
             request=req,
-            error_status_codes=["400","401","403","404","4XX","5XX"],
-            retry_config=retry_config
+            error_status_codes=["400", "401", "403", "404", "4XX", "5XX"],
+            retry_config=retry_config,
         )
-        
+
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[models.DeletedObject])
-        if utils.match_response(http_res, ["400","401","403","404"], "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX","5XX"], "*"):
-            raise models.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
-        
-        content_type = http_res.headers.get("Content-Type")
-        raise models.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+        if utils.match_response(
+            http_res, ["400", "401", "403", "404"], "application/json"
+        ):
+            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsError5Data)
+            raise models.ClerkErrorsError5(data=data)
+        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res.text, http_res
+            )
 
-    
-    
+        content_type = http_res.headers.get("Content-Type")
+        raise models.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res.text,
+            http_res,
+        )
+
     async def delete_async(
-        self, *,
+        self,
+        *,
         email_address_id: str,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -421,15 +477,15 @@ class EmailAddresses(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
-        
+
         if server_url is not None:
             base_url = server_url
-        
+
         request = models.DeleteEmailAddressRequest(
             email_address_id=email_address_id,
         )
-        
-        req = self.build_request(
+
+        req = self.build_request_async(
             method="DELETE",
             path="/email_addresses/{email_address_id}",
             base_url=base_url,
@@ -443,46 +499,53 @@ class EmailAddresses(BaseSDK):
             security=self.sdk_configuration.security,
             timeout_ms=timeout_ms,
         )
-        
+
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, [
-                "429",
-                "500",
-                "502",
-                "503",
-                "504"
-            ])                
-        
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
         http_res = await self.do_request_async(
-            hook_ctx=HookContext(operation_id="DeleteEmailAddress", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            hook_ctx=HookContext(
+                operation_id="DeleteEmailAddress",
+                oauth2_scopes=[],
+                security_source=self.sdk_configuration.security,
+            ),
             request=req,
-            error_status_codes=["400","401","403","404","4XX","5XX"],
-            retry_config=retry_config
+            error_status_codes=["400", "401", "403", "404", "4XX", "5XX"],
+            retry_config=retry_config,
         )
-        
+
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[models.DeletedObject])
-        if utils.match_response(http_res, ["400","401","403","404"], "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX","5XX"], "*"):
-            raise models.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
-        
-        content_type = http_res.headers.get("Content-Type")
-        raise models.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+        if utils.match_response(
+            http_res, ["400", "401", "403", "404"], "application/json"
+        ):
+            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsError5Data)
+            raise models.ClerkErrorsError5(data=data)
+        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res.text, http_res
+            )
 
-    
-    
+        content_type = http_res.headers.get("Content-Type")
+        raise models.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res.text,
+            http_res,
+        )
+
     def update(
-        self, *,
+        self,
+        *,
         email_address_id: str,
-        request_body: Optional[Union[models.UpdateEmailAddressRequestBody, models.UpdateEmailAddressRequestBodyTypedDict]] = None,
+        verified: OptionalNullable[bool] = UNSET,
+        primary: OptionalNullable[bool] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -492,7 +555,8 @@ class EmailAddresses(BaseSDK):
         Updates an email address.
 
         :param email_address_id: The ID of the email address to update
-        :param request_body: 
+        :param verified: The email address will be marked as verified.
+        :param primary: Set this email address as the primary email address for the user.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -501,15 +565,18 @@ class EmailAddresses(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
-        
+
         if server_url is not None:
             base_url = server_url
-        
+
         request = models.UpdateEmailAddressRequest(
             email_address_id=email_address_id,
-            request_body=utils.get_pydantic_model(request_body, Optional[models.UpdateEmailAddressRequestBody]),
+            request_body=models.UpdateEmailAddressRequestBody(
+                verified=verified,
+                primary=primary,
+            ),
         )
-        
+
         req = self.build_request(
             method="PATCH",
             path="/email_addresses/{email_address_id}",
@@ -522,49 +589,62 @@ class EmailAddresses(BaseSDK):
             user_agent_header="user-agent",
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
-            get_serialized_body=lambda: utils.serialize_request_body(request.request_body, False, True, "json", Optional[models.UpdateEmailAddressRequestBody]),
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request.request_body,
+                False,
+                True,
+                "json",
+                Optional[models.UpdateEmailAddressRequestBody],
+            ),
             timeout_ms=timeout_ms,
         )
-        
+
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, [
-                "429",
-                "500",
-                "502",
-                "503",
-                "504"
-            ])                
-        
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
         http_res = self.do_request(
-            hook_ctx=HookContext(operation_id="UpdateEmailAddress", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            hook_ctx=HookContext(
+                operation_id="UpdateEmailAddress",
+                oauth2_scopes=[],
+                security_source=self.sdk_configuration.security,
+            ),
             request=req,
-            error_status_codes=["400","401","403","404","4XX","5XX"],
-            retry_config=retry_config
+            error_status_codes=["400", "401", "403", "404", "4XX", "5XX"],
+            retry_config=retry_config,
         )
-        
+
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[models.EmailAddress])
-        if utils.match_response(http_res, ["400","401","403","404"], "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX","5XX"], "*"):
-            raise models.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
-        
-        content_type = http_res.headers.get("Content-Type")
-        raise models.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+        if utils.match_response(
+            http_res, ["400", "401", "403", "404"], "application/json"
+        ):
+            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsError6Data)
+            raise models.ClerkErrorsError6(data=data)
+        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res.text, http_res
+            )
 
-    
-    
+        content_type = http_res.headers.get("Content-Type")
+        raise models.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res.text,
+            http_res,
+        )
+
     async def update_async(
-        self, *,
+        self,
+        *,
         email_address_id: str,
-        request_body: Optional[Union[models.UpdateEmailAddressRequestBody, models.UpdateEmailAddressRequestBodyTypedDict]] = None,
+        verified: OptionalNullable[bool] = UNSET,
+        primary: OptionalNullable[bool] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -574,7 +654,8 @@ class EmailAddresses(BaseSDK):
         Updates an email address.
 
         :param email_address_id: The ID of the email address to update
-        :param request_body: 
+        :param verified: The email address will be marked as verified.
+        :param primary: Set this email address as the primary email address for the user.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -583,16 +664,19 @@ class EmailAddresses(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
-        
+
         if server_url is not None:
             base_url = server_url
-        
+
         request = models.UpdateEmailAddressRequest(
             email_address_id=email_address_id,
-            request_body=utils.get_pydantic_model(request_body, Optional[models.UpdateEmailAddressRequestBody]),
+            request_body=models.UpdateEmailAddressRequestBody(
+                verified=verified,
+                primary=primary,
+            ),
         )
-        
-        req = self.build_request(
+
+        req = self.build_request_async(
             method="PATCH",
             path="/email_addresses/{email_address_id}",
             base_url=base_url,
@@ -604,41 +688,52 @@ class EmailAddresses(BaseSDK):
             user_agent_header="user-agent",
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
-            get_serialized_body=lambda: utils.serialize_request_body(request.request_body, False, True, "json", Optional[models.UpdateEmailAddressRequestBody]),
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request.request_body,
+                False,
+                True,
+                "json",
+                Optional[models.UpdateEmailAddressRequestBody],
+            ),
             timeout_ms=timeout_ms,
         )
-        
+
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, [
-                "429",
-                "500",
-                "502",
-                "503",
-                "504"
-            ])                
-        
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
         http_res = await self.do_request_async(
-            hook_ctx=HookContext(operation_id="UpdateEmailAddress", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            hook_ctx=HookContext(
+                operation_id="UpdateEmailAddress",
+                oauth2_scopes=[],
+                security_source=self.sdk_configuration.security,
+            ),
             request=req,
-            error_status_codes=["400","401","403","404","4XX","5XX"],
-            retry_config=retry_config
+            error_status_codes=["400", "401", "403", "404", "4XX", "5XX"],
+            retry_config=retry_config,
         )
-        
+
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[models.EmailAddress])
-        if utils.match_response(http_res, ["400","401","403","404"], "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX","5XX"], "*"):
-            raise models.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
-        
-        content_type = http_res.headers.get("Content-Type")
-        raise models.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+        if utils.match_response(
+            http_res, ["400", "401", "403", "404"], "application/json"
+        ):
+            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsError6Data)
+            raise models.ClerkErrorsError6(data=data)
+        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res.text, http_res
+            )
 
-    
+        content_type = http_res.headers.get("Content-Type")
+        raise models.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res.text,
+            http_res,
+        )

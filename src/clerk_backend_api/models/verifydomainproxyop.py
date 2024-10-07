@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 from clerk_backend_api.types import BaseModel
-from typing import Optional, TypedDict
-from typing_extensions import NotRequired
+from typing import Optional
+from typing_extensions import NotRequired, TypedDict
 
 
 class VerifyDomainProxyRequestBodyTypedDict(TypedDict):
@@ -11,11 +11,11 @@ class VerifyDomainProxyRequestBodyTypedDict(TypedDict):
     r"""The ID of the domain that will be updated."""
     proxy_url: NotRequired[str]
     r"""The full URL of the proxy which will forward requests to the Clerk Frontend API for this domain. e.g. https://example.com/__clerk"""
-    
+
 
 class VerifyDomainProxyRequestBody(BaseModel):
     domain_id: Optional[str] = None
     r"""The ID of the domain that will be updated."""
+
     proxy_url: Optional[str] = None
     r"""The full URL of the proxy which will forward requests to the Clerk Frontend API for this domain. e.g. https://example.com/__clerk"""
-    
