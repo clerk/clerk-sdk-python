@@ -4,21 +4,24 @@ from __future__ import annotations
 from clerk_backend_api.types import BaseModel
 from clerk_backend_api.utils import FieldMetadata, PathParamMetadata
 from enum import Enum
-from typing import TypedDict
-from typing_extensions import Annotated
+from typing_extensions import Annotated, TypedDict
 
 
 class TemplateType(str, Enum):
     r"""The type of templates to list (email or SMS)"""
+
     EMAIL = "email"
     SMS = "sms"
+
 
 class GetTemplateListRequestTypedDict(TypedDict):
     template_type: TemplateType
     r"""The type of templates to list (email or SMS)"""
-    
+
 
 class GetTemplateListRequest(BaseModel):
-    template_type: Annotated[TemplateType, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))]
+    template_type: Annotated[
+        TemplateType,
+        FieldMetadata(path=PathParamMetadata(style="simple", explode=False)),
+    ]
     r"""The type of templates to list (email or SMS)"""
-    

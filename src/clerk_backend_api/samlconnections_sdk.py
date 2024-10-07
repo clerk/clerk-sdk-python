@@ -7,17 +7,17 @@ from clerk_backend_api.types import BaseModel, OptionalNullable, UNSET
 from jsonpath import JSONPath
 from typing import Any, Dict, Optional, Union, cast
 
+
 class SamlConnectionsSDK(BaseSDK):
-    
-    
     def list(
-        self, *,
+        self,
+        *,
         limit: Optional[int] = 10,
         offset: Optional[int] = 0,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
-    ) -> models.ListSAMLConnectionsResponse:
+    ) -> Optional[models.ListSAMLConnectionsResponse]:
         r"""Get a list of SAML Connections for an instance
 
         Returns the list of SAML Connections for an instance.
@@ -34,15 +34,15 @@ class SamlConnectionsSDK(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
-        
+
         if server_url is not None:
             base_url = server_url
-        
+
         request = models.ListSAMLConnectionsRequest(
             limit=limit,
             offset=offset,
         )
-        
+
         req = self.build_request(
             method="GET",
             path="/saml_connections",
@@ -57,28 +57,26 @@ class SamlConnectionsSDK(BaseSDK):
             security=self.sdk_configuration.security,
             timeout_ms=timeout_ms,
         )
-        
+
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, [
-                "429",
-                "500",
-                "502",
-                "503",
-                "504"
-            ])                
-        
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
         http_res = self.do_request(
-            hook_ctx=HookContext(operation_id="ListSAMLConnections", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            hook_ctx=HookContext(
+                operation_id="ListSAMLConnections",
+                oauth2_scopes=[],
+                security_source=self.sdk_configuration.security,
+            ),
             request=req,
-            error_status_codes=["402","403","422","4XX","5XX"],
-            retry_config=retry_config
+            error_status_codes=["402", "403", "422", "4XX", "5XX"],
+            retry_config=retry_config,
         )
-        
+
         def next_func() -> Optional[models.ListSAMLConnectionsResponse]:
             body = utils.unmarshal_json(http_res.text, Dict[Any, Any])
             offset = request.offset if not request.offset is None else 0
@@ -98,29 +96,40 @@ class SamlConnectionsSDK(BaseSDK):
                 offset=next_offset,
                 retries=retries,
             )
-        
+
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return models.ListSAMLConnectionsResponse(result=utils.unmarshal_json(http_res.text, Optional[models.SAMLConnections]), next=next_func)
-        if utils.match_response(http_res, ["402","403","422"], "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX","5XX"], "*"):
-            raise models.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
-        
-        content_type = http_res.headers.get("Content-Type")
-        raise models.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+            return models.ListSAMLConnectionsResponse(
+                result=utils.unmarshal_json(
+                    http_res.text, Optional[models.SAMLConnections]
+                ),
+                next=next_func,
+            )
+        if utils.match_response(http_res, ["402", "403", "422"], "application/json"):
+            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsError85Data)
+            raise models.ClerkErrorsError85(data=data)
+        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res.text, http_res
+            )
 
-    
-    
+        content_type = http_res.headers.get("Content-Type")
+        raise models.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res.text,
+            http_res,
+        )
+
     async def list_async(
-        self, *,
+        self,
+        *,
         limit: Optional[int] = 10,
         offset: Optional[int] = 0,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
-    ) -> models.ListSAMLConnectionsResponse:
+    ) -> Optional[models.ListSAMLConnectionsResponse]:
         r"""Get a list of SAML Connections for an instance
 
         Returns the list of SAML Connections for an instance.
@@ -137,16 +146,16 @@ class SamlConnectionsSDK(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
-        
+
         if server_url is not None:
             base_url = server_url
-        
+
         request = models.ListSAMLConnectionsRequest(
             limit=limit,
             offset=offset,
         )
-        
-        req = self.build_request(
+
+        req = self.build_request_async(
             method="GET",
             path="/saml_connections",
             base_url=base_url,
@@ -160,28 +169,26 @@ class SamlConnectionsSDK(BaseSDK):
             security=self.sdk_configuration.security,
             timeout_ms=timeout_ms,
         )
-        
+
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, [
-                "429",
-                "500",
-                "502",
-                "503",
-                "504"
-            ])                
-        
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
         http_res = await self.do_request_async(
-            hook_ctx=HookContext(operation_id="ListSAMLConnections", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            hook_ctx=HookContext(
+                operation_id="ListSAMLConnections",
+                oauth2_scopes=[],
+                security_source=self.sdk_configuration.security,
+            ),
             request=req,
-            error_status_codes=["402","403","422","4XX","5XX"],
-            retry_config=retry_config
+            error_status_codes=["402", "403", "422", "4XX", "5XX"],
+            retry_config=retry_config,
         )
-        
+
         def next_func() -> Optional[models.ListSAMLConnectionsResponse]:
             body = utils.unmarshal_json(http_res.text, Dict[Any, Any])
             offset = request.offset if not request.offset is None else 0
@@ -201,24 +208,40 @@ class SamlConnectionsSDK(BaseSDK):
                 offset=next_offset,
                 retries=retries,
             )
-        
+
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return models.ListSAMLConnectionsResponse(result=utils.unmarshal_json(http_res.text, Optional[models.SAMLConnections]), next=next_func)
-        if utils.match_response(http_res, ["402","403","422"], "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX","5XX"], "*"):
-            raise models.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
-        
-        content_type = http_res.headers.get("Content-Type")
-        raise models.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+            return models.ListSAMLConnectionsResponse(
+                result=utils.unmarshal_json(
+                    http_res.text, Optional[models.SAMLConnections]
+                ),
+                next=next_func,
+            )
+        if utils.match_response(http_res, ["402", "403", "422"], "application/json"):
+            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsError85Data)
+            raise models.ClerkErrorsError85(data=data)
+        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res.text, http_res
+            )
 
-    
-    
+        content_type = http_res.headers.get("Content-Type")
+        raise models.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res.text,
+            http_res,
+        )
+
     def create(
-        self, *,
-        request: Optional[Union[models.CreateSAMLConnectionRequestBody, models.CreateSAMLConnectionRequestBodyTypedDict]] = None,
+        self,
+        *,
+        request: Optional[
+            Union[
+                models.CreateSAMLConnectionRequestBody,
+                models.CreateSAMLConnectionRequestBodyTypedDict,
+            ]
+        ] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -236,14 +259,16 @@ class SamlConnectionsSDK(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
-        
+
         if server_url is not None:
             base_url = server_url
-        
-        if not isinstance(request, BaseModel) and request is not None:
-            request = utils.unmarshal(request, models.CreateSAMLConnectionRequestBody)
-        request = cast(models.CreateSAMLConnectionRequestBody, request)
-        
+
+        if not isinstance(request, BaseModel):
+            request = utils.unmarshal(
+                request, Optional[models.CreateSAMLConnectionRequestBody]
+            )
+        request = cast(Optional[models.CreateSAMLConnectionRequestBody], request)
+
         req = self.build_request(
             method="POST",
             path="/saml_connections",
@@ -256,48 +281,63 @@ class SamlConnectionsSDK(BaseSDK):
             user_agent_header="user-agent",
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
-            get_serialized_body=lambda: utils.serialize_request_body(request, False, True, "json", Optional[models.CreateSAMLConnectionRequestBody]),
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request,
+                False,
+                True,
+                "json",
+                Optional[models.CreateSAMLConnectionRequestBody],
+            ),
             timeout_ms=timeout_ms,
         )
-        
+
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, [
-                "429",
-                "500",
-                "502",
-                "503",
-                "504"
-            ])                
-        
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
         http_res = self.do_request(
-            hook_ctx=HookContext(operation_id="CreateSAMLConnection", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            hook_ctx=HookContext(
+                operation_id="CreateSAMLConnection",
+                oauth2_scopes=[],
+                security_source=self.sdk_configuration.security,
+            ),
             request=req,
-            error_status_codes=["402","403","422","4XX","5XX"],
-            retry_config=retry_config
+            error_status_codes=["402", "403", "422", "4XX", "5XX"],
+            retry_config=retry_config,
         )
-        
+
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[models.SAMLConnection])
-        if utils.match_response(http_res, ["402","403","422"], "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX","5XX"], "*"):
-            raise models.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
-        
-        content_type = http_res.headers.get("Content-Type")
-        raise models.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+        if utils.match_response(http_res, ["402", "403", "422"], "application/json"):
+            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsError86Data)
+            raise models.ClerkErrorsError86(data=data)
+        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res.text, http_res
+            )
 
-    
-    
+        content_type = http_res.headers.get("Content-Type")
+        raise models.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res.text,
+            http_res,
+        )
+
     async def create_async(
-        self, *,
-        request: Optional[Union[models.CreateSAMLConnectionRequestBody, models.CreateSAMLConnectionRequestBodyTypedDict]] = None,
+        self,
+        *,
+        request: Optional[
+            Union[
+                models.CreateSAMLConnectionRequestBody,
+                models.CreateSAMLConnectionRequestBodyTypedDict,
+            ]
+        ] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -315,15 +355,17 @@ class SamlConnectionsSDK(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
-        
+
         if server_url is not None:
             base_url = server_url
-        
-        if not isinstance(request, BaseModel) and request is not None:
-            request = utils.unmarshal(request, models.CreateSAMLConnectionRequestBody)
-        request = cast(models.CreateSAMLConnectionRequestBody, request)
-        
-        req = self.build_request(
+
+        if not isinstance(request, BaseModel):
+            request = utils.unmarshal(
+                request, Optional[models.CreateSAMLConnectionRequestBody]
+            )
+        request = cast(Optional[models.CreateSAMLConnectionRequestBody], request)
+
+        req = self.build_request_async(
             method="POST",
             path="/saml_connections",
             base_url=base_url,
@@ -335,47 +377,57 @@ class SamlConnectionsSDK(BaseSDK):
             user_agent_header="user-agent",
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
-            get_serialized_body=lambda: utils.serialize_request_body(request, False, True, "json", Optional[models.CreateSAMLConnectionRequestBody]),
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request,
+                False,
+                True,
+                "json",
+                Optional[models.CreateSAMLConnectionRequestBody],
+            ),
             timeout_ms=timeout_ms,
         )
-        
+
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, [
-                "429",
-                "500",
-                "502",
-                "503",
-                "504"
-            ])                
-        
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
         http_res = await self.do_request_async(
-            hook_ctx=HookContext(operation_id="CreateSAMLConnection", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            hook_ctx=HookContext(
+                operation_id="CreateSAMLConnection",
+                oauth2_scopes=[],
+                security_source=self.sdk_configuration.security,
+            ),
             request=req,
-            error_status_codes=["402","403","422","4XX","5XX"],
-            retry_config=retry_config
+            error_status_codes=["402", "403", "422", "4XX", "5XX"],
+            retry_config=retry_config,
         )
-        
+
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[models.SAMLConnection])
-        if utils.match_response(http_res, ["402","403","422"], "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX","5XX"], "*"):
-            raise models.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
-        
-        content_type = http_res.headers.get("Content-Type")
-        raise models.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+        if utils.match_response(http_res, ["402", "403", "422"], "application/json"):
+            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsError86Data)
+            raise models.ClerkErrorsError86(data=data)
+        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res.text, http_res
+            )
 
-    
-    
+        content_type = http_res.headers.get("Content-Type")
+        raise models.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res.text,
+            http_res,
+        )
+
     def get(
-        self, *,
+        self,
+        *,
         saml_connection_id: str,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -394,14 +446,14 @@ class SamlConnectionsSDK(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
-        
+
         if server_url is not None:
             base_url = server_url
-        
+
         request = models.GetSAMLConnectionRequest(
             saml_connection_id=saml_connection_id,
         )
-        
+
         req = self.build_request(
             method="GET",
             path="/saml_connections/{saml_connection_id}",
@@ -416,44 +468,48 @@ class SamlConnectionsSDK(BaseSDK):
             security=self.sdk_configuration.security,
             timeout_ms=timeout_ms,
         )
-        
+
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, [
-                "429",
-                "500",
-                "502",
-                "503",
-                "504"
-            ])                
-        
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
         http_res = self.do_request(
-            hook_ctx=HookContext(operation_id="GetSAMLConnection", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            hook_ctx=HookContext(
+                operation_id="GetSAMLConnection",
+                oauth2_scopes=[],
+                security_source=self.sdk_configuration.security,
+            ),
             request=req,
-            error_status_codes=["402","403","404","4XX","5XX"],
-            retry_config=retry_config
+            error_status_codes=["402", "403", "404", "4XX", "5XX"],
+            retry_config=retry_config,
         )
-        
+
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[models.SAMLConnection])
-        if utils.match_response(http_res, ["402","403","404"], "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX","5XX"], "*"):
-            raise models.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
-        
-        content_type = http_res.headers.get("Content-Type")
-        raise models.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+        if utils.match_response(http_res, ["402", "403", "404"], "application/json"):
+            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsError87Data)
+            raise models.ClerkErrorsError87(data=data)
+        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res.text, http_res
+            )
 
-    
-    
+        content_type = http_res.headers.get("Content-Type")
+        raise models.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res.text,
+            http_res,
+        )
+
     async def get_async(
-        self, *,
+        self,
+        *,
         saml_connection_id: str,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -472,15 +528,15 @@ class SamlConnectionsSDK(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
-        
+
         if server_url is not None:
             base_url = server_url
-        
+
         request = models.GetSAMLConnectionRequest(
             saml_connection_id=saml_connection_id,
         )
-        
-        req = self.build_request(
+
+        req = self.build_request_async(
             method="GET",
             path="/saml_connections/{saml_connection_id}",
             base_url=base_url,
@@ -494,44 +550,48 @@ class SamlConnectionsSDK(BaseSDK):
             security=self.sdk_configuration.security,
             timeout_ms=timeout_ms,
         )
-        
+
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, [
-                "429",
-                "500",
-                "502",
-                "503",
-                "504"
-            ])                
-        
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
         http_res = await self.do_request_async(
-            hook_ctx=HookContext(operation_id="GetSAMLConnection", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            hook_ctx=HookContext(
+                operation_id="GetSAMLConnection",
+                oauth2_scopes=[],
+                security_source=self.sdk_configuration.security,
+            ),
             request=req,
-            error_status_codes=["402","403","404","4XX","5XX"],
-            retry_config=retry_config
+            error_status_codes=["402", "403", "404", "4XX", "5XX"],
+            retry_config=retry_config,
         )
-        
+
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[models.SAMLConnection])
-        if utils.match_response(http_res, ["402","403","404"], "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX","5XX"], "*"):
-            raise models.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
-        
-        content_type = http_res.headers.get("Content-Type")
-        raise models.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+        if utils.match_response(http_res, ["402", "403", "404"], "application/json"):
+            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsError87Data)
+            raise models.ClerkErrorsError87(data=data)
+        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res.text, http_res
+            )
 
-    
-    
+        content_type = http_res.headers.get("Content-Type")
+        raise models.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res.text,
+            http_res,
+        )
+
     def update(
-        self, *,
+        self,
+        *,
         saml_connection_id: str,
         name: OptionalNullable[str] = UNSET,
         domain: OptionalNullable[str] = UNSET,
@@ -540,7 +600,12 @@ class SamlConnectionsSDK(BaseSDK):
         idp_certificate: OptionalNullable[str] = UNSET,
         idp_metadata_url: OptionalNullable[str] = UNSET,
         idp_metadata: OptionalNullable[str] = UNSET,
-        attribute_mapping: OptionalNullable[Union[models.UpdateSAMLConnectionAttributeMapping, models.UpdateSAMLConnectionAttributeMappingTypedDict]] = UNSET,
+        attribute_mapping: OptionalNullable[
+            Union[
+                models.UpdateSAMLConnectionAttributeMapping,
+                models.UpdateSAMLConnectionAttributeMappingTypedDict,
+            ]
+        ] = UNSET,
         active: OptionalNullable[bool] = UNSET,
         sync_user_attributes: OptionalNullable[bool] = UNSET,
         allow_subdomains: OptionalNullable[bool] = UNSET,
@@ -574,10 +639,10 @@ class SamlConnectionsSDK(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
-        
+
         if server_url is not None:
             base_url = server_url
-        
+
         request = models.UpdateSAMLConnectionRequest(
             saml_connection_id=saml_connection_id,
             request_body=models.UpdateSAMLConnectionRequestBody(
@@ -588,14 +653,17 @@ class SamlConnectionsSDK(BaseSDK):
                 idp_certificate=idp_certificate,
                 idp_metadata_url=idp_metadata_url,
                 idp_metadata=idp_metadata,
-                attribute_mapping=utils.get_pydantic_model(attribute_mapping, OptionalNullable[models.UpdateSAMLConnectionAttributeMapping]),
+                attribute_mapping=utils.get_pydantic_model(
+                    attribute_mapping,
+                    OptionalNullable[models.UpdateSAMLConnectionAttributeMapping],
+                ),
                 active=active,
                 sync_user_attributes=sync_user_attributes,
                 allow_subdomains=allow_subdomains,
                 allow_idp_initiated=allow_idp_initiated,
             ),
         )
-        
+
         req = self.build_request(
             method="PATCH",
             path="/saml_connections/{saml_connection_id}",
@@ -608,47 +676,59 @@ class SamlConnectionsSDK(BaseSDK):
             user_agent_header="user-agent",
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
-            get_serialized_body=lambda: utils.serialize_request_body(request.request_body, False, False, "json", models.UpdateSAMLConnectionRequestBody),
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request.request_body,
+                False,
+                False,
+                "json",
+                models.UpdateSAMLConnectionRequestBody,
+            ),
             timeout_ms=timeout_ms,
         )
-        
+
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, [
-                "429",
-                "500",
-                "502",
-                "503",
-                "504"
-            ])                
-        
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
         http_res = self.do_request(
-            hook_ctx=HookContext(operation_id="UpdateSAMLConnection", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            hook_ctx=HookContext(
+                operation_id="UpdateSAMLConnection",
+                oauth2_scopes=[],
+                security_source=self.sdk_configuration.security,
+            ),
             request=req,
-            error_status_codes=["402","403","404","422","4XX","5XX"],
-            retry_config=retry_config
+            error_status_codes=["402", "403", "404", "422", "4XX", "5XX"],
+            retry_config=retry_config,
         )
-        
+
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[models.SAMLConnection])
-        if utils.match_response(http_res, ["402","403","404","422"], "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX","5XX"], "*"):
-            raise models.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
-        
-        content_type = http_res.headers.get("Content-Type")
-        raise models.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+        if utils.match_response(
+            http_res, ["402", "403", "404", "422"], "application/json"
+        ):
+            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsError88Data)
+            raise models.ClerkErrorsError88(data=data)
+        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res.text, http_res
+            )
 
-    
-    
+        content_type = http_res.headers.get("Content-Type")
+        raise models.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res.text,
+            http_res,
+        )
+
     async def update_async(
-        self, *,
+        self,
+        *,
         saml_connection_id: str,
         name: OptionalNullable[str] = UNSET,
         domain: OptionalNullable[str] = UNSET,
@@ -657,7 +737,12 @@ class SamlConnectionsSDK(BaseSDK):
         idp_certificate: OptionalNullable[str] = UNSET,
         idp_metadata_url: OptionalNullable[str] = UNSET,
         idp_metadata: OptionalNullable[str] = UNSET,
-        attribute_mapping: OptionalNullable[Union[models.UpdateSAMLConnectionAttributeMapping, models.UpdateSAMLConnectionAttributeMappingTypedDict]] = UNSET,
+        attribute_mapping: OptionalNullable[
+            Union[
+                models.UpdateSAMLConnectionAttributeMapping,
+                models.UpdateSAMLConnectionAttributeMappingTypedDict,
+            ]
+        ] = UNSET,
         active: OptionalNullable[bool] = UNSET,
         sync_user_attributes: OptionalNullable[bool] = UNSET,
         allow_subdomains: OptionalNullable[bool] = UNSET,
@@ -691,10 +776,10 @@ class SamlConnectionsSDK(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
-        
+
         if server_url is not None:
             base_url = server_url
-        
+
         request = models.UpdateSAMLConnectionRequest(
             saml_connection_id=saml_connection_id,
             request_body=models.UpdateSAMLConnectionRequestBody(
@@ -705,15 +790,18 @@ class SamlConnectionsSDK(BaseSDK):
                 idp_certificate=idp_certificate,
                 idp_metadata_url=idp_metadata_url,
                 idp_metadata=idp_metadata,
-                attribute_mapping=utils.get_pydantic_model(attribute_mapping, OptionalNullable[models.UpdateSAMLConnectionAttributeMapping]),
+                attribute_mapping=utils.get_pydantic_model(
+                    attribute_mapping,
+                    OptionalNullable[models.UpdateSAMLConnectionAttributeMapping],
+                ),
                 active=active,
                 sync_user_attributes=sync_user_attributes,
                 allow_subdomains=allow_subdomains,
                 allow_idp_initiated=allow_idp_initiated,
             ),
         )
-        
-        req = self.build_request(
+
+        req = self.build_request_async(
             method="PATCH",
             path="/saml_connections/{saml_connection_id}",
             base_url=base_url,
@@ -725,47 +813,59 @@ class SamlConnectionsSDK(BaseSDK):
             user_agent_header="user-agent",
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
-            get_serialized_body=lambda: utils.serialize_request_body(request.request_body, False, False, "json", models.UpdateSAMLConnectionRequestBody),
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request.request_body,
+                False,
+                False,
+                "json",
+                models.UpdateSAMLConnectionRequestBody,
+            ),
             timeout_ms=timeout_ms,
         )
-        
+
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, [
-                "429",
-                "500",
-                "502",
-                "503",
-                "504"
-            ])                
-        
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
         http_res = await self.do_request_async(
-            hook_ctx=HookContext(operation_id="UpdateSAMLConnection", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            hook_ctx=HookContext(
+                operation_id="UpdateSAMLConnection",
+                oauth2_scopes=[],
+                security_source=self.sdk_configuration.security,
+            ),
             request=req,
-            error_status_codes=["402","403","404","422","4XX","5XX"],
-            retry_config=retry_config
+            error_status_codes=["402", "403", "404", "422", "4XX", "5XX"],
+            retry_config=retry_config,
         )
-        
+
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[models.SAMLConnection])
-        if utils.match_response(http_res, ["402","403","404","422"], "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX","5XX"], "*"):
-            raise models.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
-        
-        content_type = http_res.headers.get("Content-Type")
-        raise models.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+        if utils.match_response(
+            http_res, ["402", "403", "404", "422"], "application/json"
+        ):
+            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsError88Data)
+            raise models.ClerkErrorsError88(data=data)
+        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res.text, http_res
+            )
 
-    
-    
+        content_type = http_res.headers.get("Content-Type")
+        raise models.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res.text,
+            http_res,
+        )
+
     def delete(
-        self, *,
+        self,
+        *,
         saml_connection_id: str,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -784,14 +884,14 @@ class SamlConnectionsSDK(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
-        
+
         if server_url is not None:
             base_url = server_url
-        
+
         request = models.DeleteSAMLConnectionRequest(
             saml_connection_id=saml_connection_id,
         )
-        
+
         req = self.build_request(
             method="DELETE",
             path="/saml_connections/{saml_connection_id}",
@@ -806,44 +906,48 @@ class SamlConnectionsSDK(BaseSDK):
             security=self.sdk_configuration.security,
             timeout_ms=timeout_ms,
         )
-        
+
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, [
-                "429",
-                "500",
-                "502",
-                "503",
-                "504"
-            ])                
-        
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
         http_res = self.do_request(
-            hook_ctx=HookContext(operation_id="DeleteSAMLConnection", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            hook_ctx=HookContext(
+                operation_id="DeleteSAMLConnection",
+                oauth2_scopes=[],
+                security_source=self.sdk_configuration.security,
+            ),
             request=req,
-            error_status_codes=["402","403","404","4XX","5XX"],
-            retry_config=retry_config
+            error_status_codes=["402", "403", "404", "4XX", "5XX"],
+            retry_config=retry_config,
         )
-        
+
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[models.DeletedObject])
-        if utils.match_response(http_res, ["402","403","404"], "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX","5XX"], "*"):
-            raise models.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
-        
-        content_type = http_res.headers.get("Content-Type")
-        raise models.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+        if utils.match_response(http_res, ["402", "403", "404"], "application/json"):
+            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsError89Data)
+            raise models.ClerkErrorsError89(data=data)
+        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res.text, http_res
+            )
 
-    
-    
+        content_type = http_res.headers.get("Content-Type")
+        raise models.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res.text,
+            http_res,
+        )
+
     async def delete_async(
-        self, *,
+        self,
+        *,
         saml_connection_id: str,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -862,15 +966,15 @@ class SamlConnectionsSDK(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
-        
+
         if server_url is not None:
             base_url = server_url
-        
+
         request = models.DeleteSAMLConnectionRequest(
             saml_connection_id=saml_connection_id,
         )
-        
-        req = self.build_request(
+
+        req = self.build_request_async(
             method="DELETE",
             path="/saml_connections/{saml_connection_id}",
             base_url=base_url,
@@ -884,38 +988,41 @@ class SamlConnectionsSDK(BaseSDK):
             security=self.sdk_configuration.security,
             timeout_ms=timeout_ms,
         )
-        
+
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, [
-                "429",
-                "500",
-                "502",
-                "503",
-                "504"
-            ])                
-        
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
         http_res = await self.do_request_async(
-            hook_ctx=HookContext(operation_id="DeleteSAMLConnection", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            hook_ctx=HookContext(
+                operation_id="DeleteSAMLConnection",
+                oauth2_scopes=[],
+                security_source=self.sdk_configuration.security,
+            ),
             request=req,
-            error_status_codes=["402","403","404","4XX","5XX"],
-            retry_config=retry_config
+            error_status_codes=["402", "403", "404", "4XX", "5XX"],
+            retry_config=retry_config,
         )
-        
+
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[models.DeletedObject])
-        if utils.match_response(http_res, ["402","403","404"], "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX","5XX"], "*"):
-            raise models.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
-        
-        content_type = http_res.headers.get("Content-Type")
-        raise models.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+        if utils.match_response(http_res, ["402", "403", "404"], "application/json"):
+            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsError89Data)
+            raise models.ClerkErrorsError89(data=data)
+        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res.text, http_res
+            )
 
-    
+        content_type = http_res.headers.get("Content-Type")
+        raise models.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res.text,
+            http_res,
+        )

@@ -2,20 +2,19 @@
 
 from __future__ import annotations
 from clerk_backend_api.types import BaseModel
-from typing import Optional, TypedDict
-from typing_extensions import NotRequired
+from typing import Optional
+from typing_extensions import NotRequired, TypedDict
 
 
 class VerifyClientRequestBodyTypedDict(TypedDict):
     r"""Parameters."""
-    
+
     token: NotRequired[str]
     r"""A JWT Token that represents the active client."""
-    
+
 
 class VerifyClientRequestBody(BaseModel):
     r"""Parameters."""
-    
+
     token: Optional[str] = None
     r"""A JWT Token that represents the active client."""
-    

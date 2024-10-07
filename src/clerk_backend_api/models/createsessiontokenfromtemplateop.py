@@ -4,8 +4,8 @@ from __future__ import annotations
 from clerk_backend_api.types import BaseModel
 from clerk_backend_api.utils import FieldMetadata, PathParamMetadata
 from enum import Enum
-from typing import Optional, TypedDict
-from typing_extensions import Annotated, NotRequired
+from typing import Optional
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class CreateSessionTokenFromTemplateRequestTypedDict(TypedDict):
@@ -13,28 +13,34 @@ class CreateSessionTokenFromTemplateRequestTypedDict(TypedDict):
     r"""The ID of the session"""
     template_name: str
     r"""The name of the JWT Template defined in your instance (e.g. `custom_hasura`)."""
-    
+
 
 class CreateSessionTokenFromTemplateRequest(BaseModel):
-    session_id: Annotated[str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))]
+    session_id: Annotated[
+        str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))
+    ]
     r"""The ID of the session"""
-    template_name: Annotated[str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))]
+
+    template_name: Annotated[
+        str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))
+    ]
     r"""The name of the JWT Template defined in your instance (e.g. `custom_hasura`)."""
-    
+
 
 class CreateSessionTokenFromTemplateObject(str, Enum):
     TOKEN = "token"
 
+
 class CreateSessionTokenFromTemplateResponseBodyTypedDict(TypedDict):
     r"""OK"""
-    
+
     object: NotRequired[CreateSessionTokenFromTemplateObject]
     jwt: NotRequired[str]
-    
+
 
 class CreateSessionTokenFromTemplateResponseBody(BaseModel):
     r"""OK"""
-    
+
     object: Optional[CreateSessionTokenFromTemplateObject] = None
+
     jwt: Optional[str] = None
-    

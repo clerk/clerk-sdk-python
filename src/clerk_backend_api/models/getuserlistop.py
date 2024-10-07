@@ -3,8 +3,8 @@
 from __future__ import annotations
 from clerk_backend_api.types import BaseModel
 from clerk_backend_api.utils import FieldMetadata, QueryParamMetadata
-from typing import List, Optional, TypedDict
-from typing_extensions import Annotated, NotRequired
+from typing import List, Optional
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class GetUserListRequestTypedDict(TypedDict):
@@ -82,20 +82,31 @@ class GetUserListRequestTypedDict(TypedDict):
     If you don't use `+` or `-`, then `+` is implied. We only support one `order_by` parameter, and if multiple `order_by` parameters are provided, we will only keep the first one. For example,
     if you pass `order_by=username&order_by=created_at`, we will consider only the first `order_by` parameter, which is `username`. The `created_at` parameter will be ignored in this case.
     """
-    
+
 
 class GetUserListRequest(BaseModel):
-    email_address: Annotated[Optional[List[str]], FieldMetadata(query=QueryParamMetadata(style="form", explode=True))] = None
+    email_address: Annotated[
+        Optional[List[str]],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
     r"""Returns users with the specified email addresses.
     Accepts up to 100 email addresses.
     Any email addresses not found are ignored.
     """
-    phone_number: Annotated[Optional[List[str]], FieldMetadata(query=QueryParamMetadata(style="form", explode=True))] = None
+
+    phone_number: Annotated[
+        Optional[List[str]],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
     r"""Returns users with the specified phone numbers.
     Accepts up to 100 phone numbers.
     Any phone numbers not found are ignored.
     """
-    external_id: Annotated[Optional[List[str]], FieldMetadata(query=QueryParamMetadata(style="form", explode=True))] = None
+
+    external_id: Annotated[
+        Optional[List[str]],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
     r"""Returns users with the specified external ids.
     For each external id, the `+` and `-` can be
     prepended to the id, which denote whether the
@@ -104,17 +115,29 @@ class GetUserListRequest(BaseModel):
     Accepts up to 100 external ids.
     Any external ids not found are ignored.
     """
-    username: Annotated[Optional[List[str]], FieldMetadata(query=QueryParamMetadata(style="form", explode=True))] = None
+
+    username: Annotated[
+        Optional[List[str]],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
     r"""Returns users with the specified usernames.
     Accepts up to 100 usernames.
     Any usernames not found are ignored.
     """
-    web3_wallet: Annotated[Optional[List[str]], FieldMetadata(query=QueryParamMetadata(style="form", explode=True))] = None
+
+    web3_wallet: Annotated[
+        Optional[List[str]],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
     r"""Returns users with the specified web3 wallet addresses.
     Accepts up to 100 web3 wallet addresses.
     Any web3 wallet addressed not found are ignored.
     """
-    user_id: Annotated[Optional[List[str]], FieldMetadata(query=QueryParamMetadata(style="form", explode=True))] = None
+
+    user_id: Annotated[
+        Optional[List[str]],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
     r"""Returns users with the user ids specified.
     For each user id, the `+` and `-` can be
     prepended to the id, which denote whether the
@@ -123,7 +146,11 @@ class GetUserListRequest(BaseModel):
     Accepts up to 100 user ids.
     Any user ids not found are ignored.
     """
-    organization_id: Annotated[Optional[List[str]], FieldMetadata(query=QueryParamMetadata(style="form", explode=True))] = None
+
+    organization_id: Annotated[
+        Optional[List[str]],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
     r"""Returns users that have memberships to the
     given organizations.
     For each organization id, the `+` and `-` can be
@@ -132,26 +159,46 @@ class GetUserListRequest(BaseModel):
     excluded from the result set.
     Accepts up to 100 organization ids.
     """
-    query: Annotated[Optional[str], FieldMetadata(query=QueryParamMetadata(style="form", explode=True))] = None
+
+    query: Annotated[
+        Optional[str],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
     r"""Returns users that match the given query.
     For possible matches, we check the email addresses, phone numbers, usernames, web3 wallets, user ids, first and last names.
     The query value doesn't need to match the exact value you are looking for, it is capable of partial matches as well.
     """
-    last_active_at_since: Annotated[Optional[int], FieldMetadata(query=QueryParamMetadata(style="form", explode=True))] = None
+
+    last_active_at_since: Annotated[
+        Optional[int],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
     r"""Returns users that had session activity since the given date, with day precision.
     Providing a value with higher precision than day will result in an error.
     Example: use 1700690400000 to retrieve users that had session activity from 2023-11-23 until the current day.
     """
-    limit: Annotated[Optional[int], FieldMetadata(query=QueryParamMetadata(style="form", explode=True))] = 10
+
+    limit: Annotated[
+        Optional[int],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = 10
     r"""Applies a limit to the number of results returned.
     Can be used for paginating the results together with `offset`.
     """
-    offset: Annotated[Optional[int], FieldMetadata(query=QueryParamMetadata(style="form", explode=True))] = 0
+
+    offset: Annotated[
+        Optional[int],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = 0
     r"""Skip the first `offset` results when paginating.
     Needs to be an integer greater or equal to zero.
     To be used in conjunction with `limit`.
     """
-    order_by: Annotated[Optional[str], FieldMetadata(query=QueryParamMetadata(style="form", explode=True))] = "-created_at"
+
+    order_by: Annotated[
+        Optional[str],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = "-created_at"
     r"""Allows to return users in a particular order.
     At the moment, you can order the returned users by their `created_at`,`updated_at`,`email_address`,`web3wallet`,`first_name`,`last_name`,`phone_number`,`username`,`last_active_at`,`last_sign_in_at`.
     In order to specify the direction, you can use the `+/-` symbols prepended in the property to order by.
@@ -159,4 +206,3 @@ class GetUserListRequest(BaseModel):
     If you don't use `+` or `-`, then `+` is implied. We only support one `order_by` parameter, and if multiple `order_by` parameters are provided, we will only keep the first one. For example,
     if you pass `order_by=username&order_by=created_at`, we will consider only the first `order_by` parameter, which is `username`. The `created_at` parameter will be ignored in this case.
     """
-    

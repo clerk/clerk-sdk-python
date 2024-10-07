@@ -116,6 +116,19 @@ def validate_open_enum(is_int: bool):
     return validate
 
 
+def validate_const(v):
+    def validate(c):
+        if is_optional_type(type(c)) and c is None:
+            return None
+
+        if v != c:
+            raise ValueError(f"Expected {v}")
+
+        return c
+
+    return validate
+
+
 def unmarshal_json(raw, typ: Any) -> Any:
     return unmarshal(from_json(raw), typ)
 

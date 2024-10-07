@@ -3,23 +3,21 @@
 from __future__ import annotations
 from clerk_backend_api.types import BaseModel
 from clerk_backend_api.utils import FieldMetadata, PathParamMetadata, RequestMetadata
-from typing import Any, Dict, Optional, TypedDict
-from typing_extensions import Annotated, NotRequired
+from typing import Any, Dict, Optional
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class UpdateUserMetadataPrivateMetadataTypedDict(TypedDict):
     r"""Metadata saved on the user that is only visible to your backend.
     The new object will be merged with the existing value.
     """
-    
-    
+
 
 class UpdateUserMetadataPrivateMetadata(BaseModel):
     r"""Metadata saved on the user that is only visible to your backend.
     The new object will be merged with the existing value.
     """
-    
-    
+
 
 class UpdateUserMetadataUnsafeMetadataTypedDict(TypedDict):
     r"""Metadata saved on the user, that can be updated from both the Frontend and Backend APIs.
@@ -27,8 +25,7 @@ class UpdateUserMetadataUnsafeMetadataTypedDict(TypedDict):
 
     Note: Since this data can be modified from the frontend, it is not guaranteed to be safe.
     """
-    
-    
+
 
 class UpdateUserMetadataUnsafeMetadata(BaseModel):
     r"""Metadata saved on the user, that can be updated from both the Frontend and Backend APIs.
@@ -36,8 +33,7 @@ class UpdateUserMetadataUnsafeMetadata(BaseModel):
 
     Note: Since this data can be modified from the frontend, it is not guaranteed to be safe.
     """
-    
-    
+
 
 class UpdateUserMetadataRequestBodyTypedDict(TypedDict):
     public_metadata: NotRequired[Dict[str, Any]]
@@ -54,33 +50,40 @@ class UpdateUserMetadataRequestBodyTypedDict(TypedDict):
 
     Note: Since this data can be modified from the frontend, it is not guaranteed to be safe.
     """
-    
+
 
 class UpdateUserMetadataRequestBody(BaseModel):
     public_metadata: Optional[Dict[str, Any]] = None
     r"""Metadata saved on the user, that is visible to both your frontend and backend.
     The new object will be merged with the existing value.
     """
+
     private_metadata: Optional[UpdateUserMetadataPrivateMetadata] = None
     r"""Metadata saved on the user that is only visible to your backend.
     The new object will be merged with the existing value.
     """
+
     unsafe_metadata: Optional[UpdateUserMetadataUnsafeMetadata] = None
     r"""Metadata saved on the user, that can be updated from both the Frontend and Backend APIs.
     The new object will be merged with the existing value.
 
     Note: Since this data can be modified from the frontend, it is not guaranteed to be safe.
     """
-    
+
 
 class UpdateUserMetadataRequestTypedDict(TypedDict):
     user_id: str
     r"""The ID of the user whose metadata will be updated and merged"""
     request_body: NotRequired[UpdateUserMetadataRequestBodyTypedDict]
-    
+
 
 class UpdateUserMetadataRequest(BaseModel):
-    user_id: Annotated[str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))]
+    user_id: Annotated[
+        str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))
+    ]
     r"""The ID of the user whose metadata will be updated and merged"""
-    request_body: Annotated[Optional[UpdateUserMetadataRequestBody], FieldMetadata(request=RequestMetadata(media_type="application/json"))] = None
-    
+
+    request_body: Annotated[
+        Optional[UpdateUserMetadataRequestBody],
+        FieldMetadata(request=RequestMetadata(media_type="application/json")),
+    ] = None

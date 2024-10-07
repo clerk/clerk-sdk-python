@@ -3,19 +3,18 @@
 from __future__ import annotations
 from clerk_backend_api.types import BaseModel
 from clerk_backend_api.utils import FieldMetadata, PathParamMetadata, RequestMetadata
-from typing import TypedDict
-from typing_extensions import Annotated
+from typing_extensions import Annotated, TypedDict
 
 
 class UpdateOrganizationMembershipRequestBodyTypedDict(TypedDict):
     role: str
     r"""The new role of the given membership."""
-    
+
 
 class UpdateOrganizationMembershipRequestBody(BaseModel):
     role: str
     r"""The new role of the given membership."""
-    
+
 
 class UpdateOrganizationMembershipRequestTypedDict(TypedDict):
     organization_id: str
@@ -23,12 +22,20 @@ class UpdateOrganizationMembershipRequestTypedDict(TypedDict):
     user_id: str
     r"""The ID of the user that this membership belongs to"""
     request_body: UpdateOrganizationMembershipRequestBodyTypedDict
-    
+
 
 class UpdateOrganizationMembershipRequest(BaseModel):
-    organization_id: Annotated[str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))]
+    organization_id: Annotated[
+        str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))
+    ]
     r"""The ID of the organization the membership belongs to"""
-    user_id: Annotated[str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))]
+
+    user_id: Annotated[
+        str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))
+    ]
     r"""The ID of the user that this membership belongs to"""
-    request_body: Annotated[UpdateOrganizationMembershipRequestBody, FieldMetadata(request=RequestMetadata(media_type="application/json"))]
-    
+
+    request_body: Annotated[
+        UpdateOrganizationMembershipRequestBody,
+        FieldMetadata(request=RequestMetadata(media_type="application/json")),
+    ]

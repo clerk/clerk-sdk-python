@@ -3,16 +3,16 @@
 from __future__ import annotations
 from clerk_backend_api.types import BaseModel
 from clerk_backend_api.utils import FieldMetadata, PathParamMetadata
-from typing import TypedDict
-from typing_extensions import Annotated
+from typing_extensions import Annotated, TypedDict
 
 
 class DeleteUserRequestTypedDict(TypedDict):
     user_id: str
     r"""The ID of the user to delete"""
-    
+
 
 class DeleteUserRequest(BaseModel):
-    user_id: Annotated[str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))]
+    user_id: Annotated[
+        str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))
+    ]
     r"""The ID of the user to delete"""
-    

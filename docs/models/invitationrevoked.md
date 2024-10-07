@@ -1,5 +1,7 @@
 # InvitationRevoked
 
+Success
+
 
 ## Fields
 

@@ -1,6 +1,6 @@
-# ClerkErrors
+# ClerkErrorsError82
 
-Request was not successful
+Authorization invalid
 
 
 ## Fields

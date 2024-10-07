@@ -23,7 +23,6 @@ s = Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
-
 res = s.phone_numbers.create(request={
     "user_id": "usr_12345",
     "phone_number": "+11234567890",
@@ -51,11 +50,10 @@ if res is not None:
 
 ### Errors
 
-| Error Object        | Status Code         | Content Type        |
-| ------------------- | ------------------- | ------------------- |
-| models.ClerkErrors  | 400,401,403,404,422 | application/json    |
-| models.SDKError     | 4xx-5xx             | */*                 |
-
+| Error Type               | Status Code              | Content Type             |
+| ------------------------ | ------------------------ | ------------------------ |
+| models.ClerkErrorsError7 | 400, 401, 403, 404, 422  | application/json         |
+| models.SDKError          | 4XX, 5XX                 | \*/\*                    |
 
 ## get
 
@@ -69,7 +67,6 @@ from clerk_backend_api import Clerk
 s = Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
-
 
 res = s.phone_numbers.get(phone_number_id="phone_12345")
 
@@ -92,11 +89,10 @@ if res is not None:
 
 ### Errors
 
-| Error Object       | Status Code        | Content Type       |
-| ------------------ | ------------------ | ------------------ |
-| models.ClerkErrors | 400,401,403,404    | application/json   |
-| models.SDKError    | 4xx-5xx            | */*                |
-
+| Error Type               | Status Code              | Content Type             |
+| ------------------------ | ------------------------ | ------------------------ |
+| models.ClerkErrorsError8 | 400, 401, 403, 404       | application/json         |
+| models.SDKError          | 4XX, 5XX                 | \*/\*                    |
 
 ## delete
 
@@ -110,7 +106,6 @@ from clerk_backend_api import Clerk
 s = Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
-
 
 res = s.phone_numbers.delete(phone_number_id="phone_12345")
 
@@ -133,11 +128,10 @@ if res is not None:
 
 ### Errors
 
-| Error Object       | Status Code        | Content Type       |
-| ------------------ | ------------------ | ------------------ |
-| models.ClerkErrors | 400,401,403,404    | application/json   |
-| models.SDKError    | 4xx-5xx            | */*                |
-
+| Error Type               | Status Code              | Content Type             |
+| ------------------------ | ------------------------ | ------------------------ |
+| models.ClerkErrorsError9 | 400, 401, 403, 404       | application/json         |
+| models.SDKError          | 4XX, 5XX                 | \*/\*                    |
 
 ## update
 
@@ -152,12 +146,7 @@ s = Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
-
-res = s.phone_numbers.update(phone_number_id="phone_12345", request_body={
-    "verified": False,
-    "primary": True,
-    "reserved_for_second_factor": True,
-})
+res = s.phone_numbers.update(phone_number_id="phone_12345", verified=False, primary=True, reserved_for_second_factor=True)
 
 if res is not None:
     # handle response
@@ -167,11 +156,13 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                                                                     | Type                                                                                          | Required                                                                                      | Description                                                                                   | Example                                                                                       |
-| --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
-| `phone_number_id`                                                                             | *str*                                                                                         | :heavy_check_mark:                                                                            | The ID of the phone number to update                                                          | phone_12345                                                                                   |
-| `request_body`                                                                                | [Optional[models.UpdatePhoneNumberRequestBody]](../../models/updatephonenumberrequestbody.md) | :heavy_minus_sign:                                                                            | N/A                                                                                           |                                                                                               |
-| `retries`                                                                                     | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                              | :heavy_minus_sign:                                                                            | Configuration to override the default retry behavior of the client.                           |                                                                                               |
+| Parameter                                                                                                                                                                                                            | Type                                                                                                                                                                                                                 | Required                                                                                                                                                                                                             | Description                                                                                                                                                                                                          | Example                                                                                                                                                                                                              |
+| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `phone_number_id`                                                                                                                                                                                                    | *str*                                                                                                                                                                                                                | :heavy_check_mark:                                                                                                                                                                                                   | The ID of the phone number to update                                                                                                                                                                                 | phone_12345                                                                                                                                                                                                          |
+| `verified`                                                                                                                                                                                                           | *OptionalNullable[bool]*                                                                                                                                                                                             | :heavy_minus_sign:                                                                                                                                                                                                   | The phone number will be marked as verified.                                                                                                                                                                         | false                                                                                                                                                                                                                |
+| `primary`                                                                                                                                                                                                            | *OptionalNullable[bool]*                                                                                                                                                                                             | :heavy_minus_sign:                                                                                                                                                                                                   | Set this phone number as the primary phone number for the user.                                                                                                                                                      | true                                                                                                                                                                                                                 |
+| `reserved_for_second_factor`                                                                                                                                                                                         | *OptionalNullable[bool]*                                                                                                                                                                                             | :heavy_minus_sign:                                                                                                                                                                                                   | Set this phone number as reserved for multi-factor authentication.<br/>The phone number must also be verified.<br/>If there are no other reserved second factors, the phone number will be set as the default second factor. | true                                                                                                                                                                                                                 |
+| `retries`                                                                                                                                                                                                            | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                                                                                                     | :heavy_minus_sign:                                                                                                                                                                                                   | Configuration to override the default retry behavior of the client.                                                                                                                                                  |                                                                                                                                                                                                                      |
 
 ### Response
 
@@ -179,7 +170,7 @@ if res is not None:
 
 ### Errors
 
-| Error Object       | Status Code        | Content Type       |
-| ------------------ | ------------------ | ------------------ |
-| models.ClerkErrors | 400,401,403,404    | application/json   |
-| models.SDKError    | 4xx-5xx            | */*                |
+| Error Type                | Status Code               | Content Type              |
+| ------------------------- | ------------------------- | ------------------------- |
+| models.ClerkErrorsError10 | 400, 401, 403, 404        | application/json          |
+| models.SDKError           | 4XX, 5XX                  | \*/\*                     |

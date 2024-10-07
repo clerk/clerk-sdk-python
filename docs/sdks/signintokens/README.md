@@ -23,7 +23,6 @@ s = Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
-
 res = s.sign_in_tokens.create(request={
     "user_id": "user_12345",
     "expires_in_seconds": 2592000,
@@ -48,11 +47,10 @@ if res is not None:
 
 ### Errors
 
-| Error Object       | Status Code        | Content Type       |
-| ------------------ | ------------------ | ------------------ |
-| models.ClerkErrors | 404,422            | application/json   |
-| models.SDKError    | 4xx-5xx            | */*                |
-
+| Error Type                | Status Code               | Content Type              |
+| ------------------------- | ------------------------- | ------------------------- |
+| models.ClerkErrorsError77 | 404, 422                  | application/json          |
+| models.SDKError           | 4XX, 5XX                  | \*/\*                     |
 
 ## revoke
 
@@ -66,7 +64,6 @@ from clerk_backend_api import Clerk
 s = Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
-
 
 res = s.sign_in_tokens.revoke(sign_in_token_id="tok_test_1234567890")
 
@@ -89,7 +86,7 @@ if res is not None:
 
 ### Errors
 
-| Error Object       | Status Code        | Content Type       |
-| ------------------ | ------------------ | ------------------ |
-| models.ClerkErrors | 400,404            | application/json   |
-| models.SDKError    | 4xx-5xx            | */*                |
+| Error Type                | Status Code               | Content Type              |
+| ------------------------- | ------------------------- | ------------------------- |
+| models.ClerkErrorsError78 | 400, 404                  | application/json          |
+| models.SDKError           | 4XX, 5XX                  | \*/\*                     |

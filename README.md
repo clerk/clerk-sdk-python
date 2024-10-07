@@ -87,7 +87,6 @@ s = Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
-
 res = s.email_addresses.get(email_address_id="email_address_id_example")
 
 if res is not None:
@@ -119,19 +118,45 @@ asyncio.run(main())
 <!-- Start Available Resources and Operations [operations] -->
 ## Available Resources and Operations
 
-### [misc](docs/sdks/misc/README.md)
+<details open>
+<summary>Available methods</summary>
 
-* [get_public_interstitial](docs/sdks/misc/README.md#get_public_interstitial) - Returns the markup for the interstitial page
+### [actor_tokens](docs/sdks/actortokens/README.md)
 
-### [jwks](docs/sdks/jwks/README.md)
+* [create](docs/sdks/actortokens/README.md#create) - Create actor token
+* [revoke](docs/sdks/actortokens/README.md#revoke) - Revoke actor token
 
-* [get](docs/sdks/jwks/README.md#get) - Retrieve the JSON Web Key Set of the instance
+### [allowlist_identifiers](docs/sdks/allowlistidentifiers/README.md)
+
+* [list](docs/sdks/allowlistidentifiers/README.md#list) - List all identifiers on the allow-list
+* [create](docs/sdks/allowlistidentifiers/README.md#create) - Add identifier to the allow-list
+* [delete](docs/sdks/allowlistidentifiers/README.md#delete) - Delete identifier from allow-list
+
+### [beta_features](docs/sdks/betafeatures/README.md)
+
+* [update_instance_auth_config](docs/sdks/betafeatures/README.md#update_instance_auth_config) - Update instance settings
+* [~~update_production_instance_domain~~](docs/sdks/betafeatures/README.md#update_production_instance_domain) - Update production instance domain :warning: **Deprecated**
+* [change_production_instance_domain](docs/sdks/betafeatures/README.md#change_production_instance_domain) - Update production instance domain
+
+### [blocklist_identifiers](docs/sdks/blocklistidentifierssdk/README.md)
+
+* [list](docs/sdks/blocklistidentifierssdk/README.md#list) - List all identifiers on the block-list
+* [create](docs/sdks/blocklistidentifierssdk/README.md#create) - Add identifier to the block-list
+* [delete](docs/sdks/blocklistidentifierssdk/README.md#delete) - Delete identifier from block-list
+
 
 ### [clients](docs/sdks/clients/README.md)
 
 * [~~list~~](docs/sdks/clients/README.md#list) - List all clients :warning: **Deprecated**
 * [verify](docs/sdks/clients/README.md#verify) - Verify a client
 * [get](docs/sdks/clients/README.md#get) - Get a client
+
+### [domains](docs/sdks/domainssdk/README.md)
+
+* [list](docs/sdks/domainssdk/README.md#list) - List all instance domains
+* [add](docs/sdks/domainssdk/README.md#add) - Add a domain
+* [delete](docs/sdks/domainssdk/README.md#delete) - Delete a satellite domain
+* [update](docs/sdks/domainssdk/README.md#update) - Update a domain
 
 ### [email_addresses](docs/sdks/emailaddresses/README.md)
 
@@ -140,12 +165,96 @@ asyncio.run(main())
 * [delete](docs/sdks/emailaddresses/README.md#delete) - Delete an email address
 * [update](docs/sdks/emailaddresses/README.md#update) - Update an email address
 
+### [instance_settings](docs/sdks/instancesettingssdk/README.md)
+
+* [update](docs/sdks/instancesettingssdk/README.md#update) - Update instance settings
+* [update_restrictions](docs/sdks/instancesettingssdk/README.md#update_restrictions) - Update instance restrictions
+* [update_organization_settings](docs/sdks/instancesettingssdk/README.md#update_organization_settings) - Update instance organization settings
+
+### [invitations](docs/sdks/invitations/README.md)
+
+* [create](docs/sdks/invitations/README.md#create) - Create an invitation
+* [list](docs/sdks/invitations/README.md#list) - List all invitations
+* [revoke](docs/sdks/invitations/README.md#revoke) - Revokes an invitation
+
+### [jwks](docs/sdks/jwks/README.md)
+
+* [get](docs/sdks/jwks/README.md#get) - Retrieve the JSON Web Key Set of the instance
+
+### [jwt_templates](docs/sdks/jwttemplates/README.md)
+
+* [list](docs/sdks/jwttemplates/README.md#list) - List all templates
+* [create](docs/sdks/jwttemplates/README.md#create) - Create a JWT template
+* [get](docs/sdks/jwttemplates/README.md#get) - Retrieve a template
+* [update](docs/sdks/jwttemplates/README.md#update) - Update a JWT template
+* [delete](docs/sdks/jwttemplates/README.md#delete) - Delete a Template
+
+### [misc](docs/sdks/misc/README.md)
+
+* [get_public_interstitial](docs/sdks/misc/README.md#get_public_interstitial) - Returns the markup for the interstitial page
+
+### [o_auth_applications](docs/sdks/oauthapplicationssdk/README.md)
+
+* [list](docs/sdks/oauthapplicationssdk/README.md#list) - Get a list of OAuth applications for an instance
+* [create](docs/sdks/oauthapplicationssdk/README.md#create) - Create an OAuth application
+* [get](docs/sdks/oauthapplicationssdk/README.md#get) - Retrieve an OAuth application by ID
+* [update](docs/sdks/oauthapplicationssdk/README.md#update) - Update an OAuth application
+* [delete](docs/sdks/oauthapplicationssdk/README.md#delete) - Delete an OAuth application
+* [rotate_secret](docs/sdks/oauthapplicationssdk/README.md#rotate_secret) - Rotate the client secret of the given OAuth application
+
+### [organization_invitations](docs/sdks/organizationinvitationssdk/README.md)
+
+* [create](docs/sdks/organizationinvitationssdk/README.md#create) - Create and send an organization invitation
+* [list](docs/sdks/organizationinvitationssdk/README.md#list) - Get a list of organization invitations
+* [create_bulk](docs/sdks/organizationinvitationssdk/README.md#create_bulk) - Bulk create and send organization invitations
+* [~~list_pending~~](docs/sdks/organizationinvitationssdk/README.md#list_pending) - Get a list of pending organization invitations :warning: **Deprecated**
+* [get](docs/sdks/organizationinvitationssdk/README.md#get) - Retrieve an organization invitation by ID
+* [revoke](docs/sdks/organizationinvitationssdk/README.md#revoke) - Revoke a pending organization invitation
+
+### [organization_memberships](docs/sdks/organizationmembershipssdk/README.md)
+
+* [create](docs/sdks/organizationmembershipssdk/README.md#create) - Create a new organization membership
+* [list](docs/sdks/organizationmembershipssdk/README.md#list) - Get a list of all members of an organization
+* [update](docs/sdks/organizationmembershipssdk/README.md#update) - Update an organization membership
+* [delete](docs/sdks/organizationmembershipssdk/README.md#delete) - Remove a member from an organization
+* [update_metadata](docs/sdks/organizationmembershipssdk/README.md#update_metadata) - Merge and update organization membership metadata
+
+### [organizations](docs/sdks/organizationssdk/README.md)
+
+* [list](docs/sdks/organizationssdk/README.md#list) - Get a list of organizations for an instance
+* [create](docs/sdks/organizationssdk/README.md#create) - Create an organization
+* [get](docs/sdks/organizationssdk/README.md#get) - Retrieve an organization by ID or slug
+* [update](docs/sdks/organizationssdk/README.md#update) - Update an organization
+* [delete](docs/sdks/organizationssdk/README.md#delete) - Delete an organization
+* [merge_metadata](docs/sdks/organizationssdk/README.md#merge_metadata) - Merge and update metadata for an organization
+* [upload_logo](docs/sdks/organizationssdk/README.md#upload_logo) - Upload a logo for the organization
+* [delete_logo](docs/sdks/organizationssdk/README.md#delete_logo) - Delete the organization's logo.
+
 ### [phone_numbers](docs/sdks/phonenumbers/README.md)
 
 * [create](docs/sdks/phonenumbers/README.md#create) - Create a phone number
 * [get](docs/sdks/phonenumbers/README.md#get) - Retrieve a phone number
 * [delete](docs/sdks/phonenumbers/README.md#delete) - Delete a phone number
 * [update](docs/sdks/phonenumbers/README.md#update) - Update a phone number
+
+### [proxy_checks](docs/sdks/proxychecks/README.md)
+
+* [verify](docs/sdks/proxychecks/README.md#verify) - Verify the proxy configuration for your domain
+
+### [redirect_urls](docs/sdks/redirecturls/README.md)
+
+* [list](docs/sdks/redirecturls/README.md#list) - List all redirect URLs
+* [create](docs/sdks/redirecturls/README.md#create) - Create a redirect URL
+* [get](docs/sdks/redirecturls/README.md#get) - Retrieve a redirect URL
+* [delete](docs/sdks/redirecturls/README.md#delete) - Delete a redirect URL
+
+### [saml_connections](docs/sdks/samlconnectionssdk/README.md)
+
+* [list](docs/sdks/samlconnectionssdk/README.md#list) - Get a list of SAML Connections for an instance
+* [create](docs/sdks/samlconnectionssdk/README.md#create) - Create a SAML Connection
+* [get](docs/sdks/samlconnectionssdk/README.md#get) - Retrieve a SAML Connection by ID
+* [update](docs/sdks/samlconnectionssdk/README.md#update) - Update a SAML Connection
+* [delete](docs/sdks/samlconnectionssdk/README.md#delete) - Delete a SAML Connection
 
 ### [sessions](docs/sdks/sessions/README.md)
 
@@ -155,6 +264,15 @@ asyncio.run(main())
 * [~~verify~~](docs/sdks/sessions/README.md#verify) - Verify a session :warning: **Deprecated**
 * [create_token_from_template](docs/sdks/sessions/README.md#create_token_from_template) - Create a session token from a jwt template
 
+### [sign_in_tokens](docs/sdks/signintokens/README.md)
+
+* [create](docs/sdks/signintokens/README.md#create) - Create sign-in token
+* [revoke](docs/sdks/signintokens/README.md#revoke) - Revoke the given sign-in token
+
+### [sign_ups](docs/sdks/signups/README.md)
+
+* [update](docs/sdks/signups/README.md#update) - Update a sign-up
+
 ### [templates](docs/sdks/templates/README.md)
 
 * [list](docs/sdks/templates/README.md#list) - List all templates
@@ -163,6 +281,10 @@ asyncio.run(main())
 * [revert](docs/sdks/templates/README.md#revert) - Revert a template
 * [preview](docs/sdks/templates/README.md#preview) - Preview changes to a template
 * [toggle_delivery](docs/sdks/templates/README.md#toggle_delivery) - Toggle the delivery by Clerk for a template of a given type and slug
+
+### [testing_tokens](docs/sdks/testingtokens/README.md)
+
+* [create](docs/sdks/testingtokens/README.md#create) - Retrieve a new testing token
 
 ### [users](docs/sdks/users/README.md)
 
@@ -185,130 +307,13 @@ asyncio.run(main())
 * [verify_totp](docs/sdks/users/README.md#verify_totp) - Verify a TOTP or backup code for a user
 * [disable_mfa](docs/sdks/users/README.md#disable_mfa) - Disable a user's MFA methods
 
-### [invitations](docs/sdks/invitations/README.md)
-
-* [create](docs/sdks/invitations/README.md#create) - Create an invitation
-* [list](docs/sdks/invitations/README.md#list) - List all invitations
-* [revoke](docs/sdks/invitations/README.md#revoke) - Revokes an invitation
-
-### [allowlist_identifiers](docs/sdks/allowlistidentifiers/README.md)
-
-* [list](docs/sdks/allowlistidentifiers/README.md#list) - List all identifiers on the allow-list
-* [create](docs/sdks/allowlistidentifiers/README.md#create) - Add identifier to the allow-list
-* [delete](docs/sdks/allowlistidentifiers/README.md#delete) - Delete identifier from allow-list
-
-### [blocklist_identifiers](docs/sdks/blocklistidentifierssdk/README.md)
-
-* [list](docs/sdks/blocklistidentifierssdk/README.md#list) - List all identifiers on the block-list
-* [create](docs/sdks/blocklistidentifierssdk/README.md#create) - Add identifier to the block-list
-* [delete](docs/sdks/blocklistidentifierssdk/README.md#delete) - Delete identifier from block-list
-
-### [beta_features](docs/sdks/betafeatures/README.md)
-
-* [update_instance_auth_config](docs/sdks/betafeatures/README.md#update_instance_auth_config) - Update instance settings
-* [~~update_production_instance_domain~~](docs/sdks/betafeatures/README.md#update_production_instance_domain) - Update production instance domain :warning: **Deprecated**
-* [change_production_instance_domain](docs/sdks/betafeatures/README.md#change_production_instance_domain) - Update production instance domain
-
-### [actor_tokens](docs/sdks/actortokens/README.md)
-
-* [create](docs/sdks/actortokens/README.md#create) - Create actor token
-* [revoke](docs/sdks/actortokens/README.md#revoke) - Revoke actor token
-
-### [domains](docs/sdks/domainssdk/README.md)
-
-* [list](docs/sdks/domainssdk/README.md#list) - List all instance domains
-* [add](docs/sdks/domainssdk/README.md#add) - Add a domain
-* [delete](docs/sdks/domainssdk/README.md#delete) - Delete a satellite domain
-* [update](docs/sdks/domainssdk/README.md#update) - Update a domain
-
-### [instance_settings](docs/sdks/instancesettingssdk/README.md)
-
-* [update](docs/sdks/instancesettingssdk/README.md#update) - Update instance settings
-* [update_restrictions](docs/sdks/instancesettingssdk/README.md#update_restrictions) - Update instance restrictions
-* [update_organization_settings](docs/sdks/instancesettingssdk/README.md#update_organization_settings) - Update instance organization settings
-
 ### [webhooks](docs/sdks/webhooks/README.md)
 
 * [create_svix_app](docs/sdks/webhooks/README.md#create_svix_app) - Create a Svix app
 * [delete_svix_app](docs/sdks/webhooks/README.md#delete_svix_app) - Delete a Svix app
 * [generate_svix_auth_url](docs/sdks/webhooks/README.md#generate_svix_auth_url) - Create a Svix Dashboard URL
 
-### [jwt_templates](docs/sdks/jwttemplates/README.md)
-
-* [list](docs/sdks/jwttemplates/README.md#list) - List all templates
-* [create](docs/sdks/jwttemplates/README.md#create) - Create a JWT template
-* [get](docs/sdks/jwttemplates/README.md#get) - Retrieve a template
-* [update](docs/sdks/jwttemplates/README.md#update) - Update a JWT template
-* [delete](docs/sdks/jwttemplates/README.md#delete) - Delete a Template
-
-### [organizations](docs/sdks/organizationssdk/README.md)
-
-* [list](docs/sdks/organizationssdk/README.md#list) - Get a list of organizations for an instance
-* [create](docs/sdks/organizationssdk/README.md#create) - Create an organization
-* [get](docs/sdks/organizationssdk/README.md#get) - Retrieve an organization by ID or slug
-* [update](docs/sdks/organizationssdk/README.md#update) - Update an organization
-* [delete](docs/sdks/organizationssdk/README.md#delete) - Delete an organization
-* [merge_metadata](docs/sdks/organizationssdk/README.md#merge_metadata) - Merge and update metadata for an organization
-* [upload_logo](docs/sdks/organizationssdk/README.md#upload_logo) - Upload a logo for the organization
-* [delete_logo](docs/sdks/organizationssdk/README.md#delete_logo) - Delete the organization's logo.
-
-### [organization_invitations](docs/sdks/organizationinvitationssdk/README.md)
-
-* [create](docs/sdks/organizationinvitationssdk/README.md#create) - Create and send an organization invitation
-* [list](docs/sdks/organizationinvitationssdk/README.md#list) - Get a list of organization invitations
-* [create_bulk](docs/sdks/organizationinvitationssdk/README.md#create_bulk) - Bulk create and send organization invitations
-* [~~list_pending~~](docs/sdks/organizationinvitationssdk/README.md#list_pending) - Get a list of pending organization invitations :warning: **Deprecated**
-* [get](docs/sdks/organizationinvitationssdk/README.md#get) - Retrieve an organization invitation by ID
-* [revoke](docs/sdks/organizationinvitationssdk/README.md#revoke) - Revoke a pending organization invitation
-
-### [organization_memberships](docs/sdks/organizationmembershipssdk/README.md)
-
-* [create](docs/sdks/organizationmembershipssdk/README.md#create) - Create a new organization membership
-* [list](docs/sdks/organizationmembershipssdk/README.md#list) - Get a list of all members of an organization
-* [update](docs/sdks/organizationmembershipssdk/README.md#update) - Update an organization membership
-* [delete](docs/sdks/organizationmembershipssdk/README.md#delete) - Remove a member from an organization
-* [update_metadata](docs/sdks/organizationmembershipssdk/README.md#update_metadata) - Merge and update organization membership metadata
-
-### [proxy_checks](docs/sdks/proxychecks/README.md)
-
-* [verify](docs/sdks/proxychecks/README.md#verify) - Verify the proxy configuration for your domain
-
-### [redirect_urls](docs/sdks/redirecturls/README.md)
-
-* [list](docs/sdks/redirecturls/README.md#list) - List all redirect URLs
-* [create](docs/sdks/redirecturls/README.md#create) - Create a redirect URL
-* [get](docs/sdks/redirecturls/README.md#get) - Retrieve a redirect URL
-* [delete](docs/sdks/redirecturls/README.md#delete) - Delete a redirect URL
-
-### [sign_in_tokens](docs/sdks/signintokens/README.md)
-
-* [create](docs/sdks/signintokens/README.md#create) - Create sign-in token
-* [revoke](docs/sdks/signintokens/README.md#revoke) - Revoke the given sign-in token
-
-### [sign_ups](docs/sdks/signups/README.md)
-
-* [update](docs/sdks/signups/README.md#update) - Update a sign-up
-
-### [o_auth_applications](docs/sdks/oauthapplicationssdk/README.md)
-
-* [list](docs/sdks/oauthapplicationssdk/README.md#list) - Get a list of OAuth applications for an instance
-* [create](docs/sdks/oauthapplicationssdk/README.md#create) - Create an OAuth application
-* [get](docs/sdks/oauthapplicationssdk/README.md#get) - Retrieve an OAuth application by ID
-* [update](docs/sdks/oauthapplicationssdk/README.md#update) - Update an OAuth application
-* [delete](docs/sdks/oauthapplicationssdk/README.md#delete) - Delete an OAuth application
-* [rotate_secret](docs/sdks/oauthapplicationssdk/README.md#rotate_secret) - Rotate the client secret of the given OAuth application
-
-### [saml_connections](docs/sdks/samlconnectionssdk/README.md)
-
-* [list](docs/sdks/samlconnectionssdk/README.md#list) - Get a list of SAML Connections for an instance
-* [create](docs/sdks/samlconnectionssdk/README.md#create) - Create a SAML Connection
-* [get](docs/sdks/samlconnectionssdk/README.md#get) - Retrieve a SAML Connection by ID
-* [update](docs/sdks/samlconnectionssdk/README.md#update) - Update a SAML Connection
-* [delete](docs/sdks/samlconnectionssdk/README.md#delete) - Delete a SAML Connection
-
-### [testing_tokens](docs/sdks/testingtokens/README.md)
-
-* [create](docs/sdks/testingtokens/README.md#create) - Retrieve a new testing token
+</details>
 <!-- End Available Resources and Operations [operations] -->
 
 <!-- Start Pagination [pagination] -->
@@ -326,17 +331,15 @@ s = Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
-
-res = s.clients.list(limit=20, offset=10)
+res = s.users.get_organization_memberships(user_id="usr_1234567890", limit=20, offset=10)
 
 if res is not None:
     while True:
         # handle items
 
-        res = res.Next()
+        res = res.next()
         if res is None:
             break
-
 
 ```
 <!-- End Pagination [pagination] -->
@@ -358,10 +361,9 @@ s = Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
-
 res = s.users.set_profile_image(user_id="usr_test123", file={
-    "file_name": "your_file_here",
-    "content": open("<file_path>", "rb"),
+    "file_name": "example.file",
+    "content": open("example.file", "rb"),
     "content_type": "<value>",
 })
 
@@ -384,7 +386,6 @@ from clerk_backend_api import Clerk
 
 s = Clerk()
 
-
 s.misc.get_public_interstitial(frontend_api="frontend-api_1a2b3c4d", publishable_key="pub_1a2b3c4d",
     RetryConfig("backoff", BackoffStrategy(1, 50, 1.1, 100), False))
 
@@ -401,7 +402,6 @@ s = Clerk(
     retry_config=RetryConfig("backoff", BackoffStrategy(1, 50, 1.1, 100), False),
 )
 
-
 s.misc.get_public_interstitial(frontend_api="frontend-api_1a2b3c4d", publishable_key="pub_1a2b3c4d")
 
 # Use the SDK ...
@@ -412,12 +412,23 @@ s.misc.get_public_interstitial(frontend_api="frontend-api_1a2b3c4d", publishable
 <!-- Start Error Handling [errors] -->
 ## Error Handling
 
-Handling errors in this SDK should largely match your expectations.  All operations return a response object or raise an error.  If Error objects are specified in your OpenAPI Spec, the SDK will raise the appropriate Error type.
+Handling errors in this SDK should largely match your expectations. All operations return a response object or raise an exception.
 
-| Error Object       | Status Code        | Content Type       |
-| ------------------ | ------------------ | ------------------ |
-| models.ClerkErrors | 400,401,410,422    | application/json   |
-| models.SDKError    | 4xx-5xx            | */*                |
+By default, an API error will raise a models.SDKError exception, which has the following properties:
+
+| Property        | Type             | Description           |
+|-----------------|------------------|-----------------------|
+| `.status_code`  | *int*            | The HTTP status code  |
+| `.message`      | *str*            | The error message     |
+| `.raw_response` | *httpx.Response* | The raw HTTP response |
+| `.body`         | *str*            | The response content  |
+
+When custom error responses are specified for an operation, the SDK may also raise their associated exceptions. You can refer to respective *Errors* tables in SDK docs for more details on possible exception types for each operation. For example, the `verify_async` method may raise the following exceptions:
+
+| Error Type               | Status Code              | Content Type             |
+| ------------------------ | ------------------------ | ------------------------ |
+| models.ClerkErrorsError1 | 400, 401, 404            | application/json         |
+| models.SDKError          | 4XX, 5XX                 | \*/\*                    |
 
 ### Example
 
@@ -430,24 +441,20 @@ s = Clerk(
 
 res = None
 try:
-    res = s.clients.list(limit=20, offset=10)
+    res = s.clients.verify(request={
+        "token": "jwt_token_example",
+    })
 
-except models.ClerkErrors as e:
-    # handle e.data: models.ClerkErrorsData
+    if res is not None:
+        # handle response
+        pass
+
+except models.ClerkErrorsError1 as e:
+    # handle e.data: models.ClerkErrorsError1Data
     raise(e)
 except models.SDKError as e:
     # handle exception
     raise(e)
-
-if res is not None:
-    while True:
-        # handle items
-
-        res = res.Next()
-        if res is None:
-            break
-
-
 ```
 <!-- End Error Handling [errors] -->
 
@@ -471,7 +478,6 @@ s = Clerk(
     server_idx=0,
 )
 
-
 s.misc.get_public_interstitial(frontend_api="frontend-api_1a2b3c4d", publishable_key="pub_1a2b3c4d")
 
 # Use the SDK ...
@@ -488,7 +494,6 @@ from clerk_backend_api import Clerk
 s = Clerk(
     server_url="https://api.clerk.com/v1",
 )
-
 
 s.misc.get_public_interstitial(frontend_api="frontend-api_1a2b3c4d", publishable_key="pub_1a2b3c4d")
 
@@ -596,7 +601,6 @@ from clerk_backend_api import Clerk
 s = Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
-
 
 s.misc.get_public_interstitial(frontend_api="frontend-api_1a2b3c4d", publishable_key="pub_1a2b3c4d")
 

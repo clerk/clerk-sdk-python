@@ -24,7 +24,6 @@ s = Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
-
 res = s.invitations.create(request={
     "email_address": "user@example.com",
     "public_metadata": {},
@@ -52,11 +51,10 @@ if res is not None:
 
 ### Errors
 
-| Error Object       | Status Code        | Content Type       |
-| ------------------ | ------------------ | ------------------ |
-| models.ClerkErrors | 400,422            | application/json   |
-| models.SDKError    | 4xx-5xx            | */*                |
-
+| Error Type                | Status Code               | Content Type              |
+| ------------------------- | ------------------------- | ------------------------- |
+| models.ClerkErrorsError34 | 400, 422                  | application/json          |
+| models.SDKError           | 4XX, 5XX                  | \*/\*                     |
 
 ## list
 
@@ -72,17 +70,15 @@ s = Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
-
 res = s.invitations.list(limit=20, offset=10, status=clerk_backend_api.ListInvitationsQueryParamStatus.PENDING)
 
 if res is not None:
     while True:
         # handle items
 
-        res = res.Next()
+        res = res.next()
         if res is None:
             break
-
 
 ```
 
@@ -101,10 +97,9 @@ if res is not None:
 
 ### Errors
 
-| Error Object    | Status Code     | Content Type    |
+| Error Type      | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
-| models.SDKError | 4xx-5xx         | */*             |
-
+| models.SDKError | 4XX, 5XX        | \*/\*           |
 
 ## revoke
 
@@ -121,7 +116,6 @@ from clerk_backend_api import Clerk
 s = Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
-
 
 res = s.invitations.revoke(invitation_id="inv_123")
 
@@ -144,7 +138,7 @@ if res is not None:
 
 ### Errors
 
-| Error Object       | Status Code        | Content Type       |
-| ------------------ | ------------------ | ------------------ |
-| models.ClerkErrors | 400,404            | application/json   |
-| models.SDKError    | 4xx-5xx            | */*                |
+| Error Type                | Status Code               | Content Type              |
+| ------------------------- | ------------------------- | ------------------------- |
+| models.ClerkErrorsError35 | 400, 404                  | application/json          |
+| models.SDKError           | 4XX, 5XX                  | \*/\*                     |

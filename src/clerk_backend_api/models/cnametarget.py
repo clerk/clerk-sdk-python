@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 from clerk_backend_api.types import BaseModel
-from typing import TypedDict
+from typing_extensions import TypedDict
 
 
 class CNameTargetTypedDict(TypedDict):
@@ -12,13 +12,14 @@ class CNameTargetTypedDict(TypedDict):
     r"""Denotes whether this CNAME target is required to be set in order for the domain to be considered deployed.
 
     """
-    
+
 
 class CNameTarget(BaseModel):
     host: str
+
     value: str
+
     required: bool
     r"""Denotes whether this CNAME target is required to be set in order for the domain to be considered deployed.
 
     """
-    
