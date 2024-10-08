@@ -5,8 +5,8 @@ from .invitation import Invitation, InvitationTypedDict
 from clerk_backend_api.types import BaseModel
 from clerk_backend_api.utils import FieldMetadata, QueryParamMetadata
 from enum import Enum
-from typing import Callable, List, Optional
-from typing_extensions import Annotated, NotRequired, TypedDict
+from typing import Callable, List, Optional, TypedDict
+from typing_extensions import Annotated, NotRequired
 
 
 class ListInvitationsQueryParamStatus(str, Enum):

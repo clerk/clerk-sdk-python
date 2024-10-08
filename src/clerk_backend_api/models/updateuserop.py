@@ -11,8 +11,8 @@ from clerk_backend_api.types import (
 from clerk_backend_api.utils import FieldMetadata, PathParamMetadata, RequestMetadata
 from enum import Enum
 from pydantic import model_serializer
-from typing import List, Optional
-from typing_extensions import Annotated, NotRequired, TypedDict
+from typing import List, Optional, TypedDict
+from typing_extensions import Annotated, NotRequired
 
 
 class UpdateUserPasswordHasher(str, Enum):

@@ -9,7 +9,8 @@ from clerk_backend_api.types import (
     UNSET_SENTINEL,
 )
 from pydantic import model_serializer
-from typing_extensions import NotRequired, TypedDict
+from typing import TypedDict
+from typing_extensions import NotRequired
 
 
 class UpdateInstanceRestrictionsRequestBodyTypedDict(TypedDict):

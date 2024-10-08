@@ -11,8 +11,8 @@ from clerk_backend_api.types import (
 from enum import Enum
 import pydantic
 from pydantic import model_serializer
-from typing import Optional
-from typing_extensions import Annotated, NotRequired, TypedDict
+from typing import Optional, TypedDict
+from typing_extensions import Annotated, NotRequired
 
 
 class OrganizationWithLogoObject(str, Enum):

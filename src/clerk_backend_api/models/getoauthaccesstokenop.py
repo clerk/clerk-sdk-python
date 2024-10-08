@@ -10,8 +10,8 @@ from clerk_backend_api.types import (
 )
 from clerk_backend_api.utils import FieldMetadata, PathParamMetadata
 from pydantic import model_serializer
-from typing import List, Optional
-from typing_extensions import Annotated, NotRequired, TypedDict
+from typing import List, Optional, TypedDict
+from typing_extensions import Annotated, NotRequired
 
 
 class GetOAuthAccessTokenRequestTypedDict(TypedDict):

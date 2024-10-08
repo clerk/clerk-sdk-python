@@ -4,7 +4,8 @@ from __future__ import annotations
 from clerk_backend_api.types import BaseModel
 from clerk_backend_api.utils import FieldMetadata, PathParamMetadata
 from enum import Enum
-from typing_extensions import Annotated, TypedDict
+from typing import TypedDict
+from typing_extensions import Annotated
 
 
 class TemplateType(str, Enum):

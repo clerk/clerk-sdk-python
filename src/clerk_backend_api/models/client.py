@@ -5,8 +5,7 @@ from .session import Session, SessionTypedDict
 from clerk_backend_api.types import BaseModel, Nullable, UNSET_SENTINEL
 from enum import Enum
 from pydantic import model_serializer
-from typing import List
-from typing_extensions import TypedDict
+from typing import List, TypedDict
 
 
 class Object(str, Enum):

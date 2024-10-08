@@ -10,8 +10,8 @@ from clerk_backend_api.utils import (
 )
 import io
 import pydantic
-from typing import IO, Optional, Union
-from typing_extensions import Annotated, NotRequired, TypedDict
+from typing import IO, Optional, TypedDict, Union
+from typing_extensions import Annotated, NotRequired
 
 
 class UploadOrganizationLogoFileTypedDict(TypedDict):
