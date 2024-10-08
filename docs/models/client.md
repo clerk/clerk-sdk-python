@@ -1,7 +1,5 @@
 # Client
 
-Success
-
 
 ## Fields
 

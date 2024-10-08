@@ -1,7 +1,5 @@
 # RedirectURL
 
-List of Redirect URLs
-
 
 ## Fields
 

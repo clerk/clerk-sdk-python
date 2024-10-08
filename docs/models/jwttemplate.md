@@ -1,7 +1,5 @@
 # JWTTemplate
 
-List of JWT templates
-
 
 ## Fields
 

@@ -1,7 +1,5 @@
 # TotalCount
 
-Success
-
 
 ## Fields
 

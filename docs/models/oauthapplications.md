@@ -1,7 +1,5 @@
 # OAuthApplications
 
-A list of OAuth applications
-
 
 ## Fields
 

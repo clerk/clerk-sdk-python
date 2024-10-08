@@ -3,7 +3,7 @@
 from __future__ import annotations
 from clerk_backend_api.types import BaseModel
 from enum import Enum
-from typing_extensions import TypedDict
+from typing import TypedDict
 
 
 class Type(str, Enum):
@@ -13,13 +13,12 @@ class Type(str, Enum):
     OAUTH_DISCORD = "oauth_discord"
     OAUTH_APPLE = "oauth_apple"
 
-
 class IdentificationLinkTypedDict(TypedDict):
     type: Type
     id: str
-
+    
 
 class IdentificationLink(BaseModel):
     type: Type
-
     id: str
+    

@@ -1,7 +1,5 @@
 # Invitation
 
-Success
-
 
 ## Fields
 

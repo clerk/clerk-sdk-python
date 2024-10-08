@@ -1,7 +1,5 @@
 # ActorToken
 
-Success
-
 
 ## Fields
 

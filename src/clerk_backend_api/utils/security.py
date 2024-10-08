@@ -16,6 +16,7 @@ from .metadata import (
 )
 
 
+
 def get_security(security: Any) -> Tuple[Dict[str, str], Dict[str, List[str]]]:
     headers: Dict[str, str] = {}
     query_params: Dict[str, List[str]] = {}
@@ -42,9 +43,7 @@ def get_security(security: Any) -> Tuple[Dict[str, str], Dict[str, List[str]]]:
             return headers, query_params
         if metadata.scheme:
             # Special case for basic auth or custom auth which could be a flattened model
-            if metadata.sub_type in ["basic", "custom"] and not isinstance(
-                value, BaseModel
-            ):
+            if metadata.sub_type in ["basic", "custom"] and not isinstance(value, BaseModel):
                 _parse_security_scheme(headers, query_params, metadata, name, security)
             else:
                 _parse_security_scheme(headers, query_params, metadata, name, value)

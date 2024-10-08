@@ -1,7 +1,5 @@
 # SignUp
 
-Success
-
 
 ## Fields
 

@@ -1,7 +1,5 @@
 # AllowlistIdentifier
 
-Success
-
 
 ## Fields
 

@@ -1,7 +1,5 @@
 # EmailAddress
 
-Success
-
 
 ## Fields
 

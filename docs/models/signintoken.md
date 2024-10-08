@@ -1,7 +1,5 @@
 # SignInToken
 
-Success
-
 
 ## Fields
 

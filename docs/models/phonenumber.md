@@ -1,7 +1,5 @@
 # PhoneNumber
 
-Success
-
 
 ## Fields
 

@@ -2,26 +2,20 @@
 
 from __future__ import annotations
 from clerk_backend_api.types import BaseModel
-from typing import Optional
-from typing_extensions import NotRequired, TypedDict
+from typing import Optional, TypedDict
+from typing_extensions import NotRequired
 
 
 class DeletedObjectTypedDict(TypedDict):
-    r"""Deleted Object"""
-
     object: str
     deleted: bool
     id: NotRequired[str]
     slug: NotRequired[str]
-
+    
 
 class DeletedObject(BaseModel):
-    r"""Deleted Object"""
-
     object: str
-
     deleted: bool
-
     id: Optional[str] = None
-
     slug: Optional[str] = None
+    

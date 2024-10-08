@@ -27,19 +27,13 @@ from .serializers import (
     serialize_float,
     serialize_int,
     stream_to_text,
-    validate_const,
     validate_decimal,
     validate_float,
     validate_int,
     validate_open_enum,
 )
 from .url import generate_url, template_url, remove_suffix
-from .values import (
-    get_global_from_env,
-    match_content_type,
-    match_status_codes,
-    match_response,
-)
+from .values import get_global_from_env, match_content_type, match_status_codes, match_response
 from .logger import Logger, get_body_content, get_default_logger
 
 __all__ = [
@@ -84,7 +78,6 @@ __all__ = [
     "unmarshal",
     "unmarshal_json",
     "validate_decimal",
-    "validate_const",
     "validate_float",
     "validate_int",
     "validate_open_enum",
