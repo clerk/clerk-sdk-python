@@ -3859,6 +3859,7 @@ components:
         - "long_message"
         - "code"
     "ClerkErrors":
+      x-speakeasy-name-override: ClerkErrors
       type: "object"
       properties:
         "errors":
