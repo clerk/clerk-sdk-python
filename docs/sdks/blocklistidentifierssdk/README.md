@@ -42,10 +42,11 @@ if res is not None:
 
 ### Errors
 
-| Error Type                | Status Code               | Content Type              |
+| Error Object              | Status Code               | Content Type              |
 | ------------------------- | ------------------------- | ------------------------- |
-| models.ClerkErrorsError39 | 401, 402                  | application/json          |
-| models.SDKError           | 4XX, 5XX                  | \*/\*                     |
+| models.ClerkErrorsError39 | 401,402                   | application/json          |
+| models.SDKError           | 4xx-5xx                   | */*                       |
+
 
 ## create
 
@@ -83,10 +84,11 @@ if res is not None:
 
 ### Errors
 
-| Error Type                | Status Code               | Content Type              |
+| Error Object              | Status Code               | Content Type              |
 | ------------------------- | ------------------------- | ------------------------- |
-| models.ClerkErrorsError40 | 400, 402, 422             | application/json          |
-| models.SDKError           | 4XX, 5XX                  | \*/\*                     |
+| models.ClerkErrorsError40 | 400,402,422               | application/json          |
+| models.SDKError           | 4xx-5xx                   | */*                       |
+
 
 ## delete
 
@@ -122,7 +124,7 @@ if res is not None:
 
 ### Errors
 
-| Error Type                | Status Code               | Content Type              |
+| Error Object              | Status Code               | Content Type              |
 | ------------------------- | ------------------------- | ------------------------- |
-| models.ClerkErrorsError41 | 402, 404                  | application/json          |
-| models.SDKError           | 4XX, 5XX                  | \*/\*                     |
+| models.ClerkErrorsError41 | 402,404                   | application/json          |
+| models.SDKError           | 4xx-5xx                   | */*                       |

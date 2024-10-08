@@ -3,8 +3,7 @@
 from __future__ import annotations
 from .samlconnection import SAMLConnection, SAMLConnectionTypedDict
 from clerk_backend_api.types import BaseModel
-from typing import List
-from typing_extensions import TypedDict
+from typing import List, TypedDict
 
 
 class SAMLConnectionsTypedDict(TypedDict):

@@ -4,8 +4,8 @@ from __future__ import annotations
 from .client import Client, ClientTypedDict
 from clerk_backend_api.types import BaseModel
 from clerk_backend_api.utils import FieldMetadata, QueryParamMetadata
-from typing import Callable, List, Optional
-from typing_extensions import Annotated, NotRequired, TypedDict
+from typing import Callable, List, Optional, TypedDict
+from typing_extensions import Annotated, NotRequired
 
 
 class GetClientListRequestTypedDict(TypedDict):

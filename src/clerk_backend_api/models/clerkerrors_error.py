@@ -4,8 +4,7 @@ from __future__ import annotations
 from .clerkerror import ClerkError
 from clerk_backend_api import utils
 from clerk_backend_api.types import BaseModel
-from typing import List, Optional
-from typing_extensions import TypedDict
+from typing import List, Optional, TypedDict
 
 
 class ClerkErrorsMetaTypedDict(TypedDict):

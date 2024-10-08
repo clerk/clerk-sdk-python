@@ -6,8 +6,7 @@ from .organizationmembership import (
     OrganizationMembershipTypedDict,
 )
 from clerk_backend_api.types import BaseModel
-from typing import List
-from typing_extensions import TypedDict
+from typing import List, TypedDict
 
 
 class OrganizationMembershipsTypedDict(TypedDict):

@@ -11,8 +11,8 @@ from clerk_backend_api.types import (
 )
 from enum import Enum
 from pydantic import model_serializer
-from typing import List
-from typing_extensions import NotRequired, TypedDict
+from typing import List, TypedDict
+from typing_extensions import NotRequired
 
 
 class DomainObject(str, Enum):

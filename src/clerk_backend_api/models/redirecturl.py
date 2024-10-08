@@ -3,7 +3,7 @@
 from __future__ import annotations
 from clerk_backend_api.types import BaseModel
 from enum import Enum
-from typing_extensions import TypedDict
+from typing import TypedDict
 
 
 class RedirectURLObject(str, Enum):

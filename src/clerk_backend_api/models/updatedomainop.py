@@ -10,7 +10,8 @@ from clerk_backend_api.types import (
 )
 from clerk_backend_api.utils import FieldMetadata, PathParamMetadata, RequestMetadata
 from pydantic import model_serializer
-from typing_extensions import Annotated, NotRequired, TypedDict
+from typing import TypedDict
+from typing_extensions import Annotated, NotRequired
 
 
 class UpdateDomainRequestBodyTypedDict(TypedDict):

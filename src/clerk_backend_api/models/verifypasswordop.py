@@ -3,8 +3,8 @@
 from __future__ import annotations
 from clerk_backend_api.types import BaseModel
 from clerk_backend_api.utils import FieldMetadata, PathParamMetadata, RequestMetadata
-from typing import Optional
-from typing_extensions import Annotated, NotRequired, TypedDict
+from typing import Optional, TypedDict
+from typing_extensions import Annotated, NotRequired
 
 
 class VerifyPasswordRequestBodyTypedDict(TypedDict):

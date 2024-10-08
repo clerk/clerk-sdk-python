@@ -8,8 +8,8 @@ from clerk_backend_api.types import (
     UNSET_SENTINEL,
 )
 from pydantic import model_serializer
-from typing import Optional
-from typing_extensions import NotRequired, TypedDict
+from typing import Optional, TypedDict
+from typing_extensions import NotRequired
 
 
 class CreateInvitationPublicMetadataTypedDict(TypedDict):

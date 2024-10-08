@@ -42,10 +42,11 @@ if res is not None:
 
 ### Errors
 
-| Error Type                | Status Code               | Content Type              |
+| Error Object              | Status Code               | Content Type              |
 | ------------------------- | ------------------------- | ------------------------- |
 | models.ClerkErrorsError52 | 400                       | application/json          |
-| models.SDKError           | 4XX, 5XX                  | \*/\*                     |
+| models.SDKError           | 4xx-5xx                   | */*                       |
+
 
 ## delete_svix_app
 
@@ -74,10 +75,11 @@ s.webhooks.delete_svix_app()
 
 ### Errors
 
-| Error Type                | Status Code               | Content Type              |
+| Error Object              | Status Code               | Content Type              |
 | ------------------------- | ------------------------- | ------------------------- |
 | models.ClerkErrorsError53 | 400                       | application/json          |
-| models.SDKError           | 4XX, 5XX                  | \*/\*                     |
+| models.SDKError           | 4xx-5xx                   | */*                       |
+
 
 ## generate_svix_auth_url
 
@@ -112,7 +114,7 @@ if res is not None:
 
 ### Errors
 
-| Error Type                | Status Code               | Content Type              |
+| Error Object              | Status Code               | Content Type              |
 | ------------------------- | ------------------------- | ------------------------- |
 | models.ClerkErrorsError53 | 400                       | application/json          |
-| models.SDKError           | 4XX, 5XX                  | \*/\*                     |
+| models.SDKError           | 4xx-5xx                   | */*                       |

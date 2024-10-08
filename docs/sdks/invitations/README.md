@@ -51,10 +51,11 @@ if res is not None:
 
 ### Errors
 
-| Error Type                | Status Code               | Content Type              |
+| Error Object              | Status Code               | Content Type              |
 | ------------------------- | ------------------------- | ------------------------- |
-| models.ClerkErrorsError34 | 400, 422                  | application/json          |
-| models.SDKError           | 4XX, 5XX                  | \*/\*                     |
+| models.ClerkErrorsError34 | 400,422                   | application/json          |
+| models.SDKError           | 4xx-5xx                   | */*                       |
+
 
 ## list
 
@@ -97,9 +98,10 @@ if res is not None:
 
 ### Errors
 
-| Error Type      | Status Code     | Content Type    |
+| Error Object    | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
-| models.SDKError | 4XX, 5XX        | \*/\*           |
+| models.SDKError | 4xx-5xx         | */*             |
+
 
 ## revoke
 
@@ -138,7 +140,7 @@ if res is not None:
 
 ### Errors
 
-| Error Type                | Status Code               | Content Type              |
+| Error Object              | Status Code               | Content Type              |
 | ------------------------- | ------------------------- | ------------------------- |
-| models.ClerkErrorsError35 | 400, 404                  | application/json          |
-| models.SDKError           | 4XX, 5XX                  | \*/\*                     |
+| models.ClerkErrorsError35 | 400,404                   | application/json          |
+| models.SDKError           | 4xx-5xx                   | */*                       |

@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 from clerk_backend_api.types import BaseModel
-from typing import Any, Dict, Optional
-from typing_extensions import NotRequired, TypedDict
+from typing import Any, Dict, Optional, TypedDict
+from typing_extensions import NotRequired
 
 
 class CreateActorTokenRequestBodyTypedDict(TypedDict):

@@ -3,8 +3,8 @@
 from __future__ import annotations
 from clerk_backend_api.types import BaseModel
 from enum import Enum
-from typing import Optional
-from typing_extensions import NotRequired, TypedDict
+from typing import Optional, TypedDict
+from typing_extensions import NotRequired
 
 
 class BlocklistIdentifierObject(str, Enum):

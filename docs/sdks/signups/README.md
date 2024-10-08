@@ -43,7 +43,7 @@ if res is not None:
 
 ### Errors
 
-| Error Type                | Status Code               | Content Type              |
+| Error Object              | Status Code               | Content Type              |
 | ------------------------- | ------------------------- | ------------------------- |
 | models.ClerkErrorsError79 | 403                       | application/json          |
-| models.SDKError           | 4XX, 5XX                  | \*/\*                     |
+| models.SDKError           | 4xx-5xx                   | */*                       |

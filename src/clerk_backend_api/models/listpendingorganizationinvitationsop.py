@@ -7,8 +7,8 @@ from .organizationinvitations import (
 )
 from clerk_backend_api.types import BaseModel
 from clerk_backend_api.utils import FieldMetadata, PathParamMetadata, QueryParamMetadata
-from typing import Callable, Optional
-from typing_extensions import Annotated, NotRequired, TypedDict
+from typing import Callable, Optional, TypedDict
+from typing_extensions import Annotated, NotRequired
 
 
 class ListPendingOrganizationInvitationsRequestTypedDict(TypedDict):

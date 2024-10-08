@@ -52,10 +52,11 @@ if res is not None:
 
 ### Errors
 
-| Error Type              | Status Code             | Content Type            |
+| Error Object            | Status Code             | Content Type            |
 | ----------------------- | ----------------------- | ----------------------- |
-| models.ClerkErrorsError | 400, 401, 410, 422      | application/json        |
-| models.SDKError         | 4XX, 5XX                | \*/\*                   |
+| models.ClerkErrorsError | 400,401,410,422         | application/json        |
+| models.SDKError         | 4xx-5xx                 | */*                     |
+
 
 ## verify
 
@@ -93,10 +94,11 @@ if res is not None:
 
 ### Errors
 
-| Error Type               | Status Code              | Content Type             |
+| Error Object             | Status Code              | Content Type             |
 | ------------------------ | ------------------------ | ------------------------ |
-| models.ClerkErrorsError1 | 400, 401, 404            | application/json         |
-| models.SDKError          | 4XX, 5XX                 | \*/\*                    |
+| models.ClerkErrorsError1 | 400,401,404              | application/json         |
+| models.SDKError          | 4xx-5xx                  | */*                      |
+
 
 ## get
 
@@ -132,7 +134,7 @@ if res is not None:
 
 ### Errors
 
-| Error Type               | Status Code              | Content Type             |
+| Error Object             | Status Code              | Content Type             |
 | ------------------------ | ------------------------ | ------------------------ |
-| models.ClerkErrorsError2 | 400, 401, 404            | application/json         |
-| models.SDKError          | 4XX, 5XX                 | \*/\*                    |
+| models.ClerkErrorsError2 | 400,401,404              | application/json         |
+| models.SDKError          | 4xx-5xx                  | */*                      |
