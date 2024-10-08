@@ -1,12 +1,18 @@
 <div align="center">
-        <img src="https://github.com/user-attachments/assets/bdff80ad-42b9-4176-8b35-c05c551f57ac" width="150">
+  <a href="https://clerk.com?utm_source=github&utm_medium=clerk_javascript" target="_blank" rel="noopener noreferrer">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://images.clerk.com/static/logo-dark-mode-400x400.png">
+      <img src="https://images.clerk.com/static/logo-light-mode-400x400.png" height="100">
+    </picture>
+  </a>
    <p>The most comprehensive User Management Platform</p>
    <a href="https://clerk.com/docs/reference/backend-api"><img src="https://img.shields.io/static/v1?label=Docs&message=API Ref&color=000000&style=for-the-badge" /></a>
   <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge" /></a>
 </div>
 <br></br>
 
-The Clerk Python library provides convenient access to the Clerk REST API from any Python application 3.0+. The library includes type definitions for all request params and response fields, and offers synchronous and asynchronous support powered by [httpx](https://www.python-httpx.org/)
+[![chat on Discord](https://img.shields.io/discord/856971667393609759.svg?logo=discord)](https://clerk.com/discord)
+[![twitter](https://img.shields.io/twitter/follow/ClerkDev?style=social)](https://twitter.com/intent/follow?screen_name=ClerkDev)
 
 <!-- Start Summary [summary] -->
 ## Summary
