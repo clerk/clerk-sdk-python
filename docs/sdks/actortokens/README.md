@@ -22,6 +22,7 @@ s = Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
+
 res = s.actor_tokens.create(request={
     "user_id": "user_1a2b3c",
     "actor": {
@@ -50,10 +51,11 @@ if res is not None:
 
 ### Errors
 
-| Error Type                | Status Code               | Content Type              |
-| ------------------------- | ------------------------- | ------------------------- |
-| models.ClerkErrorsError44 | 400, 402, 422             | application/json          |
-| models.SDKError           | 4XX, 5XX                  | \*/\*                     |
+| Error Object       | Status Code        | Content Type       |
+| ------------------ | ------------------ | ------------------ |
+| models.ClerkErrors | 400,402,422        | application/json   |
+| models.SDKError    | 4xx-5xx            | */*                |
+
 
 ## revoke
 
@@ -67,6 +69,7 @@ from clerk_backend_api import Clerk
 s = Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
+
 
 res = s.actor_tokens.revoke(actor_token_id="act_tok_abcdefghijk")
 
@@ -89,7 +92,7 @@ if res is not None:
 
 ### Errors
 
-| Error Type                | Status Code               | Content Type              |
-| ------------------------- | ------------------------- | ------------------------- |
-| models.ClerkErrorsError45 | 400, 404                  | application/json          |
-| models.SDKError           | 4XX, 5XX                  | \*/\*                     |
+| Error Object       | Status Code        | Content Type       |
+| ------------------ | ------------------ | ------------------ |
+| models.ClerkErrors | 400,404            | application/json   |
+| models.SDKError    | 4xx-5xx            | */*                |

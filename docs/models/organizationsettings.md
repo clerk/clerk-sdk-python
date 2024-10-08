@@ -1,7 +1,5 @@
 # OrganizationSettings
 
-Success
-
 
 ## Fields
 

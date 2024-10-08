@@ -1,7 +1,5 @@
 # InstanceRestrictions
 
-Success
-
 
 ## Fields
 

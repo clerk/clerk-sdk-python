@@ -1,7 +1,5 @@
 # DeletedObject
 
-Deleted Object
-
 
 ## Fields
 

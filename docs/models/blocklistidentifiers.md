@@ -1,7 +1,5 @@
 # BlocklistIdentifiers
 
-Success
-
 
 ## Fields
 

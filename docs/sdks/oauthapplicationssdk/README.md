@@ -28,15 +28,17 @@ s = Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
+
 res = s.o_auth_applications.list(limit=20, offset=10)
 
 if res is not None:
     while True:
         # handle items
 
-        res = res.next()
+        res = res.Next()
         if res is None:
             break
+
 
 ```
 
@@ -54,10 +56,11 @@ if res is not None:
 
 ### Errors
 
-| Error Type                | Status Code               | Content Type              |
-| ------------------------- | ------------------------- | ------------------------- |
-| models.ClerkErrorsError79 | 400, 403, 422             | application/json          |
-| models.SDKError           | 4XX, 5XX                  | \*/\*                     |
+| Error Object       | Status Code        | Content Type       |
+| ------------------ | ------------------ | ------------------ |
+| models.ClerkErrors | 400,403,422        | application/json   |
+| models.SDKError    | 4xx-5xx            | */*                |
+
 
 ## create
 
@@ -73,6 +76,7 @@ from clerk_backend_api import Clerk
 s = Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
+
 
 res = s.o_auth_applications.create(request={
     "name": "Example App",
@@ -100,10 +104,11 @@ if res is not None:
 
 ### Errors
 
-| Error Type                | Status Code               | Content Type              |
-| ------------------------- | ------------------------- | ------------------------- |
-| models.ClerkErrorsError80 | 400, 403, 422             | application/json          |
-| models.SDKError           | 4XX, 5XX                  | \*/\*                     |
+| Error Object       | Status Code        | Content Type       |
+| ------------------ | ------------------ | ------------------ |
+| models.ClerkErrors | 400,403,422        | application/json   |
+| models.SDKError    | 4xx-5xx            | */*                |
+
 
 ## get
 
@@ -117,6 +122,7 @@ from clerk_backend_api import Clerk
 s = Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
+
 
 res = s.o_auth_applications.get(oauth_application_id="oauth_app_12345")
 
@@ -139,10 +145,11 @@ if res is not None:
 
 ### Errors
 
-| Error Type                | Status Code               | Content Type              |
-| ------------------------- | ------------------------- | ------------------------- |
-| models.ClerkErrorsError81 | 403, 404                  | application/json          |
-| models.SDKError           | 4XX, 5XX                  | \*/\*                     |
+| Error Object       | Status Code        | Content Type       |
+| ------------------ | ------------------ | ------------------ |
+| models.ClerkErrors | 403,404            | application/json   |
+| models.SDKError    | 4xx-5xx            | */*                |
+
 
 ## update
 
@@ -156,6 +163,7 @@ from clerk_backend_api import Clerk
 s = Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
+
 
 res = s.o_auth_applications.update(oauth_application_id="oauth_app_67890", name="Updated OAuth App Name", callback_url="https://example.com/oauth/callback", scopes="profile email public_metadata private_metadata")
 
@@ -181,10 +189,11 @@ if res is not None:
 
 ### Errors
 
-| Error Type                | Status Code               | Content Type              |
-| ------------------------- | ------------------------- | ------------------------- |
-| models.ClerkErrorsError82 | 403, 404, 422             | application/json          |
-| models.SDKError           | 4XX, 5XX                  | \*/\*                     |
+| Error Object       | Status Code        | Content Type       |
+| ------------------ | ------------------ | ------------------ |
+| models.ClerkErrors | 403,404,422        | application/json   |
+| models.SDKError    | 4xx-5xx            | */*                |
+
 
 ## delete
 
@@ -199,6 +208,7 @@ from clerk_backend_api import Clerk
 s = Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
+
 
 res = s.o_auth_applications.delete(oauth_application_id="oauth_app_09876")
 
@@ -221,10 +231,11 @@ if res is not None:
 
 ### Errors
 
-| Error Type                | Status Code               | Content Type              |
-| ------------------------- | ------------------------- | ------------------------- |
-| models.ClerkErrorsError83 | 403, 404                  | application/json          |
-| models.SDKError           | 4XX, 5XX                  | \*/\*                     |
+| Error Object       | Status Code        | Content Type       |
+| ------------------ | ------------------ | ------------------ |
+| models.ClerkErrors | 403,404            | application/json   |
+| models.SDKError    | 4xx-5xx            | */*                |
+
 
 ## rotate_secret
 
@@ -239,6 +250,7 @@ from clerk_backend_api import Clerk
 s = Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
+
 
 res = s.o_auth_applications.rotate_secret(oauth_application_id="oauth_application_12345")
 
@@ -261,7 +273,7 @@ if res is not None:
 
 ### Errors
 
-| Error Type                | Status Code               | Content Type              |
-| ------------------------- | ------------------------- | ------------------------- |
-| models.ClerkErrorsError84 | 403, 404                  | application/json          |
-| models.SDKError           | 4XX, 5XX                  | \*/\*                     |
+| Error Object       | Status Code        | Content Type       |
+| ------------------ | ------------------ | ------------------ |
+| models.ClerkErrors | 403,404            | application/json   |
+| models.SDKError    | 4xx-5xx            | */*                |

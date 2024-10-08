@@ -2,16 +2,13 @@
 
 from __future__ import annotations
 from clerk_backend_api.types import BaseModel
-from typing_extensions import TypedDict
+from typing import TypedDict
 
 
 class SvixURLTypedDict(TypedDict):
-    r"""Response that contains a temporary Svix URL to access management dashboard"""
-
     svix_url: str
-
+    
 
 class SvixURL(BaseModel):
-    r"""Response that contains a temporary Svix URL to access management dashboard"""
-
     svix_url: str
+    

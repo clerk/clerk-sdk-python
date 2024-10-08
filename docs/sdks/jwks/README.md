@@ -20,6 +20,7 @@ s = Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
+
 s.jwks.get()
 
 # Use the SDK ...
@@ -34,6 +35,6 @@ s.jwks.get()
 
 ### Errors
 
-| Error Type      | Status Code     | Content Type    |
+| Error Object    | Status Code     | Content Type    |
 | --------------- | --------------- | --------------- |
-| models.SDKError | 4XX, 5XX        | \*/\*           |
+| models.SDKError | 4xx-5xx         | */*             |

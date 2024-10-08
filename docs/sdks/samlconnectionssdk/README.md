@@ -26,15 +26,17 @@ s = Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
+
 res = s.saml_connections.list(limit=20, offset=10)
 
 if res is not None:
     while True:
         # handle items
 
-        res = res.next()
+        res = res.Next()
         if res is None:
             break
+
 
 ```
 
@@ -52,10 +54,11 @@ if res is not None:
 
 ### Errors
 
-| Error Type                | Status Code               | Content Type              |
-| ------------------------- | ------------------------- | ------------------------- |
-| models.ClerkErrorsError85 | 402, 403, 422             | application/json          |
-| models.SDKError           | 4XX, 5XX                  | \*/\*                     |
+| Error Object       | Status Code        | Content Type       |
+| ------------------ | ------------------ | ------------------ |
+| models.ClerkErrors | 402,403,422        | application/json   |
+| models.SDKError    | 4xx-5xx            | */*                |
+
 
 ## create
 
@@ -70,6 +73,7 @@ from clerk_backend_api import Clerk
 s = Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
+
 
 res = s.saml_connections.create(request={
     "name": "My SAML Connection",
@@ -107,10 +111,11 @@ if res is not None:
 
 ### Errors
 
-| Error Type                | Status Code               | Content Type              |
-| ------------------------- | ------------------------- | ------------------------- |
-| models.ClerkErrorsError86 | 402, 403, 422             | application/json          |
-| models.SDKError           | 4XX, 5XX                  | \*/\*                     |
+| Error Object       | Status Code        | Content Type       |
+| ------------------ | ------------------ | ------------------ |
+| models.ClerkErrors | 402,403,422        | application/json   |
+| models.SDKError    | 4xx-5xx            | */*                |
+
 
 ## get
 
@@ -124,6 +129,7 @@ from clerk_backend_api import Clerk
 s = Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
+
 
 res = s.saml_connections.get(saml_connection_id="saml_conn_123")
 
@@ -146,10 +152,11 @@ if res is not None:
 
 ### Errors
 
-| Error Type                | Status Code               | Content Type              |
-| ------------------------- | ------------------------- | ------------------------- |
-| models.ClerkErrorsError87 | 402, 403, 404             | application/json          |
-| models.SDKError           | 4XX, 5XX                  | \*/\*                     |
+| Error Object       | Status Code        | Content Type       |
+| ------------------ | ------------------ | ------------------ |
+| models.ClerkErrors | 402,403,404        | application/json   |
+| models.SDKError    | 4xx-5xx            | */*                |
+
 
 ## update
 
@@ -163,6 +170,7 @@ from clerk_backend_api import Clerk
 s = Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
+
 
 res = s.saml_connections.update(saml_connection_id="saml_conn_123_update", name="Example SAML Connection", domain="example.com", idp_entity_id="entity_123", idp_sso_url="https://idp.example.com/sso", idp_certificate="MIIDBTCCAe2gAwIBAgIQ...", idp_metadata_url="https://idp.example.com/metadata", idp_metadata="<EntityDescriptor>...</EntityDescriptor>", attribute_mapping={
     "user_id": "id123",
@@ -202,10 +210,11 @@ if res is not None:
 
 ### Errors
 
-| Error Type                | Status Code               | Content Type              |
-| ------------------------- | ------------------------- | ------------------------- |
-| models.ClerkErrorsError88 | 402, 403, 404, 422        | application/json          |
-| models.SDKError           | 4XX, 5XX                  | \*/\*                     |
+| Error Object       | Status Code        | Content Type       |
+| ------------------ | ------------------ | ------------------ |
+| models.ClerkErrors | 402,403,404,422    | application/json   |
+| models.SDKError    | 4xx-5xx            | */*                |
+
 
 ## delete
 
@@ -219,6 +228,7 @@ from clerk_backend_api import Clerk
 s = Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
+
 
 res = s.saml_connections.delete(saml_connection_id="saml_conn_123_delete")
 
@@ -241,7 +251,7 @@ if res is not None:
 
 ### Errors
 
-| Error Type                | Status Code               | Content Type              |
-| ------------------------- | ------------------------- | ------------------------- |
-| models.ClerkErrorsError89 | 402, 403, 404             | application/json          |
-| models.SDKError           | 4XX, 5XX                  | \*/\*                     |
+| Error Object       | Status Code        | Content Type       |
+| ------------------ | ------------------ | ------------------ |
+| models.ClerkErrors | 402,403,404        | application/json   |
+| models.SDKError    | 4xx-5xx            | */*                |
