@@ -25,9 +25,14 @@ actions:
   - target: $["components"]["schemas"]["IdentificationLink"]["properties"]["type"]["enum"]
     update:
       - "oauth_apple"
+      - "oauth_discord"
   - target: $["components"]["parameters"]["LimitParameter"]["schema"]
     update:
       type: integer
   - target: $["components"]["parameters"]["OffsetParameter"]["schema"]
     update:
       type: integer
+  - target: $["paths"]["/email_addresses/{email_address_id}"]["get"]
+    update:
+      x-speakeasy-usage-example: true
+    
