@@ -81,7 +81,7 @@ if res is not None:
 
 ### Response
 
-**[List[models.User]](../../models/.md)**
+**[List[models.User]](../../models/user.md)**
 
 ### Errors
 
@@ -724,7 +724,7 @@ if res is not None:
 
 ### Response
 
-**[List[models.ResponseBody]](../../models/.md)**
+**[List[models.ResponseBody]](../../models/responsebody.md)**
 
 ### Errors
 
