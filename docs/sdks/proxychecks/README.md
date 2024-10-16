@@ -5,9 +5,9 @@
 
 ### Available Operations
 
-* [verify](#verify) - Verify the proxy configuration for your domain
+* [verify_domain_proxy](#verify_domain_proxy) - Verify the proxy configuration for your domain
 
-## verify
+## verify_domain_proxy
 
 This endpoint can be used to validate that a proxy-enabled domain is operational.
 It tries to verify that the proxy URL provided in the parameters maps to a functional proxy that can reach the Clerk Frontend API.
@@ -28,7 +28,7 @@ s = Clerk(
 )
 
 
-res = s.proxy_checks.verify(request={
+res = s.proxy_checks.verify_domain_proxy(request={
     "domain_id": "domain_32hfu3e",
     "proxy_url": "https://example.com/__clerk",
 })

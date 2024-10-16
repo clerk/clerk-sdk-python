@@ -3,14 +3,17 @@
 
 ## Overview
 
+A user can be associated with one or more phone numbers, which allows them to be contacted via SMS.
+<https://clerk.com/docs/reference/clerkjs/phonenumber>
+
 ### Available Operations
 
-* [create](#create) - Create a phone number
-* [get](#get) - Retrieve a phone number
-* [delete](#delete) - Delete a phone number
-* [update](#update) - Update a phone number
+* [create_phone_number](#create_phone_number) - Create a phone number
+* [get_phone_number](#get_phone_number) - Retrieve a phone number
+* [delete_phone_number](#delete_phone_number) - Delete a phone number
+* [update_phone_number](#update_phone_number) - Update a phone number
 
-## create
+## create_phone_number
 
 Create a new phone number
 
@@ -24,7 +27,7 @@ s = Clerk(
 )
 
 
-res = s.phone_numbers.create(request={
+res = s.phone_numbers.create_phone_number(request={
     "user_id": "usr_12345",
     "phone_number": "+11234567890",
     "verified": True,
@@ -57,7 +60,7 @@ if res is not None:
 | models.SDKError     | 4xx-5xx             | */*                 |
 
 
-## get
+## get_phone_number
 
 Returns the details of a phone number
 
@@ -71,7 +74,7 @@ s = Clerk(
 )
 
 
-res = s.phone_numbers.get(phone_number_id="phone_12345")
+res = s.phone_numbers.get_phone_number(phone_number_id="phone_12345")
 
 if res is not None:
     # handle response
@@ -98,7 +101,7 @@ if res is not None:
 | models.SDKError    | 4xx-5xx            | */*                |
 
 
-## delete
+## delete_phone_number
 
 Delete the phone number with the given ID
 
@@ -112,7 +115,7 @@ s = Clerk(
 )
 
 
-res = s.phone_numbers.delete(phone_number_id="phone_12345")
+res = s.phone_numbers.delete_phone_number(phone_number_id="phone_12345")
 
 if res is not None:
     # handle response
@@ -139,7 +142,7 @@ if res is not None:
 | models.SDKError    | 4xx-5xx            | */*                |
 
 
-## update
+## update_phone_number
 
 Updates a phone number
 
@@ -153,7 +156,7 @@ s = Clerk(
 )
 
 
-res = s.phone_numbers.update(phone_number_id="phone_12345", request_body={
+res = s.phone_numbers.update_phone_number(phone_number_id="phone_12345", request_body={
     "verified": False,
     "primary": True,
     "reserved_for_second_factor": True,

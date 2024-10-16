@@ -8,9 +8,14 @@ from typing import Any, List, Optional, Union
 from typing_extensions import deprecated
 
 class Sessions(BaseSDK):
+    r"""The Session object is an abstraction over an HTTP session.
+    It models the period of information exchange between a user and the server.
+    Sessions are created when a user successfully goes through the sign in or sign up flows.
+    https://clerk.com/docs/reference/clerkjs/session
+    """
     
     
-    def list(
+    def get_session_list(
         self, *,
         client_id: Optional[str] = None,
         user_id: Optional[str] = None,
@@ -103,7 +108,7 @@ class Sessions(BaseSDK):
 
     
     
-    async def list_async(
+    async def get_session_list_async(
         self, *,
         client_id: Optional[str] = None,
         user_id: Optional[str] = None,
@@ -196,7 +201,7 @@ class Sessions(BaseSDK):
 
     
     
-    def get(
+    def get_session(
         self, *,
         session_id: str,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -274,7 +279,7 @@ class Sessions(BaseSDK):
 
     
     
-    async def get_async(
+    async def get_session_async(
         self, *,
         session_id: str,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -352,7 +357,7 @@ class Sessions(BaseSDK):
 
     
     
-    def revoke(
+    def revoke_session(
         self, *,
         session_id: str,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -431,7 +436,7 @@ class Sessions(BaseSDK):
 
     
     
-    async def revoke_async(
+    async def revoke_session_async(
         self, *,
         session_id: str,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -511,7 +516,7 @@ class Sessions(BaseSDK):
     
     
     @deprecated("warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible.")
-    def verify(
+    def verify_session(
         self, *,
         session_id: str,
         request_body: Optional[Union[models.VerifySessionRequestBody, models.VerifySessionRequestBodyTypedDict]] = None,
@@ -597,7 +602,7 @@ class Sessions(BaseSDK):
     
     
     @deprecated("warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible.")
-    async def verify_async(
+    async def verify_session_async(
         self, *,
         session_id: str,
         request_body: Optional[Union[models.VerifySessionRequestBody, models.VerifySessionRequestBodyTypedDict]] = None,
@@ -682,7 +687,7 @@ class Sessions(BaseSDK):
 
     
     
-    def create_token_from_template(
+    def create_session_token_from_template(
         self, *,
         session_id: str,
         template_name: str,
@@ -763,7 +768,7 @@ class Sessions(BaseSDK):
 
     
     
-    async def create_token_from_template_async(
+    async def create_session_token_from_template_async(
         self, *,
         session_id: str,
         template_name: str,

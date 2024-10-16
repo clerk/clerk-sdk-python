@@ -3,15 +3,20 @@
 
 ## Overview
 
+The Session object is an abstraction over an HTTP session.
+It models the period of information exchange between a user and the server.
+Sessions are created when a user successfully goes through the sign in or sign up flows.
+<https://clerk.com/docs/reference/clerkjs/session>
+
 ### Available Operations
 
-* [list](#list) - List all sessions
-* [get](#get) - Retrieve a session
-* [revoke](#revoke) - Revoke a session
-* [~~verify~~](#verify) - Verify a session :warning: **Deprecated**
-* [create_token_from_template](#create_token_from_template) - Create a session token from a jwt template
+* [get_session_list](#get_session_list) - List all sessions
+* [get_session](#get_session) - Retrieve a session
+* [revoke_session](#revoke_session) - Revoke a session
+* [~~verify_session~~](#verify_session) - Verify a session :warning: **Deprecated**
+* [create_session_token_from_template](#create_session_token_from_template) - Create a session token from a jwt template
 
-## list
+## get_session_list
 
 Returns a list of all sessions.
 The sessions are returned sorted by creation date, with the newest sessions appearing first.
@@ -29,7 +34,7 @@ s = Clerk(
 )
 
 
-res = s.sessions.list(client_id="client_123", user_id="user_456", status=clerk_backend_api.QueryParamStatus.ACTIVE, limit=20, offset=10)
+res = s.sessions.get_session_list(client_id="client_123", user_id="user_456", status=clerk_backend_api.QueryParamStatus.ACTIVE, limit=20, offset=10)
 
 if res is not None:
     # handle response
@@ -60,7 +65,7 @@ if res is not None:
 | models.SDKError    | 4xx-5xx            | */*                |
 
 
-## get
+## get_session
 
 Retrieve the details of a session
 
@@ -74,7 +79,7 @@ s = Clerk(
 )
 
 
-res = s.sessions.get(session_id="sess_1234567890abcdef")
+res = s.sessions.get_session(session_id="sess_1234567890abcdef")
 
 if res is not None:
     # handle response
@@ -101,7 +106,7 @@ if res is not None:
 | models.SDKError    | 4xx-5xx            | */*                |
 
 
-## revoke
+## revoke_session
 
 Sets the status of a session as "revoked", which is an unauthenticated state.
 In multi-session mode, a revoked session will still be returned along with its client object, however the user will need to sign in again.
@@ -116,7 +121,7 @@ s = Clerk(
 )
 
 
-res = s.sessions.revoke(session_id="sess_1234567890abcdef")
+res = s.sessions.revoke_session(session_id="sess_1234567890abcdef")
 
 if res is not None:
     # handle response
@@ -143,7 +148,7 @@ if res is not None:
 | models.SDKError    | 4xx-5xx            | */*                |
 
 
-## ~~verify~~
+## ~~verify_session~~
 
 Returns the session if it is authenticated, otherwise returns an error.
 WARNING: This endpoint is deprecated and will be removed in future versions. We strongly recommend switching to networkless verification using short-lived session tokens,
@@ -162,7 +167,7 @@ s = Clerk(
 )
 
 
-res = s.sessions.verify(session_id="sess_w8q4g9s60j28fghv00f3", request_body={
+res = s.sessions.verify_session(session_id="sess_w8q4g9s60j28fghv00f3", request_body={
     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzZXNzaW9uX2lkIjoic2Vzc193OHF4ZzZzNm9qMjhmZ2h2MDBmMyIsImlhdCI6MTU4MjY0OTg2Mn0.J4KP2L6bEZ6YccHFW4E2vKbOLw_mmO0gF_GNRw-wtLM",
 })
 
@@ -192,7 +197,7 @@ if res is not None:
 | models.SDKError    | 4xx-5xx            | */*                |
 
 
-## create_token_from_template
+## create_session_token_from_template
 
 Creates a JSON Web Token(JWT) based on a session and a JWT Template name defined for your instance
 
@@ -206,7 +211,7 @@ s = Clerk(
 )
 
 
-res = s.sessions.create_token_from_template(session_id="ses_123abcd4567", template_name="custom_hasura")
+res = s.sessions.create_session_token_from_template(session_id="ses_123abcd4567", template_name="custom_hasura")
 
 if res is not None:
     # handle response

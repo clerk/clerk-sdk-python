@@ -4,7 +4,7 @@ from __future__ import annotations
 from clerk_backend_api.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
 from enum import Enum
 from pydantic import model_serializer
-from typing import TypedDict
+from typing import Optional, TypedDict
 from typing_extensions import NotRequired
 
 
@@ -31,6 +31,30 @@ class Status(str, Enum):
     ABANDONED = "abandoned"
     REPLACED = "replaced"
 
+class LatestActivityTypedDict(TypedDict):
+    object: str
+    id: str
+    device_type: NotRequired[str]
+    is_mobile: NotRequired[bool]
+    browser_name: NotRequired[str]
+    browser_version: NotRequired[str]
+    ip_address: NotRequired[str]
+    city: NotRequired[str]
+    country: NotRequired[str]
+    
+
+class LatestActivity(BaseModel):
+    object: str
+    id: str
+    device_type: Optional[str] = None
+    is_mobile: Optional[bool] = None
+    browser_name: Optional[str] = None
+    browser_version: Optional[str] = None
+    ip_address: Optional[str] = None
+    city: Optional[str] = None
+    country: Optional[str] = None
+    
+
 class SessionTypedDict(TypedDict):
     object: SessionObject
     r"""String representing the object's type. Objects of the same type share the same value.
@@ -53,6 +77,7 @@ class SessionTypedDict(TypedDict):
     """
     actor: NotRequired[Nullable[ActorTypedDict]]
     last_active_organization_id: NotRequired[Nullable[str]]
+    latest_activity: NotRequired[Nullable[LatestActivityTypedDict]]
     
 
 class Session(BaseModel):
@@ -77,11 +102,12 @@ class Session(BaseModel):
     """
     actor: OptionalNullable[Actor] = UNSET
     last_active_organization_id: OptionalNullable[str] = UNSET
+    latest_activity: OptionalNullable[LatestActivity] = UNSET
     
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["actor", "last_active_organization_id"]
-        nullable_fields = ["actor", "last_active_organization_id"]
+        optional_fields = ["actor", "last_active_organization_id", "latest_activity"]
+        nullable_fields = ["actor", "last_active_organization_id", "latest_activity"]
         null_default_fields = []
 
         serialized = handler(self)

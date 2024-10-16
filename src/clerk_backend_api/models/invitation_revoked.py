@@ -38,6 +38,10 @@ class InvitationRevokedTypedDict(TypedDict):
     public_metadata: NotRequired[InvitationRevokedPublicMetadataTypedDict]
     revoked: NotRequired[bool]
     url: NotRequired[Nullable[str]]
+    expires_at: NotRequired[Nullable[int]]
+    r"""Unix timestamp of expiration.
+
+    """
     
 
 class InvitationRevoked(BaseModel):
@@ -56,11 +60,15 @@ class InvitationRevoked(BaseModel):
     public_metadata: Optional[InvitationRevokedPublicMetadata] = None
     revoked: Optional[bool] = None
     url: OptionalNullable[str] = UNSET
+    expires_at: OptionalNullable[int] = UNSET
+    r"""Unix timestamp of expiration.
+
+    """
     
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["public_metadata", "revoked", "url"]
-        nullable_fields = ["url"]
+        optional_fields = ["public_metadata", "revoked", "url", "expires_at"]
+        nullable_fields = ["url", "expires_at"]
         null_default_fields = []
 
         serialized = handler(self)

@@ -4,22 +4,24 @@ from .basesdk import BaseSDK
 from clerk_backend_api import models, utils
 from clerk_backend_api._hooks import HookContext
 from clerk_backend_api.types import BaseModel, OptionalNullable, UNSET
-from jsonpath import JSONPath
-from typing import Any, Dict, List, Optional, Union, cast
+from typing import Any, List, Optional, Union, cast
 from typing_extensions import deprecated
 
 class Clients(BaseSDK):
+    r"""The Client object tracks sessions, as well as the state of any sign in and sign up attempts, for a given device.
+    https://clerk.com/docs/reference/clerkjs/client
+    """
     
     
     @deprecated("warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible.")
-    def list(
+    def get_client_list(
         self, *,
         limit: Optional[int] = 10,
         offset: Optional[int] = 0,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
-    ) -> models.GetClientListResponse:
+    ) -> Optional[List[models.Client]]:
         r"""List all clients
 
         Returns a list of all clients. The clients are returned sorted by creation date,
@@ -81,29 +83,9 @@ class Clients(BaseSDK):
             retry_config=retry_config
         )
         
-        def next_func() -> Optional[models.GetClientListResponse]:
-            body = utils.unmarshal_json(http_res.text, Dict[Any, Any])
-            offset = request.offset if not request.offset is None else 0
-
-            if not http_res.text:
-                return None
-            results = JSONPath("$").parse(body)
-            if len(results) == 0 or len(results[0]) == 0:
-                return None
-            limit = request.limit if not request.limit is None else 0
-            if len(results[0]) < limit:
-                return None
-            next_offset = offset + len(results[0])
-
-            return self.list(
-                limit=limit,
-                offset=next_offset,
-                retries=retries,
-            )
-        
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return models.GetClientListResponse(result=utils.unmarshal_json(http_res.text, Optional[List[models.Client]]), next=next_func)
+            return utils.unmarshal_json(http_res.text, Optional[List[models.Client]])
         if utils.match_response(http_res, ["400","401","410","422"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
@@ -116,14 +98,14 @@ class Clients(BaseSDK):
     
     
     @deprecated("warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible.")
-    async def list_async(
+    async def get_client_list_async(
         self, *,
         limit: Optional[int] = 10,
         offset: Optional[int] = 0,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
-    ) -> models.GetClientListResponse:
+    ) -> Optional[List[models.Client]]:
         r"""List all clients
 
         Returns a list of all clients. The clients are returned sorted by creation date,
@@ -185,29 +167,9 @@ class Clients(BaseSDK):
             retry_config=retry_config
         )
         
-        def next_func() -> Optional[models.GetClientListResponse]:
-            body = utils.unmarshal_json(http_res.text, Dict[Any, Any])
-            offset = request.offset if not request.offset is None else 0
-
-            if not http_res.text:
-                return None
-            results = JSONPath("$").parse(body)
-            if len(results) == 0 or len(results[0]) == 0:
-                return None
-            limit = request.limit if not request.limit is None else 0
-            if len(results[0]) < limit:
-                return None
-            next_offset = offset + len(results[0])
-
-            return self.list(
-                limit=limit,
-                offset=next_offset,
-                retries=retries,
-            )
-        
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return models.GetClientListResponse(result=utils.unmarshal_json(http_res.text, Optional[List[models.Client]]), next=next_func)
+            return utils.unmarshal_json(http_res.text, Optional[List[models.Client]])
         if utils.match_response(http_res, ["400","401","410","422"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
@@ -219,7 +181,7 @@ class Clients(BaseSDK):
 
     
     
-    def verify(
+    def verify_client(
         self, *,
         request: Optional[Union[models.VerifyClientRequestBody, models.VerifyClientRequestBodyTypedDict]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -298,7 +260,7 @@ class Clients(BaseSDK):
 
     
     
-    async def verify_async(
+    async def verify_client_async(
         self, *,
         request: Optional[Union[models.VerifyClientRequestBody, models.VerifyClientRequestBodyTypedDict]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -377,7 +339,7 @@ class Clients(BaseSDK):
 
     
     
-    def get(
+    def get_client(
         self, *,
         client_id: str,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -455,7 +417,7 @@ class Clients(BaseSDK):
 
     
     
-    async def get_async(
+    async def get_client_async(
         self, *,
         client_id: str,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,

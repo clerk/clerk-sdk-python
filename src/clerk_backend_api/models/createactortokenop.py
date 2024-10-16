@@ -2,14 +2,28 @@
 
 from __future__ import annotations
 from clerk_backend_api.types import BaseModel
-from typing import Any, Dict, Optional, TypedDict
+from typing import Optional, TypedDict
 from typing_extensions import NotRequired
 
 
+class CreateActorTokenActorTypedDict(TypedDict):
+    r"""The actor payload. It needs to include a sub property which should contain the ID of the actor.
+    This whole payload will be also included in the JWT session token.
+    """
+    
+    
+
+class CreateActorTokenActor(BaseModel):
+    r"""The actor payload. It needs to include a sub property which should contain the ID of the actor.
+    This whole payload will be also included in the JWT session token.
+    """
+    
+    
+
 class CreateActorTokenRequestBodyTypedDict(TypedDict):
     user_id: str
-    r"""The ID of the user that can use the newly created sign in token."""
-    actor: Dict[str, Any]
+    r"""The ID of the user being impersonated."""
+    actor: CreateActorTokenActorTypedDict
     r"""The actor payload. It needs to include a sub property which should contain the ID of the actor.
     This whole payload will be also included in the JWT session token.
     """
@@ -25,8 +39,8 @@ class CreateActorTokenRequestBodyTypedDict(TypedDict):
 
 class CreateActorTokenRequestBody(BaseModel):
     user_id: str
-    r"""The ID of the user that can use the newly created sign in token."""
-    actor: Dict[str, Any]
+    r"""The ID of the user being impersonated."""
+    actor: CreateActorTokenActor
     r"""The actor payload. It needs to include a sub property which should contain the ID of the actor.
     This whole payload will be also included in the JWT session token.
     """

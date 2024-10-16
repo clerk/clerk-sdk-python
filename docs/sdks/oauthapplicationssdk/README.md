@@ -3,16 +3,18 @@
 
 ## Overview
 
+OAuth applications contain data for clients using Clerk as an OAuth2 identity provider.
+
 ### Available Operations
 
-* [list](#list) - Get a list of OAuth applications for an instance
-* [create](#create) - Create an OAuth application
-* [get](#get) - Retrieve an OAuth application by ID
-* [update](#update) - Update an OAuth application
-* [delete](#delete) - Delete an OAuth application
-* [rotate_secret](#rotate_secret) - Rotate the client secret of the given OAuth application
+* [list_o_auth_applications](#list_o_auth_applications) - Get a list of OAuth applications for an instance
+* [create_o_auth_application](#create_o_auth_application) - Create an OAuth application
+* [get_o_auth_application](#get_o_auth_application) - Retrieve an OAuth application by ID
+* [update_o_auth_application](#update_o_auth_application) - Update an OAuth application
+* [delete_o_auth_application](#delete_o_auth_application) - Delete an OAuth application
+* [rotate_o_auth_application_secret](#rotate_o_auth_application_secret) - Rotate the client secret of the given OAuth application
 
-## list
+## list_o_auth_applications
 
 This request returns the list of OAuth applications for an instance.
 Results can be paginated using the optional `limit` and `offset` query parameters.
@@ -29,16 +31,11 @@ s = Clerk(
 )
 
 
-res = s.o_auth_applications.list(limit=20, offset=10)
+res = s.o_auth_applications.list_o_auth_applications(limit=20, offset=10)
 
 if res is not None:
-    while True:
-        # handle items
-
-        res = res.Next()
-        if res is None:
-            break
-
+    # handle response
+    pass
 
 ```
 
@@ -52,7 +49,7 @@ if res is not None:
 
 ### Response
 
-**[models.ListOAuthApplicationsResponse](../../models/listoauthapplicationsresponse.md)**
+**[models.OAuthApplications](../../models/oauthapplications.md)**
 
 ### Errors
 
@@ -62,7 +59,7 @@ if res is not None:
 | models.SDKError    | 4xx-5xx            | */*                |
 
 
-## create
+## create_o_auth_application
 
 Creates a new OAuth application with the given name and callback URL for an instance.
 The callback URL must be a valid url.
@@ -78,7 +75,7 @@ s = Clerk(
 )
 
 
-res = s.o_auth_applications.create(request={
+res = s.o_auth_applications.create_o_auth_application(request={
     "name": "Example App",
     "callback_url": "https://example.com/oauth/callback",
     "scopes": "profile email public_metadata",
@@ -110,7 +107,7 @@ if res is not None:
 | models.SDKError    | 4xx-5xx            | */*                |
 
 
-## get
+## get_o_auth_application
 
 Fetches the OAuth application whose ID matches the provided `id` in the path.
 
@@ -124,7 +121,7 @@ s = Clerk(
 )
 
 
-res = s.o_auth_applications.get(oauth_application_id="oauth_app_12345")
+res = s.o_auth_applications.get_o_auth_application(oauth_application_id="oauth_app_12345")
 
 if res is not None:
     # handle response
@@ -151,7 +148,7 @@ if res is not None:
 | models.SDKError    | 4xx-5xx            | */*                |
 
 
-## update
+## update_o_auth_application
 
 Updates an existing OAuth application
 
@@ -165,7 +162,7 @@ s = Clerk(
 )
 
 
-res = s.o_auth_applications.update(oauth_application_id="oauth_app_67890", name="Updated OAuth App Name", callback_url="https://example.com/oauth/callback", scopes="profile email public_metadata private_metadata")
+res = s.o_auth_applications.update_o_auth_application(oauth_application_id="oauth_app_67890", name="Updated OAuth App Name", callback_url="https://example.com/oauth/callback", scopes="profile email public_metadata private_metadata")
 
 if res is not None:
     # handle response
@@ -195,7 +192,7 @@ if res is not None:
 | models.SDKError    | 4xx-5xx            | */*                |
 
 
-## delete
+## delete_o_auth_application
 
 Deletes the given OAuth application.
 This is not reversible.
@@ -210,7 +207,7 @@ s = Clerk(
 )
 
 
-res = s.o_auth_applications.delete(oauth_application_id="oauth_app_09876")
+res = s.o_auth_applications.delete_o_auth_application(oauth_application_id="oauth_app_09876")
 
 if res is not None:
     # handle response
@@ -237,7 +234,7 @@ if res is not None:
 | models.SDKError    | 4xx-5xx            | */*                |
 
 
-## rotate_secret
+## rotate_o_auth_application_secret
 
 Rotates the OAuth application's client secret.
 When the client secret is rotated, make sure to update it in authorized OAuth clients.
@@ -252,7 +249,7 @@ s = Clerk(
 )
 
 
-res = s.o_auth_applications.rotate_secret(oauth_application_id="oauth_application_12345")
+res = s.o_auth_applications.rotate_o_auth_application_secret(oauth_application_id="oauth_application_12345")
 
 if res is not None:
     # handle response

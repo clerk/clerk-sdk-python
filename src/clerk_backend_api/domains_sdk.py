@@ -7,9 +7,10 @@ from clerk_backend_api.types import BaseModel, OptionalNullable, UNSET
 from typing import Any, Optional, Union, cast
 
 class DomainsSDK(BaseSDK):
+    r"""Domains represent each instance's URLs and DNS setup."""
     
     
-    def list(
+    def list_domains(
         self, *,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -77,7 +78,7 @@ class DomainsSDK(BaseSDK):
 
     
     
-    async def list_async(
+    async def list_domains_async(
         self, *,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -145,7 +146,7 @@ class DomainsSDK(BaseSDK):
 
     
     
-    def add(
+    def add_domain(
         self, *,
         request: Optional[Union[models.AddDomainRequestBody, models.AddDomainRequestBodyTypedDict]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -228,7 +229,7 @@ class DomainsSDK(BaseSDK):
 
     
     
-    async def add_async(
+    async def add_domain_async(
         self, *,
         request: Optional[Union[models.AddDomainRequestBody, models.AddDomainRequestBodyTypedDict]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -311,7 +312,7 @@ class DomainsSDK(BaseSDK):
 
     
     
-    def delete(
+    def delete_domain(
         self, *,
         domain_id: str,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -390,7 +391,7 @@ class DomainsSDK(BaseSDK):
 
     
     
-    async def delete_async(
+    async def delete_domain_async(
         self, *,
         domain_id: str,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -469,11 +470,12 @@ class DomainsSDK(BaseSDK):
 
     
     
-    def update(
+    def update_domain(
         self, *,
         domain_id: str,
         name: OptionalNullable[str] = UNSET,
         proxy_url: OptionalNullable[str] = UNSET,
+        is_secondary: OptionalNullable[bool] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -492,6 +494,7 @@ class DomainsSDK(BaseSDK):
         :param domain_id: The ID of the domain that will be updated.
         :param name: The new domain name. For development instances, can contain the port, i.e `myhostname:3000`. For production instances, must be a valid FQDN, i.e `mysite.com`. Cannot contain protocol scheme.
         :param proxy_url: The full URL of the proxy that will forward requests to Clerk's Frontend API. Can only be updated for production instances.
+        :param is_secondary: Whether this is a domain for a secondary app, meaning that any subdomain provided is significant and will be stored as part of the domain. This is useful for supporting multiple apps (one primary and multiple secondaries) on the same root domain (eTLD+1).
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -509,6 +512,7 @@ class DomainsSDK(BaseSDK):
             request_body=models.UpdateDomainRequestBody(
                 name=name,
                 proxy_url=proxy_url,
+                is_secondary=is_secondary,
             ),
         )
         
@@ -563,11 +567,12 @@ class DomainsSDK(BaseSDK):
 
     
     
-    async def update_async(
+    async def update_domain_async(
         self, *,
         domain_id: str,
         name: OptionalNullable[str] = UNSET,
         proxy_url: OptionalNullable[str] = UNSET,
+        is_secondary: OptionalNullable[bool] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -586,6 +591,7 @@ class DomainsSDK(BaseSDK):
         :param domain_id: The ID of the domain that will be updated.
         :param name: The new domain name. For development instances, can contain the port, i.e `myhostname:3000`. For production instances, must be a valid FQDN, i.e `mysite.com`. Cannot contain protocol scheme.
         :param proxy_url: The full URL of the proxy that will forward requests to Clerk's Frontend API. Can only be updated for production instances.
+        :param is_secondary: Whether this is a domain for a secondary app, meaning that any subdomain provided is significant and will be stored as part of the domain. This is useful for supporting multiple apps (one primary and multiple secondaries) on the same root domain (eTLD+1).
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -603,6 +609,7 @@ class DomainsSDK(BaseSDK):
             request_body=models.UpdateDomainRequestBody(
                 name=name,
                 proxy_url=proxy_url,
+                is_secondary=is_secondary,
             ),
         )
         

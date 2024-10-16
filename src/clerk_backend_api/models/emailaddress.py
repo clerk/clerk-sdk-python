@@ -62,7 +62,7 @@ Error = ErrorClerkError
 class OauthTypedDict(TypedDict):
     status: OauthVerificationStatus
     strategy: OauthVerificationStrategy
-    expire_at: Nullable[int]
+    expire_at: int
     external_verification_redirect_url: NotRequired[str]
     error: NotRequired[Nullable[ErrorTypedDict]]
     attempts: NotRequired[Nullable[int]]
@@ -71,7 +71,7 @@ class OauthTypedDict(TypedDict):
 class Oauth(BaseModel):
     status: OauthVerificationStatus
     strategy: OauthVerificationStrategy
-    expire_at: Nullable[int]
+    expire_at: int
     external_verification_redirect_url: Optional[str] = None
     error: OptionalNullable[Error] = UNSET
     attempts: OptionalNullable[int] = UNSET
@@ -79,7 +79,7 @@ class Oauth(BaseModel):
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = ["external_verification_redirect_url", "error", "attempts"]
-        nullable_fields = ["expire_at", "error", "attempts"]
+        nullable_fields = ["error", "attempts"]
         null_default_fields = []
 
         serialized = handler(self)
@@ -108,7 +108,6 @@ class AdminVerificationStatus(str, Enum):
 
 class VerificationStrategy(str, Enum):
     ADMIN = "admin"
-    FROM_OAUTH_DISCORD = "from_oauth_discord"
 
 class AdminTypedDict(TypedDict):
     status: AdminVerificationStatus
@@ -167,42 +166,16 @@ class Strategy(str, Enum):
 class OtpTypedDict(TypedDict):
     status: VerificationStatus
     strategy: Strategy
-    attempts: Nullable[int]
-    expire_at: Nullable[int]
+    attempts: int
+    expire_at: int
     
 
 class Otp(BaseModel):
     status: VerificationStatus
     strategy: Strategy
-    attempts: Nullable[int]
-    expire_at: Nullable[int]
+    attempts: int
+    expire_at: int
     
-    @model_serializer(mode="wrap")
-    def serialize_model(self, handler):
-        optional_fields = []
-        nullable_fields = ["attempts", "expire_at"]
-        null_default_fields = []
-
-        serialized = handler(self)
-
-        m = {}
-
-        for n, f in self.model_fields.items():
-            k = f.alias or n
-            val = serialized.get(k)
-
-            optional_nullable = k in optional_fields and k in nullable_fields
-            is_set = (self.__pydantic_fields_set__.intersection({n}) or k in null_default_fields) # pylint: disable=no-member
-
-            if val is not None and val != UNSET_SENTINEL:
-                m[k] = val
-            elif val != UNSET_SENTINEL and (
-                not k in optional_fields or (optional_nullable and is_set)
-            ):
-                m[k] = val
-
-        return m
-        
 
 VerificationTypedDict = Union[OtpTypedDict, AdminTypedDict, OauthTypedDict]
 

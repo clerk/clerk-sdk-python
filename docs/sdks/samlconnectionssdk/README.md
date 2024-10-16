@@ -1,17 +1,20 @@
-# SamlConnectionsSDK
+# SAMLConnectionsSDK
 (*saml_connections*)
 
 ## Overview
 
+A SAML Connection holds configuration data required for facilitating a SAML SSO flow between your
+Clerk Instance (SP) and a particular SAML IdP.
+
 ### Available Operations
 
-* [list](#list) - Get a list of SAML Connections for an instance
-* [create](#create) - Create a SAML Connection
-* [get](#get) - Retrieve a SAML Connection by ID
-* [update](#update) - Update a SAML Connection
-* [delete](#delete) - Delete a SAML Connection
+* [list_saml_connections](#list_saml_connections) - Get a list of SAML Connections for an instance
+* [create_saml_connection](#create_saml_connection) - Create a SAML Connection
+* [get_saml_connection](#get_saml_connection) - Retrieve a SAML Connection by ID
+* [update_saml_connection](#update_saml_connection) - Update a SAML Connection
+* [delete_saml_connection](#delete_saml_connection) - Delete a SAML Connection
 
-## list
+## list_saml_connections
 
 Returns the list of SAML Connections for an instance.
 Results can be paginated using the optional `limit` and `offset` query parameters.
@@ -27,16 +30,11 @@ s = Clerk(
 )
 
 
-res = s.saml_connections.list(limit=20, offset=10)
+res = s.saml_connections.list_saml_connections(limit=20, offset=10)
 
 if res is not None:
-    while True:
-        # handle items
-
-        res = res.Next()
-        if res is None:
-            break
-
+    # handle response
+    pass
 
 ```
 
@@ -50,7 +48,7 @@ if res is not None:
 
 ### Response
 
-**[models.ListSAMLConnectionsResponse](../../models/listsamlconnectionsresponse.md)**
+**[models.SAMLConnections](../../models/samlconnections.md)**
 
 ### Errors
 
@@ -60,7 +58,7 @@ if res is not None:
 | models.SDKError    | 4xx-5xx            | */*                |
 
 
-## create
+## create_saml_connection
 
 Create a new SAML Connection.
 
@@ -75,7 +73,7 @@ s = Clerk(
 )
 
 
-res = s.saml_connections.create(request={
+res = s.saml_connections.create_saml_connection(request={
     "name": "My SAML Connection",
     "domain": "example.org",
     "provider": clerk_backend_api.Provider.SAML_CUSTOM,
@@ -107,7 +105,7 @@ if res is not None:
 
 ### Response
 
-**[models.SAMLConnection](../../models/samlconnection.md)**
+**[models.SchemasSAMLConnection](../../models/schemassamlconnection.md)**
 
 ### Errors
 
@@ -117,7 +115,7 @@ if res is not None:
 | models.SDKError    | 4xx-5xx            | */*                |
 
 
-## get
+## get_saml_connection
 
 Fetches the SAML Connection whose ID matches the provided `saml_connection_id` in the path.
 
@@ -131,7 +129,7 @@ s = Clerk(
 )
 
 
-res = s.saml_connections.get(saml_connection_id="saml_conn_123")
+res = s.saml_connections.get_saml_connection(saml_connection_id="saml_conn_123")
 
 if res is not None:
     # handle response
@@ -148,7 +146,7 @@ if res is not None:
 
 ### Response
 
-**[models.SAMLConnection](../../models/samlconnection.md)**
+**[models.SchemasSAMLConnection](../../models/schemassamlconnection.md)**
 
 ### Errors
 
@@ -158,7 +156,7 @@ if res is not None:
 | models.SDKError    | 4xx-5xx            | */*                |
 
 
-## update
+## update_saml_connection
 
 Updates the SAML Connection whose ID matches the provided `id` in the path.
 
@@ -172,12 +170,12 @@ s = Clerk(
 )
 
 
-res = s.saml_connections.update(saml_connection_id="saml_conn_123_update", name="Example SAML Connection", domain="example.com", idp_entity_id="entity_123", idp_sso_url="https://idp.example.com/sso", idp_certificate="MIIDBTCCAe2gAwIBAgIQ...", idp_metadata_url="https://idp.example.com/metadata", idp_metadata="<EntityDescriptor>...</EntityDescriptor>", attribute_mapping={
+res = s.saml_connections.update_saml_connection(saml_connection_id="saml_conn_123_update", name="Example SAML Connection", domain="example.com", idp_entity_id="entity_123", idp_sso_url="https://idp.example.com/sso", idp_certificate="MIIDBTCCAe2gAwIBAgIQ...", idp_metadata_url="https://idp.example.com/metadata", idp_metadata="<EntityDescriptor>...</EntityDescriptor>", attribute_mapping={
     "user_id": "id123",
     "email_address": "user@example.com",
     "first_name": "Jane",
     "last_name": "Doe",
-}, active=True, sync_user_attributes=False, allow_subdomains=True, allow_idp_initiated=False)
+}, active=True, sync_user_attributes=False, allow_subdomains=True, allow_idp_initiated=False, disable_additional_identifications=False)
 
 if res is not None:
     # handle response
@@ -202,11 +200,12 @@ if res is not None:
 | `sync_user_attributes`                                                                                                              | *OptionalNullable[bool]*                                                                                                            | :heavy_minus_sign:                                                                                                                  | Controls whether to update the user's attributes in each sign-in                                                                    | false                                                                                                                               |
 | `allow_subdomains`                                                                                                                  | *OptionalNullable[bool]*                                                                                                            | :heavy_minus_sign:                                                                                                                  | Allow users with an email address subdomain to use this connection in order to authenticate                                         | true                                                                                                                                |
 | `allow_idp_initiated`                                                                                                               | *OptionalNullable[bool]*                                                                                                            | :heavy_minus_sign:                                                                                                                  | Enable or deactivate IdP-initiated flows                                                                                            | false                                                                                                                               |
+| `disable_additional_identifications`                                                                                                | *OptionalNullable[bool]*                                                                                                            | :heavy_minus_sign:                                                                                                                  | Enable or deactivate additional identifications                                                                                     |                                                                                                                                     |
 | `retries`                                                                                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                    | :heavy_minus_sign:                                                                                                                  | Configuration to override the default retry behavior of the client.                                                                 |                                                                                                                                     |
 
 ### Response
 
-**[models.SAMLConnection](../../models/samlconnection.md)**
+**[models.SchemasSAMLConnection](../../models/schemassamlconnection.md)**
 
 ### Errors
 
@@ -216,7 +215,7 @@ if res is not None:
 | models.SDKError    | 4xx-5xx            | */*                |
 
 
-## delete
+## delete_saml_connection
 
 Deletes the SAML Connection whose ID matches the provided `id` in the path.
 
@@ -230,7 +229,7 @@ s = Clerk(
 )
 
 
-res = s.saml_connections.delete(saml_connection_id="saml_conn_123_delete")
+res = s.saml_connections.delete_saml_connection(saml_connection_id="saml_conn_123_delete")
 
 if res is not None:
     # handle response

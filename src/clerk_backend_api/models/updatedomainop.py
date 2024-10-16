@@ -18,6 +18,11 @@ class UpdateDomainRequestBodyTypedDict(TypedDict):
     r"""The full URL of the proxy that will forward requests to Clerk's Frontend API.
     Can only be updated for production instances.
     """
+    is_secondary: NotRequired[Nullable[bool]]
+    r"""Whether this is a domain for a secondary app, meaning that any subdomain provided is significant and
+    will be stored as part of the domain. This is useful for supporting multiple apps (one primary and
+    multiple secondaries) on the same root domain (eTLD+1).
+    """
     
 
 class UpdateDomainRequestBody(BaseModel):
@@ -30,11 +35,16 @@ class UpdateDomainRequestBody(BaseModel):
     r"""The full URL of the proxy that will forward requests to Clerk's Frontend API.
     Can only be updated for production instances.
     """
+    is_secondary: OptionalNullable[bool] = UNSET
+    r"""Whether this is a domain for a secondary app, meaning that any subdomain provided is significant and
+    will be stored as part of the domain. This is useful for supporting multiple apps (one primary and
+    multiple secondaries) on the same root domain (eTLD+1).
+    """
     
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["name", "proxy_url"]
-        nullable_fields = ["name", "proxy_url"]
+        optional_fields = ["name", "proxy_url", "is_secondary"]
+        nullable_fields = ["name", "proxy_url", "is_secondary"]
         null_default_fields = []
 
         serialized = handler(self)

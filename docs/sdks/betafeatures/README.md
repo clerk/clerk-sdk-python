@@ -3,6 +3,8 @@
 
 ## Overview
 
+Modify instance settings that are currently in beta.
+
 ### Available Operations
 
 * [update_instance_auth_config](#update_instance_auth_config) - Update instance settings
@@ -120,6 +122,7 @@ s = Clerk(
 
 s.beta_features.change_production_instance_domain(request={
     "home_url": "https://www.newdomain.com",
+    "is_secondary": False,
 })
 
 # Use the SDK ...

@@ -1,17 +1,22 @@
-# JwtTemplates
+# JWTTemplates
 (*jwt_templates*)
 
 ## Overview
 
+JWT Templates allow you to generate custom authentication tokens
+tied to authenticated sessions, enabling you to integrate with third-party
+services.
+<https://clerk.com/docs/request-authentication/jwt-templates>
+
 ### Available Operations
 
-* [list](#list) - List all templates
-* [create](#create) - Create a JWT template
-* [get](#get) - Retrieve a template
-* [update](#update) - Update a JWT template
-* [delete](#delete) - Delete a Template
+* [list_jwt_templates](#list_jwt_templates) - List all templates
+* [create_jwt_template](#create_jwt_template) - Create a JWT template
+* [get_jwt_template](#get_jwt_template) - Retrieve a template
+* [update_jwt_template](#update_jwt_template) - Update a JWT template
+* [delete_jwt_template](#delete_jwt_template) - Delete a Template
 
-## list
+## list_jwt_templates
 
 List all templates
 
@@ -25,7 +30,7 @@ s = Clerk(
 )
 
 
-res = s.jwt_templates.list()
+res = s.jwt_templates.list_jwt_templates()
 
 if res is not None:
     # handle response
@@ -50,7 +55,7 @@ if res is not None:
 | models.SDKError | 4xx-5xx         | */*             |
 
 
-## create
+## create_jwt_template
 
 Create a new JWT template
 
@@ -64,7 +69,7 @@ s = Clerk(
 )
 
 
-res = s.jwt_templates.create(request={
+res = s.jwt_templates.create_jwt_template(request={
     "name": "Example Template",
     "claims": {},
     "lifetime": 3600,
@@ -99,7 +104,7 @@ if res is not None:
 | models.SDKError    | 4xx-5xx            | */*                |
 
 
-## get
+## get_jwt_template
 
 Retrieve the details of a given JWT template
 
@@ -113,7 +118,7 @@ s = Clerk(
 )
 
 
-res = s.jwt_templates.get(template_id="template_123")
+res = s.jwt_templates.get_jwt_template(template_id="template_123")
 
 if res is not None:
     # handle response
@@ -140,7 +145,7 @@ if res is not None:
 | models.SDKError    | 4xx-5xx            | */*                |
 
 
-## update
+## update_jwt_template
 
 Updates an existing JWT template
 
@@ -154,11 +159,11 @@ s = Clerk(
 )
 
 
-res = s.jwt_templates.update(template_id="<value>", request_body={
+res = s.jwt_templates.update_jwt_template(template_id="<value>", request_body={
     "name": "<value>",
     "claims": {},
-    "lifetime": 8574.78,
-    "allowed_clock_skew": 245.55,
+    "lifetime": 5704.19,
+    "allowed_clock_skew": 1506.03,
     "custom_signing_key": False,
     "signing_algorithm": "<value>",
     "signing_key": "<value>",
@@ -190,7 +195,7 @@ if res is not None:
 | models.SDKError    | 4xx-5xx            | */*                |
 
 
-## delete
+## delete_jwt_template
 
 Delete a Template
 
@@ -204,7 +209,7 @@ s = Clerk(
 )
 
 
-res = s.jwt_templates.delete(template_id="<value>")
+res = s.jwt_templates.delete_jwt_template(template_id="<value>")
 
 if res is not None:
     # handle response

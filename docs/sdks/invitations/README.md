@@ -3,13 +3,16 @@
 
 ## Overview
 
+Invitations allow you to invite someone to sign up to your application, via email.
+<https://clerk.com/docs/authentication/invitations>
+
 ### Available Operations
 
-* [create](#create) - Create an invitation
-* [list](#list) - List all invitations
-* [revoke](#revoke) - Revokes an invitation
+* [create_invitation](#create_invitation) - Create an invitation
+* [list_invitations](#list_invitations) - List all invitations
+* [revoke_invitation](#revoke_invitation) - Revokes an invitation
 
-## create
+## create_invitation
 
 Creates a new invitation for the given email address and sends the invitation email.
 Keep in mind that you cannot create an invitation if there is already one for the given email address.
@@ -25,12 +28,13 @@ s = Clerk(
 )
 
 
-res = s.invitations.create(request={
+res = s.invitations.create_invitation(request={
     "email_address": "user@example.com",
     "public_metadata": {},
     "redirect_url": "https://example.com/welcome",
     "notify": True,
     "ignore_existing": True,
+    "expires_in_days": 818183,
 })
 
 if res is not None:
@@ -58,7 +62,7 @@ if res is not None:
 | models.SDKError    | 4xx-5xx            | */*                |
 
 
-## list
+## list_invitations
 
 Returns all non-revoked invitations for your application, sorted by creation date
 
@@ -73,16 +77,11 @@ s = Clerk(
 )
 
 
-res = s.invitations.list(limit=20, offset=10, status=clerk_backend_api.ListInvitationsQueryParamStatus.PENDING)
+res = s.invitations.list_invitations(limit=20, offset=10, status=clerk_backend_api.ListInvitationsQueryParamStatus.PENDING)
 
 if res is not None:
-    while True:
-        # handle items
-
-        res = res.Next()
-        if res is None:
-            break
-
+    # handle response
+    pass
 
 ```
 
@@ -97,7 +96,7 @@ if res is not None:
 
 ### Response
 
-**[models.ListInvitationsResponse](../../models/listinvitationsresponse.md)**
+**[List[models.Invitation]](../../models/.md)**
 
 ### Errors
 
@@ -106,7 +105,7 @@ if res is not None:
 | models.SDKError | 4xx-5xx         | */*             |
 
 
-## revoke
+## revoke_invitation
 
 Revokes the given invitation.
 Revoking an invitation will prevent the user from using the invitation link that was sent to them.
@@ -123,7 +122,7 @@ s = Clerk(
 )
 
 
-res = s.invitations.revoke(invitation_id="inv_123")
+res = s.invitations.revoke_invitation(invitation_id="inv_123")
 
 if res is not None:
     # handle response

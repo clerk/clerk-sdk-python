@@ -3,12 +3,15 @@
 
 ## Overview
 
+Allow your users to sign in on behalf of other users.
+<https://clerk.com/docs/authentication/user-impersonation#actor-tokens>
+
 ### Available Operations
 
-* [create](#create) - Create actor token
-* [revoke](#revoke) - Revoke actor token
+* [create_actor_token](#create_actor_token) - Create actor token
+* [revoke_actor_token](#revoke_actor_token) - Revoke actor token
 
-## create
+## create_actor_token
 
 Create an actor token that can be used to impersonate the given user.
 The `actor` parameter needs to include at least a "sub" key whose value is the ID of the actor (impersonating) user.
@@ -23,11 +26,9 @@ s = Clerk(
 )
 
 
-res = s.actor_tokens.create(request={
+res = s.actor_tokens.create_actor_token(request={
     "user_id": "user_1a2b3c",
-    "actor": {
-        "sub": "user_2OEpKhcCN1Lat9NQ0G6puh7q5Rb",
-    },
+    "actor": {},
     "expires_in_seconds": 3600,
     "session_max_duration_in_seconds": 1800,
 })
@@ -57,7 +58,7 @@ if res is not None:
 | models.SDKError    | 4xx-5xx            | */*                |
 
 
-## revoke
+## revoke_actor_token
 
 Revokes a pending actor token.
 
@@ -71,7 +72,7 @@ s = Clerk(
 )
 
 
-res = s.actor_tokens.revoke(actor_token_id="act_tok_abcdefghijk")
+res = s.actor_tokens.revoke_actor_token(actor_token_id="act_tok_abcdefghijk")
 
 if res is not None:
     # handle response

@@ -39,6 +39,7 @@ class OrganizationInvitationTypedDict(TypedDict):
     """
     email_address: NotRequired[str]
     role: NotRequired[str]
+    role_name: NotRequired[str]
     organization_id: NotRequired[str]
     status: NotRequired[str]
     public_metadata: NotRequired[OrganizationInvitationPublicMetadataTypedDict]
@@ -59,6 +60,7 @@ class OrganizationInvitation(BaseModel):
     """
     email_address: Optional[str] = None
     role: Optional[str] = None
+    role_name: Optional[str] = None
     organization_id: Optional[str] = None
     status: Optional[str] = None
     public_metadata: Optional[OrganizationInvitationPublicMetadata] = None

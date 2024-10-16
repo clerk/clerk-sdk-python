@@ -3,13 +3,16 @@
 
 ## Overview
 
+The Client object tracks sessions, as well as the state of any sign in and sign up attempts, for a given device.
+<https://clerk.com/docs/reference/clerkjs/client>
+
 ### Available Operations
 
-* [~~list~~](#list) - List all clients :warning: **Deprecated**
-* [verify](#verify) - Verify a client
-* [get](#get) - Get a client
+* [~~get_client_list~~](#get_client_list) - List all clients :warning: **Deprecated**
+* [verify_client](#verify_client) - Verify a client
+* [get_client](#get_client) - Get a client
 
-## ~~list~~
+## ~~get_client_list~~
 
 Returns a list of all clients. The clients are returned sorted by creation date,
 with the newest clients appearing first.
@@ -27,16 +30,11 @@ s = Clerk(
 )
 
 
-res = s.clients.list(limit=20, offset=10)
+res = s.clients.get_client_list(limit=20, offset=10)
 
 if res is not None:
-    while True:
-        # handle items
-
-        res = res.Next()
-        if res is None:
-            break
-
+    # handle response
+    pass
 
 ```
 
@@ -50,7 +48,7 @@ if res is not None:
 
 ### Response
 
-**[models.GetClientListResponse](../../models/getclientlistresponse.md)**
+**[List[models.Client]](../../models/.md)**
 
 ### Errors
 
@@ -60,7 +58,7 @@ if res is not None:
 | models.SDKError    | 4xx-5xx            | */*                |
 
 
-## verify
+## verify_client
 
 Verifies the client in the provided token
 
@@ -74,7 +72,7 @@ s = Clerk(
 )
 
 
-res = s.clients.verify(request={
+res = s.clients.verify_client(request={
     "token": "jwt_token_example",
 })
 
@@ -103,7 +101,7 @@ if res is not None:
 | models.SDKError    | 4xx-5xx            | */*                |
 
 
-## get
+## get_client
 
 Returns the details of a client.
 
@@ -117,7 +115,7 @@ s = Clerk(
 )
 
 
-res = s.clients.get(client_id="cli_123456789")
+res = s.clients.get_client(client_id="cli_123456789")
 
 if res is not None:
     # handle response

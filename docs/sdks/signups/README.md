@@ -5,9 +5,9 @@
 
 ### Available Operations
 
-* [update](#update) - Update a sign-up
+* [update_sign_up](#update_sign_up) - Update a sign-up
 
-## update
+## update_sign_up
 
 Update the sign-up with the given ID
 
@@ -21,8 +21,7 @@ s = Clerk(
 )
 
 
-res = s.sign_ups.update(id="signup_1234567890abcdef", request_body={
-    "custom_action": False,
+res = s.sign_ups.update_sign_up(id="signup_1234567890abcdef", request_body={
     "external_id": "ext_id_7890abcdef123456",
 })
 

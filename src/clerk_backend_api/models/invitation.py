@@ -23,6 +23,7 @@ class InvitationStatus(str, Enum):
     PENDING = "pending"
     ACCEPTED = "accepted"
     REVOKED = "revoked"
+    EXPIRED = "expired"
 
 class InvitationTypedDict(TypedDict):
     object: InvitationObject
@@ -40,6 +41,10 @@ class InvitationTypedDict(TypedDict):
     public_metadata: NotRequired[InvitationPublicMetadataTypedDict]
     revoked: NotRequired[bool]
     url: NotRequired[Nullable[str]]
+    expires_at: NotRequired[Nullable[int]]
+    r"""Unix timestamp of expiration.
+
+    """
     
 
 class Invitation(BaseModel):
@@ -58,11 +63,15 @@ class Invitation(BaseModel):
     public_metadata: Optional[InvitationPublicMetadata] = None
     revoked: Optional[bool] = None
     url: OptionalNullable[str] = UNSET
+    expires_at: OptionalNullable[int] = UNSET
+    r"""Unix timestamp of expiration.
+
+    """
     
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["public_metadata", "revoked", "url"]
-        nullable_fields = ["url"]
+        optional_fields = ["public_metadata", "revoked", "url", "expires_at"]
+        nullable_fields = ["url", "expires_at"]
         null_default_fields = []
 
         serialized = handler(self)

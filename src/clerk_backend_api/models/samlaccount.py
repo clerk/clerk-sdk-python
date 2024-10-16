@@ -160,6 +160,52 @@ SAMLAccountVerificationTypedDict = Union[TicketTypedDict, SamlTypedDict]
 SAMLAccountVerification = Union[Ticket, Saml]
 
 
+class SAMLConnectionSAMLConnectionTypedDict(TypedDict):
+    id: str
+    name: str
+    domain: str
+    active: bool
+    provider: str
+    sync_user_attributes: bool
+    created_at: int
+    r"""Unix timestamp of creation.
+
+    """
+    updated_at: int
+    r"""Unix timestamp of last update.
+
+    """
+    allow_subdomains: NotRequired[bool]
+    allow_idp_initiated: NotRequired[bool]
+    disable_additional_identifications: NotRequired[bool]
+    
+
+class SAMLConnectionSAMLConnection(BaseModel):
+    id: str
+    name: str
+    domain: str
+    active: bool
+    provider: str
+    sync_user_attributes: bool
+    created_at: int
+    r"""Unix timestamp of creation.
+
+    """
+    updated_at: int
+    r"""Unix timestamp of last update.
+
+    """
+    allow_subdomains: Optional[bool] = None
+    allow_idp_initiated: Optional[bool] = None
+    disable_additional_identifications: Optional[bool] = None
+    
+
+SamlConnectionTypedDict = SAMLConnectionSAMLConnectionTypedDict
+
+
+SamlConnection = SAMLConnectionSAMLConnection
+
+
 class SAMLAccountTypedDict(TypedDict):
     id: str
     object: SAMLAccountObject
@@ -174,6 +220,7 @@ class SAMLAccountTypedDict(TypedDict):
     last_name: NotRequired[Nullable[str]]
     provider_user_id: NotRequired[Nullable[str]]
     public_metadata: NotRequired[SAMLAccountPublicMetadataTypedDict]
+    saml_connection: NotRequired[Nullable[SamlConnectionTypedDict]]
     
 
 class SAMLAccount(BaseModel):
@@ -190,11 +237,12 @@ class SAMLAccount(BaseModel):
     last_name: OptionalNullable[str] = UNSET
     provider_user_id: OptionalNullable[str] = UNSET
     public_metadata: Optional[SAMLAccountPublicMetadata] = None
+    saml_connection: OptionalNullable[SamlConnection] = UNSET
     
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["first_name", "last_name", "provider_user_id", "public_metadata"]
-        nullable_fields = ["verification", "first_name", "last_name", "provider_user_id"]
+        optional_fields = ["first_name", "last_name", "provider_user_id", "public_metadata", "saml_connection"]
+        nullable_fields = ["verification", "first_name", "last_name", "provider_user_id", "saml_connection"]
         null_default_fields = []
 
         serialized = handler(self)

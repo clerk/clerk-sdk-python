@@ -3,11 +3,14 @@
 
 ## Overview
 
+Tokens meant for use by end-to-end test suites in requests to the Frontend API, so as to bypass bot detection measures.
+<https://clerk.com/docs/testing/overview#testing-tokens>
+
 ### Available Operations
 
-* [create](#create) - Retrieve a new testing token
+* [create_testing_token](#create_testing_token) - Retrieve a new testing token
 
-## create
+## create_testing_token
 
 Retrieve a new testing token. Only available for development instances.
 
@@ -21,7 +24,7 @@ s = Clerk(
 )
 
 
-res = s.testing_tokens.create()
+res = s.testing_tokens.create_testing_token()
 
 if res is not None:
     # handle response

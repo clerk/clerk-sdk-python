@@ -3,14 +3,17 @@
 
 ## Overview
 
+A user can be associated with one or more email addresses, which allows them to be contacted via email.
+<https://clerk.com/docs/reference/clerkjs/emailaddress>
+
 ### Available Operations
 
-* [create](#create) - Create an email address
-* [get](#get) - Retrieve an email address
-* [delete](#delete) - Delete an email address
-* [update](#update) - Update an email address
+* [create_email_address](#create_email_address) - Create an email address
+* [get_email_address](#get_email_address) - Retrieve an email address
+* [delete_email_address](#delete_email_address) - Delete an email address
+* [update_email_address](#update_email_address) - Update an email address
 
-## create
+## create_email_address
 
 Create a new email address
 
@@ -24,7 +27,7 @@ s = Clerk(
 )
 
 
-res = s.email_addresses.create(request={
+res = s.email_addresses.create_email_address(request={
     "user_id": "user_12345",
     "email_address": "example@clerk.com",
     "verified": False,
@@ -56,7 +59,7 @@ if res is not None:
 | models.SDKError     | 4xx-5xx             | */*                 |
 
 
-## get
+## get_email_address
 
 Returns the details of an email address.
 
@@ -70,7 +73,7 @@ s = Clerk(
 )
 
 
-res = s.email_addresses.get(email_address_id="email_address_id_example")
+res = s.email_addresses.get_email_address(email_address_id="email_address_id_example")
 
 if res is not None:
     # handle response
@@ -97,7 +100,7 @@ if res is not None:
 | models.SDKError    | 4xx-5xx            | */*                |
 
 
-## delete
+## delete_email_address
 
 Delete the email address with the given ID
 
@@ -111,7 +114,7 @@ s = Clerk(
 )
 
 
-res = s.email_addresses.delete(email_address_id="email_address_id_example")
+res = s.email_addresses.delete_email_address(email_address_id="email_address_id_example")
 
 if res is not None:
     # handle response
@@ -138,7 +141,7 @@ if res is not None:
 | models.SDKError    | 4xx-5xx            | */*                |
 
 
-## update
+## update_email_address
 
 Updates an email address.
 
@@ -152,7 +155,7 @@ s = Clerk(
 )
 
 
-res = s.email_addresses.update(email_address_id="email_address_id_example", request_body={
+res = s.email_addresses.update_email_address(email_address_id="email_address_id_example", request_body={
     "verified": False,
     "primary": True,
 })

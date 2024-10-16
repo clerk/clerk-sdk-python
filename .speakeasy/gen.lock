@@ -1,35 +1,32 @@
 lockVersion: 2.0.0
 id: bfe29c99-6e67-43fe-b928-64d6a5ed6aa8
 management:
-  docChecksum: fae7f7a09c243660c1f412f56e7e9e5a
+  docChecksum: a4d79062dfb0f4075e81beb5435a845b
   docVersion: v1
   speakeasyVersion: 1.385.0
   generationVersion: 2.407.2
-  releaseVersion: 0.5.0
-  configChecksum: 0f690552e0fb9523c04a7f5017e28525
+  releaseVersion: 1.0.0
+  configChecksum: 4aff20ae5943af7882208dce8eacd52d
   repoURL: https://github.com/clerk/clerk-sdk-python.git
   installationURL: https://github.com/clerk/clerk-sdk-python.git
   published: true
 features:
   python:
     additionalDependencies: 1.0.0
+    additionalProperties: 1.0.0
     constsAndDefaults: 1.0.2
     core: 5.4.2
     defaultEnabledRetries: 0.2.0
     deprecations: 3.0.0
     envVarSecurityUsage: 0.3.1
-    examples: 3.0.0
     flatRequests: 1.0.1
     flattening: 3.0.0
     globalSecurity: 3.0.2
     globalSecurityCallbacks: 1.0.0
     globalSecurityFlattening: 1.0.0
     globalServerURLs: 3.0.0
-    groups: 3.0.0
     multipartFileContentType: 1.0.0
-    nameOverrides: 3.0.0
     nullables: 1.0.0
-    pagination: 3.0.1
     responseFormat: 1.0.0
     retries: 3.0.0
     sdkHooks: 1.0.0
@@ -37,33 +34,34 @@ features:
     uploadStreams: 1.0.0
 generatedFiles:
   - src/clerk_backend_api/sdkconfiguration.py
-  - src/clerk_backend_api/misc.py
+  - src/clerk_backend_api/miscellaneous.py
   - src/clerk_backend_api/jwks.py
   - src/clerk_backend_api/clients.py
-  - src/clerk_backend_api/emailaddresses.py
-  - src/clerk_backend_api/phonenumbers.py
+  - src/clerk_backend_api/email_addresses.py
+  - src/clerk_backend_api/phone_numbers.py
   - src/clerk_backend_api/sessions.py
-  - src/clerk_backend_api/templates.py
+  - src/clerk_backend_api/email_and_sms_templates.py
   - src/clerk_backend_api/users.py
   - src/clerk_backend_api/invitations.py
-  - src/clerk_backend_api/allowlistidentifiers.py
-  - src/clerk_backend_api/blocklistidentifiers_sdk.py
-  - src/clerk_backend_api/betafeatures.py
-  - src/clerk_backend_api/actortokens.py
+  - src/clerk_backend_api/organization_invitations_sdk.py
+  - src/clerk_backend_api/allow_list_block_list.py
+  - src/clerk_backend_api/beta_features.py
+  - src/clerk_backend_api/actor_tokens.py
   - src/clerk_backend_api/domains_sdk.py
-  - src/clerk_backend_api/instancesettings_sdk.py
+  - src/clerk_backend_api/instance_settings_sdk.py
   - src/clerk_backend_api/webhooks.py
-  - src/clerk_backend_api/jwttemplates.py
+  - src/clerk_backend_api/jwt_templates.py
   - src/clerk_backend_api/organizations_sdk.py
-  - src/clerk_backend_api/organizationinvitations_sdk.py
-  - src/clerk_backend_api/organizationmemberships_sdk.py
-  - src/clerk_backend_api/proxychecks.py
-  - src/clerk_backend_api/redirecturls.py
-  - src/clerk_backend_api/signintokens.py
-  - src/clerk_backend_api/signups.py
-  - src/clerk_backend_api/oauthapplications_sdk.py
-  - src/clerk_backend_api/samlconnections_sdk.py
-  - src/clerk_backend_api/testingtokens.py
+  - src/clerk_backend_api/organization_memberships_sdk.py
+  - src/clerk_backend_api/organization_domains_sdk.py
+  - src/clerk_backend_api/organization_domain_sdk.py
+  - src/clerk_backend_api/proxy_checks.py
+  - src/clerk_backend_api/redirect_urls.py
+  - src/clerk_backend_api/sign_in_tokens.py
+  - src/clerk_backend_api/sign_ups.py
+  - src/clerk_backend_api/oauth_applications_sdk.py
+  - src/clerk_backend_api/saml_connections_sdk.py
+  - src/clerk_backend_api/testing_tokens.py
   - src/clerk_backend_api/sdk.py
   - .vscode/settings.json
   - poetry.toml
@@ -96,11 +94,12 @@ generatedFiles:
   - src/clerk_backend_api/utils/values.py
   - src/clerk_backend_api/models/sdkerror.py
   - src/clerk_backend_api/models/getpublicinterstitialop.py
-  - src/clerk_backend_api/models/getclientlistop.py
+  - src/clerk_backend_api/models/wellknown_jwks.py
   - src/clerk_backend_api/models/client.py
   - src/clerk_backend_api/models/session.py
   - src/clerk_backend_api/models/clerkerrors.py
   - src/clerk_backend_api/models/clerkerror.py
+  - src/clerk_backend_api/models/getclientlistop.py
   - src/clerk_backend_api/models/verifyclientop.py
   - src/clerk_backend_api/models/getclientop.py
   - src/clerk_backend_api/models/emailaddress.py
@@ -146,17 +145,36 @@ generatedFiles:
   - src/clerk_backend_api/models/deleteuserprofileimageop.py
   - src/clerk_backend_api/models/updateusermetadataop.py
   - src/clerk_backend_api/models/getoauthaccesstokenop.py
-  - src/clerk_backend_api/models/usersgetorganizationmembershipsop.py
   - src/clerk_backend_api/models/organizationmemberships.py
   - src/clerk_backend_api/models/organizationmembership.py
+  - src/clerk_backend_api/models/usersgetorganizationmembershipsop.py
+  - src/clerk_backend_api/models/organizationinvitationswithpublicorganizationdata.py
+  - src/clerk_backend_api/models/organizationinvitationwithpublicorganizationdata.py
+  - src/clerk_backend_api/models/usersgetorganizationinvitationsop.py
   - src/clerk_backend_api/models/verifypasswordop.py
   - src/clerk_backend_api/models/verifytotpop.py
   - src/clerk_backend_api/models/disablemfaop.py
+  - src/clerk_backend_api/models/deletebackupcodeop.py
+  - src/clerk_backend_api/models/userpasskeydeleteop.py
+  - src/clerk_backend_api/models/userweb3walletdeleteop.py
+  - src/clerk_backend_api/models/totp.py
+  - src/clerk_backend_api/models/createusertotpop.py
+  - src/clerk_backend_api/models/deletetotpop.py
+  - src/clerk_backend_api/models/deleteexternalaccountop.py
   - src/clerk_backend_api/models/invitation.py
   - src/clerk_backend_api/models/createinvitationop.py
   - src/clerk_backend_api/models/listinvitationsop.py
   - src/clerk_backend_api/models/invitation_revoked.py
   - src/clerk_backend_api/models/revokeinvitationop.py
+  - src/clerk_backend_api/models/listinstanceorganizationinvitationsop.py
+  - src/clerk_backend_api/models/organizationinvitation.py
+  - src/clerk_backend_api/models/createorganizationinvitationop.py
+  - src/clerk_backend_api/models/organizationinvitations.py
+  - src/clerk_backend_api/models/listorganizationinvitationsop.py
+  - src/clerk_backend_api/models/createorganizationinvitationbulkop.py
+  - src/clerk_backend_api/models/listpendingorganizationinvitationsop.py
+  - src/clerk_backend_api/models/getorganizationinvitationop.py
+  - src/clerk_backend_api/models/revokeorganizationinvitationop.py
   - src/clerk_backend_api/models/allowlistidentifier.py
   - src/clerk_backend_api/models/createallowlistidentifierop.py
   - src/clerk_backend_api/models/deleteallowlistidentifierop.py
@@ -199,19 +217,18 @@ generatedFiles:
   - src/clerk_backend_api/models/organizationwithlogo.py
   - src/clerk_backend_api/models/uploadorganizationlogoop.py
   - src/clerk_backend_api/models/deleteorganizationlogoop.py
-  - src/clerk_backend_api/models/organizationinvitation.py
-  - src/clerk_backend_api/models/createorganizationinvitationop.py
-  - src/clerk_backend_api/models/listorganizationinvitationsop.py
-  - src/clerk_backend_api/models/organizationinvitations.py
-  - src/clerk_backend_api/models/createorganizationinvitationbulkop.py
-  - src/clerk_backend_api/models/listpendingorganizationinvitationsop.py
-  - src/clerk_backend_api/models/getorganizationinvitationop.py
-  - src/clerk_backend_api/models/revokeorganizationinvitationop.py
   - src/clerk_backend_api/models/createorganizationmembershipop.py
   - src/clerk_backend_api/models/listorganizationmembershipsop.py
   - src/clerk_backend_api/models/updateorganizationmembershipop.py
   - src/clerk_backend_api/models/deleteorganizationmembershipop.py
   - src/clerk_backend_api/models/updateorganizationmembershipmetadataop.py
+  - src/clerk_backend_api/models/instancegetorganizationmembershipsop.py
+  - src/clerk_backend_api/models/organizationdomain.py
+  - src/clerk_backend_api/models/createorganizationdomainop.py
+  - src/clerk_backend_api/models/organizationdomains.py
+  - src/clerk_backend_api/models/listorganizationdomainsop.py
+  - src/clerk_backend_api/models/deleteorganizationdomainop.py
+  - src/clerk_backend_api/models/updateorganizationdomainop.py
   - src/clerk_backend_api/models/proxycheck.py
   - src/clerk_backend_api/models/verifydomainproxyop.py
   - src/clerk_backend_api/models/redirecturl.py
@@ -223,18 +240,18 @@ generatedFiles:
   - src/clerk_backend_api/models/revokesignintokenop.py
   - src/clerk_backend_api/models/signup.py
   - src/clerk_backend_api/models/updatesignupop.py
-  - src/clerk_backend_api/models/listoauthapplicationsop.py
   - src/clerk_backend_api/models/oauthapplications.py
   - src/clerk_backend_api/models/oauthapplication.py
+  - src/clerk_backend_api/models/listoauthapplicationsop.py
   - src/clerk_backend_api/models/oauthapplicationwithsecret.py
   - src/clerk_backend_api/models/createoauthapplicationop.py
   - src/clerk_backend_api/models/getoauthapplicationop.py
   - src/clerk_backend_api/models/updateoauthapplicationop.py
   - src/clerk_backend_api/models/deleteoauthapplicationop.py
   - src/clerk_backend_api/models/rotateoauthapplicationsecretop.py
-  - src/clerk_backend_api/models/listsamlconnectionsop.py
   - src/clerk_backend_api/models/samlconnections.py
-  - src/clerk_backend_api/models/samlconnection.py
+  - src/clerk_backend_api/models/schemas_samlconnection.py
+  - src/clerk_backend_api/models/listsamlconnectionsop.py
   - src/clerk_backend_api/models/createsamlconnectionop.py
   - src/clerk_backend_api/models/getsamlconnectionop.py
   - src/clerk_backend_api/models/updatesamlconnectionop.py
@@ -243,18 +260,20 @@ generatedFiles:
   - src/clerk_backend_api/models/security.py
   - src/clerk_backend_api/models/__init__.py
   - docs/models/getpublicinterstitialrequest.md
-  - docs/models/getclientlistrequest.md
-  - docs/models/getclientlistresponse.md
+  - docs/models/keys.md
+  - docs/models/wellknownjwks.md
   - docs/models/object.md
   - docs/models/client.md
   - docs/models/sessionobject.md
   - docs/models/actor.md
   - docs/models/status.md
+  - docs/models/latestactivity.md
   - docs/models/session.md
   - docs/models/clerkerrorsmeta.md
   - docs/models/clerkerrors.md
   - docs/models/meta.md
   - docs/models/clerkerror.md
+  - docs/models/getclientlistrequest.md
   - docs/models/verifyclientrequestbody.md
   - docs/models/getclientrequest.md
   - docs/models/emailaddressobject.md
@@ -338,11 +357,13 @@ generatedFiles:
   - docs/models/verificationerror.md
   - docs/models/saml.md
   - docs/models/samlaccountverification.md
+  - docs/models/samlconnectionsamlconnection.md
+  - docs/models/samlconnection.md
   - docs/models/samlaccount.md
   - docs/models/schemaspasskeyobject.md
   - docs/models/passkeyverificationstatus.md
   - docs/models/passkeyverificationstrategy.md
-  - docs/models/verificationnonce.md
+  - docs/models/nonce.md
   - docs/models/passkey.md
   - docs/models/schemaspasskeyverification.md
   - docs/models/schemaspasskey.md
@@ -352,12 +373,10 @@ generatedFiles:
   - docs/models/web3walletverificationadmin.md
   - docs/models/web3signatureverificationstatus.md
   - docs/models/web3signatureverificationstrategy.md
-  - docs/models/nonce.md
   - docs/models/web3signature.md
   - docs/models/web3walletverification.md
   - docs/models/web3wallet.md
   - docs/models/getuserlistrequest.md
-  - docs/models/passwordhasher.md
   - docs/models/createuserpublicmetadata.md
   - docs/models/createuserprivatemetadata.md
   - docs/models/createuserunsafemetadata.md
@@ -366,7 +385,6 @@ generatedFiles:
   - docs/models/totalcount.md
   - docs/models/getuserscountrequest.md
   - docs/models/getuserrequest.md
-  - docs/models/updateuserpasswordhasher.md
   - docs/models/updateuserpublicmetadata.md
   - docs/models/updateuserprivatemetadata.md
   - docs/models/updateuserunsafemetadata.md
@@ -381,15 +399,11 @@ generatedFiles:
   - docs/models/setuserprofileimagerequestbody.md
   - docs/models/setuserprofileimagerequest.md
   - docs/models/deleteuserprofileimagerequest.md
-  - docs/models/updateusermetadataprivatemetadata.md
-  - docs/models/updateusermetadataunsafemetadata.md
   - docs/models/updateusermetadatarequestbody.md
   - docs/models/updateusermetadatarequest.md
   - docs/models/getoauthaccesstokenrequest.md
   - docs/models/getoauthaccesstokenpublicmetadata.md
   - docs/models/responsebody.md
-  - docs/models/usersgetorganizationmembershipsrequest.md
-  - docs/models/usersgetorganizationmembershipsresponse.md
   - docs/models/organizationmemberships.md
   - docs/models/organizationmembershipobject.md
   - docs/models/organizationmembershippublicmetadata.md
@@ -400,6 +414,15 @@ generatedFiles:
   - docs/models/organizationmembershiporganization.md
   - docs/models/publicuserdata.md
   - docs/models/organizationmembership.md
+  - docs/models/usersgetorganizationmembershipsrequest.md
+  - docs/models/organizationinvitationswithpublicorganizationdata.md
+  - docs/models/organizationinvitationwithpublicorganizationdataobject.md
+  - docs/models/organizationinvitationwithpublicorganizationdatapublicmetadata.md
+  - docs/models/organizationinvitationwithpublicorganizationdataprivatemetadata.md
+  - docs/models/publicorganizationdata.md
+  - docs/models/organizationinvitationwithpublicorganizationdata.md
+  - docs/models/usersgetorganizationinvitationsqueryparamstatus.md
+  - docs/models/usersgetorganizationinvitationsrequest.md
   - docs/models/verifypasswordrequestbody.md
   - docs/models/verifypasswordrequest.md
   - docs/models/verifypasswordresponsebody.md
@@ -409,6 +432,15 @@ generatedFiles:
   - docs/models/verifytotpresponsebody.md
   - docs/models/disablemfarequest.md
   - docs/models/disablemfaresponsebody.md
+  - docs/models/deletebackupcoderequest.md
+  - docs/models/deletebackupcoderesponsebody.md
+  - docs/models/userpasskeydeleterequest.md
+  - docs/models/userweb3walletdeleterequest.md
+  - docs/models/totp.md
+  - docs/models/createusertotprequest.md
+  - docs/models/deletetotprequest.md
+  - docs/models/deletetotpresponsebody.md
+  - docs/models/deleteexternalaccountrequest.md
   - docs/models/invitationobject.md
   - docs/models/invitationpublicmetadata.md
   - docs/models/invitationstatus.md
@@ -417,12 +449,32 @@ generatedFiles:
   - docs/models/createinvitationrequestbody.md
   - docs/models/listinvitationsqueryparamstatus.md
   - docs/models/listinvitationsrequest.md
-  - docs/models/listinvitationsresponse.md
   - docs/models/invitationrevokedobject.md
   - docs/models/invitationrevokedpublicmetadata.md
   - docs/models/invitationrevokedstatus.md
   - docs/models/invitationrevoked.md
   - docs/models/revokeinvitationrequest.md
+  - docs/models/listinstanceorganizationinvitationsqueryparamstatus.md
+  - docs/models/listinstanceorganizationinvitationsrequest.md
+  - docs/models/organizationinvitationobject.md
+  - docs/models/organizationinvitationpublicmetadata.md
+  - docs/models/organizationinvitationprivatemetadata.md
+  - docs/models/organizationinvitation.md
+  - docs/models/createorganizationinvitationpublicmetadata.md
+  - docs/models/createorganizationinvitationprivatemetadata.md
+  - docs/models/createorganizationinvitationrequestbody.md
+  - docs/models/createorganizationinvitationrequest.md
+  - docs/models/organizationinvitations.md
+  - docs/models/listorganizationinvitationsqueryparamstatus.md
+  - docs/models/listorganizationinvitationsrequest.md
+  - docs/models/createorganizationinvitationbulkpublicmetadata.md
+  - docs/models/createorganizationinvitationbulkprivatemetadata.md
+  - docs/models/requestbody.md
+  - docs/models/createorganizationinvitationbulkrequest.md
+  - docs/models/listpendingorganizationinvitationsrequest.md
+  - docs/models/getorganizationinvitationrequest.md
+  - docs/models/revokeorganizationinvitationrequestbody.md
+  - docs/models/revokeorganizationinvitationrequest.md
   - docs/models/allowlistidentifierobject.md
   - docs/models/identifiertype.md
   - docs/models/allowlistidentifier.md
@@ -443,6 +495,7 @@ generatedFiles:
   - docs/models/actortokenstatus.md
   - docs/models/actortokenactor.md
   - docs/models/actortoken.md
+  - docs/models/createactortokenactor.md
   - docs/models/createactortokenrequestbody.md
   - docs/models/revokeactortokenrequest.md
   - docs/models/domains.md
@@ -499,31 +552,9 @@ generatedFiles:
   - docs/models/uploadorganizationlogorequestbody.md
   - docs/models/uploadorganizationlogorequest.md
   - docs/models/deleteorganizationlogorequest.md
-  - docs/models/organizationinvitationobject.md
-  - docs/models/organizationinvitationpublicmetadata.md
-  - docs/models/organizationinvitationprivatemetadata.md
-  - docs/models/organizationinvitation.md
-  - docs/models/createorganizationinvitationpublicmetadata.md
-  - docs/models/createorganizationinvitationprivatemetadata.md
-  - docs/models/createorganizationinvitationrequestbody.md
-  - docs/models/createorganizationinvitationrequest.md
-  - docs/models/listorganizationinvitationsqueryparamstatus.md
-  - docs/models/listorganizationinvitationsrequest.md
-  - docs/models/listorganizationinvitationsresponse.md
-  - docs/models/organizationinvitations.md
-  - docs/models/createorganizationinvitationbulkpublicmetadata.md
-  - docs/models/createorganizationinvitationbulkprivatemetadata.md
-  - docs/models/requestbody.md
-  - docs/models/createorganizationinvitationbulkrequest.md
-  - docs/models/listpendingorganizationinvitationsrequest.md
-  - docs/models/listpendingorganizationinvitationsresponse.md
-  - docs/models/getorganizationinvitationrequest.md
-  - docs/models/revokeorganizationinvitationrequestbody.md
-  - docs/models/revokeorganizationinvitationrequest.md
   - docs/models/createorganizationmembershiprequestbody.md
   - docs/models/createorganizationmembershiprequest.md
   - docs/models/listorganizationmembershipsrequest.md
-  - docs/models/listorganizationmembershipsresponse.md
   - docs/models/updateorganizationmembershiprequestbody.md
   - docs/models/updateorganizationmembershiprequest.md
   - docs/models/deleteorganizationmembershiprequest.md
@@ -531,6 +562,19 @@ generatedFiles:
   - docs/models/updateorganizationmembershipmetadataprivatemetadata.md
   - docs/models/updateorganizationmembershipmetadatarequestbody.md
   - docs/models/updateorganizationmembershipmetadatarequest.md
+  - docs/models/instancegetorganizationmembershipsrequest.md
+  - docs/models/organizationdomainobject.md
+  - docs/models/enrollmentmode.md
+  - docs/models/organizationdomainstatus.md
+  - docs/models/organizationdomainverification.md
+  - docs/models/organizationdomain.md
+  - docs/models/createorganizationdomainrequestbody.md
+  - docs/models/createorganizationdomainrequest.md
+  - docs/models/organizationdomains.md
+  - docs/models/listorganizationdomainsrequest.md
+  - docs/models/deleteorganizationdomainrequest.md
+  - docs/models/updateorganizationdomainrequestbody.md
+  - docs/models/updateorganizationdomainrequest.md
   - docs/models/proxycheckobject.md
   - docs/models/proxycheck.md
   - docs/models/verifydomainproxyrequestbody.md
@@ -553,11 +597,10 @@ generatedFiles:
   - docs/models/signup.md
   - docs/models/updatesignuprequestbody.md
   - docs/models/updatesignuprequest.md
-  - docs/models/listoauthapplicationsrequest.md
-  - docs/models/listoauthapplicationsresponse.md
   - docs/models/oauthapplications.md
   - docs/models/oauthapplicationobject.md
   - docs/models/oauthapplication.md
+  - docs/models/listoauthapplicationsrequest.md
   - docs/models/oauthapplicationwithsecretobject.md
   - docs/models/oauthapplicationwithsecret.md
   - docs/models/createoauthapplicationrequestbody.md
@@ -566,12 +609,11 @@ generatedFiles:
   - docs/models/updateoauthapplicationrequest.md
   - docs/models/deleteoauthapplicationrequest.md
   - docs/models/rotateoauthapplicationsecretrequest.md
-  - docs/models/listsamlconnectionsrequest.md
-  - docs/models/listsamlconnectionsresponse.md
   - docs/models/samlconnections.md
-  - docs/models/samlconnectionobject.md
+  - docs/models/schemassamlconnectionobject.md
   - docs/models/attributemapping.md
-  - docs/models/samlconnection.md
+  - docs/models/schemassamlconnection.md
+  - docs/models/listsamlconnectionsrequest.md
   - docs/models/provider.md
   - docs/models/createsamlconnectionattributemapping.md
   - docs/models/createsamlconnectionrequestbody.md
@@ -585,17 +627,17 @@ generatedFiles:
   - docs/models/security.md
   - docs/sdks/clerk/README.md
   - docs/models/utils/retryconfig.md
-  - docs/sdks/misc/README.md
+  - docs/sdks/miscellaneous/README.md
   - docs/sdks/jwks/README.md
   - docs/sdks/clients/README.md
   - docs/sdks/emailaddresses/README.md
   - docs/sdks/phonenumbers/README.md
   - docs/sdks/sessions/README.md
-  - docs/sdks/templates/README.md
+  - docs/sdks/emailandsmstemplates/README.md
   - docs/sdks/users/README.md
   - docs/sdks/invitations/README.md
-  - docs/sdks/allowlistidentifiers/README.md
-  - docs/sdks/blocklistidentifierssdk/README.md
+  - docs/sdks/organizationinvitationssdk/README.md
+  - docs/sdks/allowlistblocklist/README.md
   - docs/sdks/betafeatures/README.md
   - docs/sdks/actortokens/README.md
   - docs/sdks/domainssdk/README.md
@@ -603,8 +645,9 @@ generatedFiles:
   - docs/sdks/webhooks/README.md
   - docs/sdks/jwttemplates/README.md
   - docs/sdks/organizationssdk/README.md
-  - docs/sdks/organizationinvitationssdk/README.md
   - docs/sdks/organizationmembershipssdk/README.md
+  - docs/sdks/organizationdomainssdk/README.md
+  - docs/sdks/organizationdomainsdk/README.md
   - docs/sdks/proxychecks/README.md
   - docs/sdks/redirecturls/README.md
   - docs/sdks/signintokens/README.md

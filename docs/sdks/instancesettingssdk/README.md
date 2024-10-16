@@ -3,13 +3,15 @@
 
 ## Overview
 
+Modify the settings of your instance.
+
 ### Available Operations
 
-* [update](#update) - Update instance settings
-* [update_restrictions](#update_restrictions) - Update instance restrictions
-* [update_organization_settings](#update_organization_settings) - Update instance organization settings
+* [update_instance](#update_instance) - Update instance settings
+* [update_instance_restrictions](#update_instance_restrictions) - Update instance restrictions
+* [update_instance_organization_settings](#update_instance_organization_settings) - Update instance organization settings
 
-## update
+## update_instance
 
 Updates the settings of an instance
 
@@ -23,7 +25,7 @@ s = Clerk(
 )
 
 
-s.instance_settings.update(request={
+s.instance_settings.update_instance(request={
     "test_mode": True,
     "hibp": False,
     "enhanced_email_deliverability": True,
@@ -57,7 +59,7 @@ s.instance_settings.update(request={
 | models.SDKError    | 4xx-5xx            | */*                |
 
 
-## update_restrictions
+## update_instance_restrictions
 
 Updates the restriction settings of an instance
 
@@ -71,7 +73,7 @@ s = Clerk(
 )
 
 
-res = s.instance_settings.update_restrictions(request={
+res = s.instance_settings.update_instance_restrictions(request={
     "allowlist": False,
     "blocklist": True,
     "block_email_subaddresses": True,
@@ -104,7 +106,7 @@ if res is not None:
 | models.SDKError    | 4xx-5xx            | */*                |
 
 
-## update_organization_settings
+## update_instance_organization_settings
 
 Updates the organization settings of the instance
 
@@ -118,7 +120,7 @@ s = Clerk(
 )
 
 
-res = s.instance_settings.update_organization_settings(request={
+res = s.instance_settings.update_instance_organization_settings(request={
     "enabled": True,
     "max_allowed_memberships": 10,
     "admin_delete_enabled": False,

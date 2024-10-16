@@ -2,8 +2,8 @@ speakeasyVersion: 1.385.0
 sources:
     clerk-openapi:
         sourceNamespace: clerk-openapi
-        sourceRevisionDigest: sha256:6119b87229a597625b72db9000ea183ae53c14abf71976f5198f9f384cebc415
-        sourceBlobDigest: sha256:18aae668583e7fea915d4b01912c8f93532ed71703e5d485052a39dffc0e7e1c
+        sourceRevisionDigest: sha256:073575a86d0099dbcd3c752aaf957e04d4d97b2ef2f7801c1be20242c7950e8e
+        sourceBlobDigest: sha256:077bcd513c32fd0ff9a2abd89b86af0094b746511ed6a4e26bc6a00429c1072b
         tags:
             - latest
             - main
@@ -11,8 +11,8 @@ targets:
     clerk-sdk-python:
         source: clerk-openapi
         sourceNamespace: clerk-openapi
-        sourceRevisionDigest: sha256:6119b87229a597625b72db9000ea183ae53c14abf71976f5198f9f384cebc415
-        sourceBlobDigest: sha256:18aae668583e7fea915d4b01912c8f93532ed71703e5d485052a39dffc0e7e1c
+        sourceRevisionDigest: sha256:073575a86d0099dbcd3c752aaf957e04d4d97b2ef2f7801c1be20242c7950e8e
+        sourceBlobDigest: sha256:077bcd513c32fd0ff9a2abd89b86af0094b746511ed6a4e26bc6a00429c1072b
         outLocation: .
 workflow:
     workflowVersion: 1.0.0
@@ -20,7 +20,7 @@ workflow:
     sources:
         clerk-openapi:
             inputs:
-                - location: openapi.yaml
+                - location: https://raw.githubusercontent.com/clerk/openapi-specs/refs/heads/main/bapi/2021-02-05.yml
             overlays:
                 - location: ./fixes.yaml
                 - location: ./examples.yaml

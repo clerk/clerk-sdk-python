@@ -1,16 +1,19 @@
-# RedirectUrls
-(*redirect_urls*)
+# RedirectURLs
+(*redirect_ur_ls*)
 
 ## Overview
 
+Redirect URLs are whitelisted URLs that facilitate secure authentication flows in native applications (e.g. React Native, Expo).
+In these contexts, Clerk ensures that security-critical nonces are passed only to the whitelisted URLs.
+
 ### Available Operations
 
-* [list](#list) - List all redirect URLs
-* [create](#create) - Create a redirect URL
-* [get](#get) - Retrieve a redirect URL
-* [delete](#delete) - Delete a redirect URL
+* [list_redirect_ur_ls](#list_redirect_ur_ls) - List all redirect URLs
+* [create_redirect_url](#create_redirect_url) - Create a redirect URL
+* [get_redirect_url](#get_redirect_url) - Retrieve a redirect URL
+* [delete_redirect_url](#delete_redirect_url) - Delete a redirect URL
 
-## list
+## list_redirect_ur_ls
 
 Lists all whitelisted redirect_urls for the instance
 
@@ -24,7 +27,7 @@ s = Clerk(
 )
 
 
-res = s.redirect_urls.list()
+res = s.redirect_ur_ls.list_redirect_ur_ls()
 
 if res is not None:
     # handle response
@@ -49,7 +52,7 @@ if res is not None:
 | models.SDKError | 4xx-5xx         | */*             |
 
 
-## create
+## create_redirect_url
 
 Create a redirect URL
 
@@ -63,7 +66,7 @@ s = Clerk(
 )
 
 
-res = s.redirect_urls.create(request={
+res = s.redirect_ur_ls.create_redirect_url(request={
     "url": "https://my-app.com/oauth-callback",
 })
 
@@ -92,7 +95,7 @@ if res is not None:
 | models.SDKError    | 4xx-5xx            | */*                |
 
 
-## get
+## get_redirect_url
 
 Retrieve the details of the redirect URL with the given ID
 
@@ -106,7 +109,7 @@ s = Clerk(
 )
 
 
-res = s.redirect_urls.get(id="redir_01FG4K9G5NWSQ4ZPT4TQE4Z7G3")
+res = s.redirect_ur_ls.get_redirect_url(id="redir_01FG4K9G5NWSQ4ZPT4TQE4Z7G3")
 
 if res is not None:
     # handle response
@@ -133,7 +136,7 @@ if res is not None:
 | models.SDKError    | 4xx-5xx            | */*                |
 
 
-## delete
+## delete_redirect_url
 
 Remove the selected redirect URL from the whitelist of the instance
 
@@ -147,7 +150,7 @@ s = Clerk(
 )
 
 
-res = s.redirect_urls.delete(id="redir_01FG4K9G5NWSQ4ZPT4TQE4Z7G3")
+res = s.redirect_ur_ls.delete_redirect_url(id="redir_01FG4K9G5NWSQ4ZPT4TQE4Z7G3")
 
 if res is not None:
     # handle response
