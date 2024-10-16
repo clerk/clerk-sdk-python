@@ -1,0 +1,875 @@
+overlay: 1.0.0
+info:
+  title: Speakeasy Suggestions - Clerk Backend API
+  version: 0.0.1
+actions:
+  - target: $["paths"]["/sign_in_tokens/{sign_in_token_id}/revoke"]["post"]
+    update:
+      x-speakeasy-group: signInTokens
+      x-speakeasy-name-override: revoke
+    x-speakeasy-metadata:
+      after: sdk.signInTokens.revoke()
+      before: sdk.Sign-in Tokens.RevokeSignInToken()
+      type: method-name
+  - target: $["paths"]["/users/{user_id}/web3_wallets/{web3_wallet_identification_id}"]["delete"]
+    update:
+      x-speakeasy-name-override: deleteWeb3Wallet
+    x-speakeasy-metadata:
+      after: sdk.users.deleteWeb3Wallet()
+      before: sdk.Users.UserWeb3WalletDelete()
+      type: method-name
+  - target: $["paths"]["/email_addresses/{email_address_id}"]["patch"]
+    update:
+      x-speakeasy-group: emailAddresses
+      x-speakeasy-name-override: update
+    x-speakeasy-metadata:
+      after: sdk.emailAddresses.update()
+      before: sdk.Email Addresses.UpdateEmailAddress()
+      type: method-name
+  - target: $["paths"]["/saml_connections/{saml_connection_id}"]["delete"]
+    update:
+      x-speakeasy-group: samlConnections
+      x-speakeasy-name-override: delete
+    x-speakeasy-metadata:
+      after: sdk.samlConnections.delete()
+      before: sdk.SAML Connections.DeleteSAMLConnection()
+      type: method-name
+  - target: $["paths"]["/jwks"]["get"]
+    update:
+      x-speakeasy-group: jwks
+      x-speakeasy-name-override: get
+    x-speakeasy-metadata:
+      after: sdk.jwks.get()
+      before: sdk.JWKS.GetJWKS()
+      type: method-name
+  - target: $["paths"]["/users/{user_id}"]["patch"]
+    update:
+      x-speakeasy-name-override: update
+    x-speakeasy-metadata:
+      after: sdk.users.update()
+      before: sdk.Users.UpdateUser()
+      type: method-name
+  - target: $["paths"]["/organizations/{organization_id}/invitations/pending"]["get"]
+    update:
+      x-speakeasy-group: organizationInvitations
+      x-speakeasy-name-override: listPending
+    x-speakeasy-metadata:
+      after: sdk.organizationInvitations.listPending()
+      before: sdk.Organization Invitations.ListPendingOrganizationInvitations()
+      type: method-name
+  - target: $["paths"]["/allowlist_identifiers"]["post"]
+    update:
+      x-speakeasy-group: allowlistBlocklist
+    x-speakeasy-metadata:
+      after: sdk.allowlistBlocklist.createAllowlistIdentifier()
+      before: sdk.Allow-list / Block-list.CreateAllowlistIdentifier()
+      type: method-name
+  - target: $["paths"]["/sessions/{session_id}"]["get"]
+    update:
+      x-speakeasy-name-override: get
+    x-speakeasy-metadata:
+      after: sdk.sessions.get()
+      before: sdk.Sessions.GetSession()
+      type: method-name
+  - target: $["paths"]["/redirect_urls/{id}"]["get"]
+    update:
+      x-speakeasy-group: redirectUrls
+      x-speakeasy-name-override: get
+    x-speakeasy-metadata:
+      after: sdk.redirectUrls.get()
+      before: sdk.Redirect URLs.GetRedirectURL()
+      type: method-name
+  - target: $["paths"]["/users/{user_id}/unlock"]["post"]
+    update:
+      x-speakeasy-name-override: unlock
+    x-speakeasy-metadata:
+      after: sdk.users.unlock()
+      before: sdk.Users.UnlockUser()
+      type: method-name
+  - target: $["paths"]["/invitations/{invitation_id}/revoke"]["post"]
+    update:
+      x-speakeasy-name-override: revoke
+    x-speakeasy-metadata:
+      after: sdk.invitations.revoke()
+      before: sdk.Invitations.RevokeInvitation()
+      type: method-name
+  - target: $["paths"]["/clients"]["get"]
+    update:
+      x-speakeasy-name-override: list
+    x-speakeasy-metadata:
+      after: sdk.clients.list()
+      before: sdk.Clients.GetClientList()
+      type: method-name
+  - target: $["paths"]["/organizations/{organization_id}/invitations/{invitation_id}/revoke"]["post"]
+    update:
+      x-speakeasy-group: organizationInvitations
+      x-speakeasy-name-override: revoke
+    x-speakeasy-metadata:
+      after: sdk.organizationInvitations.revoke()
+      before: sdk.Organization Invitations.RevokeOrganizationInvitation()
+      type: method-name
+  - target: $["paths"]["/invitations"]["get"]
+    update:
+      x-speakeasy-name-override: list
+    x-speakeasy-metadata:
+      after: sdk.invitations.list()
+      before: sdk.Invitations.ListInvitations()
+      type: method-name
+  - target: $["paths"]["/oauth_applications/{oauth_application_id}"]["patch"]
+    update:
+      x-speakeasy-group: oauthApplications
+      x-speakeasy-name-override: update
+    x-speakeasy-metadata:
+      after: sdk.oauthApplications.update()
+      before: sdk.OAuth Applications.UpdateOAuthApplication()
+      type: method-name
+  - target: $["paths"]["/oauth_applications/{oauth_application_id}"]["get"]
+    update:
+      x-speakeasy-group: oauthApplications
+      x-speakeasy-name-override: get
+    x-speakeasy-metadata:
+      after: sdk.oauthApplications.get()
+      before: sdk.OAuth Applications.GetOAuthApplication()
+      type: method-name
+  - target: $["paths"]["/users/{user_id}/lock"]["post"]
+    update:
+      x-speakeasy-name-override: lock
+    x-speakeasy-metadata:
+      after: sdk.users.lock()
+      before: sdk.Users.LockUser()
+      type: method-name
+  - target: $["paths"]["/saml_connections/{saml_connection_id}"]["get"]
+    update:
+      x-speakeasy-group: samlConnections
+      x-speakeasy-name-override: get
+    x-speakeasy-metadata:
+      after: sdk.samlConnections.get()
+      before: sdk.SAML Connections.GetSAMLConnection()
+      type: method-name
+  - target: $["paths"]["/beta_features/domain"]["put"]
+    update:
+      x-speakeasy-group: betaFeatures
+      x-speakeasy-name-override: updateDomain
+    x-speakeasy-metadata:
+      after: sdk.betaFeatures.updateDomain()
+      before: sdk.Beta Features.UpdateProductionInstanceDomain()
+      type: method-name
+  - target: $["paths"]["/organizations/{organization_id}/metadata"]["patch"]
+    update:
+      x-speakeasy-name-override: mergeMetadata
+    x-speakeasy-metadata:
+      after: sdk.organizations.mergeMetadata()
+      before: sdk.Organizations.MergeOrganizationMetadata()
+      type: method-name
+  - target: $["paths"]["/users/{user_id}/totp"]["delete"]
+    update:
+      x-speakeasy-name-override: deleteTotp
+    x-speakeasy-metadata:
+      after: sdk.users.deleteTotp()
+      before: sdk.Users.DeleteTOTP()
+      type: method-name
+  - target: $["paths"]["/allowlist_identifiers"]["get"]
+    update:
+      x-speakeasy-group: allowlistBlocklist
+    x-speakeasy-metadata:
+      after: sdk.allowlistBlocklist.listAllowlistIdentifiers()
+      before: sdk.Allow-list / Block-list.ListAllowlistIdentifiers()
+      type: method-name
+  - target: $["paths"]["/sign_in_tokens"]["post"]
+    update:
+      x-speakeasy-group: signInTokens
+      x-speakeasy-name-override: create
+    x-speakeasy-metadata:
+      after: sdk.signInTokens.create()
+      before: sdk.Sign-in Tokens.CreateSignInToken()
+      type: method-name
+  - target: $["paths"]["/phone_numbers/{phone_number_id}"]["patch"]
+    update:
+      x-speakeasy-group: phoneNumbers
+      x-speakeasy-name-override: update
+    x-speakeasy-metadata:
+      after: sdk.phoneNumbers.update()
+      before: sdk.Phone Numbers.UpdatePhoneNumber()
+      type: method-name
+  - target: $["paths"]["/beta_features/instance_settings"]["patch"]
+    update:
+      x-speakeasy-group: betaFeatures
+      x-speakeasy-name-override: updateInstanceSettings
+    x-speakeasy-metadata:
+      after: sdk.betaFeatures.updateInstanceSettings()
+      before: sdk.Beta Features.UpdateInstanceAuthConfig()
+      type: method-name
+  - target: $["paths"]["/organizations/{organization_id}"]["delete"]
+    update:
+      x-speakeasy-name-override: delete
+    x-speakeasy-metadata:
+      after: sdk.organizations.delete()
+      before: sdk.Organizations.DeleteOrganization()
+      type: method-name
+  - target: $["paths"]["/organizations/{organization_id}/memberships/{user_id}/metadata"]["patch"]
+    update:
+      x-speakeasy-group: organizationMemberships
+      x-speakeasy-name-override: updateMetadata
+    x-speakeasy-metadata:
+      after: sdk.organizationMemberships.updateMetadata()
+      before: sdk.Organization Memberships.UpdateOrganizationMembershipMetadata()
+      type: method-name
+  - target: $["paths"]["/proxy_checks"]["post"]
+    update:
+      x-speakeasy-group: proxyChecks
+      x-speakeasy-name-override: verify
+    x-speakeasy-metadata:
+      after: sdk.proxyChecks.verify()
+      before: sdk.Proxy checks.VerifyDomainProxy()
+      type: method-name
+  - target: $["paths"]["/organizations/{organization_id}/domains/{domain_id}"]["patch"]
+    update:
+      x-speakeasy-group: organizationDomain
+      x-speakeasy-name-override: update
+    x-speakeasy-metadata:
+      after: sdk.organizationDomain.update()
+      before: sdk.Organization Domain.UpdateOrganizationDomain()
+      type: method-name
+  - target: $["paths"]["/sign_ups/{id}"]["patch"]
+    update:
+      x-speakeasy-group: signUps
+      x-speakeasy-name-override: update
+    x-speakeasy-metadata:
+      after: sdk.signUps.update()
+      before: sdk.Sign-ups.UpdateSignUp()
+      type: method-name
+  - target: $["paths"]["/jwt_templates/{template_id}"]["get"]
+    update:
+      x-speakeasy-group: jwtTemplates
+      x-speakeasy-name-override: get
+    x-speakeasy-metadata:
+      after: sdk.jwtTemplates.get()
+      before: sdk.JWT Templates.GetJWTTemplate()
+      type: method-name
+  - target: $["paths"]["/phone_numbers"]["post"]
+    update:
+      x-speakeasy-group: phoneNumbers
+      x-speakeasy-name-override: create
+    x-speakeasy-metadata:
+      after: sdk.phoneNumbers.create()
+      before: sdk.Phone Numbers.CreatePhoneNumber()
+      type: method-name
+  - target: $["paths"]["/actor_tokens/{actor_token_id}/revoke"]["post"]
+    update:
+      x-speakeasy-name-override: revoke
+      x-speakeasy-group: actorTokens
+    x-speakeasy-metadata:
+      after: sdk.actorTokens.revoke()
+      before: sdk.Actor Tokens.RevokeActorToken()
+      type: method-name
+  - target: $["paths"]["/organizations/{organization_id}/memberships"]["get"]
+    update:
+      x-speakeasy-group: organizationMemberships
+      x-speakeasy-name-override: list
+    x-speakeasy-metadata:
+      after: sdk.organizationMemberships.list()
+      before: sdk.Organization Memberships.ListOrganizationMemberships()
+      type: method-name
+  - target: $["paths"]["/users/{user_id}"]["get"]
+    update:
+      x-speakeasy-name-override: get
+    x-speakeasy-metadata:
+      after: sdk.users.get()
+      before: sdk.Users.GetUser()
+      type: method-name
+  - target: $["paths"]["/sessions/{session_id}/verify"]["post"]
+    update:
+      x-speakeasy-name-override: verify
+    x-speakeasy-metadata:
+      after: sdk.sessions.verify()
+      before: sdk.Sessions.VerifySession()
+      type: method-name
+  - target: $["paths"]["/organization_invitations"]["get"]
+    update:
+      x-speakeasy-group: organizationInvitations
+      x-speakeasy-name-override: getAll
+    x-speakeasy-metadata:
+      after: sdk.organizationInvitations.getAll()
+      before: sdk.Organization Invitations.ListInstanceOrganizationInvitations()
+      type: method-name
+  - target: $["paths"]["/oauth_applications/{oauth_application_id}"]["delete"]
+    update:
+      x-speakeasy-group: oauthApplications
+      x-speakeasy-name-override: delete
+    x-speakeasy-metadata:
+      after: sdk.oauthApplications.delete()
+      before: sdk.OAuth Applications.DeleteOAuthApplication()
+      type: method-name
+  - target: $["paths"]["/saml_connections"]["post"]
+    update:
+      x-speakeasy-group: samlConnections
+      x-speakeasy-name-override: create
+    x-speakeasy-metadata:
+      after: sdk.samlConnections.create()
+      before: sdk.SAML Connections.CreateSAMLConnection()
+      type: method-name
+  - target: $["paths"]["/sessions"]["get"]
+    update:
+      x-speakeasy-name-override: list
+    x-speakeasy-metadata:
+      after: sdk.sessions.list()
+      before: sdk.Sessions.GetSessionList()
+      type: method-name
+  - target: $["paths"]["/invitations"]["post"]
+    update:
+      x-speakeasy-name-override: create
+    x-speakeasy-metadata:
+      after: sdk.invitations.create()
+      before: sdk.Invitations.CreateInvitation()
+      type: method-name
+  - target: $["paths"]["/redirect_urls"]["get"]
+    update:
+      x-speakeasy-group: redirectURLs
+      x-speakeasy-name-override: list
+    x-speakeasy-metadata:
+      after: sdk.redirectURLs.list()
+      before: sdk.Redirect URLs.ListRedirectURLs()
+      type: method-name
+  - target: $["paths"]["/organizations/{organization_id}/domains/{domain_id}"]["delete"]
+    update:
+      x-speakeasy-group: organizationDomains
+      x-speakeasy-name-override: delete
+    x-speakeasy-metadata:
+      after: sdk.organizationDomains.delete()
+      before: sdk.Organization Domains.DeleteOrganizationDomain()
+      type: method-name
+  - target: $["paths"]["/oauth_applications"]["get"]
+    update:
+      x-speakeasy-group: oauthApplications
+      x-speakeasy-name-override: list
+    x-speakeasy-metadata:
+      after: sdk.oauthApplications.list()
+      before: sdk.OAuth Applications.ListOAuthApplications()
+      type: method-name
+  - target: $["paths"]["/domains"]["get"]
+    update:
+      x-speakeasy-name-override: list
+    x-speakeasy-metadata:
+      after: sdk.domains.list()
+      before: sdk.Domains.ListDomains()
+      type: method-name
+  - target: $["paths"]["/jwt_templates"]["get"]
+    update:
+      x-speakeasy-group: jwtTemplates
+      x-speakeasy-name-override: list
+    x-speakeasy-metadata:
+      after: sdk.jwtTemplates.list()
+      before: sdk.JWT Templates.ListJWTTemplates()
+      type: method-name
+  - target: $["paths"]["/users/{user_id}/totp"]["post"]
+    update:
+      x-speakeasy-name-override: createTOTP
+    x-speakeasy-metadata:
+      after: sdk.users.createTOTP()
+      before: sdk.Users.CreateUserTOTP()
+      type: method-name
+  - target: $["paths"]["/organizations"]["get"]
+    update:
+      x-speakeasy-name-override: list
+    x-speakeasy-metadata:
+      after: sdk.organizations.list()
+      before: sdk.Organizations.ListOrganizations()
+      type: method-name
+  - target: $["paths"]["/organizations/{organization_id}/domains"]["post"]
+    update:
+      x-speakeasy-name-override: create
+      x-speakeasy-group: organizationDomains
+    x-speakeasy-metadata:
+      after: sdk.organizationDomains.create()
+      before: sdk.Organization Domains.CreateOrganizationDomain()
+      type: method-name
+  - target: $["paths"]["/blocklist_identifiers"]["get"]
+    update:
+      x-speakeasy-name-override: list
+      x-speakeasy-group: blocklistIdentifiers
+    x-speakeasy-metadata:
+      after: sdk.blocklistIdentifiers.list()
+      before: sdk.Allow-list / Block-list.ListBlocklistIdentifiers()
+      type: method-name
+  - target: $["paths"]["/public/interstitial"]["get"]
+    update:
+      x-speakeasy-name-override: getInterstitial
+    x-speakeasy-metadata:
+      after: sdk.miscellaneous.getInterstitial()
+      before: sdk.Miscellaneous.GetPublicInterstitial()
+      type: method-name
+  - target: $["paths"]["/organizations/{organization_id}/logo"]["put"]
+    update:
+      x-speakeasy-name-override: uploadLogo
+    x-speakeasy-metadata:
+      after: sdk.organizations.uploadLogo()
+      before: sdk.Organizations.UploadOrganizationLogo()
+      type: method-name
+  - target: $["paths"]["/clients/verify"]["post"]
+    update:
+      x-speakeasy-name-override: verify
+    x-speakeasy-metadata:
+      after: sdk.clients.verify()
+      before: sdk.Clients.VerifyClient()
+      type: method-name
+  - target: $["paths"]["/instance/change_domain"]["post"]
+    update:
+      x-speakeasy-group: betaFeatures
+    x-speakeasy-metadata:
+      after: sdk.betaFeatures.changeProductionInstanceDomain()
+      before: sdk.Beta Features.ChangeProductionInstanceDomain()
+      type: method-name
+  - target: $["paths"]["/users/{user_id}/profile_image"]["delete"]
+    update:
+      x-speakeasy-name-override: deleteProfileImage
+    x-speakeasy-metadata:
+      after: sdk.users.deleteProfileImage()
+      before: sdk.Users.DeleteUserProfileImage()
+      type: method-name
+  - target: $["paths"]["/sessions/{session_id}/tokens/{template_name}"]["post"]
+    update:
+      x-speakeasy-name-override: createTokenFromTemplate
+    x-speakeasy-metadata:
+      after: sdk.sessions.createTokenFromTemplate()
+      before: sdk.Sessions.CreateSessionTokenFromTemplate()
+      type: method-name
+  - target: $["paths"]["/email_addresses/{email_address_id}"]["get"]
+    update:
+      x-speakeasy-group: emailAddresses
+      x-speakeasy-name-override: get
+    x-speakeasy-metadata:
+      after: sdk.emailAddresses.get()
+      before: sdk.Email Addresses.GetEmailAddress()
+      type: method-name
+  - target: $["paths"]["/users/{user_id}/passkeys/{passkey_identification_id}"]["delete"]
+    update:
+      x-speakeasy-name-override: deletePasskey
+    x-speakeasy-metadata:
+      after: sdk.users.deletePasskey()
+      before: sdk.Users.UserPasskeyDelete()
+      type: method-name
+  - target: $["paths"]["/organizations/{organization_id}/invitations"]["get"]
+    update:
+      x-speakeasy-group: organizationInvitations
+      x-speakeasy-name-override: list
+    x-speakeasy-metadata:
+      after: sdk.organizationInvitations.list()
+      before: sdk.Organization Invitations.ListOrganizationInvitations()
+      type: method-name
+  - target: $["paths"]["/organizations"]["post"]
+    update:
+      x-speakeasy-name-override: create
+    x-speakeasy-metadata:
+      after: sdk.organizations.create()
+      before: sdk.Organizations.CreateOrganization()
+      type: method-name
+  - target: $["paths"]["/domains"]["post"]
+    update:
+      x-speakeasy-name-override: add
+    x-speakeasy-metadata:
+      after: sdk.domains.add()
+      before: sdk.Domains.AddDomain()
+      type: method-name
+  - target: $["paths"]["/domains/{domain_id}"]["patch"]
+    update:
+      x-speakeasy-name-override: update
+    x-speakeasy-metadata:
+      after: sdk.domains.update()
+      before: sdk.Domains.UpdateDomain()
+      type: method-name
+  - target: $["paths"]["/organizations/{organization_id}/invitations/bulk"]["post"]
+    update:
+      x-speakeasy-group: organizationInvitations
+      x-speakeasy-name-override: bulkCreate
+    x-speakeasy-metadata:
+      after: sdk.organizationInvitations.bulkCreate()
+      before: sdk.Organization Invitations.CreateOrganizationInvitationBulk()
+      type: method-name
+  - target: $["paths"]["/jwt_templates/{template_id}"]["patch"]
+    update:
+      x-speakeasy-group: jwtTemplates
+      x-speakeasy-name-override: update
+    x-speakeasy-metadata:
+      after: sdk.jwtTemplates.update()
+      before: sdk.JWT Templates.UpdateJWTTemplate()
+      type: method-name
+  - target: $["paths"]["/organizations/{organization_id}/invitations"]["post"]
+    update:
+      x-speakeasy-group: organizationInvitations
+      x-speakeasy-name-override: create
+    x-speakeasy-metadata:
+      after: sdk.organizationInvitations.create()
+      before: sdk.Organization Invitations.CreateOrganizationInvitation()
+      type: method-name
+  - target: $["paths"]["/oauth_applications/{oauth_application_id}/rotate_secret"]["post"]
+    update:
+      x-speakeasy-group: oauthApplications
+      x-speakeasy-name-override: rotateSecret
+    x-speakeasy-metadata:
+      after: sdk.oauthApplications.rotateSecret()
+      before: sdk.OAuth Applications.RotateOAuthApplicationSecret()
+      type: method-name
+  - target: $["paths"]["/allowlist_identifiers/{identifier_id}"]["delete"]
+    update:
+      x-speakeasy-group: allowlistIdentifiers
+      x-speakeasy-name-override: delete
+    x-speakeasy-metadata:
+      after: sdk.allowlistIdentifiers.delete()
+      before: sdk.Allow-list / Block-list.DeleteAllowlistIdentifier()
+      type: method-name
+  - target: $["paths"]["/templates/{template_type}/{slug}/toggle_delivery"]["post"]
+    update:
+      x-speakeasy-group: emailSmsTemplates
+    x-speakeasy-metadata:
+      after: sdk.emailSmsTemplates.toggleTemplateDelivery()
+      before: sdk.Email & SMS Templates.ToggleTemplateDelivery()
+      type: method-name
+  - target: $["paths"]["/organizations/{organization_id}"]["patch"]
+    update:
+      x-speakeasy-name-override: update
+    x-speakeasy-metadata:
+      after: sdk.organizations.update()
+      before: sdk.Organizations.UpdateOrganization()
+      type: method-name
+  - target: $["paths"]["/domains/{domain_id}"]["delete"]
+    update:
+      x-speakeasy-name-override: delete
+    x-speakeasy-metadata:
+      after: sdk.domains.delete()
+      before: sdk.Domains.DeleteDomain()
+      type: method-name
+  - target: $["paths"]["/redirect_urls"]["post"]
+    update:
+      x-speakeasy-group: redirectUrls
+      x-speakeasy-name-override: create
+    x-speakeasy-metadata:
+      after: sdk.redirectUrls.create()
+      before: sdk.Redirect URLs.CreateRedirectURL()
+      type: method-name
+  - target: $["paths"]["/blocklist_identifiers"]["post"]
+    update:
+      x-speakeasy-group: allowlistBlocklist
+    x-speakeasy-metadata:
+      after: sdk.allowlistBlocklist.createBlocklistIdentifier()
+      before: sdk.Allow-list / Block-list.CreateBlocklistIdentifier()
+      type: method-name
+  - target: $["paths"]["/users"]["post"]
+    update:
+      x-speakeasy-name-override: create
+    x-speakeasy-metadata:
+      after: sdk.users.create()
+      before: sdk.Users.CreateUser()
+      type: method-name
+  - target: $["paths"]["/clients/{client_id}"]["get"]
+    update:
+      x-speakeasy-name-override: get
+    x-speakeasy-metadata:
+      after: sdk.clients.get()
+      before: sdk.Clients.GetClient()
+      type: method-name
+  - target: $["paths"]["/jwt_templates/{template_id}"]["delete"]
+    update:
+      x-speakeasy-group: jwtTemplates
+      x-speakeasy-name-override: delete
+    x-speakeasy-metadata:
+      after: sdk.jwtTemplates.delete()
+      before: sdk.JWT Templates.DeleteJWTTemplate()
+      type: method-name
+  - target: $["paths"]["/actor_tokens"]["post"]
+    update:
+      x-speakeasy-group: actorTokens
+      x-speakeasy-name-override: create
+    x-speakeasy-metadata:
+      after: sdk.actorTokens.create()
+      before: sdk.Actor Tokens.CreateActorToken()
+      type: method-name
+  - target: $["paths"]["/organizations/{organization_id}/invitations/{invitation_id}"]["get"]
+    update:
+      x-speakeasy-group: organizationInvitations
+      x-speakeasy-name-override: get
+    x-speakeasy-metadata:
+      after: sdk.organizationInvitations.get()
+      before: sdk.Organization Invitations.GetOrganizationInvitation()
+      type: method-name
+  - target: $["paths"]["/organization_memberships"]["get"]
+    update:
+      x-speakeasy-group: organizationMemberships
+      x-speakeasy-name-override: getAll
+    x-speakeasy-metadata:
+      after: sdk.organizationMemberships.getAll()
+      before: sdk.Organization Memberships.InstanceGetOrganizationMemberships()
+      type: method-name
+  - target: $["paths"]["/templates/{template_type}/{slug}/preview"]["post"]
+    update:
+      x-speakeasy-group: templates
+      x-speakeasy-name-override: preview
+    x-speakeasy-metadata:
+      after: sdk.templates.preview()
+      before: sdk.Email & SMS Templates.PreviewTemplate()
+      type: method-name
+  - target: $["paths"]["/templates/{template_type}/{slug}"]["get"]
+    update:
+      x-speakeasy-group: emailSmsTemplates
+      x-speakeasy-name-override: get
+    x-speakeasy-metadata:
+      after: sdk.emailSmsTemplates.get()
+      before: sdk.Email & SMS Templates.GetTemplate()
+      type: method-name
+  - target: $["paths"]["/templates/{template_type}/{slug}/revert"]["post"]
+    update:
+      x-speakeasy-group: emailSMSTemplates
+      x-speakeasy-name-override: revert
+    x-speakeasy-metadata:
+      after: sdk.emailSMSTemplates.revert()
+      before: sdk.Email & SMS Templates.RevertTemplate()
+      type: method-name
+  - target: $["paths"]["/users/{user_id}/organization_invitations"]["get"]
+    update:
+      x-speakeasy-name-override: getOrganizationInvitations
+    x-speakeasy-metadata:
+      after: sdk.users.getOrganizationInvitations()
+      before: sdk.Users.UsersGetOrganizationInvitations()
+      type: method-name
+  - target: $["paths"]["/organizations/{organization_id}/memberships/{user_id}"]["delete"]
+    update:
+      x-speakeasy-group: organizationMemberships
+      x-speakeasy-name-override: delete
+    x-speakeasy-metadata:
+      after: sdk.organizationMemberships.delete()
+      before: sdk.Organization Memberships.DeleteOrganizationMembership()
+      type: method-name
+  - target: $["paths"]["/users/{user_id}"]["delete"]
+    update:
+      x-speakeasy-name-override: delete
+    x-speakeasy-metadata:
+      after: sdk.users.delete()
+      before: sdk.Users.DeleteUser()
+      type: method-name
+  - target: $["paths"]["/phone_numbers/{phone_number_id}"]["delete"]
+    update:
+      x-speakeasy-group: phoneNumbers
+      x-speakeasy-name-override: delete
+    x-speakeasy-metadata:
+      after: sdk.phoneNumbers.delete()
+      before: sdk.Phone Numbers.DeletePhoneNumber()
+      type: method-name
+  - target: $["paths"]["/users/{user_id}/ban"]["post"]
+    update:
+      x-speakeasy-name-override: ban
+    x-speakeasy-metadata:
+      after: sdk.users.ban()
+      before: sdk.Users.BanUser()
+      type: method-name
+  - target: $["paths"]["/saml_connections"]["get"]
+    update:
+      x-speakeasy-group: samlConnections
+      x-speakeasy-name-override: list
+    x-speakeasy-metadata:
+      after: sdk.samlConnections.list()
+      before: sdk.SAML Connections.ListSAMLConnections()
+      type: method-name
+  - target: $["paths"]["/users/{user_id}/organization_memberships"]["get"]
+    update:
+      x-speakeasy-name-override: getOrganizationMemberships
+    x-speakeasy-metadata:
+      after: sdk.users.getOrganizationMemberships()
+      before: sdk.Users.UsersGetOrganizationMemberships()
+      type: method-name
+  - target: $["paths"]["/users/count"]["get"]
+    update:
+      x-speakeasy-name-override: count
+    x-speakeasy-metadata:
+      after: sdk.users.count()
+      before: sdk.Users.GetUsersCount()
+      type: method-name
+  - target: $["paths"]["/users/{user_id}/unban"]["post"]
+    update:
+      x-speakeasy-name-override: unban
+    x-speakeasy-metadata:
+      after: sdk.users.unban()
+      before: sdk.Users.UnbanUser()
+      type: method-name
+  - target: $["paths"]["/organizations/{organization_id}/logo"]["delete"]
+    update:
+      x-speakeasy-name-override: deleteLogo
+    x-speakeasy-metadata:
+      after: sdk.organizations.deleteLogo()
+      before: sdk.Organizations.DeleteOrganizationLogo()
+      type: method-name
+  - target: $["paths"]["/jwt_templates"]["post"]
+    update:
+      x-speakeasy-group: jwtTemplates
+      x-speakeasy-name-override: create
+    x-speakeasy-metadata:
+      after: sdk.jwtTemplates.create()
+      before: sdk.JWT Templates.CreateJWTTemplate()
+      type: method-name
+  - target: $["paths"]["/users"]["get"]
+    update:
+      x-speakeasy-name-override: list
+    x-speakeasy-metadata:
+      after: sdk.users.list()
+      before: sdk.Users.GetUserList()
+      type: method-name
+  - target: $["paths"]["/templates/{template_type}/{slug}"]["put"]
+    update:
+      x-speakeasy-name-override: upsert
+      x-speakeasy-group: emailAndSmsTemplates
+    x-speakeasy-metadata:
+      after: sdk.emailAndSmsTemplates.upsert()
+      before: sdk.Email & SMS Templates.UpsertTemplate()
+      type: method-name
+  - target: $["paths"]["/instance/organization_settings"]["patch"]
+    update:
+      x-speakeasy-group: instanceSettings
+      x-speakeasy-name-override: updateOrganizationSettings
+    x-speakeasy-metadata:
+      after: sdk.instanceSettings.updateOrganizationSettings()
+      before: sdk.Instance Settings.UpdateInstanceOrganizationSettings()
+      type: method-name
+  - target: $["paths"]["/organizations/{organization_id}/memberships/{user_id}"]["patch"]
+    update:
+      x-speakeasy-group: organizationMemberships
+      x-speakeasy-name-override: update
+    x-speakeasy-metadata:
+      after: sdk.organizationMemberships.update()
+      before: sdk.Organization Memberships.UpdateOrganizationMembership()
+      type: method-name
+  - target: $["paths"]["/saml_connections/{saml_connection_id}"]["patch"]
+    update:
+      x-speakeasy-group: samlConnections
+      x-speakeasy-name-override: update
+    x-speakeasy-metadata:
+      after: sdk.samlConnections.update()
+      before: sdk.SAML Connections.UpdateSAMLConnection()
+      type: method-name
+  - target: $["paths"]["/email_addresses/{email_address_id}"]["delete"]
+    update:
+      x-speakeasy-group: emailAddresses
+      x-speakeasy-name-override: delete
+    x-speakeasy-metadata:
+      after: sdk.emailAddresses.delete()
+      before: sdk.Email Addresses.DeleteEmailAddress()
+      type: method-name
+  - target: $["paths"]["/oauth_applications"]["post"]
+    update:
+      x-speakeasy-group: oauthApplications
+      x-speakeasy-name-override: create
+    x-speakeasy-metadata:
+      after: sdk.oauthApplications.create()
+      before: sdk.OAuth Applications.CreateOAuthApplication()
+      type: method-name
+  - target: $["paths"]["/users/{user_id}/metadata"]["patch"]
+    update:
+      x-speakeasy-name-override: updateMetadata
+    x-speakeasy-metadata:
+      after: sdk.users.updateMetadata()
+      before: sdk.Users.UpdateUserMetadata()
+      type: method-name
+  - target: $["paths"]["/organizations/{organization_id}/domains"]["get"]
+    update:
+      x-speakeasy-group: organizationDomains
+      x-speakeasy-name-override: list
+    x-speakeasy-metadata:
+      after: sdk.organizationDomains.list()
+      before: sdk.Organization Domains.ListOrganizationDomains()
+      type: method-name
+  - target: $["paths"]["/templates/{template_type}"]["get"]
+    update:
+      x-speakeasy-group: emailSMSTemplates
+      x-speakeasy-name-override: list
+    x-speakeasy-metadata:
+      after: sdk.emailSMSTemplates.list()
+      before: sdk.Email & SMS Templates.GetTemplateList()
+      type: method-name
+  - target: $["paths"]["/instance"]["patch"]
+    update:
+      x-speakeasy-group: instanceSettings
+      x-speakeasy-name-override: update
+    x-speakeasy-metadata:
+      after: sdk.instanceSettings.update()
+      before: sdk.Instance Settings.UpdateInstance()
+      type: method-name
+  - target: $["paths"]["/organizations/{organization_id}"]["get"]
+    update:
+      x-speakeasy-name-override: get
+    x-speakeasy-metadata:
+      after: sdk.organizations.get()
+      before: sdk.Organizations.GetOrganization()
+      type: method-name
+  - target: $["paths"]["/users/{user_id}/backup_code"]["delete"]
+    update:
+      x-speakeasy-name-override: deleteBackupCodes
+    x-speakeasy-metadata:
+      after: sdk.users.deleteBackupCodes()
+      before: sdk.Users.DeleteBackupCode()
+      type: method-name
+  - target: $["paths"]["/organizations/{organization_id}/memberships"]["post"]
+    update:
+      x-speakeasy-group: organizationMemberships
+      x-speakeasy-name-override: create
+    x-speakeasy-metadata:
+      after: sdk.organizationMemberships.create()
+      before: sdk.Organization Memberships.CreateOrganizationMembership()
+      type: method-name
+  - target: $["paths"]["/users/{user_id}/profile_image"]["post"]
+    update:
+      x-speakeasy-name-override: setProfileImage
+    x-speakeasy-metadata:
+      after: sdk.users.setProfileImage()
+      before: sdk.Users.SetUserProfileImage()
+      type: method-name
+  - target: $["paths"]["/phone_numbers/{phone_number_id}"]["get"]
+    update:
+      x-speakeasy-group: phoneNumbers
+      x-speakeasy-name-override: get
+    x-speakeasy-metadata:
+      after: sdk.phoneNumbers.get()
+      before: sdk.Phone Numbers.GetPhoneNumber()
+      type: method-name
+  - target: $["paths"]["/sessions/{session_id}/revoke"]["post"]
+    update:
+      x-speakeasy-name-override: revoke
+    x-speakeasy-metadata:
+      after: sdk.sessions.revoke()
+      before: sdk.Sessions.RevokeSession()
+      type: method-name
+  - target: $["paths"]["/blocklist_identifiers/{identifier_id}"]["delete"]
+    update:
+      x-speakeasy-group: allowlistBlocklist
+    x-speakeasy-metadata:
+      after: sdk.allowlistBlocklist.deleteBlocklistIdentifier()
+      before: sdk.Allow-list / Block-list.DeleteBlocklistIdentifier()
+      type: method-name
+  - target: $["paths"]["/email_addresses"]["post"]
+    update:
+      x-speakeasy-group: emailAddresses
+      x-speakeasy-name-override: create
+    x-speakeasy-metadata:
+      after: sdk.emailAddresses.create()
+      before: sdk.Email Addresses.CreateEmailAddress()
+      type: method-name
+  - target: $["paths"]["/redirect_urls/{id}"]["delete"]
+    update:
+      x-speakeasy-group: redirectUrls
+      x-speakeasy-name-override: delete
+    x-speakeasy-metadata:
+      after: sdk.redirectUrls.delete()
+      before: sdk.Redirect URLs.DeleteRedirectURL()
+      type: method-name
+  - target: $["paths"]["/testing_tokens"]["post"]
+    update:
+      x-speakeasy-group: testingTokens
+      x-speakeasy-name-override: create
+    x-speakeasy-metadata:
+      after: sdk.testingTokens.create()
+      before: sdk.Testing Tokens.CreateTestingToken()
+      type: method-name
+  - target: $["paths"]["/instance/restrictions"]["patch"]
+    update:
+      x-speakeasy-group: instanceSettings
+      x-speakeasy-name-override: updateRestrictions
+    x-speakeasy-metadata:
+      after: sdk.instanceSettings.updateRestrictions()
+      before: sdk.Instance Settings.UpdateInstanceRestrictions()
+      type: method-name
