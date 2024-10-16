@@ -7,7 +7,7 @@ sources:
         overlays:
             - location: ./fixes.yaml
             - location: ./examples.yaml
-            - location: .speakeasy/speakeasy-suggestion.yaml
+            - location: .speakeasy/speakeasy-suggestions.yaml
         registry:
             location: registry.speakeasyapi.dev/clerk/clerk/clerk-openapi
 targets:
