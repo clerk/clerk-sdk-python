@@ -3,6 +3,9 @@
 
 ## Overview
 
+The Client object tracks sessions, as well as the state of any sign in and sign up attempts, for a given device.
+<https://clerk.com/docs/reference/clerkjs/client>
+
 ### Available Operations
 
 * [~~list~~](#list) - List all clients :warning: **Deprecated**
@@ -30,13 +33,8 @@ s = Clerk(
 res = s.clients.list(limit=20, offset=10)
 
 if res is not None:
-    while True:
-        # handle items
-
-        res = res.Next()
-        if res is None:
-            break
-
+    # handle response
+    pass
 
 ```
 
@@ -50,7 +48,7 @@ if res is not None:
 
 ### Response
 
-**[models.GetClientListResponse](../../models/getclientlistresponse.md)**
+**[List[models.Client]](../../models/.md)**
 
 ### Errors
 

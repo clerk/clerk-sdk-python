@@ -4,8 +4,7 @@ from .basesdk import BaseSDK
 from clerk_backend_api import models, utils
 from clerk_backend_api._hooks import HookContext
 from clerk_backend_api.types import BaseModel, OptionalNullable, UNSET
-from jsonpath import JSONPath
-from typing import Any, Dict, Optional, Union, cast
+from typing import Any, Optional, Union, cast
 
 class SamlConnectionsSDK(BaseSDK):
     
@@ -17,7 +16,7 @@ class SamlConnectionsSDK(BaseSDK):
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
-    ) -> models.ListSAMLConnectionsResponse:
+    ) -> Optional[models.SAMLConnections]:
         r"""Get a list of SAML Connections for an instance
 
         Returns the list of SAML Connections for an instance.
@@ -79,29 +78,9 @@ class SamlConnectionsSDK(BaseSDK):
             retry_config=retry_config
         )
         
-        def next_func() -> Optional[models.ListSAMLConnectionsResponse]:
-            body = utils.unmarshal_json(http_res.text, Dict[Any, Any])
-            offset = request.offset if not request.offset is None else 0
-
-            if not http_res.text:
-                return None
-            results = JSONPath("$").parse(body)
-            if len(results) == 0 or len(results[0]) == 0:
-                return None
-            limit = request.limit if not request.limit is None else 0
-            if len(results[0]) < limit:
-                return None
-            next_offset = offset + len(results[0])
-
-            return self.list(
-                limit=limit,
-                offset=next_offset,
-                retries=retries,
-            )
-        
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return models.ListSAMLConnectionsResponse(result=utils.unmarshal_json(http_res.text, Optional[models.SAMLConnections]), next=next_func)
+            return utils.unmarshal_json(http_res.text, Optional[models.SAMLConnections])
         if utils.match_response(http_res, ["402","403","422"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
@@ -120,7 +99,7 @@ class SamlConnectionsSDK(BaseSDK):
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
-    ) -> models.ListSAMLConnectionsResponse:
+    ) -> Optional[models.SAMLConnections]:
         r"""Get a list of SAML Connections for an instance
 
         Returns the list of SAML Connections for an instance.
@@ -182,29 +161,9 @@ class SamlConnectionsSDK(BaseSDK):
             retry_config=retry_config
         )
         
-        def next_func() -> Optional[models.ListSAMLConnectionsResponse]:
-            body = utils.unmarshal_json(http_res.text, Dict[Any, Any])
-            offset = request.offset if not request.offset is None else 0
-
-            if not http_res.text:
-                return None
-            results = JSONPath("$").parse(body)
-            if len(results) == 0 or len(results[0]) == 0:
-                return None
-            limit = request.limit if not request.limit is None else 0
-            if len(results[0]) < limit:
-                return None
-            next_offset = offset + len(results[0])
-
-            return self.list(
-                limit=limit,
-                offset=next_offset,
-                retries=retries,
-            )
-        
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return models.ListSAMLConnectionsResponse(result=utils.unmarshal_json(http_res.text, Optional[models.SAMLConnections]), next=next_func)
+            return utils.unmarshal_json(http_res.text, Optional[models.SAMLConnections])
         if utils.match_response(http_res, ["402","403","422"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
@@ -222,7 +181,7 @@ class SamlConnectionsSDK(BaseSDK):
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
-    ) -> Optional[models.SAMLConnection]:
+    ) -> Optional[models.SchemasSAMLConnection]:
         r"""Create a SAML Connection
 
         Create a new SAML Connection.
@@ -283,7 +242,7 @@ class SamlConnectionsSDK(BaseSDK):
         
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, Optional[models.SAMLConnection])
+            return utils.unmarshal_json(http_res.text, Optional[models.SchemasSAMLConnection])
         if utils.match_response(http_res, ["402","403","422"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
@@ -301,7 +260,7 @@ class SamlConnectionsSDK(BaseSDK):
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
-    ) -> Optional[models.SAMLConnection]:
+    ) -> Optional[models.SchemasSAMLConnection]:
         r"""Create a SAML Connection
 
         Create a new SAML Connection.
@@ -362,7 +321,7 @@ class SamlConnectionsSDK(BaseSDK):
         
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, Optional[models.SAMLConnection])
+            return utils.unmarshal_json(http_res.text, Optional[models.SchemasSAMLConnection])
         if utils.match_response(http_res, ["402","403","422"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
@@ -380,7 +339,7 @@ class SamlConnectionsSDK(BaseSDK):
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
-    ) -> Optional[models.SAMLConnection]:
+    ) -> Optional[models.SchemasSAMLConnection]:
         r"""Retrieve a SAML Connection by ID
 
         Fetches the SAML Connection whose ID matches the provided `saml_connection_id` in the path.
@@ -440,7 +399,7 @@ class SamlConnectionsSDK(BaseSDK):
         
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, Optional[models.SAMLConnection])
+            return utils.unmarshal_json(http_res.text, Optional[models.SchemasSAMLConnection])
         if utils.match_response(http_res, ["402","403","404"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
@@ -458,7 +417,7 @@ class SamlConnectionsSDK(BaseSDK):
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
-    ) -> Optional[models.SAMLConnection]:
+    ) -> Optional[models.SchemasSAMLConnection]:
         r"""Retrieve a SAML Connection by ID
 
         Fetches the SAML Connection whose ID matches the provided `saml_connection_id` in the path.
@@ -518,7 +477,7 @@ class SamlConnectionsSDK(BaseSDK):
         
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, Optional[models.SAMLConnection])
+            return utils.unmarshal_json(http_res.text, Optional[models.SchemasSAMLConnection])
         if utils.match_response(http_res, ["402","403","404"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
@@ -545,10 +504,11 @@ class SamlConnectionsSDK(BaseSDK):
         sync_user_attributes: OptionalNullable[bool] = UNSET,
         allow_subdomains: OptionalNullable[bool] = UNSET,
         allow_idp_initiated: OptionalNullable[bool] = UNSET,
+        disable_additional_identifications: OptionalNullable[bool] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
-    ) -> Optional[models.SAMLConnection]:
+    ) -> Optional[models.SchemasSAMLConnection]:
         r"""Update a SAML Connection
 
         Updates the SAML Connection whose ID matches the provided `id` in the path.
@@ -566,6 +526,7 @@ class SamlConnectionsSDK(BaseSDK):
         :param sync_user_attributes: Controls whether to update the user's attributes in each sign-in
         :param allow_subdomains: Allow users with an email address subdomain to use this connection in order to authenticate
         :param allow_idp_initiated: Enable or deactivate IdP-initiated flows
+        :param disable_additional_identifications: Enable or deactivate additional identifications
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -593,6 +554,7 @@ class SamlConnectionsSDK(BaseSDK):
                 sync_user_attributes=sync_user_attributes,
                 allow_subdomains=allow_subdomains,
                 allow_idp_initiated=allow_idp_initiated,
+                disable_additional_identifications=disable_additional_identifications,
             ),
         )
         
@@ -635,7 +597,7 @@ class SamlConnectionsSDK(BaseSDK):
         
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, Optional[models.SAMLConnection])
+            return utils.unmarshal_json(http_res.text, Optional[models.SchemasSAMLConnection])
         if utils.match_response(http_res, ["402","403","404","422"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
@@ -662,10 +624,11 @@ class SamlConnectionsSDK(BaseSDK):
         sync_user_attributes: OptionalNullable[bool] = UNSET,
         allow_subdomains: OptionalNullable[bool] = UNSET,
         allow_idp_initiated: OptionalNullable[bool] = UNSET,
+        disable_additional_identifications: OptionalNullable[bool] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
-    ) -> Optional[models.SAMLConnection]:
+    ) -> Optional[models.SchemasSAMLConnection]:
         r"""Update a SAML Connection
 
         Updates the SAML Connection whose ID matches the provided `id` in the path.
@@ -683,6 +646,7 @@ class SamlConnectionsSDK(BaseSDK):
         :param sync_user_attributes: Controls whether to update the user's attributes in each sign-in
         :param allow_subdomains: Allow users with an email address subdomain to use this connection in order to authenticate
         :param allow_idp_initiated: Enable or deactivate IdP-initiated flows
+        :param disable_additional_identifications: Enable or deactivate additional identifications
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -710,6 +674,7 @@ class SamlConnectionsSDK(BaseSDK):
                 sync_user_attributes=sync_user_attributes,
                 allow_subdomains=allow_subdomains,
                 allow_idp_initiated=allow_idp_initiated,
+                disable_additional_identifications=disable_additional_identifications,
             ),
         )
         
@@ -752,7 +717,7 @@ class SamlConnectionsSDK(BaseSDK):
         
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, Optional[models.SAMLConnection])
+            return utils.unmarshal_json(http_res.text, Optional[models.SchemasSAMLConnection])
         if utils.match_response(http_res, ["402","403","404","422"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)

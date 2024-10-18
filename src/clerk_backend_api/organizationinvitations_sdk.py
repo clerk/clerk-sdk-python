@@ -4,19 +4,208 @@ from .basesdk import BaseSDK
 from clerk_backend_api import models, utils
 from clerk_backend_api._hooks import HookContext
 from clerk_backend_api.types import OptionalNullable, UNSET
-from jsonpath import JSONPath
-from typing import Any, Dict, List, Optional, Union
+from typing import Any, List, Optional, Union
 from typing_extensions import deprecated
 
 class OrganizationInvitationsSDK(BaseSDK):
+    
+    
+    def get_all(
+        self, *,
+        limit: Optional[int] = 10,
+        offset: Optional[int] = 0,
+        order_by: Optional[str] = "-created_at",
+        status: Optional[models.ListInstanceOrganizationInvitationsQueryParamStatus] = None,
+        query: Optional[str] = None,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+    ) -> Optional[models.OrganizationInvitationsWithPublicOrganizationData]:
+        r"""Get a list of organization invitations for the current instance
+
+        This request returns the list of organization invitations for the instance.
+        Results can be paginated using the optional `limit` and `offset` query parameters.
+        You can filter them by providing the 'status' query parameter, that accepts multiple values.
+        You can change the order by providing the 'order' query parameter, that accepts multiple values.
+        You can filter by the invited user email address providing the `query` query parameter.
+        The organization invitations are ordered by descending creation date by default.
+
+        :param limit: Applies a limit to the number of results returned. Can be used for paginating the results together with `offset`.
+        :param offset: Skip the first `offset` results when paginating. Needs to be an integer greater or equal to zero. To be used in conjunction with `limit`.
+        :param order_by: Allows to return organization invitations in a particular order. At the moment, you can order the returned organization invitations either by their `created_at` or `email_address`. In order to specify the direction, you can use the `+/-` symbols prepended in the property to order by. For example, if you want organization invitations to be returned in descending order according to their `created_at` property, you can use `-created_at`. If you don't use `+` or `-`, then `+` is implied. Defaults to `-created_at`.
+        :param status: Filter organization invitations based on their status
+        :param query: Filter organization invitations based on their `email_address`
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+        
+        if server_url is not None:
+            base_url = server_url
+        
+        request = models.ListInstanceOrganizationInvitationsRequest(
+            limit=limit,
+            offset=offset,
+            order_by=order_by,
+            status=status,
+            query=query,
+        )
+        
+        req = self.build_request(
+            method="GET",
+            path="/organization_invitations",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=False,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            security=self.sdk_configuration.security,
+            timeout_ms=timeout_ms,
+        )
+        
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, [
+                "429",
+                "500",
+                "502",
+                "503",
+                "504"
+            ])                
+        
+        http_res = self.do_request(
+            hook_ctx=HookContext(operation_id="ListInstanceOrganizationInvitations", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            request=req,
+            error_status_codes=["400","404","422","4XX","500","5XX"],
+            retry_config=retry_config
+        )
+        
+        data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return utils.unmarshal_json(http_res.text, Optional[models.OrganizationInvitationsWithPublicOrganizationData])
+        if utils.match_response(http_res, ["400","404","422","500"], "application/json"):
+            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=data)
+        if utils.match_response(http_res, ["4XX","5XX"], "*"):
+            raise models.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
+        
+        content_type = http_res.headers.get("Content-Type")
+        raise models.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+
+    
+    
+    async def get_all_async(
+        self, *,
+        limit: Optional[int] = 10,
+        offset: Optional[int] = 0,
+        order_by: Optional[str] = "-created_at",
+        status: Optional[models.ListInstanceOrganizationInvitationsQueryParamStatus] = None,
+        query: Optional[str] = None,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+    ) -> Optional[models.OrganizationInvitationsWithPublicOrganizationData]:
+        r"""Get a list of organization invitations for the current instance
+
+        This request returns the list of organization invitations for the instance.
+        Results can be paginated using the optional `limit` and `offset` query parameters.
+        You can filter them by providing the 'status' query parameter, that accepts multiple values.
+        You can change the order by providing the 'order' query parameter, that accepts multiple values.
+        You can filter by the invited user email address providing the `query` query parameter.
+        The organization invitations are ordered by descending creation date by default.
+
+        :param limit: Applies a limit to the number of results returned. Can be used for paginating the results together with `offset`.
+        :param offset: Skip the first `offset` results when paginating. Needs to be an integer greater or equal to zero. To be used in conjunction with `limit`.
+        :param order_by: Allows to return organization invitations in a particular order. At the moment, you can order the returned organization invitations either by their `created_at` or `email_address`. In order to specify the direction, you can use the `+/-` symbols prepended in the property to order by. For example, if you want organization invitations to be returned in descending order according to their `created_at` property, you can use `-created_at`. If you don't use `+` or `-`, then `+` is implied. Defaults to `-created_at`.
+        :param status: Filter organization invitations based on their status
+        :param query: Filter organization invitations based on their `email_address`
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+        
+        if server_url is not None:
+            base_url = server_url
+        
+        request = models.ListInstanceOrganizationInvitationsRequest(
+            limit=limit,
+            offset=offset,
+            order_by=order_by,
+            status=status,
+            query=query,
+        )
+        
+        req = self.build_request(
+            method="GET",
+            path="/organization_invitations",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=False,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            security=self.sdk_configuration.security,
+            timeout_ms=timeout_ms,
+        )
+        
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, [
+                "429",
+                "500",
+                "502",
+                "503",
+                "504"
+            ])                
+        
+        http_res = await self.do_request_async(
+            hook_ctx=HookContext(operation_id="ListInstanceOrganizationInvitations", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            request=req,
+            error_status_codes=["400","404","422","4XX","500","5XX"],
+            retry_config=retry_config
+        )
+        
+        data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return utils.unmarshal_json(http_res.text, Optional[models.OrganizationInvitationsWithPublicOrganizationData])
+        if utils.match_response(http_res, ["400","404","422","500"], "application/json"):
+            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=data)
+        if utils.match_response(http_res, ["4XX","5XX"], "*"):
+            raise models.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
+        
+        content_type = http_res.headers.get("Content-Type")
+        raise models.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+
     
     
     def create(
         self, *,
         organization_id: str,
         email_address: str,
-        inviter_user_id: str,
         role: str,
+        inviter_user_id: OptionalNullable[str] = UNSET,
         public_metadata: Optional[Union[models.CreateOrganizationInvitationPublicMetadata, models.CreateOrganizationInvitationPublicMetadataTypedDict]] = None,
         private_metadata: Optional[Union[models.CreateOrganizationInvitationPrivateMetadata, models.CreateOrganizationInvitationPrivateMetadataTypedDict]] = None,
         redirect_url: Optional[str] = None,
@@ -35,7 +224,7 @@ class OrganizationInvitationsSDK(BaseSDK):
         When the invited user clicks the link to accept the invitation, they will be redirected to the URL provided.
         Use this parameter to implement a custom invitation acceptance flow.
 
-        You must specify the ID of the user that will send the invitation with the `inviter_user_id` parameter.
+        You can specify the ID of the user that will send the invitation with the `inviter_user_id` parameter.
         That user must be a member with administrator privileges in the organization.
         Only \"admin\" members can create organization invitations.
 
@@ -45,8 +234,8 @@ class OrganizationInvitationsSDK(BaseSDK):
 
         :param organization_id: The ID of the organization for which to send the invitation
         :param email_address: The email address of the new member that is going to be invited to the organization
-        :param inviter_user_id: The ID of the user that invites the new member to the organization. Must be an administrator in the organization.
         :param role: The role of the new member in the organization
+        :param inviter_user_id: The ID of the user that invites the new member to the organization. Must be an administrator in the organization.
         :param public_metadata: Metadata saved on the organization invitation, read-only from the Frontend API and fully accessible (read/write) from the Backend API.
         :param private_metadata: Metadata saved on the organization invitation, fully accessible (read/write) from the Backend API but not visible from the Frontend API.
         :param redirect_url: Optional URL that the invitee will be redirected to once they accept the invitation by clicking the join link in the invitation email.
@@ -129,8 +318,8 @@ class OrganizationInvitationsSDK(BaseSDK):
         self, *,
         organization_id: str,
         email_address: str,
-        inviter_user_id: str,
         role: str,
+        inviter_user_id: OptionalNullable[str] = UNSET,
         public_metadata: Optional[Union[models.CreateOrganizationInvitationPublicMetadata, models.CreateOrganizationInvitationPublicMetadataTypedDict]] = None,
         private_metadata: Optional[Union[models.CreateOrganizationInvitationPrivateMetadata, models.CreateOrganizationInvitationPrivateMetadataTypedDict]] = None,
         redirect_url: Optional[str] = None,
@@ -149,7 +338,7 @@ class OrganizationInvitationsSDK(BaseSDK):
         When the invited user clicks the link to accept the invitation, they will be redirected to the URL provided.
         Use this parameter to implement a custom invitation acceptance flow.
 
-        You must specify the ID of the user that will send the invitation with the `inviter_user_id` parameter.
+        You can specify the ID of the user that will send the invitation with the `inviter_user_id` parameter.
         That user must be a member with administrator privileges in the organization.
         Only \"admin\" members can create organization invitations.
 
@@ -159,8 +348,8 @@ class OrganizationInvitationsSDK(BaseSDK):
 
         :param organization_id: The ID of the organization for which to send the invitation
         :param email_address: The email address of the new member that is going to be invited to the organization
-        :param inviter_user_id: The ID of the user that invites the new member to the organization. Must be an administrator in the organization.
         :param role: The role of the new member in the organization
+        :param inviter_user_id: The ID of the user that invites the new member to the organization. Must be an administrator in the organization.
         :param public_metadata: Metadata saved on the organization invitation, read-only from the Frontend API and fully accessible (read/write) from the Backend API.
         :param private_metadata: Metadata saved on the organization invitation, fully accessible (read/write) from the Backend API but not visible from the Frontend API.
         :param redirect_url: Optional URL that the invitee will be redirected to once they accept the invitation by clicking the join link in the invitation email.
@@ -248,7 +437,7 @@ class OrganizationInvitationsSDK(BaseSDK):
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
-    ) -> models.ListOrganizationInvitationsResponse:
+    ) -> Optional[models.OrganizationInvitations]:
         r"""Get a list of organization invitations
 
         This request returns the list of organization invitations.
@@ -317,31 +506,9 @@ class OrganizationInvitationsSDK(BaseSDK):
             retry_config=retry_config
         )
         
-        def next_func() -> Optional[models.ListOrganizationInvitationsResponse]:
-            body = utils.unmarshal_json(http_res.text, Dict[Any, Any])
-            offset = request.offset if not request.offset is None else 0
-
-            if not http_res.text:
-                return None
-            results = JSONPath("$").parse(body)
-            if len(results) == 0 or len(results[0]) == 0:
-                return None
-            limit = request.limit if not request.limit is None else 0
-            if len(results[0]) < limit:
-                return None
-            next_offset = offset + len(results[0])
-
-            return self.list(
-                organization_id=organization_id,
-                limit=limit,
-                offset=next_offset,
-                status=status,
-                retries=retries,
-            )
-        
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return models.ListOrganizationInvitationsResponse(result=utils.unmarshal_json(http_res.text, Optional[models.OrganizationInvitations]), next=next_func)
+            return utils.unmarshal_json(http_res.text, Optional[models.OrganizationInvitations])
         if utils.match_response(http_res, ["400","404"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
@@ -362,7 +529,7 @@ class OrganizationInvitationsSDK(BaseSDK):
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
-    ) -> models.ListOrganizationInvitationsResponse:
+    ) -> Optional[models.OrganizationInvitations]:
         r"""Get a list of organization invitations
 
         This request returns the list of organization invitations.
@@ -431,31 +598,9 @@ class OrganizationInvitationsSDK(BaseSDK):
             retry_config=retry_config
         )
         
-        def next_func() -> Optional[models.ListOrganizationInvitationsResponse]:
-            body = utils.unmarshal_json(http_res.text, Dict[Any, Any])
-            offset = request.offset if not request.offset is None else 0
-
-            if not http_res.text:
-                return None
-            results = JSONPath("$").parse(body)
-            if len(results) == 0 or len(results[0]) == 0:
-                return None
-            limit = request.limit if not request.limit is None else 0
-            if len(results[0]) < limit:
-                return None
-            next_offset = offset + len(results[0])
-
-            return self.list(
-                organization_id=organization_id,
-                limit=limit,
-                offset=next_offset,
-                status=status,
-                retries=retries,
-            )
-        
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return models.ListOrganizationInvitationsResponse(result=utils.unmarshal_json(http_res.text, Optional[models.OrganizationInvitations]), next=next_func)
+            return utils.unmarshal_json(http_res.text, Optional[models.OrganizationInvitations])
         if utils.match_response(http_res, ["400","404"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
@@ -467,7 +612,7 @@ class OrganizationInvitationsSDK(BaseSDK):
 
     
     
-    def create_bulk(
+    def bulk_create(
         self, *,
         organization_id: str,
         request_body: Union[List[models.RequestBody], List[models.RequestBodyTypedDict]],
@@ -483,7 +628,7 @@ class OrganizationInvitationsSDK(BaseSDK):
         The request body supports passing an optional `redirect_url` parameter for each invitation.
         When the invited user clicks the link to accept the invitation, they will be redirected to the provided URL.
         Use this parameter to implement a custom invitation acceptance flow.
-        You must specify the ID of the user that will send the invitation with the `inviter_user_id` parameter. Each invitation
+        You can specify the ID of the user that will send the invitation with the `inviter_user_id` parameter. Each invitation
         can have a different inviter user.
         Inviter users must be members with administrator privileges in the organization.
         Only \"admin\" members can create organization invitations.
@@ -561,7 +706,7 @@ class OrganizationInvitationsSDK(BaseSDK):
 
     
     
-    async def create_bulk_async(
+    async def bulk_create_async(
         self, *,
         organization_id: str,
         request_body: Union[List[models.RequestBody], List[models.RequestBodyTypedDict]],
@@ -577,7 +722,7 @@ class OrganizationInvitationsSDK(BaseSDK):
         The request body supports passing an optional `redirect_url` parameter for each invitation.
         When the invited user clicks the link to accept the invitation, they will be redirected to the provided URL.
         Use this parameter to implement a custom invitation acceptance flow.
-        You must specify the ID of the user that will send the invitation with the `inviter_user_id` parameter. Each invitation
+        You can specify the ID of the user that will send the invitation with the `inviter_user_id` parameter. Each invitation
         can have a different inviter user.
         Inviter users must be members with administrator privileges in the organization.
         Only \"admin\" members can create organization invitations.
@@ -664,7 +809,7 @@ class OrganizationInvitationsSDK(BaseSDK):
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
-    ) -> models.ListPendingOrganizationInvitationsResponse:
+    ) -> Optional[models.OrganizationInvitations]:
         r"""Get a list of pending organization invitations
 
         This request returns the list of organization invitations with \"pending\" status.
@@ -731,30 +876,9 @@ class OrganizationInvitationsSDK(BaseSDK):
             retry_config=retry_config
         )
         
-        def next_func() -> Optional[models.ListPendingOrganizationInvitationsResponse]:
-            body = utils.unmarshal_json(http_res.text, Dict[Any, Any])
-            offset = request.offset if not request.offset is None else 0
-
-            if not http_res.text:
-                return None
-            results = JSONPath("$").parse(body)
-            if len(results) == 0 or len(results[0]) == 0:
-                return None
-            limit = request.limit if not request.limit is None else 0
-            if len(results[0]) < limit:
-                return None
-            next_offset = offset + len(results[0])
-
-            return self.list_pending(
-                organization_id=organization_id,
-                limit=limit,
-                offset=next_offset,
-                retries=retries,
-            )
-        
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return models.ListPendingOrganizationInvitationsResponse(result=utils.unmarshal_json(http_res.text, Optional[models.OrganizationInvitations]), next=next_func)
+            return utils.unmarshal_json(http_res.text, Optional[models.OrganizationInvitations])
         if utils.match_response(http_res, ["400","404"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
@@ -775,7 +899,7 @@ class OrganizationInvitationsSDK(BaseSDK):
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
-    ) -> models.ListPendingOrganizationInvitationsResponse:
+    ) -> Optional[models.OrganizationInvitations]:
         r"""Get a list of pending organization invitations
 
         This request returns the list of organization invitations with \"pending\" status.
@@ -842,30 +966,9 @@ class OrganizationInvitationsSDK(BaseSDK):
             retry_config=retry_config
         )
         
-        def next_func() -> Optional[models.ListPendingOrganizationInvitationsResponse]:
-            body = utils.unmarshal_json(http_res.text, Dict[Any, Any])
-            offset = request.offset if not request.offset is None else 0
-
-            if not http_res.text:
-                return None
-            results = JSONPath("$").parse(body)
-            if len(results) == 0 or len(results[0]) == 0:
-                return None
-            limit = request.limit if not request.limit is None else 0
-            if len(results[0]) < limit:
-                return None
-            next_offset = offset + len(results[0])
-
-            return self.list_pending(
-                organization_id=organization_id,
-                limit=limit,
-                offset=next_offset,
-                retries=retries,
-            )
-        
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return models.ListPendingOrganizationInvitationsResponse(result=utils.unmarshal_json(http_res.text, Optional[models.OrganizationInvitations]), next=next_func)
+            return utils.unmarshal_json(http_res.text, Optional[models.OrganizationInvitations])
         if utils.match_response(http_res, ["400","404"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
@@ -1043,7 +1146,7 @@ class OrganizationInvitationsSDK(BaseSDK):
         self, *,
         organization_id: str,
         invitation_id: str,
-        requesting_user_id: str,
+        request_body: Optional[Union[models.RevokeOrganizationInvitationRequestBody, models.RevokeOrganizationInvitationRequestBodyTypedDict]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1053,12 +1156,12 @@ class OrganizationInvitationsSDK(BaseSDK):
         Use this request to revoke a previously issued organization invitation.
         Revoking an organization invitation makes it invalid; the invited user will no longer be able to join the organization with the revoked invitation.
         Only organization invitations with \"pending\" status can be revoked.
-        The request needs the `requesting_user_id` parameter to specify the user which revokes the invitation.
+        The request accepts the `requesting_user_id` parameter to specify the user which revokes the invitation.
         Only users with \"admin\" role can revoke invitations.
 
         :param organization_id: The organization ID.
         :param invitation_id: The organization invitation ID.
-        :param requesting_user_id: The ID of the user that revokes the invitation. Must be an administrator in the organization.
+        :param request_body: 
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1074,9 +1177,7 @@ class OrganizationInvitationsSDK(BaseSDK):
         request = models.RevokeOrganizationInvitationRequest(
             organization_id=organization_id,
             invitation_id=invitation_id,
-            request_body=models.RevokeOrganizationInvitationRequestBody(
-                requesting_user_id=requesting_user_id,
-            ),
+            request_body=utils.get_pydantic_model(request_body, Optional[models.RevokeOrganizationInvitationRequestBody]),
         )
         
         req = self.build_request(
@@ -1085,13 +1186,13 @@ class OrganizationInvitationsSDK(BaseSDK):
             base_url=base_url,
             url_variables=url_variables,
             request=request,
-            request_body_required=True,
+            request_body_required=False,
             request_has_path_params=True,
             request_has_query_params=True,
             user_agent_header="user-agent",
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
-            get_serialized_body=lambda: utils.serialize_request_body(request.request_body, False, False, "json", models.RevokeOrganizationInvitationRequestBody),
+            get_serialized_body=lambda: utils.serialize_request_body(request.request_body, False, True, "json", Optional[models.RevokeOrganizationInvitationRequestBody]),
             timeout_ms=timeout_ms,
         )
         
@@ -1134,7 +1235,7 @@ class OrganizationInvitationsSDK(BaseSDK):
         self, *,
         organization_id: str,
         invitation_id: str,
-        requesting_user_id: str,
+        request_body: Optional[Union[models.RevokeOrganizationInvitationRequestBody, models.RevokeOrganizationInvitationRequestBodyTypedDict]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1144,12 +1245,12 @@ class OrganizationInvitationsSDK(BaseSDK):
         Use this request to revoke a previously issued organization invitation.
         Revoking an organization invitation makes it invalid; the invited user will no longer be able to join the organization with the revoked invitation.
         Only organization invitations with \"pending\" status can be revoked.
-        The request needs the `requesting_user_id` parameter to specify the user which revokes the invitation.
+        The request accepts the `requesting_user_id` parameter to specify the user which revokes the invitation.
         Only users with \"admin\" role can revoke invitations.
 
         :param organization_id: The organization ID.
         :param invitation_id: The organization invitation ID.
-        :param requesting_user_id: The ID of the user that revokes the invitation. Must be an administrator in the organization.
+        :param request_body: 
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1165,9 +1266,7 @@ class OrganizationInvitationsSDK(BaseSDK):
         request = models.RevokeOrganizationInvitationRequest(
             organization_id=organization_id,
             invitation_id=invitation_id,
-            request_body=models.RevokeOrganizationInvitationRequestBody(
-                requesting_user_id=requesting_user_id,
-            ),
+            request_body=utils.get_pydantic_model(request_body, Optional[models.RevokeOrganizationInvitationRequestBody]),
         )
         
         req = self.build_request(
@@ -1176,13 +1275,13 @@ class OrganizationInvitationsSDK(BaseSDK):
             base_url=base_url,
             url_variables=url_variables,
             request=request,
-            request_body_required=True,
+            request_body_required=False,
             request_has_path_params=True,
             request_has_query_params=True,
             user_agent_header="user-agent",
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
-            get_serialized_body=lambda: utils.serialize_request_body(request.request_body, False, False, "json", models.RevokeOrganizationInvitationRequestBody),
+            get_serialized_body=lambda: utils.serialize_request_body(request.request_body, False, True, "json", Optional[models.RevokeOrganizationInvitationRequestBody]),
             timeout_ms=timeout_ms,
         )
         

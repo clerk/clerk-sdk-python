@@ -5,11 +5,11 @@
 
 ### Available Operations
 
-* [update_instance_auth_config](#update_instance_auth_config) - Update instance settings
-* [~~update_production_instance_domain~~](#update_production_instance_domain) - Update production instance domain :warning: **Deprecated**
+* [update_instance_settings](#update_instance_settings) - Update instance settings
+* [~~update_domain~~](#update_domain) - Update production instance domain :warning: **Deprecated**
 * [change_production_instance_domain](#change_production_instance_domain) - Update production instance domain
 
-## update_instance_auth_config
+## update_instance_settings
 
 Updates the settings of an instance
 
@@ -23,7 +23,7 @@ s = Clerk(
 )
 
 
-res = s.beta_features.update_instance_auth_config(request={
+res = s.beta_features.update_instance_settings(request={
     "restricted_to_allowlist": False,
     "from_email_address": "noreply",
     "progressive_sign_up": True,
@@ -57,7 +57,7 @@ if res is not None:
 | models.SDKError    | 4xx-5xx            | */*                |
 
 
-## ~~update_production_instance_domain~~
+## ~~update_domain~~
 
 Change the domain of a production instance.
 
@@ -77,7 +77,7 @@ s = Clerk(
 )
 
 
-s.beta_features.update_production_instance_domain(request={
+s.beta_features.update_domain(request={
     "home_url": "https://www.example.com",
 })
 
@@ -120,6 +120,7 @@ s = Clerk(
 
 s.beta_features.change_production_instance_domain(request={
     "home_url": "https://www.newdomain.com",
+    "is_secondary": False,
 })
 
 # Use the SDK ...

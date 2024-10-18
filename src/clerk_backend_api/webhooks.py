@@ -7,6 +7,9 @@ from clerk_backend_api.types import OptionalNullable, UNSET
 from typing import Any, Optional
 
 class Webhooks(BaseSDK):
+    r"""You can configure webhooks to be notified about various events that happen on your instance.
+    https://clerk.com/docs/integration/webhooks
+    """
     
     
     def create_svix_app(

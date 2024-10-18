@@ -3,6 +3,9 @@
 
 ## Overview
 
+Invitations allow you to invite someone to sign up to your application, via email.
+<https://clerk.com/docs/authentication/invitations>
+
 ### Available Operations
 
 * [create](#create) - Create an invitation
@@ -31,6 +34,7 @@ res = s.invitations.create(request={
     "redirect_url": "https://example.com/welcome",
     "notify": True,
     "ignore_existing": True,
+    "expires_in_days": 486589,
 })
 
 if res is not None:
@@ -76,13 +80,8 @@ s = Clerk(
 res = s.invitations.list(limit=20, offset=10, status=clerk_backend_api.ListInvitationsQueryParamStatus.PENDING)
 
 if res is not None:
-    while True:
-        # handle items
-
-        res = res.Next()
-        if res is None:
-            break
-
+    # handle response
+    pass
 
 ```
 
@@ -97,7 +96,7 @@ if res is not None:
 
 ### Response
 
-**[models.ListInvitationsResponse](../../models/listinvitationsresponse.md)**
+**[List[models.Invitation]](../../models/.md)**
 
 ### Errors
 

@@ -4,8 +4,7 @@ from .basesdk import BaseSDK
 from clerk_backend_api import models, utils
 from clerk_backend_api._hooks import HookContext
 from clerk_backend_api.types import OptionalNullable, UNSET
-from jsonpath import JSONPath
-from typing import Any, Dict, Optional, Union
+from typing import Any, Optional, Union
 
 class OrganizationMembershipsSDK(BaseSDK):
     
@@ -193,7 +192,7 @@ class OrganizationMembershipsSDK(BaseSDK):
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
-    ) -> models.ListOrganizationMembershipsResponse:
+    ) -> Optional[models.OrganizationMemberships]:
         r"""Get a list of all members of an organization
 
         Retrieves all user memberships for the given organization
@@ -257,31 +256,9 @@ class OrganizationMembershipsSDK(BaseSDK):
             retry_config=retry_config
         )
         
-        def next_func() -> Optional[models.ListOrganizationMembershipsResponse]:
-            body = utils.unmarshal_json(http_res.text, Dict[Any, Any])
-            offset = request.offset if not request.offset is None else 0
-
-            if not http_res.text:
-                return None
-            results = JSONPath("$").parse(body)
-            if len(results) == 0 or len(results[0]) == 0:
-                return None
-            limit = request.limit if not request.limit is None else 0
-            if len(results[0]) < limit:
-                return None
-            next_offset = offset + len(results[0])
-
-            return self.list(
-                organization_id=organization_id,
-                limit=limit,
-                offset=next_offset,
-                order_by=order_by,
-                retries=retries,
-            )
-        
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return models.ListOrganizationMembershipsResponse(result=utils.unmarshal_json(http_res.text, Optional[models.OrganizationMemberships]), next=next_func)
+            return utils.unmarshal_json(http_res.text, Optional[models.OrganizationMemberships])
         if utils.match_response(http_res, ["401","422"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
@@ -302,7 +279,7 @@ class OrganizationMembershipsSDK(BaseSDK):
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
-    ) -> models.ListOrganizationMembershipsResponse:
+    ) -> Optional[models.OrganizationMemberships]:
         r"""Get a list of all members of an organization
 
         Retrieves all user memberships for the given organization
@@ -366,31 +343,9 @@ class OrganizationMembershipsSDK(BaseSDK):
             retry_config=retry_config
         )
         
-        def next_func() -> Optional[models.ListOrganizationMembershipsResponse]:
-            body = utils.unmarshal_json(http_res.text, Dict[Any, Any])
-            offset = request.offset if not request.offset is None else 0
-
-            if not http_res.text:
-                return None
-            results = JSONPath("$").parse(body)
-            if len(results) == 0 or len(results[0]) == 0:
-                return None
-            limit = request.limit if not request.limit is None else 0
-            if len(results[0]) < limit:
-                return None
-            next_offset = offset + len(results[0])
-
-            return self.list(
-                organization_id=organization_id,
-                limit=limit,
-                offset=next_offset,
-                order_by=order_by,
-                retries=retries,
-            )
-        
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return models.ListOrganizationMembershipsResponse(result=utils.unmarshal_json(http_res.text, Optional[models.OrganizationMemberships]), next=next_func)
+            return utils.unmarshal_json(http_res.text, Optional[models.OrganizationMemberships])
         if utils.match_response(http_res, ["401","422"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
@@ -912,6 +867,174 @@ class OrganizationMembershipsSDK(BaseSDK):
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[models.OrganizationMembership])
         if utils.match_response(http_res, ["400","404","422"], "application/json"):
+            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=data)
+        if utils.match_response(http_res, ["4XX","5XX"], "*"):
+            raise models.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
+        
+        content_type = http_res.headers.get("Content-Type")
+        raise models.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+
+    
+    
+    def get_all(
+        self, *,
+        limit: Optional[int] = 10,
+        offset: Optional[int] = 0,
+        order_by: Optional[str] = None,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+    ) -> Optional[models.OrganizationMemberships]:
+        r"""Get a list of all organization memberships within an instance.
+
+        Retrieves all organization user memberships for the given instance.
+
+        :param limit: Applies a limit to the number of results returned. Can be used for paginating the results together with `offset`.
+        :param offset: Skip the first `offset` results when paginating. Needs to be an integer greater or equal to zero. To be used in conjunction with `limit`.
+        :param order_by: Sorts organizations memberships by phone_number, email_address, created_at, first_name, last_name or username. By prepending one of those values with + or -, we can choose to sort in ascending (ASC) or descending (DESC) order.
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+        
+        if server_url is not None:
+            base_url = server_url
+        
+        request = models.InstanceGetOrganizationMembershipsRequest(
+            limit=limit,
+            offset=offset,
+            order_by=order_by,
+        )
+        
+        req = self.build_request(
+            method="GET",
+            path="/organization_memberships",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=False,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            security=self.sdk_configuration.security,
+            timeout_ms=timeout_ms,
+        )
+        
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, [
+                "429",
+                "500",
+                "502",
+                "503",
+                "504"
+            ])                
+        
+        http_res = self.do_request(
+            hook_ctx=HookContext(operation_id="InstanceGetOrganizationMemberships", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            request=req,
+            error_status_codes=["400","401","422","4XX","500","5XX"],
+            retry_config=retry_config
+        )
+        
+        data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return utils.unmarshal_json(http_res.text, Optional[models.OrganizationMemberships])
+        if utils.match_response(http_res, ["400","401","422","500"], "application/json"):
+            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=data)
+        if utils.match_response(http_res, ["4XX","5XX"], "*"):
+            raise models.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
+        
+        content_type = http_res.headers.get("Content-Type")
+        raise models.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+
+    
+    
+    async def get_all_async(
+        self, *,
+        limit: Optional[int] = 10,
+        offset: Optional[int] = 0,
+        order_by: Optional[str] = None,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+    ) -> Optional[models.OrganizationMemberships]:
+        r"""Get a list of all organization memberships within an instance.
+
+        Retrieves all organization user memberships for the given instance.
+
+        :param limit: Applies a limit to the number of results returned. Can be used for paginating the results together with `offset`.
+        :param offset: Skip the first `offset` results when paginating. Needs to be an integer greater or equal to zero. To be used in conjunction with `limit`.
+        :param order_by: Sorts organizations memberships by phone_number, email_address, created_at, first_name, last_name or username. By prepending one of those values with + or -, we can choose to sort in ascending (ASC) or descending (DESC) order.
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+        
+        if server_url is not None:
+            base_url = server_url
+        
+        request = models.InstanceGetOrganizationMembershipsRequest(
+            limit=limit,
+            offset=offset,
+            order_by=order_by,
+        )
+        
+        req = self.build_request(
+            method="GET",
+            path="/organization_memberships",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=False,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            security=self.sdk_configuration.security,
+            timeout_ms=timeout_ms,
+        )
+        
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, [
+                "429",
+                "500",
+                "502",
+                "503",
+                "504"
+            ])                
+        
+        http_res = await self.do_request_async(
+            hook_ctx=HookContext(operation_id="InstanceGetOrganizationMemberships", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            request=req,
+            error_status_codes=["400","401","422","4XX","500","5XX"],
+            retry_config=retry_config
+        )
+        
+        data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return utils.unmarshal_json(http_res.text, Optional[models.OrganizationMemberships])
+        if utils.match_response(http_res, ["400","401","422","500"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
         if utils.match_response(http_res, ["4XX","5XX"], "*"):

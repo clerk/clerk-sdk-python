@@ -125,8 +125,16 @@ class UserTypedDict(TypedDict):
     r"""If enabled, user can create organizations via FAPI.
 
     """
+    create_organizations_limit: NotRequired[Nullable[int]]
+    r"""The maximum number of organizations the user can create. 0 means unlimited.
+
+    """
     last_active_at: NotRequired[Nullable[int]]
     r"""Unix timestamp of the latest session activity, with day precision.
+
+    """
+    legal_accepted_at: NotRequired[Nullable[int]]
+    r"""Unix timestamp of when the user accepted the legal requirements.
 
     """
     
@@ -204,15 +212,23 @@ class User(BaseModel):
     r"""If enabled, user can create organizations via FAPI.
 
     """
+    create_organizations_limit: OptionalNullable[int] = UNSET
+    r"""The maximum number of organizations the user can create. 0 means unlimited.
+
+    """
     last_active_at: OptionalNullable[int] = UNSET
     r"""Unix timestamp of the latest session activity, with day precision.
+
+    """
+    legal_accepted_at: OptionalNullable[int] = UNSET
+    r"""Unix timestamp of when the user accepted the legal requirements.
 
     """
     
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["id", "object", "external_id", "primary_email_address_id", "primary_phone_number_id", "primary_web3_wallet_id", "username", "first_name", "last_name", "profile_image_url", "image_url", "has_image", "public_metadata", "private_metadata", "unsafe_metadata", "email_addresses", "phone_numbers", "web3_wallets", "passkeys", "password_enabled", "two_factor_enabled", "totp_enabled", "backup_code_enabled", "mfa_enabled_at", "mfa_disabled_at", "external_accounts", "saml_accounts", "last_sign_in_at", "banned", "locked", "lockout_expires_in_seconds", "verification_attempts_remaining", "updated_at", "created_at", "delete_self_enabled", "create_organization_enabled", "last_active_at"]
-        nullable_fields = ["external_id", "primary_email_address_id", "primary_phone_number_id", "primary_web3_wallet_id", "username", "first_name", "last_name", "private_metadata", "mfa_enabled_at", "mfa_disabled_at", "last_sign_in_at", "lockout_expires_in_seconds", "verification_attempts_remaining", "last_active_at"]
+        optional_fields = ["id", "object", "external_id", "primary_email_address_id", "primary_phone_number_id", "primary_web3_wallet_id", "username", "first_name", "last_name", "profile_image_url", "image_url", "has_image", "public_metadata", "private_metadata", "unsafe_metadata", "email_addresses", "phone_numbers", "web3_wallets", "passkeys", "password_enabled", "two_factor_enabled", "totp_enabled", "backup_code_enabled", "mfa_enabled_at", "mfa_disabled_at", "external_accounts", "saml_accounts", "last_sign_in_at", "banned", "locked", "lockout_expires_in_seconds", "verification_attempts_remaining", "updated_at", "created_at", "delete_self_enabled", "create_organization_enabled", "create_organizations_limit", "last_active_at", "legal_accepted_at"]
+        nullable_fields = ["external_id", "primary_email_address_id", "primary_phone_number_id", "primary_web3_wallet_id", "username", "first_name", "last_name", "private_metadata", "mfa_enabled_at", "mfa_disabled_at", "last_sign_in_at", "lockout_expires_in_seconds", "verification_attempts_remaining", "create_organizations_limit", "last_active_at", "legal_accepted_at"]
         null_default_fields = []
 
         serialized = handler(self)

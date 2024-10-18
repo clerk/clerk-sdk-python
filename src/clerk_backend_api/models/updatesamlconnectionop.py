@@ -51,6 +51,8 @@ class UpdateSAMLConnectionRequestBodyTypedDict(TypedDict):
     r"""Allow users with an email address subdomain to use this connection in order to authenticate"""
     allow_idp_initiated: NotRequired[Nullable[bool]]
     r"""Enable or deactivate IdP-initiated flows"""
+    disable_additional_identifications: NotRequired[Nullable[bool]]
+    r"""Enable or deactivate additional identifications"""
     
 
 class UpdateSAMLConnectionRequestBody(BaseModel):
@@ -78,11 +80,13 @@ class UpdateSAMLConnectionRequestBody(BaseModel):
     r"""Allow users with an email address subdomain to use this connection in order to authenticate"""
     allow_idp_initiated: OptionalNullable[bool] = UNSET
     r"""Enable or deactivate IdP-initiated flows"""
+    disable_additional_identifications: OptionalNullable[bool] = UNSET
+    r"""Enable or deactivate additional identifications"""
     
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["name", "domain", "idp_entity_id", "idp_sso_url", "idp_certificate", "idp_metadata_url", "idp_metadata", "attribute_mapping", "active", "sync_user_attributes", "allow_subdomains", "allow_idp_initiated"]
-        nullable_fields = ["name", "domain", "idp_entity_id", "idp_sso_url", "idp_certificate", "idp_metadata_url", "idp_metadata", "attribute_mapping", "active", "sync_user_attributes", "allow_subdomains", "allow_idp_initiated"]
+        optional_fields = ["name", "domain", "idp_entity_id", "idp_sso_url", "idp_certificate", "idp_metadata_url", "idp_metadata", "attribute_mapping", "active", "sync_user_attributes", "allow_subdomains", "allow_idp_initiated", "disable_additional_identifications"]
+        nullable_fields = ["name", "domain", "idp_entity_id", "idp_sso_url", "idp_certificate", "idp_metadata_url", "idp_metadata", "attribute_mapping", "active", "sync_user_attributes", "allow_subdomains", "allow_idp_initiated", "disable_additional_identifications"]
         null_default_fields = []
 
         serialized = handler(self)

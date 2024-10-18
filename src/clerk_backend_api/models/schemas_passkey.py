@@ -20,13 +20,13 @@ class PasskeyVerificationStatus(str, Enum):
 class PasskeyVerificationStrategy(str, Enum):
     PASSKEY = "passkey"
 
-class VerificationNonce(str, Enum):
+class Nonce(str, Enum):
     NONCE = "nonce"
 
 class PasskeyTypedDict(TypedDict):
     status: PasskeyVerificationStatus
     strategy: PasskeyVerificationStrategy
-    nonce: NotRequired[VerificationNonce]
+    nonce: NotRequired[Nonce]
     attempts: NotRequired[Nullable[int]]
     expire_at: NotRequired[Nullable[int]]
     
@@ -34,7 +34,7 @@ class PasskeyTypedDict(TypedDict):
 class Passkey(BaseModel):
     status: PasskeyVerificationStatus
     strategy: PasskeyVerificationStrategy
-    nonce: Optional[VerificationNonce] = None
+    nonce: Optional[Nonce] = None
     attempts: OptionalNullable[int] = UNSET
     expire_at: OptionalNullable[int] = UNSET
     

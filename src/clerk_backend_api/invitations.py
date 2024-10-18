@@ -4,10 +4,12 @@ from .basesdk import BaseSDK
 from clerk_backend_api import models, utils
 from clerk_backend_api._hooks import HookContext
 from clerk_backend_api.types import BaseModel, OptionalNullable, UNSET
-from jsonpath import JSONPath
-from typing import Any, Dict, List, Optional, Union, cast
+from typing import Any, List, Optional, Union, cast
 
 class Invitations(BaseSDK):
+    r"""Invitations allow you to invite someone to sign up to your application, via email.
+    https://clerk.com/docs/authentication/invitations
+    """
     
     
     def create(
@@ -180,7 +182,7 @@ class Invitations(BaseSDK):
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
-    ) -> models.ListInvitationsResponse:
+    ) -> Optional[List[models.Invitation]]:
         r"""List all invitations
 
         Returns all non-revoked invitations for your application, sorted by creation date
@@ -242,29 +244,8 @@ class Invitations(BaseSDK):
             retry_config=retry_config
         )
         
-        def next_func() -> Optional[models.ListInvitationsResponse]:
-            body = utils.unmarshal_json(http_res.text, Dict[Any, Any])
-            offset = request.offset if not request.offset is None else 0
-
-            if not http_res.text:
-                return None
-            results = JSONPath("$").parse(body)
-            if len(results) == 0 or len(results[0]) == 0:
-                return None
-            limit = request.limit if not request.limit is None else 0
-            if len(results[0]) < limit:
-                return None
-            next_offset = offset + len(results[0])
-
-            return self.list(
-                limit=limit,
-                offset=next_offset,
-                status=status,
-                retries=retries,
-            )
-        
         if utils.match_response(http_res, "200", "application/json"):
-            return models.ListInvitationsResponse(result=utils.unmarshal_json(http_res.text, Optional[List[models.Invitation]]), next=next_func)
+            return utils.unmarshal_json(http_res.text, Optional[List[models.Invitation]])
         if utils.match_response(http_res, ["4XX","5XX"], "*"):
             raise models.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
         
@@ -281,7 +262,7 @@ class Invitations(BaseSDK):
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
-    ) -> models.ListInvitationsResponse:
+    ) -> Optional[List[models.Invitation]]:
         r"""List all invitations
 
         Returns all non-revoked invitations for your application, sorted by creation date
@@ -343,29 +324,8 @@ class Invitations(BaseSDK):
             retry_config=retry_config
         )
         
-        def next_func() -> Optional[models.ListInvitationsResponse]:
-            body = utils.unmarshal_json(http_res.text, Dict[Any, Any])
-            offset = request.offset if not request.offset is None else 0
-
-            if not http_res.text:
-                return None
-            results = JSONPath("$").parse(body)
-            if len(results) == 0 or len(results[0]) == 0:
-                return None
-            limit = request.limit if not request.limit is None else 0
-            if len(results[0]) < limit:
-                return None
-            next_offset = offset + len(results[0])
-
-            return self.list(
-                limit=limit,
-                offset=next_offset,
-                status=status,
-                retries=retries,
-            )
-        
         if utils.match_response(http_res, "200", "application/json"):
-            return models.ListInvitationsResponse(result=utils.unmarshal_json(http_res.text, Optional[List[models.Invitation]]), next=next_func)
+            return utils.unmarshal_json(http_res.text, Optional[List[models.Invitation]])
         if utils.match_response(http_res, ["4XX","5XX"], "*"):
             raise models.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
         

@@ -36,8 +36,8 @@ class TemplateTypedDict(TypedDict):
     r"""whether this template can be reverted to the corresponding system default"""
     can_delete: NotRequired[bool]
     r"""whether this template can be deleted"""
-    can_disable: NotRequired[bool]
-    r"""whether this template can be disabled, true only for notification SMS templates"""
+    can_toggle: NotRequired[bool]
+    r"""whether this template can be enabled or disabled, true only for notification SMS templates"""
     subject: NotRequired[Nullable[str]]
     r"""email subject"""
     markup: NotRequired[str]
@@ -51,6 +51,7 @@ class TemplateTypedDict(TypedDict):
     from_email_name: NotRequired[str]
     reply_to_email_name: NotRequired[str]
     delivered_by_clerk: NotRequired[bool]
+    enabled: NotRequired[bool]
     updated_at: NotRequired[int]
     r"""Unix timestamp of last update.
 
@@ -83,8 +84,8 @@ class Template(BaseModel):
     r"""whether this template can be reverted to the corresponding system default"""
     can_delete: Optional[bool] = None
     r"""whether this template can be deleted"""
-    can_disable: Optional[bool] = None
-    r"""whether this template can be disabled, true only for notification SMS templates"""
+    can_toggle: Optional[bool] = None
+    r"""whether this template can be enabled or disabled, true only for notification SMS templates"""
     subject: OptionalNullable[str] = UNSET
     r"""email subject"""
     markup: Optional[str] = None
@@ -98,6 +99,7 @@ class Template(BaseModel):
     from_email_name: Optional[str] = None
     reply_to_email_name: Optional[str] = None
     delivered_by_clerk: Optional[bool] = None
+    enabled: Optional[bool] = None
     updated_at: Optional[int] = None
     r"""Unix timestamp of last update.
 
@@ -109,7 +111,7 @@ class Template(BaseModel):
     
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["id", "object", "instance_id", "resource_type", "template_type", "name", "slug", "position", "can_revert", "can_delete", "can_disable", "subject", "markup", "body", "available_variables", "required_variables", "from_email_name", "reply_to_email_name", "delivered_by_clerk", "updated_at", "created_at"]
+        optional_fields = ["id", "object", "instance_id", "resource_type", "template_type", "name", "slug", "position", "can_revert", "can_delete", "can_toggle", "subject", "markup", "body", "available_variables", "required_variables", "from_email_name", "reply_to_email_name", "delivered_by_clerk", "enabled", "updated_at", "created_at"]
         nullable_fields = ["instance_id", "subject"]
         null_default_fields = []
 

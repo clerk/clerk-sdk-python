@@ -1,0 +1,9 @@
+# CreateOrganizationDomainRequest
+
+
+## Fields
+
+| Field                                                                                          | Type                                                                                           | Required                                                                                       | Description                                                                                    |
+| ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| `organization_id`                                                                              | *str*                                                                                          | :heavy_check_mark:                                                                             | The ID of the organization where the new domain will be created.                               |
+| `request_body`                                                                                 | [models.CreateOrganizationDomainRequestBody](../models/createorganizationdomainrequestbody.md) | :heavy_check_mark:                                                                             | N/A                                                                                            |

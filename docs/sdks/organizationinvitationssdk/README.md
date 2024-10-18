@@ -5,12 +5,64 @@
 
 ### Available Operations
 
+* [get_all](#get_all) - Get a list of organization invitations for the current instance
 * [create](#create) - Create and send an organization invitation
 * [list](#list) - Get a list of organization invitations
-* [create_bulk](#create_bulk) - Bulk create and send organization invitations
+* [bulk_create](#bulk_create) - Bulk create and send organization invitations
 * [~~list_pending~~](#list_pending) - Get a list of pending organization invitations :warning: **Deprecated**
 * [get](#get) - Retrieve an organization invitation by ID
 * [revoke](#revoke) - Revoke a pending organization invitation
+
+## get_all
+
+This request returns the list of organization invitations for the instance.
+Results can be paginated using the optional `limit` and `offset` query parameters.
+You can filter them by providing the 'status' query parameter, that accepts multiple values.
+You can change the order by providing the 'order' query parameter, that accepts multiple values.
+You can filter by the invited user email address providing the `query` query parameter.
+The organization invitations are ordered by descending creation date by default.
+
+### Example Usage
+
+```python
+import clerk_backend_api
+from clerk_backend_api import Clerk
+
+s = Clerk(
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+)
+
+
+res = s.organization_invitations.get_all(limit=20, offset=10, order_by="-created_at", status=clerk_backend_api.ListInstanceOrganizationInvitationsQueryParamStatus.ACCEPTED, query="<value>")
+
+if res is not None:
+    # handle response
+    pass
+
+```
+
+### Parameters
+
+| Parameter                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           | Type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                | Required                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | Example                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `limit`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             | *Optional[int]*                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     | :heavy_minus_sign:                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  | Applies a limit to the number of results returned.<br/>Can be used for paginating the results together with `offset`.                                                                                                                                                                                                                                                                                                                                                                                                               | 20                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| `offset`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | *Optional[int]*                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     | :heavy_minus_sign:                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  | Skip the first `offset` results when paginating.<br/>Needs to be an integer greater or equal to zero.<br/>To be used in conjunction with `limit`.                                                                                                                                                                                                                                                                                                                                                                                   | 10                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| `order_by`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          | *Optional[str]*                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     | :heavy_minus_sign:                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  | Allows to return organization invitations in a particular order.<br/>At the moment, you can order the returned organization invitations either by their `created_at` or `email_address`.<br/>In order to specify the direction, you can use the `+/-` symbols prepended in the property to order by.<br/>For example, if you want organization invitations to be returned in descending order according to their `created_at` property, you can use `-created_at`.<br/>If you don't use `+` or `-`, then `+` is implied.<br/>Defaults to `-created_at`. |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| `status`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | [Optional[models.ListInstanceOrganizationInvitationsQueryParamStatus]](../../models/listinstanceorganizationinvitationsqueryparamstatus.md)                                                                                                                                                                                                                                                                                                                                                                                         | :heavy_minus_sign:                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  | Filter organization invitations based on their status                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| `query`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             | *Optional[str]*                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     | :heavy_minus_sign:                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  | Filter organization invitations based on their `email_address`                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| `retries`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                                                                                                                                                                                                                                                                                                                                                                                                                    | :heavy_minus_sign:                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  | Configuration to override the default retry behavior of the client.                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+
+### Response
+
+**[models.OrganizationInvitationsWithPublicOrganizationData](../../models/organizationinvitationswithpublicorganizationdata.md)**
+
+### Errors
+
+| Error Object       | Status Code        | Content Type       |
+| ------------------ | ------------------ | ------------------ |
+| models.ClerkErrors | 400,404,422,500    | application/json   |
+| models.SDKError    | 4xx-5xx            | */*                |
+
 
 ## create
 
@@ -23,7 +75,7 @@ The request body supports passing an optional `redirect_url` parameter.
 When the invited user clicks the link to accept the invitation, they will be redirected to the URL provided.
 Use this parameter to implement a custom invitation acceptance flow.
 
-You must specify the ID of the user that will send the invitation with the `inviter_user_id` parameter.
+You can specify the ID of the user that will send the invitation with the `inviter_user_id` parameter.
 That user must be a member with administrator privileges in the organization.
 Only "admin" members can create organization invitations.
 
@@ -41,7 +93,7 @@ s = Clerk(
 )
 
 
-res = s.organization_invitations.create(organization_id="org_12345", email_address="user@example.com", inviter_user_id="user_67890", role="admin", public_metadata={}, private_metadata={}, redirect_url="https://example.com/welcome")
+res = s.organization_invitations.create(organization_id="org_12345", email_address="user@example.com", role="admin", inviter_user_id="user_67890", public_metadata={}, private_metadata={}, redirect_url="https://example.com/welcome")
 
 if res is not None:
     # handle response
@@ -55,8 +107,8 @@ if res is not None:
 | ---------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
 | `organization_id`                                                                                                                        | *str*                                                                                                                                    | :heavy_check_mark:                                                                                                                       | The ID of the organization for which to send the invitation                                                                              | org_12345                                                                                                                                |
 | `email_address`                                                                                                                          | *str*                                                                                                                                    | :heavy_check_mark:                                                                                                                       | The email address of the new member that is going to be invited to the organization                                                      | user@example.com                                                                                                                         |
-| `inviter_user_id`                                                                                                                        | *str*                                                                                                                                    | :heavy_check_mark:                                                                                                                       | The ID of the user that invites the new member to the organization.<br/>Must be an administrator in the organization.                    | user_67890                                                                                                                               |
 | `role`                                                                                                                                   | *str*                                                                                                                                    | :heavy_check_mark:                                                                                                                       | The role of the new member in the organization                                                                                           | admin                                                                                                                                    |
+| `inviter_user_id`                                                                                                                        | *OptionalNullable[str]*                                                                                                                  | :heavy_minus_sign:                                                                                                                       | The ID of the user that invites the new member to the organization.<br/>Must be an administrator in the organization.                    | user_67890                                                                                                                               |
 | `public_metadata`                                                                                                                        | [Optional[models.CreateOrganizationInvitationPublicMetadata]](../../models/createorganizationinvitationpublicmetadata.md)                | :heavy_minus_sign:                                                                                                                       | Metadata saved on the organization invitation, read-only from the Frontend API and fully accessible (read/write) from the Backend API.   | {<br/>"key": "value"<br/>}                                                                                                               |
 | `private_metadata`                                                                                                                       | [Optional[models.CreateOrganizationInvitationPrivateMetadata]](../../models/createorganizationinvitationprivatemetadata.md)              | :heavy_minus_sign:                                                                                                                       | Metadata saved on the organization invitation, fully accessible (read/write) from the Backend API but not visible from the Frontend API. | {<br/>"private_key": "secret_value"<br/>}                                                                                                |
 | `redirect_url`                                                                                                                           | *Optional[str]*                                                                                                                          | :heavy_minus_sign:                                                                                                                       | Optional URL that the invitee will be redirected to once they accept the invitation by clicking the join link in the invitation email.   | https://example.com/welcome                                                                                                              |
@@ -97,13 +149,8 @@ s = Clerk(
 res = s.organization_invitations.list(organization_id="org_12345", limit=20, offset=10, status=clerk_backend_api.ListOrganizationInvitationsQueryParamStatus.PENDING)
 
 if res is not None:
-    while True:
-        # handle items
-
-        res = res.Next()
-        if res is None:
-            break
-
+    # handle response
+    pass
 
 ```
 
@@ -119,7 +166,7 @@ if res is not None:
 
 ### Response
 
-**[models.ListOrganizationInvitationsResponse](../../models/listorganizationinvitationsresponse.md)**
+**[models.OrganizationInvitations](../../models/organizationinvitations.md)**
 
 ### Errors
 
@@ -129,7 +176,7 @@ if res is not None:
 | models.SDKError    | 4xx-5xx            | */*                |
 
 
-## create_bulk
+## bulk_create
 
 Creates new organization invitations in bulk and sends out emails to the provided email addresses with a link to accept the invitation and join the organization.
 You can specify a different `role` for each invited organization member.
@@ -137,7 +184,7 @@ New organization invitations get a "pending" status until they are revoked by an
 The request body supports passing an optional `redirect_url` parameter for each invitation.
 When the invited user clicks the link to accept the invitation, they will be redirected to the provided URL.
 Use this parameter to implement a custom invitation acceptance flow.
-You must specify the ID of the user that will send the invitation with the `inviter_user_id` parameter. Each invitation
+You can specify the ID of the user that will send the invitation with the `inviter_user_id` parameter. Each invitation
 can have a different inviter user.
 Inviter users must be members with administrator privileges in the organization.
 Only "admin" members can create organization invitations.
@@ -155,11 +202,11 @@ s = Clerk(
 )
 
 
-res = s.organization_invitations.create_bulk(organization_id="org_12345", request_body=[
+res = s.organization_invitations.bulk_create(organization_id="org_12345", request_body=[
     {
         "email_address": "newmember@example.com",
-        "inviter_user_id": "user_67890",
         "role": "admin",
+        "inviter_user_id": "user_67890",
         "public_metadata": {},
         "private_metadata": {},
         "redirect_url": "https://example.com/welcome",
@@ -216,13 +263,8 @@ s = Clerk(
 res = s.organization_invitations.list_pending(organization_id="org_12345", limit=20, offset=10)
 
 if res is not None:
-    while True:
-        # handle items
-
-        res = res.Next()
-        if res is None:
-            break
-
+    # handle response
+    pass
 
 ```
 
@@ -237,7 +279,7 @@ if res is not None:
 
 ### Response
 
-**[models.ListPendingOrganizationInvitationsResponse](../../models/listpendingorganizationinvitationsresponse.md)**
+**[models.OrganizationInvitations](../../models/organizationinvitations.md)**
 
 ### Errors
 
@@ -294,7 +336,7 @@ if res is not None:
 Use this request to revoke a previously issued organization invitation.
 Revoking an organization invitation makes it invalid; the invited user will no longer be able to join the organization with the revoked invitation.
 Only organization invitations with "pending" status can be revoked.
-The request needs the `requesting_user_id` parameter to specify the user which revokes the invitation.
+The request accepts the `requesting_user_id` parameter to specify the user which revokes the invitation.
 Only users with "admin" role can revoke invitations.
 
 ### Example Usage
@@ -307,7 +349,9 @@ s = Clerk(
 )
 
 
-res = s.organization_invitations.revoke(organization_id="org_123456", invitation_id="inv_123456", requesting_user_id="usr_12345")
+res = s.organization_invitations.revoke(organization_id="org_123456", invitation_id="inv_123456", request_body={
+    "requesting_user_id": "usr_12345",
+})
 
 if res is not None:
     # handle response
@@ -317,12 +361,12 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                                                                     | Type                                                                                          | Required                                                                                      | Description                                                                                   | Example                                                                                       |
-| --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
-| `organization_id`                                                                             | *str*                                                                                         | :heavy_check_mark:                                                                            | The organization ID.                                                                          | org_123456                                                                                    |
-| `invitation_id`                                                                               | *str*                                                                                         | :heavy_check_mark:                                                                            | The organization invitation ID.                                                               | inv_123456                                                                                    |
-| `requesting_user_id`                                                                          | *str*                                                                                         | :heavy_check_mark:                                                                            | The ID of the user that revokes the invitation.<br/>Must be an administrator in the organization. | usr_12345                                                                                     |
-| `retries`                                                                                     | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                              | :heavy_minus_sign:                                                                            | Configuration to override the default retry behavior of the client.                           |                                                                                               |
+| Parameter                                                                                                           | Type                                                                                                                | Required                                                                                                            | Description                                                                                                         | Example                                                                                                             |
+| ------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| `organization_id`                                                                                                   | *str*                                                                                                               | :heavy_check_mark:                                                                                                  | The organization ID.                                                                                                | org_123456                                                                                                          |
+| `invitation_id`                                                                                                     | *str*                                                                                                               | :heavy_check_mark:                                                                                                  | The organization invitation ID.                                                                                     | inv_123456                                                                                                          |
+| `request_body`                                                                                                      | [Optional[models.RevokeOrganizationInvitationRequestBody]](../../models/revokeorganizationinvitationrequestbody.md) | :heavy_minus_sign:                                                                                                  | N/A                                                                                                                 |                                                                                                                     |
+| `retries`                                                                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                    | :heavy_minus_sign:                                                                                                  | Configuration to override the default retry behavior of the client.                                                 |                                                                                                                     |
 
 ### Response
 

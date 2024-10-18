@@ -1,5 +1,5 @@
-# OAuthApplicationsSDK
-(*o_auth_applications*)
+# OauthApplicationsSDK
+(*oauth_applications*)
 
 ## Overview
 
@@ -29,16 +29,11 @@ s = Clerk(
 )
 
 
-res = s.o_auth_applications.list(limit=20, offset=10)
+res = s.oauth_applications.list(limit=20, offset=10)
 
 if res is not None:
-    while True:
-        # handle items
-
-        res = res.Next()
-        if res is None:
-            break
-
+    # handle response
+    pass
 
 ```
 
@@ -52,7 +47,7 @@ if res is not None:
 
 ### Response
 
-**[models.ListOAuthApplicationsResponse](../../models/listoauthapplicationsresponse.md)**
+**[models.OAuthApplications](../../models/oauthapplications.md)**
 
 ### Errors
 
@@ -78,7 +73,7 @@ s = Clerk(
 )
 
 
-res = s.o_auth_applications.create(request={
+res = s.oauth_applications.create(request={
     "name": "Example App",
     "callback_url": "https://example.com/oauth/callback",
     "scopes": "profile email public_metadata",
@@ -124,7 +119,7 @@ s = Clerk(
 )
 
 
-res = s.o_auth_applications.get(oauth_application_id="oauth_app_12345")
+res = s.oauth_applications.get(oauth_application_id="oauth_app_12345")
 
 if res is not None:
     # handle response
@@ -165,7 +160,7 @@ s = Clerk(
 )
 
 
-res = s.o_auth_applications.update(oauth_application_id="oauth_app_67890", name="Updated OAuth App Name", callback_url="https://example.com/oauth/callback", scopes="profile email public_metadata private_metadata")
+res = s.oauth_applications.update(oauth_application_id="oauth_app_67890", name="Updated OAuth App Name", callback_url="https://example.com/oauth/callback", scopes="profile email public_metadata private_metadata")
 
 if res is not None:
     # handle response
@@ -210,7 +205,7 @@ s = Clerk(
 )
 
 
-res = s.o_auth_applications.delete(oauth_application_id="oauth_app_09876")
+res = s.oauth_applications.delete(oauth_application_id="oauth_app_09876")
 
 if res is not None:
     # handle response
@@ -252,7 +247,7 @@ s = Clerk(
 )
 
 
-res = s.o_auth_applications.rotate_secret(oauth_application_id="oauth_application_12345")
+res = s.oauth_applications.rotate_secret(oauth_application_id="oauth_application_12345")
 
 if res is not None:
     # handle response

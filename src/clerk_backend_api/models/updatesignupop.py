@@ -9,11 +9,6 @@ from typing_extensions import Annotated, NotRequired
 
 
 class UpdateSignUpRequestBodyTypedDict(TypedDict):
-    custom_action: NotRequired[bool]
-    r"""Specifies whether a custom action has run for this sign-up attempt.
-    This is important when your instance has been configured to require a custom action to run before converting a sign-up into a user.
-    After executing any external business logic you deem necessary, you can mark the sign-up as ready-to-convert by setting `custom_action` to `true`.
-    """
     external_id: NotRequired[Nullable[str]]
     r"""The ID of the guest attempting to sign up as used in your external systems or your previous authentication solution.
     This will be copied to the resulting user when the sign-up is completed.
@@ -21,11 +16,6 @@ class UpdateSignUpRequestBodyTypedDict(TypedDict):
     
 
 class UpdateSignUpRequestBody(BaseModel):
-    custom_action: Optional[bool] = None
-    r"""Specifies whether a custom action has run for this sign-up attempt.
-    This is important when your instance has been configured to require a custom action to run before converting a sign-up into a user.
-    After executing any external business logic you deem necessary, you can mark the sign-up as ready-to-convert by setting `custom_action` to `true`.
-    """
     external_id: OptionalNullable[str] = UNSET
     r"""The ID of the guest attempting to sign up as used in your external systems or your previous authentication solution.
     This will be copied to the resulting user when the sign-up is completed.
@@ -33,7 +23,7 @@ class UpdateSignUpRequestBody(BaseModel):
     
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["custom_action", "external_id"]
+        optional_fields = ["external_id"]
         nullable_fields = ["external_id"]
         null_default_fields = []
 

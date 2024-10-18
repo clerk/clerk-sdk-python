@@ -7,6 +7,9 @@ from clerk_backend_api.types import BaseModel, OptionalNullable, UNSET
 from typing import Any, Optional, Union, cast
 
 class OrganizationsSDK(BaseSDK):
+    r"""Organizations are used to group members under a common entity and provide shared access to resources.
+    https://clerk.com/docs/organizations/overview
+    """
     
     
     def list(
@@ -213,6 +216,8 @@ class OrganizationsSDK(BaseSDK):
         Organizations support private and public metadata.
         Private metadata can only be accessed from the Backend API.
         Public metadata can be accessed from the Backend API, and are read-only from the Frontend API.
+        The `created_by` user will see this as their [active organization] (https://clerk.com/docs/organizations/overview#active-organization)
+        the next time they create a session, presuming they don't explicitly set a different organization as active before then.
 
         :param request: The request object to send.
         :param retries: Override the default retry configuration for this method
@@ -300,6 +305,8 @@ class OrganizationsSDK(BaseSDK):
         Organizations support private and public metadata.
         Private metadata can only be accessed from the Backend API.
         Public metadata can be accessed from the Backend API, and are read-only from the Frontend API.
+        The `created_by` user will see this as their [active organization] (https://clerk.com/docs/organizations/overview#active-organization)
+        the next time they create a session, presuming they don't explicitly set a different organization as active before then.
 
         :param request: The request object to send.
         :param retries: Override the default retry configuration for this method
@@ -372,6 +379,7 @@ class OrganizationsSDK(BaseSDK):
     def get(
         self, *,
         organization_id: str,
+        include_members_count: Optional[bool] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -381,6 +389,7 @@ class OrganizationsSDK(BaseSDK):
         Fetches the organization whose ID or slug matches the provided `id_or_slug` URL query parameter.
 
         :param organization_id: The ID or slug of the organization
+        :param include_members_count: Flag to denote whether or not the organization's members count should be included in the response.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -395,6 +404,7 @@ class OrganizationsSDK(BaseSDK):
         
         request = models.GetOrganizationRequest(
             organization_id=organization_id,
+            include_members_count=include_members_count,
         )
         
         req = self.build_request(
@@ -450,6 +460,7 @@ class OrganizationsSDK(BaseSDK):
     async def get_async(
         self, *,
         organization_id: str,
+        include_members_count: Optional[bool] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -459,6 +470,7 @@ class OrganizationsSDK(BaseSDK):
         Fetches the organization whose ID or slug matches the provided `id_or_slug` URL query parameter.
 
         :param organization_id: The ID or slug of the organization
+        :param include_members_count: Flag to denote whether or not the organization's members count should be included in the response.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -473,6 +485,7 @@ class OrganizationsSDK(BaseSDK):
         
         request = models.GetOrganizationRequest(
             organization_id=organization_id,
+            include_members_count=include_members_count,
         )
         
         req = self.build_request(
@@ -534,6 +547,7 @@ class OrganizationsSDK(BaseSDK):
         slug: OptionalNullable[str] = UNSET,
         max_allowed_memberships: OptionalNullable[int] = UNSET,
         admin_delete_enabled: OptionalNullable[bool] = UNSET,
+        created_at: Optional[str] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -545,10 +559,11 @@ class OrganizationsSDK(BaseSDK):
         :param organization_id: The ID of the organization to update
         :param public_metadata: Metadata saved on the organization, that is visible to both your frontend and backend.
         :param private_metadata: Metadata saved on the organization that is only visible to your backend.
-        :param name: The new name of the organization
+        :param name: The new name of the organization. May not contain URLs or HTML.
         :param slug: The new slug of the organization, which needs to be unique in the instance
         :param max_allowed_memberships: The maximum number of memberships allowed for this organization
         :param admin_delete_enabled: If true, an admin can delete this organization with the Frontend API.
+        :param created_at: A custom date/time denoting _when_ the organization was created, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`).
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -570,6 +585,7 @@ class OrganizationsSDK(BaseSDK):
                 slug=slug,
                 max_allowed_memberships=max_allowed_memberships,
                 admin_delete_enabled=admin_delete_enabled,
+                created_at=created_at,
             ),
         )
         
@@ -633,6 +649,7 @@ class OrganizationsSDK(BaseSDK):
         slug: OptionalNullable[str] = UNSET,
         max_allowed_memberships: OptionalNullable[int] = UNSET,
         admin_delete_enabled: OptionalNullable[bool] = UNSET,
+        created_at: Optional[str] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -644,10 +661,11 @@ class OrganizationsSDK(BaseSDK):
         :param organization_id: The ID of the organization to update
         :param public_metadata: Metadata saved on the organization, that is visible to both your frontend and backend.
         :param private_metadata: Metadata saved on the organization that is only visible to your backend.
-        :param name: The new name of the organization
+        :param name: The new name of the organization. May not contain URLs or HTML.
         :param slug: The new slug of the organization, which needs to be unique in the instance
         :param max_allowed_memberships: The maximum number of memberships allowed for this organization
         :param admin_delete_enabled: If true, an admin can delete this organization with the Frontend API.
+        :param created_at: A custom date/time denoting _when_ the organization was created, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`).
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -669,6 +687,7 @@ class OrganizationsSDK(BaseSDK):
                 slug=slug,
                 max_allowed_memberships=max_allowed_memberships,
                 admin_delete_enabled=admin_delete_enabled,
+                created_at=created_at,
             ),
         )
         

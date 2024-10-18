@@ -10,7 +10,7 @@ from typing_extensions import deprecated
 class BetaFeatures(BaseSDK):
     
     
-    def update_instance_auth_config(
+    def update_instance_settings(
         self, *,
         request: Optional[Union[models.UpdateInstanceAuthConfigRequestBody, models.UpdateInstanceAuthConfigRequestBodyTypedDict]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -89,7 +89,7 @@ class BetaFeatures(BaseSDK):
 
     
     
-    async def update_instance_auth_config_async(
+    async def update_instance_settings_async(
         self, *,
         request: Optional[Union[models.UpdateInstanceAuthConfigRequestBody, models.UpdateInstanceAuthConfigRequestBodyTypedDict]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -169,7 +169,7 @@ class BetaFeatures(BaseSDK):
     
     
     @deprecated("warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible.")
-    def update_production_instance_domain(
+    def update_domain(
         self, *,
         request: Optional[Union[models.UpdateProductionInstanceDomainRequestBody, models.UpdateProductionInstanceDomainRequestBodyTypedDict]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -253,7 +253,7 @@ class BetaFeatures(BaseSDK):
     
     
     @deprecated("warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible.")
-    async def update_production_instance_domain_async(
+    async def update_domain_async(
         self, *,
         request: Optional[Union[models.UpdateProductionInstanceDomainRequestBody, models.UpdateProductionInstanceDomainRequestBodyTypedDict]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,

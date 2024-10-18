@@ -177,6 +177,7 @@ class OrganizationMembershipTypedDict(TypedDict):
 
     """
     role: NotRequired[str]
+    role_name: NotRequired[str]
     permissions: NotRequired[List[str]]
     public_metadata: NotRequired[OrganizationMembershipPublicMetadataTypedDict]
     r"""Metadata saved on the organization membership, accessible from both Frontend and Backend APIs"""
@@ -199,6 +200,7 @@ class OrganizationMembership(BaseModel):
 
     """
     role: Optional[str] = None
+    role_name: Optional[str] = None
     permissions: Optional[List[str]] = None
     public_metadata: Optional[OrganizationMembershipPublicMetadata] = None
     r"""Metadata saved on the organization membership, accessible from both Frontend and Backend APIs"""
