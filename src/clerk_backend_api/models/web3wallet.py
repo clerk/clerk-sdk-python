@@ -19,7 +19,6 @@ class AdminVerificationWeb3WalletStatus(str, Enum):
 
 class AdminVerificationWeb3WalletStrategy(str, Enum):
     ADMIN = "admin"
-    FROM_OAUTH_DISCORD = "from_oauth_discord"
 
 class Web3WalletVerificationAdminTypedDict(TypedDict):
     status: AdminVerificationWeb3WalletStatus
@@ -62,18 +61,20 @@ class Web3WalletVerificationAdmin(BaseModel):
         
 
 class Web3SignatureVerificationStatus(str, Enum):
+    UNVERIFIED = "unverified"
     VERIFIED = "verified"
+    FAILED = "failed"
+    EXPIRED = "expired"
 
 class Web3SignatureVerificationStrategy(str, Enum):
     WEB3_METAMASK_SIGNATURE = "web3_metamask_signature"
-
-class Nonce(str, Enum):
-    NONCE = "nonce"
+    WEB3_COINBASE_WALLET_SIGNATURE = "web3_coinbase_wallet_signature"
 
 class Web3SignatureTypedDict(TypedDict):
     status: Web3SignatureVerificationStatus
     strategy: Web3SignatureVerificationStrategy
-    nonce: Nonce
+    nonce: NotRequired[Nullable[str]]
+    message: NotRequired[Nullable[str]]
     attempts: NotRequired[Nullable[int]]
     expire_at: NotRequired[Nullable[int]]
     
@@ -81,14 +82,15 @@ class Web3SignatureTypedDict(TypedDict):
 class Web3Signature(BaseModel):
     status: Web3SignatureVerificationStatus
     strategy: Web3SignatureVerificationStrategy
-    nonce: Nonce
+    nonce: OptionalNullable[str] = UNSET
+    message: OptionalNullable[str] = UNSET
     attempts: OptionalNullable[int] = UNSET
     expire_at: OptionalNullable[int] = UNSET
     
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["attempts", "expire_at"]
-        nullable_fields = ["attempts", "expire_at"]
+        optional_fields = ["nonce", "message", "attempts", "expire_at"]
+        nullable_fields = ["nonce", "message", "attempts", "expire_at"]
         null_default_fields = []
 
         serialized = handler(self)

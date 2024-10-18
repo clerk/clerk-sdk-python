@@ -30,13 +30,8 @@ s = Clerk(
 res = s.saml_connections.list(limit=20, offset=10)
 
 if res is not None:
-    while True:
-        # handle items
-
-        res = res.Next()
-        if res is None:
-            break
-
+    # handle response
+    pass
 
 ```
 
@@ -50,7 +45,7 @@ if res is not None:
 
 ### Response
 
-**[models.ListSAMLConnectionsResponse](../../models/listsamlconnectionsresponse.md)**
+**[models.SAMLConnections](../../models/samlconnections.md)**
 
 ### Errors
 
@@ -107,7 +102,7 @@ if res is not None:
 
 ### Response
 
-**[models.SAMLConnection](../../models/samlconnection.md)**
+**[models.SchemasSAMLConnection](../../models/schemassamlconnection.md)**
 
 ### Errors
 
@@ -148,7 +143,7 @@ if res is not None:
 
 ### Response
 
-**[models.SAMLConnection](../../models/samlconnection.md)**
+**[models.SchemasSAMLConnection](../../models/schemassamlconnection.md)**
 
 ### Errors
 
@@ -177,7 +172,7 @@ res = s.saml_connections.update(saml_connection_id="saml_conn_123_update", name=
     "email_address": "user@example.com",
     "first_name": "Jane",
     "last_name": "Doe",
-}, active=True, sync_user_attributes=False, allow_subdomains=True, allow_idp_initiated=False)
+}, active=True, sync_user_attributes=False, allow_subdomains=True, allow_idp_initiated=False, disable_additional_identifications=False)
 
 if res is not None:
     # handle response
@@ -202,11 +197,12 @@ if res is not None:
 | `sync_user_attributes`                                                                                                              | *OptionalNullable[bool]*                                                                                                            | :heavy_minus_sign:                                                                                                                  | Controls whether to update the user's attributes in each sign-in                                                                    | false                                                                                                                               |
 | `allow_subdomains`                                                                                                                  | *OptionalNullable[bool]*                                                                                                            | :heavy_minus_sign:                                                                                                                  | Allow users with an email address subdomain to use this connection in order to authenticate                                         | true                                                                                                                                |
 | `allow_idp_initiated`                                                                                                               | *OptionalNullable[bool]*                                                                                                            | :heavy_minus_sign:                                                                                                                  | Enable or deactivate IdP-initiated flows                                                                                            | false                                                                                                                               |
+| `disable_additional_identifications`                                                                                                | *OptionalNullable[bool]*                                                                                                            | :heavy_minus_sign:                                                                                                                  | Enable or deactivate additional identifications                                                                                     |                                                                                                                                     |
 | `retries`                                                                                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                    | :heavy_minus_sign:                                                                                                                  | Configuration to override the default retry behavior of the client.                                                                 |                                                                                                                                     |
 
 ### Response
 
-**[models.SAMLConnection](../../models/samlconnection.md)**
+**[models.SchemasSAMLConnection](../../models/schemassamlconnection.md)**
 
 ### Errors
 

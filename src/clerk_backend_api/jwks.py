@@ -14,7 +14,7 @@ class Jwks(BaseSDK):
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
-    ):
+    ) -> Optional[models.WellKnownJWKS]:
         r"""Retrieve the JSON Web Key Set of the instance
 
         Retrieve the JSON Web Key Set of the instance
@@ -40,7 +40,7 @@ class Jwks(BaseSDK):
             request_has_path_params=False,
             request_has_query_params=True,
             user_agent_header="user-agent",
-            accept_header_value="*/*",
+            accept_header_value="application/json",
             security=self.sdk_configuration.security,
             timeout_ms=timeout_ms,
         )
@@ -66,8 +66,8 @@ class Jwks(BaseSDK):
             retry_config=retry_config
         )
         
-        if utils.match_response(http_res, "200", "*"):
-            return
+        if utils.match_response(http_res, "200", "application/json"):
+            return utils.unmarshal_json(http_res.text, Optional[models.WellKnownJWKS])
         if utils.match_response(http_res, ["4XX","5XX"], "*"):
             raise models.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
         
@@ -81,7 +81,7 @@ class Jwks(BaseSDK):
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
-    ):
+    ) -> Optional[models.WellKnownJWKS]:
         r"""Retrieve the JSON Web Key Set of the instance
 
         Retrieve the JSON Web Key Set of the instance
@@ -107,7 +107,7 @@ class Jwks(BaseSDK):
             request_has_path_params=False,
             request_has_query_params=True,
             user_agent_header="user-agent",
-            accept_header_value="*/*",
+            accept_header_value="application/json",
             security=self.sdk_configuration.security,
             timeout_ms=timeout_ms,
         )
@@ -133,8 +133,8 @@ class Jwks(BaseSDK):
             retry_config=retry_config
         )
         
-        if utils.match_response(http_res, "200", "*"):
-            return
+        if utils.match_response(http_res, "200", "application/json"):
+            return utils.unmarshal_json(http_res.text, Optional[models.WellKnownJWKS])
         if utils.match_response(http_res, ["4XX","5XX"], "*"):
             raise models.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
         

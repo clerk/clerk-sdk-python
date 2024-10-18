@@ -7,48 +7,16 @@ from typing import Any, Dict, Optional, TypedDict
 from typing_extensions import Annotated, NotRequired
 
 
-class UpdateUserMetadataPrivateMetadataTypedDict(TypedDict):
-    r"""Metadata saved on the user that is only visible to your backend.
-    The new object will be merged with the existing value.
-    """
-    
-    
-
-class UpdateUserMetadataPrivateMetadata(BaseModel):
-    r"""Metadata saved on the user that is only visible to your backend.
-    The new object will be merged with the existing value.
-    """
-    
-    
-
-class UpdateUserMetadataUnsafeMetadataTypedDict(TypedDict):
-    r"""Metadata saved on the user, that can be updated from both the Frontend and Backend APIs.
-    The new object will be merged with the existing value.
-
-    Note: Since this data can be modified from the frontend, it is not guaranteed to be safe.
-    """
-    
-    
-
-class UpdateUserMetadataUnsafeMetadata(BaseModel):
-    r"""Metadata saved on the user, that can be updated from both the Frontend and Backend APIs.
-    The new object will be merged with the existing value.
-
-    Note: Since this data can be modified from the frontend, it is not guaranteed to be safe.
-    """
-    
-    
-
 class UpdateUserMetadataRequestBodyTypedDict(TypedDict):
     public_metadata: NotRequired[Dict[str, Any]]
     r"""Metadata saved on the user, that is visible to both your frontend and backend.
     The new object will be merged with the existing value.
     """
-    private_metadata: NotRequired[UpdateUserMetadataPrivateMetadataTypedDict]
+    private_metadata: NotRequired[Dict[str, Any]]
     r"""Metadata saved on the user that is only visible to your backend.
     The new object will be merged with the existing value.
     """
-    unsafe_metadata: NotRequired[UpdateUserMetadataUnsafeMetadataTypedDict]
+    unsafe_metadata: NotRequired[Dict[str, Any]]
     r"""Metadata saved on the user, that can be updated from both the Frontend and Backend APIs.
     The new object will be merged with the existing value.
 
@@ -61,11 +29,11 @@ class UpdateUserMetadataRequestBody(BaseModel):
     r"""Metadata saved on the user, that is visible to both your frontend and backend.
     The new object will be merged with the existing value.
     """
-    private_metadata: Optional[UpdateUserMetadataPrivateMetadata] = None
+    private_metadata: Optional[Dict[str, Any]] = None
     r"""Metadata saved on the user that is only visible to your backend.
     The new object will be merged with the existing value.
     """
-    unsafe_metadata: Optional[UpdateUserMetadataUnsafeMetadata] = None
+    unsafe_metadata: Optional[Dict[str, Any]] = None
     r"""Metadata saved on the user, that can be updated from both the Frontend and Backend APIs.
     The new object will be merged with the existing value.
 

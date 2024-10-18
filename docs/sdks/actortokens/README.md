@@ -25,9 +25,7 @@ s = Clerk(
 
 res = s.actor_tokens.create(request={
     "user_id": "user_1a2b3c",
-    "actor": {
-        "sub": "user_2OEpKhcCN1Lat9NQ0G6puh7q5Rb",
-    },
+    "actor": {},
     "expires_in_seconds": 3600,
     "session_max_duration_in_seconds": 1800,
 })

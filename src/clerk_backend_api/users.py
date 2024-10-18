@@ -4,10 +4,12 @@ from .basesdk import BaseSDK
 from clerk_backend_api import models, utils
 from clerk_backend_api._hooks import HookContext
 from clerk_backend_api.types import OptionalNullable, UNSET
-from jsonpath import JSONPath
-from typing import Any, Dict, List, Optional, Union
+from typing import Any, List, Optional, Union
 
 class Users(BaseSDK):
+    r"""The user object represents a user that has successfully signed up to your application.
+    https://clerk.com/docs/reference/clerkjs/user
+    """
     
     
     def list(
@@ -245,7 +247,7 @@ class Users(BaseSDK):
         username: OptionalNullable[str] = UNSET,
         password: OptionalNullable[str] = UNSET,
         password_digest: Optional[str] = None,
-        password_hasher: Optional[models.PasswordHasher] = None,
+        password_hasher: Optional[str] = None,
         skip_password_checks: Optional[bool] = None,
         skip_password_requirement: Optional[bool] = None,
         totp_secret: Optional[str] = None,
@@ -253,6 +255,11 @@ class Users(BaseSDK):
         public_metadata: Optional[Union[models.CreateUserPublicMetadata, models.CreateUserPublicMetadataTypedDict]] = None,
         private_metadata: Optional[Union[models.CreateUserPrivateMetadata, models.CreateUserPrivateMetadataTypedDict]] = None,
         unsafe_metadata: Optional[Union[models.CreateUserUnsafeMetadata, models.CreateUserUnsafeMetadataTypedDict]] = None,
+        delete_self_enabled: OptionalNullable[bool] = UNSET,
+        legal_accepted_at: OptionalNullable[str] = UNSET,
+        skip_legal_checks: OptionalNullable[bool] = UNSET,
+        create_organization_enabled: OptionalNullable[bool] = UNSET,
+        create_organizations_limit: OptionalNullable[int] = UNSET,
         created_at: Optional[str] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -277,7 +284,7 @@ class Users(BaseSDK):
         :param username: The username to give to the user. It must be unique across your instance.
         :param password: The plaintext password to give the user. Must be at least 8 characters long, and can not be in any list of hacked passwords.
         :param password_digest: In case you already have the password digests and not the passwords, you can use them for the newly created user via this property. The digests should be generated with one of the supported algorithms. The hashing algorithm can be specified using the `password_hasher` property.
-        :param password_hasher: The hashing algorithm that was used to generate the password digest. The algorithms we support at the moment are [bcrypt](https://en.wikipedia.org/wiki/Bcrypt), [bcrypt_sha256_django](https://docs.djangoproject.com/en/4.0/topics/auth/passwords/), [md5](https://en.wikipedia.org/wiki/MD5), pbkdf2_sha256, pbkdf2_sha512, [pbkdf2_sha256_django](https://docs.djangoproject.com/en/4.0/topics/auth/passwords/), [phpass](https://www.openwall.com/phpass/), [scrypt_firebase](https://firebaseopensource.com/projects/firebase/scrypt/), [scrypt_werkzeug](https://werkzeug.palletsprojects.com/en/3.0.x/utils/#werkzeug.security.generate_password_hash), [sha256](https://en.wikipedia.org/wiki/SHA-2) and the [argon2](https://argon2.online/) variants argon2i and argon2id.  If you need support for any particular hashing algorithm, [please let us know](https://clerk.com/support).  Note: for password hashers considered insecure (at this moment MD5 and SHA256), the corresponding user password hashes will be transparently migrated to Bcrypt (a secure hasher) upon the user's first successful password sign in. Insecure schemes are marked with `(insecure)` in the list below.  Each of the supported hashers expects the incoming digest to be in a particular format. Specifically:  **bcrypt:** The digest should be of the following form:  `$<algorithm version>$<cost>$<salt & hash>`  **bcrypt_sha256_django:** This is the Django-specific variant of Bcrypt, using SHA256 hashing function. The format should be as follows (as exported from Django):  `bcrypt_sha256$$<algorithm version>$<cost>$<salt & hash>`  **md5** (insecure): The digest should follow the regular form e.g.:  `5f4dcc3b5aa765d61d8327deb882cf99`  **pbkdf2_sha256:** This is the PBKDF2 algorithm using the SHA256 hashing function. The format should be as follows:  `pbkdf2_sha256$<iterations>$<salt>$<hash>`  Note: Both the salt and the hash are expected to be base64-encoded.  **pbkdf2_sha512:** This is the PBKDF2 algorithm using the SHA512 hashing function. The format should be as follows:  `pbkdf2_sha512$<iterations>$<salt>$<hash>`    _iterations:_ The number of iterations used. Must be an integer less than 420000.   _salt:_ The salt used when generating the hash. Must be less than 1024 bytes.   _hash:_ The hex-encoded hash. Must have been generated with a key length less than 1024 bytes.  **pbkdf2_sha256_django:** This is the Django-specific variant of PBKDF2 and the digest should have the following format (as exported from Django):  `pbkdf2_sha256$<iterations>$<salt>$<hash>`  Note: The salt is expected to be un-encoded, the hash is expected base64-encoded.  **pbkdf2_sha1:** This is similar to pkbdf2_sha256_django, but with two differences: 1. uses sha1 instead of sha256 2. accepts the hash as a hex-encoded string  The format is the following:  `pbkdf2_sha1$<iterations>$<salt>$<hash-as-hex-string>`  **phpass:** Portable public domain password hashing framework for use in PHP applications. Digests hashed with phpass have the following sections:  The format is the following:  `$P$<rounds><salt><encoded-checksum>`  - $P$ is the prefix used to identify phpass hashes. - rounds is a single character encoding a 6-bit integer representing the number of rounds used. - salt is eight characters drawn from [./0-9A-Za-z], providing a 48-bit salt. - checksum is 22 characters drawn from the same set, encoding the 128-bit checksum with MD5.  **scrypt_firebase:** The Firebase-specific variant of scrypt. The value is expected to have 6 segments separated by the $ character and include the following information:  _hash:_ The actual Base64 hash. This can be retrieved when exporting the user from Firebase. _salt:_ The salt used to generate the above hash. Again, this is given when exporting the user. _signer key:_ The base64 encoded signer key. _salt separator:_ The base64 encoded salt separator. _rounds:_ The number of rounds the algorithm needs to run. _memory cost:_ The cost of the algorithm run  The first 2 (hash and salt) are per user and can be retrieved when exporting the user from Firebase. The other 4 values (signer key, salt separator, rounds and memory cost) are project-wide settings and can be retrieved from the project's password hash parameters.  Once you have all these, you can combine it in the following format and send this as the digest in order for Clerk to accept it:  `<hash>$<salt>$<signer key>$<salt separator>$<rounds>$<memory cost>`  **scrypt_werkzeug:** The Werkzeug-specific variant of scrypt.    The value is expected to have 3 segments separated by the $ character and include the following information:    _algorithm args:_ The algorithm used to generate the hash.   _salt:_ The salt used to generate the above hash.   _hash:_ The actual Base64 hash.    The algorithm args are the parameters used to generate the hash and are included in the digest.  **argon2i:** Algorithms in the argon2 family generate digests that encode the following information:  _version (v):_ The argon version, version 19 is assumed _memory (m):_ The memory used by the algorithm (in kibibytes) _iterations (t):_ The number of iterations to perform _parallelism (p):_ The number of threads to use  Parts are demarcated by the `$` character, with the first part identifying the algorithm variant. The middle part is a comma-separated list of the encoding options (memory, iterations, parallelism). The final part is the actual digest.  `$argon2i$v=19$m=4096,t=3,p=1$4t6CL3P7YiHBtwESXawI8Hm20zJj4cs7/4/G3c187e0$m7RQFczcKr5bIR0IIxbpO2P0tyrLjf3eUW3M3QSwnLc`  **argon2id:** See the previous algorithm for an explanation of the formatting.  For the argon2id case, the value of the algorithm in the first part of the digest is `argon2id`:  `$argon2id$v=19$m=64,t=4,p=8$Z2liZXJyaXNo$iGXEpMBTDYQ8G/71tF0qGjxRHEmR3gpGULcE93zUJVU`  **sha256** (insecure): The digest should be a 64-length hex string, e.g.:  `9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08`  **sha256_salted** (insecure): The digest should be a 64-length hex string with a salt.  The format is the following:   `<hash>$<salt>`    The value is expected to have 2 segments separated by the $ character and include the following information:   _hash:_ The sha256 hash, a 64-length hex string.   _salt:_ The salt used to generate the above hash. Must be between 1 and 1024 bits.
+        :param password_hasher: The hashing algorithm that was used to generate the password digest.  The algorithms we support at the moment are [`bcrypt`](https://en.wikipedia.org/wiki/Bcrypt), [`bcrypt_sha256_django`](https://docs.djangoproject.com/en/4.0/topics/auth/passwords/), [`md5`](https://en.wikipedia.org/wiki/MD5), `pbkdf2_sha1`, `pbkdf2_sha256`, [`pbkdf2_sha256_django`](https://docs.djangoproject.com/en/4.0/topics/auth/passwords/), [`phpass`](https://www.openwall.com/phpass/), [`scrypt_firebase`](https://firebaseopensource.com/projects/firebase/scrypt/), [`scrypt_werkzeug`](https://werkzeug.palletsprojects.com/en/3.0.x/utils/#werkzeug.security.generate_password_hash), [`sha256`](https://en.wikipedia.org/wiki/SHA-2), and the [`argon2`](https://argon2.online/) variants: `argon2i` and `argon2id`.  Each of the supported hashers expects the incoming digest to be in a particular format. See the [Clerk docs](https://clerk.com/docs/references/backend/user/create-user) for more information.
         :param skip_password_checks: When set to `true` all password checks are skipped. It is recommended to use this method only when migrating plaintext passwords to Clerk. Upon migration the user base should be prompted to pick stronger password.
         :param skip_password_requirement: When set to `true`, `password` is not required anymore when creating the user and can be omitted. This is useful when you are trying to create a user that doesn't have a password, in an instance that is using passwords. Please note that you cannot use this flag if password is the only way for a user to sign into your instance.
         :param totp_secret: In case TOTP is configured on the instance, you can provide the secret to enable it on the newly created user without the need to reset it. Please note that currently the supported options are: * Period: 30 seconds * Code length: 6 digits * Algorithm: SHA1
@@ -285,6 +292,11 @@ class Users(BaseSDK):
         :param public_metadata: Metadata saved on the user, that is visible to both your Frontend and Backend APIs
         :param private_metadata: Metadata saved on the user, that is only visible to your Backend API
         :param unsafe_metadata: Metadata saved on the user, that can be updated from both the Frontend and Backend APIs. Note: Since this data can be modified from the frontend, it is not guaranteed to be safe.
+        :param delete_self_enabled: If enabled, user can delete themselves via FAPI.
+        :param legal_accepted_at: A custom timestamp denoting _when_ the user accepted legal requirements, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`).
+        :param skip_legal_checks: When set to `true` all legal checks are skipped. It is not recommended to skip legal checks unless you are migrating a user to Clerk.
+        :param create_organization_enabled: If enabled, user can create organizations via FAPI.
+        :param create_organizations_limit: The maximum number of organizations the user can create. 0 means unlimited.
         :param created_at: A custom date/time denoting _when_ the user signed up to the application, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`).
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -316,6 +328,11 @@ class Users(BaseSDK):
             public_metadata=utils.get_pydantic_model(public_metadata, Optional[models.CreateUserPublicMetadata]),
             private_metadata=utils.get_pydantic_model(private_metadata, Optional[models.CreateUserPrivateMetadata]),
             unsafe_metadata=utils.get_pydantic_model(unsafe_metadata, Optional[models.CreateUserUnsafeMetadata]),
+            delete_self_enabled=delete_self_enabled,
+            legal_accepted_at=legal_accepted_at,
+            skip_legal_checks=skip_legal_checks,
+            create_organization_enabled=create_organization_enabled,
+            create_organizations_limit=create_organizations_limit,
             created_at=created_at,
         )
         
@@ -381,7 +398,7 @@ class Users(BaseSDK):
         username: OptionalNullable[str] = UNSET,
         password: OptionalNullable[str] = UNSET,
         password_digest: Optional[str] = None,
-        password_hasher: Optional[models.PasswordHasher] = None,
+        password_hasher: Optional[str] = None,
         skip_password_checks: Optional[bool] = None,
         skip_password_requirement: Optional[bool] = None,
         totp_secret: Optional[str] = None,
@@ -389,6 +406,11 @@ class Users(BaseSDK):
         public_metadata: Optional[Union[models.CreateUserPublicMetadata, models.CreateUserPublicMetadataTypedDict]] = None,
         private_metadata: Optional[Union[models.CreateUserPrivateMetadata, models.CreateUserPrivateMetadataTypedDict]] = None,
         unsafe_metadata: Optional[Union[models.CreateUserUnsafeMetadata, models.CreateUserUnsafeMetadataTypedDict]] = None,
+        delete_self_enabled: OptionalNullable[bool] = UNSET,
+        legal_accepted_at: OptionalNullable[str] = UNSET,
+        skip_legal_checks: OptionalNullable[bool] = UNSET,
+        create_organization_enabled: OptionalNullable[bool] = UNSET,
+        create_organizations_limit: OptionalNullable[int] = UNSET,
         created_at: Optional[str] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -413,7 +435,7 @@ class Users(BaseSDK):
         :param username: The username to give to the user. It must be unique across your instance.
         :param password: The plaintext password to give the user. Must be at least 8 characters long, and can not be in any list of hacked passwords.
         :param password_digest: In case you already have the password digests and not the passwords, you can use them for the newly created user via this property. The digests should be generated with one of the supported algorithms. The hashing algorithm can be specified using the `password_hasher` property.
-        :param password_hasher: The hashing algorithm that was used to generate the password digest. The algorithms we support at the moment are [bcrypt](https://en.wikipedia.org/wiki/Bcrypt), [bcrypt_sha256_django](https://docs.djangoproject.com/en/4.0/topics/auth/passwords/), [md5](https://en.wikipedia.org/wiki/MD5), pbkdf2_sha256, pbkdf2_sha512, [pbkdf2_sha256_django](https://docs.djangoproject.com/en/4.0/topics/auth/passwords/), [phpass](https://www.openwall.com/phpass/), [scrypt_firebase](https://firebaseopensource.com/projects/firebase/scrypt/), [scrypt_werkzeug](https://werkzeug.palletsprojects.com/en/3.0.x/utils/#werkzeug.security.generate_password_hash), [sha256](https://en.wikipedia.org/wiki/SHA-2) and the [argon2](https://argon2.online/) variants argon2i and argon2id.  If you need support for any particular hashing algorithm, [please let us know](https://clerk.com/support).  Note: for password hashers considered insecure (at this moment MD5 and SHA256), the corresponding user password hashes will be transparently migrated to Bcrypt (a secure hasher) upon the user's first successful password sign in. Insecure schemes are marked with `(insecure)` in the list below.  Each of the supported hashers expects the incoming digest to be in a particular format. Specifically:  **bcrypt:** The digest should be of the following form:  `$<algorithm version>$<cost>$<salt & hash>`  **bcrypt_sha256_django:** This is the Django-specific variant of Bcrypt, using SHA256 hashing function. The format should be as follows (as exported from Django):  `bcrypt_sha256$$<algorithm version>$<cost>$<salt & hash>`  **md5** (insecure): The digest should follow the regular form e.g.:  `5f4dcc3b5aa765d61d8327deb882cf99`  **pbkdf2_sha256:** This is the PBKDF2 algorithm using the SHA256 hashing function. The format should be as follows:  `pbkdf2_sha256$<iterations>$<salt>$<hash>`  Note: Both the salt and the hash are expected to be base64-encoded.  **pbkdf2_sha512:** This is the PBKDF2 algorithm using the SHA512 hashing function. The format should be as follows:  `pbkdf2_sha512$<iterations>$<salt>$<hash>`    _iterations:_ The number of iterations used. Must be an integer less than 420000.   _salt:_ The salt used when generating the hash. Must be less than 1024 bytes.   _hash:_ The hex-encoded hash. Must have been generated with a key length less than 1024 bytes.  **pbkdf2_sha256_django:** This is the Django-specific variant of PBKDF2 and the digest should have the following format (as exported from Django):  `pbkdf2_sha256$<iterations>$<salt>$<hash>`  Note: The salt is expected to be un-encoded, the hash is expected base64-encoded.  **pbkdf2_sha1:** This is similar to pkbdf2_sha256_django, but with two differences: 1. uses sha1 instead of sha256 2. accepts the hash as a hex-encoded string  The format is the following:  `pbkdf2_sha1$<iterations>$<salt>$<hash-as-hex-string>`  **phpass:** Portable public domain password hashing framework for use in PHP applications. Digests hashed with phpass have the following sections:  The format is the following:  `$P$<rounds><salt><encoded-checksum>`  - $P$ is the prefix used to identify phpass hashes. - rounds is a single character encoding a 6-bit integer representing the number of rounds used. - salt is eight characters drawn from [./0-9A-Za-z], providing a 48-bit salt. - checksum is 22 characters drawn from the same set, encoding the 128-bit checksum with MD5.  **scrypt_firebase:** The Firebase-specific variant of scrypt. The value is expected to have 6 segments separated by the $ character and include the following information:  _hash:_ The actual Base64 hash. This can be retrieved when exporting the user from Firebase. _salt:_ The salt used to generate the above hash. Again, this is given when exporting the user. _signer key:_ The base64 encoded signer key. _salt separator:_ The base64 encoded salt separator. _rounds:_ The number of rounds the algorithm needs to run. _memory cost:_ The cost of the algorithm run  The first 2 (hash and salt) are per user and can be retrieved when exporting the user from Firebase. The other 4 values (signer key, salt separator, rounds and memory cost) are project-wide settings and can be retrieved from the project's password hash parameters.  Once you have all these, you can combine it in the following format and send this as the digest in order for Clerk to accept it:  `<hash>$<salt>$<signer key>$<salt separator>$<rounds>$<memory cost>`  **scrypt_werkzeug:** The Werkzeug-specific variant of scrypt.    The value is expected to have 3 segments separated by the $ character and include the following information:    _algorithm args:_ The algorithm used to generate the hash.   _salt:_ The salt used to generate the above hash.   _hash:_ The actual Base64 hash.    The algorithm args are the parameters used to generate the hash and are included in the digest.  **argon2i:** Algorithms in the argon2 family generate digests that encode the following information:  _version (v):_ The argon version, version 19 is assumed _memory (m):_ The memory used by the algorithm (in kibibytes) _iterations (t):_ The number of iterations to perform _parallelism (p):_ The number of threads to use  Parts are demarcated by the `$` character, with the first part identifying the algorithm variant. The middle part is a comma-separated list of the encoding options (memory, iterations, parallelism). The final part is the actual digest.  `$argon2i$v=19$m=4096,t=3,p=1$4t6CL3P7YiHBtwESXawI8Hm20zJj4cs7/4/G3c187e0$m7RQFczcKr5bIR0IIxbpO2P0tyrLjf3eUW3M3QSwnLc`  **argon2id:** See the previous algorithm for an explanation of the formatting.  For the argon2id case, the value of the algorithm in the first part of the digest is `argon2id`:  `$argon2id$v=19$m=64,t=4,p=8$Z2liZXJyaXNo$iGXEpMBTDYQ8G/71tF0qGjxRHEmR3gpGULcE93zUJVU`  **sha256** (insecure): The digest should be a 64-length hex string, e.g.:  `9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08`  **sha256_salted** (insecure): The digest should be a 64-length hex string with a salt.  The format is the following:   `<hash>$<salt>`    The value is expected to have 2 segments separated by the $ character and include the following information:   _hash:_ The sha256 hash, a 64-length hex string.   _salt:_ The salt used to generate the above hash. Must be between 1 and 1024 bits.
+        :param password_hasher: The hashing algorithm that was used to generate the password digest.  The algorithms we support at the moment are [`bcrypt`](https://en.wikipedia.org/wiki/Bcrypt), [`bcrypt_sha256_django`](https://docs.djangoproject.com/en/4.0/topics/auth/passwords/), [`md5`](https://en.wikipedia.org/wiki/MD5), `pbkdf2_sha1`, `pbkdf2_sha256`, [`pbkdf2_sha256_django`](https://docs.djangoproject.com/en/4.0/topics/auth/passwords/), [`phpass`](https://www.openwall.com/phpass/), [`scrypt_firebase`](https://firebaseopensource.com/projects/firebase/scrypt/), [`scrypt_werkzeug`](https://werkzeug.palletsprojects.com/en/3.0.x/utils/#werkzeug.security.generate_password_hash), [`sha256`](https://en.wikipedia.org/wiki/SHA-2), and the [`argon2`](https://argon2.online/) variants: `argon2i` and `argon2id`.  Each of the supported hashers expects the incoming digest to be in a particular format. See the [Clerk docs](https://clerk.com/docs/references/backend/user/create-user) for more information.
         :param skip_password_checks: When set to `true` all password checks are skipped. It is recommended to use this method only when migrating plaintext passwords to Clerk. Upon migration the user base should be prompted to pick stronger password.
         :param skip_password_requirement: When set to `true`, `password` is not required anymore when creating the user and can be omitted. This is useful when you are trying to create a user that doesn't have a password, in an instance that is using passwords. Please note that you cannot use this flag if password is the only way for a user to sign into your instance.
         :param totp_secret: In case TOTP is configured on the instance, you can provide the secret to enable it on the newly created user without the need to reset it. Please note that currently the supported options are: * Period: 30 seconds * Code length: 6 digits * Algorithm: SHA1
@@ -421,6 +443,11 @@ class Users(BaseSDK):
         :param public_metadata: Metadata saved on the user, that is visible to both your Frontend and Backend APIs
         :param private_metadata: Metadata saved on the user, that is only visible to your Backend API
         :param unsafe_metadata: Metadata saved on the user, that can be updated from both the Frontend and Backend APIs. Note: Since this data can be modified from the frontend, it is not guaranteed to be safe.
+        :param delete_self_enabled: If enabled, user can delete themselves via FAPI.
+        :param legal_accepted_at: A custom timestamp denoting _when_ the user accepted legal requirements, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`).
+        :param skip_legal_checks: When set to `true` all legal checks are skipped. It is not recommended to skip legal checks unless you are migrating a user to Clerk.
+        :param create_organization_enabled: If enabled, user can create organizations via FAPI.
+        :param create_organizations_limit: The maximum number of organizations the user can create. 0 means unlimited.
         :param created_at: A custom date/time denoting _when_ the user signed up to the application, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`).
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -452,6 +479,11 @@ class Users(BaseSDK):
             public_metadata=utils.get_pydantic_model(public_metadata, Optional[models.CreateUserPublicMetadata]),
             private_metadata=utils.get_pydantic_model(private_metadata, Optional[models.CreateUserPrivateMetadata]),
             unsafe_metadata=utils.get_pydantic_model(unsafe_metadata, Optional[models.CreateUserUnsafeMetadata]),
+            delete_self_enabled=delete_self_enabled,
+            legal_accepted_at=legal_accepted_at,
+            skip_legal_checks=skip_legal_checks,
+            create_organization_enabled=create_organization_enabled,
+            create_organizations_limit=create_organizations_limit,
             created_at=created_at,
         )
         
@@ -868,7 +900,7 @@ class Users(BaseSDK):
         profile_image_id: OptionalNullable[str] = UNSET,
         password: OptionalNullable[str] = UNSET,
         password_digest: Optional[str] = None,
-        password_hasher: Optional[models.UpdateUserPasswordHasher] = None,
+        password_hasher: Optional[str] = None,
         skip_password_checks: OptionalNullable[bool] = UNSET,
         sign_out_of_other_sessions: OptionalNullable[bool] = UNSET,
         totp_secret: Optional[str] = None,
@@ -878,6 +910,9 @@ class Users(BaseSDK):
         unsafe_metadata: Optional[Union[models.UpdateUserUnsafeMetadata, models.UpdateUserUnsafeMetadataTypedDict]] = None,
         delete_self_enabled: OptionalNullable[bool] = UNSET,
         create_organization_enabled: OptionalNullable[bool] = UNSET,
+        legal_accepted_at: OptionalNullable[str] = UNSET,
+        skip_legal_checks: OptionalNullable[bool] = UNSET,
+        create_organizations_limit: OptionalNullable[int] = UNSET,
         created_at: Optional[str] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -910,7 +945,7 @@ class Users(BaseSDK):
         :param profile_image_id: The ID of the image to set as the user's profile image
         :param password: The plaintext password to give the user. Must be at least 8 characters long, and can not be in any list of hacked passwords.
         :param password_digest: In case you already have the password digests and not the passwords, you can use them for the newly created user via this property. The digests should be generated with one of the supported algorithms. The hashing algorithm can be specified using the `password_hasher` property.
-        :param password_hasher: The hashing algorithm that was used to generate the password digest. The algorithms we support at the moment are [bcrypt](https://en.wikipedia.org/wiki/Bcrypt), [bcrypt_sha256_django](https://docs.djangoproject.com/en/4.0/topics/auth/passwords/), [md5](https://en.wikipedia.org/wiki/MD5), pbkdf2_sha256, pbkdf2_sha512, [pbkdf2_sha256_django](https://docs.djangoproject.com/en/4.0/topics/auth/passwords/), [phpass](https://www.openwall.com/phpass/), [scrypt_firebase](https://firebaseopensource.com/projects/firebase/scrypt/), [sha256](https://en.wikipedia.org/wiki/SHA-2), [scrypt_werkzeug](https://werkzeug.palletsprojects.com/en/3.0.x/utils/#werkzeug.security.generate_password_hash) and the [argon2](https://argon2.online/) variants argon2i and argon2id.  If you need support for any particular hashing algorithm, [please let us know](https://clerk.com/support).  Note: for password hashers considered insecure (at this moment MD5 and SHA256), the corresponding user password hashes will be transparently migrated to Bcrypt (a secure hasher) upon the user's first successful password sign in. Insecure schemes are marked with `(insecure)` in the list below.  Each of the supported hashers expects the incoming digest to be in a particular format. Specifically:  **bcrypt:** The digest should be of the following form:  `$<algorithm version>$<cost>$<salt & hash>`  **bcrypt_sha256_django:** This is the Django-specific variant of Bcrypt, using SHA256 hashing function. The format should be as follows (as exported from Django):  `bcrypt_sha256$$<algorithm version>$<cost>$<salt & hash>`  **md5** (insecure): The digest should follow the regular form e.g.:  `5f4dcc3b5aa765d61d8327deb882cf99`  **pbkdf2_sha256:** This is the PBKDF2 algorithm using the SHA256 hashing function. The format should be as follows:  `pbkdf2_sha256$<iterations>$<salt>$<hash>`  Note: Both the salt and the hash are expected to be base64-encoded.  **pbkdf2_sha512:** This is the PBKDF2 algorithm using the SHA512 hashing function. The format should be as follows:  `pbkdf2_sha512$<iterations>$<salt>$<hash>`    _iterations:_ The number of iterations used. Must be an integer less than 420000.   _salt:_ The salt used when generating the hash. Must be less than bytes.   _hash:_ The hex-encoded hash. Must have been generated with a key length less than 1024 bytes.  **pbkdf2_sha256_django:** This is the Django-specific variant of PBKDF2 and the digest should have the following format (as exported from Django):  `pbkdf2_sha256$<iterations>$<salt>$<hash>`  Note: The salt is expected to be un-encoded, the hash is expected base64-encoded.  **pbkdf2_sha1:** This is similar to pkbdf2_sha256_django, but with two differences: 1. uses sha1 instead of sha256 2. accepts the hash as a hex-encoded string  The format is the following:  `pbkdf2_sha1$<iterations>$<salt>$<hash-as-hex-string>`  **phpass:** Portable public domain password hashing framework for use in PHP applications. Digests hashed with phpass have the following sections:  The format is the following:  `$P$<rounds><salt><encoded-checksum>`  - $P$ is the prefix used to identify phpass hashes. - rounds is a single character encoding a 6-bit integer representing the number of rounds used. - salt is eight characters drawn from [./0-9A-Za-z], providing a 48-bit salt. - checksum is 22 characters drawn from the same set, encoding the 128-bit checksum with MD5.  **scrypt_firebase:** The Firebase-specific variant of scrypt. The value is expected to have 6 segments separated by the $ character and include the following information:  _hash:_ The actual Base64 hash. This can be retrieved when exporting the user from Firebase. _salt:_ The salt used to generate the above hash. Again, this is given when exporting the user. _signer key:_ The base64 encoded signer key. _salt separator:_ The base64 encoded salt separator. _rounds:_ The number of rounds the algorithm needs to run. _memory cost:_ The cost of the algorithm run  The first 2 (hash and salt) are per user and can be retrieved when exporting the user from Firebase. The other 4 values (signer key, salt separator, rounds and memory cost) are project-wide settings and can be retrieved from the project's password hash parameters.  Once you have all these, you can combine it in the following format and send this as the digest in order for Clerk to accept it:  `<hash>$<salt>$<signer key>$<salt separator>$<rounds>$<memory cost>`  **scrypt_werkzeug:** The Werkzeug-specific variant of scrypt.  The value is expected to have 3 segments separated by the $ character and include the following information:  _algorithm args:_ The algorithm used to generate the hash. _salt:_ The salt used to generate the above hash. _hash:_ The actual Base64 hash.  The algorithm args are the parameters used to generate the hash and are included in the digest.  **argon2i:** Algorithms in the argon2 family generate digests that encode the following information:  _version (v):_ The argon version, version 19 is assumed _memory (m):_ The memory used by the algorithm (in kibibytes) _iterations (t):_ The number of iterations to perform _parallelism (p):_ The number of threads to use  Parts are demarcated by the `$` character, with the first part identifying the algorithm variant. The middle part is a comma-separated list of the encoding options (memory, iterations, parallelism). The final part is the actual digest.  `$argon2i$v=19$m=4096,t=3,p=1$4t6CL3P7YiHBtwESXawI8Hm20zJj4cs7/4/G3c187e0$m7RQFczcKr5bIR0IIxbpO2P0tyrLjf3eUW3M3QSwnLc`  **argon2id:** See the previous algorithm for an explanation of the formatting.  For the argon2id case, the value of the algorithm in the first part of the digest is `argon2id`:  `$argon2id$v=19$m=64,t=4,p=8$Z2liZXJyaXNo$iGXEpMBTDYQ8G/71tF0qGjxRHEmR3gpGULcE93zUJVU`  **sha256** (insecure): The digest should be a 64-length hex string, e.g.:  `9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08`
+        :param password_hasher: The hashing algorithm that was used to generate the password digest.  The algorithms we support at the moment are [`bcrypt`](https://en.wikipedia.org/wiki/Bcrypt), [`bcrypt_sha256_django`](https://docs.djangoproject.com/en/4.0/topics/auth/passwords/), [`md5`](https://en.wikipedia.org/wiki/MD5), `pbkdf2_sha1`, `pbkdf2_sha256`, [`pbkdf2_sha256_django`](https://docs.djangoproject.com/en/4.0/topics/auth/passwords/), [`phpass`](https://www.openwall.com/phpass/), [`scrypt_firebase`](https://firebaseopensource.com/projects/firebase/scrypt/), [`scrypt_werkzeug`](https://werkzeug.palletsprojects.com/en/3.0.x/utils/#werkzeug.security.generate_password_hash), [`sha256`](https://en.wikipedia.org/wiki/SHA-2), and the [`argon2`](https://argon2.online/) variants: `argon2i` and `argon2id`.  Each of the supported hashers expects the incoming digest to be in a particular format. See the [Clerk docs](https://clerk.com/docs/references/backend/user/create-user) for more information.
         :param skip_password_checks: Set it to `true` if you're updating the user's password and want to skip any password policy settings check. This parameter can only be used when providing a `password`.
         :param sign_out_of_other_sessions: Set to `true` to sign out the user from all their active sessions once their password is updated. This parameter can only be used when providing a `password`.
         :param totp_secret: In case TOTP is configured on the instance, you can provide the secret to enable it on the specific user without the need to reset it. Please note that currently the supported options are: * Period: 30 seconds * Code length: 6 digits * Algorithm: SHA1
@@ -920,6 +955,9 @@ class Users(BaseSDK):
         :param unsafe_metadata: Metadata saved on the user, that can be updated from both the Frontend and Backend APIs. Note: Since this data can be modified from the frontend, it is not guaranteed to be safe.
         :param delete_self_enabled: If true, the user can delete themselves with the Frontend API.
         :param create_organization_enabled: If true, the user can create organizations with the Frontend API.
+        :param legal_accepted_at: A custom timestamps denoting _when_ the user accepted legal requirements, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`).
+        :param skip_legal_checks: When set to `true` all legal checks are skipped. It is not recommended to skip legal checks unless you are migrating a user to Clerk.
+        :param create_organizations_limit: The maximum number of organizations the user can create. 0 means unlimited.
         :param created_at: A custom date/time denoting _when_ the user signed up to the application, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`).
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -957,6 +995,9 @@ class Users(BaseSDK):
                 unsafe_metadata=utils.get_pydantic_model(unsafe_metadata, Optional[models.UpdateUserUnsafeMetadata]),
                 delete_self_enabled=delete_self_enabled,
                 create_organization_enabled=create_organization_enabled,
+                legal_accepted_at=legal_accepted_at,
+                skip_legal_checks=skip_legal_checks,
+                create_organizations_limit=create_organizations_limit,
                 created_at=created_at,
             ),
         )
@@ -1026,7 +1067,7 @@ class Users(BaseSDK):
         profile_image_id: OptionalNullable[str] = UNSET,
         password: OptionalNullable[str] = UNSET,
         password_digest: Optional[str] = None,
-        password_hasher: Optional[models.UpdateUserPasswordHasher] = None,
+        password_hasher: Optional[str] = None,
         skip_password_checks: OptionalNullable[bool] = UNSET,
         sign_out_of_other_sessions: OptionalNullable[bool] = UNSET,
         totp_secret: Optional[str] = None,
@@ -1036,6 +1077,9 @@ class Users(BaseSDK):
         unsafe_metadata: Optional[Union[models.UpdateUserUnsafeMetadata, models.UpdateUserUnsafeMetadataTypedDict]] = None,
         delete_self_enabled: OptionalNullable[bool] = UNSET,
         create_organization_enabled: OptionalNullable[bool] = UNSET,
+        legal_accepted_at: OptionalNullable[str] = UNSET,
+        skip_legal_checks: OptionalNullable[bool] = UNSET,
+        create_organizations_limit: OptionalNullable[int] = UNSET,
         created_at: Optional[str] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -1068,7 +1112,7 @@ class Users(BaseSDK):
         :param profile_image_id: The ID of the image to set as the user's profile image
         :param password: The plaintext password to give the user. Must be at least 8 characters long, and can not be in any list of hacked passwords.
         :param password_digest: In case you already have the password digests and not the passwords, you can use them for the newly created user via this property. The digests should be generated with one of the supported algorithms. The hashing algorithm can be specified using the `password_hasher` property.
-        :param password_hasher: The hashing algorithm that was used to generate the password digest. The algorithms we support at the moment are [bcrypt](https://en.wikipedia.org/wiki/Bcrypt), [bcrypt_sha256_django](https://docs.djangoproject.com/en/4.0/topics/auth/passwords/), [md5](https://en.wikipedia.org/wiki/MD5), pbkdf2_sha256, pbkdf2_sha512, [pbkdf2_sha256_django](https://docs.djangoproject.com/en/4.0/topics/auth/passwords/), [phpass](https://www.openwall.com/phpass/), [scrypt_firebase](https://firebaseopensource.com/projects/firebase/scrypt/), [sha256](https://en.wikipedia.org/wiki/SHA-2), [scrypt_werkzeug](https://werkzeug.palletsprojects.com/en/3.0.x/utils/#werkzeug.security.generate_password_hash) and the [argon2](https://argon2.online/) variants argon2i and argon2id.  If you need support for any particular hashing algorithm, [please let us know](https://clerk.com/support).  Note: for password hashers considered insecure (at this moment MD5 and SHA256), the corresponding user password hashes will be transparently migrated to Bcrypt (a secure hasher) upon the user's first successful password sign in. Insecure schemes are marked with `(insecure)` in the list below.  Each of the supported hashers expects the incoming digest to be in a particular format. Specifically:  **bcrypt:** The digest should be of the following form:  `$<algorithm version>$<cost>$<salt & hash>`  **bcrypt_sha256_django:** This is the Django-specific variant of Bcrypt, using SHA256 hashing function. The format should be as follows (as exported from Django):  `bcrypt_sha256$$<algorithm version>$<cost>$<salt & hash>`  **md5** (insecure): The digest should follow the regular form e.g.:  `5f4dcc3b5aa765d61d8327deb882cf99`  **pbkdf2_sha256:** This is the PBKDF2 algorithm using the SHA256 hashing function. The format should be as follows:  `pbkdf2_sha256$<iterations>$<salt>$<hash>`  Note: Both the salt and the hash are expected to be base64-encoded.  **pbkdf2_sha512:** This is the PBKDF2 algorithm using the SHA512 hashing function. The format should be as follows:  `pbkdf2_sha512$<iterations>$<salt>$<hash>`    _iterations:_ The number of iterations used. Must be an integer less than 420000.   _salt:_ The salt used when generating the hash. Must be less than bytes.   _hash:_ The hex-encoded hash. Must have been generated with a key length less than 1024 bytes.  **pbkdf2_sha256_django:** This is the Django-specific variant of PBKDF2 and the digest should have the following format (as exported from Django):  `pbkdf2_sha256$<iterations>$<salt>$<hash>`  Note: The salt is expected to be un-encoded, the hash is expected base64-encoded.  **pbkdf2_sha1:** This is similar to pkbdf2_sha256_django, but with two differences: 1. uses sha1 instead of sha256 2. accepts the hash as a hex-encoded string  The format is the following:  `pbkdf2_sha1$<iterations>$<salt>$<hash-as-hex-string>`  **phpass:** Portable public domain password hashing framework for use in PHP applications. Digests hashed with phpass have the following sections:  The format is the following:  `$P$<rounds><salt><encoded-checksum>`  - $P$ is the prefix used to identify phpass hashes. - rounds is a single character encoding a 6-bit integer representing the number of rounds used. - salt is eight characters drawn from [./0-9A-Za-z], providing a 48-bit salt. - checksum is 22 characters drawn from the same set, encoding the 128-bit checksum with MD5.  **scrypt_firebase:** The Firebase-specific variant of scrypt. The value is expected to have 6 segments separated by the $ character and include the following information:  _hash:_ The actual Base64 hash. This can be retrieved when exporting the user from Firebase. _salt:_ The salt used to generate the above hash. Again, this is given when exporting the user. _signer key:_ The base64 encoded signer key. _salt separator:_ The base64 encoded salt separator. _rounds:_ The number of rounds the algorithm needs to run. _memory cost:_ The cost of the algorithm run  The first 2 (hash and salt) are per user and can be retrieved when exporting the user from Firebase. The other 4 values (signer key, salt separator, rounds and memory cost) are project-wide settings and can be retrieved from the project's password hash parameters.  Once you have all these, you can combine it in the following format and send this as the digest in order for Clerk to accept it:  `<hash>$<salt>$<signer key>$<salt separator>$<rounds>$<memory cost>`  **scrypt_werkzeug:** The Werkzeug-specific variant of scrypt.  The value is expected to have 3 segments separated by the $ character and include the following information:  _algorithm args:_ The algorithm used to generate the hash. _salt:_ The salt used to generate the above hash. _hash:_ The actual Base64 hash.  The algorithm args are the parameters used to generate the hash and are included in the digest.  **argon2i:** Algorithms in the argon2 family generate digests that encode the following information:  _version (v):_ The argon version, version 19 is assumed _memory (m):_ The memory used by the algorithm (in kibibytes) _iterations (t):_ The number of iterations to perform _parallelism (p):_ The number of threads to use  Parts are demarcated by the `$` character, with the first part identifying the algorithm variant. The middle part is a comma-separated list of the encoding options (memory, iterations, parallelism). The final part is the actual digest.  `$argon2i$v=19$m=4096,t=3,p=1$4t6CL3P7YiHBtwESXawI8Hm20zJj4cs7/4/G3c187e0$m7RQFczcKr5bIR0IIxbpO2P0tyrLjf3eUW3M3QSwnLc`  **argon2id:** See the previous algorithm for an explanation of the formatting.  For the argon2id case, the value of the algorithm in the first part of the digest is `argon2id`:  `$argon2id$v=19$m=64,t=4,p=8$Z2liZXJyaXNo$iGXEpMBTDYQ8G/71tF0qGjxRHEmR3gpGULcE93zUJVU`  **sha256** (insecure): The digest should be a 64-length hex string, e.g.:  `9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08`
+        :param password_hasher: The hashing algorithm that was used to generate the password digest.  The algorithms we support at the moment are [`bcrypt`](https://en.wikipedia.org/wiki/Bcrypt), [`bcrypt_sha256_django`](https://docs.djangoproject.com/en/4.0/topics/auth/passwords/), [`md5`](https://en.wikipedia.org/wiki/MD5), `pbkdf2_sha1`, `pbkdf2_sha256`, [`pbkdf2_sha256_django`](https://docs.djangoproject.com/en/4.0/topics/auth/passwords/), [`phpass`](https://www.openwall.com/phpass/), [`scrypt_firebase`](https://firebaseopensource.com/projects/firebase/scrypt/), [`scrypt_werkzeug`](https://werkzeug.palletsprojects.com/en/3.0.x/utils/#werkzeug.security.generate_password_hash), [`sha256`](https://en.wikipedia.org/wiki/SHA-2), and the [`argon2`](https://argon2.online/) variants: `argon2i` and `argon2id`.  Each of the supported hashers expects the incoming digest to be in a particular format. See the [Clerk docs](https://clerk.com/docs/references/backend/user/create-user) for more information.
         :param skip_password_checks: Set it to `true` if you're updating the user's password and want to skip any password policy settings check. This parameter can only be used when providing a `password`.
         :param sign_out_of_other_sessions: Set to `true` to sign out the user from all their active sessions once their password is updated. This parameter can only be used when providing a `password`.
         :param totp_secret: In case TOTP is configured on the instance, you can provide the secret to enable it on the specific user without the need to reset it. Please note that currently the supported options are: * Period: 30 seconds * Code length: 6 digits * Algorithm: SHA1
@@ -1078,6 +1122,9 @@ class Users(BaseSDK):
         :param unsafe_metadata: Metadata saved on the user, that can be updated from both the Frontend and Backend APIs. Note: Since this data can be modified from the frontend, it is not guaranteed to be safe.
         :param delete_self_enabled: If true, the user can delete themselves with the Frontend API.
         :param create_organization_enabled: If true, the user can create organizations with the Frontend API.
+        :param legal_accepted_at: A custom timestamps denoting _when_ the user accepted legal requirements, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`).
+        :param skip_legal_checks: When set to `true` all legal checks are skipped. It is not recommended to skip legal checks unless you are migrating a user to Clerk.
+        :param create_organizations_limit: The maximum number of organizations the user can create. 0 means unlimited.
         :param created_at: A custom date/time denoting _when_ the user signed up to the application, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`).
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -1115,6 +1162,9 @@ class Users(BaseSDK):
                 unsafe_metadata=utils.get_pydantic_model(unsafe_metadata, Optional[models.UpdateUserUnsafeMetadata]),
                 delete_self_enabled=delete_self_enabled,
                 create_organization_enabled=create_organization_enabled,
+                legal_accepted_at=legal_accepted_at,
+                skip_legal_checks=skip_legal_checks,
+                create_organizations_limit=create_organizations_limit,
                 created_at=created_at,
             ),
         )
@@ -2518,14 +2568,14 @@ class Users(BaseSDK):
         http_res = self.do_request(
             hook_ctx=HookContext(operation_id="GetOAuthAccessToken", oauth2_scopes=[], security_source=self.sdk_configuration.security),
             request=req,
-            error_status_codes=["422","4XX","5XX"],
+            error_status_codes=["400","422","4XX","5XX"],
             retry_config=retry_config
         )
         
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[List[models.ResponseBody]])
-        if utils.match_response(http_res, "422", "application/json"):
+        if utils.match_response(http_res, ["400","422"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
         if utils.match_response(http_res, ["4XX","5XX"], "*"):
@@ -2600,14 +2650,14 @@ class Users(BaseSDK):
         http_res = await self.do_request_async(
             hook_ctx=HookContext(operation_id="GetOAuthAccessToken", oauth2_scopes=[], security_source=self.sdk_configuration.security),
             request=req,
-            error_status_codes=["422","4XX","5XX"],
+            error_status_codes=["400","422","4XX","5XX"],
             retry_config=retry_config
         )
         
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[List[models.ResponseBody]])
-        if utils.match_response(http_res, "422", "application/json"):
+        if utils.match_response(http_res, ["400","422"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
         if utils.match_response(http_res, ["4XX","5XX"], "*"):
@@ -2626,7 +2676,7 @@ class Users(BaseSDK):
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
-    ) -> models.UsersGetOrganizationMembershipsResponse:
+    ) -> Optional[models.OrganizationMemberships]:
         r"""Retrieve all memberships for a user
 
         Retrieve a paginated list of the user's organization memberships
@@ -2688,30 +2738,9 @@ class Users(BaseSDK):
             retry_config=retry_config
         )
         
-        def next_func() -> Optional[models.UsersGetOrganizationMembershipsResponse]:
-            body = utils.unmarshal_json(http_res.text, Dict[Any, Any])
-            offset = request.offset if not request.offset is None else 0
-
-            if not http_res.text:
-                return None
-            results = JSONPath("$").parse(body)
-            if len(results) == 0 or len(results[0]) == 0:
-                return None
-            limit = request.limit if not request.limit is None else 0
-            if len(results[0]) < limit:
-                return None
-            next_offset = offset + len(results[0])
-
-            return self.get_organization_memberships(
-                user_id=user_id,
-                limit=limit,
-                offset=next_offset,
-                retries=retries,
-            )
-        
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return models.UsersGetOrganizationMembershipsResponse(result=utils.unmarshal_json(http_res.text, Optional[models.OrganizationMemberships]), next=next_func)
+            return utils.unmarshal_json(http_res.text, Optional[models.OrganizationMemberships])
         if utils.match_response(http_res, "403", "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
@@ -2731,7 +2760,7 @@ class Users(BaseSDK):
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
-    ) -> models.UsersGetOrganizationMembershipsResponse:
+    ) -> Optional[models.OrganizationMemberships]:
         r"""Retrieve all memberships for a user
 
         Retrieve a paginated list of the user's organization memberships
@@ -2793,31 +2822,184 @@ class Users(BaseSDK):
             retry_config=retry_config
         )
         
-        def next_func() -> Optional[models.UsersGetOrganizationMembershipsResponse]:
-            body = utils.unmarshal_json(http_res.text, Dict[Any, Any])
-            offset = request.offset if not request.offset is None else 0
+        data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return utils.unmarshal_json(http_res.text, Optional[models.OrganizationMemberships])
+        if utils.match_response(http_res, "403", "application/json"):
+            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=data)
+        if utils.match_response(http_res, ["4XX","5XX"], "*"):
+            raise models.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
+        
+        content_type = http_res.headers.get("Content-Type")
+        raise models.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
 
-            if not http_res.text:
-                return None
-            results = JSONPath("$").parse(body)
-            if len(results) == 0 or len(results[0]) == 0:
-                return None
-            limit = request.limit if not request.limit is None else 0
-            if len(results[0]) < limit:
-                return None
-            next_offset = offset + len(results[0])
+    
+    
+    def get_organization_invitations(
+        self, *,
+        user_id: str,
+        limit: Optional[int] = 10,
+        offset: Optional[int] = 0,
+        status: Optional[models.UsersGetOrganizationInvitationsQueryParamStatus] = None,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+    ) -> Optional[models.OrganizationInvitationsWithPublicOrganizationData]:
+        r"""Retrieve all invitations for a user
 
-            return self.get_organization_memberships(
-                user_id=user_id,
-                limit=limit,
-                offset=next_offset,
-                retries=retries,
-            )
+        Retrieve a paginated list of the user's organization invitations
+
+        :param user_id: The ID of the user whose organization invitations we want to retrieve
+        :param limit: Applies a limit to the number of results returned. Can be used for paginating the results together with `offset`.
+        :param offset: Skip the first `offset` results when paginating. Needs to be an integer greater or equal to zero. To be used in conjunction with `limit`.
+        :param status: Filter organization invitations based on their status
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+        
+        if server_url is not None:
+            base_url = server_url
+        
+        request = models.UsersGetOrganizationInvitationsRequest(
+            user_id=user_id,
+            limit=limit,
+            offset=offset,
+            status=status,
+        )
+        
+        req = self.build_request(
+            method="GET",
+            path="/users/{user_id}/organization_invitations",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            security=self.sdk_configuration.security,
+            timeout_ms=timeout_ms,
+        )
+        
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, [
+                "429",
+                "500",
+                "502",
+                "503",
+                "504"
+            ])                
+        
+        http_res = self.do_request(
+            hook_ctx=HookContext(operation_id="UsersGetOrganizationInvitations", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            request=req,
+            error_status_codes=["400","403","404","4XX","5XX"],
+            retry_config=retry_config
+        )
         
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return models.UsersGetOrganizationMembershipsResponse(result=utils.unmarshal_json(http_res.text, Optional[models.OrganizationMemberships]), next=next_func)
-        if utils.match_response(http_res, "403", "application/json"):
+            return utils.unmarshal_json(http_res.text, Optional[models.OrganizationInvitationsWithPublicOrganizationData])
+        if utils.match_response(http_res, ["400","403","404"], "application/json"):
+            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=data)
+        if utils.match_response(http_res, ["4XX","5XX"], "*"):
+            raise models.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
+        
+        content_type = http_res.headers.get("Content-Type")
+        raise models.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+
+    
+    
+    async def get_organization_invitations_async(
+        self, *,
+        user_id: str,
+        limit: Optional[int] = 10,
+        offset: Optional[int] = 0,
+        status: Optional[models.UsersGetOrganizationInvitationsQueryParamStatus] = None,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+    ) -> Optional[models.OrganizationInvitationsWithPublicOrganizationData]:
+        r"""Retrieve all invitations for a user
+
+        Retrieve a paginated list of the user's organization invitations
+
+        :param user_id: The ID of the user whose organization invitations we want to retrieve
+        :param limit: Applies a limit to the number of results returned. Can be used for paginating the results together with `offset`.
+        :param offset: Skip the first `offset` results when paginating. Needs to be an integer greater or equal to zero. To be used in conjunction with `limit`.
+        :param status: Filter organization invitations based on their status
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+        
+        if server_url is not None:
+            base_url = server_url
+        
+        request = models.UsersGetOrganizationInvitationsRequest(
+            user_id=user_id,
+            limit=limit,
+            offset=offset,
+            status=status,
+        )
+        
+        req = self.build_request(
+            method="GET",
+            path="/users/{user_id}/organization_invitations",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            security=self.sdk_configuration.security,
+            timeout_ms=timeout_ms,
+        )
+        
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, [
+                "429",
+                "500",
+                "502",
+                "503",
+                "504"
+            ])                
+        
+        http_res = await self.do_request_async(
+            hook_ctx=HookContext(operation_id="UsersGetOrganizationInvitations", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            request=req,
+            error_status_codes=["400","403","404","4XX","5XX"],
+            retry_config=retry_config
+        )
+        
+        data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return utils.unmarshal_json(http_res.text, Optional[models.OrganizationInvitationsWithPublicOrganizationData])
+        if utils.match_response(http_res, ["400","403","404"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
         if utils.match_response(http_res, ["4XX","5XX"], "*"):
@@ -3310,6 +3492,962 @@ class Users(BaseSDK):
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[models.DisableMFAResponseBody])
         if utils.match_response(http_res, ["404","500"], "application/json"):
+            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=data)
+        if utils.match_response(http_res, ["4XX","5XX"], "*"):
+            raise models.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
+        
+        content_type = http_res.headers.get("Content-Type")
+        raise models.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+
+    
+    
+    def delete_backup_codes(
+        self, *,
+        user_id: str,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+    ) -> Optional[models.DeleteBackupCodeResponseBody]:
+        r"""Disable all user's Backup codes
+
+        Disable all of a user's backup codes.
+
+        :param user_id: The ID of the user whose backup codes are to be deleted.
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+        
+        if server_url is not None:
+            base_url = server_url
+        
+        request = models.DeleteBackupCodeRequest(
+            user_id=user_id,
+        )
+        
+        req = self.build_request(
+            method="DELETE",
+            path="/users/{user_id}/backup_code",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            security=self.sdk_configuration.security,
+            timeout_ms=timeout_ms,
+        )
+        
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, [
+                "429",
+                "500",
+                "502",
+                "503",
+                "504"
+            ])                
+        
+        http_res = self.do_request(
+            hook_ctx=HookContext(operation_id="DeleteBackupCode", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            request=req,
+            error_status_codes=["404","4XX","500","5XX"],
+            retry_config=retry_config
+        )
+        
+        data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return utils.unmarshal_json(http_res.text, Optional[models.DeleteBackupCodeResponseBody])
+        if utils.match_response(http_res, ["404","500"], "application/json"):
+            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=data)
+        if utils.match_response(http_res, ["4XX","5XX"], "*"):
+            raise models.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
+        
+        content_type = http_res.headers.get("Content-Type")
+        raise models.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+
+    
+    
+    async def delete_backup_codes_async(
+        self, *,
+        user_id: str,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+    ) -> Optional[models.DeleteBackupCodeResponseBody]:
+        r"""Disable all user's Backup codes
+
+        Disable all of a user's backup codes.
+
+        :param user_id: The ID of the user whose backup codes are to be deleted.
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+        
+        if server_url is not None:
+            base_url = server_url
+        
+        request = models.DeleteBackupCodeRequest(
+            user_id=user_id,
+        )
+        
+        req = self.build_request(
+            method="DELETE",
+            path="/users/{user_id}/backup_code",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            security=self.sdk_configuration.security,
+            timeout_ms=timeout_ms,
+        )
+        
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, [
+                "429",
+                "500",
+                "502",
+                "503",
+                "504"
+            ])                
+        
+        http_res = await self.do_request_async(
+            hook_ctx=HookContext(operation_id="DeleteBackupCode", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            request=req,
+            error_status_codes=["404","4XX","500","5XX"],
+            retry_config=retry_config
+        )
+        
+        data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return utils.unmarshal_json(http_res.text, Optional[models.DeleteBackupCodeResponseBody])
+        if utils.match_response(http_res, ["404","500"], "application/json"):
+            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=data)
+        if utils.match_response(http_res, ["4XX","5XX"], "*"):
+            raise models.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
+        
+        content_type = http_res.headers.get("Content-Type")
+        raise models.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+
+    
+    
+    def delete_passkey(
+        self, *,
+        user_id: str,
+        passkey_identification_id: str,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+    ) -> Optional[models.DeletedObject]:
+        r"""Delete a user passkey
+
+        Delete the passkey identification for a given user and notify them through email.
+
+        :param user_id: The ID of the user that owns the passkey identity
+        :param passkey_identification_id: The ID of the passkey identity to be deleted
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+        
+        if server_url is not None:
+            base_url = server_url
+        
+        request = models.UserPasskeyDeleteRequest(
+            user_id=user_id,
+            passkey_identification_id=passkey_identification_id,
+        )
+        
+        req = self.build_request(
+            method="DELETE",
+            path="/users/{user_id}/passkeys/{passkey_identification_id}",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            security=self.sdk_configuration.security,
+            timeout_ms=timeout_ms,
+        )
+        
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, [
+                "429",
+                "500",
+                "502",
+                "503",
+                "504"
+            ])                
+        
+        http_res = self.do_request(
+            hook_ctx=HookContext(operation_id="UserPasskeyDelete", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            request=req,
+            error_status_codes=["403","404","4XX","500","5XX"],
+            retry_config=retry_config
+        )
+        
+        data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return utils.unmarshal_json(http_res.text, Optional[models.DeletedObject])
+        if utils.match_response(http_res, ["403","404","500"], "application/json"):
+            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=data)
+        if utils.match_response(http_res, ["4XX","5XX"], "*"):
+            raise models.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
+        
+        content_type = http_res.headers.get("Content-Type")
+        raise models.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+
+    
+    
+    async def delete_passkey_async(
+        self, *,
+        user_id: str,
+        passkey_identification_id: str,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+    ) -> Optional[models.DeletedObject]:
+        r"""Delete a user passkey
+
+        Delete the passkey identification for a given user and notify them through email.
+
+        :param user_id: The ID of the user that owns the passkey identity
+        :param passkey_identification_id: The ID of the passkey identity to be deleted
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+        
+        if server_url is not None:
+            base_url = server_url
+        
+        request = models.UserPasskeyDeleteRequest(
+            user_id=user_id,
+            passkey_identification_id=passkey_identification_id,
+        )
+        
+        req = self.build_request(
+            method="DELETE",
+            path="/users/{user_id}/passkeys/{passkey_identification_id}",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            security=self.sdk_configuration.security,
+            timeout_ms=timeout_ms,
+        )
+        
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, [
+                "429",
+                "500",
+                "502",
+                "503",
+                "504"
+            ])                
+        
+        http_res = await self.do_request_async(
+            hook_ctx=HookContext(operation_id="UserPasskeyDelete", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            request=req,
+            error_status_codes=["403","404","4XX","500","5XX"],
+            retry_config=retry_config
+        )
+        
+        data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return utils.unmarshal_json(http_res.text, Optional[models.DeletedObject])
+        if utils.match_response(http_res, ["403","404","500"], "application/json"):
+            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=data)
+        if utils.match_response(http_res, ["4XX","5XX"], "*"):
+            raise models.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
+        
+        content_type = http_res.headers.get("Content-Type")
+        raise models.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+
+    
+    
+    def delete_web3_wallet(
+        self, *,
+        user_id: str,
+        web3_wallet_identification_id: str,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+    ) -> Optional[models.DeletedObject]:
+        r"""Delete a user web3 wallet
+
+        Delete the web3 wallet identification for a given user.
+
+        :param user_id: The ID of the user that owns the web3 wallet
+        :param web3_wallet_identification_id: The ID of the web3 wallet identity to be deleted
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+        
+        if server_url is not None:
+            base_url = server_url
+        
+        request = models.UserWeb3WalletDeleteRequest(
+            user_id=user_id,
+            web3_wallet_identification_id=web3_wallet_identification_id,
+        )
+        
+        req = self.build_request(
+            method="DELETE",
+            path="/users/{user_id}/web3_wallets/{web3_wallet_identification_id}",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            security=self.sdk_configuration.security,
+            timeout_ms=timeout_ms,
+        )
+        
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, [
+                "429",
+                "500",
+                "502",
+                "503",
+                "504"
+            ])                
+        
+        http_res = self.do_request(
+            hook_ctx=HookContext(operation_id="UserWeb3WalletDelete", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            request=req,
+            error_status_codes=["400","403","404","4XX","500","5XX"],
+            retry_config=retry_config
+        )
+        
+        data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return utils.unmarshal_json(http_res.text, Optional[models.DeletedObject])
+        if utils.match_response(http_res, ["400","403","404","500"], "application/json"):
+            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=data)
+        if utils.match_response(http_res, ["4XX","5XX"], "*"):
+            raise models.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
+        
+        content_type = http_res.headers.get("Content-Type")
+        raise models.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+
+    
+    
+    async def delete_web3_wallet_async(
+        self, *,
+        user_id: str,
+        web3_wallet_identification_id: str,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+    ) -> Optional[models.DeletedObject]:
+        r"""Delete a user web3 wallet
+
+        Delete the web3 wallet identification for a given user.
+
+        :param user_id: The ID of the user that owns the web3 wallet
+        :param web3_wallet_identification_id: The ID of the web3 wallet identity to be deleted
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+        
+        if server_url is not None:
+            base_url = server_url
+        
+        request = models.UserWeb3WalletDeleteRequest(
+            user_id=user_id,
+            web3_wallet_identification_id=web3_wallet_identification_id,
+        )
+        
+        req = self.build_request(
+            method="DELETE",
+            path="/users/{user_id}/web3_wallets/{web3_wallet_identification_id}",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            security=self.sdk_configuration.security,
+            timeout_ms=timeout_ms,
+        )
+        
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, [
+                "429",
+                "500",
+                "502",
+                "503",
+                "504"
+            ])                
+        
+        http_res = await self.do_request_async(
+            hook_ctx=HookContext(operation_id="UserWeb3WalletDelete", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            request=req,
+            error_status_codes=["400","403","404","4XX","500","5XX"],
+            retry_config=retry_config
+        )
+        
+        data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return utils.unmarshal_json(http_res.text, Optional[models.DeletedObject])
+        if utils.match_response(http_res, ["400","403","404","500"], "application/json"):
+            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=data)
+        if utils.match_response(http_res, ["4XX","5XX"], "*"):
+            raise models.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
+        
+        content_type = http_res.headers.get("Content-Type")
+        raise models.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+
+    
+    
+    def create_totp(
+        self, *,
+        user_id: str,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+    ) -> Optional[models.Totp]:
+        r"""Create a TOTP for a user
+
+        Creates a TOTP (Time-based One-Time Password) for a given user, returning both the TOTP secret and the URI.
+
+
+        :param user_id: The ID of the user for whom the TOTP is being created.
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+        
+        if server_url is not None:
+            base_url = server_url
+        
+        request = models.CreateUserTOTPRequest(
+            user_id=user_id,
+        )
+        
+        req = self.build_request(
+            method="POST",
+            path="/users/{user_id}/totp",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            security=self.sdk_configuration.security,
+            timeout_ms=timeout_ms,
+        )
+        
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, [
+                "429",
+                "500",
+                "502",
+                "503",
+                "504"
+            ])                
+        
+        http_res = self.do_request(
+            hook_ctx=HookContext(operation_id="CreateUserTOTP", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            request=req,
+            error_status_codes=["403","404","4XX","500","5XX"],
+            retry_config=retry_config
+        )
+        
+        data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return utils.unmarshal_json(http_res.text, Optional[models.Totp])
+        if utils.match_response(http_res, ["403","404","500"], "application/json"):
+            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=data)
+        if utils.match_response(http_res, ["4XX","5XX"], "*"):
+            raise models.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
+        
+        content_type = http_res.headers.get("Content-Type")
+        raise models.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+
+    
+    
+    async def create_totp_async(
+        self, *,
+        user_id: str,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+    ) -> Optional[models.Totp]:
+        r"""Create a TOTP for a user
+
+        Creates a TOTP (Time-based One-Time Password) for a given user, returning both the TOTP secret and the URI.
+
+
+        :param user_id: The ID of the user for whom the TOTP is being created.
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+        
+        if server_url is not None:
+            base_url = server_url
+        
+        request = models.CreateUserTOTPRequest(
+            user_id=user_id,
+        )
+        
+        req = self.build_request(
+            method="POST",
+            path="/users/{user_id}/totp",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            security=self.sdk_configuration.security,
+            timeout_ms=timeout_ms,
+        )
+        
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, [
+                "429",
+                "500",
+                "502",
+                "503",
+                "504"
+            ])                
+        
+        http_res = await self.do_request_async(
+            hook_ctx=HookContext(operation_id="CreateUserTOTP", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            request=req,
+            error_status_codes=["403","404","4XX","500","5XX"],
+            retry_config=retry_config
+        )
+        
+        data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return utils.unmarshal_json(http_res.text, Optional[models.Totp])
+        if utils.match_response(http_res, ["403","404","500"], "application/json"):
+            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=data)
+        if utils.match_response(http_res, ["4XX","5XX"], "*"):
+            raise models.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
+        
+        content_type = http_res.headers.get("Content-Type")
+        raise models.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+
+    
+    
+    def delete_totp(
+        self, *,
+        user_id: str,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+    ) -> Optional[models.DeleteTOTPResponseBody]:
+        r"""Delete all the user's TOTPs
+
+        Deletes all of the user's TOTPs.
+
+        :param user_id: The ID of the user whose TOTPs are to be deleted
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+        
+        if server_url is not None:
+            base_url = server_url
+        
+        request = models.DeleteTOTPRequest(
+            user_id=user_id,
+        )
+        
+        req = self.build_request(
+            method="DELETE",
+            path="/users/{user_id}/totp",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            security=self.sdk_configuration.security,
+            timeout_ms=timeout_ms,
+        )
+        
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, [
+                "429",
+                "500",
+                "502",
+                "503",
+                "504"
+            ])                
+        
+        http_res = self.do_request(
+            hook_ctx=HookContext(operation_id="DeleteTOTP", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            request=req,
+            error_status_codes=["404","4XX","500","5XX"],
+            retry_config=retry_config
+        )
+        
+        data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return utils.unmarshal_json(http_res.text, Optional[models.DeleteTOTPResponseBody])
+        if utils.match_response(http_res, ["404","500"], "application/json"):
+            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=data)
+        if utils.match_response(http_res, ["4XX","5XX"], "*"):
+            raise models.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
+        
+        content_type = http_res.headers.get("Content-Type")
+        raise models.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+
+    
+    
+    async def delete_totp_async(
+        self, *,
+        user_id: str,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+    ) -> Optional[models.DeleteTOTPResponseBody]:
+        r"""Delete all the user's TOTPs
+
+        Deletes all of the user's TOTPs.
+
+        :param user_id: The ID of the user whose TOTPs are to be deleted
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+        
+        if server_url is not None:
+            base_url = server_url
+        
+        request = models.DeleteTOTPRequest(
+            user_id=user_id,
+        )
+        
+        req = self.build_request(
+            method="DELETE",
+            path="/users/{user_id}/totp",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            security=self.sdk_configuration.security,
+            timeout_ms=timeout_ms,
+        )
+        
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, [
+                "429",
+                "500",
+                "502",
+                "503",
+                "504"
+            ])                
+        
+        http_res = await self.do_request_async(
+            hook_ctx=HookContext(operation_id="DeleteTOTP", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            request=req,
+            error_status_codes=["404","4XX","500","5XX"],
+            retry_config=retry_config
+        )
+        
+        data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return utils.unmarshal_json(http_res.text, Optional[models.DeleteTOTPResponseBody])
+        if utils.match_response(http_res, ["404","500"], "application/json"):
+            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=data)
+        if utils.match_response(http_res, ["4XX","5XX"], "*"):
+            raise models.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
+        
+        content_type = http_res.headers.get("Content-Type")
+        raise models.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+
+    
+    
+    def delete_external_account(
+        self, *,
+        user_id: str,
+        external_account_id: str,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+    ) -> Optional[models.DeletedObject]:
+        r"""Delete External Account
+
+        Delete an external account by ID.
+
+        :param user_id: The ID of the user's external account
+        :param external_account_id: The ID of the external account to delete
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+        
+        if server_url is not None:
+            base_url = server_url
+        
+        request = models.DeleteExternalAccountRequest(
+            user_id=user_id,
+            external_account_id=external_account_id,
+        )
+        
+        req = self.build_request(
+            method="DELETE",
+            path="/users/{user_id}/external_accounts/{external_account_id}",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            security=self.sdk_configuration.security,
+            timeout_ms=timeout_ms,
+        )
+        
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, [
+                "429",
+                "500",
+                "502",
+                "503",
+                "504"
+            ])                
+        
+        http_res = self.do_request(
+            hook_ctx=HookContext(operation_id="DeleteExternalAccount", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            request=req,
+            error_status_codes=["400","403","404","4XX","500","5XX"],
+            retry_config=retry_config
+        )
+        
+        data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return utils.unmarshal_json(http_res.text, Optional[models.DeletedObject])
+        if utils.match_response(http_res, ["400","403","404","500"], "application/json"):
+            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=data)
+        if utils.match_response(http_res, ["4XX","5XX"], "*"):
+            raise models.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
+        
+        content_type = http_res.headers.get("Content-Type")
+        raise models.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+
+    
+    
+    async def delete_external_account_async(
+        self, *,
+        user_id: str,
+        external_account_id: str,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+    ) -> Optional[models.DeletedObject]:
+        r"""Delete External Account
+
+        Delete an external account by ID.
+
+        :param user_id: The ID of the user's external account
+        :param external_account_id: The ID of the external account to delete
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+        
+        if server_url is not None:
+            base_url = server_url
+        
+        request = models.DeleteExternalAccountRequest(
+            user_id=user_id,
+            external_account_id=external_account_id,
+        )
+        
+        req = self.build_request(
+            method="DELETE",
+            path="/users/{user_id}/external_accounts/{external_account_id}",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            security=self.sdk_configuration.security,
+            timeout_ms=timeout_ms,
+        )
+        
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, [
+                "429",
+                "500",
+                "502",
+                "503",
+                "504"
+            ])                
+        
+        http_res = await self.do_request_async(
+            hook_ctx=HookContext(operation_id="DeleteExternalAccount", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            request=req,
+            error_status_codes=["400","403","404","4XX","500","5XX"],
+            retry_config=retry_config
+        )
+        
+        data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return utils.unmarshal_json(http_res.text, Optional[models.DeletedObject])
+        if utils.match_response(http_res, ["400","403","404","500"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
         if utils.match_response(http_res, ["4XX","5XX"], "*"):

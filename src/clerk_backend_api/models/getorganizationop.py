@@ -2,17 +2,21 @@
 
 from __future__ import annotations
 from clerk_backend_api.types import BaseModel
-from clerk_backend_api.utils import FieldMetadata, PathParamMetadata
-from typing import TypedDict
-from typing_extensions import Annotated
+from clerk_backend_api.utils import FieldMetadata, PathParamMetadata, QueryParamMetadata
+from typing import Optional, TypedDict
+from typing_extensions import Annotated, NotRequired
 
 
 class GetOrganizationRequestTypedDict(TypedDict):
     organization_id: str
     r"""The ID or slug of the organization"""
+    include_members_count: NotRequired[bool]
+    r"""Flag to denote whether or not the organization's members count should be included in the response."""
     
 
 class GetOrganizationRequest(BaseModel):
     organization_id: Annotated[str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))]
     r"""The ID or slug of the organization"""
+    include_members_count: Annotated[Optional[bool], FieldMetadata(query=QueryParamMetadata(style="form", explode=True))] = None
+    r"""Flag to denote whether or not the organization's members count should be included in the response."""
     

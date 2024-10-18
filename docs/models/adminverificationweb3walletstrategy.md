@@ -3,7 +3,6 @@
 
 ## Values
 
-| Name                 | Value                |
-| -------------------- | -------------------- |
-| `ADMIN`              | admin                |
-| `FROM_OAUTH_DISCORD` | from_oauth_discord   |
+| Name    | Value   |
+| ------- | ------- |
+| `ADMIN` | admin   |

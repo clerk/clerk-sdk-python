@@ -4,10 +4,9 @@ from .basesdk import BaseSDK
 from clerk_backend_api import models, utils
 from clerk_backend_api._hooks import HookContext
 from clerk_backend_api.types import BaseModel, OptionalNullable, UNSET
-from jsonpath import JSONPath
-from typing import Any, Dict, Optional, Union, cast
+from typing import Any, Optional, Union, cast
 
-class OAuthApplicationsSDK(BaseSDK):
+class OauthApplicationsSDK(BaseSDK):
     
     
     def list(
@@ -17,7 +16,7 @@ class OAuthApplicationsSDK(BaseSDK):
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
-    ) -> models.ListOAuthApplicationsResponse:
+    ) -> Optional[models.OAuthApplications]:
         r"""Get a list of OAuth applications for an instance
 
         This request returns the list of OAuth applications for an instance.
@@ -80,29 +79,9 @@ class OAuthApplicationsSDK(BaseSDK):
             retry_config=retry_config
         )
         
-        def next_func() -> Optional[models.ListOAuthApplicationsResponse]:
-            body = utils.unmarshal_json(http_res.text, Dict[Any, Any])
-            offset = request.offset if not request.offset is None else 0
-
-            if not http_res.text:
-                return None
-            results = JSONPath("$").parse(body)
-            if len(results) == 0 or len(results[0]) == 0:
-                return None
-            limit = request.limit if not request.limit is None else 0
-            if len(results[0]) < limit:
-                return None
-            next_offset = offset + len(results[0])
-
-            return self.list(
-                limit=limit,
-                offset=next_offset,
-                retries=retries,
-            )
-        
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return models.ListOAuthApplicationsResponse(result=utils.unmarshal_json(http_res.text, Optional[models.OAuthApplications]), next=next_func)
+            return utils.unmarshal_json(http_res.text, Optional[models.OAuthApplications])
         if utils.match_response(http_res, ["400","403","422"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
@@ -121,7 +100,7 @@ class OAuthApplicationsSDK(BaseSDK):
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
-    ) -> models.ListOAuthApplicationsResponse:
+    ) -> Optional[models.OAuthApplications]:
         r"""Get a list of OAuth applications for an instance
 
         This request returns the list of OAuth applications for an instance.
@@ -184,29 +163,9 @@ class OAuthApplicationsSDK(BaseSDK):
             retry_config=retry_config
         )
         
-        def next_func() -> Optional[models.ListOAuthApplicationsResponse]:
-            body = utils.unmarshal_json(http_res.text, Dict[Any, Any])
-            offset = request.offset if not request.offset is None else 0
-
-            if not http_res.text:
-                return None
-            results = JSONPath("$").parse(body)
-            if len(results) == 0 or len(results[0]) == 0:
-                return None
-            limit = request.limit if not request.limit is None else 0
-            if len(results[0]) < limit:
-                return None
-            next_offset = offset + len(results[0])
-
-            return self.list(
-                limit=limit,
-                offset=next_offset,
-                retries=retries,
-            )
-        
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return models.ListOAuthApplicationsResponse(result=utils.unmarshal_json(http_res.text, Optional[models.OAuthApplications]), next=next_func)
+            return utils.unmarshal_json(http_res.text, Optional[models.OAuthApplications])
         if utils.match_response(http_res, ["400","403","422"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)

@@ -34,13 +34,17 @@ class UpdateOrganizationRequestBodyTypedDict(TypedDict):
     private_metadata: NotRequired[UpdateOrganizationPrivateMetadataTypedDict]
     r"""Metadata saved on the organization that is only visible to your backend."""
     name: NotRequired[Nullable[str]]
-    r"""The new name of the organization"""
+    r"""The new name of the organization.
+    May not contain URLs or HTML.
+    """
     slug: NotRequired[Nullable[str]]
     r"""The new slug of the organization, which needs to be unique in the instance"""
     max_allowed_memberships: NotRequired[Nullable[int]]
     r"""The maximum number of memberships allowed for this organization"""
     admin_delete_enabled: NotRequired[Nullable[bool]]
     r"""If true, an admin can delete this organization with the Frontend API."""
+    created_at: NotRequired[str]
+    r"""A custom date/time denoting _when_ the organization was created, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`)."""
     
 
 class UpdateOrganizationRequestBody(BaseModel):
@@ -49,17 +53,21 @@ class UpdateOrganizationRequestBody(BaseModel):
     private_metadata: Optional[UpdateOrganizationPrivateMetadata] = None
     r"""Metadata saved on the organization that is only visible to your backend."""
     name: OptionalNullable[str] = UNSET
-    r"""The new name of the organization"""
+    r"""The new name of the organization.
+    May not contain URLs or HTML.
+    """
     slug: OptionalNullable[str] = UNSET
     r"""The new slug of the organization, which needs to be unique in the instance"""
     max_allowed_memberships: OptionalNullable[int] = UNSET
     r"""The maximum number of memberships allowed for this organization"""
     admin_delete_enabled: OptionalNullable[bool] = UNSET
     r"""If true, an admin can delete this organization with the Frontend API."""
+    created_at: Optional[str] = None
+    r"""A custom date/time denoting _when_ the organization was created, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`)."""
     
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["public_metadata", "private_metadata", "name", "slug", "max_allowed_memberships", "admin_delete_enabled"]
+        optional_fields = ["public_metadata", "private_metadata", "name", "slug", "max_allowed_memberships", "admin_delete_enabled", "created_at"]
         nullable_fields = ["name", "slug", "max_allowed_memberships", "admin_delete_enabled"]
         null_default_fields = []
 

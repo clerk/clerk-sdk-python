@@ -8,24 +8,30 @@ from .utils.retries import RetryConfig
 from clerk_backend_api import models, utils
 from clerk_backend_api._hooks import SDKHooks
 from clerk_backend_api.actortokens import ActorTokens
+from clerk_backend_api.allowlistblocklist import AllowlistBlocklist
 from clerk_backend_api.allowlistidentifiers import AllowlistIdentifiers
 from clerk_backend_api.betafeatures import BetaFeatures
 from clerk_backend_api.blocklistidentifiers_sdk import BlocklistIdentifiersSDK
+from clerk_backend_api.clerk_redirecturls import ClerkRedirectUrls
 from clerk_backend_api.clients import Clients
 from clerk_backend_api.domains_sdk import DomainsSDK
 from clerk_backend_api.emailaddresses import EmailAddresses
+from clerk_backend_api.emailandsmstemplates import EmailAndSmsTemplates
+from clerk_backend_api.emailsmstemplates import EmailSMSTemplates
 from clerk_backend_api.instancesettings_sdk import InstanceSettingsSDK
 from clerk_backend_api.invitations import Invitations
 from clerk_backend_api.jwks import Jwks
 from clerk_backend_api.jwttemplates import JwtTemplates
-from clerk_backend_api.misc import Misc
-from clerk_backend_api.oauthapplications_sdk import OAuthApplicationsSDK
+from clerk_backend_api.miscellaneous import Miscellaneous
+from clerk_backend_api.oauthapplications_sdk import OauthApplicationsSDK
+from clerk_backend_api.organizationdomain_sdk import OrganizationDomainSDK
+from clerk_backend_api.organizationdomains_sdk import OrganizationDomainsSDK
 from clerk_backend_api.organizationinvitations_sdk import OrganizationInvitationsSDK
 from clerk_backend_api.organizationmemberships_sdk import OrganizationMembershipsSDK
 from clerk_backend_api.organizations_sdk import OrganizationsSDK
 from clerk_backend_api.phonenumbers import PhoneNumbers
 from clerk_backend_api.proxychecks import ProxyChecks
-from clerk_backend_api.redirecturls import RedirectUrls
+from clerk_backend_api.redirecturls import RedirectURLs
 from clerk_backend_api.samlconnections_sdk import SamlConnectionsSDK
 from clerk_backend_api.sessions import Sessions
 from clerk_backend_api.signintokens import SignInTokens
@@ -51,31 +57,59 @@ class Clerk(BaseSDK):
     Please see https://clerk.com/docs for more information.
     https://clerk.com/docs
     """
-    misc: Misc
+    miscellaneous: Miscellaneous
+    r"""Various endpoints that do not belong in any particular category."""
     jwks: Jwks
     clients: Clients
+    r"""The Client object tracks sessions, as well as the state of any sign in and sign up attempts, for a given device.
+    https://clerk.com/docs/reference/clerkjs/client
+    """
     email_addresses: EmailAddresses
     phone_numbers: PhoneNumbers
     sessions: Sessions
+    r"""The Session object is an abstraction over an HTTP session.
+    It models the period of information exchange between a user and the server.
+    Sessions are created when a user successfully goes through the sign in or sign up flows.
+    https://clerk.com/docs/reference/clerkjs/session
+    """
+    email_sms_templates: EmailSMSTemplates
+    email_and_sms_templates: EmailAndSmsTemplates
     templates: Templates
     users: Users
+    r"""The user object represents a user that has successfully signed up to your application.
+    https://clerk.com/docs/reference/clerkjs/user
+    """
     invitations: Invitations
+    r"""Invitations allow you to invite someone to sign up to your application, via email.
+    https://clerk.com/docs/authentication/invitations
+    """
+    organization_invitations: OrganizationInvitationsSDK
+    allowlist_blocklist: AllowlistBlocklist
     allowlist_identifiers: AllowlistIdentifiers
     blocklist_identifiers: BlocklistIdentifiersSDK
     beta_features: BetaFeatures
     actor_tokens: ActorTokens
     domains: DomainsSDK
+    r"""Domains represent each instance's URLs and DNS setup."""
     instance_settings: InstanceSettingsSDK
     webhooks: Webhooks
+    r"""You can configure webhooks to be notified about various events that happen on your instance.
+    https://clerk.com/docs/integration/webhooks
+    """
     jwt_templates: JwtTemplates
     organizations: OrganizationsSDK
-    organization_invitations: OrganizationInvitationsSDK
+    r"""Organizations are used to group members under a common entity and provide shared access to resources.
+    https://clerk.com/docs/organizations/overview
+    """
     organization_memberships: OrganizationMembershipsSDK
+    organization_domains: OrganizationDomainsSDK
+    organization_domain: OrganizationDomainSDK
     proxy_checks: ProxyChecks
-    redirect_urls: RedirectUrls
+    redirect_ur_ls: RedirectURLs
+    redirect_urls: ClerkRedirectUrls
     sign_in_tokens: SignInTokens
     sign_ups: SignUps
-    o_auth_applications: OAuthApplicationsSDK
+    oauth_applications: OauthApplicationsSDK
     saml_connections: SamlConnectionsSDK
     testing_tokens: TestingTokens
     def __init__(
@@ -154,15 +188,19 @@ class Clerk(BaseSDK):
 
 
     def _init_sdks(self):
-        self.misc = Misc(self.sdk_configuration)
+        self.miscellaneous = Miscellaneous(self.sdk_configuration)
         self.jwks = Jwks(self.sdk_configuration)
         self.clients = Clients(self.sdk_configuration)
         self.email_addresses = EmailAddresses(self.sdk_configuration)
         self.phone_numbers = PhoneNumbers(self.sdk_configuration)
         self.sessions = Sessions(self.sdk_configuration)
+        self.email_sms_templates = EmailSMSTemplates(self.sdk_configuration)
+        self.email_and_sms_templates = EmailAndSmsTemplates(self.sdk_configuration)
         self.templates = Templates(self.sdk_configuration)
         self.users = Users(self.sdk_configuration)
         self.invitations = Invitations(self.sdk_configuration)
+        self.organization_invitations = OrganizationInvitationsSDK(self.sdk_configuration)
+        self.allowlist_blocklist = AllowlistBlocklist(self.sdk_configuration)
         self.allowlist_identifiers = AllowlistIdentifiers(self.sdk_configuration)
         self.blocklist_identifiers = BlocklistIdentifiersSDK(self.sdk_configuration)
         self.beta_features = BetaFeatures(self.sdk_configuration)
@@ -172,13 +210,15 @@ class Clerk(BaseSDK):
         self.webhooks = Webhooks(self.sdk_configuration)
         self.jwt_templates = JwtTemplates(self.sdk_configuration)
         self.organizations = OrganizationsSDK(self.sdk_configuration)
-        self.organization_invitations = OrganizationInvitationsSDK(self.sdk_configuration)
         self.organization_memberships = OrganizationMembershipsSDK(self.sdk_configuration)
+        self.organization_domains = OrganizationDomainsSDK(self.sdk_configuration)
+        self.organization_domain = OrganizationDomainSDK(self.sdk_configuration)
         self.proxy_checks = ProxyChecks(self.sdk_configuration)
-        self.redirect_urls = RedirectUrls(self.sdk_configuration)
+        self.redirect_ur_ls = RedirectURLs(self.sdk_configuration)
+        self.redirect_urls = ClerkRedirectUrls(self.sdk_configuration)
         self.sign_in_tokens = SignInTokens(self.sdk_configuration)
         self.sign_ups = SignUps(self.sdk_configuration)
-        self.o_auth_applications = OAuthApplicationsSDK(self.sdk_configuration)
+        self.oauth_applications = OauthApplicationsSDK(self.sdk_configuration)
         self.saml_connections = SamlConnectionsSDK(self.sdk_configuration)
         self.testing_tokens = TestingTokens(self.sdk_configuration)
     

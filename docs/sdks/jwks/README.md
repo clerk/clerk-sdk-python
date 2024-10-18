@@ -21,9 +21,11 @@ s = Clerk(
 )
 
 
-s.jwks.get()
+res = s.jwks.get()
 
-# Use the SDK ...
+if res is not None:
+    # handle response
+    pass
 
 ```
 
@@ -32,6 +34,10 @@ s.jwks.get()
 | Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
 | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
 | `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+
+### Response
+
+**[models.WellKnownJWKS](../../models/wellknownjwks.md)**
 
 ### Errors
 

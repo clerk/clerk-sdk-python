@@ -3,6 +3,9 @@
 
 ## Overview
 
+Organizations are used to group members under a common entity and provide shared access to resources.
+<https://clerk.com/docs/organizations/overview>
+
 ### Available Operations
 
 * [list](#list) - Get a list of organizations for an instance
@@ -73,6 +76,8 @@ You can provide additional metadata for the organization and set any custom attr
 Organizations support private and public metadata.
 Private metadata can only be accessed from the Backend API.
 Public metadata can be accessed from the Backend API, and are read-only from the Frontend API.
+The `created_by` user will see this as their [active organization] (https://clerk.com/docs/organizations/overview#active-organization)
+the next time they create a session, presuming they don't explicitly set a different organization as active before then.
 
 ### Example Usage
 
@@ -91,6 +96,7 @@ res = s.organizations.create(request={
     "public_metadata": {},
     "slug": "neworg",
     "max_allowed_memberships": 100,
+    "created_at": "<value>",
 })
 
 if res is not None:
@@ -132,7 +138,7 @@ s = Clerk(
 )
 
 
-res = s.organizations.get(organization_id="org_123")
+res = s.organizations.get(organization_id="org_123", include_members_count=False)
 
 if res is not None:
     # handle response
@@ -142,10 +148,11 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         | Example                                                             |
-| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| `organization_id`                                                   | *str*                                                               | :heavy_check_mark:                                                  | The ID or slug of the organization                                  | org_123                                                             |
-| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |                                                                     |
+| Parameter                                                                                          | Type                                                                                               | Required                                                                                           | Description                                                                                        | Example                                                                                            |
+| -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| `organization_id`                                                                                  | *str*                                                                                              | :heavy_check_mark:                                                                                 | The ID or slug of the organization                                                                 | org_123                                                                                            |
+| `include_members_count`                                                                            | *Optional[bool]*                                                                                   | :heavy_minus_sign:                                                                                 | Flag to denote whether or not the organization's members count should be included in the response. |                                                                                                    |
+| `retries`                                                                                          | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                   | :heavy_minus_sign:                                                                                 | Configuration to override the default retry behavior of the client.                                |                                                                                                    |
 
 ### Response
 
@@ -173,7 +180,7 @@ s = Clerk(
 )
 
 
-res = s.organizations.update(organization_id="org_123_update", public_metadata={}, private_metadata={}, name="New Organization Name", slug="new-org-slug", max_allowed_memberships=100, admin_delete_enabled=True)
+res = s.organizations.update(organization_id="org_123_update", public_metadata={}, private_metadata={}, name="New Organization Name", slug="new-org-slug", max_allowed_memberships=100, admin_delete_enabled=True, created_at="<value>")
 
 if res is not None:
     # handle response
@@ -183,16 +190,17 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                                                                               | Type                                                                                                    | Required                                                                                                | Description                                                                                             | Example                                                                                                 |
-| ------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
-| `organization_id`                                                                                       | *str*                                                                                                   | :heavy_check_mark:                                                                                      | The ID of the organization to update                                                                    | org_123_update                                                                                          |
-| `public_metadata`                                                                                       | [Optional[models.UpdateOrganizationPublicMetadata]](../../models/updateorganizationpublicmetadata.md)   | :heavy_minus_sign:                                                                                      | Metadata saved on the organization, that is visible to both your frontend and backend.                  | {}                                                                                                      |
-| `private_metadata`                                                                                      | [Optional[models.UpdateOrganizationPrivateMetadata]](../../models/updateorganizationprivatemetadata.md) | :heavy_minus_sign:                                                                                      | Metadata saved on the organization that is only visible to your backend.                                | {}                                                                                                      |
-| `name`                                                                                                  | *OptionalNullable[str]*                                                                                 | :heavy_minus_sign:                                                                                      | The new name of the organization                                                                        | New Organization Name                                                                                   |
-| `slug`                                                                                                  | *OptionalNullable[str]*                                                                                 | :heavy_minus_sign:                                                                                      | The new slug of the organization, which needs to be unique in the instance                              | new-org-slug                                                                                            |
-| `max_allowed_memberships`                                                                               | *OptionalNullable[int]*                                                                                 | :heavy_minus_sign:                                                                                      | The maximum number of memberships allowed for this organization                                         | 100                                                                                                     |
-| `admin_delete_enabled`                                                                                  | *OptionalNullable[bool]*                                                                                | :heavy_minus_sign:                                                                                      | If true, an admin can delete this organization with the Frontend API.                                   | true                                                                                                    |
-| `retries`                                                                                               | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                        | :heavy_minus_sign:                                                                                      | Configuration to override the default retry behavior of the client.                                     |                                                                                                         |
+| Parameter                                                                                                                       | Type                                                                                                                            | Required                                                                                                                        | Description                                                                                                                     | Example                                                                                                                         |
+| ------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| `organization_id`                                                                                                               | *str*                                                                                                                           | :heavy_check_mark:                                                                                                              | The ID of the organization to update                                                                                            | org_123_update                                                                                                                  |
+| `public_metadata`                                                                                                               | [Optional[models.UpdateOrganizationPublicMetadata]](../../models/updateorganizationpublicmetadata.md)                           | :heavy_minus_sign:                                                                                                              | Metadata saved on the organization, that is visible to both your frontend and backend.                                          | {}                                                                                                                              |
+| `private_metadata`                                                                                                              | [Optional[models.UpdateOrganizationPrivateMetadata]](../../models/updateorganizationprivatemetadata.md)                         | :heavy_minus_sign:                                                                                                              | Metadata saved on the organization that is only visible to your backend.                                                        | {}                                                                                                                              |
+| `name`                                                                                                                          | *OptionalNullable[str]*                                                                                                         | :heavy_minus_sign:                                                                                                              | The new name of the organization.<br/>May not contain URLs or HTML.                                                             | New Organization Name                                                                                                           |
+| `slug`                                                                                                                          | *OptionalNullable[str]*                                                                                                         | :heavy_minus_sign:                                                                                                              | The new slug of the organization, which needs to be unique in the instance                                                      | new-org-slug                                                                                                                    |
+| `max_allowed_memberships`                                                                                                       | *OptionalNullable[int]*                                                                                                         | :heavy_minus_sign:                                                                                                              | The maximum number of memberships allowed for this organization                                                                 | 100                                                                                                                             |
+| `admin_delete_enabled`                                                                                                          | *OptionalNullable[bool]*                                                                                                        | :heavy_minus_sign:                                                                                                              | If true, an admin can delete this organization with the Frontend API.                                                           | true                                                                                                                            |
+| `created_at`                                                                                                                    | *Optional[str]*                                                                                                                 | :heavy_minus_sign:                                                                                                              | A custom date/time denoting _when_ the organization was created, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`). |                                                                                                                                 |
+| `retries`                                                                                                                       | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                | :heavy_minus_sign:                                                                                                              | Configuration to override the default retry behavior of the client.                                                             |                                                                                                                                 |
 
 ### Response
 
@@ -313,12 +321,12 @@ s = Clerk(
 
 
 res = s.organizations.upload_logo(organization_id="org_12345", request_body={
-    "uploader_user_id": "user_67890",
     "file": {
         "file_name": "your_file_here",
         "content": open("<file_path>", "rb"),
         "content_type": "<value>",
     },
+    "uploader_user_id": "user_67890",
 })
 
 if res is not None:

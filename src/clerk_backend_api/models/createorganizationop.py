@@ -28,7 +28,9 @@ class CreateOrganizationPublicMetadata(BaseModel):
 
 class CreateOrganizationRequestBodyTypedDict(TypedDict):
     name: str
-    r"""The name of the new organization"""
+    r"""The name of the new organization.
+    May not contain URLs or HTML.
+    """
     created_by: str
     r"""The ID of the User who will become the administrator for the new organization"""
     private_metadata: NotRequired[CreateOrganizationPrivateMetadataTypedDict]
@@ -42,11 +44,15 @@ class CreateOrganizationRequestBodyTypedDict(TypedDict):
     """
     max_allowed_memberships: NotRequired[int]
     r"""The maximum number of memberships allowed for this organization"""
+    created_at: NotRequired[str]
+    r"""A custom date/time denoting _when_ the organization was created, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`)."""
     
 
 class CreateOrganizationRequestBody(BaseModel):
     name: str
-    r"""The name of the new organization"""
+    r"""The name of the new organization.
+    May not contain URLs or HTML.
+    """
     created_by: str
     r"""The ID of the User who will become the administrator for the new organization"""
     private_metadata: Optional[CreateOrganizationPrivateMetadata] = None
@@ -60,4 +66,6 @@ class CreateOrganizationRequestBody(BaseModel):
     """
     max_allowed_memberships: Optional[int] = None
     r"""The maximum number of memberships allowed for this organization"""
+    created_at: Optional[str] = None
+    r"""A custom date/time denoting _when_ the organization was created, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`)."""
     

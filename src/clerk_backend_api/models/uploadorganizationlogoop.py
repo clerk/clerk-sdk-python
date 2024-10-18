@@ -22,15 +22,15 @@ class UploadOrganizationLogoFile(BaseModel):
     
 
 class UploadOrganizationLogoRequestBodyTypedDict(TypedDict):
-    uploader_user_id: str
-    r"""The ID of the user that will be credited with the image upload."""
     file: UploadOrganizationLogoFileTypedDict
+    uploader_user_id: NotRequired[str]
+    r"""The ID of the user that will be credited with the image upload."""
     
 
 class UploadOrganizationLogoRequestBody(BaseModel):
-    uploader_user_id: Annotated[str, FieldMetadata(multipart=True)]
-    r"""The ID of the user that will be credited with the image upload."""
     file: Annotated[UploadOrganizationLogoFile, pydantic.Field(alias=""), FieldMetadata(multipart=MultipartFormMetadata(file=True))]
+    uploader_user_id: Annotated[Optional[str], FieldMetadata(multipart=True)] = None
+    r"""The ID of the user that will be credited with the image upload."""
     
 
 class UploadOrganizationLogoRequestTypedDict(TypedDict):

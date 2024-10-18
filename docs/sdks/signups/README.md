@@ -22,7 +22,6 @@ s = Clerk(
 
 
 res = s.sign_ups.update(id="signup_1234567890abcdef", request_body={
-    "custom_action": False,
     "external_id": "ext_id_7890abcdef123456",
 })
 

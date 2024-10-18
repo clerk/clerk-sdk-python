@@ -9,9 +9,19 @@ from typing_extensions import NotRequired
 class ChangeProductionInstanceDomainRequestBodyTypedDict(TypedDict):
     home_url: NotRequired[str]
     r"""The new home URL of the production instance e.g. https://www.example.com"""
+    is_secondary: NotRequired[bool]
+    r"""Whether this is a domain for a secondary app, meaning that any subdomain provided is significant and
+    will be stored as part of the domain. This is useful for supporting multiple apps (one primary and
+    multiple secondaries) on the same root domain (eTLD+1).
+    """
     
 
 class ChangeProductionInstanceDomainRequestBody(BaseModel):
     home_url: Optional[str] = None
     r"""The new home URL of the production instance e.g. https://www.example.com"""
+    is_secondary: Optional[bool] = None
+    r"""Whether this is a domain for a secondary app, meaning that any subdomain provided is significant and
+    will be stored as part of the domain. This is useful for supporting multiple apps (one primary and
+    multiple secondaries) on the same root domain (eTLD+1).
+    """
     
