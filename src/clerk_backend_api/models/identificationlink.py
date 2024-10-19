@@ -12,6 +12,7 @@ class Type(str, Enum):
     SAML = "saml"
     OAUTH_APPLE = "oauth_apple"
     OAUTH_DISCORD = "oauth_discord"
+    OAUTH_MICROSOFT = "oauth_microsoft"
 
 class IdentificationLinkTypedDict(TypedDict):
     type: Type
