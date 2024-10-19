@@ -5,8 +5,8 @@ management:
   docVersion: v1
   speakeasyVersion: 1.385.0
   generationVersion: 2.407.2
-  releaseVersion: 1.0.0
-  configChecksum: 4aff20ae5943af7882208dce8eacd52d
+  releaseVersion: 1.0.1
+  configChecksum: 38d1ac3ddb3a03f7345218a299ec5108
   repoURL: https://github.com/clerk/clerk-sdk-python.git
   installationURL: https://github.com/clerk/clerk-sdk-python.git
   published: true
