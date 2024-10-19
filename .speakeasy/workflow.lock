@@ -2,7 +2,7 @@ speakeasyVersion: 1.385.0
 sources:
     clerk-openapi:
         sourceNamespace: clerk-openapi
-        sourceRevisionDigest: sha256:80e76fbeeada366104bd0054f5f99a6e046202f93a5c3b5331e468afc3dd4b4d
+        sourceRevisionDigest: sha256:b16e2cf72b6dd0a7ae4e7b5cebbab767f7e1f2a974b2091830e9ac7e1d97d60d
         sourceBlobDigest: sha256:5973f4930511cc94f06052b98484a93dc07822f035843d1e5ea2a8f40188e68d
         tags:
             - latest
@@ -11,7 +11,7 @@ targets:
     clerk-sdk-python:
         source: clerk-openapi
         sourceNamespace: clerk-openapi
-        sourceRevisionDigest: sha256:80e76fbeeada366104bd0054f5f99a6e046202f93a5c3b5331e468afc3dd4b4d
+        sourceRevisionDigest: sha256:b16e2cf72b6dd0a7ae4e7b5cebbab767f7e1f2a974b2091830e9ac7e1d97d60d
         sourceBlobDigest: sha256:5973f4930511cc94f06052b98484a93dc07822f035843d1e5ea2a8f40188e68d
         outLocation: .
 workflow:
