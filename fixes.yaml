@@ -9,10 +9,12 @@ actions:
     update:
       - "phone_code"
       - "email_code"
+      - "email_link"
       - "reset_password_email_code"
       - "from_oauth_discord"
       - "from_oauth_google"
       - "from_oauth_apple"
+      - "from_oauth_microsoft"
   - target: $["components"]["schemas"]["Oauth"]["properties"]["strategy"]["enum"][*]
     remove: true
   - target: $["components"]["schemas"]["Oauth"]["properties"]["strategy"]["enum"]
@@ -22,10 +24,13 @@ actions:
       - "from_oauth_google"
       - "from_oauth_discord"
       - "oauth_apple"
+      - "oauth_microsoft"
+      - "email_link"
   - target: $["components"]["schemas"]["IdentificationLink"]["properties"]["type"]["enum"]
     update:
       - "oauth_apple"
       - "oauth_discord"
+      - "oauth_microsoft"
   - target: $["components"]["parameters"]["LimitParameter"]["schema"]
     update:
       type: integer
