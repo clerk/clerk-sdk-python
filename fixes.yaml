@@ -23,6 +23,7 @@ actions:
       - "oauth_mock"
       - "from_oauth_google"
       - "from_oauth_discord"
+      - "from_microsoft_oauth"
       - "oauth_apple"
       - "oauth_microsoft"
       - "email_link"
