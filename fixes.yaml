@@ -41,4 +41,7 @@ actions:
   - target: $["paths"]["/email_addresses/{email_address_id}"]["get"]
     update:
       x-speakeasy-usage-example: true
+  - target: $["paths"].*.*.requestBody
+    update:
+      required: true
     
