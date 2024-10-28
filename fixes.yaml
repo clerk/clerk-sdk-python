@@ -41,7 +41,7 @@ actions:
   - target: $["paths"]["/email_addresses/{email_address_id}"]["get"]
     update:
       x-speakeasy-usage-example: true
-   - target: $["paths"]["/users"]["post"]["requestBody"]["content"]["application/json"]["schema"]["properties"]["public_metadata"]
+  - target: $["paths"]["/users"]["post"]["requestBody"]["content"]["application/json"]["schema"]["properties"]["public_metadata"]
     update:
       additionalProperties: true
   - target: $["paths"]["/users"]["post"]["requestBody"]["content"]["application/json"]["schema"]["properties"]["private_metadata"]
