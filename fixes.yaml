@@ -41,4 +41,108 @@ actions:
   - target: $["paths"]["/email_addresses/{email_address_id}"]["get"]
     update:
       x-speakeasy-usage-example: true
-    
+   - target: $["paths"]["/users"]["post"]["requestBody"]["content"]["application/json"]["schema"]["properties"]["public_metadata"]
+    update:
+      additionalProperties: true
+  - target: $["paths"]["/users"]["post"]["requestBody"]["content"]["application/json"]["schema"]["properties"]["private_metadata"]
+    update:
+      additionalProperties: true
+  - target: $["paths"]["/users"]["post"]["requestBody"]["content"]["application/json"]["schema"]["properties"]["unsafe_metadata"]
+    update:
+      additionalProperties: true
+  - target: $["paths"]["/users/{user_id}"]["patch"]["requestBody"]["content"]["application/json"]["schema"]["properties"]["public_metadata"]
+    update:
+      additionalProperties: true
+  - target: $["paths"]["/users/{user_id}"]["patch"]["requestBody"]["content"]["application/json"]["schema"]["properties"]["private_metadata"]
+    update:
+      additionalProperties: true
+  - target: $["paths"]["/users/{user_id}"]["patch"]["requestBody"]["content"]["application/json"]["schema"]["properties"]["unsafe_metadata"]
+    update:
+      additionalProperties: true
+  - target: $["paths"]["/users/{user_id}/oauth_access_tokens/{provider}"]["get"]["responses"]["200"]["content"]["application/json"]["schema"]["items"]["properties"]["public_metadata"]
+    update:
+      additionalProperties: true
+  - target: $["paths"]["/invitations"]["post"]["requestBody"]["content"]["application/json"]["schema"]["properties"]["public_metadata"]
+    update:
+      additionalProperties: true
+  - target: $["paths"]["/organizations"]["post"]["requestBody"]["content"]["application/json"]["schema"]["properties"]["private_metadata"]
+    update:
+      additionalProperties: true
+  - target: $["paths"]["/organizations"]["post"]["requestBody"]["content"]["application/json"]["schema"]["properties"]["public_metadata"]
+    update:
+      additionalProperties: true
+  - target: $["paths"]["/organizations/{organization_id}"]["patch"]["requestBody"]["content"]["application/json"]["schema"]["properties"]["public_metadata"]
+    update:
+      additionalProperties: true
+  - target: $["paths"]["/organizations/{organization_id}"]["patch"]["requestBody"]["content"]["application/json"]["schema"]["properties"]["private_metadata"]
+    update:
+      additionalProperties: true
+  - target: $["paths"]["/organizations/{organization_id}/metadata"]["patch"]["requestBody"]["content"]["application/json"]["schema"]["properties"]["public_metadata"]
+    update:
+      additionalProperties: true
+  - target: $["paths"]["/organizations/{organization_id}/metadata"]["patch"]["requestBody"]["content"]["application/json"]["schema"]["properties"]["private_metadata"]
+    update:
+      additionalProperties: true
+  - target: $["paths"]["/organizations/{organization_id}/invitations"]["post"]["requestBody"]["content"]["application/json"]["schema"]["properties"]["public_metadata"]
+    update:
+      additionalProperties: true
+  - target: $["paths"]["/organizations/{organization_id}/invitations"]["post"]["requestBody"]["content"]["application/json"]["schema"]["properties"]["private_metadata"]
+    update:
+        dditionalProperties: true
+  - target: $["paths"]["/organizations/{organization_id}/invitations/bulk"]["post"]["requestBody"]["content"]["application/json"]["schema"]["items"]["properties"]["public_metadata"]
+    update:
+      additionalProperties: true
+  - target: $["paths"]["/organizations/{organization_id}/invitations/bulk"]["post"]["requestBody"]["content"]["application/json"]["schema"]["items"]["properties"]["private_metadata"]
+    update:
+      additionalProperties: true
+  - target: $["paths"]["/organizations/{organization_id}/memberships/{user_id}/metadata"]["patch"]["requestBody"]["content"]["application/json"]["schema"]["properties"]["public_metadata"]
+    update:
+      additionalProperties: true
+  - target: $["paths"]["/organizations/{organization_id}/memberships/{user_id}/metadata"]["patch"]["requestBody"]["content"]["application/json"]["schema"]["properties"]["private_metadata"]
+    update:
+      additionalProperties: true
+  - target: $["components"]["schemas"]["SAMLAccount"]["properties"]["public_metadata"]
+    update:
+      additionalProperties: true
+  - target: $["components"]["schemas"]["User"]["properties"]["public_metadata"]
+    update:
+      additionalProperties: true
+  - target: $["components"]["schemas"]["User"]["properties"]["private_metadata"]
+    update:
+      additionalProperties: true
+  - target: $["components"]["schemas"]["User"]["properties"]["unsafe_metadata"]
+    update:
+      additionalProperties: true
+  - target: $["components"]["schemas"]["Organization"]["properties"]["public_metadata"]
+    update:
+      additionalProperties: true
+  - target: $["components"]["schemas"]["Organization"]["properties"]["private_metadata"]
+    update:
+      additionalProperties: true
+  - target: $["components"]["schemas"]["OrganizationMembership"]["properties"]["public_metadata"]
+    update:
+      additionalProperties: true
+  - target: $["components"]["schemas"]["OrganizationMembership"]["properties"]["private_metadata"]
+    update:
+      additionalProperties: true
+  - target: $["components"]["schemas"]["OrganizationInvitationWithPublicOrganizationData"]["properties"]["public_metadata"]
+    update:
+      additionalProperties: true
+  - target: $["components"]["schemas"]["OrganizationInvitationWithPublicOrganizationData"]["properties"]["private_metadata"]
+    update:
+      additionalProperties: true
+  - target: $["components"]["schemas"]["Invitation"]["properties"]["public_metadata"]
+    update:
+      additionalProperties: true
+  - target: $["components"]["schemas"]["OrganizationInvitation"]["properties"]["public_metadata"]
+    update:
+      additionalProperties: true
+  - target: $["components"]["schemas"]["OrganizationInvitation"]["properties"]["private_metadata"]
+    update:
+      additionalProperties: true
+  - target: $["components"]["schemas"]["SignUp"]["properties"]["unsafe_metadata"]
+    update:
+      additionalProperties: true
+  - target: $["components"]["schemas"]["SignUp"]["properties"]["public_metadata"]
+    update:
+      additionalProperties: true
