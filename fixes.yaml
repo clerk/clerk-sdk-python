@@ -88,7 +88,7 @@ actions:
       additionalProperties: true
   - target: $["paths"]["/organizations/{organization_id}/invitations"]["post"]["requestBody"]["content"]["application/json"]["schema"]["properties"]["private_metadata"]
     update:
-        dditionalProperties: true
+      additionalProperties: true
   - target: $["paths"]["/organizations/{organization_id}/invitations/bulk"]["post"]["requestBody"]["content"]["application/json"]["schema"]["items"]["properties"]["public_metadata"]
     update:
       additionalProperties: true
