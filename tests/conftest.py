@@ -5,6 +5,10 @@ from clerk_backend_api import Clerk
 from clerk_backend_api.jwks_helpers import AuthenticateRequestOptions, VerifyTokenOptions
 
 
+def has_env_vars(env_vars: List[str]) -> bool:
+    return all(os.getenv(var, "").strip() for var in env_vars)
+
+
 @pytest.fixture
 def secret_key() -> Optional[str]:
     """Secret Key from Clerk Dashboard."""
