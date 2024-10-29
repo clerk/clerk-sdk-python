@@ -4,34 +4,14 @@ from __future__ import annotations
 from clerk_backend_api.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
 from clerk_backend_api.utils import FieldMetadata, PathParamMetadata, RequestMetadata
 from pydantic import model_serializer
-from typing import Optional, TypedDict
+from typing import Any, Dict, Optional, TypedDict
 from typing_extensions import Annotated, NotRequired
 
 
-class UpdateOrganizationPublicMetadataTypedDict(TypedDict):
-    r"""Metadata saved on the organization, that is visible to both your frontend and backend."""
-    
-    
-
-class UpdateOrganizationPublicMetadata(BaseModel):
-    r"""Metadata saved on the organization, that is visible to both your frontend and backend."""
-    
-    
-
-class UpdateOrganizationPrivateMetadataTypedDict(TypedDict):
-    r"""Metadata saved on the organization that is only visible to your backend."""
-    
-    
-
-class UpdateOrganizationPrivateMetadata(BaseModel):
-    r"""Metadata saved on the organization that is only visible to your backend."""
-    
-    
-
 class UpdateOrganizationRequestBodyTypedDict(TypedDict):
-    public_metadata: NotRequired[UpdateOrganizationPublicMetadataTypedDict]
+    public_metadata: NotRequired[Dict[str, Any]]
     r"""Metadata saved on the organization, that is visible to both your frontend and backend."""
-    private_metadata: NotRequired[UpdateOrganizationPrivateMetadataTypedDict]
+    private_metadata: NotRequired[Dict[str, Any]]
     r"""Metadata saved on the organization that is only visible to your backend."""
     name: NotRequired[Nullable[str]]
     r"""The new name of the organization.
@@ -48,9 +28,9 @@ class UpdateOrganizationRequestBodyTypedDict(TypedDict):
     
 
 class UpdateOrganizationRequestBody(BaseModel):
-    public_metadata: Optional[UpdateOrganizationPublicMetadata] = None
+    public_metadata: Optional[Dict[str, Any]] = None
     r"""Metadata saved on the organization, that is visible to both your frontend and backend."""
-    private_metadata: Optional[UpdateOrganizationPrivateMetadata] = None
+    private_metadata: Optional[Dict[str, Any]] = None
     r"""Metadata saved on the organization that is only visible to your backend."""
     name: OptionalNullable[str] = UNSET
     r"""The new name of the organization.

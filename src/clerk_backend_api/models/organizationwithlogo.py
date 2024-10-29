@@ -5,28 +5,12 @@ from clerk_backend_api.types import BaseModel, Nullable, OptionalNullable, UNSET
 from enum import Enum
 import pydantic
 from pydantic import model_serializer
-from typing import Optional, TypedDict
+from typing import Any, Dict, Optional, TypedDict
 from typing_extensions import Annotated, NotRequired
 
 
 class OrganizationWithLogoObject(str, Enum):
     ORGANIZATION = "organization"
-
-class OrganizationWithLogoPublicMetadataTypedDict(TypedDict):
-    pass
-    
-
-class OrganizationWithLogoPublicMetadata(BaseModel):
-    pass
-    
-
-class OrganizationWithLogoPrivateMetadataTypedDict(TypedDict):
-    pass
-    
-
-class OrganizationWithLogoPrivateMetadata(BaseModel):
-    pass
-    
 
 class OrganizationWithLogoTypedDict(TypedDict):
     object: OrganizationWithLogoObject
@@ -34,8 +18,8 @@ class OrganizationWithLogoTypedDict(TypedDict):
     name: str
     slug: str
     max_allowed_memberships: int
-    public_metadata: OrganizationWithLogoPublicMetadataTypedDict
-    private_metadata: OrganizationWithLogoPrivateMetadataTypedDict
+    public_metadata: Dict[str, Any]
+    private_metadata: Dict[str, Any]
     created_at: int
     r"""Unix timestamp of creation.
 
@@ -58,8 +42,8 @@ class OrganizationWithLogo(BaseModel):
     name: str
     slug: str
     max_allowed_memberships: int
-    public_metadata: OrganizationWithLogoPublicMetadata
-    private_metadata: OrganizationWithLogoPrivateMetadata
+    public_metadata: Dict[str, Any]
+    private_metadata: Dict[str, Any]
     created_at: int
     r"""Unix timestamp of creation.
 

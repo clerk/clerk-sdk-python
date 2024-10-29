@@ -4,20 +4,12 @@ from __future__ import annotations
 from clerk_backend_api.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
 from enum import Enum
 from pydantic import model_serializer
-from typing import Optional, TypedDict
+from typing import Any, Dict, Optional, TypedDict
 from typing_extensions import NotRequired
 
 
 class InvitationObject(str, Enum):
     INVITATION = "invitation"
-
-class InvitationPublicMetadataTypedDict(TypedDict):
-    pass
-    
-
-class InvitationPublicMetadata(BaseModel):
-    pass
-    
 
 class InvitationStatus(str, Enum):
     PENDING = "pending"
@@ -38,7 +30,7 @@ class InvitationTypedDict(TypedDict):
     r"""Unix timestamp of last update.
 
     """
-    public_metadata: NotRequired[InvitationPublicMetadataTypedDict]
+    public_metadata: NotRequired[Dict[str, Any]]
     revoked: NotRequired[bool]
     url: NotRequired[Nullable[str]]
     expires_at: NotRequired[Nullable[int]]
@@ -60,7 +52,7 @@ class Invitation(BaseModel):
     r"""Unix timestamp of last update.
 
     """
-    public_metadata: Optional[InvitationPublicMetadata] = None
+    public_metadata: Optional[Dict[str, Any]] = None
     revoked: Optional[bool] = None
     url: OptionalNullable[str] = UNSET
     expires_at: OptionalNullable[int] = UNSET

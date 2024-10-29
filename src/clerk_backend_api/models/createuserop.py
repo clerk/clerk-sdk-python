@@ -3,43 +3,9 @@
 from __future__ import annotations
 from clerk_backend_api.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
 from pydantic import model_serializer
-from typing import List, Optional, TypedDict
+from typing import Any, Dict, List, Optional, TypedDict
 from typing_extensions import NotRequired
 
-
-class CreateUserPublicMetadataTypedDict(TypedDict):
-    r"""Metadata saved on the user, that is visible to both your Frontend and Backend APIs"""
-    
-    
-
-class CreateUserPublicMetadata(BaseModel):
-    r"""Metadata saved on the user, that is visible to both your Frontend and Backend APIs"""
-    
-    
-
-class CreateUserPrivateMetadataTypedDict(TypedDict):
-    r"""Metadata saved on the user, that is only visible to your Backend API"""
-    
-    
-
-class CreateUserPrivateMetadata(BaseModel):
-    r"""Metadata saved on the user, that is only visible to your Backend API"""
-    
-    
-
-class CreateUserUnsafeMetadataTypedDict(TypedDict):
-    r"""Metadata saved on the user, that can be updated from both the Frontend and Backend APIs.
-    Note: Since this data can be modified from the frontend, it is not guaranteed to be safe.
-    """
-    
-    
-
-class CreateUserUnsafeMetadata(BaseModel):
-    r"""Metadata saved on the user, that can be updated from both the Frontend and Backend APIs.
-    Note: Since this data can be modified from the frontend, it is not guaranteed to be safe.
-    """
-    
-    
 
 class CreateUserRequestBodyTypedDict(TypedDict):
     external_id: NotRequired[Nullable[str]]
@@ -109,11 +75,11 @@ class CreateUserRequestBodyTypedDict(TypedDict):
     r"""If Backup Codes are configured on the instance, you can provide them to enable it on the newly created user without the need to reset them.
     You must provide the backup codes in plain format or the corresponding bcrypt digest.
     """
-    public_metadata: NotRequired[CreateUserPublicMetadataTypedDict]
+    public_metadata: NotRequired[Dict[str, Any]]
     r"""Metadata saved on the user, that is visible to both your Frontend and Backend APIs"""
-    private_metadata: NotRequired[CreateUserPrivateMetadataTypedDict]
+    private_metadata: NotRequired[Dict[str, Any]]
     r"""Metadata saved on the user, that is only visible to your Backend API"""
-    unsafe_metadata: NotRequired[CreateUserUnsafeMetadataTypedDict]
+    unsafe_metadata: NotRequired[Dict[str, Any]]
     r"""Metadata saved on the user, that can be updated from both the Frontend and Backend APIs.
     Note: Since this data can be modified from the frontend, it is not guaranteed to be safe.
     """
@@ -207,11 +173,11 @@ class CreateUserRequestBody(BaseModel):
     r"""If Backup Codes are configured on the instance, you can provide them to enable it on the newly created user without the need to reset them.
     You must provide the backup codes in plain format or the corresponding bcrypt digest.
     """
-    public_metadata: Optional[CreateUserPublicMetadata] = None
+    public_metadata: Optional[Dict[str, Any]] = None
     r"""Metadata saved on the user, that is visible to both your Frontend and Backend APIs"""
-    private_metadata: Optional[CreateUserPrivateMetadata] = None
+    private_metadata: Optional[Dict[str, Any]] = None
     r"""Metadata saved on the user, that is only visible to your Backend API"""
-    unsafe_metadata: Optional[CreateUserUnsafeMetadata] = None
+    unsafe_metadata: Optional[Dict[str, Any]] = None
     r"""Metadata saved on the user, that can be updated from both the Frontend and Backend APIs.
     Note: Since this data can be modified from the frontend, it is not guaranteed to be safe.
     """

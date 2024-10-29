@@ -4,7 +4,7 @@ from __future__ import annotations
 from clerk_backend_api.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
 from enum import Enum
 from pydantic import model_serializer
-from typing import Optional, TypedDict, Union
+from typing import Any, Dict, Optional, TypedDict, Union
 from typing_extensions import NotRequired
 
 
@@ -13,14 +13,6 @@ class SAMLAccountObject(str, Enum):
 
     """
     SAML_ACCOUNT = "saml_account"
-
-class SAMLAccountPublicMetadataTypedDict(TypedDict):
-    pass
-    
-
-class SAMLAccountPublicMetadata(BaseModel):
-    pass
-    
 
 class TicketVerificationStatus(str, Enum):
     UNVERIFIED = "unverified"
@@ -219,7 +211,7 @@ class SAMLAccountTypedDict(TypedDict):
     first_name: NotRequired[Nullable[str]]
     last_name: NotRequired[Nullable[str]]
     provider_user_id: NotRequired[Nullable[str]]
-    public_metadata: NotRequired[SAMLAccountPublicMetadataTypedDict]
+    public_metadata: NotRequired[Dict[str, Any]]
     saml_connection: NotRequired[Nullable[SamlConnectionTypedDict]]
     
 
@@ -236,7 +228,7 @@ class SAMLAccount(BaseModel):
     first_name: OptionalNullable[str] = UNSET
     last_name: OptionalNullable[str] = UNSET
     provider_user_id: OptionalNullable[str] = UNSET
-    public_metadata: Optional[SAMLAccountPublicMetadata] = None
+    public_metadata: Optional[Dict[str, Any]] = None
     saml_connection: OptionalNullable[SamlConnection] = UNSET
     
     @model_serializer(mode="wrap")

@@ -93,7 +93,11 @@ s = Clerk(
 )
 
 
-res = s.organization_invitations.create(organization_id="org_12345", email_address="user@example.com", role="admin", inviter_user_id="user_67890", public_metadata={}, private_metadata={}, redirect_url="https://example.com/welcome")
+res = s.organization_invitations.create(organization_id="org_12345", email_address="user@example.com", role="admin", inviter_user_id="user_67890", public_metadata={
+    "key": "value",
+}, private_metadata={
+    "private_key": "secret_value",
+}, redirect_url="https://example.com/welcome")
 
 if res is not None:
     # handle response
@@ -109,8 +113,8 @@ if res is not None:
 | `email_address`                                                                                                                          | *str*                                                                                                                                    | :heavy_check_mark:                                                                                                                       | The email address of the new member that is going to be invited to the organization                                                      | user@example.com                                                                                                                         |
 | `role`                                                                                                                                   | *str*                                                                                                                                    | :heavy_check_mark:                                                                                                                       | The role of the new member in the organization                                                                                           | admin                                                                                                                                    |
 | `inviter_user_id`                                                                                                                        | *OptionalNullable[str]*                                                                                                                  | :heavy_minus_sign:                                                                                                                       | The ID of the user that invites the new member to the organization.<br/>Must be an administrator in the organization.                    | user_67890                                                                                                                               |
-| `public_metadata`                                                                                                                        | [Optional[models.CreateOrganizationInvitationPublicMetadata]](../../models/createorganizationinvitationpublicmetadata.md)                | :heavy_minus_sign:                                                                                                                       | Metadata saved on the organization invitation, read-only from the Frontend API and fully accessible (read/write) from the Backend API.   | {<br/>"key": "value"<br/>}                                                                                                               |
-| `private_metadata`                                                                                                                       | [Optional[models.CreateOrganizationInvitationPrivateMetadata]](../../models/createorganizationinvitationprivatemetadata.md)              | :heavy_minus_sign:                                                                                                                       | Metadata saved on the organization invitation, fully accessible (read/write) from the Backend API but not visible from the Frontend API. | {<br/>"private_key": "secret_value"<br/>}                                                                                                |
+| `public_metadata`                                                                                                                        | Dict[str, *Any*]                                                                                                                         | :heavy_minus_sign:                                                                                                                       | Metadata saved on the organization invitation, read-only from the Frontend API and fully accessible (read/write) from the Backend API.   | {<br/>"key": "value"<br/>}                                                                                                               |
+| `private_metadata`                                                                                                                       | Dict[str, *Any*]                                                                                                                         | :heavy_minus_sign:                                                                                                                       | Metadata saved on the organization invitation, fully accessible (read/write) from the Backend API but not visible from the Frontend API. | {<br/>"private_key": "secret_value"<br/>}                                                                                                |
 | `redirect_url`                                                                                                                           | *Optional[str]*                                                                                                                          | :heavy_minus_sign:                                                                                                                       | Optional URL that the invitee will be redirected to once they accept the invitation by clicking the join link in the invitation email.   | https://example.com/welcome                                                                                                              |
 | `retries`                                                                                                                                | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                         | :heavy_minus_sign:                                                                                                                       | Configuration to override the default retry behavior of the client.                                                                      |                                                                                                                                          |
 
@@ -207,8 +211,12 @@ res = s.organization_invitations.bulk_create(organization_id="org_12345", reques
         "email_address": "newmember@example.com",
         "role": "admin",
         "inviter_user_id": "user_67890",
-        "public_metadata": {},
-        "private_metadata": {},
+        "public_metadata": {
+
+        },
+        "private_metadata": {
+
+        },
         "redirect_url": "https://example.com/welcome",
     },
 ])

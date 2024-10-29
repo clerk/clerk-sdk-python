@@ -5,7 +5,7 @@ from clerk_backend_api.types import BaseModel, Nullable, OptionalNullable, UNSET
 from enum import Enum
 import pydantic
 from pydantic import model_serializer
-from typing import List, Optional, TypedDict
+from typing import Any, Dict, List, Optional, TypedDict
 from typing_extensions import Annotated, NotRequired
 
 
@@ -15,44 +15,8 @@ class OrganizationMembershipObject(str, Enum):
     """
     ORGANIZATION_MEMBERSHIP = "organization_membership"
 
-class OrganizationMembershipPublicMetadataTypedDict(TypedDict):
-    r"""Metadata saved on the organization membership, accessible from both Frontend and Backend APIs"""
-    
-    
-
-class OrganizationMembershipPublicMetadata(BaseModel):
-    r"""Metadata saved on the organization membership, accessible from both Frontend and Backend APIs"""
-    
-    
-
-class OrganizationMembershipPrivateMetadataTypedDict(TypedDict):
-    r"""Metadata saved on the organization membership, accessible only from the Backend API"""
-    
-    
-
-class OrganizationMembershipPrivateMetadata(BaseModel):
-    r"""Metadata saved on the organization membership, accessible only from the Backend API"""
-    
-    
-
 class OrganizationMembershipOrganizationObject(str, Enum):
     ORGANIZATION = "organization"
-
-class OrganizationMembershipOrganizationPublicMetadataTypedDict(TypedDict):
-    pass
-    
-
-class OrganizationMembershipOrganizationPublicMetadata(BaseModel):
-    pass
-    
-
-class OrganizationMembershipOrganizationPrivateMetadataTypedDict(TypedDict):
-    pass
-    
-
-class OrganizationMembershipOrganizationPrivateMetadata(BaseModel):
-    pass
-    
 
 class OrganizationMembershipOrganizationTypedDict(TypedDict):
     object: OrganizationMembershipOrganizationObject
@@ -60,8 +24,8 @@ class OrganizationMembershipOrganizationTypedDict(TypedDict):
     name: str
     slug: str
     max_allowed_memberships: int
-    public_metadata: OrganizationMembershipOrganizationPublicMetadataTypedDict
-    private_metadata: OrganizationMembershipOrganizationPrivateMetadataTypedDict
+    public_metadata: Dict[str, Any]
+    private_metadata: Dict[str, Any]
     created_at: int
     r"""Unix timestamp of creation.
 
@@ -81,8 +45,8 @@ class OrganizationMembershipOrganization(BaseModel):
     name: str
     slug: str
     max_allowed_memberships: int
-    public_metadata: OrganizationMembershipOrganizationPublicMetadata
-    private_metadata: OrganizationMembershipOrganizationPrivateMetadata
+    public_metadata: Dict[str, Any]
+    private_metadata: Dict[str, Any]
     created_at: int
     r"""Unix timestamp of creation.
 
@@ -179,9 +143,9 @@ class OrganizationMembershipTypedDict(TypedDict):
     role: NotRequired[str]
     role_name: NotRequired[str]
     permissions: NotRequired[List[str]]
-    public_metadata: NotRequired[OrganizationMembershipPublicMetadataTypedDict]
+    public_metadata: NotRequired[Dict[str, Any]]
     r"""Metadata saved on the organization membership, accessible from both Frontend and Backend APIs"""
-    private_metadata: NotRequired[OrganizationMembershipPrivateMetadataTypedDict]
+    private_metadata: NotRequired[Dict[str, Any]]
     r"""Metadata saved on the organization membership, accessible only from the Backend API"""
     organization: NotRequired[OrganizationMembershipOrganizationTypedDict]
     public_user_data: NotRequired[PublicUserDataTypedDict]
@@ -202,9 +166,9 @@ class OrganizationMembership(BaseModel):
     role: Optional[str] = None
     role_name: Optional[str] = None
     permissions: Optional[List[str]] = None
-    public_metadata: Optional[OrganizationMembershipPublicMetadata] = None
+    public_metadata: Optional[Dict[str, Any]] = None
     r"""Metadata saved on the organization membership, accessible from both Frontend and Backend APIs"""
-    private_metadata: Optional[OrganizationMembershipPrivateMetadata] = None
+    private_metadata: Optional[Dict[str, Any]] = None
     r"""Metadata saved on the organization membership, accessible only from the Backend API"""
     organization: Optional[OrganizationMembershipOrganization] = None
     public_user_data: Optional[PublicUserData] = None

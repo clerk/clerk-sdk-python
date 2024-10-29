@@ -4,43 +4,9 @@ from __future__ import annotations
 from clerk_backend_api.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
 from clerk_backend_api.utils import FieldMetadata, PathParamMetadata, RequestMetadata
 from pydantic import model_serializer
-from typing import List, Optional, TypedDict
+from typing import Any, Dict, List, Optional, TypedDict
 from typing_extensions import Annotated, NotRequired
 
-
-class UpdateUserPublicMetadataTypedDict(TypedDict):
-    r"""Metadata saved on the user, that is visible to both your Frontend and Backend APIs"""
-    
-    
-
-class UpdateUserPublicMetadata(BaseModel):
-    r"""Metadata saved on the user, that is visible to both your Frontend and Backend APIs"""
-    
-    
-
-class UpdateUserPrivateMetadataTypedDict(TypedDict):
-    r"""Metadata saved on the user, that is only visible to your Backend API"""
-    
-    
-
-class UpdateUserPrivateMetadata(BaseModel):
-    r"""Metadata saved on the user, that is only visible to your Backend API"""
-    
-    
-
-class UpdateUserUnsafeMetadataTypedDict(TypedDict):
-    r"""Metadata saved on the user, that can be updated from both the Frontend and Backend APIs.
-    Note: Since this data can be modified from the frontend, it is not guaranteed to be safe.
-    """
-    
-    
-
-class UpdateUserUnsafeMetadata(BaseModel):
-    r"""Metadata saved on the user, that can be updated from both the Frontend and Backend APIs.
-    Note: Since this data can be modified from the frontend, it is not guaranteed to be safe.
-    """
-    
-    
 
 class UpdateUserRequestBodyTypedDict(TypedDict):
     external_id: NotRequired[Nullable[str]]
@@ -107,11 +73,11 @@ class UpdateUserRequestBodyTypedDict(TypedDict):
     r"""If Backup Codes are configured on the instance, you can provide them to enable it on the specific user without the need to reset them.
     You must provide the backup codes in plain format or the corresponding bcrypt digest.
     """
-    public_metadata: NotRequired[UpdateUserPublicMetadataTypedDict]
+    public_metadata: NotRequired[Dict[str, Any]]
     r"""Metadata saved on the user, that is visible to both your Frontend and Backend APIs"""
-    private_metadata: NotRequired[UpdateUserPrivateMetadataTypedDict]
+    private_metadata: NotRequired[Dict[str, Any]]
     r"""Metadata saved on the user, that is only visible to your Backend API"""
-    unsafe_metadata: NotRequired[UpdateUserUnsafeMetadataTypedDict]
+    unsafe_metadata: NotRequired[Dict[str, Any]]
     r"""Metadata saved on the user, that can be updated from both the Frontend and Backend APIs.
     Note: Since this data can be modified from the frontend, it is not guaranteed to be safe.
     """
@@ -196,11 +162,11 @@ class UpdateUserRequestBody(BaseModel):
     r"""If Backup Codes are configured on the instance, you can provide them to enable it on the specific user without the need to reset them.
     You must provide the backup codes in plain format or the corresponding bcrypt digest.
     """
-    public_metadata: Optional[UpdateUserPublicMetadata] = None
+    public_metadata: Optional[Dict[str, Any]] = None
     r"""Metadata saved on the user, that is visible to both your Frontend and Backend APIs"""
-    private_metadata: Optional[UpdateUserPrivateMetadata] = None
+    private_metadata: Optional[Dict[str, Any]] = None
     r"""Metadata saved on the user, that is only visible to your Backend API"""
-    unsafe_metadata: Optional[UpdateUserUnsafeMetadata] = None
+    unsafe_metadata: Optional[Dict[str, Any]] = None
     r"""Metadata saved on the user, that can be updated from both the Frontend and Backend APIs.
     Note: Since this data can be modified from the frontend, it is not guaranteed to be safe.
     """

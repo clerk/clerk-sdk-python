@@ -4,7 +4,7 @@ from __future__ import annotations
 from clerk_backend_api.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
 from enum import Enum
 from pydantic import model_serializer
-from typing import List, Optional, TypedDict
+from typing import Any, Dict, List, Optional, TypedDict
 from typing_extensions import NotRequired
 
 
@@ -21,22 +21,6 @@ class VerificationsTypedDict(TypedDict):
     
 
 class Verifications(BaseModel):
-    pass
-    
-
-class SignUpUnsafeMetadataTypedDict(TypedDict):
-    pass
-    
-
-class SignUpUnsafeMetadata(BaseModel):
-    pass
-    
-
-class SignUpPublicMetadataTypedDict(TypedDict):
-    pass
-    
-
-class SignUpPublicMetadata(BaseModel):
     pass
     
 
@@ -66,8 +50,8 @@ class SignUpTypedDict(TypedDict):
     web3_wallet: NotRequired[Nullable[str]]
     first_name: NotRequired[Nullable[str]]
     last_name: NotRequired[Nullable[str]]
-    unsafe_metadata: NotRequired[SignUpUnsafeMetadataTypedDict]
-    public_metadata: NotRequired[SignUpPublicMetadataTypedDict]
+    unsafe_metadata: NotRequired[Dict[str, Any]]
+    public_metadata: NotRequired[Dict[str, Any]]
     external_id: NotRequired[Nullable[str]]
     created_session_id: NotRequired[Nullable[str]]
     created_user_id: NotRequired[Nullable[str]]
@@ -92,8 +76,8 @@ class SignUp(BaseModel):
     web3_wallet: OptionalNullable[str] = UNSET
     first_name: OptionalNullable[str] = UNSET
     last_name: OptionalNullable[str] = UNSET
-    unsafe_metadata: Optional[SignUpUnsafeMetadata] = None
-    public_metadata: Optional[SignUpPublicMetadata] = None
+    unsafe_metadata: Optional[Dict[str, Any]] = None
+    public_metadata: Optional[Dict[str, Any]] = None
     external_id: OptionalNullable[str] = UNSET
     created_session_id: OptionalNullable[str] = UNSET
     created_user_id: OptionalNullable[str] = UNSET

@@ -10,7 +10,7 @@ from clerk_backend_api.types import BaseModel, Nullable, OptionalNullable, UNSET
 from enum import Enum
 import pydantic
 from pydantic import model_serializer
-from typing import List, Optional, TypedDict
+from typing import Any, Dict, List, Optional, TypedDict
 from typing_extensions import Annotated, NotRequired
 
 
@@ -19,30 +19,6 @@ class UserObject(str, Enum):
 
     """
     USER = "user"
-
-class PublicMetadataTypedDict(TypedDict):
-    pass
-    
-
-class PublicMetadata(BaseModel):
-    pass
-    
-
-class PrivateMetadataTypedDict(TypedDict):
-    pass
-    
-
-class PrivateMetadata(BaseModel):
-    pass
-    
-
-class UnsafeMetadataTypedDict(TypedDict):
-    pass
-    
-
-class UnsafeMetadata(BaseModel):
-    pass
-    
 
 class ExternalAccountsTypedDict(TypedDict):
     pass
@@ -68,9 +44,9 @@ class UserTypedDict(TypedDict):
     profile_image_url: NotRequired[str]
     image_url: NotRequired[str]
     has_image: NotRequired[bool]
-    public_metadata: NotRequired[PublicMetadataTypedDict]
-    private_metadata: NotRequired[Nullable[PrivateMetadataTypedDict]]
-    unsafe_metadata: NotRequired[UnsafeMetadataTypedDict]
+    public_metadata: NotRequired[Dict[str, Any]]
+    private_metadata: NotRequired[Nullable[Dict[str, Any]]]
+    unsafe_metadata: NotRequired[Dict[str, Any]]
     email_addresses: NotRequired[List[EmailAddressTypedDict]]
     phone_numbers: NotRequired[List[PhoneNumberTypedDict]]
     web3_wallets: NotRequired[List[Web3WalletTypedDict]]
@@ -155,9 +131,9 @@ class User(BaseModel):
     profile_image_url: Annotated[Optional[str], pydantic.Field(deprecated="warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible.")] = None
     image_url: Optional[str] = None
     has_image: Optional[bool] = None
-    public_metadata: Optional[PublicMetadata] = None
-    private_metadata: OptionalNullable[PrivateMetadata] = UNSET
-    unsafe_metadata: Optional[UnsafeMetadata] = None
+    public_metadata: Optional[Dict[str, Any]] = None
+    private_metadata: OptionalNullable[Dict[str, Any]] = UNSET
+    unsafe_metadata: Optional[Dict[str, Any]] = None
     email_addresses: Optional[List[EmailAddress]] = None
     phone_numbers: Optional[List[PhoneNumber]] = None
     web3_wallets: Optional[List[Web3Wallet]] = None

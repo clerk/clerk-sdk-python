@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: bfe29c99-6e67-43fe-b928-64d6a5ed6aa8
 management:
-  docChecksum: 043152d28198abb5910dc00f65f25d0c
+  docChecksum: 3729a9e678b39fae6e60a063c4498eff
   docVersion: v1
   speakeasyVersion: 1.385.0
   generationVersion: 2.407.2
-  releaseVersion: 1.0.3
-  configChecksum: b8428ce9b92cb0413c5ae64ed0ada07e
+  releaseVersion: 1.1.0
+  configChecksum: a11f3eebeffae0f4ac25bcc0f627c9ac
   repoURL: https://github.com/clerk/clerk-sdk-python.git
   installationURL: https://github.com/clerk/clerk-sdk-python.git
   published: true
@@ -342,13 +342,9 @@ generatedFiles:
   - docs/models/previewtemplaterequest.md
   - docs/models/previewtemplateresponsebody.md
   - docs/models/userobject.md
-  - docs/models/publicmetadata.md
-  - docs/models/privatemetadata.md
-  - docs/models/unsafemetadata.md
   - docs/models/externalaccounts.md
   - docs/models/user.md
   - docs/models/samlaccountobject.md
-  - docs/models/samlaccountpublicmetadata.md
   - docs/models/ticketverificationstatus.md
   - docs/models/ticketverificationstrategy.md
   - docs/models/ticket.md
@@ -379,17 +375,11 @@ generatedFiles:
   - docs/models/web3walletverification.md
   - docs/models/web3wallet.md
   - docs/models/getuserlistrequest.md
-  - docs/models/createuserpublicmetadata.md
-  - docs/models/createuserprivatemetadata.md
-  - docs/models/createuserunsafemetadata.md
   - docs/models/createuserrequestbody.md
   - docs/models/totalcountobject.md
   - docs/models/totalcount.md
   - docs/models/getuserscountrequest.md
   - docs/models/getuserrequest.md
-  - docs/models/updateuserpublicmetadata.md
-  - docs/models/updateuserprivatemetadata.md
-  - docs/models/updateuserunsafemetadata.md
   - docs/models/updateuserrequestbody.md
   - docs/models/updateuserrequest.md
   - docs/models/deleteuserrequest.md
@@ -404,23 +394,16 @@ generatedFiles:
   - docs/models/updateusermetadatarequestbody.md
   - docs/models/updateusermetadatarequest.md
   - docs/models/getoauthaccesstokenrequest.md
-  - docs/models/getoauthaccesstokenpublicmetadata.md
   - docs/models/responsebody.md
   - docs/models/organizationmemberships.md
   - docs/models/organizationmembershipobject.md
-  - docs/models/organizationmembershippublicmetadata.md
-  - docs/models/organizationmembershipprivatemetadata.md
   - docs/models/organizationmembershiporganizationobject.md
-  - docs/models/organizationmembershiporganizationpublicmetadata.md
-  - docs/models/organizationmembershiporganizationprivatemetadata.md
   - docs/models/organizationmembershiporganization.md
   - docs/models/publicuserdata.md
   - docs/models/organizationmembership.md
   - docs/models/usersgetorganizationmembershipsrequest.md
   - docs/models/organizationinvitationswithpublicorganizationdata.md
   - docs/models/organizationinvitationwithpublicorganizationdataobject.md
-  - docs/models/organizationinvitationwithpublicorganizationdatapublicmetadata.md
-  - docs/models/organizationinvitationwithpublicorganizationdataprivatemetadata.md
   - docs/models/publicorganizationdata.md
   - docs/models/organizationinvitationwithpublicorganizationdata.md
   - docs/models/usersgetorganizationinvitationsqueryparamstatus.md
@@ -444,33 +427,24 @@ generatedFiles:
   - docs/models/deletetotpresponsebody.md
   - docs/models/deleteexternalaccountrequest.md
   - docs/models/invitationobject.md
-  - docs/models/invitationpublicmetadata.md
   - docs/models/invitationstatus.md
   - docs/models/invitation.md
-  - docs/models/createinvitationpublicmetadata.md
   - docs/models/createinvitationrequestbody.md
   - docs/models/listinvitationsqueryparamstatus.md
   - docs/models/listinvitationsrequest.md
   - docs/models/invitationrevokedobject.md
-  - docs/models/invitationrevokedpublicmetadata.md
   - docs/models/invitationrevokedstatus.md
   - docs/models/invitationrevoked.md
   - docs/models/revokeinvitationrequest.md
   - docs/models/listinstanceorganizationinvitationsqueryparamstatus.md
   - docs/models/listinstanceorganizationinvitationsrequest.md
   - docs/models/organizationinvitationobject.md
-  - docs/models/organizationinvitationpublicmetadata.md
-  - docs/models/organizationinvitationprivatemetadata.md
   - docs/models/organizationinvitation.md
-  - docs/models/createorganizationinvitationpublicmetadata.md
-  - docs/models/createorganizationinvitationprivatemetadata.md
   - docs/models/createorganizationinvitationrequestbody.md
   - docs/models/createorganizationinvitationrequest.md
   - docs/models/organizationinvitations.md
   - docs/models/listorganizationinvitationsqueryparamstatus.md
   - docs/models/listorganizationinvitationsrequest.md
-  - docs/models/createorganizationinvitationbulkpublicmetadata.md
-  - docs/models/createorganizationinvitationbulkprivatemetadata.md
   - docs/models/requestbody.md
   - docs/models/createorganizationinvitationbulkrequest.md
   - docs/models/listpendingorganizationinvitationsrequest.md
@@ -529,26 +503,16 @@ generatedFiles:
   - docs/models/deletejwttemplaterequest.md
   - docs/models/organizations.md
   - docs/models/organizationobject.md
-  - docs/models/organizationpublicmetadata.md
-  - docs/models/organizationprivatemetadata.md
   - docs/models/organization.md
   - docs/models/listorganizationsrequest.md
-  - docs/models/createorganizationprivatemetadata.md
-  - docs/models/createorganizationpublicmetadata.md
   - docs/models/createorganizationrequestbody.md
   - docs/models/getorganizationrequest.md
-  - docs/models/updateorganizationpublicmetadata.md
-  - docs/models/updateorganizationprivatemetadata.md
   - docs/models/updateorganizationrequestbody.md
   - docs/models/updateorganizationrequest.md
   - docs/models/deleteorganizationrequest.md
-  - docs/models/mergeorganizationmetadatapublicmetadata.md
-  - docs/models/mergeorganizationmetadataprivatemetadata.md
   - docs/models/mergeorganizationmetadatarequestbody.md
   - docs/models/mergeorganizationmetadatarequest.md
   - docs/models/organizationwithlogoobject.md
-  - docs/models/organizationwithlogopublicmetadata.md
-  - docs/models/organizationwithlogoprivatemetadata.md
   - docs/models/organizationwithlogo.md
   - docs/models/uploadorganizationlogofile.md
   - docs/models/uploadorganizationlogorequestbody.md
@@ -560,8 +524,6 @@ generatedFiles:
   - docs/models/updateorganizationmembershiprequestbody.md
   - docs/models/updateorganizationmembershiprequest.md
   - docs/models/deleteorganizationmembershiprequest.md
-  - docs/models/updateorganizationmembershipmetadatapublicmetadata.md
-  - docs/models/updateorganizationmembershipmetadataprivatemetadata.md
   - docs/models/updateorganizationmembershipmetadatarequestbody.md
   - docs/models/updateorganizationmembershipmetadatarequest.md
   - docs/models/instancegetorganizationmembershipsrequest.md
@@ -593,8 +555,6 @@ generatedFiles:
   - docs/models/signupobject.md
   - docs/models/signupstatus.md
   - docs/models/verifications.md
-  - docs/models/signupunsafemetadata.md
-  - docs/models/signuppublicmetadata.md
   - docs/models/externalaccount.md
   - docs/models/signup.md
   - docs/models/updatesignuprequestbody.md

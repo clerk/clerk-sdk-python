@@ -3,32 +3,16 @@
 from __future__ import annotations
 from clerk_backend_api.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
 from pydantic import model_serializer
-from typing import Optional, TypedDict
+from typing import Any, Dict, Optional, TypedDict
 from typing_extensions import NotRequired
 
-
-class CreateInvitationPublicMetadataTypedDict(TypedDict):
-    r"""Metadata that will be attached to the newly created invitation.
-    The value of this property should be a well-formed JSON object.
-    Once the user accepts the invitation and signs up, these metadata will end up in the user's public metadata.
-    """
-    
-    
-
-class CreateInvitationPublicMetadata(BaseModel):
-    r"""Metadata that will be attached to the newly created invitation.
-    The value of this property should be a well-formed JSON object.
-    Once the user accepts the invitation and signs up, these metadata will end up in the user's public metadata.
-    """
-    
-    
 
 class CreateInvitationRequestBodyTypedDict(TypedDict):
     r"""Required parameters"""
     
     email_address: str
     r"""The email address the invitation will be sent to"""
-    public_metadata: NotRequired[CreateInvitationPublicMetadataTypedDict]
+    public_metadata: NotRequired[Dict[str, Any]]
     r"""Metadata that will be attached to the newly created invitation.
     The value of this property should be a well-formed JSON object.
     Once the user accepts the invitation and signs up, these metadata will end up in the user's public metadata.
@@ -52,7 +36,7 @@ class CreateInvitationRequestBody(BaseModel):
     
     email_address: str
     r"""The email address the invitation will be sent to"""
-    public_metadata: Optional[CreateInvitationPublicMetadata] = None
+    public_metadata: Optional[Dict[str, Any]] = None
     r"""Metadata that will be attached to the newly created invitation.
     The value of this property should be a well-formed JSON object.
     Once the user accepts the invitation and signs up, these metadata will end up in the user's public metadata.

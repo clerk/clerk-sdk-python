@@ -3,7 +3,7 @@
 from __future__ import annotations
 from clerk_backend_api.types import BaseModel
 from enum import Enum
-from typing import Optional, TypedDict
+from typing import Any, Dict, Optional, TypedDict
 from typing_extensions import NotRequired
 
 
@@ -12,22 +12,6 @@ class OrganizationInvitationObject(str, Enum):
 
     """
     ORGANIZATION_INVITATION = "organization_invitation"
-
-class OrganizationInvitationPublicMetadataTypedDict(TypedDict):
-    pass
-    
-
-class OrganizationInvitationPublicMetadata(BaseModel):
-    pass
-    
-
-class OrganizationInvitationPrivateMetadataTypedDict(TypedDict):
-    pass
-    
-
-class OrganizationInvitationPrivateMetadata(BaseModel):
-    pass
-    
 
 class OrganizationInvitationTypedDict(TypedDict):
     r"""An organization invitation"""
@@ -42,8 +26,8 @@ class OrganizationInvitationTypedDict(TypedDict):
     role_name: NotRequired[str]
     organization_id: NotRequired[str]
     status: NotRequired[str]
-    public_metadata: NotRequired[OrganizationInvitationPublicMetadataTypedDict]
-    private_metadata: NotRequired[OrganizationInvitationPrivateMetadataTypedDict]
+    public_metadata: NotRequired[Dict[str, Any]]
+    private_metadata: NotRequired[Dict[str, Any]]
     created_at: NotRequired[int]
     r"""Unix timestamp of creation."""
     updated_at: NotRequired[int]
@@ -63,8 +47,8 @@ class OrganizationInvitation(BaseModel):
     role_name: Optional[str] = None
     organization_id: Optional[str] = None
     status: Optional[str] = None
-    public_metadata: Optional[OrganizationInvitationPublicMetadata] = None
-    private_metadata: Optional[OrganizationInvitationPrivateMetadata] = None
+    public_metadata: Optional[Dict[str, Any]] = None
+    private_metadata: Optional[Dict[str, Any]] = None
     created_at: Optional[int] = None
     r"""Unix timestamp of creation."""
     updated_at: Optional[int] = None

@@ -4,7 +4,7 @@ from __future__ import annotations
 from clerk_backend_api.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
 from clerk_backend_api.utils import FieldMetadata, PathParamMetadata
 from pydantic import model_serializer
-from typing import List, Optional, TypedDict
+from typing import Any, Dict, List, Optional, TypedDict
 from typing_extensions import Annotated, NotRequired
 
 
@@ -22,14 +22,6 @@ class GetOAuthAccessTokenRequest(BaseModel):
     r"""The ID of the OAuth provider (e.g. `oauth_google`)"""
     
 
-class GetOAuthAccessTokenPublicMetadataTypedDict(TypedDict):
-    pass
-    
-
-class GetOAuthAccessTokenPublicMetadata(BaseModel):
-    pass
-    
-
 class ResponseBodyTypedDict(TypedDict):
     object: NotRequired[str]
     external_account_id: NotRequired[str]
@@ -40,7 +32,7 @@ class ResponseBodyTypedDict(TypedDict):
     r"""The access token"""
     provider: NotRequired[str]
     r"""The ID of the provider"""
-    public_metadata: NotRequired[GetOAuthAccessTokenPublicMetadataTypedDict]
+    public_metadata: NotRequired[Dict[str, Any]]
     label: NotRequired[Nullable[str]]
     scopes: NotRequired[List[str]]
     r"""The list of scopes that the token is valid for.
@@ -60,7 +52,7 @@ class ResponseBody(BaseModel):
     r"""The access token"""
     provider: Optional[str] = None
     r"""The ID of the provider"""
-    public_metadata: Optional[GetOAuthAccessTokenPublicMetadata] = None
+    public_metadata: Optional[Dict[str, Any]] = None
     label: OptionalNullable[str] = UNSET
     scopes: Optional[List[str]] = None
     r"""The list of scopes that the token is valid for.
