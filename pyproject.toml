@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "clerk-backend-api"
-version = "1.1.0"
+version = "1.1.1"
 description = "Python Client SDK for clerk.dev"
 authors = ["Clerk",]
 readme = "README-PYPI.md"
