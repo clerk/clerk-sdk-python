@@ -30,7 +30,9 @@ s = Clerk(
 
 res = s.invitations.create(request={
     "email_address": "user@example.com",
-    "public_metadata": {},
+    "public_metadata": {
+
+    },
     "redirect_url": "https://example.com/welcome",
     "notify": True,
     "ignore_existing": True,

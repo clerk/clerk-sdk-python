@@ -3,7 +3,7 @@
 from __future__ import annotations
 from clerk_backend_api.types import BaseModel
 from enum import Enum
-from typing import Optional, TypedDict
+from typing import Any, Dict, Optional, TypedDict
 from typing_extensions import NotRequired
 
 
@@ -12,22 +12,6 @@ class OrganizationInvitationWithPublicOrganizationDataObject(str, Enum):
 
     """
     ORGANIZATION_INVITATION = "organization_invitation"
-
-class OrganizationInvitationWithPublicOrganizationDataPublicMetadataTypedDict(TypedDict):
-    pass
-    
-
-class OrganizationInvitationWithPublicOrganizationDataPublicMetadata(BaseModel):
-    pass
-    
-
-class OrganizationInvitationWithPublicOrganizationDataPrivateMetadataTypedDict(TypedDict):
-    pass
-    
-
-class OrganizationInvitationWithPublicOrganizationDataPrivateMetadata(BaseModel):
-    pass
-    
 
 class PublicOrganizationDataTypedDict(TypedDict):
     id: NotRequired[str]
@@ -58,8 +42,8 @@ class OrganizationInvitationWithPublicOrganizationDataTypedDict(TypedDict):
     role_name: NotRequired[str]
     organization_id: NotRequired[str]
     status: NotRequired[str]
-    public_metadata: NotRequired[OrganizationInvitationWithPublicOrganizationDataPublicMetadataTypedDict]
-    private_metadata: NotRequired[OrganizationInvitationWithPublicOrganizationDataPrivateMetadataTypedDict]
+    public_metadata: NotRequired[Dict[str, Any]]
+    private_metadata: NotRequired[Dict[str, Any]]
     public_organization_data: NotRequired[PublicOrganizationDataTypedDict]
     created_at: NotRequired[int]
     r"""Unix timestamp of creation."""
@@ -80,8 +64,8 @@ class OrganizationInvitationWithPublicOrganizationData(BaseModel):
     role_name: Optional[str] = None
     organization_id: Optional[str] = None
     status: Optional[str] = None
-    public_metadata: Optional[OrganizationInvitationWithPublicOrganizationDataPublicMetadata] = None
-    private_metadata: Optional[OrganizationInvitationWithPublicOrganizationDataPrivateMetadata] = None
+    public_metadata: Optional[Dict[str, Any]] = None
+    private_metadata: Optional[Dict[str, Any]] = None
     public_organization_data: Optional[PublicOrganizationData] = None
     created_at: Optional[int] = None
     r"""Unix timestamp of creation."""

@@ -4,28 +4,12 @@ from __future__ import annotations
 from clerk_backend_api.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
 from enum import Enum
 from pydantic import model_serializer
-from typing import Optional, TypedDict
+from typing import Any, Dict, Optional, TypedDict
 from typing_extensions import NotRequired
 
 
 class OrganizationObject(str, Enum):
     ORGANIZATION = "organization"
-
-class OrganizationPublicMetadataTypedDict(TypedDict):
-    pass
-    
-
-class OrganizationPublicMetadata(BaseModel):
-    pass
-    
-
-class OrganizationPrivateMetadataTypedDict(TypedDict):
-    pass
-    
-
-class OrganizationPrivateMetadata(BaseModel):
-    pass
-    
 
 class OrganizationTypedDict(TypedDict):
     object: OrganizationObject
@@ -33,8 +17,8 @@ class OrganizationTypedDict(TypedDict):
     name: str
     slug: str
     max_allowed_memberships: int
-    public_metadata: OrganizationPublicMetadataTypedDict
-    private_metadata: OrganizationPrivateMetadataTypedDict
+    public_metadata: Dict[str, Any]
+    private_metadata: Dict[str, Any]
     created_at: int
     r"""Unix timestamp of creation.
 
@@ -54,8 +38,8 @@ class Organization(BaseModel):
     name: str
     slug: str
     max_allowed_memberships: int
-    public_metadata: OrganizationPublicMetadata
-    private_metadata: OrganizationPrivateMetadata
+    public_metadata: Dict[str, Any]
+    private_metadata: Dict[str, Any]
     created_at: int
     r"""Unix timestamp of creation.
 

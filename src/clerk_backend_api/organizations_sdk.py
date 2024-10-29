@@ -4,7 +4,7 @@ from .basesdk import BaseSDK
 from clerk_backend_api import models, utils
 from clerk_backend_api._hooks import HookContext
 from clerk_backend_api.types import BaseModel, OptionalNullable, UNSET
-from typing import Any, Optional, Union, cast
+from typing import Any, Dict, Optional, Union, cast
 
 class OrganizationsSDK(BaseSDK):
     r"""Organizations are used to group members under a common entity and provide shared access to resources.
@@ -541,8 +541,8 @@ class OrganizationsSDK(BaseSDK):
     def update(
         self, *,
         organization_id: str,
-        public_metadata: Optional[Union[models.UpdateOrganizationPublicMetadata, models.UpdateOrganizationPublicMetadataTypedDict]] = None,
-        private_metadata: Optional[Union[models.UpdateOrganizationPrivateMetadata, models.UpdateOrganizationPrivateMetadataTypedDict]] = None,
+        public_metadata: Optional[Dict[str, Any]] = None,
+        private_metadata: Optional[Dict[str, Any]] = None,
         name: OptionalNullable[str] = UNSET,
         slug: OptionalNullable[str] = UNSET,
         max_allowed_memberships: OptionalNullable[int] = UNSET,
@@ -579,8 +579,8 @@ class OrganizationsSDK(BaseSDK):
         request = models.UpdateOrganizationRequest(
             organization_id=organization_id,
             request_body=models.UpdateOrganizationRequestBody(
-                public_metadata=utils.get_pydantic_model(public_metadata, Optional[models.UpdateOrganizationPublicMetadata]),
-                private_metadata=utils.get_pydantic_model(private_metadata, Optional[models.UpdateOrganizationPrivateMetadata]),
+                public_metadata=public_metadata,
+                private_metadata=private_metadata,
                 name=name,
                 slug=slug,
                 max_allowed_memberships=max_allowed_memberships,
@@ -643,8 +643,8 @@ class OrganizationsSDK(BaseSDK):
     async def update_async(
         self, *,
         organization_id: str,
-        public_metadata: Optional[Union[models.UpdateOrganizationPublicMetadata, models.UpdateOrganizationPublicMetadataTypedDict]] = None,
-        private_metadata: Optional[Union[models.UpdateOrganizationPrivateMetadata, models.UpdateOrganizationPrivateMetadataTypedDict]] = None,
+        public_metadata: Optional[Dict[str, Any]] = None,
+        private_metadata: Optional[Dict[str, Any]] = None,
         name: OptionalNullable[str] = UNSET,
         slug: OptionalNullable[str] = UNSET,
         max_allowed_memberships: OptionalNullable[int] = UNSET,
@@ -681,8 +681,8 @@ class OrganizationsSDK(BaseSDK):
         request = models.UpdateOrganizationRequest(
             organization_id=organization_id,
             request_body=models.UpdateOrganizationRequestBody(
-                public_metadata=utils.get_pydantic_model(public_metadata, Optional[models.UpdateOrganizationPublicMetadata]),
-                private_metadata=utils.get_pydantic_model(private_metadata, Optional[models.UpdateOrganizationPrivateMetadata]),
+                public_metadata=public_metadata,
+                private_metadata=private_metadata,
                 name=name,
                 slug=slug,
                 max_allowed_memberships=max_allowed_memberships,
@@ -905,8 +905,8 @@ class OrganizationsSDK(BaseSDK):
     def merge_metadata(
         self, *,
         organization_id: str,
-        public_metadata: Optional[Union[models.MergeOrganizationMetadataPublicMetadata, models.MergeOrganizationMetadataPublicMetadataTypedDict]] = None,
-        private_metadata: Optional[Union[models.MergeOrganizationMetadataPrivateMetadata, models.MergeOrganizationMetadataPrivateMetadataTypedDict]] = None,
+        public_metadata: Optional[Dict[str, Any]] = None,
+        private_metadata: Optional[Dict[str, Any]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -936,8 +936,8 @@ class OrganizationsSDK(BaseSDK):
         request = models.MergeOrganizationMetadataRequest(
             organization_id=organization_id,
             request_body=models.MergeOrganizationMetadataRequestBody(
-                public_metadata=utils.get_pydantic_model(public_metadata, Optional[models.MergeOrganizationMetadataPublicMetadata]),
-                private_metadata=utils.get_pydantic_model(private_metadata, Optional[models.MergeOrganizationMetadataPrivateMetadata]),
+                public_metadata=public_metadata,
+                private_metadata=private_metadata,
             ),
         )
         
@@ -995,8 +995,8 @@ class OrganizationsSDK(BaseSDK):
     async def merge_metadata_async(
         self, *,
         organization_id: str,
-        public_metadata: Optional[Union[models.MergeOrganizationMetadataPublicMetadata, models.MergeOrganizationMetadataPublicMetadataTypedDict]] = None,
-        private_metadata: Optional[Union[models.MergeOrganizationMetadataPrivateMetadata, models.MergeOrganizationMetadataPrivateMetadataTypedDict]] = None,
+        public_metadata: Optional[Dict[str, Any]] = None,
+        private_metadata: Optional[Dict[str, Any]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1026,8 +1026,8 @@ class OrganizationsSDK(BaseSDK):
         request = models.MergeOrganizationMetadataRequest(
             organization_id=organization_id,
             request_body=models.MergeOrganizationMetadataRequestBody(
-                public_metadata=utils.get_pydantic_model(public_metadata, Optional[models.MergeOrganizationMetadataPublicMetadata]),
-                private_metadata=utils.get_pydantic_model(private_metadata, Optional[models.MergeOrganizationMetadataPrivateMetadata]),
+                public_metadata=public_metadata,
+                private_metadata=private_metadata,
             ),
         )
         

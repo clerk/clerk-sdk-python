@@ -4,7 +4,7 @@ from .basesdk import BaseSDK
 from clerk_backend_api import models, utils
 from clerk_backend_api._hooks import HookContext
 from clerk_backend_api.types import OptionalNullable, UNSET
-from typing import Any, List, Optional, Union
+from typing import Any, Dict, List, Optional, Union
 from typing_extensions import deprecated
 
 class OrganizationInvitationsSDK(BaseSDK):
@@ -206,8 +206,8 @@ class OrganizationInvitationsSDK(BaseSDK):
         email_address: str,
         role: str,
         inviter_user_id: OptionalNullable[str] = UNSET,
-        public_metadata: Optional[Union[models.CreateOrganizationInvitationPublicMetadata, models.CreateOrganizationInvitationPublicMetadataTypedDict]] = None,
-        private_metadata: Optional[Union[models.CreateOrganizationInvitationPrivateMetadata, models.CreateOrganizationInvitationPrivateMetadataTypedDict]] = None,
+        public_metadata: Optional[Dict[str, Any]] = None,
+        private_metadata: Optional[Dict[str, Any]] = None,
         redirect_url: Optional[str] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -257,8 +257,8 @@ class OrganizationInvitationsSDK(BaseSDK):
                 email_address=email_address,
                 inviter_user_id=inviter_user_id,
                 role=role,
-                public_metadata=utils.get_pydantic_model(public_metadata, Optional[models.CreateOrganizationInvitationPublicMetadata]),
-                private_metadata=utils.get_pydantic_model(private_metadata, Optional[models.CreateOrganizationInvitationPrivateMetadata]),
+                public_metadata=public_metadata,
+                private_metadata=private_metadata,
                 redirect_url=redirect_url,
             ),
         )
@@ -320,8 +320,8 @@ class OrganizationInvitationsSDK(BaseSDK):
         email_address: str,
         role: str,
         inviter_user_id: OptionalNullable[str] = UNSET,
-        public_metadata: Optional[Union[models.CreateOrganizationInvitationPublicMetadata, models.CreateOrganizationInvitationPublicMetadataTypedDict]] = None,
-        private_metadata: Optional[Union[models.CreateOrganizationInvitationPrivateMetadata, models.CreateOrganizationInvitationPrivateMetadataTypedDict]] = None,
+        public_metadata: Optional[Dict[str, Any]] = None,
+        private_metadata: Optional[Dict[str, Any]] = None,
         redirect_url: Optional[str] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -371,8 +371,8 @@ class OrganizationInvitationsSDK(BaseSDK):
                 email_address=email_address,
                 inviter_user_id=inviter_user_id,
                 role=role,
-                public_metadata=utils.get_pydantic_model(public_metadata, Optional[models.CreateOrganizationInvitationPublicMetadata]),
-                private_metadata=utils.get_pydantic_model(private_metadata, Optional[models.CreateOrganizationInvitationPrivateMetadata]),
+                public_metadata=public_metadata,
+                private_metadata=private_metadata,
                 redirect_url=redirect_url,
             ),
         )

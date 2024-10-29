@@ -2,29 +2,9 @@
 
 from __future__ import annotations
 from clerk_backend_api.types import BaseModel
-from typing import Optional, TypedDict
+from typing import Any, Dict, Optional, TypedDict
 from typing_extensions import NotRequired
 
-
-class CreateOrganizationPrivateMetadataTypedDict(TypedDict):
-    r"""Metadata saved on the organization, accessible only from the Backend API"""
-    
-    
-
-class CreateOrganizationPrivateMetadata(BaseModel):
-    r"""Metadata saved on the organization, accessible only from the Backend API"""
-    
-    
-
-class CreateOrganizationPublicMetadataTypedDict(TypedDict):
-    r"""Metadata saved on the organization, read-only from the Frontend API and fully accessible (read/write) from the Backend API"""
-    
-    
-
-class CreateOrganizationPublicMetadata(BaseModel):
-    r"""Metadata saved on the organization, read-only from the Frontend API and fully accessible (read/write) from the Backend API"""
-    
-    
 
 class CreateOrganizationRequestBodyTypedDict(TypedDict):
     name: str
@@ -33,9 +13,9 @@ class CreateOrganizationRequestBodyTypedDict(TypedDict):
     """
     created_by: str
     r"""The ID of the User who will become the administrator for the new organization"""
-    private_metadata: NotRequired[CreateOrganizationPrivateMetadataTypedDict]
+    private_metadata: NotRequired[Dict[str, Any]]
     r"""Metadata saved on the organization, accessible only from the Backend API"""
-    public_metadata: NotRequired[CreateOrganizationPublicMetadataTypedDict]
+    public_metadata: NotRequired[Dict[str, Any]]
     r"""Metadata saved on the organization, read-only from the Frontend API and fully accessible (read/write) from the Backend API"""
     slug: NotRequired[str]
     r"""A slug for the new organization.
@@ -55,9 +35,9 @@ class CreateOrganizationRequestBody(BaseModel):
     """
     created_by: str
     r"""The ID of the User who will become the administrator for the new organization"""
-    private_metadata: Optional[CreateOrganizationPrivateMetadata] = None
+    private_metadata: Optional[Dict[str, Any]] = None
     r"""Metadata saved on the organization, accessible only from the Backend API"""
-    public_metadata: Optional[CreateOrganizationPublicMetadata] = None
+    public_metadata: Optional[Dict[str, Any]] = None
     r"""Metadata saved on the organization, read-only from the Frontend API and fully accessible (read/write) from the Backend API"""
     slug: Optional[str] = None
     r"""A slug for the new organization.

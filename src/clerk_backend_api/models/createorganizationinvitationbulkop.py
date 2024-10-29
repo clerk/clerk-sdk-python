@@ -4,29 +4,9 @@ from __future__ import annotations
 from clerk_backend_api.types import BaseModel, Nullable, OptionalNullable, UNSET, UNSET_SENTINEL
 from clerk_backend_api.utils import FieldMetadata, PathParamMetadata, RequestMetadata
 from pydantic import model_serializer
-from typing import List, Optional, TypedDict
+from typing import Any, Dict, List, Optional, TypedDict
 from typing_extensions import Annotated, NotRequired
 
-
-class CreateOrganizationInvitationBulkPublicMetadataTypedDict(TypedDict):
-    r"""Metadata saved on the organization invitation, read-only from the Frontend API and fully accessible (read/write) from the Backend API."""
-    
-    
-
-class CreateOrganizationInvitationBulkPublicMetadata(BaseModel):
-    r"""Metadata saved on the organization invitation, read-only from the Frontend API and fully accessible (read/write) from the Backend API."""
-    
-    
-
-class CreateOrganizationInvitationBulkPrivateMetadataTypedDict(TypedDict):
-    r"""Metadata saved on the organization invitation, fully accessible (read/write) from the Backend API but not visible from the Frontend API."""
-    
-    
-
-class CreateOrganizationInvitationBulkPrivateMetadata(BaseModel):
-    r"""Metadata saved on the organization invitation, fully accessible (read/write) from the Backend API but not visible from the Frontend API."""
-    
-    
 
 class RequestBodyTypedDict(TypedDict):
     email_address: str
@@ -37,9 +17,9 @@ class RequestBodyTypedDict(TypedDict):
     r"""The ID of the user that invites the new member to the organization.
     Must be an administrator in the organization.
     """
-    public_metadata: NotRequired[CreateOrganizationInvitationBulkPublicMetadataTypedDict]
+    public_metadata: NotRequired[Dict[str, Any]]
     r"""Metadata saved on the organization invitation, read-only from the Frontend API and fully accessible (read/write) from the Backend API."""
-    private_metadata: NotRequired[CreateOrganizationInvitationBulkPrivateMetadataTypedDict]
+    private_metadata: NotRequired[Dict[str, Any]]
     r"""Metadata saved on the organization invitation, fully accessible (read/write) from the Backend API but not visible from the Frontend API."""
     redirect_url: NotRequired[str]
     r"""Optional URL that the invitee will be redirected to once they accept the invitation by clicking the join link in the invitation email."""
@@ -54,9 +34,9 @@ class RequestBody(BaseModel):
     r"""The ID of the user that invites the new member to the organization.
     Must be an administrator in the organization.
     """
-    public_metadata: Optional[CreateOrganizationInvitationBulkPublicMetadata] = None
+    public_metadata: Optional[Dict[str, Any]] = None
     r"""Metadata saved on the organization invitation, read-only from the Frontend API and fully accessible (read/write) from the Backend API."""
-    private_metadata: Optional[CreateOrganizationInvitationBulkPrivateMetadata] = None
+    private_metadata: Optional[Dict[str, Any]] = None
     r"""Metadata saved on the organization invitation, fully accessible (read/write) from the Backend API but not visible from the Frontend API."""
     redirect_url: Optional[str] = None
     r"""Optional URL that the invitee will be redirected to once they accept the invitation by clicking the join link in the invitation email."""

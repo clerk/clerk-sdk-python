@@ -4,7 +4,7 @@ from .basesdk import BaseSDK
 from clerk_backend_api import models, utils
 from clerk_backend_api._hooks import HookContext
 from clerk_backend_api.types import OptionalNullable, UNSET
-from typing import Any, Optional, Union
+from typing import Any, Dict, Optional
 
 class OrganizationMembershipsSDK(BaseSDK):
     
@@ -697,8 +697,8 @@ class OrganizationMembershipsSDK(BaseSDK):
         self, *,
         organization_id: str,
         user_id: str,
-        public_metadata: Optional[Union[models.UpdateOrganizationMembershipMetadataPublicMetadata, models.UpdateOrganizationMembershipMetadataPublicMetadataTypedDict]] = None,
-        private_metadata: Optional[Union[models.UpdateOrganizationMembershipMetadataPrivateMetadata, models.UpdateOrganizationMembershipMetadataPrivateMetadataTypedDict]] = None,
+        public_metadata: Optional[Dict[str, Any]] = None,
+        private_metadata: Optional[Dict[str, Any]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -729,8 +729,8 @@ class OrganizationMembershipsSDK(BaseSDK):
             organization_id=organization_id,
             user_id=user_id,
             request_body=models.UpdateOrganizationMembershipMetadataRequestBody(
-                public_metadata=utils.get_pydantic_model(public_metadata, Optional[models.UpdateOrganizationMembershipMetadataPublicMetadata]),
-                private_metadata=utils.get_pydantic_model(private_metadata, Optional[models.UpdateOrganizationMembershipMetadataPrivateMetadata]),
+                public_metadata=public_metadata,
+                private_metadata=private_metadata,
             ),
         )
         
@@ -789,8 +789,8 @@ class OrganizationMembershipsSDK(BaseSDK):
         self, *,
         organization_id: str,
         user_id: str,
-        public_metadata: Optional[Union[models.UpdateOrganizationMembershipMetadataPublicMetadata, models.UpdateOrganizationMembershipMetadataPublicMetadataTypedDict]] = None,
-        private_metadata: Optional[Union[models.UpdateOrganizationMembershipMetadataPrivateMetadata, models.UpdateOrganizationMembershipMetadataPrivateMetadataTypedDict]] = None,
+        public_metadata: Optional[Dict[str, Any]] = None,
+        private_metadata: Optional[Dict[str, Any]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -821,8 +821,8 @@ class OrganizationMembershipsSDK(BaseSDK):
             organization_id=organization_id,
             user_id=user_id,
             request_body=models.UpdateOrganizationMembershipMetadataRequestBody(
-                public_metadata=utils.get_pydantic_model(public_metadata, Optional[models.UpdateOrganizationMembershipMetadataPublicMetadata]),
-                private_metadata=utils.get_pydantic_model(private_metadata, Optional[models.UpdateOrganizationMembershipMetadataPrivateMetadata]),
+                public_metadata=public_metadata,
+                private_metadata=private_metadata,
             ),
         )
         
