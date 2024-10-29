@@ -23,7 +23,7 @@ def test_authenticate_request_no_session_token(clerk, request_url, ar_options):
     assert state.reason == AuthErrorReason.SESSION_TOKEN_MISSING
     assert 'Could not retrieve session token' in state.message
     assert state.token is None
-    # assert state.payload is None
+    assert state.payload is None
 
 
 def assert_request_state(state: RequestState, session_token: str, ar_options: AuthenticateRequestOptions):
@@ -31,12 +31,12 @@ def assert_request_state(state: RequestState, session_token: str, ar_options: Au
         assert state.message is None
         assert state.token is not None
         assert state.token == session_token
-        # assert state.payload is not None
-        # assert state.payload.get('azp') in ar_options.authorized_parties
+        assert state.payload is not None
+        assert state.payload.get('azp') in ar_options.authorized_parties
     else:
         assert state.reason == TokenVerificationErrorReason.TOKEN_EXPIRED
         assert state.token is None
-        # assert state.payload is None
+        assert state.payload is None
         warn("the provided session token is expired.")
 
 

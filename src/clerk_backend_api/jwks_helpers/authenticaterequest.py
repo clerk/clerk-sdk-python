@@ -2,7 +2,7 @@ import httpx
 from dataclasses import dataclass
 from enum import Enum
 from http.cookies import SimpleCookie
-from typing import List, Union, Optional
+from typing import Any, Dict, List, Union, Optional
 from warnings import warn
 
 from ..sdk import Clerk
@@ -36,6 +36,7 @@ class RequestState:
     status: AuthStatus
     reason: Optional[Union[AuthErrorReason, TokenVerificationErrorReason]] = None
     token: Optional[str] = None
+    payload: Optional[Dict[str, Any]] = None
 
     @property
     def is_signed_in(self) -> bool:
@@ -91,15 +92,13 @@ def authenticate_request(self: Clerk, request: httpx.Request, options: Authentic
         return security.bearer_auth
 
 
-    def get_session_token(request) -> Optional[str]:
+    def get_session_token(request: httpx.Request) -> Optional[str]:
         """Retrieve token from __session cookie or Authorization header."""
 
-        # https://github.com/clerk/javascript/blob/main/packages/backend/src/tokens/request.ts#L343
         bearer_token = request.headers.get('Authorization')
         if bearer_token is not None:
             return bearer_token.replace('Bearer ', '')
 
-        # https://github.com/clerk/javascript/blob/main/packages/backend/src/tokens/request.ts#L386
         cookie_header = request.headers.get('cookie')
         if cookie_header is not None:
             session_cookie = SimpleCookie(cookie_header).get('__session')
@@ -118,7 +117,7 @@ def authenticate_request(self: Clerk, request: httpx.Request, options: Authentic
         return RequestState(status=AuthStatus.SIGNED_OUT, reason=AuthErrorReason.SECRET_KEY_MISSING)
 
     try:
-        verify_token(
+        payload = verify_token(
             session_token,
             VerifyTokenOptions(
                 audience=options.audience,
@@ -129,7 +128,7 @@ def authenticate_request(self: Clerk, request: httpx.Request, options: Authentic
             ),
         )
 
-        return RequestState(status=AuthStatus.SIGNED_IN, token=session_token)
+        return RequestState(status=AuthStatus.SIGNED_IN, token=session_token, payload=payload)
 
     except TokenVerificationError as e:
         return RequestState(status=AuthStatus.SIGNED_OUT, reason=e.reason)
