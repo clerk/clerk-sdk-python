@@ -13,3 +13,4 @@
 | `FROM_OAUTH_GOOGLE`         | from_oauth_google           |
 | `FROM_OAUTH_APPLE`          | from_oauth_apple            |
 | `FROM_OAUTH_MICROSOFT`      | from_oauth_microsoft        |
+| `FROM_OAUTH_GITHUB`         | from_oauth_github           |

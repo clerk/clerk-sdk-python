@@ -30,6 +30,7 @@ class OauthVerificationStrategy(str, Enum):
     FROM_OAUTH_MICROSOFT = "from_oauth_microsoft"
     OAUTH_APPLE = "oauth_apple"
     OAUTH_MICROSOFT = "oauth_microsoft"
+    OAUTH_GITHUB = "oauth_github"
     EMAIL_LINK = "email_link"
 
 class ErrorMetaTypedDict(TypedDict):
@@ -167,6 +168,7 @@ class Strategy(str, Enum):
     FROM_OAUTH_GOOGLE = "from_oauth_google"
     FROM_OAUTH_APPLE = "from_oauth_apple"
     FROM_OAUTH_MICROSOFT = "from_oauth_microsoft"
+    FROM_OAUTH_GITHUB = "from_oauth_github"
 
 class OtpTypedDict(TypedDict):
     status: VerificationStatus

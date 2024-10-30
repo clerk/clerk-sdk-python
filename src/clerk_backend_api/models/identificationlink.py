@@ -13,6 +13,7 @@ class Type(str, Enum):
     OAUTH_APPLE = "oauth_apple"
     OAUTH_DISCORD = "oauth_discord"
     OAUTH_MICROSOFT = "oauth_microsoft"
+    OAUTH_GITHUB = "oauth_github"
 
 class IdentificationLinkTypedDict(TypedDict):
     type: Type
