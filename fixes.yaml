@@ -15,6 +15,7 @@ actions:
       - "from_oauth_google"
       - "from_oauth_apple"
       - "from_oauth_microsoft"
+      - "from_oauth_github"
   - target: $["components"]["schemas"]["Oauth"]["properties"]["strategy"]["enum"][*]
     remove: true
   - target: $["components"]["schemas"]["Oauth"]["properties"]["strategy"]["enum"]
@@ -26,12 +27,14 @@ actions:
       - "from_oauth_microsoft"
       - "oauth_apple"
       - "oauth_microsoft"
+      - "oauth_github"
       - "email_link"
   - target: $["components"]["schemas"]["IdentificationLink"]["properties"]["type"]["enum"]
     update:
       - "oauth_apple"
       - "oauth_discord"
       - "oauth_microsoft"
+      - "oauth_github"
   - target: $["components"]["parameters"]["LimitParameter"]["schema"]
     update:
       type: integer
