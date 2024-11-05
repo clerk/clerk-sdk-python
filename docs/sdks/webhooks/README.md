@@ -25,7 +25,6 @@ s = Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
-
 res = s.webhooks.create_svix_app()
 
 if res is not None:
@@ -46,11 +45,10 @@ if res is not None:
 
 ### Errors
 
-| Error Object       | Status Code        | Content Type       |
+| Error Type         | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
 | models.ClerkErrors | 400                | application/json   |
-| models.SDKError    | 4xx-5xx            | */*                |
-
+| models.SDKError    | 4XX, 5XX           | \*/\*              |
 
 ## delete_svix_app
 
@@ -64,7 +62,6 @@ from clerk_backend_api import Clerk
 s = Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
-
 
 s.webhooks.delete_svix_app()
 
@@ -80,11 +77,10 @@ s.webhooks.delete_svix_app()
 
 ### Errors
 
-| Error Object       | Status Code        | Content Type       |
+| Error Type         | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
 | models.ClerkErrors | 400                | application/json   |
-| models.SDKError    | 4xx-5xx            | */*                |
-
+| models.SDKError    | 4XX, 5XX           | \*/\*              |
 
 ## generate_svix_auth_url
 
@@ -98,7 +94,6 @@ from clerk_backend_api import Clerk
 s = Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
-
 
 res = s.webhooks.generate_svix_auth_url()
 
@@ -120,7 +115,7 @@ if res is not None:
 
 ### Errors
 
-| Error Object       | Status Code        | Content Type       |
+| Error Type         | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
 | models.ClerkErrors | 400                | application/json   |
-| models.SDKError    | 4xx-5xx            | */*                |
+| models.SDKError    | 4XX, 5XX           | \*/\*              |

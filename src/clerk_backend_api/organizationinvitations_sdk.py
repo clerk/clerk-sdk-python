@@ -7,15 +7,17 @@ from clerk_backend_api.types import OptionalNullable, UNSET
 from typing import Any, Dict, List, Optional, Union
 from typing_extensions import deprecated
 
+
 class OrganizationInvitationsSDK(BaseSDK):
-    
-    
     def get_all(
-        self, *,
+        self,
+        *,
         limit: Optional[int] = 10,
         offset: Optional[int] = 0,
         order_by: Optional[str] = "-created_at",
-        status: Optional[models.ListInstanceOrganizationInvitationsQueryParamStatus] = None,
+        status: Optional[
+            models.ListInstanceOrganizationInvitationsQueryParamStatus
+        ] = None,
         query: Optional[str] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -43,10 +45,10 @@ class OrganizationInvitationsSDK(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
-        
+
         if server_url is not None:
             base_url = server_url
-        
+
         request = models.ListInstanceOrganizationInvitationsRequest(
             limit=limit,
             offset=offset,
@@ -54,7 +56,7 @@ class OrganizationInvitationsSDK(BaseSDK):
             status=status,
             query=query,
         )
-        
+
         req = self.build_request(
             method="GET",
             path="/organization_invitations",
@@ -69,48 +71,61 @@ class OrganizationInvitationsSDK(BaseSDK):
             security=self.sdk_configuration.security,
             timeout_ms=timeout_ms,
         )
-        
+
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, [
-                "429",
-                "500",
-                "502",
-                "503",
-                "504"
-            ])                
-        
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
         http_res = self.do_request(
-            hook_ctx=HookContext(operation_id="ListInstanceOrganizationInvitations", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            hook_ctx=HookContext(
+                operation_id="ListInstanceOrganizationInvitations",
+                oauth2_scopes=[],
+                security_source=self.sdk_configuration.security,
+            ),
             request=req,
-            error_status_codes=["400","404","422","4XX","500","5XX"],
-            retry_config=retry_config
+            error_status_codes=["400", "404", "422", "4XX", "500", "5XX"],
+            retry_config=retry_config,
         )
-        
+
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, Optional[models.OrganizationInvitationsWithPublicOrganizationData])
-        if utils.match_response(http_res, ["400","404","422","500"], "application/json"):
+            return utils.unmarshal_json(
+                http_res.text,
+                Optional[models.OrganizationInvitationsWithPublicOrganizationData],
+            )
+        if utils.match_response(
+            http_res, ["400", "404", "422", "500"], "application/json"
+        ):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX","5XX"], "*"):
-            raise models.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
-        
-        content_type = http_res.headers.get("Content-Type")
-        raise models.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
 
-    
-    
+        content_type = http_res.headers.get("Content-Type")
+        http_res_text = utils.stream_to_text(http_res)
+        raise models.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res_text,
+            http_res,
+        )
+
     async def get_all_async(
-        self, *,
+        self,
+        *,
         limit: Optional[int] = 10,
         offset: Optional[int] = 0,
         order_by: Optional[str] = "-created_at",
-        status: Optional[models.ListInstanceOrganizationInvitationsQueryParamStatus] = None,
+        status: Optional[
+            models.ListInstanceOrganizationInvitationsQueryParamStatus
+        ] = None,
         query: Optional[str] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -138,10 +153,10 @@ class OrganizationInvitationsSDK(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
-        
+
         if server_url is not None:
             base_url = server_url
-        
+
         request = models.ListInstanceOrganizationInvitationsRequest(
             limit=limit,
             offset=offset,
@@ -149,8 +164,8 @@ class OrganizationInvitationsSDK(BaseSDK):
             status=status,
             query=query,
         )
-        
-        req = self.build_request(
+
+        req = self.build_request_async(
             method="GET",
             path="/organization_invitations",
             base_url=base_url,
@@ -164,44 +179,55 @@ class OrganizationInvitationsSDK(BaseSDK):
             security=self.sdk_configuration.security,
             timeout_ms=timeout_ms,
         )
-        
+
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, [
-                "429",
-                "500",
-                "502",
-                "503",
-                "504"
-            ])                
-        
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
         http_res = await self.do_request_async(
-            hook_ctx=HookContext(operation_id="ListInstanceOrganizationInvitations", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            hook_ctx=HookContext(
+                operation_id="ListInstanceOrganizationInvitations",
+                oauth2_scopes=[],
+                security_source=self.sdk_configuration.security,
+            ),
             request=req,
-            error_status_codes=["400","404","422","4XX","500","5XX"],
-            retry_config=retry_config
+            error_status_codes=["400", "404", "422", "4XX", "500", "5XX"],
+            retry_config=retry_config,
         )
-        
+
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, Optional[models.OrganizationInvitationsWithPublicOrganizationData])
-        if utils.match_response(http_res, ["400","404","422","500"], "application/json"):
+            return utils.unmarshal_json(
+                http_res.text,
+                Optional[models.OrganizationInvitationsWithPublicOrganizationData],
+            )
+        if utils.match_response(
+            http_res, ["400", "404", "422", "500"], "application/json"
+        ):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX","5XX"], "*"):
-            raise models.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
-        
-        content_type = http_res.headers.get("Content-Type")
-        raise models.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
 
-    
-    
+        content_type = http_res.headers.get("Content-Type")
+        http_res_text = await utils.stream_to_text_async(http_res)
+        raise models.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res_text,
+            http_res,
+        )
+
     def create(
-        self, *,
+        self,
+        *,
         organization_id: str,
         email_address: str,
         role: str,
@@ -247,10 +273,10 @@ class OrganizationInvitationsSDK(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
-        
+
         if server_url is not None:
             base_url = server_url
-        
+
         request = models.CreateOrganizationInvitationRequest(
             organization_id=organization_id,
             request_body=models.CreateOrganizationInvitationRequestBody(
@@ -262,7 +288,7 @@ class OrganizationInvitationsSDK(BaseSDK):
                 redirect_url=redirect_url,
             ),
         )
-        
+
         req = self.build_request(
             method="POST",
             path="/organizations/{organization_id}/invitations",
@@ -275,47 +301,63 @@ class OrganizationInvitationsSDK(BaseSDK):
             user_agent_header="user-agent",
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
-            get_serialized_body=lambda: utils.serialize_request_body(request.request_body, False, False, "json", models.CreateOrganizationInvitationRequestBody),
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request.request_body,
+                False,
+                False,
+                "json",
+                models.CreateOrganizationInvitationRequestBody,
+            ),
             timeout_ms=timeout_ms,
         )
-        
+
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, [
-                "429",
-                "500",
-                "502",
-                "503",
-                "504"
-            ])                
-        
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
         http_res = self.do_request(
-            hook_ctx=HookContext(operation_id="CreateOrganizationInvitation", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            hook_ctx=HookContext(
+                operation_id="CreateOrganizationInvitation",
+                oauth2_scopes=[],
+                security_source=self.sdk_configuration.security,
+            ),
             request=req,
-            error_status_codes=["400","403","404","422","4XX","5XX"],
-            retry_config=retry_config
+            error_status_codes=["400", "403", "404", "422", "4XX", "5XX"],
+            retry_config=retry_config,
         )
-        
+
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, Optional[models.OrganizationInvitation])
-        if utils.match_response(http_res, ["400","403","404","422"], "application/json"):
+            return utils.unmarshal_json(
+                http_res.text, Optional[models.OrganizationInvitation]
+            )
+        if utils.match_response(
+            http_res, ["400", "403", "404", "422"], "application/json"
+        ):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX","5XX"], "*"):
-            raise models.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
-        
-        content_type = http_res.headers.get("Content-Type")
-        raise models.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
 
-    
-    
+        content_type = http_res.headers.get("Content-Type")
+        http_res_text = utils.stream_to_text(http_res)
+        raise models.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res_text,
+            http_res,
+        )
+
     async def create_async(
-        self, *,
+        self,
+        *,
         organization_id: str,
         email_address: str,
         role: str,
@@ -361,10 +403,10 @@ class OrganizationInvitationsSDK(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
-        
+
         if server_url is not None:
             base_url = server_url
-        
+
         request = models.CreateOrganizationInvitationRequest(
             organization_id=organization_id,
             request_body=models.CreateOrganizationInvitationRequestBody(
@@ -376,8 +418,8 @@ class OrganizationInvitationsSDK(BaseSDK):
                 redirect_url=redirect_url,
             ),
         )
-        
-        req = self.build_request(
+
+        req = self.build_request_async(
             method="POST",
             path="/organizations/{organization_id}/invitations",
             base_url=base_url,
@@ -389,47 +431,63 @@ class OrganizationInvitationsSDK(BaseSDK):
             user_agent_header="user-agent",
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
-            get_serialized_body=lambda: utils.serialize_request_body(request.request_body, False, False, "json", models.CreateOrganizationInvitationRequestBody),
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request.request_body,
+                False,
+                False,
+                "json",
+                models.CreateOrganizationInvitationRequestBody,
+            ),
             timeout_ms=timeout_ms,
         )
-        
+
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, [
-                "429",
-                "500",
-                "502",
-                "503",
-                "504"
-            ])                
-        
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
         http_res = await self.do_request_async(
-            hook_ctx=HookContext(operation_id="CreateOrganizationInvitation", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            hook_ctx=HookContext(
+                operation_id="CreateOrganizationInvitation",
+                oauth2_scopes=[],
+                security_source=self.sdk_configuration.security,
+            ),
             request=req,
-            error_status_codes=["400","403","404","422","4XX","5XX"],
-            retry_config=retry_config
+            error_status_codes=["400", "403", "404", "422", "4XX", "5XX"],
+            retry_config=retry_config,
         )
-        
+
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, Optional[models.OrganizationInvitation])
-        if utils.match_response(http_res, ["400","403","404","422"], "application/json"):
+            return utils.unmarshal_json(
+                http_res.text, Optional[models.OrganizationInvitation]
+            )
+        if utils.match_response(
+            http_res, ["400", "403", "404", "422"], "application/json"
+        ):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX","5XX"], "*"):
-            raise models.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
-        
-        content_type = http_res.headers.get("Content-Type")
-        raise models.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
 
-    
-    
+        content_type = http_res.headers.get("Content-Type")
+        http_res_text = await utils.stream_to_text_async(http_res)
+        raise models.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res_text,
+            http_res,
+        )
+
     def list(
-        self, *,
+        self,
+        *,
         organization_id: str,
         limit: Optional[int] = 10,
         offset: Optional[int] = 0,
@@ -459,17 +517,17 @@ class OrganizationInvitationsSDK(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
-        
+
         if server_url is not None:
             base_url = server_url
-        
+
         request = models.ListOrganizationInvitationsRequest(
             organization_id=organization_id,
             limit=limit,
             offset=offset,
             status=status,
         )
-        
+
         req = self.build_request(
             method="GET",
             path="/organizations/{organization_id}/invitations",
@@ -484,44 +542,52 @@ class OrganizationInvitationsSDK(BaseSDK):
             security=self.sdk_configuration.security,
             timeout_ms=timeout_ms,
         )
-        
+
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, [
-                "429",
-                "500",
-                "502",
-                "503",
-                "504"
-            ])                
-        
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
         http_res = self.do_request(
-            hook_ctx=HookContext(operation_id="ListOrganizationInvitations", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            hook_ctx=HookContext(
+                operation_id="ListOrganizationInvitations",
+                oauth2_scopes=[],
+                security_source=self.sdk_configuration.security,
+            ),
             request=req,
-            error_status_codes=["400","404","4XX","5XX"],
-            retry_config=retry_config
+            error_status_codes=["400", "404", "4XX", "5XX"],
+            retry_config=retry_config,
         )
-        
+
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, Optional[models.OrganizationInvitations])
-        if utils.match_response(http_res, ["400","404"], "application/json"):
+            return utils.unmarshal_json(
+                http_res.text, Optional[models.OrganizationInvitations]
+            )
+        if utils.match_response(http_res, ["400", "404"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX","5XX"], "*"):
-            raise models.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
-        
-        content_type = http_res.headers.get("Content-Type")
-        raise models.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
 
-    
-    
+        content_type = http_res.headers.get("Content-Type")
+        http_res_text = utils.stream_to_text(http_res)
+        raise models.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res_text,
+            http_res,
+        )
+
     async def list_async(
-        self, *,
+        self,
+        *,
         organization_id: str,
         limit: Optional[int] = 10,
         offset: Optional[int] = 0,
@@ -551,18 +617,18 @@ class OrganizationInvitationsSDK(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
-        
+
         if server_url is not None:
             base_url = server_url
-        
+
         request = models.ListOrganizationInvitationsRequest(
             organization_id=organization_id,
             limit=limit,
             offset=offset,
             status=status,
         )
-        
-        req = self.build_request(
+
+        req = self.build_request_async(
             method="GET",
             path="/organizations/{organization_id}/invitations",
             base_url=base_url,
@@ -576,46 +642,56 @@ class OrganizationInvitationsSDK(BaseSDK):
             security=self.sdk_configuration.security,
             timeout_ms=timeout_ms,
         )
-        
+
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, [
-                "429",
-                "500",
-                "502",
-                "503",
-                "504"
-            ])                
-        
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
         http_res = await self.do_request_async(
-            hook_ctx=HookContext(operation_id="ListOrganizationInvitations", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            hook_ctx=HookContext(
+                operation_id="ListOrganizationInvitations",
+                oauth2_scopes=[],
+                security_source=self.sdk_configuration.security,
+            ),
             request=req,
-            error_status_codes=["400","404","4XX","5XX"],
-            retry_config=retry_config
+            error_status_codes=["400", "404", "4XX", "5XX"],
+            retry_config=retry_config,
         )
-        
+
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, Optional[models.OrganizationInvitations])
-        if utils.match_response(http_res, ["400","404"], "application/json"):
+            return utils.unmarshal_json(
+                http_res.text, Optional[models.OrganizationInvitations]
+            )
+        if utils.match_response(http_res, ["400", "404"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX","5XX"], "*"):
-            raise models.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
-        
-        content_type = http_res.headers.get("Content-Type")
-        raise models.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
 
-    
-    
+        content_type = http_res.headers.get("Content-Type")
+        http_res_text = await utils.stream_to_text_async(http_res)
+        raise models.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res_text,
+            http_res,
+        )
+
     def bulk_create(
-        self, *,
+        self,
+        *,
         organization_id: str,
-        request_body: Union[List[models.RequestBody], List[models.RequestBodyTypedDict]],
+        request_body: Union[
+            List[models.RequestBody], List[models.RequestBodyTypedDict]
+        ],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -637,7 +713,7 @@ class OrganizationInvitationsSDK(BaseSDK):
         When the organization invitation is accepted, the metadata will be transferred to the newly created organization membership.
 
         :param organization_id: The organization ID.
-        :param request_body: 
+        :param request_body:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -646,15 +722,17 @@ class OrganizationInvitationsSDK(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
-        
+
         if server_url is not None:
             base_url = server_url
-        
+
         request = models.CreateOrganizationInvitationBulkRequest(
             organization_id=organization_id,
-            request_body=utils.get_pydantic_model(request_body, List[models.RequestBody]),
+            request_body=utils.get_pydantic_model(
+                request_body, List[models.RequestBody]
+            ),
         )
-        
+
         req = self.build_request(
             method="POST",
             path="/organizations/{organization_id}/invitations/bulk",
@@ -667,49 +745,63 @@ class OrganizationInvitationsSDK(BaseSDK):
             user_agent_header="user-agent",
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
-            get_serialized_body=lambda: utils.serialize_request_body(request.request_body, False, False, "json", List[models.RequestBody]),
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request.request_body, False, False, "json", List[models.RequestBody]
+            ),
             timeout_ms=timeout_ms,
         )
-        
+
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, [
-                "429",
-                "500",
-                "502",
-                "503",
-                "504"
-            ])                
-        
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
         http_res = self.do_request(
-            hook_ctx=HookContext(operation_id="CreateOrganizationInvitationBulk", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            hook_ctx=HookContext(
+                operation_id="CreateOrganizationInvitationBulk",
+                oauth2_scopes=[],
+                security_source=self.sdk_configuration.security,
+            ),
             request=req,
-            error_status_codes=["400","403","404","422","4XX","5XX"],
-            retry_config=retry_config
+            error_status_codes=["400", "403", "404", "422", "4XX", "5XX"],
+            retry_config=retry_config,
         )
-        
+
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, Optional[models.OrganizationInvitations])
-        if utils.match_response(http_res, ["400","403","404","422"], "application/json"):
+            return utils.unmarshal_json(
+                http_res.text, Optional[models.OrganizationInvitations]
+            )
+        if utils.match_response(
+            http_res, ["400", "403", "404", "422"], "application/json"
+        ):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX","5XX"], "*"):
-            raise models.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
-        
-        content_type = http_res.headers.get("Content-Type")
-        raise models.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
 
-    
-    
+        content_type = http_res.headers.get("Content-Type")
+        http_res_text = utils.stream_to_text(http_res)
+        raise models.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res_text,
+            http_res,
+        )
+
     async def bulk_create_async(
-        self, *,
+        self,
+        *,
         organization_id: str,
-        request_body: Union[List[models.RequestBody], List[models.RequestBodyTypedDict]],
+        request_body: Union[
+            List[models.RequestBody], List[models.RequestBodyTypedDict]
+        ],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -731,7 +823,7 @@ class OrganizationInvitationsSDK(BaseSDK):
         When the organization invitation is accepted, the metadata will be transferred to the newly created organization membership.
 
         :param organization_id: The organization ID.
-        :param request_body: 
+        :param request_body:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -740,16 +832,18 @@ class OrganizationInvitationsSDK(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
-        
+
         if server_url is not None:
             base_url = server_url
-        
+
         request = models.CreateOrganizationInvitationBulkRequest(
             organization_id=organization_id,
-            request_body=utils.get_pydantic_model(request_body, List[models.RequestBody]),
+            request_body=utils.get_pydantic_model(
+                request_body, List[models.RequestBody]
+            ),
         )
-        
-        req = self.build_request(
+
+        req = self.build_request_async(
             method="POST",
             path="/organizations/{organization_id}/invitations/bulk",
             base_url=base_url,
@@ -761,48 +855,62 @@ class OrganizationInvitationsSDK(BaseSDK):
             user_agent_header="user-agent",
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
-            get_serialized_body=lambda: utils.serialize_request_body(request.request_body, False, False, "json", List[models.RequestBody]),
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request.request_body, False, False, "json", List[models.RequestBody]
+            ),
             timeout_ms=timeout_ms,
         )
-        
+
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, [
-                "429",
-                "500",
-                "502",
-                "503",
-                "504"
-            ])                
-        
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
         http_res = await self.do_request_async(
-            hook_ctx=HookContext(operation_id="CreateOrganizationInvitationBulk", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            hook_ctx=HookContext(
+                operation_id="CreateOrganizationInvitationBulk",
+                oauth2_scopes=[],
+                security_source=self.sdk_configuration.security,
+            ),
             request=req,
-            error_status_codes=["400","403","404","422","4XX","5XX"],
-            retry_config=retry_config
+            error_status_codes=["400", "403", "404", "422", "4XX", "5XX"],
+            retry_config=retry_config,
         )
-        
+
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, Optional[models.OrganizationInvitations])
-        if utils.match_response(http_res, ["400","403","404","422"], "application/json"):
+            return utils.unmarshal_json(
+                http_res.text, Optional[models.OrganizationInvitations]
+            )
+        if utils.match_response(
+            http_res, ["400", "403", "404", "422"], "application/json"
+        ):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX","5XX"], "*"):
-            raise models.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
-        
-        content_type = http_res.headers.get("Content-Type")
-        raise models.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
 
-    
-    
-    @deprecated("warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible.")
+        content_type = http_res.headers.get("Content-Type")
+        http_res_text = await utils.stream_to_text_async(http_res)
+        raise models.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res_text,
+            http_res,
+        )
+
+    @deprecated(
+        "warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
+    )
     def list_pending(
-        self, *,
+        self,
+        *,
         organization_id: str,
         limit: Optional[int] = 10,
         offset: Optional[int] = 0,
@@ -830,16 +938,16 @@ class OrganizationInvitationsSDK(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
-        
+
         if server_url is not None:
             base_url = server_url
-        
+
         request = models.ListPendingOrganizationInvitationsRequest(
             organization_id=organization_id,
             limit=limit,
             offset=offset,
         )
-        
+
         req = self.build_request(
             method="GET",
             path="/organizations/{organization_id}/invitations/pending",
@@ -854,45 +962,55 @@ class OrganizationInvitationsSDK(BaseSDK):
             security=self.sdk_configuration.security,
             timeout_ms=timeout_ms,
         )
-        
+
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, [
-                "429",
-                "500",
-                "502",
-                "503",
-                "504"
-            ])                
-        
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
         http_res = self.do_request(
-            hook_ctx=HookContext(operation_id="ListPendingOrganizationInvitations", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            hook_ctx=HookContext(
+                operation_id="ListPendingOrganizationInvitations",
+                oauth2_scopes=[],
+                security_source=self.sdk_configuration.security,
+            ),
             request=req,
-            error_status_codes=["400","404","4XX","5XX"],
-            retry_config=retry_config
+            error_status_codes=["400", "404", "4XX", "5XX"],
+            retry_config=retry_config,
         )
-        
+
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, Optional[models.OrganizationInvitations])
-        if utils.match_response(http_res, ["400","404"], "application/json"):
+            return utils.unmarshal_json(
+                http_res.text, Optional[models.OrganizationInvitations]
+            )
+        if utils.match_response(http_res, ["400", "404"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX","5XX"], "*"):
-            raise models.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
-        
-        content_type = http_res.headers.get("Content-Type")
-        raise models.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
 
-    
-    
-    @deprecated("warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible.")
+        content_type = http_res.headers.get("Content-Type")
+        http_res_text = utils.stream_to_text(http_res)
+        raise models.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res_text,
+            http_res,
+        )
+
+    @deprecated(
+        "warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
+    )
     async def list_pending_async(
-        self, *,
+        self,
+        *,
         organization_id: str,
         limit: Optional[int] = 10,
         offset: Optional[int] = 0,
@@ -920,17 +1038,17 @@ class OrganizationInvitationsSDK(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
-        
+
         if server_url is not None:
             base_url = server_url
-        
+
         request = models.ListPendingOrganizationInvitationsRequest(
             organization_id=organization_id,
             limit=limit,
             offset=offset,
         )
-        
-        req = self.build_request(
+
+        req = self.build_request_async(
             method="GET",
             path="/organizations/{organization_id}/invitations/pending",
             base_url=base_url,
@@ -944,44 +1062,52 @@ class OrganizationInvitationsSDK(BaseSDK):
             security=self.sdk_configuration.security,
             timeout_ms=timeout_ms,
         )
-        
+
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, [
-                "429",
-                "500",
-                "502",
-                "503",
-                "504"
-            ])                
-        
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
         http_res = await self.do_request_async(
-            hook_ctx=HookContext(operation_id="ListPendingOrganizationInvitations", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            hook_ctx=HookContext(
+                operation_id="ListPendingOrganizationInvitations",
+                oauth2_scopes=[],
+                security_source=self.sdk_configuration.security,
+            ),
             request=req,
-            error_status_codes=["400","404","4XX","5XX"],
-            retry_config=retry_config
+            error_status_codes=["400", "404", "4XX", "5XX"],
+            retry_config=retry_config,
         )
-        
+
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, Optional[models.OrganizationInvitations])
-        if utils.match_response(http_res, ["400","404"], "application/json"):
+            return utils.unmarshal_json(
+                http_res.text, Optional[models.OrganizationInvitations]
+            )
+        if utils.match_response(http_res, ["400", "404"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX","5XX"], "*"):
-            raise models.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
-        
-        content_type = http_res.headers.get("Content-Type")
-        raise models.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
 
-    
-    
+        content_type = http_res.headers.get("Content-Type")
+        http_res_text = await utils.stream_to_text_async(http_res)
+        raise models.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res_text,
+            http_res,
+        )
+
     def get(
-        self, *,
+        self,
+        *,
         organization_id: str,
         invitation_id: str,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -1002,15 +1128,15 @@ class OrganizationInvitationsSDK(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
-        
+
         if server_url is not None:
             base_url = server_url
-        
+
         request = models.GetOrganizationInvitationRequest(
             organization_id=organization_id,
             invitation_id=invitation_id,
         )
-        
+
         req = self.build_request(
             method="GET",
             path="/organizations/{organization_id}/invitations/{invitation_id}",
@@ -1025,44 +1151,52 @@ class OrganizationInvitationsSDK(BaseSDK):
             security=self.sdk_configuration.security,
             timeout_ms=timeout_ms,
         )
-        
+
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, [
-                "429",
-                "500",
-                "502",
-                "503",
-                "504"
-            ])                
-        
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
         http_res = self.do_request(
-            hook_ctx=HookContext(operation_id="GetOrganizationInvitation", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            hook_ctx=HookContext(
+                operation_id="GetOrganizationInvitation",
+                oauth2_scopes=[],
+                security_source=self.sdk_configuration.security,
+            ),
             request=req,
-            error_status_codes=["400","403","404","4XX","5XX"],
-            retry_config=retry_config
+            error_status_codes=["400", "403", "404", "4XX", "5XX"],
+            retry_config=retry_config,
         )
-        
+
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, Optional[models.OrganizationInvitation])
-        if utils.match_response(http_res, ["400","403","404"], "application/json"):
+            return utils.unmarshal_json(
+                http_res.text, Optional[models.OrganizationInvitation]
+            )
+        if utils.match_response(http_res, ["400", "403", "404"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX","5XX"], "*"):
-            raise models.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
-        
-        content_type = http_res.headers.get("Content-Type")
-        raise models.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
 
-    
-    
+        content_type = http_res.headers.get("Content-Type")
+        http_res_text = utils.stream_to_text(http_res)
+        raise models.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res_text,
+            http_res,
+        )
+
     async def get_async(
-        self, *,
+        self,
+        *,
         organization_id: str,
         invitation_id: str,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -1083,16 +1217,16 @@ class OrganizationInvitationsSDK(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
-        
+
         if server_url is not None:
             base_url = server_url
-        
+
         request = models.GetOrganizationInvitationRequest(
             organization_id=organization_id,
             invitation_id=invitation_id,
         )
-        
-        req = self.build_request(
+
+        req = self.build_request_async(
             method="GET",
             path="/organizations/{organization_id}/invitations/{invitation_id}",
             base_url=base_url,
@@ -1106,47 +1240,55 @@ class OrganizationInvitationsSDK(BaseSDK):
             security=self.sdk_configuration.security,
             timeout_ms=timeout_ms,
         )
-        
+
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, [
-                "429",
-                "500",
-                "502",
-                "503",
-                "504"
-            ])                
-        
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
         http_res = await self.do_request_async(
-            hook_ctx=HookContext(operation_id="GetOrganizationInvitation", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            hook_ctx=HookContext(
+                operation_id="GetOrganizationInvitation",
+                oauth2_scopes=[],
+                security_source=self.sdk_configuration.security,
+            ),
             request=req,
-            error_status_codes=["400","403","404","4XX","5XX"],
-            retry_config=retry_config
+            error_status_codes=["400", "403", "404", "4XX", "5XX"],
+            retry_config=retry_config,
         )
-        
+
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, Optional[models.OrganizationInvitation])
-        if utils.match_response(http_res, ["400","403","404"], "application/json"):
+            return utils.unmarshal_json(
+                http_res.text, Optional[models.OrganizationInvitation]
+            )
+        if utils.match_response(http_res, ["400", "403", "404"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX","5XX"], "*"):
-            raise models.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
-        
-        content_type = http_res.headers.get("Content-Type")
-        raise models.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
 
-    
-    
+        content_type = http_res.headers.get("Content-Type")
+        http_res_text = await utils.stream_to_text_async(http_res)
+        raise models.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res_text,
+            http_res,
+        )
+
     def revoke(
-        self, *,
+        self,
+        *,
         organization_id: str,
         invitation_id: str,
-        request_body: Optional[Union[models.RevokeOrganizationInvitationRequestBody, models.RevokeOrganizationInvitationRequestBodyTypedDict]] = None,
+        requesting_user_id: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1161,7 +1303,7 @@ class OrganizationInvitationsSDK(BaseSDK):
 
         :param organization_id: The organization ID.
         :param invitation_id: The organization invitation ID.
-        :param request_body: 
+        :param requesting_user_id: The ID of the user that revokes the invitation. Must be an administrator in the organization.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1170,16 +1312,18 @@ class OrganizationInvitationsSDK(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
-        
+
         if server_url is not None:
             base_url = server_url
-        
+
         request = models.RevokeOrganizationInvitationRequest(
             organization_id=organization_id,
             invitation_id=invitation_id,
-            request_body=utils.get_pydantic_model(request_body, Optional[models.RevokeOrganizationInvitationRequestBody]),
+            request_body=models.RevokeOrganizationInvitationRequestBody(
+                requesting_user_id=requesting_user_id,
+            ),
         )
-        
+
         req = self.build_request(
             method="POST",
             path="/organizations/{organization_id}/invitations/{invitation_id}/revoke",
@@ -1192,50 +1336,64 @@ class OrganizationInvitationsSDK(BaseSDK):
             user_agent_header="user-agent",
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
-            get_serialized_body=lambda: utils.serialize_request_body(request.request_body, False, True, "json", Optional[models.RevokeOrganizationInvitationRequestBody]),
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request.request_body,
+                False,
+                True,
+                "json",
+                Optional[models.RevokeOrganizationInvitationRequestBody],
+            ),
             timeout_ms=timeout_ms,
         )
-        
+
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, [
-                "429",
-                "500",
-                "502",
-                "503",
-                "504"
-            ])                
-        
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
         http_res = self.do_request(
-            hook_ctx=HookContext(operation_id="RevokeOrganizationInvitation", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            hook_ctx=HookContext(
+                operation_id="RevokeOrganizationInvitation",
+                oauth2_scopes=[],
+                security_source=self.sdk_configuration.security,
+            ),
             request=req,
-            error_status_codes=["400","403","404","4XX","5XX"],
-            retry_config=retry_config
+            error_status_codes=["400", "403", "404", "4XX", "5XX"],
+            retry_config=retry_config,
         )
-        
+
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, Optional[models.OrganizationInvitation])
-        if utils.match_response(http_res, ["400","403","404"], "application/json"):
+            return utils.unmarshal_json(
+                http_res.text, Optional[models.OrganizationInvitation]
+            )
+        if utils.match_response(http_res, ["400", "403", "404"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX","5XX"], "*"):
-            raise models.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
-        
-        content_type = http_res.headers.get("Content-Type")
-        raise models.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
 
-    
-    
+        content_type = http_res.headers.get("Content-Type")
+        http_res_text = utils.stream_to_text(http_res)
+        raise models.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res_text,
+            http_res,
+        )
+
     async def revoke_async(
-        self, *,
+        self,
+        *,
         organization_id: str,
         invitation_id: str,
-        request_body: Optional[Union[models.RevokeOrganizationInvitationRequestBody, models.RevokeOrganizationInvitationRequestBodyTypedDict]] = None,
+        requesting_user_id: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1250,7 +1408,7 @@ class OrganizationInvitationsSDK(BaseSDK):
 
         :param organization_id: The organization ID.
         :param invitation_id: The organization invitation ID.
-        :param request_body: 
+        :param requesting_user_id: The ID of the user that revokes the invitation. Must be an administrator in the organization.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1259,17 +1417,19 @@ class OrganizationInvitationsSDK(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
-        
+
         if server_url is not None:
             base_url = server_url
-        
+
         request = models.RevokeOrganizationInvitationRequest(
             organization_id=organization_id,
             invitation_id=invitation_id,
-            request_body=utils.get_pydantic_model(request_body, Optional[models.RevokeOrganizationInvitationRequestBody]),
+            request_body=models.RevokeOrganizationInvitationRequestBody(
+                requesting_user_id=requesting_user_id,
+            ),
         )
-        
-        req = self.build_request(
+
+        req = self.build_request_async(
             method="POST",
             path="/organizations/{organization_id}/invitations/{invitation_id}/revoke",
             base_url=base_url,
@@ -1281,41 +1441,54 @@ class OrganizationInvitationsSDK(BaseSDK):
             user_agent_header="user-agent",
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
-            get_serialized_body=lambda: utils.serialize_request_body(request.request_body, False, True, "json", Optional[models.RevokeOrganizationInvitationRequestBody]),
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request.request_body,
+                False,
+                True,
+                "json",
+                Optional[models.RevokeOrganizationInvitationRequestBody],
+            ),
             timeout_ms=timeout_ms,
         )
-        
+
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, [
-                "429",
-                "500",
-                "502",
-                "503",
-                "504"
-            ])                
-        
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
         http_res = await self.do_request_async(
-            hook_ctx=HookContext(operation_id="RevokeOrganizationInvitation", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            hook_ctx=HookContext(
+                operation_id="RevokeOrganizationInvitation",
+                oauth2_scopes=[],
+                security_source=self.sdk_configuration.security,
+            ),
             request=req,
-            error_status_codes=["400","403","404","4XX","5XX"],
-            retry_config=retry_config
+            error_status_codes=["400", "403", "404", "4XX", "5XX"],
+            retry_config=retry_config,
         )
-        
+
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, Optional[models.OrganizationInvitation])
-        if utils.match_response(http_res, ["400","403","404"], "application/json"):
+            return utils.unmarshal_json(
+                http_res.text, Optional[models.OrganizationInvitation]
+            )
+        if utils.match_response(http_res, ["400", "403", "404"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX","5XX"], "*"):
-            raise models.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
-        
-        content_type = http_res.headers.get("Content-Type")
-        raise models.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
 
-    
+        content_type = http_res.headers.get("Content-Type")
+        http_res_text = await utils.stream_to_text_async(http_res)
+        raise models.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res_text,
+            http_res,
+        )

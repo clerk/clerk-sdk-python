@@ -23,7 +23,6 @@ s = Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
-
 res = s.allowlist_blocklist.list_allowlist_identifiers()
 
 if res is not None:
@@ -44,11 +43,10 @@ if res is not None:
 
 ### Errors
 
-| Error Object       | Status Code        | Content Type       |
+| Error Type         | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
-| models.ClerkErrors | 401,402            | application/json   |
-| models.SDKError    | 4xx-5xx            | */*                |
-
+| models.ClerkErrors | 401, 402           | application/json   |
+| models.SDKError    | 4XX, 5XX           | \*/\*              |
 
 ## create_allowlist_identifier
 
@@ -62,7 +60,6 @@ from clerk_backend_api import Clerk
 s = Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
-
 
 res = s.allowlist_blocklist.create_allowlist_identifier(request={
     "identifier": "user@example.com",
@@ -88,11 +85,10 @@ if res is not None:
 
 ### Errors
 
-| Error Object       | Status Code        | Content Type       |
+| Error Type         | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
-| models.ClerkErrors | 400,402,422        | application/json   |
-| models.SDKError    | 4xx-5xx            | */*                |
-
+| models.ClerkErrors | 400, 402, 422      | application/json   |
+| models.SDKError    | 4XX, 5XX           | \*/\*              |
 
 ## create_blocklist_identifier
 
@@ -106,7 +102,6 @@ from clerk_backend_api import Clerk
 s = Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
-
 
 res = s.allowlist_blocklist.create_blocklist_identifier(request={
     "identifier": "example@example.com",
@@ -131,11 +126,10 @@ if res is not None:
 
 ### Errors
 
-| Error Object       | Status Code        | Content Type       |
+| Error Type         | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
-| models.ClerkErrors | 400,402,422        | application/json   |
-| models.SDKError    | 4xx-5xx            | */*                |
-
+| models.ClerkErrors | 400, 402, 422      | application/json   |
+| models.SDKError    | 4XX, 5XX           | \*/\*              |
 
 ## delete_blocklist_identifier
 
@@ -149,7 +143,6 @@ from clerk_backend_api import Clerk
 s = Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
-
 
 res = s.allowlist_blocklist.delete_blocklist_identifier(identifier_id="identifier123")
 
@@ -172,7 +165,7 @@ if res is not None:
 
 ### Errors
 
-| Error Object       | Status Code        | Content Type       |
+| Error Type         | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
-| models.ClerkErrors | 402,404            | application/json   |
-| models.SDKError    | 4xx-5xx            | */*                |
+| models.ClerkErrors | 402, 404           | application/json   |
+| models.SDKError    | 4XX, 5XX           | \*/\*              |

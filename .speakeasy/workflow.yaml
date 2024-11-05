@@ -18,3 +18,7 @@ targets:
         publish:
             pypi:
                 token: $pypi_token
+        codeSamples:
+            registry:
+                location: registry.speakeasyapi.dev/clerk/clerk/clerk-openapi-code-samples
+            blocking: false

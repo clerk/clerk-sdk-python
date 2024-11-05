@@ -3,16 +3,16 @@
 from __future__ import annotations
 from clerk_backend_api.types import BaseModel
 from clerk_backend_api.utils import FieldMetadata, PathParamMetadata
-from typing import TypedDict
-from typing_extensions import Annotated
+from typing_extensions import Annotated, TypedDict
 
 
 class RevokeSignInTokenRequestTypedDict(TypedDict):
     sign_in_token_id: str
     r"""The ID of the sign-in token to be revoked"""
-    
+
 
 class RevokeSignInTokenRequest(BaseModel):
-    sign_in_token_id: Annotated[str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))]
+    sign_in_token_id: Annotated[
+        str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))
+    ]
     r"""The ID of the sign-in token to be revoked"""
-    

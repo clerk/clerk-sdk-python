@@ -27,13 +27,22 @@ from .serializers import (
     serialize_float,
     serialize_int,
     stream_to_text,
+    stream_to_text_async,
+    stream_to_bytes,
+    stream_to_bytes_async,
+    validate_const,
     validate_decimal,
     validate_float,
     validate_int,
     validate_open_enum,
 )
 from .url import generate_url, template_url, remove_suffix
-from .values import get_global_from_env, match_content_type, match_status_codes, match_response
+from .values import (
+    get_global_from_env,
+    match_content_type,
+    match_status_codes,
+    match_response,
+)
 from .logger import Logger, get_body_content, get_default_logger
 
 __all__ = [
@@ -74,10 +83,14 @@ __all__ = [
     "serialize_request_body",
     "SerializedRequestBody",
     "stream_to_text",
+    "stream_to_text_async",
+    "stream_to_bytes",
+    "stream_to_bytes_async",
     "template_url",
     "unmarshal",
     "unmarshal_json",
     "validate_decimal",
+    "validate_const",
     "validate_float",
     "validate_int",
     "validate_open_enum",

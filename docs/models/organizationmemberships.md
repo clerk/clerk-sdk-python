@@ -1,5 +1,7 @@
 # OrganizationMemberships
 
+A list of organization memberships
+
 
 ## Fields
 

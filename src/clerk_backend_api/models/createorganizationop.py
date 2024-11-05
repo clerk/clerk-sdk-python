@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 from clerk_backend_api.types import BaseModel
-from typing import Any, Dict, Optional, TypedDict
-from typing_extensions import NotRequired
+from typing import Any, Dict, Optional
+from typing_extensions import NotRequired, TypedDict
 
 
 class CreateOrganizationRequestBodyTypedDict(TypedDict):
@@ -26,26 +26,31 @@ class CreateOrganizationRequestBodyTypedDict(TypedDict):
     r"""The maximum number of memberships allowed for this organization"""
     created_at: NotRequired[str]
     r"""A custom date/time denoting _when_ the organization was created, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`)."""
-    
+
 
 class CreateOrganizationRequestBody(BaseModel):
     name: str
     r"""The name of the new organization.
     May not contain URLs or HTML.
     """
+
     created_by: str
     r"""The ID of the User who will become the administrator for the new organization"""
+
     private_metadata: Optional[Dict[str, Any]] = None
     r"""Metadata saved on the organization, accessible only from the Backend API"""
+
     public_metadata: Optional[Dict[str, Any]] = None
     r"""Metadata saved on the organization, read-only from the Frontend API and fully accessible (read/write) from the Backend API"""
+
     slug: Optional[str] = None
     r"""A slug for the new organization.
     Can contain only lowercase alphanumeric characters and the dash \"-\".
     Must be unique for the instance.
     """
+
     max_allowed_memberships: Optional[int] = None
     r"""The maximum number of memberships allowed for this organization"""
+
     created_at: Optional[str] = None
     r"""A custom date/time denoting _when_ the organization was created, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`)."""
-    

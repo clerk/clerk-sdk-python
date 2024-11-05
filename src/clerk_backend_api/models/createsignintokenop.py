@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 from clerk_backend_api.types import BaseModel
-from typing import Optional, TypedDict
-from typing_extensions import NotRequired
+from typing import Optional
+from typing_extensions import NotRequired, TypedDict
 
 
 class CreateSignInTokenRequestBodyTypedDict(TypedDict):
@@ -13,13 +13,13 @@ class CreateSignInTokenRequestBodyTypedDict(TypedDict):
     r"""Optional parameter to specify the life duration of the sign in token in seconds.
     By default, the duration is 30 days.
     """
-    
+
 
 class CreateSignInTokenRequestBody(BaseModel):
     user_id: Optional[str] = None
     r"""The ID of the user that can use the newly created sign in token"""
+
     expires_in_seconds: Optional[int] = 2592000
     r"""Optional parameter to specify the life duration of the sign in token in seconds.
     By default, the duration is 30 days.
     """
-    

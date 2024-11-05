@@ -3,8 +3,7 @@
 from __future__ import annotations
 from clerk_backend_api.types import BaseModel
 from clerk_backend_api.utils import FieldMetadata, PathParamMetadata
-from typing import TypedDict
-from typing_extensions import Annotated
+from typing_extensions import Annotated, TypedDict
 
 
 class GetOrganizationInvitationRequestTypedDict(TypedDict):
@@ -12,11 +11,15 @@ class GetOrganizationInvitationRequestTypedDict(TypedDict):
     r"""The organization ID."""
     invitation_id: str
     r"""The organization invitation ID."""
-    
+
 
 class GetOrganizationInvitationRequest(BaseModel):
-    organization_id: Annotated[str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))]
+    organization_id: Annotated[
+        str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))
+    ]
     r"""The organization ID."""
-    invitation_id: Annotated[str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))]
+
+    invitation_id: Annotated[
+        str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))
+    ]
     r"""The organization invitation ID."""
-    

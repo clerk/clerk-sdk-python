@@ -1,5 +1,7 @@
 # InstanceSettings
 
+InstanceSettings Server API
+
 
 ## Fields
 

@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 from clerk_backend_api.types import BaseModel
-from typing import List, Optional, TypedDict
-from typing_extensions import NotRequired
+from typing import List, Optional
+from typing_extensions import NotRequired, TypedDict
 
 
 class KeysTypedDict(TypedDict):
@@ -13,21 +13,29 @@ class KeysTypedDict(TypedDict):
     alg: NotRequired[str]
     n: NotRequired[str]
     e: NotRequired[str]
-    
+
 
 class Keys(BaseModel):
     use: Optional[str] = None
+
     kty: Optional[str] = None
+
     kid: Optional[str] = None
+
     alg: Optional[str] = None
+
     n: Optional[str] = None
+
     e: Optional[str] = None
-    
+
 
 class WellKnownJWKSTypedDict(TypedDict):
+    r"""Get the JSON Web Key Set"""
+
     keys: NotRequired[List[KeysTypedDict]]
-    
+
 
 class WellKnownJWKS(BaseModel):
+    r"""Get the JSON Web Key Set"""
+
     keys: Optional[List[Keys]] = None
-    

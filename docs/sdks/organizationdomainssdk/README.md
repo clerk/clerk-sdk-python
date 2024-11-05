@@ -22,8 +22,7 @@ s = Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
-
-res = s.organization_domains.create(organization_id="<value>", name="<value>", enrollment_mode="<value>", verified=False)
+res = s.organization_domains.create(organization_id="<id>", name="<value>", enrollment_mode="<value>", verified=True)
 
 if res is not None:
     # handle response
@@ -47,11 +46,10 @@ if res is not None:
 
 ### Errors
 
-| Error Object       | Status Code        | Content Type       |
+| Error Type         | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
-| models.ClerkErrors | 400,403,404,422    | application/json   |
-| models.SDKError    | 4xx-5xx            | */*                |
-
+| models.ClerkErrors | 400, 403, 404, 422 | application/json   |
+| models.SDKError    | 4XX, 5XX           | \*/\*              |
 
 ## list
 
@@ -66,8 +64,7 @@ s = Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
-
-res = s.organization_domains.list(organization_id="<value>", limit=20, offset=10, verified="<value>", enrollment_mode="<value>")
+res = s.organization_domains.list(organization_id="<id>", limit=20, offset=10, verified="<value>", enrollment_mode="<value>")
 
 if res is not None:
     # handle response
@@ -92,11 +89,10 @@ if res is not None:
 
 ### Errors
 
-| Error Object       | Status Code        | Content Type       |
+| Error Type         | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
-| models.ClerkErrors | 401,422            | application/json   |
-| models.SDKError    | 4xx-5xx            | */*                |
-
+| models.ClerkErrors | 401, 422           | application/json   |
+| models.SDKError    | 4XX, 5XX           | \*/\*              |
 
 ## delete
 
@@ -111,8 +107,7 @@ s = Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
-
-res = s.organization_domains.delete(organization_id="<value>", domain_id="<value>")
+res = s.organization_domains.delete(organization_id="<id>", domain_id="<id>")
 
 if res is not None:
     # handle response
@@ -134,7 +129,7 @@ if res is not None:
 
 ### Errors
 
-| Error Object       | Status Code        | Content Type       |
+| Error Type         | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
-| models.ClerkErrors | 400,401,404        | application/json   |
-| models.SDKError    | 4xx-5xx            | */*                |
+| models.ClerkErrors | 400, 401, 404      | application/json   |
+| models.SDKError    | 4XX, 5XX           | \*/\*              |

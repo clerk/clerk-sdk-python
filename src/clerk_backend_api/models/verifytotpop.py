@@ -4,46 +4,53 @@ from __future__ import annotations
 from clerk_backend_api.types import BaseModel
 from clerk_backend_api.utils import FieldMetadata, PathParamMetadata, RequestMetadata
 from enum import Enum
-from typing import Optional, TypedDict
-from typing_extensions import Annotated, NotRequired
+from typing import Optional
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class VerifyTOTPRequestBodyTypedDict(TypedDict):
     code: str
     r"""The TOTP or backup code to verify"""
-    
+
 
 class VerifyTOTPRequestBody(BaseModel):
     code: str
     r"""The TOTP or backup code to verify"""
-    
+
 
 class VerifyTOTPRequestTypedDict(TypedDict):
     user_id: str
     r"""The ID of the user for whom to verify the TOTP"""
     request_body: NotRequired[VerifyTOTPRequestBodyTypedDict]
-    
+
 
 class VerifyTOTPRequest(BaseModel):
-    user_id: Annotated[str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))]
+    user_id: Annotated[
+        str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))
+    ]
     r"""The ID of the user for whom to verify the TOTP"""
-    request_body: Annotated[Optional[VerifyTOTPRequestBody], FieldMetadata(request=RequestMetadata(media_type="application/json"))] = None
-    
+
+    request_body: Annotated[
+        Optional[VerifyTOTPRequestBody],
+        FieldMetadata(request=RequestMetadata(media_type="application/json")),
+    ] = None
+
 
 class CodeType(str, Enum):
     TOTP = "totp"
     BACKUP_CODE = "backup_code"
 
+
 class VerifyTOTPResponseBodyTypedDict(TypedDict):
     r"""The provided TOTP or backup code was correct."""
-    
+
     verified: NotRequired[bool]
     code_type: NotRequired[CodeType]
-    
+
 
 class VerifyTOTPResponseBody(BaseModel):
     r"""The provided TOTP or backup code was correct."""
-    
+
     verified: Optional[bool] = None
+
     code_type: Optional[CodeType] = None
-    

@@ -20,7 +20,6 @@ s = Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
-
 res = s.blocklist_identifiers.list()
 
 if res is not None:
@@ -41,7 +40,7 @@ if res is not None:
 
 ### Errors
 
-| Error Object       | Status Code        | Content Type       |
+| Error Type         | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
-| models.ClerkErrors | 401,402            | application/json   |
-| models.SDKError    | 4xx-5xx            | */*                |
+| models.ClerkErrors | 401, 402           | application/json   |
+| models.SDKError    | 4XX, 5XX           | \*/\*              |

@@ -29,7 +29,6 @@ s = Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
-
 res = s.clients.list(limit=20, offset=10)
 
 if res is not None:
@@ -52,11 +51,10 @@ if res is not None:
 
 ### Errors
 
-| Error Object       | Status Code        | Content Type       |
+| Error Type         | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
-| models.ClerkErrors | 400,401,410,422    | application/json   |
-| models.SDKError    | 4xx-5xx            | */*                |
-
+| models.ClerkErrors | 400, 401, 410, 422 | application/json   |
+| models.SDKError    | 4XX, 5XX           | \*/\*              |
 
 ## verify
 
@@ -70,7 +68,6 @@ from clerk_backend_api import Clerk
 s = Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
-
 
 res = s.clients.verify(request={
     "token": "jwt_token_example",
@@ -95,11 +92,10 @@ if res is not None:
 
 ### Errors
 
-| Error Object       | Status Code        | Content Type       |
+| Error Type         | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
-| models.ClerkErrors | 400,401,404        | application/json   |
-| models.SDKError    | 4xx-5xx            | */*                |
-
+| models.ClerkErrors | 400, 401, 404      | application/json   |
+| models.SDKError    | 4XX, 5XX           | \*/\*              |
 
 ## get
 
@@ -113,7 +109,6 @@ from clerk_backend_api import Clerk
 s = Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
-
 
 res = s.clients.get(client_id="cli_123456789")
 
@@ -136,7 +131,7 @@ if res is not None:
 
 ### Errors
 
-| Error Object       | Status Code        | Content Type       |
+| Error Type         | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
-| models.ClerkErrors | 400,401,404        | application/json   |
-| models.SDKError    | 4xx-5xx            | */*                |
+| models.ClerkErrors | 400, 401, 404      | application/json   |
+| models.SDKError    | 4XX, 5XX           | \*/\*              |

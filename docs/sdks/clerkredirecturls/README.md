@@ -22,7 +22,6 @@ s = Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
-
 res = s.redirect_urls.create(request={
     "url": "https://my-app.com/oauth-callback",
 })
@@ -46,11 +45,10 @@ if res is not None:
 
 ### Errors
 
-| Error Object       | Status Code        | Content Type       |
+| Error Type         | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
-| models.ClerkErrors | 400,422            | application/json   |
-| models.SDKError    | 4xx-5xx            | */*                |
-
+| models.ClerkErrors | 400, 422           | application/json   |
+| models.SDKError    | 4XX, 5XX           | \*/\*              |
 
 ## get
 
@@ -64,7 +62,6 @@ from clerk_backend_api import Clerk
 s = Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
-
 
 res = s.redirect_urls.get(id="redir_01FG4K9G5NWSQ4ZPT4TQE4Z7G3")
 
@@ -87,11 +84,10 @@ if res is not None:
 
 ### Errors
 
-| Error Object       | Status Code        | Content Type       |
+| Error Type         | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
 | models.ClerkErrors | 404                | application/json   |
-| models.SDKError    | 4xx-5xx            | */*                |
-
+| models.SDKError    | 4XX, 5XX           | \*/\*              |
 
 ## delete
 
@@ -105,7 +101,6 @@ from clerk_backend_api import Clerk
 s = Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
-
 
 res = s.redirect_urls.delete(id="redir_01FG4K9G5NWSQ4ZPT4TQE4Z7G3")
 
@@ -128,7 +123,7 @@ if res is not None:
 
 ### Errors
 
-| Error Object       | Status Code        | Content Type       |
+| Error Type         | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
 | models.ClerkErrors | 404                | application/json   |
-| models.SDKError    | 4xx-5xx            | */*                |
+| models.SDKError    | 4XX, 5XX           | \*/\*              |

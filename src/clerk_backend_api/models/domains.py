@@ -3,21 +3,26 @@
 from __future__ import annotations
 from .domain import Domain, DomainTypedDict
 from clerk_backend_api.types import BaseModel
-from typing import List, TypedDict
+from typing import List
+from typing_extensions import TypedDict
 
 
 class DomainsTypedDict(TypedDict):
+    r"""A list of domains"""
+
     data: List[DomainTypedDict]
     total_count: int
     r"""Total number of domains
 
     """
-    
+
 
 class Domains(BaseModel):
+    r"""A list of domains"""
+
     data: List[Domain]
+
     total_count: int
     r"""Total number of domains
 
     """
-    

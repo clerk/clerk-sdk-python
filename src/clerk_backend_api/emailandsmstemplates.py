@@ -4,18 +4,26 @@ from .basesdk import BaseSDK
 from clerk_backend_api import models, utils
 from clerk_backend_api._hooks import HookContext
 from clerk_backend_api.types import OptionalNullable, UNSET
-from typing import Any, Optional, Union
+from typing import Any, Optional
 from typing_extensions import deprecated
 
+
 class EmailAndSmsTemplates(BaseSDK):
-    
-    
-    @deprecated("warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible.")
+    @deprecated(
+        "warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
+    )
     def upsert(
-        self, *,
+        self,
+        *,
         template_type: models.UpsertTemplatePathParamTemplateType,
         slug: str,
-        request_body: Optional[Union[models.UpsertTemplateRequestBody, models.UpsertTemplateRequestBodyTypedDict]] = None,
+        name: Optional[str] = None,
+        subject: OptionalNullable[str] = UNSET,
+        markup: OptionalNullable[str] = UNSET,
+        body: Optional[str] = None,
+        delivered_by_clerk: OptionalNullable[bool] = UNSET,
+        from_email_name: Optional[str] = None,
+        reply_to_email_name: Optional[str] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -26,7 +34,13 @@ class EmailAndSmsTemplates(BaseSDK):
 
         :param template_type: The type of template to update
         :param slug: The slug of the template to update
-        :param request_body: 
+        :param name: The user-friendly name of the template
+        :param subject: The email subject. Applicable only to email templates.
+        :param markup: The editor markup used to generate the body of the template
+        :param body: The template body before variable interpolation
+        :param delivered_by_clerk: Whether Clerk should deliver emails or SMS messages based on the current template
+        :param from_email_name: The local part of the From email address that will be used for emails. For example, in the address 'hello@example.com', the local part is 'hello'. Applicable only to email templates.
+        :param reply_to_email_name: The local part of the Reply To email address that will be used for emails. For example, in the address 'hello@example.com', the local part is 'hello'. Applicable only to email templates.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -35,16 +49,24 @@ class EmailAndSmsTemplates(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
-        
+
         if server_url is not None:
             base_url = server_url
-        
+
         request = models.UpsertTemplateRequest(
             template_type=template_type,
             slug=slug,
-            request_body=utils.get_pydantic_model(request_body, Optional[models.UpsertTemplateRequestBody]),
+            request_body=models.UpsertTemplateRequestBody(
+                name=name,
+                subject=subject,
+                markup=markup,
+                body=body,
+                delivered_by_clerk=delivered_by_clerk,
+                from_email_name=from_email_name,
+                reply_to_email_name=reply_to_email_name,
+            ),
         )
-        
+
         req = self.build_request(
             method="PUT",
             path="/templates/{template_type}/{slug}",
@@ -57,51 +79,73 @@ class EmailAndSmsTemplates(BaseSDK):
             user_agent_header="user-agent",
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
-            get_serialized_body=lambda: utils.serialize_request_body(request.request_body, False, True, "json", Optional[models.UpsertTemplateRequestBody]),
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request.request_body,
+                False,
+                True,
+                "json",
+                Optional[models.UpsertTemplateRequestBody],
+            ),
             timeout_ms=timeout_ms,
         )
-        
+
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, [
-                "429",
-                "500",
-                "502",
-                "503",
-                "504"
-            ])                
-        
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
         http_res = self.do_request(
-            hook_ctx=HookContext(operation_id="UpsertTemplate", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            hook_ctx=HookContext(
+                operation_id="UpsertTemplate",
+                oauth2_scopes=[],
+                security_source=self.sdk_configuration.security,
+            ),
             request=req,
-            error_status_codes=["400","401","402","403","404","422","4XX","5XX"],
-            retry_config=retry_config
+            error_status_codes=["400", "401", "402", "403", "404", "422", "4XX", "5XX"],
+            retry_config=retry_config,
         )
-        
+
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[models.Template])
-        if utils.match_response(http_res, ["400","401","402","403","404","422"], "application/json"):
+        if utils.match_response(
+            http_res, ["400", "401", "402", "403", "404", "422"], "application/json"
+        ):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX","5XX"], "*"):
-            raise models.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
-        
-        content_type = http_res.headers.get("Content-Type")
-        raise models.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
 
-    
-    
-    @deprecated("warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible.")
+        content_type = http_res.headers.get("Content-Type")
+        http_res_text = utils.stream_to_text(http_res)
+        raise models.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res_text,
+            http_res,
+        )
+
+    @deprecated(
+        "warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
+    )
     async def upsert_async(
-        self, *,
+        self,
+        *,
         template_type: models.UpsertTemplatePathParamTemplateType,
         slug: str,
-        request_body: Optional[Union[models.UpsertTemplateRequestBody, models.UpsertTemplateRequestBodyTypedDict]] = None,
+        name: Optional[str] = None,
+        subject: OptionalNullable[str] = UNSET,
+        markup: OptionalNullable[str] = UNSET,
+        body: Optional[str] = None,
+        delivered_by_clerk: OptionalNullable[bool] = UNSET,
+        from_email_name: Optional[str] = None,
+        reply_to_email_name: Optional[str] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -112,7 +156,13 @@ class EmailAndSmsTemplates(BaseSDK):
 
         :param template_type: The type of template to update
         :param slug: The slug of the template to update
-        :param request_body: 
+        :param name: The user-friendly name of the template
+        :param subject: The email subject. Applicable only to email templates.
+        :param markup: The editor markup used to generate the body of the template
+        :param body: The template body before variable interpolation
+        :param delivered_by_clerk: Whether Clerk should deliver emails or SMS messages based on the current template
+        :param from_email_name: The local part of the From email address that will be used for emails. For example, in the address 'hello@example.com', the local part is 'hello'. Applicable only to email templates.
+        :param reply_to_email_name: The local part of the Reply To email address that will be used for emails. For example, in the address 'hello@example.com', the local part is 'hello'. Applicable only to email templates.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -121,17 +171,25 @@ class EmailAndSmsTemplates(BaseSDK):
         url_variables = None
         if timeout_ms is None:
             timeout_ms = self.sdk_configuration.timeout_ms
-        
+
         if server_url is not None:
             base_url = server_url
-        
+
         request = models.UpsertTemplateRequest(
             template_type=template_type,
             slug=slug,
-            request_body=utils.get_pydantic_model(request_body, Optional[models.UpsertTemplateRequestBody]),
+            request_body=models.UpsertTemplateRequestBody(
+                name=name,
+                subject=subject,
+                markup=markup,
+                body=body,
+                delivered_by_clerk=delivered_by_clerk,
+                from_email_name=from_email_name,
+                reply_to_email_name=reply_to_email_name,
+            ),
         )
-        
-        req = self.build_request(
+
+        req = self.build_request_async(
             method="PUT",
             path="/templates/{template_type}/{slug}",
             base_url=base_url,
@@ -143,41 +201,54 @@ class EmailAndSmsTemplates(BaseSDK):
             user_agent_header="user-agent",
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
-            get_serialized_body=lambda: utils.serialize_request_body(request.request_body, False, True, "json", Optional[models.UpsertTemplateRequestBody]),
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request.request_body,
+                False,
+                True,
+                "json",
+                Optional[models.UpsertTemplateRequestBody],
+            ),
             timeout_ms=timeout_ms,
         )
-        
+
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, [
-                "429",
-                "500",
-                "502",
-                "503",
-                "504"
-            ])                
-        
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
         http_res = await self.do_request_async(
-            hook_ctx=HookContext(operation_id="UpsertTemplate", oauth2_scopes=[], security_source=self.sdk_configuration.security),
+            hook_ctx=HookContext(
+                operation_id="UpsertTemplate",
+                oauth2_scopes=[],
+                security_source=self.sdk_configuration.security,
+            ),
             request=req,
-            error_status_codes=["400","401","402","403","404","422","4XX","5XX"],
-            retry_config=retry_config
+            error_status_codes=["400", "401", "402", "403", "404", "422", "4XX", "5XX"],
+            retry_config=retry_config,
         )
-        
+
         data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[models.Template])
-        if utils.match_response(http_res, ["400","401","402","403","404","422"], "application/json"):
+        if utils.match_response(
+            http_res, ["400", "401", "402", "403", "404", "422"], "application/json"
+        ):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX","5XX"], "*"):
-            raise models.SDKError("API error occurred", http_res.status_code, http_res.text, http_res)
-        
-        content_type = http_res.headers.get("Content-Type")
-        raise models.SDKError(f"Unexpected response received (code: {http_res.status_code}, type: {content_type})", http_res.status_code, http_res.text, http_res)
+        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
 
-    
+        content_type = http_res.headers.get("Content-Type")
+        http_res_text = await utils.stream_to_text_async(http_res)
+        raise models.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res_text,
+            http_res,
+        )
