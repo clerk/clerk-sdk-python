@@ -44,6 +44,7 @@ from clerk_backend_api.webhooks import Webhooks
 import httpx
 from typing import Any, Callable, Dict, Optional, Union
 
+
 class Clerk(BaseSDK):
     r"""Clerk Backend API: The Clerk REST Backend API, meant to be accessed by backend
     servers.
@@ -57,6 +58,7 @@ class Clerk(BaseSDK):
     Please see https://clerk.com/docs for more information.
     https://clerk.com/docs
     """
+
     miscellaneous: Miscellaneous
     r"""Various endpoints that do not belong in any particular category."""
     jwks: Jwks
@@ -112,6 +114,7 @@ class Clerk(BaseSDK):
     oauth_applications: OauthApplicationsSDK
     saml_connections: SamlConnectionsSDK
     testing_tokens: TestingTokens
+
     def __init__(
         self,
         bearer_auth: Optional[Union[Optional[str], Callable[[], Optional[str]]]] = None,
@@ -122,7 +125,7 @@ class Clerk(BaseSDK):
         async_client: Optional[AsyncHttpClient] = None,
         retry_config: OptionalNullable[RetryConfig] = UNSET,
         timeout_ms: Optional[int] = None,
-        debug_logger: Optional[Logger] = None
+        debug_logger: Optional[Logger] = None,
     ) -> None:
         r"""Instantiates the SDK configuring it with the provided parameters.
 
@@ -151,33 +154,37 @@ class Clerk(BaseSDK):
         assert issubclass(
             type(async_client), AsyncHttpClient
         ), "The provided async_client must implement the AsyncHttpClient protocol."
-        
+
         security: Any = None
         if callable(bearer_auth):
-            security = lambda: models.Security(bearer_auth = bearer_auth()) # pylint: disable=unnecessary-lambda-assignment
+            security = lambda: models.Security(bearer_auth=bearer_auth())  # pylint: disable=unnecessary-lambda-assignment
         else:
-            security = models.Security(bearer_auth = bearer_auth)
+            security = models.Security(bearer_auth=bearer_auth)
 
         if server_url is not None:
             if url_params is not None:
                 server_url = utils.template_url(server_url, url_params)
-    
 
-        BaseSDK.__init__(self, SDKConfiguration(
-            client=client,
-            async_client=async_client,
-            security=security,
-            server_url=server_url,
-            server_idx=server_idx,
-            retry_config=retry_config,
-            timeout_ms=timeout_ms,
-            debug_logger=debug_logger
-        ))
+        BaseSDK.__init__(
+            self,
+            SDKConfiguration(
+                client=client,
+                async_client=async_client,
+                security=security,
+                server_url=server_url,
+                server_idx=server_idx,
+                retry_config=retry_config,
+                timeout_ms=timeout_ms,
+                debug_logger=debug_logger,
+            ),
+        )
 
         hooks = SDKHooks()
 
         current_server_url, *_ = self.sdk_configuration.get_server_details()
-        server_url, self.sdk_configuration.client = hooks.sdk_init(current_server_url, self.sdk_configuration.client)
+        server_url, self.sdk_configuration.client = hooks.sdk_init(
+            current_server_url, self.sdk_configuration.client
+        )
         if current_server_url != server_url:
             self.sdk_configuration.server_url = server_url
 
@@ -185,7 +192,6 @@ class Clerk(BaseSDK):
         self.sdk_configuration.__dict__["_hooks"] = hooks
 
         self._init_sdks()
-
 
     def _init_sdks(self):
         self.miscellaneous = Miscellaneous(self.sdk_configuration)
@@ -199,7 +205,9 @@ class Clerk(BaseSDK):
         self.templates = Templates(self.sdk_configuration)
         self.users = Users(self.sdk_configuration)
         self.invitations = Invitations(self.sdk_configuration)
-        self.organization_invitations = OrganizationInvitationsSDK(self.sdk_configuration)
+        self.organization_invitations = OrganizationInvitationsSDK(
+            self.sdk_configuration
+        )
         self.allowlist_blocklist = AllowlistBlocklist(self.sdk_configuration)
         self.allowlist_identifiers = AllowlistIdentifiers(self.sdk_configuration)
         self.blocklist_identifiers = BlocklistIdentifiersSDK(self.sdk_configuration)
@@ -210,7 +218,9 @@ class Clerk(BaseSDK):
         self.webhooks = Webhooks(self.sdk_configuration)
         self.jwt_templates = JwtTemplates(self.sdk_configuration)
         self.organizations = OrganizationsSDK(self.sdk_configuration)
-        self.organization_memberships = OrganizationMembershipsSDK(self.sdk_configuration)
+        self.organization_memberships = OrganizationMembershipsSDK(
+            self.sdk_configuration
+        )
         self.organization_domains = OrganizationDomainsSDK(self.sdk_configuration)
         self.organization_domain = OrganizationDomainSDK(self.sdk_configuration)
         self.proxy_checks = ProxyChecks(self.sdk_configuration)
@@ -221,4 +231,3 @@ class Clerk(BaseSDK):
         self.oauth_applications = OauthApplicationsSDK(self.sdk_configuration)
         self.saml_connections = SamlConnectionsSDK(self.sdk_configuration)
         self.testing_tokens = TestingTokens(self.sdk_configuration)
-    

@@ -3,16 +3,16 @@
 from __future__ import annotations
 from clerk_backend_api.types import BaseModel
 from clerk_backend_api.utils import FieldMetadata, PathParamMetadata
-from typing import TypedDict
-from typing_extensions import Annotated
+from typing_extensions import Annotated, TypedDict
 
 
 class GetOAuthApplicationRequestTypedDict(TypedDict):
     oauth_application_id: str
     r"""The ID of the OAuth application"""
-    
+
 
 class GetOAuthApplicationRequest(BaseModel):
-    oauth_application_id: Annotated[str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))]
+    oauth_application_id: Annotated[
+        str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))
+    ]
     r"""The ID of the OAuth application"""
-    

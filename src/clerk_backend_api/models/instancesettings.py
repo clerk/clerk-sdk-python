@@ -3,15 +3,19 @@
 from __future__ import annotations
 from clerk_backend_api.types import BaseModel
 from enum import Enum
-from typing import Optional, TypedDict
-from typing_extensions import NotRequired
+from typing import Optional
+from typing_extensions import NotRequired, TypedDict
 
 
 class InstanceSettingsObject(str, Enum):
     r"""String representing the object's type. Objects of the same type share the same value."""
+
     INSTANCE_SETTINGS = "instance_settings"
 
+
 class InstanceSettingsTypedDict(TypedDict):
+    r"""InstanceSettings Server API"""
+
     object: NotRequired[InstanceSettingsObject]
     r"""String representing the object's type. Objects of the same type share the same value."""
     id: NotRequired[str]
@@ -19,14 +23,20 @@ class InstanceSettingsTypedDict(TypedDict):
     from_email_address: NotRequired[str]
     progressive_sign_up: NotRequired[bool]
     enhanced_email_deliverability: NotRequired[bool]
-    
+
 
 class InstanceSettings(BaseModel):
+    r"""InstanceSettings Server API"""
+
     object: Optional[InstanceSettingsObject] = None
     r"""String representing the object's type. Objects of the same type share the same value."""
+
     id: Optional[str] = None
+
     restricted_to_allowlist: Optional[bool] = None
+
     from_email_address: Optional[str] = None
+
     progressive_sign_up: Optional[bool] = None
+
     enhanced_email_deliverability: Optional[bool] = None
-    

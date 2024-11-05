@@ -5,16 +5,19 @@ from .session import Session, SessionTypedDict
 from clerk_backend_api.types import BaseModel, Nullable, UNSET_SENTINEL
 from enum import Enum
 from pydantic import model_serializer
-from typing import List, TypedDict
+from typing import List
+from typing_extensions import TypedDict
 
 
 class Object(str, Enum):
-    r"""String representing the object's type. Objects of the same type share the same value.
+    r"""String representing the object's type. Objects of the same type share the same value."""
 
-    """
     CLIENT = "client"
 
+
 class ClientTypedDict(TypedDict):
+    r"""Success"""
+
     object: Object
     r"""String representing the object's type. Objects of the same type share the same value.
 
@@ -39,34 +42,44 @@ class ClientTypedDict(TypedDict):
     r"""Unix timestamp of creation.
 
     """
-    
+
 
 class Client(BaseModel):
+    r"""Success"""
+
     object: Object
     r"""String representing the object's type. Objects of the same type share the same value.
 
     """
+
     id: str
     r"""String representing the identifier of the session.
 
     """
+
     session_ids: List[str]
+
     sessions: List[Session]
+
     sign_in_id: Nullable[str]
+
     sign_up_id: Nullable[str]
+
     last_active_session_id: Nullable[str]
     r"""Last active session_id.
 
     """
+
     updated_at: int
     r"""Unix timestamp of last update.
 
     """
+
     created_at: int
     r"""Unix timestamp of creation.
 
     """
-    
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = []
@@ -80,9 +93,13 @@ class Client(BaseModel):
         for n, f in self.model_fields.items():
             k = f.alias or n
             val = serialized.get(k)
+            serialized.pop(k, None)
 
             optional_nullable = k in optional_fields and k in nullable_fields
-            is_set = (self.__pydantic_fields_set__.intersection({n}) or k in null_default_fields) # pylint: disable=no-member
+            is_set = (
+                self.__pydantic_fields_set__.intersection({n})
+                or k in null_default_fields
+            )  # pylint: disable=no-member
 
             if val is not None and val != UNSET_SENTINEL:
                 m[k] = val
@@ -92,4 +109,3 @@ class Client(BaseModel):
                 m[k] = val
 
         return m
-        

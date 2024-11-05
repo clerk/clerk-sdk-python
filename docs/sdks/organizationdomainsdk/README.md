@@ -20,8 +20,7 @@ s = Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
-
-res = s.organization_domain.update(organization_id="<value>", domain_id="<value>", enrollment_mode="<value>", verified=False)
+res = s.organization_domain.update(organization_id="<id>", domain_id="<id>", enrollment_mode="<value>", verified=False)
 
 if res is not None:
     # handle response
@@ -45,7 +44,7 @@ if res is not None:
 
 ### Errors
 
-| Error Object       | Status Code        | Content Type       |
+| Error Type         | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
-| models.ClerkErrors | 400,404,422        | application/json   |
-| models.SDKError    | 4xx-5xx            | */*                |
+| models.ClerkErrors | 400, 404, 422      | application/json   |
+| models.SDKError    | 4XX, 5XX           | \*/\*              |

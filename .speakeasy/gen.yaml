@@ -11,8 +11,9 @@ generation:
     requestResponseComponentNamesFeb2024: true
   auth:
     oAuth2ClientCredentialsEnabled: true
+    oAuth2PasswordEnabled: false
 python:
-  version: 1.1.2
+  version: 1.2.0
   additionalDependencies:
     dev:
       pytest: ^8.3.3

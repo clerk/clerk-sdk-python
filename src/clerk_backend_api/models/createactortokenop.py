@@ -2,23 +2,21 @@
 
 from __future__ import annotations
 from clerk_backend_api.types import BaseModel
-from typing import Optional, TypedDict
-from typing_extensions import NotRequired
+from typing import Optional
+from typing_extensions import NotRequired, TypedDict
 
 
 class CreateActorTokenActorTypedDict(TypedDict):
     r"""The actor payload. It needs to include a sub property which should contain the ID of the actor.
     This whole payload will be also included in the JWT session token.
     """
-    
-    
+
 
 class CreateActorTokenActor(BaseModel):
     r"""The actor payload. It needs to include a sub property which should contain the ID of the actor.
     This whole payload will be also included in the JWT session token.
     """
-    
-    
+
 
 class CreateActorTokenRequestBodyTypedDict(TypedDict):
     user_id: str
@@ -35,21 +33,23 @@ class CreateActorTokenRequestBodyTypedDict(TypedDict):
     r"""The maximum duration that the session which will be created by the generated actor token should last.
     By default, the duration of a session created via an actor token, lasts 30 minutes.
     """
-    
+
 
 class CreateActorTokenRequestBody(BaseModel):
     user_id: str
     r"""The ID of the user being impersonated."""
+
     actor: CreateActorTokenActor
     r"""The actor payload. It needs to include a sub property which should contain the ID of the actor.
     This whole payload will be also included in the JWT session token.
     """
+
     expires_in_seconds: Optional[int] = 3600
     r"""Optional parameter to specify the life duration of the actor token in seconds.
     By default, the duration is 1 hour.
     """
+
     session_max_duration_in_seconds: Optional[int] = 1800
     r"""The maximum duration that the session which will be created by the generated actor token should last.
     By default, the duration of a session created via an actor token, lasts 30 minutes.
     """
-    

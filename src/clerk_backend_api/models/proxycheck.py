@@ -3,13 +3,16 @@
 from __future__ import annotations
 from clerk_backend_api.types import BaseModel
 from enum import Enum
-from typing import TypedDict
+from typing_extensions import TypedDict
 
 
 class ProxyCheckObject(str, Enum):
     PROXY_CHECK = "proxy_check"
 
+
 class ProxyCheckTypedDict(TypedDict):
+    r"""Health check information about a domain's proxy configuration validation attempt."""
+
     object: ProxyCheckObject
     id: str
     domain_id: str
@@ -18,15 +21,23 @@ class ProxyCheckTypedDict(TypedDict):
     successful: bool
     created_at: int
     updated_at: int
-    
+
 
 class ProxyCheck(BaseModel):
+    r"""Health check information about a domain's proxy configuration validation attempt."""
+
     object: ProxyCheckObject
+
     id: str
+
     domain_id: str
+
     last_run_at: int
+
     proxy_url: str
+
     successful: bool
+
     created_at: int
+
     updated_at: int
-    

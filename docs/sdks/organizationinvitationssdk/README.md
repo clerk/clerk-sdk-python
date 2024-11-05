@@ -32,7 +32,6 @@ s = Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
-
 res = s.organization_invitations.get_all(limit=20, offset=10, order_by="-created_at", status=clerk_backend_api.ListInstanceOrganizationInvitationsQueryParamStatus.ACCEPTED, query="<value>")
 
 if res is not None:
@@ -58,11 +57,10 @@ if res is not None:
 
 ### Errors
 
-| Error Object       | Status Code        | Content Type       |
+| Error Type         | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
-| models.ClerkErrors | 400,404,422,500    | application/json   |
-| models.SDKError    | 4xx-5xx            | */*                |
-
+| models.ClerkErrors | 400, 404, 422, 500 | application/json   |
+| models.SDKError    | 4XX, 5XX           | \*/\*              |
 
 ## create
 
@@ -91,7 +89,6 @@ from clerk_backend_api import Clerk
 s = Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
-
 
 res = s.organization_invitations.create(organization_id="org_12345", email_address="user@example.com", role="admin", inviter_user_id="user_67890", public_metadata={
     "key": "value",
@@ -124,11 +121,10 @@ if res is not None:
 
 ### Errors
 
-| Error Object       | Status Code        | Content Type       |
+| Error Type         | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
-| models.ClerkErrors | 400,403,404,422    | application/json   |
-| models.SDKError    | 4xx-5xx            | */*                |
-
+| models.ClerkErrors | 400, 403, 404, 422 | application/json   |
+| models.SDKError    | 4XX, 5XX           | \*/\*              |
 
 ## list
 
@@ -148,7 +144,6 @@ from clerk_backend_api import Clerk
 s = Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
-
 
 res = s.organization_invitations.list(organization_id="org_12345", limit=20, offset=10, status=clerk_backend_api.ListOrganizationInvitationsQueryParamStatus.PENDING)
 
@@ -174,11 +169,10 @@ if res is not None:
 
 ### Errors
 
-| Error Object       | Status Code        | Content Type       |
+| Error Type         | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
-| models.ClerkErrors | 400,404            | application/json   |
-| models.SDKError    | 4xx-5xx            | */*                |
-
+| models.ClerkErrors | 400, 404           | application/json   |
+| models.SDKError    | 4XX, 5XX           | \*/\*              |
 
 ## bulk_create
 
@@ -204,7 +198,6 @@ from clerk_backend_api import Clerk
 s = Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
-
 
 res = s.organization_invitations.bulk_create(organization_id="org_12345", request_body=[
     {
@@ -241,11 +234,10 @@ if res is not None:
 
 ### Errors
 
-| Error Object       | Status Code        | Content Type       |
+| Error Type         | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
-| models.ClerkErrors | 400,403,404,422    | application/json   |
-| models.SDKError    | 4xx-5xx            | */*                |
-
+| models.ClerkErrors | 400, 403, 404, 422 | application/json   |
+| models.SDKError    | 4XX, 5XX           | \*/\*              |
 
 ## ~~list_pending~~
 
@@ -266,7 +258,6 @@ from clerk_backend_api import Clerk
 s = Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
-
 
 res = s.organization_invitations.list_pending(organization_id="org_12345", limit=20, offset=10)
 
@@ -291,11 +282,10 @@ if res is not None:
 
 ### Errors
 
-| Error Object       | Status Code        | Content Type       |
+| Error Type         | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
-| models.ClerkErrors | 400,404            | application/json   |
-| models.SDKError    | 4xx-5xx            | */*                |
-
+| models.ClerkErrors | 400, 404           | application/json   |
+| models.SDKError    | 4XX, 5XX           | \*/\*              |
 
 ## get
 
@@ -309,7 +299,6 @@ from clerk_backend_api import Clerk
 s = Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
-
 
 res = s.organization_invitations.get(organization_id="org_123456789", invitation_id="inv_987654321")
 
@@ -333,11 +322,10 @@ if res is not None:
 
 ### Errors
 
-| Error Object       | Status Code        | Content Type       |
+| Error Type         | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
-| models.ClerkErrors | 400,403,404        | application/json   |
-| models.SDKError    | 4xx-5xx            | */*                |
-
+| models.ClerkErrors | 400, 403, 404      | application/json   |
+| models.SDKError    | 4XX, 5XX           | \*/\*              |
 
 ## revoke
 
@@ -356,10 +344,7 @@ s = Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 )
 
-
-res = s.organization_invitations.revoke(organization_id="org_123456", invitation_id="inv_123456", request_body={
-    "requesting_user_id": "usr_12345",
-})
+res = s.organization_invitations.revoke(organization_id="org_123456", invitation_id="inv_123456", requesting_user_id="usr_12345")
 
 if res is not None:
     # handle response
@@ -369,12 +354,12 @@ if res is not None:
 
 ### Parameters
 
-| Parameter                                                                                                           | Type                                                                                                                | Required                                                                                                            | Description                                                                                                         | Example                                                                                                             |
-| ------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
-| `organization_id`                                                                                                   | *str*                                                                                                               | :heavy_check_mark:                                                                                                  | The organization ID.                                                                                                | org_123456                                                                                                          |
-| `invitation_id`                                                                                                     | *str*                                                                                                               | :heavy_check_mark:                                                                                                  | The organization invitation ID.                                                                                     | inv_123456                                                                                                          |
-| `request_body`                                                                                                      | [Optional[models.RevokeOrganizationInvitationRequestBody]](../../models/revokeorganizationinvitationrequestbody.md) | :heavy_minus_sign:                                                                                                  | N/A                                                                                                                 |                                                                                                                     |
-| `retries`                                                                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                    | :heavy_minus_sign:                                                                                                  | Configuration to override the default retry behavior of the client.                                                 |                                                                                                                     |
+| Parameter                                                                                     | Type                                                                                          | Required                                                                                      | Description                                                                                   | Example                                                                                       |
+| --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| `organization_id`                                                                             | *str*                                                                                         | :heavy_check_mark:                                                                            | The organization ID.                                                                          | org_123456                                                                                    |
+| `invitation_id`                                                                               | *str*                                                                                         | :heavy_check_mark:                                                                            | The organization invitation ID.                                                               | inv_123456                                                                                    |
+| `requesting_user_id`                                                                          | *OptionalNullable[str]*                                                                       | :heavy_minus_sign:                                                                            | The ID of the user that revokes the invitation.<br/>Must be an administrator in the organization. | usr_12345                                                                                     |
+| `retries`                                                                                     | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                              | :heavy_minus_sign:                                                                            | Configuration to override the default retry behavior of the client.                           |                                                                                               |
 
 ### Response
 
@@ -382,7 +367,7 @@ if res is not None:
 
 ### Errors
 
-| Error Object       | Status Code        | Content Type       |
+| Error Type         | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
-| models.ClerkErrors | 400,403,404        | application/json   |
-| models.SDKError    | 4xx-5xx            | */*                |
+| models.ClerkErrors | 400, 403, 404      | application/json   |
+| models.SDKError    | 4XX, 5XX           | \*/\*              |

@@ -2,41 +2,67 @@
 
 from __future__ import annotations
 from clerk_backend_api.types import BaseModel
-from clerk_backend_api.utils import FieldMetadata, MultipartFormMetadata, PathParamMetadata, RequestMetadata
+from clerk_backend_api.utils import (
+    FieldMetadata,
+    MultipartFormMetadata,
+    PathParamMetadata,
+    RequestMetadata,
+)
 import io
 import pydantic
-from typing import IO, Optional, TypedDict, Union
-from typing_extensions import Annotated, NotRequired
+from typing import IO, Optional, Union
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class FileTypedDict(TypedDict):
     file_name: str
     content: Union[bytes, IO[bytes], io.BufferedReader]
     content_type: NotRequired[str]
-    
+
 
 class File(BaseModel):
-    file_name: Annotated[str, pydantic.Field(alias="file"), FieldMetadata(multipart=True)]
-    content: Annotated[Union[bytes, IO[bytes], io.BufferedReader], pydantic.Field(alias=""), FieldMetadata(multipart=MultipartFormMetadata(content=True))]
-    content_type: Annotated[Optional[str], pydantic.Field(alias="Content-Type"), FieldMetadata(multipart=True)] = None
-    
+    file_name: Annotated[
+        str, pydantic.Field(alias="file"), FieldMetadata(multipart=True)
+    ]
+
+    content: Annotated[
+        Union[bytes, IO[bytes], io.BufferedReader],
+        pydantic.Field(alias=""),
+        FieldMetadata(multipart=MultipartFormMetadata(content=True)),
+    ]
+
+    content_type: Annotated[
+        Optional[str],
+        pydantic.Field(alias="Content-Type"),
+        FieldMetadata(multipart=True),
+    ] = None
+
 
 class SetUserProfileImageRequestBodyTypedDict(TypedDict):
     file: NotRequired[FileTypedDict]
-    
+
 
 class SetUserProfileImageRequestBody(BaseModel):
-    file: Annotated[Optional[File], pydantic.Field(alias=""), FieldMetadata(multipart=MultipartFormMetadata(file=True))] = None
-    
+    file: Annotated[
+        Optional[File],
+        pydantic.Field(alias=""),
+        FieldMetadata(multipart=MultipartFormMetadata(file=True)),
+    ] = None
+
 
 class SetUserProfileImageRequestTypedDict(TypedDict):
     user_id: str
     r"""The ID of the user to update the profile image for"""
     request_body: SetUserProfileImageRequestBodyTypedDict
-    
+
 
 class SetUserProfileImageRequest(BaseModel):
-    user_id: Annotated[str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))]
+    user_id: Annotated[
+        str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))
+    ]
     r"""The ID of the user to update the profile image for"""
-    request_body: Annotated[SetUserProfileImageRequestBody, FieldMetadata(request=RequestMetadata(media_type="multipart/form-data"))]
-    
+
+    request_body: Annotated[
+        SetUserProfileImageRequestBody,
+        FieldMetadata(request=RequestMetadata(media_type="multipart/form-data")),
+    ]

@@ -3,16 +3,16 @@
 from __future__ import annotations
 from clerk_backend_api.types import BaseModel
 from clerk_backend_api.utils import FieldMetadata, PathParamMetadata
-from typing import TypedDict
-from typing_extensions import Annotated
+from typing_extensions import Annotated, TypedDict
 
 
 class GetClientRequestTypedDict(TypedDict):
     client_id: str
     r"""Client ID."""
-    
+
 
 class GetClientRequest(BaseModel):
-    client_id: Annotated[str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))]
+    client_id: Annotated[
+        str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))
+    ]
     r"""Client ID."""
-    

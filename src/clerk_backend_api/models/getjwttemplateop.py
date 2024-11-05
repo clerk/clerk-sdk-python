@@ -3,16 +3,16 @@
 from __future__ import annotations
 from clerk_backend_api.types import BaseModel
 from clerk_backend_api.utils import FieldMetadata, PathParamMetadata
-from typing import TypedDict
-from typing_extensions import Annotated
+from typing_extensions import Annotated, TypedDict
 
 
 class GetJWTTemplateRequestTypedDict(TypedDict):
     template_id: str
     r"""JWT Template ID"""
-    
+
 
 class GetJWTTemplateRequest(BaseModel):
-    template_id: Annotated[str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))]
+    template_id: Annotated[
+        str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))
+    ]
     r"""JWT Template ID"""
-    

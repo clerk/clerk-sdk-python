@@ -1,5 +1,7 @@
 # Organizations
 
+A list of organizations
+
 
 ## Fields
 

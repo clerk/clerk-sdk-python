@@ -3,8 +3,7 @@
 from __future__ import annotations
 from clerk_backend_api.types import BaseModel
 from clerk_backend_api.utils import FieldMetadata, PathParamMetadata
-from typing import TypedDict
-from typing_extensions import Annotated
+from typing_extensions import Annotated, TypedDict
 
 
 class UserWeb3WalletDeleteRequestTypedDict(TypedDict):
@@ -12,11 +11,15 @@ class UserWeb3WalletDeleteRequestTypedDict(TypedDict):
     r"""The ID of the user that owns the web3 wallet"""
     web3_wallet_identification_id: str
     r"""The ID of the web3 wallet identity to be deleted"""
-    
+
 
 class UserWeb3WalletDeleteRequest(BaseModel):
-    user_id: Annotated[str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))]
+    user_id: Annotated[
+        str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))
+    ]
     r"""The ID of the user that owns the web3 wallet"""
-    web3_wallet_identification_id: Annotated[str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))]
+
+    web3_wallet_identification_id: Annotated[
+        str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))
+    ]
     r"""The ID of the web3 wallet identity to be deleted"""
-    
