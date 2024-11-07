@@ -39,6 +39,7 @@ class OauthVerificationStrategy(str, Enum):
     OAUTH_MICROSOFT = "oauth_microsoft"
     OAUTH_GITHUB = "oauth_github"
     EMAIL_LINK = "email_link"
+    SAML = "saml"
 
 
 class ErrorMetaTypedDict(TypedDict):
@@ -134,6 +135,7 @@ class AdminVerificationStatus(str, Enum):
 
 class VerificationStrategy(str, Enum):
     ADMIN = "admin"
+    SAML = "saml"
 
 
 class AdminTypedDict(TypedDict):
@@ -200,6 +202,7 @@ class Strategy(str, Enum):
     FROM_OAUTH_APPLE = "from_oauth_apple"
     FROM_OAUTH_MICROSOFT = "from_oauth_microsoft"
     FROM_OAUTH_GITHUB = "from_oauth_github"
+    SAML = "saml"
 
 
 class OtpTypedDict(TypedDict):
