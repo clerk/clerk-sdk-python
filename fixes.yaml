@@ -149,3 +149,21 @@ actions:
   - target: $["components"]["schemas"]["SignUp"]["properties"]["public_metadata"]
     update:
       additionalProperties: true
+  - target: $["components"]["schemas"]["OTP"]["properties"]["strategy"]
+    update:
+      x-speakeasy-unknown-values: allow
+  - target: $["components"]["schemas"]["Admin"]["properties"]["strategy"]
+    update:
+      x-speakeasy-unknown-values: allow
+  - target: $["components"]["schemas"]["Oauth"]["properties"]["status"]
+    update:
+      x-speakeasy-unknown-values: allow
+  - target: $["components"]["schemas"]["Oauth"]["properties"]["strategy"]
+    update:
+      x-speakeasy-unknown-values: allow
+  - target: $["components"]["schemas"]["IdentificationLink"]["properties"]["type"]
+    update:
+      x-speakeasy-unknown-values: allow
+  - target: $["components"]["schemas"]["EmailAddress"]["properties"]["object"]
+    update:
+      x-speakeasy-unknown-values: allow
