@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 from .identificationlink import IdentificationLink, IdentificationLinkTypedDict
+from clerk_backend_api import utils
 from clerk_backend_api.types import (
     BaseModel,
     Nullable,
@@ -9,19 +10,21 @@ from clerk_backend_api.types import (
     UNSET,
     UNSET_SENTINEL,
 )
+from clerk_backend_api.utils import validate_open_enum
 from enum import Enum
 from pydantic import model_serializer
+from pydantic.functional_validators import PlainValidator
 from typing import List, Optional, Union
-from typing_extensions import NotRequired, TypedDict
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
-class EmailAddressObject(str, Enum):
+class EmailAddressObject(str, Enum, metaclass=utils.OpenEnumMeta):
     r"""String representing the object's type. Objects of the same type share the same value."""
 
     EMAIL_ADDRESS = "email_address"
 
 
-class OauthVerificationStatus(str, Enum):
+class OauthVerificationStatus(str, Enum, metaclass=utils.OpenEnumMeta):
     UNVERIFIED = "unverified"
     VERIFIED = "verified"
     FAILED = "failed"
@@ -29,7 +32,7 @@ class OauthVerificationStatus(str, Enum):
     TRANSFERABLE = "transferable"
 
 
-class OauthVerificationStrategy(str, Enum):
+class OauthVerificationStrategy(str, Enum, metaclass=utils.OpenEnumMeta):
     OAUTH_GOOGLE = "oauth_google"
     OAUTH_MOCK = "oauth_mock"
     FROM_OAUTH_GOOGLE = "from_oauth_google"
@@ -85,9 +88,13 @@ class OauthTypedDict(TypedDict):
 
 
 class Oauth(BaseModel):
-    status: OauthVerificationStatus
+    status: Annotated[
+        OauthVerificationStatus, PlainValidator(validate_open_enum(False))
+    ]
 
-    strategy: OauthVerificationStrategy
+    strategy: Annotated[
+        OauthVerificationStrategy, PlainValidator(validate_open_enum(False))
+    ]
 
     expire_at: int
 
@@ -132,7 +139,7 @@ class AdminVerificationStatus(str, Enum):
     VERIFIED = "verified"
 
 
-class VerificationStrategy(str, Enum):
+class VerificationStrategy(str, Enum, metaclass=utils.OpenEnumMeta):
     ADMIN = "admin"
 
 
@@ -146,7 +153,7 @@ class AdminTypedDict(TypedDict):
 class Admin(BaseModel):
     status: AdminVerificationStatus
 
-    strategy: VerificationStrategy
+    strategy: Annotated[VerificationStrategy, PlainValidator(validate_open_enum(False))]
 
     attempts: OptionalNullable[int] = UNSET
 
@@ -190,7 +197,7 @@ class VerificationStatus(str, Enum):
     EXPIRED = "expired"
 
 
-class Strategy(str, Enum):
+class Strategy(str, Enum, metaclass=utils.OpenEnumMeta):
     PHONE_CODE = "phone_code"
     EMAIL_CODE = "email_code"
     EMAIL_LINK = "email_link"
@@ -212,7 +219,7 @@ class OtpTypedDict(TypedDict):
 class Otp(BaseModel):
     status: VerificationStatus
 
-    strategy: Strategy
+    strategy: Annotated[Strategy, PlainValidator(validate_open_enum(False))]
 
     attempts: int
 
@@ -250,7 +257,7 @@ class EmailAddressTypedDict(TypedDict):
 class EmailAddress(BaseModel):
     r"""Success"""
 
-    object: EmailAddressObject
+    object: Annotated[EmailAddressObject, PlainValidator(validate_open_enum(False))]
     r"""String representing the object's type. Objects of the same type share the same value.
 
     """
