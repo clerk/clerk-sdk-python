@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 from .identificationlink import IdentificationLink, IdentificationLinkTypedDict
+from clerk_backend_api import utils
 from clerk_backend_api.types import (
     BaseModel,
     Nullable,
@@ -9,10 +10,12 @@ from clerk_backend_api.types import (
     UNSET,
     UNSET_SENTINEL,
 )
+from clerk_backend_api.utils import validate_open_enum
 from enum import Enum
 from pydantic import model_serializer
+from pydantic.functional_validators import PlainValidator
 from typing import List, Optional, Union
-from typing_extensions import NotRequired, TypedDict
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class PhoneNumberObject(str, Enum):
@@ -25,7 +28,7 @@ class AdminVerificationPhoneNumberStatus(str, Enum):
     VERIFIED = "verified"
 
 
-class AdminVerificationStrategy(str, Enum):
+class AdminVerificationStrategy(str, Enum, metaclass=utils.OpenEnumMeta):
     ADMIN = "admin"
 
 
@@ -39,7 +42,9 @@ class VerificationAdminTypedDict(TypedDict):
 class VerificationAdmin(BaseModel):
     status: AdminVerificationPhoneNumberStatus
 
-    strategy: AdminVerificationStrategy
+    strategy: Annotated[
+        AdminVerificationStrategy, PlainValidator(validate_open_enum(False))
+    ]
 
     attempts: OptionalNullable[int] = UNSET
 
@@ -83,7 +88,7 @@ class OTPVerificationStatus(str, Enum):
     EXPIRED = "expired"
 
 
-class OTPVerificationStrategy(str, Enum):
+class OTPVerificationStrategy(str, Enum, metaclass=utils.OpenEnumMeta):
     PHONE_CODE = "phone_code"
     EMAIL_CODE = "email_code"
     EMAIL_LINK = "email_link"
@@ -105,7 +110,9 @@ class VerificationOTPTypedDict(TypedDict):
 class VerificationOTP(BaseModel):
     status: OTPVerificationStatus
 
-    strategy: OTPVerificationStrategy
+    strategy: Annotated[
+        OTPVerificationStrategy, PlainValidator(validate_open_enum(False))
+    ]
 
     attempts: int
 
