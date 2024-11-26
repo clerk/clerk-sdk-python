@@ -28,6 +28,7 @@ class TicketVerificationStatus(str, Enum):
 
 class TicketVerificationStrategy(str, Enum):
     TICKET = "ticket"
+    SAML = "saml"
 
 
 class TicketTypedDict(TypedDict):
