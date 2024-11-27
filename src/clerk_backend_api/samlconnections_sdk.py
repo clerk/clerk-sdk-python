@@ -3,8 +3,8 @@
 from .basesdk import BaseSDK
 from clerk_backend_api import models, utils
 from clerk_backend_api._hooks import HookContext
-from clerk_backend_api.types import BaseModel, OptionalNullable, UNSET
-from typing import Any, Optional, Union, cast
+from clerk_backend_api.types import OptionalNullable, UNSET
+from typing import Any, Optional, Union
 
 
 class SamlConnectionsSDK(BaseSDK):
@@ -189,12 +189,20 @@ class SamlConnectionsSDK(BaseSDK):
     def create(
         self,
         *,
-        request: Optional[
+        name: str,
+        domain: str,
+        provider: models.Provider,
+        idp_entity_id: OptionalNullable[str] = UNSET,
+        idp_sso_url: OptionalNullable[str] = UNSET,
+        idp_certificate: OptionalNullable[str] = UNSET,
+        idp_metadata_url: OptionalNullable[str] = UNSET,
+        idp_metadata: OptionalNullable[str] = UNSET,
+        attribute_mapping: OptionalNullable[
             Union[
-                models.CreateSAMLConnectionRequestBody,
-                models.CreateSAMLConnectionRequestBodyTypedDict,
+                models.CreateSAMLConnectionAttributeMapping,
+                models.CreateSAMLConnectionAttributeMappingTypedDict,
             ]
-        ] = None,
+        ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -203,7 +211,15 @@ class SamlConnectionsSDK(BaseSDK):
 
         Create a new SAML Connection.
 
-        :param request: The request object to send.
+        :param name: The name to use as a label for this SAML Connection
+        :param domain: The domain of your organization. Sign in flows using an email with this domain, will use this SAML Connection.
+        :param provider: The IdP provider of the connection.
+        :param idp_entity_id: The Entity ID as provided by the IdP
+        :param idp_sso_url: The Single-Sign On URL as provided by the IdP
+        :param idp_certificate: The X.509 certificate as provided by the IdP
+        :param idp_metadata_url: The URL which serves the IdP metadata. If present, it takes priority over the corresponding individual properties
+        :param idp_metadata: The XML content of the IdP metadata file. If present, it takes priority over the corresponding individual properties
+        :param attribute_mapping: Define the attribute name mapping between Identity Provider and Clerk's user properties
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -216,11 +232,20 @@ class SamlConnectionsSDK(BaseSDK):
         if server_url is not None:
             base_url = server_url
 
-        if not isinstance(request, BaseModel):
-            request = utils.unmarshal(
-                request, Optional[models.CreateSAMLConnectionRequestBody]
-            )
-        request = cast(Optional[models.CreateSAMLConnectionRequestBody], request)
+        request = models.CreateSAMLConnectionRequestBody(
+            name=name,
+            domain=domain,
+            provider=provider,
+            idp_entity_id=idp_entity_id,
+            idp_sso_url=idp_sso_url,
+            idp_certificate=idp_certificate,
+            idp_metadata_url=idp_metadata_url,
+            idp_metadata=idp_metadata,
+            attribute_mapping=utils.get_pydantic_model(
+                attribute_mapping,
+                OptionalNullable[models.CreateSAMLConnectionAttributeMapping],
+            ),
+        )
 
         req = self.build_request(
             method="POST",
@@ -228,18 +253,14 @@ class SamlConnectionsSDK(BaseSDK):
             base_url=base_url,
             url_variables=url_variables,
             request=request,
-            request_body_required=False,
+            request_body_required=True,
             request_has_path_params=False,
             request_has_query_params=True,
             user_agent_header="user-agent",
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request,
-                False,
-                True,
-                "json",
-                Optional[models.CreateSAMLConnectionRequestBody],
+                request, False, False, "json", models.CreateSAMLConnectionRequestBody
             ),
             timeout_ms=timeout_ms,
         )
@@ -289,12 +310,20 @@ class SamlConnectionsSDK(BaseSDK):
     async def create_async(
         self,
         *,
-        request: Optional[
+        name: str,
+        domain: str,
+        provider: models.Provider,
+        idp_entity_id: OptionalNullable[str] = UNSET,
+        idp_sso_url: OptionalNullable[str] = UNSET,
+        idp_certificate: OptionalNullable[str] = UNSET,
+        idp_metadata_url: OptionalNullable[str] = UNSET,
+        idp_metadata: OptionalNullable[str] = UNSET,
+        attribute_mapping: OptionalNullable[
             Union[
-                models.CreateSAMLConnectionRequestBody,
-                models.CreateSAMLConnectionRequestBodyTypedDict,
+                models.CreateSAMLConnectionAttributeMapping,
+                models.CreateSAMLConnectionAttributeMappingTypedDict,
             ]
-        ] = None,
+        ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -303,7 +332,15 @@ class SamlConnectionsSDK(BaseSDK):
 
         Create a new SAML Connection.
 
-        :param request: The request object to send.
+        :param name: The name to use as a label for this SAML Connection
+        :param domain: The domain of your organization. Sign in flows using an email with this domain, will use this SAML Connection.
+        :param provider: The IdP provider of the connection.
+        :param idp_entity_id: The Entity ID as provided by the IdP
+        :param idp_sso_url: The Single-Sign On URL as provided by the IdP
+        :param idp_certificate: The X.509 certificate as provided by the IdP
+        :param idp_metadata_url: The URL which serves the IdP metadata. If present, it takes priority over the corresponding individual properties
+        :param idp_metadata: The XML content of the IdP metadata file. If present, it takes priority over the corresponding individual properties
+        :param attribute_mapping: Define the attribute name mapping between Identity Provider and Clerk's user properties
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -316,11 +353,20 @@ class SamlConnectionsSDK(BaseSDK):
         if server_url is not None:
             base_url = server_url
 
-        if not isinstance(request, BaseModel):
-            request = utils.unmarshal(
-                request, Optional[models.CreateSAMLConnectionRequestBody]
-            )
-        request = cast(Optional[models.CreateSAMLConnectionRequestBody], request)
+        request = models.CreateSAMLConnectionRequestBody(
+            name=name,
+            domain=domain,
+            provider=provider,
+            idp_entity_id=idp_entity_id,
+            idp_sso_url=idp_sso_url,
+            idp_certificate=idp_certificate,
+            idp_metadata_url=idp_metadata_url,
+            idp_metadata=idp_metadata,
+            attribute_mapping=utils.get_pydantic_model(
+                attribute_mapping,
+                OptionalNullable[models.CreateSAMLConnectionAttributeMapping],
+            ),
+        )
 
         req = self.build_request_async(
             method="POST",
@@ -328,18 +374,14 @@ class SamlConnectionsSDK(BaseSDK):
             base_url=base_url,
             url_variables=url_variables,
             request=request,
-            request_body_required=False,
+            request_body_required=True,
             request_has_path_params=False,
             request_has_query_params=True,
             user_agent_header="user-agent",
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request,
-                False,
-                True,
-                "json",
-                Optional[models.CreateSAMLConnectionRequestBody],
+                request, False, False, "json", models.CreateSAMLConnectionRequestBody
             ),
             timeout_ms=timeout_ms,
         )

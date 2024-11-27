@@ -19,15 +19,14 @@ Get a list of all identifiers allowed to sign up to an instance
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    res = s.allowlist_blocklist.list_allowlist_identifiers()
 
-res = s.allowlist_blocklist.list_allowlist_identifiers()
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -57,27 +56,24 @@ Create an identifier allowed to sign up to an instance
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    res = s.allowlist_blocklist.create_allowlist_identifier(identifier="user@example.com", notify=True)
 
-res = s.allowlist_blocklist.create_allowlist_identifier(request={
-    "identifier": "user@example.com",
-    "notify": True,
-})
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
 ### Parameters
 
-| Parameter                                                                                           | Type                                                                                                | Required                                                                                            | Description                                                                                         |
-| --------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
-| `request`                                                                                           | [models.CreateAllowlistIdentifierRequestBody](../../models/createallowlistidentifierrequestbody.md) | :heavy_check_mark:                                                                                  | The request object to use for the request.                                                          |
-| `retries`                                                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                    | :heavy_minus_sign:                                                                                  | Configuration to override the default retry behavior of the client.                                 |
+| Parameter                                                                                                                                                                    | Type                                                                                                                                                                         | Required                                                                                                                                                                     | Description                                                                                                                                                                  | Example                                                                                                                                                                      |
+| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `identifier`                                                                                                                                                                 | *str*                                                                                                                                                                        | :heavy_check_mark:                                                                                                                                                           | The identifier to be added in the allow-list.<br/>This can be an email address, a phone number or a web3 wallet.                                                             | user@example.com                                                                                                                                                             |
+| `notify`                                                                                                                                                                     | *Optional[bool]*                                                                                                                                                             | :heavy_minus_sign:                                                                                                                                                           | This flag denotes whether the given identifier will receive an invitation to join the application.<br/>Note that this only works for email address and phone number identifiers. | true                                                                                                                                                                         |
+| `retries`                                                                                                                                                                    | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                                                             | :heavy_minus_sign:                                                                                                                                                           | Configuration to override the default retry behavior of the client.                                                                                                          |                                                                                                                                                                              |
 
 ### Response
 
@@ -99,26 +95,23 @@ Create an identifier that is blocked from accessing an instance
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    res = s.allowlist_blocklist.create_blocklist_identifier(identifier="example@example.com")
 
-res = s.allowlist_blocklist.create_blocklist_identifier(request={
-    "identifier": "example@example.com",
-})
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
 ### Parameters
 
-| Parameter                                                                                           | Type                                                                                                | Required                                                                                            | Description                                                                                         |
-| --------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
-| `request`                                                                                           | [models.CreateBlocklistIdentifierRequestBody](../../models/createblocklistidentifierrequestbody.md) | :heavy_check_mark:                                                                                  | The request object to use for the request.                                                          |
-| `retries`                                                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                    | :heavy_minus_sign:                                                                                  | Configuration to override the default retry behavior of the client.                                 |
+| Parameter                                                                                                    | Type                                                                                                         | Required                                                                                                     | Description                                                                                                  | Example                                                                                                      |
+| ------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------ |
+| `identifier`                                                                                                 | *str*                                                                                                        | :heavy_check_mark:                                                                                           | The identifier to be added in the block-list.<br/>This can be an email address, a phone number or a web3 wallet. | example@example.com                                                                                          |
+| `retries`                                                                                                    | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                             | :heavy_minus_sign:                                                                                           | Configuration to override the default retry behavior of the client.                                          |                                                                                                              |
 
 ### Response
 
@@ -140,15 +133,14 @@ Delete an identifier from the instance block-list
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    res = s.allowlist_blocklist.delete_blocklist_identifier(identifier_id="identifier123")
 
-res = s.allowlist_blocklist.delete_blocklist_identifier(identifier_id="identifier123")
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 

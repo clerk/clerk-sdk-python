@@ -88,15 +88,14 @@ Generally, the SDK will work well with most IDEs out of the box. However, when u
 # Synchronous Example
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    res = s.email_addresses.get(email_address_id="email_address_id_example")
 
-res = s.email_addresses.get(email_address_id="email_address_id_example")
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 ```
 
 </br>
@@ -108,13 +107,14 @@ import asyncio
 from clerk_backend_api import Clerk
 
 async def main():
-    s = Clerk(
+    async with Clerk(
         bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-    )
-    res = await s.email_addresses.get_async(email_address_id="email_address_id_example")
-    if res is not None:
-        # handle response
-        pass
+    ) as s:
+        res = await s.email_addresses.get_async(email_address_id="email_address_id_example")
+
+        if res is not None:
+            # handle response
+            pass
 
 asyncio.run(main())
 ```
@@ -365,19 +365,18 @@ Certain SDK methods accept file objects as part of a request body or multi-part 
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    res = s.users.set_profile_image(user_id="usr_test123", file={
+        "file_name": "example.file",
+        "content": open("example.file", "rb"),
+        "content_type": "<value>",
+    })
 
-res = s.users.set_profile_image(user_id="usr_test123", file={
-    "file_name": "example.file",
-    "content": open("example.file", "rb"),
-    "content_type": "<value>",
-})
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 <!-- End File uploads [file-upload] -->
@@ -392,12 +391,11 @@ To change the default retry strategy for a single API call, simply provide a `Re
 from clerk.utils import BackoffStrategy, RetryConfig
 from clerk_backend_api import Clerk
 
-s = Clerk()
+with Clerk() as s:
+    s.miscellaneous.get_interstitial(frontend_api="frontend-api_1a2b3c4d", publishable_key="pub_1a2b3c4d",
+        RetryConfig("backoff", BackoffStrategy(1, 50, 1.1, 100), False))
 
-s.miscellaneous.get_interstitial(frontend_api="frontend-api_1a2b3c4d", publishable_key="pub_1a2b3c4d",
-    RetryConfig("backoff", BackoffStrategy(1, 50, 1.1, 100), False))
-
-# Use the SDK ...
+    # Use the SDK ...
 
 ```
 
@@ -406,13 +404,12 @@ If you'd like to override the default retry strategy for all operations that sup
 from clerk.utils import BackoffStrategy, RetryConfig
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     retry_config=RetryConfig("backoff", BackoffStrategy(1, 50, 1.1, 100), False),
-)
+) as s:
+    s.miscellaneous.get_interstitial(frontend_api="frontend-api_1a2b3c4d", publishable_key="pub_1a2b3c4d")
 
-s.miscellaneous.get_interstitial(frontend_api="frontend-api_1a2b3c4d", publishable_key="pub_1a2b3c4d")
-
-# Use the SDK ...
+    # Use the SDK ...
 
 ```
 <!-- End Retries [retries] -->
@@ -443,26 +440,25 @@ When custom error responses are specified for an operation, the SDK may also rai
 ```python
 from clerk_backend_api import Clerk, models
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    res = None
+    try:
+        res = s.clients.verify(request={
+            "token": "jwt_token_example",
+        })
 
-res = None
-try:
-    res = s.clients.verify(request={
-        "token": "jwt_token_example",
-    })
+        if res is not None:
+            # handle response
+            pass
 
-    if res is not None:
-        # handle response
-        pass
-
-except models.ClerkErrors as e:
-    # handle e.data: models.ClerkErrorsData
-    raise(e)
-except models.SDKError as e:
-    # handle exception
-    raise(e)
+    except models.ClerkErrors as e:
+        # handle e.data: models.ClerkErrorsData
+        raise(e)
+    except models.SDKError as e:
+        # handle exception
+        raise(e)
 ```
 <!-- End Error Handling [errors] -->
 
@@ -475,13 +471,12 @@ The default server can also be overridden globally by passing a URL to the `serv
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     server_url="https://api.clerk.com/v1",
-)
+) as s:
+    s.miscellaneous.get_interstitial(frontend_api="frontend-api_1a2b3c4d", publishable_key="pub_1a2b3c4d")
 
-s.miscellaneous.get_interstitial(frontend_api="frontend-api_1a2b3c4d", publishable_key="pub_1a2b3c4d")
-
-# Use the SDK ...
+    # Use the SDK ...
 
 ```
 <!-- End Server Selection [server] -->
@@ -582,13 +577,12 @@ To authenticate with the API the `bearer_auth` parameter must be set when initia
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    s.miscellaneous.get_interstitial(frontend_api="frontend-api_1a2b3c4d", publishable_key="pub_1a2b3c4d")
 
-s.miscellaneous.get_interstitial(frontend_api="frontend-api_1a2b3c4d", publishable_key="pub_1a2b3c4d")
-
-# Use the SDK ...
+    # Use the SDK ...
 
 ```
 <!-- End Authentication [security] -->

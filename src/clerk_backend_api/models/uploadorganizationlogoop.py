@@ -58,7 +58,7 @@ class UploadOrganizationLogoRequestBody(BaseModel):
 class UploadOrganizationLogoRequestTypedDict(TypedDict):
     organization_id: str
     r"""The ID of the organization for which to upload a logo"""
-    request_body: NotRequired[UploadOrganizationLogoRequestBodyTypedDict]
+    request_body: UploadOrganizationLogoRequestBodyTypedDict
 
 
 class UploadOrganizationLogoRequest(BaseModel):
@@ -68,6 +68,6 @@ class UploadOrganizationLogoRequest(BaseModel):
     r"""The ID of the organization for which to upload a logo"""
 
     request_body: Annotated[
-        Optional[UploadOrganizationLogoRequestBody],
+        UploadOrganizationLogoRequestBody,
         FieldMetadata(request=RequestMetadata(media_type="multipart/form-data")),
-    ] = None
+    ]

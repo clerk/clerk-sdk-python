@@ -13,3 +13,5 @@ Each version is identified by its release date, e.g. `2021-02-05`. For more info
 
 Please see https://clerk.com/docs for more information.
 <https://clerk.com/docs>
+
+### Available Operations

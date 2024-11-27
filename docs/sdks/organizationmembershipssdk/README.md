@@ -21,15 +21,14 @@ Adds a user as a member to the given organization.
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    res = s.organization_memberships.create(organization_id="org_123", user_id="user_456", role="admin")
 
-res = s.organization_memberships.create(organization_id="org_123", user_id="user_456", role="admin")
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -62,15 +61,14 @@ Retrieves all user memberships for the given organization
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    res = s.organization_memberships.list(organization_id="org_789", limit=20, offset=10, order_by="+created_at")
 
-res = s.organization_memberships.list(organization_id="org_789", limit=20, offset=10, order_by="+created_at")
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -104,15 +102,14 @@ Updates the properties of an existing organization membership
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    res = s.organization_memberships.update(organization_id="org_12345", user_id="user_67890", role="admin")
 
-res = s.organization_memberships.update(organization_id="org_12345", user_id="user_67890", role="admin")
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -145,15 +142,14 @@ Removes the given membership from the organization
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    res = s.organization_memberships.delete(organization_id="org_12345", user_id="user_67890")
 
-res = s.organization_memberships.delete(organization_id="org_12345", user_id="user_67890")
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -187,19 +183,18 @@ You can remove metadata keys at any level by setting their value to `null`.
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    res = s.organization_memberships.update_metadata(organization_id="org_123456", user_id="user_654321", public_metadata={
 
-res = s.organization_memberships.update_metadata(organization_id="org_123456", user_id="user_654321", public_metadata={
+    }, private_metadata={
 
-}, private_metadata={
+    })
 
-})
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -233,15 +228,14 @@ Retrieves all organization user memberships for the given instance.
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    res = s.organization_memberships.get_all(limit=20, offset=10, order_by="<value>")
 
-res = s.organization_memberships.get_all(limit=20, offset=10, order_by="<value>")
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 

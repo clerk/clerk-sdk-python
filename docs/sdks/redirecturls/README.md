@@ -16,15 +16,14 @@ Lists all whitelisted redirect_urls for the instance
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    res = s.redirect_ur_ls.list()
 
-res = s.redirect_ur_ls.list()
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 

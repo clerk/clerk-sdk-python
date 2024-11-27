@@ -21,7 +21,7 @@ class VerifyTOTPRequestBody(BaseModel):
 class VerifyTOTPRequestTypedDict(TypedDict):
     user_id: str
     r"""The ID of the user for whom to verify the TOTP"""
-    request_body: NotRequired[VerifyTOTPRequestBodyTypedDict]
+    request_body: VerifyTOTPRequestBodyTypedDict
 
 
 class VerifyTOTPRequest(BaseModel):
@@ -31,9 +31,9 @@ class VerifyTOTPRequest(BaseModel):
     r"""The ID of the user for whom to verify the TOTP"""
 
     request_body: Annotated[
-        Optional[VerifyTOTPRequestBody],
+        VerifyTOTPRequestBody,
         FieldMetadata(request=RequestMetadata(media_type="application/json")),
-    ] = None
+    ]
 
 
 class CodeType(str, Enum):

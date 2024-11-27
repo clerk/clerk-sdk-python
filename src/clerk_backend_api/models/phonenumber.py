@@ -15,7 +15,7 @@ from enum import Enum
 from pydantic import model_serializer
 from pydantic.functional_validators import PlainValidator
 from typing import List, Optional, Union
-from typing_extensions import Annotated, NotRequired, TypedDict
+from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 
 class PhoneNumberObject(str, Enum):
@@ -119,12 +119,15 @@ class VerificationOTP(BaseModel):
     expire_at: int
 
 
-PhoneNumberVerificationTypedDict = Union[
-    VerificationOTPTypedDict, VerificationAdminTypedDict
-]
+PhoneNumberVerificationTypedDict = TypeAliasType(
+    "PhoneNumberVerificationTypedDict",
+    Union[VerificationOTPTypedDict, VerificationAdminTypedDict],
+)
 
 
-PhoneNumberVerification = Union[VerificationOTP, VerificationAdmin]
+PhoneNumberVerification = TypeAliasType(
+    "PhoneNumberVerification", Union[VerificationOTP, VerificationAdmin]
+)
 
 
 class PhoneNumberTypedDict(TypedDict):

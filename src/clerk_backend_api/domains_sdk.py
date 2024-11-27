@@ -3,8 +3,8 @@
 from .basesdk import BaseSDK
 from clerk_backend_api import models, utils
 from clerk_backend_api._hooks import HookContext
-from clerk_backend_api.types import BaseModel, OptionalNullable, UNSET
-from typing import Any, Optional, Union, cast
+from clerk_backend_api.types import OptionalNullable, UNSET
+from typing import Any, Optional
 
 
 class DomainsSDK(BaseSDK):
@@ -161,9 +161,9 @@ class DomainsSDK(BaseSDK):
     def add(
         self,
         *,
-        request: Optional[
-            Union[models.AddDomainRequestBody, models.AddDomainRequestBodyTypedDict]
-        ] = None,
+        name: str,
+        is_satellite: bool,
+        proxy_url: Optional[str] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -176,7 +176,9 @@ class DomainsSDK(BaseSDK):
         At the moment, instances can have only one primary domain, so the `is_satellite` parameter must be set to `true`.
         If you're planning to configure the new satellite domain to run behind a proxy, pass the `proxy_url` parameter accordingly.
 
-        :param request: The request object to send.
+        :param name: The new domain name. Can contain the port for development instances.
+        :param is_satellite: Marks the new domain as satellite. Only `true` is accepted at the moment.
+        :param proxy_url: The full URL of the proxy which will forward requests to the Clerk Frontend API for this domain. Applicable only to production instances.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -189,9 +191,11 @@ class DomainsSDK(BaseSDK):
         if server_url is not None:
             base_url = server_url
 
-        if not isinstance(request, BaseModel):
-            request = utils.unmarshal(request, Optional[models.AddDomainRequestBody])
-        request = cast(Optional[models.AddDomainRequestBody], request)
+        request = models.AddDomainRequestBody(
+            name=name,
+            is_satellite=is_satellite,
+            proxy_url=proxy_url,
+        )
 
         req = self.build_request(
             method="POST",
@@ -199,14 +203,14 @@ class DomainsSDK(BaseSDK):
             base_url=base_url,
             url_variables=url_variables,
             request=request,
-            request_body_required=False,
+            request_body_required=True,
             request_has_path_params=False,
             request_has_query_params=True,
             user_agent_header="user-agent",
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request, False, True, "json", Optional[models.AddDomainRequestBody]
+                request, False, False, "json", models.AddDomainRequestBody
             ),
             timeout_ms=timeout_ms,
         )
@@ -254,9 +258,9 @@ class DomainsSDK(BaseSDK):
     async def add_async(
         self,
         *,
-        request: Optional[
-            Union[models.AddDomainRequestBody, models.AddDomainRequestBodyTypedDict]
-        ] = None,
+        name: str,
+        is_satellite: bool,
+        proxy_url: Optional[str] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -269,7 +273,9 @@ class DomainsSDK(BaseSDK):
         At the moment, instances can have only one primary domain, so the `is_satellite` parameter must be set to `true`.
         If you're planning to configure the new satellite domain to run behind a proxy, pass the `proxy_url` parameter accordingly.
 
-        :param request: The request object to send.
+        :param name: The new domain name. Can contain the port for development instances.
+        :param is_satellite: Marks the new domain as satellite. Only `true` is accepted at the moment.
+        :param proxy_url: The full URL of the proxy which will forward requests to the Clerk Frontend API for this domain. Applicable only to production instances.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -282,9 +288,11 @@ class DomainsSDK(BaseSDK):
         if server_url is not None:
             base_url = server_url
 
-        if not isinstance(request, BaseModel):
-            request = utils.unmarshal(request, Optional[models.AddDomainRequestBody])
-        request = cast(Optional[models.AddDomainRequestBody], request)
+        request = models.AddDomainRequestBody(
+            name=name,
+            is_satellite=is_satellite,
+            proxy_url=proxy_url,
+        )
 
         req = self.build_request_async(
             method="POST",
@@ -292,14 +300,14 @@ class DomainsSDK(BaseSDK):
             base_url=base_url,
             url_variables=url_variables,
             request=request,
-            request_body_required=False,
+            request_body_required=True,
             request_has_path_params=False,
             request_has_query_params=True,
             user_agent_header="user-agent",
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request, False, True, "json", Optional[models.AddDomainRequestBody]
+                request, False, False, "json", models.AddDomainRequestBody
             ),
             timeout_ms=timeout_ms,
         )

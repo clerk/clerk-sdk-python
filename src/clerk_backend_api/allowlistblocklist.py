@@ -3,8 +3,8 @@
 from .basesdk import BaseSDK
 from clerk_backend_api import models, utils
 from clerk_backend_api._hooks import HookContext
-from clerk_backend_api.types import BaseModel, OptionalNullable, UNSET
-from typing import Any, List, Optional, Union, cast
+from clerk_backend_api.types import OptionalNullable, UNSET
+from typing import Any, List, Optional
 
 
 class AllowlistBlocklist(BaseSDK):
@@ -169,12 +169,8 @@ class AllowlistBlocklist(BaseSDK):
     def create_allowlist_identifier(
         self,
         *,
-        request: Optional[
-            Union[
-                models.CreateAllowlistIdentifierRequestBody,
-                models.CreateAllowlistIdentifierRequestBodyTypedDict,
-            ]
-        ] = None,
+        identifier: str,
+        notify: Optional[bool] = False,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -183,7 +179,8 @@ class AllowlistBlocklist(BaseSDK):
 
         Create an identifier allowed to sign up to an instance
 
-        :param request: The request object to send.
+        :param identifier: The identifier to be added in the allow-list. This can be an email address, a phone number or a web3 wallet.
+        :param notify: This flag denotes whether the given identifier will receive an invitation to join the application. Note that this only works for email address and phone number identifiers.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -196,11 +193,10 @@ class AllowlistBlocklist(BaseSDK):
         if server_url is not None:
             base_url = server_url
 
-        if not isinstance(request, BaseModel):
-            request = utils.unmarshal(
-                request, Optional[models.CreateAllowlistIdentifierRequestBody]
-            )
-        request = cast(Optional[models.CreateAllowlistIdentifierRequestBody], request)
+        request = models.CreateAllowlistIdentifierRequestBody(
+            identifier=identifier,
+            notify=notify,
+        )
 
         req = self.build_request(
             method="POST",
@@ -208,7 +204,7 @@ class AllowlistBlocklist(BaseSDK):
             base_url=base_url,
             url_variables=url_variables,
             request=request,
-            request_body_required=False,
+            request_body_required=True,
             request_has_path_params=False,
             request_has_query_params=True,
             user_agent_header="user-agent",
@@ -217,9 +213,9 @@ class AllowlistBlocklist(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request,
                 False,
-                True,
+                False,
                 "json",
-                Optional[models.CreateAllowlistIdentifierRequestBody],
+                models.CreateAllowlistIdentifierRequestBody,
             ),
             timeout_ms=timeout_ms,
         )
@@ -269,12 +265,8 @@ class AllowlistBlocklist(BaseSDK):
     async def create_allowlist_identifier_async(
         self,
         *,
-        request: Optional[
-            Union[
-                models.CreateAllowlistIdentifierRequestBody,
-                models.CreateAllowlistIdentifierRequestBodyTypedDict,
-            ]
-        ] = None,
+        identifier: str,
+        notify: Optional[bool] = False,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -283,7 +275,8 @@ class AllowlistBlocklist(BaseSDK):
 
         Create an identifier allowed to sign up to an instance
 
-        :param request: The request object to send.
+        :param identifier: The identifier to be added in the allow-list. This can be an email address, a phone number or a web3 wallet.
+        :param notify: This flag denotes whether the given identifier will receive an invitation to join the application. Note that this only works for email address and phone number identifiers.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -296,11 +289,10 @@ class AllowlistBlocklist(BaseSDK):
         if server_url is not None:
             base_url = server_url
 
-        if not isinstance(request, BaseModel):
-            request = utils.unmarshal(
-                request, Optional[models.CreateAllowlistIdentifierRequestBody]
-            )
-        request = cast(Optional[models.CreateAllowlistIdentifierRequestBody], request)
+        request = models.CreateAllowlistIdentifierRequestBody(
+            identifier=identifier,
+            notify=notify,
+        )
 
         req = self.build_request_async(
             method="POST",
@@ -308,7 +300,7 @@ class AllowlistBlocklist(BaseSDK):
             base_url=base_url,
             url_variables=url_variables,
             request=request,
-            request_body_required=False,
+            request_body_required=True,
             request_has_path_params=False,
             request_has_query_params=True,
             user_agent_header="user-agent",
@@ -317,9 +309,9 @@ class AllowlistBlocklist(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request,
                 False,
-                True,
+                False,
                 "json",
-                Optional[models.CreateAllowlistIdentifierRequestBody],
+                models.CreateAllowlistIdentifierRequestBody,
             ),
             timeout_ms=timeout_ms,
         )
@@ -369,12 +361,7 @@ class AllowlistBlocklist(BaseSDK):
     def create_blocklist_identifier(
         self,
         *,
-        request: Optional[
-            Union[
-                models.CreateBlocklistIdentifierRequestBody,
-                models.CreateBlocklistIdentifierRequestBodyTypedDict,
-            ]
-        ] = None,
+        identifier: str,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -383,7 +370,7 @@ class AllowlistBlocklist(BaseSDK):
 
         Create an identifier that is blocked from accessing an instance
 
-        :param request: The request object to send.
+        :param identifier: The identifier to be added in the block-list. This can be an email address, a phone number or a web3 wallet.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -396,11 +383,9 @@ class AllowlistBlocklist(BaseSDK):
         if server_url is not None:
             base_url = server_url
 
-        if not isinstance(request, BaseModel):
-            request = utils.unmarshal(
-                request, Optional[models.CreateBlocklistIdentifierRequestBody]
-            )
-        request = cast(Optional[models.CreateBlocklistIdentifierRequestBody], request)
+        request = models.CreateBlocklistIdentifierRequestBody(
+            identifier=identifier,
+        )
 
         req = self.build_request(
             method="POST",
@@ -408,7 +393,7 @@ class AllowlistBlocklist(BaseSDK):
             base_url=base_url,
             url_variables=url_variables,
             request=request,
-            request_body_required=False,
+            request_body_required=True,
             request_has_path_params=False,
             request_has_query_params=True,
             user_agent_header="user-agent",
@@ -417,9 +402,9 @@ class AllowlistBlocklist(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request,
                 False,
-                True,
+                False,
                 "json",
-                Optional[models.CreateBlocklistIdentifierRequestBody],
+                models.CreateBlocklistIdentifierRequestBody,
             ),
             timeout_ms=timeout_ms,
         )
@@ -469,12 +454,7 @@ class AllowlistBlocklist(BaseSDK):
     async def create_blocklist_identifier_async(
         self,
         *,
-        request: Optional[
-            Union[
-                models.CreateBlocklistIdentifierRequestBody,
-                models.CreateBlocklistIdentifierRequestBodyTypedDict,
-            ]
-        ] = None,
+        identifier: str,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -483,7 +463,7 @@ class AllowlistBlocklist(BaseSDK):
 
         Create an identifier that is blocked from accessing an instance
 
-        :param request: The request object to send.
+        :param identifier: The identifier to be added in the block-list. This can be an email address, a phone number or a web3 wallet.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -496,11 +476,9 @@ class AllowlistBlocklist(BaseSDK):
         if server_url is not None:
             base_url = server_url
 
-        if not isinstance(request, BaseModel):
-            request = utils.unmarshal(
-                request, Optional[models.CreateBlocklistIdentifierRequestBody]
-            )
-        request = cast(Optional[models.CreateBlocklistIdentifierRequestBody], request)
+        request = models.CreateBlocklistIdentifierRequestBody(
+            identifier=identifier,
+        )
 
         req = self.build_request_async(
             method="POST",
@@ -508,7 +486,7 @@ class AllowlistBlocklist(BaseSDK):
             base_url=base_url,
             url_variables=url_variables,
             request=request,
-            request_body_required=False,
+            request_body_required=True,
             request_has_path_params=False,
             request_has_query_params=True,
             user_agent_header="user-agent",
@@ -517,9 +495,9 @@ class AllowlistBlocklist(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request,
                 False,
-                True,
+                False,
                 "json",
-                Optional[models.CreateBlocklistIdentifierRequestBody],
+                models.CreateBlocklistIdentifierRequestBody,
             ),
             timeout_ms=timeout_ms,
         )

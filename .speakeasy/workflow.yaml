@@ -20,5 +20,5 @@ targets:
                 token: $pypi_token
         codeSamples:
             registry:
-                location: registry.speakeasyapi.dev/clerk/clerk/clerk-openapi-code-samples
+                location: registry.speakeasyapi.dev/clerk/clerk/clerk-openapi-python-code-samples
             blocking: false

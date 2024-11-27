@@ -18,15 +18,14 @@ Creates a new organization domain. By default the domain is verified, but can be
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    res = s.organization_domains.create(organization_id="<id>", name="<value>", enrollment_mode="<value>", verified=True)
 
-res = s.organization_domains.create(organization_id="<id>", name="<value>", enrollment_mode="<value>", verified=True)
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -60,15 +59,14 @@ Get a list of all domains of an organization.
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    res = s.organization_domains.list(organization_id="<id>", limit=20, offset=10, verified="<value>", enrollment_mode="<value>")
 
-res = s.organization_domains.list(organization_id="<id>", limit=20, offset=10, verified="<value>", enrollment_mode="<value>")
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -103,15 +101,14 @@ Removes the given domain from the organization.
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    res = s.organization_domains.delete(organization_id="<id>", domain_id="<id>")
 
-res = s.organization_domains.delete(organization_id="<id>", domain_id="<id>")
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 

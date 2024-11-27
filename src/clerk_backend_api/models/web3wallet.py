@@ -14,7 +14,7 @@ from enum import Enum
 from pydantic import model_serializer
 from pydantic.functional_validators import PlainValidator
 from typing import Optional, Union
-from typing_extensions import Annotated, NotRequired, TypedDict
+from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 
 class Web3WalletObject(str, Enum):
@@ -145,12 +145,15 @@ class Web3Signature(BaseModel):
         return m
 
 
-Web3WalletVerificationTypedDict = Union[
-    Web3WalletVerificationAdminTypedDict, Web3SignatureTypedDict
-]
+Web3WalletVerificationTypedDict = TypeAliasType(
+    "Web3WalletVerificationTypedDict",
+    Union[Web3WalletVerificationAdminTypedDict, Web3SignatureTypedDict],
+)
 
 
-Web3WalletVerification = Union[Web3WalletVerificationAdmin, Web3Signature]
+Web3WalletVerification = TypeAliasType(
+    "Web3WalletVerification", Union[Web3WalletVerificationAdmin, Web3Signature]
+)
 
 
 class Web3WalletTypedDict(TypedDict):

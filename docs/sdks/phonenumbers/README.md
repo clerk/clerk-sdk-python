@@ -19,21 +19,20 @@ Create a new phone number
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    res = s.phone_numbers.create(request={
+        "user_id": "usr_12345",
+        "phone_number": "+11234567890",
+        "verified": True,
+        "primary": False,
+        "reserved_for_second_factor": False,
+    })
 
-res = s.phone_numbers.create(request={
-    "user_id": "usr_12345",
-    "phone_number": "+11234567890",
-    "verified": True,
-    "primary": False,
-    "reserved_for_second_factor": False,
-})
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -64,15 +63,14 @@ Returns the details of a phone number
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    res = s.phone_numbers.get(phone_number_id="phone_12345")
 
-res = s.phone_numbers.get(phone_number_id="phone_12345")
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -103,15 +101,14 @@ Delete the phone number with the given ID
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    res = s.phone_numbers.delete(phone_number_id="phone_12345")
 
-res = s.phone_numbers.delete(phone_number_id="phone_12345")
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -142,15 +139,14 @@ Updates a phone number
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    res = s.phone_numbers.update(phone_number_id="phone_12345", verified=False, primary=True, reserved_for_second_factor=True)
 
-res = s.phone_numbers.update(phone_number_id="phone_12345", verified=False, primary=True, reserved_for_second_factor=True)
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 

@@ -11,12 +11,10 @@ class PhoneNumbers(BaseSDK):
     def create(
         self,
         *,
-        request: Optional[
-            Union[
-                models.CreatePhoneNumberRequestBody,
-                models.CreatePhoneNumberRequestBodyTypedDict,
-            ]
-        ] = None,
+        request: Union[
+            models.CreatePhoneNumberRequestBody,
+            models.CreatePhoneNumberRequestBodyTypedDict,
+        ] = models.CreatePhoneNumberRequestBody(),
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -39,10 +37,8 @@ class PhoneNumbers(BaseSDK):
             base_url = server_url
 
         if not isinstance(request, BaseModel):
-            request = utils.unmarshal(
-                request, Optional[models.CreatePhoneNumberRequestBody]
-            )
-        request = cast(Optional[models.CreatePhoneNumberRequestBody], request)
+            request = utils.unmarshal(request, models.CreatePhoneNumberRequestBody)
+        request = cast(models.CreatePhoneNumberRequestBody, request)
 
         req = self.build_request(
             method="POST",
@@ -50,7 +46,7 @@ class PhoneNumbers(BaseSDK):
             base_url=base_url,
             url_variables=url_variables,
             request=request,
-            request_body_required=False,
+            request_body_required=True,
             request_has_path_params=False,
             request_has_query_params=True,
             user_agent_header="user-agent",
@@ -111,12 +107,10 @@ class PhoneNumbers(BaseSDK):
     async def create_async(
         self,
         *,
-        request: Optional[
-            Union[
-                models.CreatePhoneNumberRequestBody,
-                models.CreatePhoneNumberRequestBodyTypedDict,
-            ]
-        ] = None,
+        request: Union[
+            models.CreatePhoneNumberRequestBody,
+            models.CreatePhoneNumberRequestBodyTypedDict,
+        ] = models.CreatePhoneNumberRequestBody(),
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -139,10 +133,8 @@ class PhoneNumbers(BaseSDK):
             base_url = server_url
 
         if not isinstance(request, BaseModel):
-            request = utils.unmarshal(
-                request, Optional[models.CreatePhoneNumberRequestBody]
-            )
-        request = cast(Optional[models.CreatePhoneNumberRequestBody], request)
+            request = utils.unmarshal(request, models.CreatePhoneNumberRequestBody)
+        request = cast(models.CreatePhoneNumberRequestBody, request)
 
         req = self.build_request_async(
             method="POST",
@@ -150,7 +142,7 @@ class PhoneNumbers(BaseSDK):
             base_url=base_url,
             url_variables=url_variables,
             request=request,
-            request_body_required=False,
+            request_body_required=True,
             request_has_path_params=False,
             request_has_query_params=True,
             user_agent_header="user-agent",
@@ -598,7 +590,7 @@ class PhoneNumbers(BaseSDK):
             base_url=base_url,
             url_variables=url_variables,
             request=request,
-            request_body_required=False,
+            request_body_required=True,
             request_has_path_params=True,
             request_has_query_params=True,
             user_agent_header="user-agent",
@@ -607,9 +599,9 @@ class PhoneNumbers(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request.request_body,
                 False,
-                True,
+                False,
                 "json",
-                Optional[models.UpdatePhoneNumberRequestBody],
+                models.UpdatePhoneNumberRequestBody,
             ),
             timeout_ms=timeout_ms,
         )
@@ -702,7 +694,7 @@ class PhoneNumbers(BaseSDK):
             base_url=base_url,
             url_variables=url_variables,
             request=request,
-            request_body_required=False,
+            request_body_required=True,
             request_has_path_params=True,
             request_has_query_params=True,
             user_agent_header="user-agent",
@@ -711,9 +703,9 @@ class PhoneNumbers(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request.request_body,
                 False,
-                True,
+                False,
                 "json",
-                Optional[models.UpdatePhoneNumberRequestBody],
+                models.UpdatePhoneNumberRequestBody,
             ),
             timeout_ms=timeout_ms,
         )

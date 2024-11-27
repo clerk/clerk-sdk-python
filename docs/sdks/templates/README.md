@@ -18,15 +18,14 @@ Returns a preview of a template for a given template_type, slug and body
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    res = s.templates.preview(template_type="email", slug="welcome-email", subject="Welcome to our service!", body="Hi, thank you for joining our service.", from_email_name="hello", reply_to_email_name="support")
 
-res = s.templates.preview(template_type="email", slug="welcome-email", subject="Welcome to our service!", body="Hi, thank you for joining our service.", from_email_name="hello", reply_to_email_name="support")
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 

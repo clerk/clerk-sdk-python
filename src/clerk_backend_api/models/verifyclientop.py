@@ -7,14 +7,10 @@ from typing_extensions import NotRequired, TypedDict
 
 
 class VerifyClientRequestBodyTypedDict(TypedDict):
-    r"""Parameters."""
-
     token: NotRequired[str]
     r"""A JWT that represents the active client."""
 
 
 class VerifyClientRequestBody(BaseModel):
-    r"""Parameters."""
-
     token: Optional[str] = None
     r"""A JWT that represents the active client."""

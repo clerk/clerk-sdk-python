@@ -29,15 +29,14 @@ moving forward at least one of `client_id` or `user_id` parameters should be pro
 import clerk_backend_api
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    res = s.sessions.list(client_id="client_123", user_id="user_456", status=clerk_backend_api.QueryParamStatus.ACTIVE, limit=20, offset=10)
 
-res = s.sessions.list(client_id="client_123", user_id="user_456", status=clerk_backend_api.QueryParamStatus.ACTIVE, limit=20, offset=10)
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -72,15 +71,14 @@ Retrieve the details of a session
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    res = s.sessions.get(session_id="sess_1234567890abcdef")
 
-res = s.sessions.get(session_id="sess_1234567890abcdef")
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -112,15 +110,14 @@ In multi-session mode, a revoked session will still be returned along with its c
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    res = s.sessions.revoke(session_id="sess_1234567890abcdef")
 
-res = s.sessions.revoke(session_id="sess_1234567890abcdef")
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -156,15 +153,14 @@ WARNING: This endpoint is deprecated and will be removed in future versions. We 
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    res = s.sessions.verify(session_id="sess_w8q4g9s60j28fghv00f3", token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzZXNzaW9uX2lkIjoic2Vzc193OHF4ZzZzNm9qMjhmZ2h2MDBmMyIsImlhdCI6MTU4MjY0OTg2Mn0.J4KP2L6bEZ6YccHFW4E2vKbOLw_mmO0gF_GNRw-wtLM")
 
-res = s.sessions.verify(session_id="sess_w8q4g9s60j28fghv00f3", token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzZXNzaW9uX2lkIjoic2Vzc193OHF4ZzZzNm9qMjhmZ2h2MDBmMyIsImlhdCI6MTU4MjY0OTg2Mn0.J4KP2L6bEZ6YccHFW4E2vKbOLw_mmO0gF_GNRw-wtLM")
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -196,15 +192,14 @@ Creates a JSON Web Token(JWT) based on a session and a JWT Template name defined
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    res = s.sessions.create_token_from_template(session_id="ses_123abcd4567", template_name="custom_hasura")
 
-res = s.sessions.create_token_from_template(session_id="ses_123abcd4567", template_name="custom_hasura")
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 

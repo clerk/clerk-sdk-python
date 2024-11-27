@@ -16,15 +16,14 @@ Update the sign-up with the given ID
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    res = s.sign_ups.update(id="signup_1234567890abcdef", external_id="ext_id_7890abcdef123456")
 
-res = s.sign_ups.update(id="signup_1234567890abcdef", external_id="ext_id_7890abcdef123456")
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 

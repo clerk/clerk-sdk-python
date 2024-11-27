@@ -20,15 +20,14 @@ List all templates
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    res = s.jwt_templates.list()
 
-res = s.jwt_templates.list()
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -57,23 +56,22 @@ Create a new JWT template
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    res = s.jwt_templates.create(request={
+        "name": "Example Template",
+        "claims": {},
+        "lifetime": 3600,
+        "allowed_clock_skew": 5,
+        "custom_signing_key": False,
+        "signing_algorithm": "RS256",
+        "signing_key": "PRIVATE_KEY_PLACEHOLDER",
+    })
 
-res = s.jwt_templates.create(request={
-    "name": "Example Template",
-    "claims": {},
-    "lifetime": 3600,
-    "allowed_clock_skew": 5,
-    "custom_signing_key": False,
-    "signing_algorithm": "RS256",
-    "signing_key": "PRIVATE_KEY_PLACEHOLDER",
-})
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -104,15 +102,14 @@ Retrieve the details of a given JWT template
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    res = s.jwt_templates.get(template_id="template_123")
 
-res = s.jwt_templates.get(template_id="template_123")
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -143,15 +140,14 @@ Updates an existing JWT template
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    res = s.jwt_templates.update(template_id="<id>", name="<value>", claims={}, lifetime=8574.77, allowed_clock_skew=5971.29, custom_signing_key=True, signing_algorithm="<value>", signing_key="<value>")
 
-res = s.jwt_templates.update(template_id="<id>", name="<value>", claims={}, lifetime=8574.77, allowed_clock_skew=5971.29, custom_signing_key=True, signing_algorithm="<value>", signing_key="<value>")
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -189,15 +185,14 @@ Delete a Template
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    res = s.jwt_templates.delete(template_id="<id>")
 
-res = s.jwt_templates.delete(template_id="<id>")
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 

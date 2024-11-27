@@ -11,12 +11,9 @@ class InstanceSettingsSDK(BaseSDK):
     def update(
         self,
         *,
-        request: Optional[
-            Union[
-                models.UpdateInstanceRequestBody,
-                models.UpdateInstanceRequestBodyTypedDict,
-            ]
-        ] = None,
+        request: Union[
+            models.UpdateInstanceRequestBody, models.UpdateInstanceRequestBodyTypedDict
+        ] = models.UpdateInstanceRequestBody(),
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -39,10 +36,8 @@ class InstanceSettingsSDK(BaseSDK):
             base_url = server_url
 
         if not isinstance(request, BaseModel):
-            request = utils.unmarshal(
-                request, Optional[models.UpdateInstanceRequestBody]
-            )
-        request = cast(Optional[models.UpdateInstanceRequestBody], request)
+            request = utils.unmarshal(request, models.UpdateInstanceRequestBody)
+        request = cast(models.UpdateInstanceRequestBody, request)
 
         req = self.build_request(
             method="PATCH",
@@ -50,7 +45,7 @@ class InstanceSettingsSDK(BaseSDK):
             base_url=base_url,
             url_variables=url_variables,
             request=request,
-            request_body_required=False,
+            request_body_required=True,
             request_has_path_params=False,
             request_has_query_params=True,
             user_agent_header="user-agent",
@@ -105,12 +100,9 @@ class InstanceSettingsSDK(BaseSDK):
     async def update_async(
         self,
         *,
-        request: Optional[
-            Union[
-                models.UpdateInstanceRequestBody,
-                models.UpdateInstanceRequestBodyTypedDict,
-            ]
-        ] = None,
+        request: Union[
+            models.UpdateInstanceRequestBody, models.UpdateInstanceRequestBodyTypedDict
+        ] = models.UpdateInstanceRequestBody(),
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -133,10 +125,8 @@ class InstanceSettingsSDK(BaseSDK):
             base_url = server_url
 
         if not isinstance(request, BaseModel):
-            request = utils.unmarshal(
-                request, Optional[models.UpdateInstanceRequestBody]
-            )
-        request = cast(Optional[models.UpdateInstanceRequestBody], request)
+            request = utils.unmarshal(request, models.UpdateInstanceRequestBody)
+        request = cast(models.UpdateInstanceRequestBody, request)
 
         req = self.build_request_async(
             method="PATCH",
@@ -144,7 +134,7 @@ class InstanceSettingsSDK(BaseSDK):
             base_url=base_url,
             url_variables=url_variables,
             request=request,
-            request_body_required=False,
+            request_body_required=True,
             request_has_path_params=False,
             request_has_query_params=True,
             user_agent_header="user-agent",
@@ -199,12 +189,10 @@ class InstanceSettingsSDK(BaseSDK):
     def update_restrictions(
         self,
         *,
-        request: Optional[
-            Union[
-                models.UpdateInstanceRestrictionsRequestBody,
-                models.UpdateInstanceRestrictionsRequestBodyTypedDict,
-            ]
-        ] = None,
+        request: Union[
+            models.UpdateInstanceRestrictionsRequestBody,
+            models.UpdateInstanceRestrictionsRequestBodyTypedDict,
+        ] = models.UpdateInstanceRestrictionsRequestBody(),
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -228,9 +216,9 @@ class InstanceSettingsSDK(BaseSDK):
 
         if not isinstance(request, BaseModel):
             request = utils.unmarshal(
-                request, Optional[models.UpdateInstanceRestrictionsRequestBody]
+                request, models.UpdateInstanceRestrictionsRequestBody
             )
-        request = cast(Optional[models.UpdateInstanceRestrictionsRequestBody], request)
+        request = cast(models.UpdateInstanceRestrictionsRequestBody, request)
 
         req = self.build_request(
             method="PATCH",
@@ -238,7 +226,7 @@ class InstanceSettingsSDK(BaseSDK):
             base_url=base_url,
             url_variables=url_variables,
             request=request,
-            request_body_required=False,
+            request_body_required=True,
             request_has_path_params=False,
             request_has_query_params=True,
             user_agent_header="user-agent",
@@ -299,12 +287,10 @@ class InstanceSettingsSDK(BaseSDK):
     async def update_restrictions_async(
         self,
         *,
-        request: Optional[
-            Union[
-                models.UpdateInstanceRestrictionsRequestBody,
-                models.UpdateInstanceRestrictionsRequestBodyTypedDict,
-            ]
-        ] = None,
+        request: Union[
+            models.UpdateInstanceRestrictionsRequestBody,
+            models.UpdateInstanceRestrictionsRequestBodyTypedDict,
+        ] = models.UpdateInstanceRestrictionsRequestBody(),
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -328,9 +314,9 @@ class InstanceSettingsSDK(BaseSDK):
 
         if not isinstance(request, BaseModel):
             request = utils.unmarshal(
-                request, Optional[models.UpdateInstanceRestrictionsRequestBody]
+                request, models.UpdateInstanceRestrictionsRequestBody
             )
-        request = cast(Optional[models.UpdateInstanceRestrictionsRequestBody], request)
+        request = cast(models.UpdateInstanceRestrictionsRequestBody, request)
 
         req = self.build_request_async(
             method="PATCH",
@@ -338,7 +324,7 @@ class InstanceSettingsSDK(BaseSDK):
             base_url=base_url,
             url_variables=url_variables,
             request=request,
-            request_body_required=False,
+            request_body_required=True,
             request_has_path_params=False,
             request_has_query_params=True,
             user_agent_header="user-agent",
@@ -399,12 +385,10 @@ class InstanceSettingsSDK(BaseSDK):
     def update_organization_settings(
         self,
         *,
-        request: Optional[
-            Union[
-                models.UpdateInstanceOrganizationSettingsRequestBody,
-                models.UpdateInstanceOrganizationSettingsRequestBodyTypedDict,
-            ]
-        ] = None,
+        request: Union[
+            models.UpdateInstanceOrganizationSettingsRequestBody,
+            models.UpdateInstanceOrganizationSettingsRequestBodyTypedDict,
+        ] = models.UpdateInstanceOrganizationSettingsRequestBody(),
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -428,11 +412,9 @@ class InstanceSettingsSDK(BaseSDK):
 
         if not isinstance(request, BaseModel):
             request = utils.unmarshal(
-                request, Optional[models.UpdateInstanceOrganizationSettingsRequestBody]
+                request, models.UpdateInstanceOrganizationSettingsRequestBody
             )
-        request = cast(
-            Optional[models.UpdateInstanceOrganizationSettingsRequestBody], request
-        )
+        request = cast(models.UpdateInstanceOrganizationSettingsRequestBody, request)
 
         req = self.build_request(
             method="PATCH",
@@ -440,7 +422,7 @@ class InstanceSettingsSDK(BaseSDK):
             base_url=base_url,
             url_variables=url_variables,
             request=request,
-            request_body_required=False,
+            request_body_required=True,
             request_has_path_params=False,
             request_has_query_params=True,
             user_agent_header="user-agent",
@@ -501,12 +483,10 @@ class InstanceSettingsSDK(BaseSDK):
     async def update_organization_settings_async(
         self,
         *,
-        request: Optional[
-            Union[
-                models.UpdateInstanceOrganizationSettingsRequestBody,
-                models.UpdateInstanceOrganizationSettingsRequestBodyTypedDict,
-            ]
-        ] = None,
+        request: Union[
+            models.UpdateInstanceOrganizationSettingsRequestBody,
+            models.UpdateInstanceOrganizationSettingsRequestBodyTypedDict,
+        ] = models.UpdateInstanceOrganizationSettingsRequestBody(),
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -530,11 +510,9 @@ class InstanceSettingsSDK(BaseSDK):
 
         if not isinstance(request, BaseModel):
             request = utils.unmarshal(
-                request, Optional[models.UpdateInstanceOrganizationSettingsRequestBody]
+                request, models.UpdateInstanceOrganizationSettingsRequestBody
             )
-        request = cast(
-            Optional[models.UpdateInstanceOrganizationSettingsRequestBody], request
-        )
+        request = cast(models.UpdateInstanceOrganizationSettingsRequestBody, request)
 
         req = self.build_request_async(
             method="PATCH",
@@ -542,7 +520,7 @@ class InstanceSettingsSDK(BaseSDK):
             base_url=base_url,
             url_variables=url_variables,
             request=request,
-            request_body_required=False,
+            request_body_required=True,
             request_has_path_params=False,
             request_has_query_params=True,
             user_agent_header="user-agent",

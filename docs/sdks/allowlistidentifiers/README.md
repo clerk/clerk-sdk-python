@@ -16,15 +16,14 @@ Delete an identifier from the instance allow-list
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    res = s.allowlist_identifiers.delete(identifier_id="example_identifier_id")
 
-res = s.allowlist_identifiers.delete(identifier_id="example_identifier_id")
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
