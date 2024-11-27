@@ -1,7 +1,5 @@
 # VerifyClientRequestBody
 
-Parameters.
-
 
 ## Fields
 

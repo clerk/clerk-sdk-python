@@ -204,11 +204,9 @@ class Clients(BaseSDK):
     def verify(
         self,
         *,
-        request: Optional[
-            Union[
-                models.VerifyClientRequestBody, models.VerifyClientRequestBodyTypedDict
-            ]
-        ] = None,
+        request: Union[
+            models.VerifyClientRequestBody, models.VerifyClientRequestBodyTypedDict
+        ] = models.VerifyClientRequestBody(),
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -231,8 +229,8 @@ class Clients(BaseSDK):
             base_url = server_url
 
         if not isinstance(request, BaseModel):
-            request = utils.unmarshal(request, Optional[models.VerifyClientRequestBody])
-        request = cast(Optional[models.VerifyClientRequestBody], request)
+            request = utils.unmarshal(request, models.VerifyClientRequestBody)
+        request = cast(models.VerifyClientRequestBody, request)
 
         req = self.build_request(
             method="POST",
@@ -240,7 +238,7 @@ class Clients(BaseSDK):
             base_url=base_url,
             url_variables=url_variables,
             request=request,
-            request_body_required=False,
+            request_body_required=True,
             request_has_path_params=False,
             request_has_query_params=True,
             user_agent_header="user-agent",
@@ -295,11 +293,9 @@ class Clients(BaseSDK):
     async def verify_async(
         self,
         *,
-        request: Optional[
-            Union[
-                models.VerifyClientRequestBody, models.VerifyClientRequestBodyTypedDict
-            ]
-        ] = None,
+        request: Union[
+            models.VerifyClientRequestBody, models.VerifyClientRequestBodyTypedDict
+        ] = models.VerifyClientRequestBody(),
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -322,8 +318,8 @@ class Clients(BaseSDK):
             base_url = server_url
 
         if not isinstance(request, BaseModel):
-            request = utils.unmarshal(request, Optional[models.VerifyClientRequestBody])
-        request = cast(Optional[models.VerifyClientRequestBody], request)
+            request = utils.unmarshal(request, models.VerifyClientRequestBody)
+        request = cast(models.VerifyClientRequestBody, request)
 
         req = self.build_request_async(
             method="POST",
@@ -331,7 +327,7 @@ class Clients(BaseSDK):
             base_url=base_url,
             url_variables=url_variables,
             request=request,
-            request_body_required=False,
+            request_body_required=True,
             request_has_path_params=False,
             request_has_query_params=True,
             user_agent_header="user-agent",

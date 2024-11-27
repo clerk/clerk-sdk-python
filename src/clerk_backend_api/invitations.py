@@ -3,8 +3,8 @@
 from .basesdk import BaseSDK
 from clerk_backend_api import models, utils
 from clerk_backend_api._hooks import HookContext
-from clerk_backend_api.types import BaseModel, OptionalNullable, UNSET
-from typing import Any, List, Optional, Union, cast
+from clerk_backend_api.types import OptionalNullable, UNSET
+from typing import Any, Dict, List, Optional
 
 
 class Invitations(BaseSDK):
@@ -15,12 +15,12 @@ class Invitations(BaseSDK):
     def create(
         self,
         *,
-        request: Optional[
-            Union[
-                models.CreateInvitationRequestBody,
-                models.CreateInvitationRequestBodyTypedDict,
-            ]
-        ] = None,
+        email_address: str,
+        public_metadata: Optional[Dict[str, Any]] = None,
+        redirect_url: Optional[str] = None,
+        notify: OptionalNullable[bool] = True,
+        ignore_existing: OptionalNullable[bool] = False,
+        expires_in_days: OptionalNullable[int] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -31,7 +31,12 @@ class Invitations(BaseSDK):
         Keep in mind that you cannot create an invitation if there is already one for the given email address.
         Also, trying to create an invitation for an email address that already exists in your application will result to an error.
 
-        :param request: The request object to send.
+        :param email_address: The email address the invitation will be sent to
+        :param public_metadata: Metadata that will be attached to the newly created invitation. The value of this property should be a well-formed JSON object. Once the user accepts the invitation and signs up, these metadata will end up in the user's public metadata.
+        :param redirect_url: Optional URL which specifies where to redirect the user once they click the invitation link. This is only required if you have implemented a [custom flow](https://clerk.com/docs/authentication/invitations#custom-flow) and you're not using Clerk Hosted Pages or Clerk Components.
+        :param notify: Optional flag which denotes whether an email invitation should be sent to the given email address. Defaults to true.
+        :param ignore_existing: Whether an invitation should be created if there is already an existing invitation for this email address, or it's claimed by another user.
+        :param expires_in_days: The number of days the invitation will be valid for. By default, the invitation does not expire.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -44,11 +49,14 @@ class Invitations(BaseSDK):
         if server_url is not None:
             base_url = server_url
 
-        if not isinstance(request, BaseModel):
-            request = utils.unmarshal(
-                request, Optional[models.CreateInvitationRequestBody]
-            )
-        request = cast(Optional[models.CreateInvitationRequestBody], request)
+        request = models.CreateInvitationRequestBody(
+            email_address=email_address,
+            public_metadata=public_metadata,
+            redirect_url=redirect_url,
+            notify=notify,
+            ignore_existing=ignore_existing,
+            expires_in_days=expires_in_days,
+        )
 
         req = self.build_request(
             method="POST",
@@ -56,18 +64,14 @@ class Invitations(BaseSDK):
             base_url=base_url,
             url_variables=url_variables,
             request=request,
-            request_body_required=False,
+            request_body_required=True,
             request_has_path_params=False,
             request_has_query_params=True,
             user_agent_header="user-agent",
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request,
-                False,
-                True,
-                "json",
-                Optional[models.CreateInvitationRequestBody],
+                request, False, False, "json", models.CreateInvitationRequestBody
             ),
             timeout_ms=timeout_ms,
         )
@@ -115,12 +119,12 @@ class Invitations(BaseSDK):
     async def create_async(
         self,
         *,
-        request: Optional[
-            Union[
-                models.CreateInvitationRequestBody,
-                models.CreateInvitationRequestBodyTypedDict,
-            ]
-        ] = None,
+        email_address: str,
+        public_metadata: Optional[Dict[str, Any]] = None,
+        redirect_url: Optional[str] = None,
+        notify: OptionalNullable[bool] = True,
+        ignore_existing: OptionalNullable[bool] = False,
+        expires_in_days: OptionalNullable[int] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -131,7 +135,12 @@ class Invitations(BaseSDK):
         Keep in mind that you cannot create an invitation if there is already one for the given email address.
         Also, trying to create an invitation for an email address that already exists in your application will result to an error.
 
-        :param request: The request object to send.
+        :param email_address: The email address the invitation will be sent to
+        :param public_metadata: Metadata that will be attached to the newly created invitation. The value of this property should be a well-formed JSON object. Once the user accepts the invitation and signs up, these metadata will end up in the user's public metadata.
+        :param redirect_url: Optional URL which specifies where to redirect the user once they click the invitation link. This is only required if you have implemented a [custom flow](https://clerk.com/docs/authentication/invitations#custom-flow) and you're not using Clerk Hosted Pages or Clerk Components.
+        :param notify: Optional flag which denotes whether an email invitation should be sent to the given email address. Defaults to true.
+        :param ignore_existing: Whether an invitation should be created if there is already an existing invitation for this email address, or it's claimed by another user.
+        :param expires_in_days: The number of days the invitation will be valid for. By default, the invitation does not expire.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -144,11 +153,14 @@ class Invitations(BaseSDK):
         if server_url is not None:
             base_url = server_url
 
-        if not isinstance(request, BaseModel):
-            request = utils.unmarshal(
-                request, Optional[models.CreateInvitationRequestBody]
-            )
-        request = cast(Optional[models.CreateInvitationRequestBody], request)
+        request = models.CreateInvitationRequestBody(
+            email_address=email_address,
+            public_metadata=public_metadata,
+            redirect_url=redirect_url,
+            notify=notify,
+            ignore_existing=ignore_existing,
+            expires_in_days=expires_in_days,
+        )
 
         req = self.build_request_async(
             method="POST",
@@ -156,18 +168,14 @@ class Invitations(BaseSDK):
             base_url=base_url,
             url_variables=url_variables,
             request=request,
-            request_body_required=False,
+            request_body_required=True,
             request_has_path_params=False,
             request_has_query_params=True,
             user_agent_header="user-agent",
             accept_header_value="application/json",
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request,
-                False,
-                True,
-                "json",
-                Optional[models.CreateInvitationRequestBody],
+                request, False, False, "json", models.CreateInvitationRequestBody
             ),
             timeout_ms=timeout_ms,
         )

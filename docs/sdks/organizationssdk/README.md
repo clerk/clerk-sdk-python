@@ -29,15 +29,14 @@ Most recent organizations will be returned first.
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    res = s.organizations.list(limit=20, offset=10, include_members_count=False, query="clerk", order_by="-name")
 
-res = s.organizations.list(limit=20, offset=10, include_members_count=False, query="clerk", order_by="-name")
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -82,36 +81,33 @@ the next time they create a session, presuming they don't explicitly set a diffe
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
-
-res = s.organizations.create(request={
-    "name": "NewOrg",
-    "created_by": "user_123",
-    "private_metadata": {
+) as s:
+    res = s.organizations.create(name="NewOrg", created_by="user_123", private_metadata={
         "internal_code": "ABC123",
-    },
-    "public_metadata": {
+    }, public_metadata={
         "public_event": "Annual Summit",
-    },
-    "slug": "neworg",
-    "max_allowed_memberships": 100,
-    "created_at": "<value>",
-})
+    }, slug="neworg", max_allowed_memberships=100, created_at="<value>")
 
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
 ### Parameters
 
-| Parameter                                                                             | Type                                                                                  | Required                                                                              | Description                                                                           |
-| ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
-| `request`                                                                             | [models.CreateOrganizationRequestBody](../../models/createorganizationrequestbody.md) | :heavy_check_mark:                                                                    | The request object to use for the request.                                            |
-| `retries`                                                                             | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                      | :heavy_minus_sign:                                                                    | Configuration to override the default retry behavior of the client.                   |
+| Parameter                                                                                                                              | Type                                                                                                                                   | Required                                                                                                                               | Description                                                                                                                            | Example                                                                                                                                |
+| -------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| `name`                                                                                                                                 | *str*                                                                                                                                  | :heavy_check_mark:                                                                                                                     | The name of the new organization.<br/>May not contain URLs or HTML.                                                                    | NewOrg                                                                                                                                 |
+| `created_by`                                                                                                                           | *str*                                                                                                                                  | :heavy_check_mark:                                                                                                                     | The ID of the User who will become the administrator for the new organization                                                          | user_123                                                                                                                               |
+| `private_metadata`                                                                                                                     | Dict[str, *Any*]                                                                                                                       | :heavy_minus_sign:                                                                                                                     | Metadata saved on the organization, accessible only from the Backend API                                                               | {<br/>"internal_code": "ABC123"<br/>}                                                                                                  |
+| `public_metadata`                                                                                                                      | Dict[str, *Any*]                                                                                                                       | :heavy_minus_sign:                                                                                                                     | Metadata saved on the organization, read-only from the Frontend API and fully accessible (read/write) from the Backend API             | {<br/>"public_event": "Annual Summit"<br/>}                                                                                            |
+| `slug`                                                                                                                                 | *Optional[str]*                                                                                                                        | :heavy_minus_sign:                                                                                                                     | A slug for the new organization.<br/>Can contain only lowercase alphanumeric characters and the dash "-".<br/>Must be unique for the instance. | neworg                                                                                                                                 |
+| `max_allowed_memberships`                                                                                                              | *Optional[int]*                                                                                                                        | :heavy_minus_sign:                                                                                                                     | The maximum number of memberships allowed for this organization                                                                        | 100                                                                                                                                    |
+| `created_at`                                                                                                                           | *Optional[str]*                                                                                                                        | :heavy_minus_sign:                                                                                                                     | A custom date/time denoting _when_ the organization was created, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`).        |                                                                                                                                        |
+| `retries`                                                                                                                              | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                       | :heavy_minus_sign:                                                                                                                     | Configuration to override the default retry behavior of the client.                                                                    |                                                                                                                                        |
 
 ### Response
 
@@ -133,15 +129,14 @@ Fetches the organization whose ID or slug matches the provided `id_or_slug` URL 
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    res = s.organizations.get(organization_id="org_123", include_members_count=False)
 
-res = s.organizations.get(organization_id="org_123", include_members_count=False)
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -173,19 +168,18 @@ Updates an existing organization
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    res = s.organizations.update(organization_id="org_123_update", public_metadata={
 
-res = s.organizations.update(organization_id="org_123_update", public_metadata={
+    }, private_metadata={
 
-}, private_metadata={
+    }, name="New Organization Name", slug="new-org-slug", max_allowed_memberships=100, admin_delete_enabled=True, created_at="<value>")
 
-}, name="New Organization Name", slug="new-org-slug", max_allowed_memberships=100, admin_delete_enabled=True, created_at="<value>")
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -225,15 +219,14 @@ This is not reversible.
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    res = s.organizations.delete(organization_id="org_321_delete")
 
-res = s.organizations.delete(organization_id="org_321_delete")
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -267,19 +260,18 @@ You can remove metadata keys at any level by setting their value to `null`.
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    res = s.organizations.merge_metadata(organization_id="org_12345", public_metadata={
+        "announcement": "We are opening a new office!",
+    }, private_metadata={
+        "internal_use_only": "Future plans discussion.",
+    })
 
-res = s.organizations.merge_metadata(organization_id="org_12345", public_metadata={
-    "announcement": "We are opening a new office!",
-}, private_metadata={
-    "internal_use_only": "Future plans discussion.",
-})
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -315,19 +307,18 @@ Only the following file content types are supported: `image/jpeg`, `image/png`, 
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    res = s.organizations.upload_logo(organization_id="org_12345", file={
+        "file_name": "example.file",
+        "content": open("example.file", "rb"),
+        "content_type": "<value>",
+    }, uploader_user_id="user_67890")
 
-res = s.organizations.upload_logo(organization_id="org_12345", file={
-    "file_name": "example.file",
-    "content": open("example.file", "rb"),
-    "content_type": "<value>",
-}, uploader_user_id="user_67890")
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -360,15 +351,14 @@ Delete the organization's logo.
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    res = s.organizations.delete_logo(organization_id="org_12345")
 
-res = s.organizations.delete_logo(organization_id="org_12345")
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 

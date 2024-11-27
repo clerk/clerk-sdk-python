@@ -19,20 +19,19 @@ Create a new email address
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    res = s.email_addresses.create(request={
+        "user_id": "user_12345",
+        "email_address": "example@clerk.com",
+        "verified": False,
+        "primary": True,
+    })
 
-res = s.email_addresses.create(request={
-    "user_id": "user_12345",
-    "email_address": "example@clerk.com",
-    "verified": False,
-    "primary": True,
-})
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -63,15 +62,14 @@ Returns the details of an email address.
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    res = s.email_addresses.get(email_address_id="email_address_id_example")
 
-res = s.email_addresses.get(email_address_id="email_address_id_example")
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -102,15 +100,14 @@ Delete the email address with the given ID
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    res = s.email_addresses.delete(email_address_id="email_address_id_example")
 
-res = s.email_addresses.delete(email_address_id="email_address_id_example")
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -141,15 +138,14 @@ Updates an email address.
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    res = s.email_addresses.update(email_address_id="email_address_id_example", verified=False, primary=True)
 
-res = s.email_addresses.update(email_address_id="email_address_id_example", verified=False, primary=True)
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 

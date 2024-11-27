@@ -25,15 +25,14 @@ Warning: the endpoint is being deprecated and will be removed in future versions
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    res = s.clients.list(limit=20, offset=10)
 
-res = s.clients.list(limit=20, offset=10)
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -65,17 +64,16 @@ Verifies the client in the provided token
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    res = s.clients.verify(request={
+        "token": "jwt_token_example",
+    })
 
-res = s.clients.verify(request={
-    "token": "jwt_token_example",
-})
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -106,15 +104,14 @@ Returns the details of a client.
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    res = s.clients.get(client_id="cli_123456789")
 
-res = s.clients.get(client_id="cli_123456789")
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 

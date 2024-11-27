@@ -157,12 +157,10 @@ class JwtTemplates(BaseSDK):
     def create(
         self,
         *,
-        request: Optional[
-            Union[
-                models.CreateJWTTemplateRequestBody,
-                models.CreateJWTTemplateRequestBodyTypedDict,
-            ]
-        ] = None,
+        request: Union[
+            models.CreateJWTTemplateRequestBody,
+            models.CreateJWTTemplateRequestBodyTypedDict,
+        ] = models.CreateJWTTemplateRequestBody(),
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -185,10 +183,8 @@ class JwtTemplates(BaseSDK):
             base_url = server_url
 
         if not isinstance(request, BaseModel):
-            request = utils.unmarshal(
-                request, Optional[models.CreateJWTTemplateRequestBody]
-            )
-        request = cast(Optional[models.CreateJWTTemplateRequestBody], request)
+            request = utils.unmarshal(request, models.CreateJWTTemplateRequestBody)
+        request = cast(models.CreateJWTTemplateRequestBody, request)
 
         req = self.build_request(
             method="POST",
@@ -196,7 +192,7 @@ class JwtTemplates(BaseSDK):
             base_url=base_url,
             url_variables=url_variables,
             request=request,
-            request_body_required=False,
+            request_body_required=True,
             request_has_path_params=False,
             request_has_query_params=True,
             user_agent_header="user-agent",
@@ -255,12 +251,10 @@ class JwtTemplates(BaseSDK):
     async def create_async(
         self,
         *,
-        request: Optional[
-            Union[
-                models.CreateJWTTemplateRequestBody,
-                models.CreateJWTTemplateRequestBodyTypedDict,
-            ]
-        ] = None,
+        request: Union[
+            models.CreateJWTTemplateRequestBody,
+            models.CreateJWTTemplateRequestBodyTypedDict,
+        ] = models.CreateJWTTemplateRequestBody(),
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -283,10 +277,8 @@ class JwtTemplates(BaseSDK):
             base_url = server_url
 
         if not isinstance(request, BaseModel):
-            request = utils.unmarshal(
-                request, Optional[models.CreateJWTTemplateRequestBody]
-            )
-        request = cast(Optional[models.CreateJWTTemplateRequestBody], request)
+            request = utils.unmarshal(request, models.CreateJWTTemplateRequestBody)
+        request = cast(models.CreateJWTTemplateRequestBody, request)
 
         req = self.build_request_async(
             method="POST",
@@ -294,7 +286,7 @@ class JwtTemplates(BaseSDK):
             base_url=base_url,
             url_variables=url_variables,
             request=request,
-            request_body_required=False,
+            request_body_required=True,
             request_has_path_params=False,
             request_has_query_params=True,
             user_agent_header="user-agent",
@@ -582,7 +574,7 @@ class JwtTemplates(BaseSDK):
             base_url=base_url,
             url_variables=url_variables,
             request=request,
-            request_body_required=False,
+            request_body_required=True,
             request_has_path_params=True,
             request_has_query_params=True,
             user_agent_header="user-agent",
@@ -591,9 +583,9 @@ class JwtTemplates(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request.request_body,
                 False,
-                True,
+                False,
                 "json",
-                Optional[models.UpdateJWTTemplateRequestBody],
+                models.UpdateJWTTemplateRequestBody,
             ),
             timeout_ms=timeout_ms,
         )
@@ -702,7 +694,7 @@ class JwtTemplates(BaseSDK):
             base_url=base_url,
             url_variables=url_variables,
             request=request,
-            request_body_required=False,
+            request_body_required=True,
             request_has_path_params=True,
             request_has_query_params=True,
             user_agent_header="user-agent",
@@ -711,9 +703,9 @@ class JwtTemplates(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request.request_body,
                 False,
-                True,
+                False,
                 "json",
-                Optional[models.UpdateJWTTemplateRequestBody],
+                models.UpdateJWTTemplateRequestBody,
             ),
             timeout_ms=timeout_ms,
         )

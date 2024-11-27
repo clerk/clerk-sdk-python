@@ -11,7 +11,7 @@ from clerk_backend_api.types import (
 from enum import Enum
 from pydantic import model_serializer
 from typing import Any, Dict, Optional, Union
-from typing_extensions import NotRequired, TypedDict
+from typing_extensions import NotRequired, TypeAliasType, TypedDict
 
 
 class SAMLAccountObject(str, Enum):
@@ -28,6 +28,7 @@ class TicketVerificationStatus(str, Enum):
 
 class TicketVerificationStrategy(str, Enum):
     TICKET = "ticket"
+    SAML = "saml"
 
 
 class TicketTypedDict(TypedDict):
@@ -176,10 +177,12 @@ class Saml(BaseModel):
         return m
 
 
-SAMLAccountVerificationTypedDict = Union[TicketTypedDict, SamlTypedDict]
+SAMLAccountVerificationTypedDict = TypeAliasType(
+    "SAMLAccountVerificationTypedDict", Union[TicketTypedDict, SamlTypedDict]
+)
 
 
-SAMLAccountVerification = Union[Ticket, Saml]
+SAMLAccountVerification = TypeAliasType("SAMLAccountVerification", Union[Ticket, Saml])
 
 
 class SAMLConnectionSAMLConnectionTypedDict(TypedDict):

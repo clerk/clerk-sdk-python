@@ -19,11 +19,10 @@ It is used by Clerk SDKs when the user's authentication state cannot be immediat
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk()
+with Clerk() as s:
+    s.miscellaneous.get_interstitial(frontend_api="frontend-api_1a2b3c4d", publishable_key="pub_1a2b3c4d")
 
-s.miscellaneous.get_interstitial(frontend_api="frontend-api_1a2b3c4d", publishable_key="pub_1a2b3c4d")
-
-# Use the SDK ...
+    # Use the SDK ...
 
 ```
 

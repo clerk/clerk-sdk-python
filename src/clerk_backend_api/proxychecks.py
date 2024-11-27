@@ -11,12 +11,10 @@ class ProxyChecks(BaseSDK):
     def verify(
         self,
         *,
-        request: Optional[
-            Union[
-                models.VerifyDomainProxyRequestBody,
-                models.VerifyDomainProxyRequestBodyTypedDict,
-            ]
-        ] = None,
+        request: Union[
+            models.VerifyDomainProxyRequestBody,
+            models.VerifyDomainProxyRequestBodyTypedDict,
+        ] = models.VerifyDomainProxyRequestBody(),
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -46,10 +44,8 @@ class ProxyChecks(BaseSDK):
             base_url = server_url
 
         if not isinstance(request, BaseModel):
-            request = utils.unmarshal(
-                request, Optional[models.VerifyDomainProxyRequestBody]
-            )
-        request = cast(Optional[models.VerifyDomainProxyRequestBody], request)
+            request = utils.unmarshal(request, models.VerifyDomainProxyRequestBody)
+        request = cast(models.VerifyDomainProxyRequestBody, request)
 
         req = self.build_request(
             method="POST",
@@ -57,7 +53,7 @@ class ProxyChecks(BaseSDK):
             base_url=base_url,
             url_variables=url_variables,
             request=request,
-            request_body_required=False,
+            request_body_required=True,
             request_has_path_params=False,
             request_has_query_params=True,
             user_agent_header="user-agent",
@@ -116,12 +112,10 @@ class ProxyChecks(BaseSDK):
     async def verify_async(
         self,
         *,
-        request: Optional[
-            Union[
-                models.VerifyDomainProxyRequestBody,
-                models.VerifyDomainProxyRequestBodyTypedDict,
-            ]
-        ] = None,
+        request: Union[
+            models.VerifyDomainProxyRequestBody,
+            models.VerifyDomainProxyRequestBodyTypedDict,
+        ] = models.VerifyDomainProxyRequestBody(),
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -151,10 +145,8 @@ class ProxyChecks(BaseSDK):
             base_url = server_url
 
         if not isinstance(request, BaseModel):
-            request = utils.unmarshal(
-                request, Optional[models.VerifyDomainProxyRequestBody]
-            )
-        request = cast(Optional[models.VerifyDomainProxyRequestBody], request)
+            request = utils.unmarshal(request, models.VerifyDomainProxyRequestBody)
+        request = cast(models.VerifyDomainProxyRequestBody, request)
 
         req = self.build_request_async(
             method="POST",
@@ -162,7 +154,7 @@ class ProxyChecks(BaseSDK):
             base_url=base_url,
             url_variables=url_variables,
             request=request,
-            request_body_required=False,
+            request_body_required=True,
             request_has_path_params=False,
             request_has_query_params=True,
             user_agent_header="user-agent",

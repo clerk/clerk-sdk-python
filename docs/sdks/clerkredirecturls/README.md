@@ -18,17 +18,16 @@ Create a redirect URL
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    res = s.redirect_urls.create(request={
+        "url": "https://my-app.com/oauth-callback",
+    })
 
-res = s.redirect_urls.create(request={
-    "url": "https://my-app.com/oauth-callback",
-})
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -59,15 +58,14 @@ Retrieve the details of the redirect URL with the given ID
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    res = s.redirect_urls.get(id="redir_01FG4K9G5NWSQ4ZPT4TQE4Z7G3")
 
-res = s.redirect_urls.get(id="redir_01FG4K9G5NWSQ4ZPT4TQE4Z7G3")
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -98,15 +96,14 @@ Remove the selected redirect URL from the whitelist of the instance
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    res = s.redirect_urls.delete(id="redir_01FG4K9G5NWSQ4ZPT4TQE4Z7G3")
 
-res = s.redirect_urls.delete(id="redir_01FG4K9G5NWSQ4ZPT4TQE4Z7G3")
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 

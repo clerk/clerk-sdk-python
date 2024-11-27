@@ -15,7 +15,7 @@ from enum import Enum
 from pydantic import model_serializer
 from pydantic.functional_validators import PlainValidator
 from typing import List, Optional, Union
-from typing_extensions import Annotated, NotRequired, TypedDict
+from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 
 class EmailAddressObject(str, Enum, metaclass=utils.OpenEnumMeta):
@@ -226,10 +226,12 @@ class Otp(BaseModel):
     expire_at: int
 
 
-VerificationTypedDict = Union[OtpTypedDict, AdminTypedDict, OauthTypedDict]
+VerificationTypedDict = TypeAliasType(
+    "VerificationTypedDict", Union[OtpTypedDict, AdminTypedDict, OauthTypedDict]
+)
 
 
-Verification = Union[Otp, Admin, Oauth]
+Verification = TypeAliasType("Verification", Union[Otp, Admin, Oauth])
 
 
 class EmailAddressTypedDict(TypedDict):

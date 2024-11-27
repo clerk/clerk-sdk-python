@@ -44,29 +44,28 @@ The users are returned sorted by creation date, with the newest users appearing 
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    res = s.users.list(email_address=[
+        "test@example.com",
+    ], phone_number=[
+        "+12345678901",
+    ], external_id=[
+        "external-id-123",
+    ], username=[
+        "user123",
+    ], web3_wallet=[
+        "0x123456789abcdef0x123456789abcdef",
+    ], user_id=[
+        "user-id-123",
+    ], organization_id=[
+        "org-id-123",
+    ], query="John", last_active_at_since=1700690400000, limit=20, offset=10, order_by="-created_at")
 
-res = s.users.list(email_address=[
-    "test@example.com",
-], phone_number=[
-    "+12345678901",
-], external_id=[
-    "external-id-123",
-], username=[
-    "user123",
-], web3_wallet=[
-    "0x123456789abcdef0x123456789abcdef",
-], user_id=[
-    "user-id-123",
-], organization_id=[
-    "org-id-123",
-], query="John", last_active_at_since=1700690400000, limit=20, offset=10, order_by="-created_at")
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -114,56 +113,55 @@ A rate limit rule of 20 requests per 10 seconds is applied to this endpoint.
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
-
-res = s.users.create(request={
-    "external_id": "ext-id-001",
-    "first_name": "John",
-    "last_name": "Doe",
-    "email_address": [
-        "john.doe@example.com",
-    ],
-    "phone_number": [
-        "+12345678901",
-    ],
-    "web3_wallet": [
-        "0x123456789abcdef0x123456789abcdef",
-    ],
-    "username": "johndoe123",
-    "password": "Secure*Pass4",
-    "password_digest": "$argon2i$v=19$m=4096,t=3,p=1$4t6CL3P7YiHBtwESXawI8Hm20zJj4cs7/4/G3c187e0$m7RQFczcKr5bIR0IIxbpO2P0tyrLjf3eUW3M3QSwnLc",
-    "password_hasher": "argon2i",
-    "skip_password_checks": False,
-    "skip_password_requirement": False,
-    "totp_secret": "base32totpsecretkey",
-    "backup_codes": [
-        "123456",
-        "654321",
-    ],
-    "public_metadata": {
-        "role": "user",
-    },
-    "private_metadata": {
-        "internal_id": "789",
-    },
-    "unsafe_metadata": {
-        "preferences": {
-            "theme": "dark",
+) as s:
+    res = s.users.create(request={
+        "external_id": "ext-id-001",
+        "first_name": "John",
+        "last_name": "Doe",
+        "email_address": [
+            "john.doe@example.com",
+        ],
+        "phone_number": [
+            "+12345678901",
+        ],
+        "web3_wallet": [
+            "0x123456789abcdef0x123456789abcdef",
+        ],
+        "username": "johndoe123",
+        "password": "Secure*Pass4",
+        "password_digest": "$argon2i$v=19$m=4096,t=3,p=1$4t6CL3P7YiHBtwESXawI8Hm20zJj4cs7/4/G3c187e0$m7RQFczcKr5bIR0IIxbpO2P0tyrLjf3eUW3M3QSwnLc",
+        "password_hasher": "argon2i",
+        "skip_password_checks": False,
+        "skip_password_requirement": False,
+        "totp_secret": "base32totpsecretkey",
+        "backup_codes": [
+            "123456",
+            "654321",
+        ],
+        "public_metadata": {
+            "role": "user",
         },
-    },
-    "delete_self_enabled": True,
-    "legal_accepted_at": "<value>",
-    "skip_legal_checks": False,
-    "create_organization_enabled": True,
-    "create_organizations_limit": 134365,
-    "created_at": "2023-03-15T07:15:20.902Z",
-})
+        "private_metadata": {
+            "internal_id": "789",
+        },
+        "unsafe_metadata": {
+            "preferences": {
+                "theme": "dark",
+            },
+        },
+        "delete_self_enabled": True,
+        "legal_accepted_at": "<value>",
+        "skip_legal_checks": False,
+        "create_organization_enabled": True,
+        "create_organizations_limit": 134365,
+        "created_at": "2023-03-15T07:15:20.902Z",
+    })
 
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -194,27 +192,26 @@ Returns a total count of all users that match the given filtering criteria.
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    res = s.users.count(email_address=[
+        "user@example.com",
+    ], phone_number=[
+        "+1234567890",
+    ], external_id=[
+        "external-id-123",
+    ], username=[
+        "username123",
+    ], web3_wallet=[
+        "0x123456789abcdef",
+    ], user_id=[
+        "user-id-123",
+    ], query="John Doe")
 
-res = s.users.count(email_address=[
-    "user@example.com",
-], phone_number=[
-    "+1234567890",
-], external_id=[
-    "external-id-123",
-], username=[
-    "username123",
-], web3_wallet=[
-    "0x123456789abcdef",
-], user_id=[
-    "user-id-123",
-], query="John Doe")
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -251,15 +248,14 @@ Retrieve the details of a user
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    res = s.users.get(user_id="usr_1")
 
-res = s.users.get(user_id="usr_1")
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -301,24 +297,23 @@ You can also choose to sign the user out of all their active sessions on any dev
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    res = s.users.update(user_id="usr_1", external_id="ext_123", first_name="Jane", last_name="Doe", primary_email_address_id="eml_12345", notify_primary_email_address_changed=True, primary_phone_number_id="phn_67890", primary_web3_wallet_id="wlt_123", username="janedoe", profile_image_id="img_789", password="secretPass123!", password_digest="$argon2i$v=19$m=4096,t=3,p=1$4t6CL3P7YiHBtwESXawI8Hm20zJj4cs7/4/G3c187e0$m7RQFczcKr5bIR0IIxbpO2P0tyrLjf3eUW3M3QSwnLc", password_hasher="argon2i", skip_password_checks=False, sign_out_of_other_sessions=True, totp_secret="ABCD1234EFGH5678", backup_codes=[
+        "123456",
+        "654321",
+    ], public_metadata={
+        "theme": "dark",
+    }, private_metadata={
+        "vip": True,
+    }, unsafe_metadata={
+        "age": 30,
+    }, delete_self_enabled=True, create_organization_enabled=False, legal_accepted_at="<value>", skip_legal_checks=False, create_organizations_limit=597129, created_at="2021-04-05T14:30:00.000Z")
 
-res = s.users.update(user_id="usr_1", external_id="ext_123", first_name="Jane", last_name="Doe", primary_email_address_id="eml_12345", notify_primary_email_address_changed=True, primary_phone_number_id="phn_67890", primary_web3_wallet_id="wlt_123", username="janedoe", profile_image_id="img_789", password="secretPass123!", password_digest="$argon2i$v=19$m=4096,t=3,p=1$4t6CL3P7YiHBtwESXawI8Hm20zJj4cs7/4/G3c187e0$m7RQFczcKr5bIR0IIxbpO2P0tyrLjf3eUW3M3QSwnLc", password_hasher="argon2i", skip_password_checks=False, sign_out_of_other_sessions=True, totp_secret="ABCD1234EFGH5678", backup_codes=[
-    "123456",
-    "654321",
-], public_metadata={
-    "theme": "dark",
-}, private_metadata={
-    "vip": True,
-}, unsafe_metadata={
-    "age": 30,
-}, delete_self_enabled=True, create_organization_enabled=False, legal_accepted_at="<value>", skip_legal_checks=False, create_organizations_limit=597129, created_at="2021-04-05T14:30:00.000Z")
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -374,15 +369,14 @@ Delete the specified user
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    res = s.users.delete(user_id="usr_1")
 
-res = s.users.delete(user_id="usr_1")
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -413,15 +407,14 @@ Marks the given user as banned, which means that all their sessions are revoked 
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    res = s.users.ban(user_id="user_12345")
 
-res = s.users.ban(user_id="user_12345")
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -452,15 +445,14 @@ Removes the ban mark from the given user.
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    res = s.users.unban(user_id="user_12345")
 
-res = s.users.unban(user_id="user_12345")
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -492,15 +484,14 @@ Lock duration can be configured in the instance's restrictions settings.
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    res = s.users.lock(user_id="user_123456789")
 
-res = s.users.lock(user_id="user_123456789")
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -531,15 +522,14 @@ Removes the lock from the given user.
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    res = s.users.unlock(user_id="user_12345")
 
-res = s.users.unlock(user_id="user_12345")
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -570,19 +560,18 @@ Update a user's profile image
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    res = s.users.set_profile_image(user_id="usr_test123", file={
+        "file_name": "example.file",
+        "content": open("example.file", "rb"),
+        "content_type": "<value>",
+    })
 
-res = s.users.set_profile_image(user_id="usr_test123", file={
-    "file_name": "example.file",
-    "content": open("example.file", "rb"),
-    "content_type": "<value>",
-})
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -614,15 +603,14 @@ Delete a user's profile image
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    res = s.users.delete_profile_image(user_id="usr_test123")
 
-res = s.users.delete_profile_image(user_id="usr_test123")
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -660,24 +648,23 @@ You can remove metadata keys at any level by setting their value to `null`.
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    res = s.users.update_metadata(user_id="user_123456789", public_metadata={
+        "key": "<value>",
+        "key1": "<value>",
+    }, private_metadata={
+        "key": "<value>",
+        "key1": "<value>",
+    }, unsafe_metadata={
+        "key": "<value>",
+        "key1": "<value>",
+    })
 
-res = s.users.update_metadata(user_id="user_123456789", public_metadata={
-    "key": "<value>",
-    "key1": "<value>",
-}, private_metadata={
-    "key": "<value>",
-    "key1": "<value>",
-}, unsafe_metadata={
-    "key": "<value>",
-    "key1": "<value>",
-})
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -712,15 +699,14 @@ For OAuth 2.0, if the access token has expired and we have a corresponding refre
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    res = s.users.get_o_auth_access_token(user_id="user_123", provider="oauth_google")
 
-res = s.users.get_o_auth_access_token(user_id="user_123", provider="oauth_google")
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -752,15 +738,14 @@ Retrieve a paginated list of the user's organization memberships
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    res = s.users.get_organization_memberships(user_id="usr_1234567890", limit=20, offset=10)
 
-res = s.users.get_organization_memberships(user_id="usr_1234567890", limit=20, offset=10)
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -794,15 +779,14 @@ Retrieve a paginated list of the user's organization invitations
 import clerk_backend_api
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    res = s.users.get_organization_invitations(user_id="<id>", limit=20, offset=10, status=clerk_backend_api.UsersGetOrganizationInvitationsQueryParamStatus.PENDING)
 
-res = s.users.get_organization_invitations(user_id="<id>", limit=20, offset=10, status=clerk_backend_api.UsersGetOrganizationInvitationsQueryParamStatus.PENDING)
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -837,15 +821,14 @@ Useful for custom auth flows and re-verification.
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    res = s.users.verify_password(user_id="user_123", password="securepassword123")
 
-res = s.users.verify_password(user_id="user_123", password="securepassword123")
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -880,15 +863,14 @@ Useful for custom auth flows and re-verification.
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    res = s.users.verify_totp(user_id="usr_1a2b3c", code="123456")
 
-res = s.users.verify_totp(user_id="usr_1a2b3c", code="123456")
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -920,15 +902,14 @@ Disable all of a user's MFA methods (e.g. OTP sent via SMS, TOTP on their authen
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    res = s.users.disable_mfa(user_id="user_123456")
 
-res = s.users.disable_mfa(user_id="user_123456")
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -959,15 +940,14 @@ Disable all of a user's backup codes.
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    res = s.users.delete_backup_codes(user_id="<id>")
 
-res = s.users.delete_backup_codes(user_id="<id>")
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -998,15 +978,14 @@ Delete the passkey identification for a given user and notify them through email
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    res = s.users.delete_passkey(user_id="<id>", passkey_identification_id="<id>")
 
-res = s.users.delete_passkey(user_id="<id>", passkey_identification_id="<id>")
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -1038,15 +1017,14 @@ Delete the web3 wallet identification for a given user.
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    res = s.users.delete_web3_wallet(user_id="<id>", web3_wallet_identification_id="<id>")
 
-res = s.users.delete_web3_wallet(user_id="<id>", web3_wallet_identification_id="<id>")
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -1079,15 +1057,14 @@ Creates a TOTP (Time-based One-Time Password) for a given user, returning both t
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    res = s.users.create_totp(user_id="<id>")
 
-res = s.users.create_totp(user_id="<id>")
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -1118,15 +1095,14 @@ Deletes all of the user's TOTPs.
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    res = s.users.delete_totp(user_id="<id>")
 
-res = s.users.delete_totp(user_id="<id>")
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -1157,15 +1133,14 @@ Delete an external account by ID.
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    res = s.users.delete_external_account(user_id="<id>", external_account_id="<id>")
 
-res = s.users.delete_external_account(user_id="<id>", external_account_id="<id>")
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 

@@ -11,12 +11,10 @@ class EmailAddresses(BaseSDK):
     def create(
         self,
         *,
-        request: Optional[
-            Union[
-                models.CreateEmailAddressRequestBody,
-                models.CreateEmailAddressRequestBodyTypedDict,
-            ]
-        ] = None,
+        request: Union[
+            models.CreateEmailAddressRequestBody,
+            models.CreateEmailAddressRequestBodyTypedDict,
+        ] = models.CreateEmailAddressRequestBody(),
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -39,10 +37,8 @@ class EmailAddresses(BaseSDK):
             base_url = server_url
 
         if not isinstance(request, BaseModel):
-            request = utils.unmarshal(
-                request, Optional[models.CreateEmailAddressRequestBody]
-            )
-        request = cast(Optional[models.CreateEmailAddressRequestBody], request)
+            request = utils.unmarshal(request, models.CreateEmailAddressRequestBody)
+        request = cast(models.CreateEmailAddressRequestBody, request)
 
         req = self.build_request(
             method="POST",
@@ -50,7 +46,7 @@ class EmailAddresses(BaseSDK):
             base_url=base_url,
             url_variables=url_variables,
             request=request,
-            request_body_required=False,
+            request_body_required=True,
             request_has_path_params=False,
             request_has_query_params=True,
             user_agent_header="user-agent",
@@ -111,12 +107,10 @@ class EmailAddresses(BaseSDK):
     async def create_async(
         self,
         *,
-        request: Optional[
-            Union[
-                models.CreateEmailAddressRequestBody,
-                models.CreateEmailAddressRequestBodyTypedDict,
-            ]
-        ] = None,
+        request: Union[
+            models.CreateEmailAddressRequestBody,
+            models.CreateEmailAddressRequestBodyTypedDict,
+        ] = models.CreateEmailAddressRequestBody(),
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -139,10 +133,8 @@ class EmailAddresses(BaseSDK):
             base_url = server_url
 
         if not isinstance(request, BaseModel):
-            request = utils.unmarshal(
-                request, Optional[models.CreateEmailAddressRequestBody]
-            )
-        request = cast(Optional[models.CreateEmailAddressRequestBody], request)
+            request = utils.unmarshal(request, models.CreateEmailAddressRequestBody)
+        request = cast(models.CreateEmailAddressRequestBody, request)
 
         req = self.build_request_async(
             method="POST",
@@ -150,7 +142,7 @@ class EmailAddresses(BaseSDK):
             base_url=base_url,
             url_variables=url_variables,
             request=request,
-            request_body_required=False,
+            request_body_required=True,
             request_has_path_params=False,
             request_has_query_params=True,
             user_agent_header="user-agent",
@@ -595,7 +587,7 @@ class EmailAddresses(BaseSDK):
             base_url=base_url,
             url_variables=url_variables,
             request=request,
-            request_body_required=False,
+            request_body_required=True,
             request_has_path_params=True,
             request_has_query_params=True,
             user_agent_header="user-agent",
@@ -604,9 +596,9 @@ class EmailAddresses(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request.request_body,
                 False,
-                True,
+                False,
                 "json",
-                Optional[models.UpdateEmailAddressRequestBody],
+                models.UpdateEmailAddressRequestBody,
             ),
             timeout_ms=timeout_ms,
         )
@@ -696,7 +688,7 @@ class EmailAddresses(BaseSDK):
             base_url=base_url,
             url_variables=url_variables,
             request=request,
-            request_body_required=False,
+            request_body_required=True,
             request_has_path_params=True,
             request_has_query_params=True,
             user_agent_header="user-agent",
@@ -705,9 +697,9 @@ class EmailAddresses(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request.request_body,
                 False,
-                True,
+                False,
                 "json",
-                Optional[models.UpdateEmailAddressRequestBody],
+                models.UpdateEmailAddressRequestBody,
             ),
             timeout_ms=timeout_ms,
         )

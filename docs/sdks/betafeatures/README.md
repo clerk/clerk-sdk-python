@@ -18,22 +18,21 @@ Updates the settings of an instance
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    res = s.beta_features.update_instance_settings(request={
+        "restricted_to_allowlist": False,
+        "from_email_address": "noreply",
+        "progressive_sign_up": True,
+        "session_token_template": "defaultSessionToken",
+        "enhanced_email_deliverability": True,
+        "test_mode": True,
+    })
 
-res = s.beta_features.update_instance_settings(request={
-    "restricted_to_allowlist": False,
-    "from_email_address": "noreply",
-    "progressive_sign_up": True,
-    "session_token_template": "defaultSessionToken",
-    "enhanced_email_deliverability": True,
-    "test_mode": True,
-})
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -70,15 +69,14 @@ WARNING: Changing your domain will invalidate all current user sessions (i.e. us
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    s.beta_features.update_domain(request={
+        "home_url": "https://www.example.com",
+    })
 
-s.beta_features.update_domain(request={
-    "home_url": "https://www.example.com",
-})
-
-# Use the SDK ...
+    # Use the SDK ...
 
 ```
 
@@ -109,16 +107,15 @@ WARNING: Changing your domain will invalidate all current user sessions (i.e. us
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    s.beta_features.change_production_instance_domain(request={
+        "home_url": "https://www.newdomain.com",
+        "is_secondary": False,
+    })
 
-s.beta_features.change_production_instance_domain(request={
-    "home_url": "https://www.newdomain.com",
-    "is_secondary": False,
-})
-
-# Use the SDK ...
+    # Use the SDK ...
 
 ```
 

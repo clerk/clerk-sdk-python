@@ -21,15 +21,14 @@ Create a Svix app and associate it with the current instance
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    res = s.webhooks.create_svix_app()
 
-res = s.webhooks.create_svix_app()
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -59,13 +58,12 @@ Delete a Svix app and disassociate it from the current instance
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    s.webhooks.delete_svix_app()
 
-s.webhooks.delete_svix_app()
-
-# Use the SDK ...
+    # Use the SDK ...
 
 ```
 
@@ -91,15 +89,14 @@ Generate a new url for accessing the Svix's management dashboard for that partic
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    res = s.webhooks.generate_svix_auth_url()
 
-res = s.webhooks.generate_svix_auth_url()
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 

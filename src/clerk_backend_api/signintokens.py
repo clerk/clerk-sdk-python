@@ -11,12 +11,10 @@ class SignInTokens(BaseSDK):
     def create(
         self,
         *,
-        request: Optional[
-            Union[
-                models.CreateSignInTokenRequestBody,
-                models.CreateSignInTokenRequestBodyTypedDict,
-            ]
-        ] = None,
+        request: Union[
+            models.CreateSignInTokenRequestBody,
+            models.CreateSignInTokenRequestBodyTypedDict,
+        ] = models.CreateSignInTokenRequestBody(),
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -41,10 +39,8 @@ class SignInTokens(BaseSDK):
             base_url = server_url
 
         if not isinstance(request, BaseModel):
-            request = utils.unmarshal(
-                request, Optional[models.CreateSignInTokenRequestBody]
-            )
-        request = cast(Optional[models.CreateSignInTokenRequestBody], request)
+            request = utils.unmarshal(request, models.CreateSignInTokenRequestBody)
+        request = cast(models.CreateSignInTokenRequestBody, request)
 
         req = self.build_request(
             method="POST",
@@ -52,7 +48,7 @@ class SignInTokens(BaseSDK):
             base_url=base_url,
             url_variables=url_variables,
             request=request,
-            request_body_required=False,
+            request_body_required=True,
             request_has_path_params=False,
             request_has_query_params=True,
             user_agent_header="user-agent",
@@ -111,12 +107,10 @@ class SignInTokens(BaseSDK):
     async def create_async(
         self,
         *,
-        request: Optional[
-            Union[
-                models.CreateSignInTokenRequestBody,
-                models.CreateSignInTokenRequestBodyTypedDict,
-            ]
-        ] = None,
+        request: Union[
+            models.CreateSignInTokenRequestBody,
+            models.CreateSignInTokenRequestBodyTypedDict,
+        ] = models.CreateSignInTokenRequestBody(),
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -141,10 +135,8 @@ class SignInTokens(BaseSDK):
             base_url = server_url
 
         if not isinstance(request, BaseModel):
-            request = utils.unmarshal(
-                request, Optional[models.CreateSignInTokenRequestBody]
-            )
-        request = cast(Optional[models.CreateSignInTokenRequestBody], request)
+            request = utils.unmarshal(request, models.CreateSignInTokenRequestBody)
+        request = cast(models.CreateSignInTokenRequestBody, request)
 
         req = self.build_request_async(
             method="POST",
@@ -152,7 +144,7 @@ class SignInTokens(BaseSDK):
             base_url=base_url,
             url_variables=url_variables,
             request=request,
-            request_body_required=False,
+            request_body_required=True,
             request_has_path_params=False,
             request_has_query_params=True,
             user_agent_header="user-agent",

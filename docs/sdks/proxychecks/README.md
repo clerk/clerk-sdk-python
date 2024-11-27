@@ -23,18 +23,17 @@ a different proxy URL than the one provided. It can also be used to re-validate 
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    res = s.proxy_checks.verify(request={
+        "domain_id": "domain_32hfu3e",
+        "proxy_url": "https://example.com/__clerk",
+    })
 
-res = s.proxy_checks.verify(request={
-    "domain_id": "domain_32hfu3e",
-    "proxy_url": "https://example.com/__clerk",
-})
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 

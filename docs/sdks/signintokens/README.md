@@ -19,18 +19,17 @@ You can optionally supply a different duration in seconds using the `expires_in_
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    res = s.sign_in_tokens.create(request={
+        "user_id": "user_12345",
+        "expires_in_seconds": 2592000,
+    })
 
-res = s.sign_in_tokens.create(request={
-    "user_id": "user_12345",
-    "expires_in_seconds": 2592000,
-})
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -61,15 +60,14 @@ Revokes a pending sign-in token
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    res = s.sign_in_tokens.revoke(sign_in_token_id="tok_test_1234567890")
 
-res = s.sign_in_tokens.revoke(sign_in_token_id="tok_test_1234567890")
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 

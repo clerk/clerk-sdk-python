@@ -12,12 +12,10 @@ class BetaFeatures(BaseSDK):
     def update_instance_settings(
         self,
         *,
-        request: Optional[
-            Union[
-                models.UpdateInstanceAuthConfigRequestBody,
-                models.UpdateInstanceAuthConfigRequestBodyTypedDict,
-            ]
-        ] = None,
+        request: Union[
+            models.UpdateInstanceAuthConfigRequestBody,
+            models.UpdateInstanceAuthConfigRequestBodyTypedDict,
+        ] = models.UpdateInstanceAuthConfigRequestBody(),
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -41,9 +39,9 @@ class BetaFeatures(BaseSDK):
 
         if not isinstance(request, BaseModel):
             request = utils.unmarshal(
-                request, Optional[models.UpdateInstanceAuthConfigRequestBody]
+                request, models.UpdateInstanceAuthConfigRequestBody
             )
-        request = cast(Optional[models.UpdateInstanceAuthConfigRequestBody], request)
+        request = cast(models.UpdateInstanceAuthConfigRequestBody, request)
 
         req = self.build_request(
             method="PATCH",
@@ -51,7 +49,7 @@ class BetaFeatures(BaseSDK):
             base_url=base_url,
             url_variables=url_variables,
             request=request,
-            request_body_required=False,
+            request_body_required=True,
             request_has_path_params=False,
             request_has_query_params=True,
             user_agent_header="user-agent",
@@ -112,12 +110,10 @@ class BetaFeatures(BaseSDK):
     async def update_instance_settings_async(
         self,
         *,
-        request: Optional[
-            Union[
-                models.UpdateInstanceAuthConfigRequestBody,
-                models.UpdateInstanceAuthConfigRequestBodyTypedDict,
-            ]
-        ] = None,
+        request: Union[
+            models.UpdateInstanceAuthConfigRequestBody,
+            models.UpdateInstanceAuthConfigRequestBodyTypedDict,
+        ] = models.UpdateInstanceAuthConfigRequestBody(),
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -141,9 +137,9 @@ class BetaFeatures(BaseSDK):
 
         if not isinstance(request, BaseModel):
             request = utils.unmarshal(
-                request, Optional[models.UpdateInstanceAuthConfigRequestBody]
+                request, models.UpdateInstanceAuthConfigRequestBody
             )
-        request = cast(Optional[models.UpdateInstanceAuthConfigRequestBody], request)
+        request = cast(models.UpdateInstanceAuthConfigRequestBody, request)
 
         req = self.build_request_async(
             method="PATCH",
@@ -151,7 +147,7 @@ class BetaFeatures(BaseSDK):
             base_url=base_url,
             url_variables=url_variables,
             request=request,
-            request_body_required=False,
+            request_body_required=True,
             request_has_path_params=False,
             request_has_query_params=True,
             user_agent_header="user-agent",
@@ -426,12 +422,10 @@ class BetaFeatures(BaseSDK):
     def change_production_instance_domain(
         self,
         *,
-        request: Optional[
-            Union[
-                models.ChangeProductionInstanceDomainRequestBody,
-                models.ChangeProductionInstanceDomainRequestBodyTypedDict,
-            ]
-        ] = None,
+        request: Union[
+            models.ChangeProductionInstanceDomainRequestBody,
+            models.ChangeProductionInstanceDomainRequestBodyTypedDict,
+        ] = models.ChangeProductionInstanceDomainRequestBody(),
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -459,11 +453,9 @@ class BetaFeatures(BaseSDK):
 
         if not isinstance(request, BaseModel):
             request = utils.unmarshal(
-                request, Optional[models.ChangeProductionInstanceDomainRequestBody]
+                request, models.ChangeProductionInstanceDomainRequestBody
             )
-        request = cast(
-            Optional[models.ChangeProductionInstanceDomainRequestBody], request
-        )
+        request = cast(models.ChangeProductionInstanceDomainRequestBody, request)
 
         req = self.build_request(
             method="POST",
@@ -471,7 +463,7 @@ class BetaFeatures(BaseSDK):
             base_url=base_url,
             url_variables=url_variables,
             request=request,
-            request_body_required=False,
+            request_body_required=True,
             request_has_path_params=False,
             request_has_query_params=True,
             user_agent_header="user-agent",
@@ -530,12 +522,10 @@ class BetaFeatures(BaseSDK):
     async def change_production_instance_domain_async(
         self,
         *,
-        request: Optional[
-            Union[
-                models.ChangeProductionInstanceDomainRequestBody,
-                models.ChangeProductionInstanceDomainRequestBodyTypedDict,
-            ]
-        ] = None,
+        request: Union[
+            models.ChangeProductionInstanceDomainRequestBody,
+            models.ChangeProductionInstanceDomainRequestBodyTypedDict,
+        ] = models.ChangeProductionInstanceDomainRequestBody(),
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -563,11 +553,9 @@ class BetaFeatures(BaseSDK):
 
         if not isinstance(request, BaseModel):
             request = utils.unmarshal(
-                request, Optional[models.ChangeProductionInstanceDomainRequestBody]
+                request, models.ChangeProductionInstanceDomainRequestBody
             )
-        request = cast(
-            Optional[models.ChangeProductionInstanceDomainRequestBody], request
-        )
+        request = cast(models.ChangeProductionInstanceDomainRequestBody, request)
 
         req = self.build_request_async(
             method="POST",
@@ -575,7 +563,7 @@ class BetaFeatures(BaseSDK):
             base_url=base_url,
             url_variables=url_variables,
             request=request,
-            request_body_required=False,
+            request_body_required=True,
             request_has_path_params=False,
             request_has_query_params=True,
             user_agent_header="user-agent",

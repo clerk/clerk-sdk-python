@@ -11,12 +11,10 @@ class ClerkRedirectUrls(BaseSDK):
     def create(
         self,
         *,
-        request: Optional[
-            Union[
-                models.CreateRedirectURLRequestBody,
-                models.CreateRedirectURLRequestBodyTypedDict,
-            ]
-        ] = None,
+        request: Union[
+            models.CreateRedirectURLRequestBody,
+            models.CreateRedirectURLRequestBodyTypedDict,
+        ] = models.CreateRedirectURLRequestBody(),
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -39,10 +37,8 @@ class ClerkRedirectUrls(BaseSDK):
             base_url = server_url
 
         if not isinstance(request, BaseModel):
-            request = utils.unmarshal(
-                request, Optional[models.CreateRedirectURLRequestBody]
-            )
-        request = cast(Optional[models.CreateRedirectURLRequestBody], request)
+            request = utils.unmarshal(request, models.CreateRedirectURLRequestBody)
+        request = cast(models.CreateRedirectURLRequestBody, request)
 
         req = self.build_request(
             method="POST",
@@ -50,7 +46,7 @@ class ClerkRedirectUrls(BaseSDK):
             base_url=base_url,
             url_variables=url_variables,
             request=request,
-            request_body_required=False,
+            request_body_required=True,
             request_has_path_params=False,
             request_has_query_params=True,
             user_agent_header="user-agent",
@@ -109,12 +105,10 @@ class ClerkRedirectUrls(BaseSDK):
     async def create_async(
         self,
         *,
-        request: Optional[
-            Union[
-                models.CreateRedirectURLRequestBody,
-                models.CreateRedirectURLRequestBodyTypedDict,
-            ]
-        ] = None,
+        request: Union[
+            models.CreateRedirectURLRequestBody,
+            models.CreateRedirectURLRequestBodyTypedDict,
+        ] = models.CreateRedirectURLRequestBody(),
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -137,10 +131,8 @@ class ClerkRedirectUrls(BaseSDK):
             base_url = server_url
 
         if not isinstance(request, BaseModel):
-            request = utils.unmarshal(
-                request, Optional[models.CreateRedirectURLRequestBody]
-            )
-        request = cast(Optional[models.CreateRedirectURLRequestBody], request)
+            request = utils.unmarshal(request, models.CreateRedirectURLRequestBody)
+        request = cast(models.CreateRedirectURLRequestBody, request)
 
         req = self.build_request_async(
             method="POST",
@@ -148,7 +140,7 @@ class ClerkRedirectUrls(BaseSDK):
             base_url=base_url,
             url_variables=url_variables,
             request=request,
-            request_body_required=False,
+            request_body_required=True,
             request_has_path_params=False,
             request_has_query_params=True,
             user_agent_header="user-agent",

@@ -18,26 +18,25 @@ Updates the settings of an instance
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    s.instance_settings.update(request={
+        "test_mode": True,
+        "hibp": False,
+        "enhanced_email_deliverability": True,
+        "support_email": "support@example.com",
+        "clerk_js_version": "2.3.1",
+        "development_origin": "http://localhost:3000",
+        "allowed_origins": [
+            "http://localhost:3000",
+            "chrome-extension://extension_uiid",
+            "capacitor://localhost",
+        ],
+        "url_based_session_syncing": True,
+    })
 
-s.instance_settings.update(request={
-    "test_mode": True,
-    "hibp": False,
-    "enhanced_email_deliverability": True,
-    "support_email": "support@example.com",
-    "clerk_js_version": "2.3.1",
-    "development_origin": "http://localhost:3000",
-    "allowed_origins": [
-        "http://localhost:3000",
-        "chrome-extension://extension_uiid",
-        "capacitor://localhost",
-    ],
-    "url_based_session_syncing": True,
-})
-
-# Use the SDK ...
+    # Use the SDK ...
 
 ```
 
@@ -64,21 +63,20 @@ Updates the restriction settings of an instance
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    res = s.instance_settings.update_restrictions(request={
+        "allowlist": False,
+        "blocklist": True,
+        "block_email_subaddresses": True,
+        "block_disposable_email_domains": True,
+        "ignore_dots_for_gmail_addresses": False,
+    })
 
-res = s.instance_settings.update_restrictions(request={
-    "allowlist": False,
-    "blocklist": True,
-    "block_email_subaddresses": True,
-    "block_disposable_email_domains": True,
-    "ignore_dots_for_gmail_addresses": False,
-})
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -109,26 +107,25 @@ Updates the organization settings of the instance
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    res = s.instance_settings.update_organization_settings(request={
+        "enabled": True,
+        "max_allowed_memberships": 10,
+        "admin_delete_enabled": False,
+        "domains_enabled": True,
+        "domains_enrollment_modes": [
+            "automatic_invitation",
+            "automatic_suggestion",
+        ],
+        "creator_role_id": "creator_role",
+        "domains_default_role_id": "member_role",
+    })
 
-res = s.instance_settings.update_organization_settings(request={
-    "enabled": True,
-    "max_allowed_memberships": 10,
-    "admin_delete_enabled": False,
-    "domains_enabled": True,
-    "domains_enrollment_modes": [
-        "automatic_invitation",
-        "automatic_suggestion",
-    ],
-    "creator_role_id": "creator_role",
-    "domains_default_role_id": "member_role",
-})
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 

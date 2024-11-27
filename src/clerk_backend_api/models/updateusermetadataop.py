@@ -46,7 +46,7 @@ class UpdateUserMetadataRequestBody(BaseModel):
 class UpdateUserMetadataRequestTypedDict(TypedDict):
     user_id: str
     r"""The ID of the user whose metadata will be updated and merged"""
-    request_body: NotRequired[UpdateUserMetadataRequestBodyTypedDict]
+    request_body: UpdateUserMetadataRequestBodyTypedDict
 
 
 class UpdateUserMetadataRequest(BaseModel):
@@ -56,6 +56,6 @@ class UpdateUserMetadataRequest(BaseModel):
     r"""The ID of the user whose metadata will be updated and merged"""
 
     request_body: Annotated[
-        Optional[UpdateUserMetadataRequestBody],
+        UpdateUserMetadataRequestBody,
         FieldMetadata(request=RequestMetadata(media_type="application/json")),
-    ] = None
+    ]

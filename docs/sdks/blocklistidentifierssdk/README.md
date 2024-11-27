@@ -16,15 +16,14 @@ Get a list of all identifiers which are not allowed to access an instance
 ```python
 from clerk_backend_api import Clerk
 
-s = Clerk(
+with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-)
+) as s:
+    res = s.blocklist_identifiers.list()
 
-res = s.blocklist_identifiers.list()
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
