@@ -167,3 +167,6 @@ actions:
   - target: $["components"]["schemas"]["EmailAddress"]["properties"]["object"]
     update:
       x-speakeasy-unknown-values: allow
+  - target: $["components"]["schemas"]["Ticket"]["properties"]["strategy"]["enum"]
+    update:
+      - saml
