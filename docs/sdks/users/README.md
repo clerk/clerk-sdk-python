@@ -89,7 +89,7 @@ with Clerk(
 
 ### Response
 
-**[List[models.User]](../../models/.md)**
+**[List[models.User]](../../models/user.md)**
 
 ### Errors
 
@@ -720,7 +720,7 @@ with Clerk(
 
 ### Response
 
-**[List[models.ResponseBody]](../../models/.md)**
+**[List[models.ResponseBody]](../../models/responsebody.md)**
 
 ### Errors
 
