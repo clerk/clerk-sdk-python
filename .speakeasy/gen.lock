@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: bfe29c99-6e67-43fe-b928-64d6a5ed6aa8
 management:
-  docChecksum: b38d2555c95ce0fd804e5caf98da547b
+  docChecksum: 264c7cf574c4fa453587755d1bf79bcb
   docVersion: v1
-  speakeasyVersion: 1.448.0
-  generationVersion: 2.466.0
-  releaseVersion: 1.4.0
-  configChecksum: d230d40f9aa069e972589344260c6aa8
+  speakeasyVersion: 1.452.0
+  generationVersion: 2.472.1
+  releaseVersion: 1.4.1
+  configChecksum: b9e0a4731aec79a52c8180337d03b9fc
   repoURL: https://github.com/clerk/clerk-sdk-python.git
   installationURL: https://github.com/clerk/clerk-sdk-python.git
   published: true
@@ -15,7 +15,7 @@ features:
     additionalDependencies: 1.0.0
     additionalProperties: 1.0.1
     constsAndDefaults: 1.0.5
-    core: 5.6.8
+    core: 5.6.9
     defaultEnabledRetries: 0.2.0
     deprecations: 3.0.0
     enumUnions: 0.1.0
