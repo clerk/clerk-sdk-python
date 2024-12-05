@@ -83,6 +83,10 @@ actions:
   - target: $["paths"]["/organizations/{organization_id}/metadata"]["patch"]["requestBody"]["content"]["application/json"]["schema"]["properties"]["public_metadata"]
     update:
       additionalProperties: true
+  - target: $["paths"]["/organizations/{organization_id}"]["patch"]["requestBody"]["content"]["application/json"]["schema"]["additionalProperties"]
+    update: true
+  - target: $["paths"]["/organizations/{organization_id}/metadata"]["patch"]["requestBody"]["content"]["application/json"]["schema"]["additionalProperties"]
+    update: true
   - target: $["paths"]["/organizations/{organization_id}/metadata"]["patch"]["requestBody"]["content"]["application/json"]["schema"]["properties"]["private_metadata"]
     update:
       additionalProperties: true
