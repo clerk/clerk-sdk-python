@@ -159,7 +159,7 @@ class BaseSDK:
             headers = {**headers, **security_headers}
             query_params = {**query_params, **security_query_params}
 
-        serialized_request_body = SerializedRequestBody("application/octet-stream")
+        serialized_request_body = SerializedRequestBody()
         if get_serialized_body is not None:
             rb = get_serialized_body()
             if request_body_required and rb is None:

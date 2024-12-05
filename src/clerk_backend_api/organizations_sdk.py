@@ -625,6 +625,7 @@ class OrganizationsSDK(BaseSDK):
         max_allowed_memberships: OptionalNullable[int] = UNSET,
         admin_delete_enabled: OptionalNullable[bool] = UNSET,
         created_at: Optional[str] = None,
+        additional_properties: Optional[Dict[str, Any]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -641,6 +642,7 @@ class OrganizationsSDK(BaseSDK):
         :param max_allowed_memberships: The maximum number of memberships allowed for this organization
         :param admin_delete_enabled: If true, an admin can delete this organization with the Frontend API.
         :param created_at: A custom date/time denoting _when_ the organization was created, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`).
+        :param additional_properties:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -663,6 +665,7 @@ class OrganizationsSDK(BaseSDK):
                 max_allowed_memberships=max_allowed_memberships,
                 admin_delete_enabled=admin_delete_enabled,
                 created_at=created_at,
+                **(additional_properties or {}),
             ),
         )
 
@@ -739,6 +742,7 @@ class OrganizationsSDK(BaseSDK):
         max_allowed_memberships: OptionalNullable[int] = UNSET,
         admin_delete_enabled: OptionalNullable[bool] = UNSET,
         created_at: Optional[str] = None,
+        additional_properties: Optional[Dict[str, Any]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -755,6 +759,7 @@ class OrganizationsSDK(BaseSDK):
         :param max_allowed_memberships: The maximum number of memberships allowed for this organization
         :param admin_delete_enabled: If true, an admin can delete this organization with the Frontend API.
         :param created_at: A custom date/time denoting _when_ the organization was created, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`).
+        :param additional_properties:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -777,6 +782,7 @@ class OrganizationsSDK(BaseSDK):
                 max_allowed_memberships=max_allowed_memberships,
                 admin_delete_enabled=admin_delete_enabled,
                 created_at=created_at,
+                **(additional_properties or {}),
             ),
         )
 
@@ -1020,6 +1026,7 @@ class OrganizationsSDK(BaseSDK):
         organization_id: str,
         public_metadata: Optional[Dict[str, Any]] = None,
         private_metadata: Optional[Dict[str, Any]] = None,
+        additional_properties: Optional[Dict[str, Any]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1034,6 +1041,7 @@ class OrganizationsSDK(BaseSDK):
         :param organization_id: The ID of the organization for which metadata will be merged or updated
         :param public_metadata: Metadata saved on the organization, that is visible to both your frontend and backend. The new object will be merged with the existing value.
         :param private_metadata: Metadata saved on the organization that is only visible to your backend. The new object will be merged with the existing value.
+        :param additional_properties:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1051,6 +1059,7 @@ class OrganizationsSDK(BaseSDK):
             request_body=models.MergeOrganizationMetadataRequestBody(
                 public_metadata=public_metadata,
                 private_metadata=private_metadata,
+                **(additional_properties or {}),
             ),
         )
 
@@ -1124,6 +1133,7 @@ class OrganizationsSDK(BaseSDK):
         organization_id: str,
         public_metadata: Optional[Dict[str, Any]] = None,
         private_metadata: Optional[Dict[str, Any]] = None,
+        additional_properties: Optional[Dict[str, Any]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1138,6 +1148,7 @@ class OrganizationsSDK(BaseSDK):
         :param organization_id: The ID of the organization for which metadata will be merged or updated
         :param public_metadata: Metadata saved on the organization, that is visible to both your frontend and backend. The new object will be merged with the existing value.
         :param private_metadata: Metadata saved on the organization that is only visible to your backend. The new object will be merged with the existing value.
+        :param additional_properties:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1155,6 +1166,7 @@ class OrganizationsSDK(BaseSDK):
             request_body=models.MergeOrganizationMetadataRequestBody(
                 public_metadata=public_metadata,
                 private_metadata=private_metadata,
+                **(additional_properties or {}),
             ),
         )
 

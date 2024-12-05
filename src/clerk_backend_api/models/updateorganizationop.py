@@ -9,7 +9,8 @@ from clerk_backend_api.types import (
     UNSET_SENTINEL,
 )
 from clerk_backend_api.utils import FieldMetadata, PathParamMetadata, RequestMetadata
-from pydantic import model_serializer
+import pydantic
+from pydantic import ConfigDict, model_serializer
 from typing import Any, Dict, Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
 
@@ -34,6 +35,11 @@ class UpdateOrganizationRequestBodyTypedDict(TypedDict):
 
 
 class UpdateOrganizationRequestBody(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True, arbitrary_types_allowed=True, extra="allow"
+    )
+    __pydantic_extra__: Dict[str, Any] = pydantic.Field(init=False)
+
     public_metadata: Optional[Dict[str, Any]] = None
     r"""Metadata saved on the organization, that is visible to both your frontend and backend."""
 
@@ -56,6 +62,14 @@ class UpdateOrganizationRequestBody(BaseModel):
 
     created_at: Optional[str] = None
     r"""A custom date/time denoting _when_ the organization was created, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`)."""
+
+    @property
+    def additional_properties(self):
+        return self.__pydantic_extra__
+
+    @additional_properties.setter
+    def additional_properties(self, value):
+        self.__pydantic_extra__ = value  # pyright: ignore[reportIncompatibleVariableOverride]
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
@@ -97,6 +111,9 @@ class UpdateOrganizationRequestBody(BaseModel):
                 not k in optional_fields or (optional_nullable and is_set)
             ):
                 m[k] = val
+
+        for k, v in serialized.items():
+            m[k] = v
 
         return m
 
