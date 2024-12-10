@@ -21,8 +21,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.phone_numbers.create(request={
+) as clerk:
+    res = clerk.phone_numbers.create(request={
         "user_id": "usr_12345",
         "phone_number": "+11234567890",
         "verified": True,
@@ -65,8 +65,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.phone_numbers.get(phone_number_id="phone_12345")
+) as clerk:
+    res = clerk.phone_numbers.get(phone_number_id="phone_12345")
 
     if res is not None:
         # handle response
@@ -103,8 +103,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.phone_numbers.delete(phone_number_id="phone_12345")
+) as clerk:
+    res = clerk.phone_numbers.delete(phone_number_id="phone_12345")
 
     if res is not None:
         # handle response
@@ -141,8 +141,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.phone_numbers.update(phone_number_id="phone_12345", verified=False, primary=True, reserved_for_second_factor=True)
+) as clerk:
+    res = clerk.phone_numbers.update(phone_number_id="phone_12345", verified=False, primary=True, reserved_for_second_factor=True)
 
     if res is not None:
         # handle response

@@ -20,8 +20,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.beta_features.update_instance_settings(request={
+) as clerk:
+    res = clerk.beta_features.update_instance_settings(request={
         "restricted_to_allowlist": False,
         "from_email_address": "noreply",
         "progressive_sign_up": True,
@@ -71,8 +71,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    s.beta_features.update_domain(request={
+) as clerk:
+    clerk.beta_features.update_domain(request={
         "home_url": "https://www.example.com",
     })
 
@@ -109,8 +109,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    s.beta_features.change_production_instance_domain(request={
+) as clerk:
+    clerk.beta_features.change_production_instance_domain(request={
         "home_url": "https://www.newdomain.com",
         "is_secondary": False,
     })

@@ -21,8 +21,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.allowlist_blocklist.list_allowlist_identifiers()
+) as clerk:
+    res = clerk.allowlist_blocklist.list_allowlist_identifiers()
 
     if res is not None:
         # handle response
@@ -58,8 +58,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.allowlist_blocklist.create_allowlist_identifier(identifier="user@example.com", notify=True)
+) as clerk:
+    res = clerk.allowlist_blocklist.create_allowlist_identifier(identifier="user@example.com", notify=True)
 
     if res is not None:
         # handle response
@@ -97,8 +97,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.allowlist_blocklist.create_blocklist_identifier(identifier="example@example.com")
+) as clerk:
+    res = clerk.allowlist_blocklist.create_blocklist_identifier(identifier="example@example.com")
 
     if res is not None:
         # handle response
@@ -135,8 +135,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.allowlist_blocklist.delete_blocklist_identifier(identifier_id="identifier123")
+) as clerk:
+    res = clerk.allowlist_blocklist.delete_blocklist_identifier(identifier_id="identifier123")
 
     if res is not None:
         # handle response

@@ -25,8 +25,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.proxy_checks.verify(request={
+) as clerk:
+    res = clerk.proxy_checks.verify(request={
         "domain_id": "domain_32hfu3e",
         "proxy_url": "https://example.com/__clerk",
     })

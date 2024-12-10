@@ -18,8 +18,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.organization_domain.update(organization_id="<id>", domain_id="<id>", enrollment_mode="<value>", verified=False)
+) as clerk:
+    res = clerk.organization_domain.update(organization_id="<id>", domain_id="<id>", enrollment_mode="<value>", verified=False)
 
     if res is not None:
         # handle response

@@ -31,8 +31,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.organizations.list(limit=20, offset=10, include_members_count=False, query="clerk", order_by="-name")
+) as clerk:
+    res = clerk.organizations.list(limit=20, offset=10, include_members_count=False, query="clerk", order_by="-name")
 
     if res is not None:
         # handle response
@@ -83,8 +83,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.organizations.create(name="NewOrg", created_by="user_123", private_metadata={
+) as clerk:
+    res = clerk.organizations.create(name="NewOrg", created_by="user_123", private_metadata={
         "internal_code": "ABC123",
     }, public_metadata={
         "public_event": "Annual Summit",
@@ -131,8 +131,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.organizations.get(organization_id="org_123", include_members_count=False)
+) as clerk:
+    res = clerk.organizations.get(organization_id="org_123", include_members_count=False)
 
     if res is not None:
         # handle response
@@ -170,8 +170,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.organizations.update(organization_id="org_123_update", public_metadata={
+) as clerk:
+    res = clerk.organizations.update(organization_id="org_123_update", public_metadata={
 
     }, private_metadata={
 
@@ -224,8 +224,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.organizations.delete(organization_id="org_321_delete")
+) as clerk:
+    res = clerk.organizations.delete(organization_id="org_321_delete")
 
     if res is not None:
         # handle response
@@ -265,8 +265,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.organizations.merge_metadata(organization_id="org_12345", public_metadata={
+) as clerk:
+    res = clerk.organizations.merge_metadata(organization_id="org_12345", public_metadata={
         "announcement": "We are opening a new office!",
     }, private_metadata={
         "internal_use_only": "Future plans discussion.",
@@ -315,8 +315,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.organizations.upload_logo(organization_id="org_12345", file={
+) as clerk:
+    res = clerk.organizations.upload_logo(organization_id="org_12345", file={
         "file_name": "example.file",
         "content": open("example.file", "rb"),
         "content_type": "<value>",
@@ -359,8 +359,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.organizations.delete_logo(organization_id="org_12345")
+) as clerk:
+    res = clerk.organizations.delete_logo(organization_id="org_12345")
 
     if res is not None:
         # handle response

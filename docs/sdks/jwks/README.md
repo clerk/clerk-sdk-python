@@ -18,8 +18,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.jwks.get()
+) as clerk:
+    res = clerk.jwks.get()
 
     if res is not None:
         # handle response
