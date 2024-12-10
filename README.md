@@ -83,6 +83,28 @@ Generally, the SDK will work well with most IDEs out of the box. However, when u
 - [PyCharm Pydantic Plugin](https://docs.pydantic.dev/latest/integrations/pycharm/)
 <!-- End IDE Support [idesupport] -->
 
+## Authenticate Request
+
+Use `authenticate_request` to authenticate backend requests in Django, Flask, and other Python web frameworks.
+
+```python
+from clerk_backend_api import Clerk
+
+with Clerk(
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+) as s:
+    # Example request to authenticate
+    is_authenticated = s.security.authenticate_request(request={
+        "header": "example-header",
+        "token": "example-token"
+    })
+
+    if is_authenticated:
+        print("Request authenticated successfully!")
+    else:
+        print("Authentication failed.")
+```
+
 <!-- Start SDK Example Usage [usage] -->
 ## SDK Example Usage
 
