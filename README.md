@@ -152,7 +152,7 @@ with Clerk(
 
 ## Request Authentication
 
-Use the [authenticate_request](https://github.com/speakeasy-sdks/clerk-sdk-python/blob/main/src/clerk_backend_api/jwks_helpers/authenticaterequest.py) method to authenticate a request from your app's frontend (when using a Clerk frontend SDK) to a Python backend (Django, Flask, and other Python web frameworks). For example the following utility function checks if the user is effectively signed in:
+Use the [authenticate_request](https://github.com/clerk/clerk-sdk-python/blob/main/src/clerk_backend_api/jwks_helpers/authenticaterequest.py) method to authenticate a request from your app's frontend (when using a Clerk frontend SDK) to a Python backend (Django, Flask, and other Python web frameworks). For example the following utility function checks if the user is effectively signed in:
 
 ```python
 import os
