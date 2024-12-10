@@ -37,13 +37,14 @@ More information about the API can be found at https://clerk.com/docs
   * [SDK Installation](#sdk-installation)
   * [IDE Support](#ide-support)
   * [SDK Example Usage](#sdk-example-usage)
+  * [Authentication](#authentication)
+  * [Request Authentication](#request-authentication)
   * [Available Resources and Operations](#available-resources-and-operations)
   * [File uploads](#file-uploads)
   * [Retries](#retries)
   * [Error Handling](#error-handling)
   * [Server Selection](#server-selection)
   * [Custom HTTP Client](#custom-http-client)
-  * [Authentication](#authentication)
   * [Debugging](#debugging)
 * [Development](#development)
   * [Maturity](#maturity)
@@ -123,6 +124,54 @@ async def main():
 asyncio.run(main())
 ```
 <!-- End SDK Example Usage [usage] -->
+
+<!-- Start Authentication [security] -->
+## Authentication
+
+### Per-Client Security Schemes
+
+This SDK supports the following security scheme globally:
+
+| Name          | Type | Scheme      |
+| ------------- | ---- | ----------- |
+| `bearer_auth` | http | HTTP Bearer |
+
+To authenticate with the API the `bearer_auth` parameter must be set when initializing the SDK client instance. For example:
+```python
+from clerk_backend_api import Clerk
+
+with Clerk(
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+) as s:
+    s.miscellaneous.get_interstitial(frontend_api="frontend-api_1a2b3c4d", publishable_key="pub_1a2b3c4d")
+
+    # Use the SDK ...
+
+```
+<!-- End Authentication [security] -->
+
+##  Request Authentication
+
+Use the [authenticate_request](https://github.com/speakeasy-sdks/clerk-sdk-python/blob/main/src/clerk_backend_api/jwks_helpers/authenticaterequest.py) method to authenticate a request from your app's frontend (when using a Clerk frontend SDK) to a Python backend (Django, Flask, and other Python web frameworks). For example the following utility function would check if the user is effectively signed in:
+
+```python
+import os
+import httpx
+from clerk_backend_api import Clerk
+from clerk_backend_api.jwks_helpers import AuthenticateRequestOptions
+
+def is_signed_in(request: httpx.Request):
+    sdk = Clerk(bearer_auth=os.getenv('CLERK_SECRET_KEY'))
+    request_state = sdk.authenticate_request(
+        request,
+        AuthenticateRequestOptions(
+            authorized_parties=['https://example.com']
+        )
+    )
+    return request_state.is_signed_in
+```
+
+If the request is correctly authenticated, the token's payload is made available in `request_state.payload`. Otherwise the reason for the token verification failure is given by `request_state.reason`.
 
 <!-- Start Available Resources and Operations [operations] -->
 ## Available Resources and Operations
@@ -565,31 +614,6 @@ class CustomClient(AsyncHttpClient):
 s = Clerk(async_client=CustomClient(httpx.AsyncClient()))
 ```
 <!-- End Custom HTTP Client [http-client] -->
-
-<!-- Start Authentication [security] -->
-## Authentication
-
-### Per-Client Security Schemes
-
-This SDK supports the following security scheme globally:
-
-| Name          | Type | Scheme      |
-| ------------- | ---- | ----------- |
-| `bearer_auth` | http | HTTP Bearer |
-
-To authenticate with the API the `bearer_auth` parameter must be set when initializing the SDK client instance. For example:
-```python
-from clerk_backend_api import Clerk
-
-with Clerk(
-    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    s.miscellaneous.get_interstitial(frontend_api="frontend-api_1a2b3c4d", publishable_key="pub_1a2b3c4d")
-
-    # Use the SDK ...
-
-```
-<!-- End Authentication [security] -->
 
 <!-- Start Debugging [debug] -->
 ## Debugging
