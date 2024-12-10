@@ -26,8 +26,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.oauth_applications.list(limit=20, offset=10)
+) as clerk:
+    res = clerk.oauth_applications.list(limit=20, offset=10)
 
     if res is not None:
         # handle response
@@ -67,8 +67,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.oauth_applications.create(name="Example App", callback_url="https://example.com/oauth/callback", scopes="profile email public_metadata", public=True)
+) as clerk:
+    res = clerk.oauth_applications.create(name="Example App", callback_url="https://example.com/oauth/callback", scopes="profile email public_metadata", public=True)
 
     if res is not None:
         # handle response
@@ -108,8 +108,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.oauth_applications.get(oauth_application_id="oauth_app_12345")
+) as clerk:
+    res = clerk.oauth_applications.get(oauth_application_id="oauth_app_12345")
 
     if res is not None:
         # handle response
@@ -146,8 +146,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.oauth_applications.update(oauth_application_id="oauth_app_67890", name="Updated OAuth App Name", callback_url="https://example.com/oauth/callback", scopes="profile email public_metadata private_metadata")
+) as clerk:
+    res = clerk.oauth_applications.update(oauth_application_id="oauth_app_67890", name="Updated OAuth App Name", callback_url="https://example.com/oauth/callback", scopes="profile email public_metadata private_metadata")
 
     if res is not None:
         # handle response
@@ -188,8 +188,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.oauth_applications.delete(oauth_application_id="oauth_app_09876")
+) as clerk:
+    res = clerk.oauth_applications.delete(oauth_application_id="oauth_app_09876")
 
     if res is not None:
         # handle response
@@ -227,8 +227,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.oauth_applications.rotate_secret(oauth_application_id="oauth_application_12345")
+) as clerk:
+    res = clerk.oauth_applications.rotate_secret(oauth_application_id="oauth_application_12345")
 
     if res is not None:
         # handle response

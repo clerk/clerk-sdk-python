@@ -21,8 +21,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.email_addresses.create(request={
+) as clerk:
+    res = clerk.email_addresses.create(request={
         "user_id": "user_12345",
         "email_address": "example@clerk.com",
         "verified": False,
@@ -64,8 +64,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.email_addresses.get(email_address_id="email_address_id_example")
+) as clerk:
+    res = clerk.email_addresses.get(email_address_id="email_address_id_example")
 
     if res is not None:
         # handle response
@@ -102,8 +102,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.email_addresses.delete(email_address_id="email_address_id_example")
+) as clerk:
+    res = clerk.email_addresses.delete(email_address_id="email_address_id_example")
 
     if res is not None:
         # handle response
@@ -140,8 +140,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.email_addresses.update(email_address_id="email_address_id_example", verified=False, primary=True)
+) as clerk:
+    res = clerk.email_addresses.update(email_address_id="email_address_id_example", verified=False, primary=True)
 
     if res is not None:
         # handle response

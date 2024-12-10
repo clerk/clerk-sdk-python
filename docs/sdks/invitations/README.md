@@ -25,8 +25,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.invitations.create(email_address="user@example.com", public_metadata={
+) as clerk:
+    res = clerk.invitations.create(email_address="user@example.com", public_metadata={
 
     }, redirect_url="https://example.com/welcome", notify=True, ignore_existing=True, expires_in_days=486589)
 
@@ -71,8 +71,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.invitations.list(limit=20, offset=10, status=clerk_backend_api.ListInvitationsQueryParamStatus.PENDING)
+) as clerk:
+    res = clerk.invitations.list(limit=20, offset=10, status=clerk_backend_api.ListInvitationsQueryParamStatus.PENDING)
 
     if res is not None:
         # handle response
@@ -113,8 +113,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.invitations.revoke(invitation_id="inv_123")
+) as clerk:
+    res = clerk.invitations.revoke(invitation_id="inv_123")
 
     if res is not None:
         # handle response

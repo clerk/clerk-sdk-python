@@ -27,8 +27,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.clients.list(limit=20, offset=10)
+) as clerk:
+    res = clerk.clients.list(limit=20, offset=10)
 
     if res is not None:
         # handle response
@@ -66,8 +66,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.clients.verify(request={
+) as clerk:
+    res = clerk.clients.verify(request={
         "token": "jwt_token_example",
     })
 
@@ -106,8 +106,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.clients.get(client_id="cli_123456789")
+) as clerk:
+    res = clerk.clients.get(client_id="cli_123456789")
 
     if res is not None:
         # handle response
