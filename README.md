@@ -88,21 +88,20 @@ Generally, the SDK will work well with most IDEs out of the box. However, when u
 Use `authenticate_request` to authenticate backend requests in Django, Flask, and other Python web frameworks.
 
 ```python
+import os
+import httpx
 from clerk_backend_api import Clerk
+from clerk_backend_api.jwks_helpers import AuthenticateRequestOptions
 
-with Clerk(
-    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    # Example request to authenticate
-    is_authenticated = s.security.authenticate_request(request={
-        "header": "example-header",
-        "token": "example-token"
-    })
-
-    if is_authenticated:
-        print("Request authenticated successfully!")
-    else:
-        print("Authentication failed.")
+def is_signed_in(request: httpx.Request):
+    sdk = Clerk(bearer_auth=os.getenv('CLERK_SECRET_KEY'))
+    request_state = sdk.authenticate_request(
+        request,
+        AuthenticateRequestOptions(
+            authorized_parties=['https://example.com']
+        )
+    )
+    return request_state.is_signed_in
 ```
 
 <!-- Start SDK Example Usage [usage] -->
