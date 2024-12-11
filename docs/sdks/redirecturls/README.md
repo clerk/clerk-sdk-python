@@ -18,8 +18,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.redirect_ur_ls.list()
+) as clerk:
+    res = clerk.redirect_ur_ls.list()
 
     if res is not None:
         # handle response

@@ -25,8 +25,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.email_sms_templates.list(template_type=clerk_backend_api.TemplateType.EMAIL)
+) as clerk:
+    res = clerk.email_sms_templates.list(template_type=clerk_backend_api.TemplateType.EMAIL)
 
     if res is not None:
         # handle response
@@ -66,8 +66,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.email_sms_templates.revert(template_type=clerk_backend_api.RevertTemplatePathParamTemplateType.EMAIL, slug="welcome-email")
+) as clerk:
+    res = clerk.email_sms_templates.revert(template_type=clerk_backend_api.RevertTemplatePathParamTemplateType.EMAIL, slug="welcome-email")
 
     if res is not None:
         # handle response
@@ -108,8 +108,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.email_sms_templates.get(template_type=clerk_backend_api.PathParamTemplateType.EMAIL, slug="welcome-email")
+) as clerk:
+    res = clerk.email_sms_templates.get(template_type=clerk_backend_api.PathParamTemplateType.EMAIL, slug="welcome-email")
 
     if res is not None:
         # handle response
@@ -152,8 +152,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.email_sms_templates.toggle_template_delivery(template_type=clerk_backend_api.ToggleTemplateDeliveryPathParamTemplateType.EMAIL, slug="welcome-email", delivered_by_clerk=True)
+) as clerk:
+    res = clerk.email_sms_templates.toggle_template_delivery(template_type=clerk_backend_api.ToggleTemplateDeliveryPathParamTemplateType.EMAIL, slug="welcome-email", delivered_by_clerk=True)
 
     if res is not None:
         # handle response

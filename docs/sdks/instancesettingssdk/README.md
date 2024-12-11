@@ -20,8 +20,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    s.instance_settings.update(request={
+) as clerk:
+    clerk.instance_settings.update(request={
         "test_mode": True,
         "hibp": False,
         "enhanced_email_deliverability": True,
@@ -65,8 +65,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.instance_settings.update_restrictions(request={
+) as clerk:
+    res = clerk.instance_settings.update_restrictions(request={
         "allowlist": False,
         "blocklist": True,
         "block_email_subaddresses": True,
@@ -109,8 +109,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.instance_settings.update_organization_settings(request={
+) as clerk:
+    res = clerk.instance_settings.update_organization_settings(request={
         "enabled": True,
         "max_allowed_memberships": 10,
         "admin_delete_enabled": False,

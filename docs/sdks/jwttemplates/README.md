@@ -22,8 +22,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.jwt_templates.list()
+) as clerk:
+    res = clerk.jwt_templates.list()
 
     if res is not None:
         # handle response
@@ -58,8 +58,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.jwt_templates.create(request={
+) as clerk:
+    res = clerk.jwt_templates.create(request={
         "name": "Example Template",
         "claims": {},
         "lifetime": 3600,
@@ -104,8 +104,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.jwt_templates.get(template_id="template_123")
+) as clerk:
+    res = clerk.jwt_templates.get(template_id="template_123")
 
     if res is not None:
         # handle response
@@ -142,8 +142,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.jwt_templates.update(template_id="<id>", name="<value>", claims={}, lifetime=8574.77, allowed_clock_skew=5971.29, custom_signing_key=True, signing_algorithm="<value>", signing_key="<value>")
+) as clerk:
+    res = clerk.jwt_templates.update(template_id="<id>", name="<value>", claims={}, lifetime=8574.77, allowed_clock_skew=5971.29, custom_signing_key=True, signing_algorithm="<value>", signing_key="<value>")
 
     if res is not None:
         # handle response
@@ -187,8 +187,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.jwt_templates.delete(template_id="<id>")
+) as clerk:
+    res = clerk.jwt_templates.delete(template_id="<id>")
 
     if res is not None:
         # handle response
