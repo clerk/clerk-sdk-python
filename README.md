@@ -95,8 +95,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.email_addresses.get(email_address_id="email_address_id_example")
+) as clerk:
+    res = clerk.email_addresses.get(email_address_id="email_address_id_example")
 
     if res is not None:
         # handle response
@@ -114,8 +114,8 @@ from clerk_backend_api import Clerk
 async def main():
     async with Clerk(
         bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-    ) as s:
-        res = await s.email_addresses.get_async(email_address_id="email_address_id_example")
+    ) as clerk:
+        res = await clerk.email_addresses.get_async(email_address_id="email_address_id_example")
 
         if res is not None:
             # handle response
@@ -142,8 +142,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    s.miscellaneous.get_interstitial(frontend_api="frontend-api_1a2b3c4d", publishable_key="pub_1a2b3c4d")
+) as clerk:
+    clerk.miscellaneous.get_interstitial(frontend_api="frontend-api_1a2b3c4d", publishable_key="pub_1a2b3c4d")
 
     # Use the SDK ...
 
@@ -420,8 +420,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.users.set_profile_image(user_id="usr_test123", file={
+) as clerk:
+    res = clerk.users.set_profile_image(user_id="usr_test123", file={
         "file_name": "example.file",
         "content": open("example.file", "rb"),
         "content_type": "<value>",
@@ -441,11 +441,11 @@ Some of the endpoints in this SDK support retries. If you use the SDK without an
 
 To change the default retry strategy for a single API call, simply provide a `RetryConfig` object to the call:
 ```python
-from clerk.utils import BackoffStrategy, RetryConfig
 from clerk_backend_api import Clerk
+from clerk_backend_api.utils import BackoffStrategy, RetryConfig
 
-with Clerk() as s:
-    s.miscellaneous.get_interstitial(frontend_api="frontend-api_1a2b3c4d", publishable_key="pub_1a2b3c4d",
+with Clerk() as clerk:
+    clerk.miscellaneous.get_interstitial(frontend_api="frontend-api_1a2b3c4d", publishable_key="pub_1a2b3c4d",
         RetryConfig("backoff", BackoffStrategy(1, 50, 1.1, 100), False))
 
     # Use the SDK ...
@@ -454,13 +454,13 @@ with Clerk() as s:
 
 If you'd like to override the default retry strategy for all operations that support retries, you can use the `retry_config` optional parameter when initializing the SDK:
 ```python
-from clerk.utils import BackoffStrategy, RetryConfig
 from clerk_backend_api import Clerk
+from clerk_backend_api.utils import BackoffStrategy, RetryConfig
 
 with Clerk(
     retry_config=RetryConfig("backoff", BackoffStrategy(1, 50, 1.1, 100), False),
-) as s:
-    s.miscellaneous.get_interstitial(frontend_api="frontend-api_1a2b3c4d", publishable_key="pub_1a2b3c4d")
+) as clerk:
+    clerk.miscellaneous.get_interstitial(frontend_api="frontend-api_1a2b3c4d", publishable_key="pub_1a2b3c4d")
 
     # Use the SDK ...
 
@@ -495,10 +495,10 @@ from clerk_backend_api import Clerk, models
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
+) as clerk:
     res = None
     try:
-        res = s.clients.verify(request={
+        res = clerk.clients.verify(request={
             "token": "jwt_token_example",
         })
 
@@ -526,8 +526,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     server_url="https://api.clerk.com/v1",
-) as s:
-    s.miscellaneous.get_interstitial(frontend_api="frontend-api_1a2b3c4d", publishable_key="pub_1a2b3c4d")
+) as clerk:
+    clerk.miscellaneous.get_interstitial(frontend_api="frontend-api_1a2b3c4d", publishable_key="pub_1a2b3c4d")
 
     # Use the SDK ...
 

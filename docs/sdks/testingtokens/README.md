@@ -18,8 +18,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.testing_tokens.create()
+) as clerk:
+    res = clerk.testing_tokens.create()
 
     if res is not None:
         # handle response

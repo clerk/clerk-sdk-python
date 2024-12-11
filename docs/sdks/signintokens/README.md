@@ -21,8 +21,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.sign_in_tokens.create(request={
+) as clerk:
+    res = clerk.sign_in_tokens.create(request={
         "user_id": "user_12345",
         "expires_in_seconds": 2592000,
     })
@@ -62,8 +62,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.sign_in_tokens.revoke(sign_in_token_id="tok_test_1234567890")
+) as clerk:
+    res = clerk.sign_in_tokens.revoke(sign_in_token_id="tok_test_1234567890")
 
     if res is not None:
         # handle response

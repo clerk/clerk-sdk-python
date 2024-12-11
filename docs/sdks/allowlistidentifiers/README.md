@@ -18,8 +18,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.allowlist_identifiers.delete(identifier_id="example_identifier_id")
+) as clerk:
+    res = clerk.allowlist_identifiers.delete(identifier_id="example_identifier_id")
 
     if res is not None:
         # handle response

@@ -20,8 +20,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.actor_tokens.create(user_id="user_1a2b3c", actor={}, expires_in_seconds=3600, session_max_duration_in_seconds=1800)
+) as clerk:
+    res = clerk.actor_tokens.create(user_id="user_1a2b3c", actor={}, expires_in_seconds=3600, session_max_duration_in_seconds=1800)
 
     if res is not None:
         # handle response
@@ -61,8 +61,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.actor_tokens.revoke(actor_token_id="act_tok_abcdefghijk")
+) as clerk:
+    res = clerk.actor_tokens.revoke(actor_token_id="act_tok_abcdefghijk")
 
     if res is not None:
         # handle response

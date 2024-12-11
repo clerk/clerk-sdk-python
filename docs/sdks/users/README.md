@@ -46,8 +46,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.users.list(email_address=[
+) as clerk:
+    res = clerk.users.list(email_address=[
         "test@example.com",
     ], phone_number=[
         "+12345678901",
@@ -115,8 +115,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.users.create(request={
+) as clerk:
+    res = clerk.users.create(request={
         "external_id": "ext-id-001",
         "first_name": "John",
         "last_name": "Doe",
@@ -194,8 +194,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.users.count(email_address=[
+) as clerk:
+    res = clerk.users.count(email_address=[
         "user@example.com",
     ], phone_number=[
         "+1234567890",
@@ -250,8 +250,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.users.get(user_id="usr_1")
+) as clerk:
+    res = clerk.users.get(user_id="usr_1")
 
     if res is not None:
         # handle response
@@ -299,8 +299,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.users.update(user_id="usr_1", external_id="ext_123", first_name="Jane", last_name="Doe", primary_email_address_id="eml_12345", notify_primary_email_address_changed=True, primary_phone_number_id="phn_67890", primary_web3_wallet_id="wlt_123", username="janedoe", profile_image_id="img_789", password="secretPass123!", password_digest="$argon2i$v=19$m=4096,t=3,p=1$4t6CL3P7YiHBtwESXawI8Hm20zJj4cs7/4/G3c187e0$m7RQFczcKr5bIR0IIxbpO2P0tyrLjf3eUW3M3QSwnLc", password_hasher="argon2i", skip_password_checks=False, sign_out_of_other_sessions=True, totp_secret="ABCD1234EFGH5678", backup_codes=[
+) as clerk:
+    res = clerk.users.update(user_id="usr_1", external_id="ext_123", first_name="Jane", last_name="Doe", primary_email_address_id="eml_12345", notify_primary_email_address_changed=True, primary_phone_number_id="phn_67890", primary_web3_wallet_id="wlt_123", username="janedoe", profile_image_id="img_789", password="secretPass123!", password_digest="$argon2i$v=19$m=4096,t=3,p=1$4t6CL3P7YiHBtwESXawI8Hm20zJj4cs7/4/G3c187e0$m7RQFczcKr5bIR0IIxbpO2P0tyrLjf3eUW3M3QSwnLc", password_hasher="argon2i", skip_password_checks=False, sign_out_of_other_sessions=True, totp_secret="ABCD1234EFGH5678", backup_codes=[
         "123456",
         "654321",
     ], public_metadata={
@@ -371,8 +371,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.users.delete(user_id="usr_1")
+) as clerk:
+    res = clerk.users.delete(user_id="usr_1")
 
     if res is not None:
         # handle response
@@ -409,8 +409,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.users.ban(user_id="user_12345")
+) as clerk:
+    res = clerk.users.ban(user_id="user_12345")
 
     if res is not None:
         # handle response
@@ -447,8 +447,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.users.unban(user_id="user_12345")
+) as clerk:
+    res = clerk.users.unban(user_id="user_12345")
 
     if res is not None:
         # handle response
@@ -486,8 +486,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.users.lock(user_id="user_123456789")
+) as clerk:
+    res = clerk.users.lock(user_id="user_123456789")
 
     if res is not None:
         # handle response
@@ -524,8 +524,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.users.unlock(user_id="user_12345")
+) as clerk:
+    res = clerk.users.unlock(user_id="user_12345")
 
     if res is not None:
         # handle response
@@ -562,8 +562,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.users.set_profile_image(user_id="usr_test123", file={
+) as clerk:
+    res = clerk.users.set_profile_image(user_id="usr_test123", file={
         "file_name": "example.file",
         "content": open("example.file", "rb"),
         "content_type": "<value>",
@@ -605,8 +605,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.users.delete_profile_image(user_id="usr_test123")
+) as clerk:
+    res = clerk.users.delete_profile_image(user_id="usr_test123")
 
     if res is not None:
         # handle response
@@ -650,8 +650,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.users.update_metadata(user_id="user_123456789", public_metadata={
+) as clerk:
+    res = clerk.users.update_metadata(user_id="user_123456789", public_metadata={
         "key": "<value>",
         "key1": "<value>",
     }, private_metadata={
@@ -701,8 +701,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.users.get_o_auth_access_token(user_id="user_123", provider="oauth_google")
+) as clerk:
+    res = clerk.users.get_o_auth_access_token(user_id="user_123", provider="oauth_google")
 
     if res is not None:
         # handle response
@@ -740,8 +740,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.users.get_organization_memberships(user_id="usr_1234567890", limit=20, offset=10)
+) as clerk:
+    res = clerk.users.get_organization_memberships(user_id="usr_1234567890", limit=20, offset=10)
 
     if res is not None:
         # handle response
@@ -781,8 +781,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.users.get_organization_invitations(user_id="<id>", limit=20, offset=10, status=clerk_backend_api.UsersGetOrganizationInvitationsQueryParamStatus.PENDING)
+) as clerk:
+    res = clerk.users.get_organization_invitations(user_id="<id>", limit=20, offset=10, status=clerk_backend_api.UsersGetOrganizationInvitationsQueryParamStatus.PENDING)
 
     if res is not None:
         # handle response
@@ -823,8 +823,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.users.verify_password(user_id="user_123", password="securepassword123")
+) as clerk:
+    res = clerk.users.verify_password(user_id="user_123", password="securepassword123")
 
     if res is not None:
         # handle response
@@ -865,8 +865,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.users.verify_totp(user_id="usr_1a2b3c", code="123456")
+) as clerk:
+    res = clerk.users.verify_totp(user_id="usr_1a2b3c", code="123456")
 
     if res is not None:
         # handle response
@@ -904,8 +904,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.users.disable_mfa(user_id="user_123456")
+) as clerk:
+    res = clerk.users.disable_mfa(user_id="user_123456")
 
     if res is not None:
         # handle response
@@ -942,8 +942,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.users.delete_backup_codes(user_id="<id>")
+) as clerk:
+    res = clerk.users.delete_backup_codes(user_id="<id>")
 
     if res is not None:
         # handle response
@@ -980,8 +980,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.users.delete_passkey(user_id="<id>", passkey_identification_id="<id>")
+) as clerk:
+    res = clerk.users.delete_passkey(user_id="<id>", passkey_identification_id="<id>")
 
     if res is not None:
         # handle response
@@ -1019,8 +1019,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.users.delete_web3_wallet(user_id="<id>", web3_wallet_identification_id="<id>")
+) as clerk:
+    res = clerk.users.delete_web3_wallet(user_id="<id>", web3_wallet_identification_id="<id>")
 
     if res is not None:
         # handle response
@@ -1059,8 +1059,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.users.create_totp(user_id="<id>")
+) as clerk:
+    res = clerk.users.create_totp(user_id="<id>")
 
     if res is not None:
         # handle response
@@ -1097,8 +1097,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.users.delete_totp(user_id="<id>")
+) as clerk:
+    res = clerk.users.delete_totp(user_id="<id>")
 
     if res is not None:
         # handle response
@@ -1135,8 +1135,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.users.delete_external_account(user_id="<id>", external_account_id="<id>")
+) as clerk:
+    res = clerk.users.delete_external_account(user_id="<id>", external_account_id="<id>")
 
     if res is not None:
         # handle response

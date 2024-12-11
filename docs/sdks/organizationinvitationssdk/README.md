@@ -30,8 +30,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.organization_invitations.get_all(limit=20, offset=10, order_by="-created_at", status=clerk_backend_api.ListInstanceOrganizationInvitationsQueryParamStatus.ACCEPTED, query="<value>")
+) as clerk:
+    res = clerk.organization_invitations.get_all(limit=20, offset=10, order_by="-created_at", status=clerk_backend_api.ListInstanceOrganizationInvitationsQueryParamStatus.ACCEPTED, query="<value>")
 
     if res is not None:
         # handle response
@@ -87,8 +87,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.organization_invitations.create(organization_id="org_12345", email_address="user@example.com", role="admin", inviter_user_id="user_67890", public_metadata={
+) as clerk:
+    res = clerk.organization_invitations.create(organization_id="org_12345", email_address="user@example.com", role="admin", inviter_user_id="user_67890", public_metadata={
         "key": "value",
     }, private_metadata={
         "private_key": "secret_value",
@@ -141,8 +141,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.organization_invitations.list(organization_id="org_12345", limit=20, offset=10, status=clerk_backend_api.ListOrganizationInvitationsQueryParamStatus.PENDING)
+) as clerk:
+    res = clerk.organization_invitations.list(organization_id="org_12345", limit=20, offset=10, status=clerk_backend_api.ListOrganizationInvitationsQueryParamStatus.PENDING)
 
     if res is not None:
         # handle response
@@ -194,8 +194,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.organization_invitations.bulk_create(organization_id="org_12345", request_body=[
+) as clerk:
+    res = clerk.organization_invitations.bulk_create(organization_id="org_12345", request_body=[
         {
             "email_address": "newmember@example.com",
             "role": "admin",
@@ -253,8 +253,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.organization_invitations.list_pending(organization_id="org_12345", limit=20, offset=10)
+) as clerk:
+    res = clerk.organization_invitations.list_pending(organization_id="org_12345", limit=20, offset=10)
 
     if res is not None:
         # handle response
@@ -293,8 +293,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.organization_invitations.get(organization_id="org_123456789", invitation_id="inv_987654321")
+) as clerk:
+    res = clerk.organization_invitations.get(organization_id="org_123456789", invitation_id="inv_987654321")
 
     if res is not None:
         # handle response
@@ -336,8 +336,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.organization_invitations.revoke(organization_id="org_123456", invitation_id="inv_123456", requesting_user_id="usr_12345")
+) as clerk:
+    res = clerk.organization_invitations.revoke(organization_id="org_123456", invitation_id="inv_123456", requesting_user_id="usr_12345")
 
     if res is not None:
         # handle response

@@ -5,8 +5,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.email_addresses.get(email_address_id="email_address_id_example")
+) as clerk:
+    res = clerk.email_addresses.get(email_address_id="email_address_id_example")
 
     if res is not None:
         # handle response
@@ -24,8 +24,8 @@ from clerk_backend_api import Clerk
 async def main():
     async with Clerk(
         bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-    ) as s:
-        res = await s.email_addresses.get_async(email_address_id="email_address_id_example")
+    ) as clerk:
+        res = await clerk.email_addresses.get_async(email_address_id="email_address_id_example")
 
         if res is not None:
             # handle response

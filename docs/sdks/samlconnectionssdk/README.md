@@ -24,8 +24,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.saml_connections.list(limit=20, offset=10)
+) as clerk:
+    res = clerk.saml_connections.list(limit=20, offset=10)
 
     if res is not None:
         # handle response
@@ -64,8 +64,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.saml_connections.create(name="My SAML Connection", domain="example.org", provider=clerk_backend_api.Provider.SAML_CUSTOM, idp_entity_id="http://idp.example.org/", idp_sso_url="http://idp.example.org/sso", idp_certificate="MIIDdzCCAl+gAwIBAgIJAKcyBaiiz+DT...", idp_metadata_url="http://idp.example.org/metadata.xml", idp_metadata="<EntityDescriptor ...", attribute_mapping={
+) as clerk:
+    res = clerk.saml_connections.create(name="My SAML Connection", domain="example.org", provider=clerk_backend_api.Provider.SAML_CUSTOM, idp_entity_id="http://idp.example.org/", idp_sso_url="http://idp.example.org/sso", idp_certificate="MIIDdzCCAl+gAwIBAgIJAKcyBaiiz+DT...", idp_metadata_url="http://idp.example.org/metadata.xml", idp_metadata="<EntityDescriptor ...", attribute_mapping={
         "user_id": "nameid",
         "email_address": "mail",
         "first_name": "givenName",
@@ -115,8 +115,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.saml_connections.get(saml_connection_id="saml_conn_123")
+) as clerk:
+    res = clerk.saml_connections.get(saml_connection_id="saml_conn_123")
 
     if res is not None:
         # handle response
@@ -153,8 +153,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.saml_connections.update(saml_connection_id="saml_conn_123_update", name="Example SAML Connection", domain="example.com", idp_entity_id="entity_123", idp_sso_url="https://idp.example.com/sso", idp_certificate="MIIDBTCCAe2gAwIBAgIQ...", idp_metadata_url="https://idp.example.com/metadata", idp_metadata="<EntityDescriptor>...</EntityDescriptor>", attribute_mapping={
+) as clerk:
+    res = clerk.saml_connections.update(saml_connection_id="saml_conn_123_update", name="Example SAML Connection", domain="example.com", idp_entity_id="entity_123", idp_sso_url="https://idp.example.com/sso", idp_certificate="MIIDBTCCAe2gAwIBAgIQ...", idp_metadata_url="https://idp.example.com/metadata", idp_metadata="<EntityDescriptor>...</EntityDescriptor>", attribute_mapping={
         "user_id": "id123",
         "email_address": "user@example.com",
         "first_name": "Jane",
@@ -209,8 +209,8 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.saml_connections.delete(saml_connection_id="saml_conn_123_delete")
+) as clerk:
+    res = clerk.saml_connections.delete(saml_connection_id="saml_conn_123_delete")
 
     if res is not None:
         # handle response
