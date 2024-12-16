@@ -23,12 +23,14 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.webhooks.create_svix_app()
+) as clerk:
 
-    if res is not None:
-        # handle response
-        pass
+    res = clerk.webhooks.create_svix_app()
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -60,8 +62,9 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    s.webhooks.delete_svix_app()
+) as clerk:
+
+    clerk.webhooks.delete_svix_app()
 
     # Use the SDK ...
 
@@ -91,12 +94,14 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.webhooks.generate_svix_auth_url()
+) as clerk:
 
-    if res is not None:
-        # handle response
-        pass
+    res = clerk.webhooks.generate_svix_auth_url()
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 

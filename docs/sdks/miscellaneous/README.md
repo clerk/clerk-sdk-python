@@ -19,8 +19,9 @@ It is used by Clerk SDKs when the user's authentication state cannot be immediat
 ```python
 from clerk_backend_api import Clerk
 
-with Clerk() as s:
-    s.miscellaneous.get_interstitial(frontend_api="frontend-api_1a2b3c4d", publishable_key="pub_1a2b3c4d")
+with Clerk() as clerk:
+
+    clerk.miscellaneous.get_interstitial(frontend_api="frontend-api_1a2b3c4d", publishable_key="pub_1a2b3c4d")
 
     # Use the SDK ...
 

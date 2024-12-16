@@ -24,12 +24,14 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.domains.list()
+) as clerk:
 
-    if res is not None:
-        # handle response
-        pass
+    res = clerk.domains.list()
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -64,12 +66,14 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.domains.add(name="example.com", is_satellite=True, proxy_url="https://proxy.example.com")
+) as clerk:
 
-    if res is not None:
-        # handle response
-        pass
+    res = clerk.domains.add(name="example.com", is_satellite=True, proxy_url="https://proxy.example.com")
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -105,12 +109,14 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.domains.delete(domain_id="domain_12345")
+) as clerk:
 
-    if res is not None:
-        # handle response
-        pass
+    res = clerk.domains.delete(domain_id="domain_12345")
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -150,12 +156,14 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.domains.update(domain_id="domain_12345", name="example.com", proxy_url="http://proxy.example.com", is_secondary=False)
+) as clerk:
 
-    if res is not None:
-        # handle response
-        pass
+    res = clerk.domains.update(domain_id="domain_12345", name="example.com", proxy_url="http://proxy.example.com", is_secondary=False)
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 

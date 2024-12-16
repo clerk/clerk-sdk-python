@@ -20,12 +20,14 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.organization_domains.create(organization_id="<id>", name="<value>", enrollment_mode="<value>", verified=True)
+) as clerk:
 
-    if res is not None:
-        # handle response
-        pass
+    res = clerk.organization_domains.create(organization_id="<id>", name="<value>", enrollment_mode="<value>", verified=True)
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -61,12 +63,14 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.organization_domains.list(organization_id="<id>", limit=20, offset=10, verified="<value>", enrollment_mode="<value>")
+) as clerk:
 
-    if res is not None:
-        # handle response
-        pass
+    res = clerk.organization_domains.list(organization_id="<id>", limit=20, offset=10, verified="<value>", enrollment_mode="<value>")
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -103,12 +107,14 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.organization_domains.delete(organization_id="<id>", domain_id="<id>")
+) as clerk:
 
-    if res is not None:
-        # handle response
-        pass
+    res = clerk.organization_domains.delete(organization_id="<id>", domain_id="<id>")
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 

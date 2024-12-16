@@ -23,12 +23,14 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.organization_memberships.create(organization_id="org_123", user_id="user_456", role="admin")
+) as clerk:
 
-    if res is not None:
-        # handle response
-        pass
+    res = clerk.organization_memberships.create(organization_id="org_123", user_id="user_456", role="admin")
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -63,12 +65,14 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.organization_memberships.list(organization_id="org_789", limit=20, offset=10, order_by="+created_at")
+) as clerk:
 
-    if res is not None:
-        # handle response
-        pass
+    res = clerk.organization_memberships.list(organization_id="org_789", limit=20, offset=10, order_by="+created_at")
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -104,12 +108,14 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.organization_memberships.update(organization_id="org_12345", user_id="user_67890", role="admin")
+) as clerk:
 
-    if res is not None:
-        # handle response
-        pass
+    res = clerk.organization_memberships.update(organization_id="org_12345", user_id="user_67890", role="admin")
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -144,12 +150,14 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.organization_memberships.delete(organization_id="org_12345", user_id="user_67890")
+) as clerk:
 
-    if res is not None:
-        # handle response
-        pass
+    res = clerk.organization_memberships.delete(organization_id="org_12345", user_id="user_67890")
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -185,16 +193,18 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.organization_memberships.update_metadata(organization_id="org_123456", user_id="user_654321", public_metadata={
+) as clerk:
+
+    res = clerk.organization_memberships.update_metadata(organization_id="org_123456", user_id="user_654321", public_metadata={
 
     }, private_metadata={
 
     })
 
-    if res is not None:
-        # handle response
-        pass
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -230,12 +240,14 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.organization_memberships.get_all(limit=20, offset=10, order_by="<value>")
+) as clerk:
 
-    if res is not None:
-        # handle response
-        pass
+    res = clerk.organization_memberships.get_all(limit=20, offset=10, order_by="<value>")
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
