@@ -18,12 +18,14 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.sign_ups.update(id="signup_1234567890abcdef", external_id="ext_id_7890abcdef123456")
+) as clerk:
 
-    if res is not None:
-        # handle response
-        pass
+    res = clerk.sign_ups.update(id="signup_1234567890abcdef", external_id="ext_id_7890abcdef123456")
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 

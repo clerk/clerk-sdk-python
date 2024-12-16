@@ -31,12 +31,14 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.organizations.list(limit=20, offset=10, include_members_count=False, query="clerk", order_by="-name")
+) as clerk:
 
-    if res is not None:
-        # handle response
-        pass
+    res = clerk.organizations.list(limit=20, offset=10, include_members_count=False, query="clerk", order_by="-name")
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -83,16 +85,18 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.organizations.create(name="NewOrg", created_by="user_123", private_metadata={
+) as clerk:
+
+    res = clerk.organizations.create(name="NewOrg", created_by="user_123", private_metadata={
         "internal_code": "ABC123",
     }, public_metadata={
         "public_event": "Annual Summit",
     }, slug="neworg", max_allowed_memberships=100, created_at="<value>")
 
-    if res is not None:
-        # handle response
-        pass
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -131,12 +135,14 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.organizations.get(organization_id="org_123", include_members_count=False)
+) as clerk:
 
-    if res is not None:
-        # handle response
-        pass
+    res = clerk.organizations.get(organization_id="org_123", include_members_count=False)
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -170,8 +176,9 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.organizations.update(organization_id="org_123_update", public_metadata={
+) as clerk:
+
+    res = clerk.organizations.update(organization_id="org_123_update", public_metadata={
 
     }, private_metadata={
 
@@ -179,9 +186,10 @@ with Clerk(
 
     })
 
-    if res is not None:
-        # handle response
-        pass
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -224,12 +232,14 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.organizations.delete(organization_id="org_321_delete")
+) as clerk:
 
-    if res is not None:
-        # handle response
-        pass
+    res = clerk.organizations.delete(organization_id="org_321_delete")
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -265,8 +275,9 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.organizations.merge_metadata(organization_id="org_12345", public_metadata={
+) as clerk:
+
+    res = clerk.organizations.merge_metadata(organization_id="org_12345", public_metadata={
         "announcement": "We are opening a new office!",
     }, private_metadata={
         "internal_use_only": "Future plans discussion.",
@@ -274,9 +285,10 @@ with Clerk(
 
     })
 
-    if res is not None:
-        # handle response
-        pass
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -315,16 +327,18 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.organizations.upload_logo(organization_id="org_12345", file={
+) as clerk:
+
+    res = clerk.organizations.upload_logo(organization_id="org_12345", file={
         "file_name": "example.file",
         "content": open("example.file", "rb"),
         "content_type": "<value>",
     }, uploader_user_id="user_67890")
 
-    if res is not None:
-        # handle response
-        pass
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -359,12 +373,14 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.organizations.delete_logo(organization_id="org_12345")
+) as clerk:
 
-    if res is not None:
-        # handle response
-        pass
+    res = clerk.organizations.delete_logo(organization_id="org_12345")
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 

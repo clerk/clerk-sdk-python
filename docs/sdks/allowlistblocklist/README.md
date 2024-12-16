@@ -21,12 +21,14 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.allowlist_blocklist.list_allowlist_identifiers()
+) as clerk:
 
-    if res is not None:
-        # handle response
-        pass
+    res = clerk.allowlist_blocklist.list_allowlist_identifiers()
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -58,12 +60,14 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.allowlist_blocklist.create_allowlist_identifier(identifier="user@example.com", notify=True)
+) as clerk:
 
-    if res is not None:
-        # handle response
-        pass
+    res = clerk.allowlist_blocklist.create_allowlist_identifier(identifier="user@example.com", notify=True)
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -97,12 +101,14 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.allowlist_blocklist.create_blocklist_identifier(identifier="example@example.com")
+) as clerk:
 
-    if res is not None:
-        # handle response
-        pass
+    res = clerk.allowlist_blocklist.create_blocklist_identifier(identifier="example@example.com")
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -135,12 +141,14 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.allowlist_blocklist.delete_blocklist_identifier(identifier_id="identifier123")
+) as clerk:
 
-    if res is not None:
-        # handle response
-        pass
+    res = clerk.allowlist_blocklist.delete_blocklist_identifier(identifier_id="identifier123")
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 

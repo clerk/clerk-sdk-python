@@ -22,12 +22,14 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.jwt_templates.list()
+) as clerk:
 
-    if res is not None:
-        # handle response
-        pass
+    res = clerk.jwt_templates.list()
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -58,8 +60,9 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.jwt_templates.create(request={
+) as clerk:
+
+    res = clerk.jwt_templates.create(request={
         "name": "Example Template",
         "claims": {},
         "lifetime": 3600,
@@ -69,9 +72,10 @@ with Clerk(
         "signing_key": "PRIVATE_KEY_PLACEHOLDER",
     })
 
-    if res is not None:
-        # handle response
-        pass
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -104,12 +108,14 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.jwt_templates.get(template_id="template_123")
+) as clerk:
 
-    if res is not None:
-        # handle response
-        pass
+    res = clerk.jwt_templates.get(template_id="template_123")
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -142,12 +148,14 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.jwt_templates.update(template_id="<id>", name="<value>", claims={}, lifetime=8574.77, allowed_clock_skew=5971.29, custom_signing_key=True, signing_algorithm="<value>", signing_key="<value>")
+) as clerk:
 
-    if res is not None:
-        # handle response
-        pass
+    res = clerk.jwt_templates.update(template_id="<id>", name="<value>", claims={}, lifetime=8574.77, allowed_clock_skew=5971.29, custom_signing_key=True, signing_algorithm="<value>", signing_key="<value>")
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -187,12 +195,14 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.jwt_templates.delete(template_id="<id>")
+) as clerk:
 
-    if res is not None:
-        # handle response
-        pass
+    res = clerk.jwt_templates.delete(template_id="<id>")
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 

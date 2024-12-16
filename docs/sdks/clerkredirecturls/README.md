@@ -20,14 +20,16 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.redirect_urls.create(request={
+) as clerk:
+
+    res = clerk.redirect_urls.create(request={
         "url": "https://my-app.com/oauth-callback",
     })
 
-    if res is not None:
-        # handle response
-        pass
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -60,12 +62,14 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.redirect_urls.get(id="redir_01FG4K9G5NWSQ4ZPT4TQE4Z7G3")
+) as clerk:
 
-    if res is not None:
-        # handle response
-        pass
+    res = clerk.redirect_urls.get(id="redir_01FG4K9G5NWSQ4ZPT4TQE4Z7G3")
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -98,12 +102,14 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.redirect_urls.delete(id="redir_01FG4K9G5NWSQ4ZPT4TQE4Z7G3")
+) as clerk:
 
-    if res is not None:
-        # handle response
-        pass
+    res = clerk.redirect_urls.delete(id="redir_01FG4K9G5NWSQ4ZPT4TQE4Z7G3")
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 

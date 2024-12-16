@@ -46,8 +46,9 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.users.list(email_address=[
+) as clerk:
+
+    res = clerk.users.list(email_address=[
         "test@example.com",
     ], phone_number=[
         "+12345678901",
@@ -63,9 +64,10 @@ with Clerk(
         "org-id-123",
     ], query="John", last_active_at_since=1700690400000, limit=20, offset=10, order_by="-created_at")
 
-    if res is not None:
-        # handle response
-        pass
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -115,8 +117,9 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.users.create(request={
+) as clerk:
+
+    res = clerk.users.create(request={
         "external_id": "ext-id-001",
         "first_name": "John",
         "last_name": "Doe",
@@ -159,9 +162,10 @@ with Clerk(
         "created_at": "2023-03-15T07:15:20.902Z",
     })
 
-    if res is not None:
-        # handle response
-        pass
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -194,8 +198,9 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.users.count(email_address=[
+) as clerk:
+
+    res = clerk.users.count(email_address=[
         "user@example.com",
     ], phone_number=[
         "+1234567890",
@@ -209,9 +214,10 @@ with Clerk(
         "user-id-123",
     ], query="John Doe")
 
-    if res is not None:
-        # handle response
-        pass
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -250,12 +256,14 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.users.get(user_id="usr_1")
+) as clerk:
 
-    if res is not None:
-        # handle response
-        pass
+    res = clerk.users.get(user_id="usr_1")
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -299,8 +307,9 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.users.update(user_id="usr_1", external_id="ext_123", first_name="Jane", last_name="Doe", primary_email_address_id="eml_12345", notify_primary_email_address_changed=True, primary_phone_number_id="phn_67890", primary_web3_wallet_id="wlt_123", username="janedoe", profile_image_id="img_789", password="secretPass123!", password_digest="$argon2i$v=19$m=4096,t=3,p=1$4t6CL3P7YiHBtwESXawI8Hm20zJj4cs7/4/G3c187e0$m7RQFczcKr5bIR0IIxbpO2P0tyrLjf3eUW3M3QSwnLc", password_hasher="argon2i", skip_password_checks=False, sign_out_of_other_sessions=True, totp_secret="ABCD1234EFGH5678", backup_codes=[
+) as clerk:
+
+    res = clerk.users.update(user_id="usr_1", external_id="ext_123", first_name="Jane", last_name="Doe", primary_email_address_id="eml_12345", notify_primary_email_address_changed=True, primary_phone_number_id="phn_67890", primary_web3_wallet_id="wlt_123", username="janedoe", profile_image_id="img_789", password="secretPass123!", password_digest="$argon2i$v=19$m=4096,t=3,p=1$4t6CL3P7YiHBtwESXawI8Hm20zJj4cs7/4/G3c187e0$m7RQFczcKr5bIR0IIxbpO2P0tyrLjf3eUW3M3QSwnLc", password_hasher="argon2i", skip_password_checks=False, sign_out_of_other_sessions=True, totp_secret="ABCD1234EFGH5678", backup_codes=[
         "123456",
         "654321",
     ], public_metadata={
@@ -311,9 +320,10 @@ with Clerk(
         "age": 30,
     }, delete_self_enabled=True, create_organization_enabled=False, legal_accepted_at="<value>", skip_legal_checks=False, create_organizations_limit=597129, created_at="2021-04-05T14:30:00.000Z")
 
-    if res is not None:
-        # handle response
-        pass
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -371,12 +381,14 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.users.delete(user_id="usr_1")
+) as clerk:
 
-    if res is not None:
-        # handle response
-        pass
+    res = clerk.users.delete(user_id="usr_1")
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -409,12 +421,14 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.users.ban(user_id="user_12345")
+) as clerk:
 
-    if res is not None:
-        # handle response
-        pass
+    res = clerk.users.ban(user_id="user_12345")
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -447,12 +461,14 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.users.unban(user_id="user_12345")
+) as clerk:
 
-    if res is not None:
-        # handle response
-        pass
+    res = clerk.users.unban(user_id="user_12345")
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -486,12 +502,14 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.users.lock(user_id="user_123456789")
+) as clerk:
 
-    if res is not None:
-        # handle response
-        pass
+    res = clerk.users.lock(user_id="user_123456789")
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -524,12 +542,14 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.users.unlock(user_id="user_12345")
+) as clerk:
 
-    if res is not None:
-        # handle response
-        pass
+    res = clerk.users.unlock(user_id="user_12345")
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -562,16 +582,18 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.users.set_profile_image(user_id="usr_test123", file={
+) as clerk:
+
+    res = clerk.users.set_profile_image(user_id="usr_test123", file={
         "file_name": "example.file",
         "content": open("example.file", "rb"),
         "content_type": "<value>",
     })
 
-    if res is not None:
-        # handle response
-        pass
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -605,12 +627,14 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.users.delete_profile_image(user_id="usr_test123")
+) as clerk:
 
-    if res is not None:
-        # handle response
-        pass
+    res = clerk.users.delete_profile_image(user_id="usr_test123")
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -650,8 +674,9 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.users.update_metadata(user_id="user_123456789", public_metadata={
+) as clerk:
+
+    res = clerk.users.update_metadata(user_id="user_123456789", public_metadata={
         "key": "<value>",
         "key1": "<value>",
     }, private_metadata={
@@ -662,9 +687,10 @@ with Clerk(
         "key1": "<value>",
     })
 
-    if res is not None:
-        # handle response
-        pass
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -701,12 +727,14 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.users.get_o_auth_access_token(user_id="user_123", provider="oauth_google")
+) as clerk:
 
-    if res is not None:
-        # handle response
-        pass
+    res = clerk.users.get_o_auth_access_token(user_id="user_123", provider="oauth_google")
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -740,12 +768,14 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.users.get_organization_memberships(user_id="usr_1234567890", limit=20, offset=10)
+) as clerk:
 
-    if res is not None:
-        # handle response
-        pass
+    res = clerk.users.get_organization_memberships(user_id="usr_1234567890", limit=20, offset=10)
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -781,12 +811,14 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.users.get_organization_invitations(user_id="<id>", limit=20, offset=10, status=clerk_backend_api.UsersGetOrganizationInvitationsQueryParamStatus.PENDING)
+) as clerk:
 
-    if res is not None:
-        # handle response
-        pass
+    res = clerk.users.get_organization_invitations(user_id="<id>", limit=20, offset=10, status=clerk_backend_api.UsersGetOrganizationInvitationsQueryParamStatus.PENDING)
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -823,12 +855,14 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.users.verify_password(user_id="user_123", password="securepassword123")
+) as clerk:
 
-    if res is not None:
-        # handle response
-        pass
+    res = clerk.users.verify_password(user_id="user_123", password="securepassword123")
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -865,12 +899,14 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.users.verify_totp(user_id="usr_1a2b3c", code="123456")
+) as clerk:
 
-    if res is not None:
-        # handle response
-        pass
+    res = clerk.users.verify_totp(user_id="usr_1a2b3c", code="123456")
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -904,12 +940,14 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.users.disable_mfa(user_id="user_123456")
+) as clerk:
 
-    if res is not None:
-        # handle response
-        pass
+    res = clerk.users.disable_mfa(user_id="user_123456")
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -942,12 +980,14 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.users.delete_backup_codes(user_id="<id>")
+) as clerk:
 
-    if res is not None:
-        # handle response
-        pass
+    res = clerk.users.delete_backup_codes(user_id="<id>")
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -980,12 +1020,14 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.users.delete_passkey(user_id="<id>", passkey_identification_id="<id>")
+) as clerk:
 
-    if res is not None:
-        # handle response
-        pass
+    res = clerk.users.delete_passkey(user_id="<id>", passkey_identification_id="<id>")
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -1019,12 +1061,14 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.users.delete_web3_wallet(user_id="<id>", web3_wallet_identification_id="<id>")
+) as clerk:
 
-    if res is not None:
-        # handle response
-        pass
+    res = clerk.users.delete_web3_wallet(user_id="<id>", web3_wallet_identification_id="<id>")
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -1059,12 +1103,14 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.users.create_totp(user_id="<id>")
+) as clerk:
 
-    if res is not None:
-        # handle response
-        pass
+    res = clerk.users.create_totp(user_id="<id>")
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -1097,12 +1143,14 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.users.delete_totp(user_id="<id>")
+) as clerk:
 
-    if res is not None:
-        # handle response
-        pass
+    res = clerk.users.delete_totp(user_id="<id>")
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -1135,12 +1183,14 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.users.delete_external_account(user_id="<id>", external_account_id="<id>")
+) as clerk:
 
-    if res is not None:
-        # handle response
-        pass
+    res = clerk.users.delete_external_account(user_id="<id>", external_account_id="<id>")
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 

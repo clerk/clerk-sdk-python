@@ -18,12 +18,14 @@ from clerk_backend_api import Clerk
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as s:
-    res = s.blocklist_identifiers.list()
+) as clerk:
 
-    if res is not None:
-        # handle response
-        pass
+    res = clerk.blocklist_identifiers.list()
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
