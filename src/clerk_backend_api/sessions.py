@@ -61,7 +61,7 @@ class Sessions(BaseSDK):
             offset=offset,
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="GET",
             path="/sessions",
             base_url=base_url,
@@ -163,7 +163,7 @@ class Sessions(BaseSDK):
             offset=offset,
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="GET",
             path="/sessions",
             base_url=base_url,
@@ -250,7 +250,7 @@ class Sessions(BaseSDK):
             session_id=session_id,
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="GET",
             path="/sessions/{session_id}",
             base_url=base_url,
@@ -337,7 +337,7 @@ class Sessions(BaseSDK):
             session_id=session_id,
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="GET",
             path="/sessions/{session_id}",
             base_url=base_url,
@@ -425,7 +425,7 @@ class Sessions(BaseSDK):
             session_id=session_id,
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="POST",
             path="/sessions/{session_id}/revoke",
             base_url=base_url,
@@ -513,7 +513,7 @@ class Sessions(BaseSDK):
             session_id=session_id,
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="POST",
             path="/sessions/{session_id}/revoke",
             base_url=base_url,
@@ -611,7 +611,7 @@ class Sessions(BaseSDK):
             ),
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="POST",
             path="/sessions/{session_id}/verify",
             base_url=base_url,
@@ -718,7 +718,7 @@ class Sessions(BaseSDK):
             ),
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="POST",
             path="/sessions/{session_id}/verify",
             base_url=base_url,
@@ -817,7 +817,7 @@ class Sessions(BaseSDK):
             template_name=template_name,
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="POST",
             path="/sessions/{session_id}/tokens/{template_name}",
             base_url=base_url,
@@ -910,7 +910,7 @@ class Sessions(BaseSDK):
             template_name=template_name,
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="POST",
             path="/sessions/{session_id}/tokens/{template_name}",
             base_url=base_url,

@@ -50,7 +50,7 @@ class OrganizationDomainsSDK(BaseSDK):
             ),
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="POST",
             path="/organizations/{organization_id}/domains",
             base_url=base_url,
@@ -159,7 +159,7 @@ class OrganizationDomainsSDK(BaseSDK):
             ),
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="POST",
             path="/organizations/{organization_id}/domains",
             base_url=base_url,
@@ -269,7 +269,7 @@ class OrganizationDomainsSDK(BaseSDK):
             enrollment_mode=enrollment_mode,
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="GET",
             path="/organizations/{organization_id}/domains",
             base_url=base_url,
@@ -370,7 +370,7 @@ class OrganizationDomainsSDK(BaseSDK):
             enrollment_mode=enrollment_mode,
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="GET",
             path="/organizations/{organization_id}/domains",
             base_url=base_url,
@@ -462,7 +462,7 @@ class OrganizationDomainsSDK(BaseSDK):
             domain_id=domain_id,
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="DELETE",
             path="/organizations/{organization_id}/domains/{domain_id}",
             base_url=base_url,
@@ -552,7 +552,7 @@ class OrganizationDomainsSDK(BaseSDK):
             domain_id=domain_id,
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="DELETE",
             path="/organizations/{organization_id}/domains/{domain_id}",
             base_url=base_url,

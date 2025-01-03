@@ -39,7 +39,7 @@ class AllowlistIdentifiers(BaseSDK):
             identifier_id=identifier_id,
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="DELETE",
             path="/allowlist_identifiers/{identifier_id}",
             base_url=base_url,
@@ -126,7 +126,7 @@ class AllowlistIdentifiers(BaseSDK):
             identifier_id=identifier_id,
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="DELETE",
             path="/allowlist_identifiers/{identifier_id}",
             base_url=base_url,

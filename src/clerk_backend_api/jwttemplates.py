@@ -30,7 +30,7 @@ class JwtTemplates(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
-        req = self.build_request(
+        req = self._build_request(
             method="GET",
             path="/jwt_templates",
             base_url=base_url,
@@ -106,7 +106,7 @@ class JwtTemplates(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="GET",
             path="/jwt_templates",
             base_url=base_url,
@@ -194,7 +194,7 @@ class JwtTemplates(BaseSDK):
             request = utils.unmarshal(request, models.CreateJWTTemplateRequestBody)
         request = cast(models.CreateJWTTemplateRequestBody, request)
 
-        req = self.build_request(
+        req = self._build_request(
             method="POST",
             path="/jwt_templates",
             base_url=base_url,
@@ -291,7 +291,7 @@ class JwtTemplates(BaseSDK):
             request = utils.unmarshal(request, models.CreateJWTTemplateRequestBody)
         request = cast(models.CreateJWTTemplateRequestBody, request)
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="POST",
             path="/jwt_templates",
             base_url=base_url,
@@ -385,7 +385,7 @@ class JwtTemplates(BaseSDK):
             template_id=template_id,
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="GET",
             path="/jwt_templates/{template_id}",
             base_url=base_url,
@@ -472,7 +472,7 @@ class JwtTemplates(BaseSDK):
             template_id=template_id,
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="GET",
             path="/jwt_templates/{template_id}",
             base_url=base_url,
@@ -588,7 +588,7 @@ class JwtTemplates(BaseSDK):
             ),
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="PATCH",
             path="/jwt_templates/{template_id}",
             base_url=base_url,
@@ -711,7 +711,7 @@ class JwtTemplates(BaseSDK):
             ),
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="PATCH",
             path="/jwt_templates/{template_id}",
             base_url=base_url,
@@ -803,7 +803,7 @@ class JwtTemplates(BaseSDK):
             template_id=template_id,
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="DELETE",
             path="/jwt_templates/{template_id}",
             base_url=base_url,
@@ -888,7 +888,7 @@ class JwtTemplates(BaseSDK):
             template_id=template_id,
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="DELETE",
             path="/jwt_templates/{template_id}",
             base_url=base_url,

@@ -3,7 +3,7 @@
 import importlib.metadata
 
 __title__: str = "clerk-backend-api"
-__version__: str = "1.5.0"
+__version__: str = "1.6.0"
 
 try:
     if __package__ is not None:

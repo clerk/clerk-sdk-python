@@ -60,7 +60,7 @@ class Templates(BaseSDK):
             ),
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="POST",
             path="/templates/{template_type}/{slug}/preview",
             base_url=base_url,
@@ -178,7 +178,7 @@ class Templates(BaseSDK):
             ),
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="POST",
             path="/templates/{template_type}/{slug}/preview",
             base_url=base_url,

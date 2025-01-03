@@ -47,7 +47,7 @@ class OrganizationMembershipsSDK(BaseSDK):
             ),
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="POST",
             path="/organizations/{organization_id}/memberships",
             base_url=base_url,
@@ -153,7 +153,7 @@ class OrganizationMembershipsSDK(BaseSDK):
             ),
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="POST",
             path="/organizations/{organization_id}/memberships",
             base_url=base_url,
@@ -260,7 +260,7 @@ class OrganizationMembershipsSDK(BaseSDK):
             order_by=order_by,
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="GET",
             path="/organizations/{organization_id}/memberships",
             base_url=base_url,
@@ -358,7 +358,7 @@ class OrganizationMembershipsSDK(BaseSDK):
             order_by=order_by,
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="GET",
             path="/organizations/{organization_id}/memberships",
             base_url=base_url,
@@ -455,7 +455,7 @@ class OrganizationMembershipsSDK(BaseSDK):
             ),
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="PATCH",
             path="/organizations/{organization_id}/memberships/{user_id}",
             base_url=base_url,
@@ -559,7 +559,7 @@ class OrganizationMembershipsSDK(BaseSDK):
             ),
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="PATCH",
             path="/organizations/{organization_id}/memberships/{user_id}",
             base_url=base_url,
@@ -658,7 +658,7 @@ class OrganizationMembershipsSDK(BaseSDK):
             user_id=user_id,
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="DELETE",
             path="/organizations/{organization_id}/memberships/{user_id}",
             base_url=base_url,
@@ -750,7 +750,7 @@ class OrganizationMembershipsSDK(BaseSDK):
             user_id=user_id,
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="DELETE",
             path="/organizations/{organization_id}/memberships/{user_id}",
             base_url=base_url,
@@ -852,7 +852,7 @@ class OrganizationMembershipsSDK(BaseSDK):
             ),
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="PATCH",
             path="/organizations/{organization_id}/memberships/{user_id}/metadata",
             base_url=base_url,
@@ -961,7 +961,7 @@ class OrganizationMembershipsSDK(BaseSDK):
             ),
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="PATCH",
             path="/organizations/{organization_id}/memberships/{user_id}/metadata",
             base_url=base_url,
@@ -1063,7 +1063,7 @@ class OrganizationMembershipsSDK(BaseSDK):
             order_by=order_by,
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="GET",
             path="/organization_memberships",
             base_url=base_url,
@@ -1160,7 +1160,7 @@ class OrganizationMembershipsSDK(BaseSDK):
             order_by=order_by,
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="GET",
             path="/organization_memberships",
             base_url=base_url,

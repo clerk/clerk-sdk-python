@@ -49,7 +49,7 @@ class ProxyChecks(BaseSDK):
             request = utils.unmarshal(request, models.VerifyDomainProxyRequestBody)
         request = cast(models.VerifyDomainProxyRequestBody, request)
 
-        req = self.build_request(
+        req = self._build_request(
             method="POST",
             path="/proxy_checks",
             base_url=base_url,
@@ -153,7 +153,7 @@ class ProxyChecks(BaseSDK):
             request = utils.unmarshal(request, models.VerifyDomainProxyRequestBody)
         request = cast(models.VerifyDomainProxyRequestBody, request)
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="POST",
             path="/proxy_checks",
             base_url=base_url,

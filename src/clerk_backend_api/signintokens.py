@@ -44,7 +44,7 @@ class SignInTokens(BaseSDK):
             request = utils.unmarshal(request, models.CreateSignInTokenRequestBody)
         request = cast(models.CreateSignInTokenRequestBody, request)
 
-        req = self.build_request(
+        req = self._build_request(
             method="POST",
             path="/sign_in_tokens",
             base_url=base_url,
@@ -143,7 +143,7 @@ class SignInTokens(BaseSDK):
             request = utils.unmarshal(request, models.CreateSignInTokenRequestBody)
         request = cast(models.CreateSignInTokenRequestBody, request)
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="POST",
             path="/sign_in_tokens",
             base_url=base_url,
@@ -237,7 +237,7 @@ class SignInTokens(BaseSDK):
             sign_in_token_id=sign_in_token_id,
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="POST",
             path="/sign_in_tokens/{sign_in_token_id}/revoke",
             base_url=base_url,
@@ -324,7 +324,7 @@ class SignInTokens(BaseSDK):
             sign_in_token_id=sign_in_token_id,
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="POST",
             path="/sign_in_tokens/{sign_in_token_id}/revoke",
             base_url=base_url,

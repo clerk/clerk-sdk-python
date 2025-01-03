@@ -45,7 +45,7 @@ class BetaFeatures(BaseSDK):
             )
         request = cast(models.UpdateInstanceAuthConfigRequestBody, request)
 
-        req = self.build_request(
+        req = self._build_request(
             method="PATCH",
             path="/beta_features/instance_settings",
             base_url=base_url,
@@ -146,7 +146,7 @@ class BetaFeatures(BaseSDK):
             )
         request = cast(models.UpdateInstanceAuthConfigRequestBody, request)
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="PATCH",
             path="/beta_features/instance_settings",
             base_url=base_url,
@@ -258,7 +258,7 @@ class BetaFeatures(BaseSDK):
             Optional[models.UpdateProductionInstanceDomainRequestBody], request
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="PUT",
             path="/beta_features/domain",
             base_url=base_url,
@@ -368,7 +368,7 @@ class BetaFeatures(BaseSDK):
             Optional[models.UpdateProductionInstanceDomainRequestBody], request
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="PUT",
             path="/beta_features/domain",
             base_url=base_url,
@@ -471,7 +471,7 @@ class BetaFeatures(BaseSDK):
             )
         request = cast(models.ChangeProductionInstanceDomainRequestBody, request)
 
-        req = self.build_request(
+        req = self._build_request(
             method="POST",
             path="/instance/change_domain",
             base_url=base_url,
@@ -574,7 +574,7 @@ class BetaFeatures(BaseSDK):
             )
         request = cast(models.ChangeProductionInstanceDomainRequestBody, request)
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="POST",
             path="/instance/change_domain",
             base_url=base_url,

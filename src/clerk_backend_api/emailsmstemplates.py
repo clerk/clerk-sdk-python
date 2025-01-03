@@ -44,7 +44,7 @@ class EmailSMSTemplates(BaseSDK):
             template_type=template_type,
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="GET",
             path="/templates/{template_type}",
             base_url=base_url,
@@ -135,7 +135,7 @@ class EmailSMSTemplates(BaseSDK):
             template_type=template_type,
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="GET",
             path="/templates/{template_type}",
             base_url=base_url,
@@ -228,7 +228,7 @@ class EmailSMSTemplates(BaseSDK):
             slug=slug,
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="POST",
             path="/templates/{template_type}/{slug}/revert",
             base_url=base_url,
@@ -323,7 +323,7 @@ class EmailSMSTemplates(BaseSDK):
             slug=slug,
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="POST",
             path="/templates/{template_type}/{slug}/revert",
             base_url=base_url,
@@ -418,7 +418,7 @@ class EmailSMSTemplates(BaseSDK):
             slug=slug,
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="GET",
             path="/templates/{template_type}/{slug}",
             base_url=base_url,
@@ -511,7 +511,7 @@ class EmailSMSTemplates(BaseSDK):
             slug=slug,
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="GET",
             path="/templates/{template_type}/{slug}",
             base_url=base_url,
@@ -611,7 +611,7 @@ class EmailSMSTemplates(BaseSDK):
             ),
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="POST",
             path="/templates/{template_type}/{slug}/toggle_delivery",
             base_url=base_url,
@@ -718,7 +718,7 @@ class EmailSMSTemplates(BaseSDK):
             ),
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="POST",
             path="/templates/{template_type}/{slug}/toggle_delivery",
             base_url=base_url,

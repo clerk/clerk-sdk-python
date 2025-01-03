@@ -58,7 +58,7 @@ class OrganizationsSDK(BaseSDK):
             order_by=order_by,
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="GET",
             path="/organizations",
             base_url=base_url,
@@ -160,7 +160,7 @@ class OrganizationsSDK(BaseSDK):
             order_by=order_by,
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="GET",
             path="/organizations",
             base_url=base_url,
@@ -275,7 +275,7 @@ class OrganizationsSDK(BaseSDK):
             created_at=created_at,
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="POST",
             path="/organizations",
             base_url=base_url,
@@ -393,7 +393,7 @@ class OrganizationsSDK(BaseSDK):
             created_at=created_at,
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="POST",
             path="/organizations",
             base_url=base_url,
@@ -486,7 +486,7 @@ class OrganizationsSDK(BaseSDK):
             include_members_count=include_members_count,
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="GET",
             path="/organizations/{organization_id}",
             base_url=base_url,
@@ -576,7 +576,7 @@ class OrganizationsSDK(BaseSDK):
             include_members_count=include_members_count,
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="GET",
             path="/organizations/{organization_id}",
             base_url=base_url,
@@ -689,7 +689,7 @@ class OrganizationsSDK(BaseSDK):
             ),
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="PATCH",
             path="/organizations/{organization_id}",
             base_url=base_url,
@@ -809,7 +809,7 @@ class OrganizationsSDK(BaseSDK):
             ),
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="PATCH",
             path="/organizations/{organization_id}",
             base_url=base_url,
@@ -905,7 +905,7 @@ class OrganizationsSDK(BaseSDK):
             organization_id=organization_id,
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="DELETE",
             path="/organizations/{organization_id}",
             base_url=base_url,
@@ -994,7 +994,7 @@ class OrganizationsSDK(BaseSDK):
             organization_id=organization_id,
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="DELETE",
             path="/organizations/{organization_id}",
             base_url=base_url,
@@ -1095,7 +1095,7 @@ class OrganizationsSDK(BaseSDK):
             ),
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="PATCH",
             path="/organizations/{organization_id}/metadata",
             base_url=base_url,
@@ -1205,7 +1205,7 @@ class OrganizationsSDK(BaseSDK):
             ),
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="PATCH",
             path="/organizations/{organization_id}/metadata",
             base_url=base_url,
@@ -1315,7 +1315,7 @@ class OrganizationsSDK(BaseSDK):
             ),
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="PUT",
             path="/organizations/{organization_id}/logo",
             base_url=base_url,
@@ -1427,7 +1427,7 @@ class OrganizationsSDK(BaseSDK):
             ),
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="PUT",
             path="/organizations/{organization_id}/logo",
             base_url=base_url,
@@ -1523,7 +1523,7 @@ class OrganizationsSDK(BaseSDK):
             organization_id=organization_id,
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="DELETE",
             path="/organizations/{organization_id}/logo",
             base_url=base_url,
@@ -1608,7 +1608,7 @@ class OrganizationsSDK(BaseSDK):
             organization_id=organization_id,
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="DELETE",
             path="/organizations/{organization_id}/logo",
             base_url=base_url,

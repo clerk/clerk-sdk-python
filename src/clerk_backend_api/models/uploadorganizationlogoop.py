@@ -22,7 +22,7 @@ class UploadOrganizationLogoFileTypedDict(TypedDict):
 
 class UploadOrganizationLogoFile(BaseModel):
     file_name: Annotated[
-        str, pydantic.Field(alias="file"), FieldMetadata(multipart=True)
+        str, pydantic.Field(alias="fileName"), FieldMetadata(multipart=True)
     ]
 
     content: Annotated[
@@ -47,7 +47,6 @@ class UploadOrganizationLogoRequestBodyTypedDict(TypedDict):
 class UploadOrganizationLogoRequestBody(BaseModel):
     file: Annotated[
         UploadOrganizationLogoFile,
-        pydantic.Field(alias=""),
         FieldMetadata(multipart=MultipartFormMetadata(file=True)),
     ]
 

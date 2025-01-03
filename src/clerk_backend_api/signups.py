@@ -44,7 +44,7 @@ class SignUps(BaseSDK):
             ),
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="PATCH",
             path="/sign_ups/{id}",
             base_url=base_url,
@@ -143,7 +143,7 @@ class SignUps(BaseSDK):
             ),
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="PATCH",
             path="/sign_ups/{id}",
             base_url=base_url,

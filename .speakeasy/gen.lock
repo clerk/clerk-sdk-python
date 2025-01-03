@@ -3,10 +3,10 @@ id: bfe29c99-6e67-43fe-b928-64d6a5ed6aa8
 management:
   docChecksum: 3b85d94743e8bef36aebfc53ac120e1b
   docVersion: v1
-  speakeasyVersion: 1.455.5
-  generationVersion: 2.479.3
-  releaseVersion: 1.5.0
-  configChecksum: a7a47d1edde189269bbfa1a50e5cdae5
+  speakeasyVersion: 1.460.6
+  generationVersion: 2.484.4
+  releaseVersion: 1.6.0
+  configChecksum: 11a372d385b3244fe1fc0e9c62b4d760
   repoURL: https://github.com/clerk/clerk-sdk-python.git
   installationURL: https://github.com/clerk/clerk-sdk-python.git
   published: true
@@ -15,9 +15,9 @@ features:
     additionalDependencies: 1.0.0
     additionalProperties: 1.0.1
     constsAndDefaults: 1.0.5
-    core: 5.7.2
+    core: 5.7.4
     defaultEnabledRetries: 0.2.0
-    deprecations: 3.0.0
+    deprecations: 3.0.1
     enumUnions: 0.1.0
     envVarSecurityUsage: 0.3.2
     examples: 3.0.0
@@ -26,11 +26,11 @@ features:
     globalSecurity: 3.0.2
     globalSecurityCallbacks: 1.0.0
     globalSecurityFlattening: 1.0.0
-    globalServerURLs: 3.0.0
+    globalServerURLs: 3.1.0
     groups: 3.0.0
     methodArguments: 1.0.2
     multipartFileContentType: 1.0.0
-    nameOverrides: 3.0.0
+    nameOverrides: 3.0.1
     nullables: 1.0.0
     openEnums: 1.0.0
     responseFormat: 1.0.1
@@ -1380,7 +1380,8 @@ examples:
       responses:
         "400":
           application/json: {"errors": [{"message": "Error message", "long_message": "Longer error message with more details", "code": "error_code", "meta": {}, "clerk_trace_id": "trace_id"}], "meta": {}}
-        "200": {}
+        "200":
+          application/json: {}
   RevertTemplate:
     speakeasy-default-revert-template:
       parameters:

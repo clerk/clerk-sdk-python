@@ -60,7 +60,7 @@ class Invitations(BaseSDK):
             expires_in_days=expires_in_days,
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="POST",
             path="/invitations",
             base_url=base_url,
@@ -167,7 +167,7 @@ class Invitations(BaseSDK):
             expires_in_days=expires_in_days,
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="POST",
             path="/invitations",
             base_url=base_url,
@@ -263,7 +263,7 @@ class Invitations(BaseSDK):
             status=status,
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="GET",
             path="/invitations",
             base_url=base_url,
@@ -354,7 +354,7 @@ class Invitations(BaseSDK):
             status=status,
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="GET",
             path="/invitations",
             base_url=base_url,
@@ -442,7 +442,7 @@ class Invitations(BaseSDK):
             invitation_id=invitation_id,
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="POST",
             path="/invitations/{invitation_id}/revoke",
             base_url=base_url,
@@ -534,7 +534,7 @@ class Invitations(BaseSDK):
             invitation_id=invitation_id,
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="POST",
             path="/invitations/{invitation_id}/revoke",
             base_url=base_url,

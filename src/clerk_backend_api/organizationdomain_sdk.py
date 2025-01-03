@@ -50,7 +50,7 @@ class OrganizationDomainSDK(BaseSDK):
             ),
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="PATCH",
             path="/organizations/{organization_id}/domains/{domain_id}",
             base_url=base_url,
@@ -157,7 +157,7 @@ class OrganizationDomainSDK(BaseSDK):
             ),
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="PATCH",
             path="/organizations/{organization_id}/domains/{domain_id}",
             base_url=base_url,

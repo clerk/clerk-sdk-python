@@ -42,7 +42,7 @@ class PhoneNumbers(BaseSDK):
             request = utils.unmarshal(request, models.CreatePhoneNumberRequestBody)
         request = cast(models.CreatePhoneNumberRequestBody, request)
 
-        req = self.build_request(
+        req = self._build_request(
             method="POST",
             path="/phone_numbers",
             base_url=base_url,
@@ -141,7 +141,7 @@ class PhoneNumbers(BaseSDK):
             request = utils.unmarshal(request, models.CreatePhoneNumberRequestBody)
         request = cast(models.CreatePhoneNumberRequestBody, request)
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="POST",
             path="/phone_numbers",
             base_url=base_url,
@@ -237,7 +237,7 @@ class PhoneNumbers(BaseSDK):
             phone_number_id=phone_number_id,
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="GET",
             path="/phone_numbers/{phone_number_id}",
             base_url=base_url,
@@ -326,7 +326,7 @@ class PhoneNumbers(BaseSDK):
             phone_number_id=phone_number_id,
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="GET",
             path="/phone_numbers/{phone_number_id}",
             base_url=base_url,
@@ -415,7 +415,7 @@ class PhoneNumbers(BaseSDK):
             phone_number_id=phone_number_id,
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="DELETE",
             path="/phone_numbers/{phone_number_id}",
             base_url=base_url,
@@ -504,7 +504,7 @@ class PhoneNumbers(BaseSDK):
             phone_number_id=phone_number_id,
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="DELETE",
             path="/phone_numbers/{phone_number_id}",
             base_url=base_url,
@@ -604,7 +604,7 @@ class PhoneNumbers(BaseSDK):
             ),
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="PATCH",
             path="/phone_numbers/{phone_number_id}",
             base_url=base_url,
@@ -711,7 +711,7 @@ class PhoneNumbers(BaseSDK):
             ),
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="PATCH",
             path="/phone_numbers/{phone_number_id}",
             base_url=base_url,

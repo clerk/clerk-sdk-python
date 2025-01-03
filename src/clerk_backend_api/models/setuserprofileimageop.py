@@ -22,7 +22,7 @@ class FileTypedDict(TypedDict):
 
 class File(BaseModel):
     file_name: Annotated[
-        str, pydantic.Field(alias="file"), FieldMetadata(multipart=True)
+        str, pydantic.Field(alias="fileName"), FieldMetadata(multipart=True)
     ]
 
     content: Annotated[
@@ -44,9 +44,7 @@ class SetUserProfileImageRequestBodyTypedDict(TypedDict):
 
 class SetUserProfileImageRequestBody(BaseModel):
     file: Annotated[
-        Optional[File],
-        pydantic.Field(alias=""),
-        FieldMetadata(multipart=MultipartFormMetadata(file=True)),
+        Optional[File], FieldMetadata(multipart=MultipartFormMetadata(file=True))
     ] = None
 
 
