@@ -45,7 +45,7 @@ class OauthApplicationsSDK(BaseSDK):
             offset=offset,
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="GET",
             path="/oauth_applications",
             base_url=base_url,
@@ -140,7 +140,7 @@ class OauthApplicationsSDK(BaseSDK):
             offset=offset,
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="GET",
             path="/oauth_applications",
             base_url=base_url,
@@ -240,7 +240,7 @@ class OauthApplicationsSDK(BaseSDK):
             public=public,
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="POST",
             path="/oauth_applications",
             base_url=base_url,
@@ -343,7 +343,7 @@ class OauthApplicationsSDK(BaseSDK):
             public=public,
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="POST",
             path="/oauth_applications",
             base_url=base_url,
@@ -435,7 +435,7 @@ class OauthApplicationsSDK(BaseSDK):
             oauth_application_id=oauth_application_id,
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="GET",
             path="/oauth_applications/{oauth_application_id}",
             base_url=base_url,
@@ -524,7 +524,7 @@ class OauthApplicationsSDK(BaseSDK):
             oauth_application_id=oauth_application_id,
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="GET",
             path="/oauth_applications/{oauth_application_id}",
             base_url=base_url,
@@ -624,7 +624,7 @@ class OauthApplicationsSDK(BaseSDK):
             ),
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="PATCH",
             path="/oauth_applications/{oauth_application_id}",
             base_url=base_url,
@@ -731,7 +731,7 @@ class OauthApplicationsSDK(BaseSDK):
             ),
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="PATCH",
             path="/oauth_applications/{oauth_application_id}",
             base_url=base_url,
@@ -828,7 +828,7 @@ class OauthApplicationsSDK(BaseSDK):
             oauth_application_id=oauth_application_id,
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="DELETE",
             path="/oauth_applications/{oauth_application_id}",
             base_url=base_url,
@@ -916,7 +916,7 @@ class OauthApplicationsSDK(BaseSDK):
             oauth_application_id=oauth_application_id,
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="DELETE",
             path="/oauth_applications/{oauth_application_id}",
             base_url=base_url,
@@ -1004,7 +1004,7 @@ class OauthApplicationsSDK(BaseSDK):
             oauth_application_id=oauth_application_id,
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="POST",
             path="/oauth_applications/{oauth_application_id}/rotate_secret",
             base_url=base_url,
@@ -1094,7 +1094,7 @@ class OauthApplicationsSDK(BaseSDK):
             oauth_application_id=oauth_application_id,
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="POST",
             path="/oauth_applications/{oauth_application_id}/rotate_secret",
             base_url=base_url,

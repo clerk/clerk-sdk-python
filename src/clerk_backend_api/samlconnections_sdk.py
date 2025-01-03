@@ -44,7 +44,7 @@ class SamlConnectionsSDK(BaseSDK):
             offset=offset,
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="GET",
             path="/saml_connections",
             base_url=base_url,
@@ -136,7 +136,7 @@ class SamlConnectionsSDK(BaseSDK):
             offset=offset,
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="GET",
             path="/saml_connections",
             base_url=base_url,
@@ -255,7 +255,7 @@ class SamlConnectionsSDK(BaseSDK):
             ),
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="POST",
             path="/saml_connections",
             base_url=base_url,
@@ -379,7 +379,7 @@ class SamlConnectionsSDK(BaseSDK):
             ),
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="POST",
             path="/saml_connections",
             base_url=base_url,
@@ -471,7 +471,7 @@ class SamlConnectionsSDK(BaseSDK):
             saml_connection_id=saml_connection_id,
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="GET",
             path="/saml_connections/{saml_connection_id}",
             base_url=base_url,
@@ -560,7 +560,7 @@ class SamlConnectionsSDK(BaseSDK):
             saml_connection_id=saml_connection_id,
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="GET",
             path="/saml_connections/{saml_connection_id}",
             base_url=base_url,
@@ -698,7 +698,7 @@ class SamlConnectionsSDK(BaseSDK):
             ),
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="PATCH",
             path="/saml_connections/{saml_connection_id}",
             base_url=base_url,
@@ -845,7 +845,7 @@ class SamlConnectionsSDK(BaseSDK):
             ),
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="PATCH",
             path="/saml_connections/{saml_connection_id}",
             base_url=base_url,
@@ -943,7 +943,7 @@ class SamlConnectionsSDK(BaseSDK):
             saml_connection_id=saml_connection_id,
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="DELETE",
             path="/saml_connections/{saml_connection_id}",
             base_url=base_url,
@@ -1030,7 +1030,7 @@ class SamlConnectionsSDK(BaseSDK):
             saml_connection_id=saml_connection_id,
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="DELETE",
             path="/saml_connections/{saml_connection_id}",
             base_url=base_url,

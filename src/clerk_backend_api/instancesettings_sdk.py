@@ -41,7 +41,7 @@ class InstanceSettingsSDK(BaseSDK):
             request = utils.unmarshal(request, models.UpdateInstanceRequestBody)
         request = cast(models.UpdateInstanceRequestBody, request)
 
-        req = self.build_request(
+        req = self._build_request(
             method="PATCH",
             path="/instance",
             base_url=base_url,
@@ -133,7 +133,7 @@ class InstanceSettingsSDK(BaseSDK):
             request = utils.unmarshal(request, models.UpdateInstanceRequestBody)
         request = cast(models.UpdateInstanceRequestBody, request)
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="PATCH",
             path="/instance",
             base_url=base_url,
@@ -228,7 +228,7 @@ class InstanceSettingsSDK(BaseSDK):
             )
         request = cast(models.UpdateInstanceRestrictionsRequestBody, request)
 
-        req = self.build_request(
+        req = self._build_request(
             method="PATCH",
             path="/instance/restrictions",
             base_url=base_url,
@@ -329,7 +329,7 @@ class InstanceSettingsSDK(BaseSDK):
             )
         request = cast(models.UpdateInstanceRestrictionsRequestBody, request)
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="PATCH",
             path="/instance/restrictions",
             base_url=base_url,
@@ -430,7 +430,7 @@ class InstanceSettingsSDK(BaseSDK):
             )
         request = cast(models.UpdateInstanceOrganizationSettingsRequestBody, request)
 
-        req = self.build_request(
+        req = self._build_request(
             method="PATCH",
             path="/instance/organization_settings",
             base_url=base_url,
@@ -531,7 +531,7 @@ class InstanceSettingsSDK(BaseSDK):
             )
         request = cast(models.UpdateInstanceOrganizationSettingsRequestBody, request)
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="PATCH",
             path="/instance/organization_settings",
             base_url=base_url,

@@ -45,7 +45,7 @@ class Miscellaneous(BaseSDK):
             publishable_key=publishable_key,
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="GET",
             path="/public/interstitial",
             base_url=base_url,
@@ -131,7 +131,7 @@ class Miscellaneous(BaseSDK):
             publishable_key=publishable_key,
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="GET",
             path="/public/interstitial",
             base_url=base_url,

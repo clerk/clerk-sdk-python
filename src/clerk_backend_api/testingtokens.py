@@ -32,7 +32,7 @@ class TestingTokens(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
-        req = self.build_request(
+        req = self._build_request(
             method="POST",
             path="/testing_tokens",
             base_url=base_url,
@@ -108,7 +108,7 @@ class TestingTokens(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="POST",
             path="/testing_tokens",
             base_url=base_url,

@@ -42,7 +42,7 @@ class ClerkRedirectUrls(BaseSDK):
             request = utils.unmarshal(request, models.CreateRedirectURLRequestBody)
         request = cast(models.CreateRedirectURLRequestBody, request)
 
-        req = self.build_request(
+        req = self._build_request(
             method="POST",
             path="/redirect_urls",
             base_url=base_url,
@@ -139,7 +139,7 @@ class ClerkRedirectUrls(BaseSDK):
             request = utils.unmarshal(request, models.CreateRedirectURLRequestBody)
         request = cast(models.CreateRedirectURLRequestBody, request)
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="POST",
             path="/redirect_urls",
             base_url=base_url,
@@ -233,7 +233,7 @@ class ClerkRedirectUrls(BaseSDK):
             id=id,
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="GET",
             path="/redirect_urls/{id}",
             base_url=base_url,
@@ -320,7 +320,7 @@ class ClerkRedirectUrls(BaseSDK):
             id=id,
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="GET",
             path="/redirect_urls/{id}",
             base_url=base_url,
@@ -407,7 +407,7 @@ class ClerkRedirectUrls(BaseSDK):
             id=id,
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="DELETE",
             path="/redirect_urls/{id}",
             base_url=base_url,
@@ -494,7 +494,7 @@ class ClerkRedirectUrls(BaseSDK):
             id=id,
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="DELETE",
             path="/redirect_urls/{id}",
             base_url=base_url,

@@ -51,7 +51,7 @@ class ActorTokens(BaseSDK):
             session_max_duration_in_seconds=session_max_duration_in_seconds,
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="POST",
             path="/actor_tokens",
             base_url=base_url,
@@ -153,7 +153,7 @@ class ActorTokens(BaseSDK):
             session_max_duration_in_seconds=session_max_duration_in_seconds,
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="POST",
             path="/actor_tokens",
             base_url=base_url,
@@ -243,7 +243,7 @@ class ActorTokens(BaseSDK):
             actor_token_id=actor_token_id,
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="POST",
             path="/actor_tokens/{actor_token_id}/revoke",
             base_url=base_url,
@@ -330,7 +330,7 @@ class ActorTokens(BaseSDK):
             actor_token_id=actor_token_id,
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="POST",
             path="/actor_tokens/{actor_token_id}/revoke",
             base_url=base_url,

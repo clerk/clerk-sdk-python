@@ -42,7 +42,7 @@ class EmailAddresses(BaseSDK):
             request = utils.unmarshal(request, models.CreateEmailAddressRequestBody)
         request = cast(models.CreateEmailAddressRequestBody, request)
 
-        req = self.build_request(
+        req = self._build_request(
             method="POST",
             path="/email_addresses",
             base_url=base_url,
@@ -141,7 +141,7 @@ class EmailAddresses(BaseSDK):
             request = utils.unmarshal(request, models.CreateEmailAddressRequestBody)
         request = cast(models.CreateEmailAddressRequestBody, request)
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="POST",
             path="/email_addresses",
             base_url=base_url,
@@ -237,7 +237,7 @@ class EmailAddresses(BaseSDK):
             email_address_id=email_address_id,
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="GET",
             path="/email_addresses/{email_address_id}",
             base_url=base_url,
@@ -326,7 +326,7 @@ class EmailAddresses(BaseSDK):
             email_address_id=email_address_id,
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="GET",
             path="/email_addresses/{email_address_id}",
             base_url=base_url,
@@ -415,7 +415,7 @@ class EmailAddresses(BaseSDK):
             email_address_id=email_address_id,
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="DELETE",
             path="/email_addresses/{email_address_id}",
             base_url=base_url,
@@ -504,7 +504,7 @@ class EmailAddresses(BaseSDK):
             email_address_id=email_address_id,
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="DELETE",
             path="/email_addresses/{email_address_id}",
             base_url=base_url,
@@ -601,7 +601,7 @@ class EmailAddresses(BaseSDK):
             ),
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="PATCH",
             path="/email_addresses/{email_address_id}",
             base_url=base_url,
@@ -705,7 +705,7 @@ class EmailAddresses(BaseSDK):
             ),
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="PATCH",
             path="/email_addresses/{email_address_id}",
             base_url=base_url,

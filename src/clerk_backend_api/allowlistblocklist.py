@@ -32,7 +32,7 @@ class AllowlistBlocklist(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
-        req = self.build_request(
+        req = self._build_request(
             method="GET",
             path="/allowlist_identifiers",
             base_url=base_url,
@@ -114,7 +114,7 @@ class AllowlistBlocklist(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="GET",
             path="/allowlist_identifiers",
             base_url=base_url,
@@ -206,7 +206,7 @@ class AllowlistBlocklist(BaseSDK):
             notify=notify,
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="POST",
             path="/allowlist_identifiers",
             base_url=base_url,
@@ -305,7 +305,7 @@ class AllowlistBlocklist(BaseSDK):
             notify=notify,
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="POST",
             path="/allowlist_identifiers",
             base_url=base_url,
@@ -401,7 +401,7 @@ class AllowlistBlocklist(BaseSDK):
             identifier=identifier,
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="POST",
             path="/blocklist_identifiers",
             base_url=base_url,
@@ -497,7 +497,7 @@ class AllowlistBlocklist(BaseSDK):
             identifier=identifier,
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="POST",
             path="/blocklist_identifiers",
             base_url=base_url,
@@ -593,7 +593,7 @@ class AllowlistBlocklist(BaseSDK):
             identifier_id=identifier_id,
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="DELETE",
             path="/blocklist_identifiers/{identifier_id}",
             base_url=base_url,
@@ -680,7 +680,7 @@ class AllowlistBlocklist(BaseSDK):
             identifier_id=identifier_id,
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="DELETE",
             path="/blocklist_identifiers/{identifier_id}",
             base_url=base_url,

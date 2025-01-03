@@ -69,7 +69,7 @@ class EmailAndSmsTemplates(BaseSDK):
             ),
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="PUT",
             path="/templates/{template_type}/{slug}",
             base_url=base_url,
@@ -194,7 +194,7 @@ class EmailAndSmsTemplates(BaseSDK):
             ),
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="PUT",
             path="/templates/{template_type}/{slug}",
             base_url=base_url,

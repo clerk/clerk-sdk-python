@@ -59,7 +59,7 @@ class OrganizationInvitationsSDK(BaseSDK):
             query=query,
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="GET",
             path="/organization_invitations",
             base_url=base_url,
@@ -170,7 +170,7 @@ class OrganizationInvitationsSDK(BaseSDK):
             query=query,
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="GET",
             path="/organization_invitations",
             base_url=base_url,
@@ -297,7 +297,7 @@ class OrganizationInvitationsSDK(BaseSDK):
             ),
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="POST",
             path="/organizations/{organization_id}/invitations",
             base_url=base_url,
@@ -430,7 +430,7 @@ class OrganizationInvitationsSDK(BaseSDK):
             ),
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="POST",
             path="/organizations/{organization_id}/invitations",
             base_url=base_url,
@@ -542,7 +542,7 @@ class OrganizationInvitationsSDK(BaseSDK):
             status=status,
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="GET",
             path="/organizations/{organization_id}/invitations",
             base_url=base_url,
@@ -645,7 +645,7 @@ class OrganizationInvitationsSDK(BaseSDK):
             status=status,
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="GET",
             path="/organizations/{organization_id}/invitations",
             base_url=base_url,
@@ -753,7 +753,7 @@ class OrganizationInvitationsSDK(BaseSDK):
             ),
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="POST",
             path="/organizations/{organization_id}/invitations/bulk",
             base_url=base_url,
@@ -866,7 +866,7 @@ class OrganizationInvitationsSDK(BaseSDK):
             ),
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="POST",
             path="/organizations/{organization_id}/invitations/bulk",
             base_url=base_url,
@@ -974,7 +974,7 @@ class OrganizationInvitationsSDK(BaseSDK):
             offset=offset,
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="GET",
             path="/organizations/{organization_id}/invitations/pending",
             base_url=base_url,
@@ -1077,7 +1077,7 @@ class OrganizationInvitationsSDK(BaseSDK):
             offset=offset,
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="GET",
             path="/organizations/{organization_id}/invitations/pending",
             base_url=base_url,
@@ -1169,7 +1169,7 @@ class OrganizationInvitationsSDK(BaseSDK):
             invitation_id=invitation_id,
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="GET",
             path="/organizations/{organization_id}/invitations/{invitation_id}",
             base_url=base_url,
@@ -1261,7 +1261,7 @@ class OrganizationInvitationsSDK(BaseSDK):
             invitation_id=invitation_id,
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="GET",
             path="/organizations/{organization_id}/invitations/{invitation_id}",
             base_url=base_url,
@@ -1362,7 +1362,7 @@ class OrganizationInvitationsSDK(BaseSDK):
             ),
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="POST",
             path="/organizations/{organization_id}/invitations/{invitation_id}/revoke",
             base_url=base_url,
@@ -1470,7 +1470,7 @@ class OrganizationInvitationsSDK(BaseSDK):
             ),
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="POST",
             path="/organizations/{organization_id}/invitations/{invitation_id}/revoke",
             base_url=base_url,

@@ -52,7 +52,7 @@ class Clients(BaseSDK):
             offset=offset,
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="GET",
             path="/clients",
             base_url=base_url,
@@ -149,7 +149,7 @@ class Clients(BaseSDK):
             offset=offset,
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="GET",
             path="/clients",
             base_url=base_url,
@@ -240,7 +240,7 @@ class Clients(BaseSDK):
             request = utils.unmarshal(request, models.VerifyClientRequestBody)
         request = cast(models.VerifyClientRequestBody, request)
 
-        req = self.build_request(
+        req = self._build_request(
             method="POST",
             path="/clients/verify",
             base_url=base_url,
@@ -332,7 +332,7 @@ class Clients(BaseSDK):
             request = utils.unmarshal(request, models.VerifyClientRequestBody)
         request = cast(models.VerifyClientRequestBody, request)
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="POST",
             path="/clients/verify",
             base_url=base_url,
@@ -422,7 +422,7 @@ class Clients(BaseSDK):
             client_id=client_id,
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="GET",
             path="/clients/{client_id}",
             base_url=base_url,
@@ -509,7 +509,7 @@ class Clients(BaseSDK):
             client_id=client_id,
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="GET",
             path="/clients/{client_id}",
             base_url=base_url,

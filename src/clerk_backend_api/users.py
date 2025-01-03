@@ -77,7 +77,7 @@ class Users(BaseSDK):
             order_by=order_by,
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="GET",
             path="/users",
             base_url=base_url,
@@ -198,7 +198,7 @@ class Users(BaseSDK):
             order_by=order_by,
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="GET",
             path="/users",
             base_url=base_url,
@@ -293,7 +293,7 @@ class Users(BaseSDK):
             request = utils.unmarshal(request, models.CreateUserRequestBody)
         request = cast(models.CreateUserRequestBody, request)
 
-        req = self.build_request(
+        req = self._build_request(
             method="POST",
             path="/users",
             base_url=base_url,
@@ -393,7 +393,7 @@ class Users(BaseSDK):
             request = utils.unmarshal(request, models.CreateUserRequestBody)
         request = cast(models.CreateUserRequestBody, request)
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="POST",
             path="/users",
             base_url=base_url,
@@ -503,7 +503,7 @@ class Users(BaseSDK):
             query=query,
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="GET",
             path="/users/count",
             base_url=base_url,
@@ -608,7 +608,7 @@ class Users(BaseSDK):
             query=query,
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="GET",
             path="/users/count",
             base_url=base_url,
@@ -695,7 +695,7 @@ class Users(BaseSDK):
             user_id=user_id,
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="GET",
             path="/users/{user_id}",
             base_url=base_url,
@@ -782,7 +782,7 @@ class Users(BaseSDK):
             user_id=user_id,
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="GET",
             path="/users/{user_id}",
             base_url=base_url,
@@ -957,7 +957,7 @@ class Users(BaseSDK):
             ),
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="PATCH",
             path="/users/{user_id}",
             base_url=base_url,
@@ -1137,7 +1137,7 @@ class Users(BaseSDK):
             ),
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="PATCH",
             path="/users/{user_id}",
             base_url=base_url,
@@ -1229,7 +1229,7 @@ class Users(BaseSDK):
             user_id=user_id,
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="DELETE",
             path="/users/{user_id}",
             base_url=base_url,
@@ -1316,7 +1316,7 @@ class Users(BaseSDK):
             user_id=user_id,
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="DELETE",
             path="/users/{user_id}",
             base_url=base_url,
@@ -1403,7 +1403,7 @@ class Users(BaseSDK):
             user_id=user_id,
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="POST",
             path="/users/{user_id}/ban",
             base_url=base_url,
@@ -1490,7 +1490,7 @@ class Users(BaseSDK):
             user_id=user_id,
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="POST",
             path="/users/{user_id}/ban",
             base_url=base_url,
@@ -1577,7 +1577,7 @@ class Users(BaseSDK):
             user_id=user_id,
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="POST",
             path="/users/{user_id}/unban",
             base_url=base_url,
@@ -1664,7 +1664,7 @@ class Users(BaseSDK):
             user_id=user_id,
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="POST",
             path="/users/{user_id}/unban",
             base_url=base_url,
@@ -1752,7 +1752,7 @@ class Users(BaseSDK):
             user_id=user_id,
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="POST",
             path="/users/{user_id}/lock",
             base_url=base_url,
@@ -1840,7 +1840,7 @@ class Users(BaseSDK):
             user_id=user_id,
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="POST",
             path="/users/{user_id}/lock",
             base_url=base_url,
@@ -1927,7 +1927,7 @@ class Users(BaseSDK):
             user_id=user_id,
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="POST",
             path="/users/{user_id}/unlock",
             base_url=base_url,
@@ -2014,7 +2014,7 @@ class Users(BaseSDK):
             user_id=user_id,
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="POST",
             path="/users/{user_id}/unlock",
             base_url=base_url,
@@ -2106,7 +2106,7 @@ class Users(BaseSDK):
             ),
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="POST",
             path="/users/{user_id}/profile_image",
             base_url=base_url,
@@ -2205,7 +2205,7 @@ class Users(BaseSDK):
             ),
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="POST",
             path="/users/{user_id}/profile_image",
             base_url=base_url,
@@ -2299,7 +2299,7 @@ class Users(BaseSDK):
             user_id=user_id,
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="DELETE",
             path="/users/{user_id}/profile_image",
             base_url=base_url,
@@ -2386,7 +2386,7 @@ class Users(BaseSDK):
             user_id=user_id,
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="DELETE",
             path="/users/{user_id}/profile_image",
             base_url=base_url,
@@ -2491,7 +2491,7 @@ class Users(BaseSDK):
             ),
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="PATCH",
             path="/users/{user_id}/metadata",
             base_url=base_url,
@@ -2605,7 +2605,7 @@ class Users(BaseSDK):
             ),
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="PATCH",
             path="/users/{user_id}/metadata",
             base_url=base_url,
@@ -2705,7 +2705,7 @@ class Users(BaseSDK):
             provider=provider,
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="GET",
             path="/users/{user_id}/oauth_access_tokens/{provider}",
             base_url=base_url,
@@ -2798,7 +2798,7 @@ class Users(BaseSDK):
             provider=provider,
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="GET",
             path="/users/{user_id}/oauth_access_tokens/{provider}",
             base_url=base_url,
@@ -2893,7 +2893,7 @@ class Users(BaseSDK):
             offset=offset,
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="GET",
             path="/users/{user_id}/organization_memberships",
             base_url=base_url,
@@ -2988,7 +2988,7 @@ class Users(BaseSDK):
             offset=offset,
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="GET",
             path="/users/{user_id}/organization_memberships",
             base_url=base_url,
@@ -3086,7 +3086,7 @@ class Users(BaseSDK):
             status=status,
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="GET",
             path="/users/{user_id}/organization_invitations",
             base_url=base_url,
@@ -3185,7 +3185,7 @@ class Users(BaseSDK):
             status=status,
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="GET",
             path="/users/{user_id}/organization_invitations",
             base_url=base_url,
@@ -3281,7 +3281,7 @@ class Users(BaseSDK):
             ),
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="POST",
             path="/users/{user_id}/verify_password",
             base_url=base_url,
@@ -3383,7 +3383,7 @@ class Users(BaseSDK):
             ),
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="POST",
             path="/users/{user_id}/verify_password",
             base_url=base_url,
@@ -3487,7 +3487,7 @@ class Users(BaseSDK):
             ),
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="POST",
             path="/users/{user_id}/verify_totp",
             base_url=base_url,
@@ -3587,7 +3587,7 @@ class Users(BaseSDK):
             ),
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="POST",
             path="/users/{user_id}/verify_totp",
             base_url=base_url,
@@ -3679,7 +3679,7 @@ class Users(BaseSDK):
             user_id=user_id,
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="DELETE",
             path="/users/{user_id}/mfa",
             base_url=base_url,
@@ -3768,7 +3768,7 @@ class Users(BaseSDK):
             user_id=user_id,
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="DELETE",
             path="/users/{user_id}/mfa",
             base_url=base_url,
@@ -3857,7 +3857,7 @@ class Users(BaseSDK):
             user_id=user_id,
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="DELETE",
             path="/users/{user_id}/backup_code",
             base_url=base_url,
@@ -3946,7 +3946,7 @@ class Users(BaseSDK):
             user_id=user_id,
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="DELETE",
             path="/users/{user_id}/backup_code",
             base_url=base_url,
@@ -4038,7 +4038,7 @@ class Users(BaseSDK):
             passkey_identification_id=passkey_identification_id,
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="DELETE",
             path="/users/{user_id}/passkeys/{passkey_identification_id}",
             base_url=base_url,
@@ -4128,7 +4128,7 @@ class Users(BaseSDK):
             passkey_identification_id=passkey_identification_id,
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="DELETE",
             path="/users/{user_id}/passkeys/{passkey_identification_id}",
             base_url=base_url,
@@ -4218,7 +4218,7 @@ class Users(BaseSDK):
             web3_wallet_identification_id=web3_wallet_identification_id,
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="DELETE",
             path="/users/{user_id}/web3_wallets/{web3_wallet_identification_id}",
             base_url=base_url,
@@ -4310,7 +4310,7 @@ class Users(BaseSDK):
             web3_wallet_identification_id=web3_wallet_identification_id,
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="DELETE",
             path="/users/{user_id}/web3_wallets/{web3_wallet_identification_id}",
             base_url=base_url,
@@ -4400,7 +4400,7 @@ class Users(BaseSDK):
             user_id=user_id,
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="POST",
             path="/users/{user_id}/totp",
             base_url=base_url,
@@ -4488,7 +4488,7 @@ class Users(BaseSDK):
             user_id=user_id,
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="POST",
             path="/users/{user_id}/totp",
             base_url=base_url,
@@ -4575,7 +4575,7 @@ class Users(BaseSDK):
             user_id=user_id,
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="DELETE",
             path="/users/{user_id}/totp",
             base_url=base_url,
@@ -4664,7 +4664,7 @@ class Users(BaseSDK):
             user_id=user_id,
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="DELETE",
             path="/users/{user_id}/totp",
             base_url=base_url,
@@ -4756,7 +4756,7 @@ class Users(BaseSDK):
             external_account_id=external_account_id,
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="DELETE",
             path="/users/{user_id}/external_accounts/{external_account_id}",
             base_url=base_url,
@@ -4848,7 +4848,7 @@ class Users(BaseSDK):
             external_account_id=external_account_id,
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="DELETE",
             path="/users/{user_id}/external_accounts/{external_account_id}",
             base_url=base_url,
