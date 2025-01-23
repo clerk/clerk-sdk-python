@@ -23,6 +23,8 @@ class OAuthApplicationWithSecretTypedDict(TypedDict):
     authorize_url: str
     token_fetch_url: str
     user_info_url: str
+    discovery_url: str
+    token_introspection_url: str
     created_at: int
     r"""Unix timestamp of creation.
 
@@ -59,6 +61,10 @@ class OAuthApplicationWithSecret(BaseModel):
     token_fetch_url: str
 
     user_info_url: str
+
+    discovery_url: str
+
+    token_introspection_url: str
 
     created_at: int
     r"""Unix timestamp of creation.

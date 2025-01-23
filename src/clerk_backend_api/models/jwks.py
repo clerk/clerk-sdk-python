@@ -13,6 +13,8 @@ class KeysTypedDict(TypedDict):
     alg: NotRequired[str]
     n: NotRequired[str]
     e: NotRequired[str]
+    x: NotRequired[str]
+    crv: NotRequired[str]
 
 
 class Keys(BaseModel):
@@ -28,14 +30,18 @@ class Keys(BaseModel):
 
     e: Optional[str] = None
 
+    x: Optional[str] = None
 
-class WellKnownJWKSTypedDict(TypedDict):
+    crv: Optional[str] = None
+
+
+class JwksTypedDict(TypedDict):
     r"""Get the JSON Web Key Set"""
 
     keys: NotRequired[List[KeysTypedDict]]
 
 
-class WellKnownJWKS(BaseModel):
+class Jwks(BaseModel):
     r"""Get the JSON Web Key Set"""
 
     keys: Optional[List[Keys]] = None

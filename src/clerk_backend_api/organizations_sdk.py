@@ -3,8 +3,8 @@
 from .basesdk import BaseSDK
 from clerk_backend_api import models, utils
 from clerk_backend_api._hooks import HookContext
-from clerk_backend_api.types import OptionalNullable, UNSET
-from typing import Any, Dict, Mapping, Optional, Union
+from clerk_backend_api.types import BaseModel, OptionalNullable, UNSET
+from typing import Any, Dict, Mapping, Optional, Union, cast
 
 
 class OrganizationsSDK(BaseSDK):
@@ -99,7 +99,12 @@ class OrganizationsSDK(BaseSDK):
         if utils.match_response(http_res, ["400", "403", "422"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -201,7 +206,12 @@ class OrganizationsSDK(BaseSDK):
         if utils.match_response(http_res, ["400", "403", "422"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -219,13 +229,12 @@ class OrganizationsSDK(BaseSDK):
     def create(
         self,
         *,
-        name: str,
-        created_by: str,
-        private_metadata: Optional[Dict[str, Any]] = None,
-        public_metadata: Optional[Dict[str, Any]] = None,
-        slug: Optional[str] = None,
-        max_allowed_memberships: Optional[int] = None,
-        created_at: Optional[str] = None,
+        request: Optional[
+            Union[
+                models.CreateOrganizationRequestBody,
+                models.CreateOrganizationRequestBodyTypedDict,
+            ]
+        ] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -234,7 +243,6 @@ class OrganizationsSDK(BaseSDK):
         r"""Create an organization
 
         Creates a new organization with the given name for an instance.
-        In order to successfully create an organization you need to provide the ID of the User who will become the organization administrator.
         You can specify an optional slug for the new organization.
         If provided, the organization slug can contain only lowercase alphanumeric characters (letters and digits) and the dash \"-\".
         Organization slugs must be unique for the instance.
@@ -245,13 +253,7 @@ class OrganizationsSDK(BaseSDK):
         The `created_by` user will see this as their [active organization] (https://clerk.com/docs/organizations/overview#active-organization)
         the next time they create a session, presuming they don't explicitly set a different organization as active before then.
 
-        :param name: The name of the new organization. May not contain URLs or HTML.
-        :param created_by: The ID of the User who will become the administrator for the new organization
-        :param private_metadata: Metadata saved on the organization, accessible only from the Backend API
-        :param public_metadata: Metadata saved on the organization, read-only from the Frontend API and fully accessible (read/write) from the Backend API
-        :param slug: A slug for the new organization. Can contain only lowercase alphanumeric characters and the dash \"-\". Must be unique for the instance.
-        :param max_allowed_memberships: The maximum number of memberships allowed for this organization
-        :param created_at: A custom date/time denoting _when_ the organization was created, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`).
+        :param request: The request object to send.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -265,15 +267,11 @@ class OrganizationsSDK(BaseSDK):
         if server_url is not None:
             base_url = server_url
 
-        request = models.CreateOrganizationRequestBody(
-            name=name,
-            created_by=created_by,
-            private_metadata=private_metadata,
-            public_metadata=public_metadata,
-            slug=slug,
-            max_allowed_memberships=max_allowed_memberships,
-            created_at=created_at,
-        )
+        if not isinstance(request, BaseModel):
+            request = utils.unmarshal(
+                request, Optional[models.CreateOrganizationRequestBody]
+            )
+        request = cast(Optional[models.CreateOrganizationRequestBody], request)
 
         req = self._build_request(
             method="POST",
@@ -281,7 +279,7 @@ class OrganizationsSDK(BaseSDK):
             base_url=base_url,
             url_variables=url_variables,
             request=request,
-            request_body_required=True,
+            request_body_required=False,
             request_has_path_params=False,
             request_has_query_params=True,
             user_agent_header="user-agent",
@@ -289,7 +287,11 @@ class OrganizationsSDK(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request, False, False, "json", models.CreateOrganizationRequestBody
+                request,
+                False,
+                True,
+                "json",
+                Optional[models.CreateOrganizationRequestBody],
             ),
             timeout_ms=timeout_ms,
         )
@@ -319,7 +321,12 @@ class OrganizationsSDK(BaseSDK):
         if utils.match_response(http_res, ["400", "403", "422"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -337,13 +344,12 @@ class OrganizationsSDK(BaseSDK):
     async def create_async(
         self,
         *,
-        name: str,
-        created_by: str,
-        private_metadata: Optional[Dict[str, Any]] = None,
-        public_metadata: Optional[Dict[str, Any]] = None,
-        slug: Optional[str] = None,
-        max_allowed_memberships: Optional[int] = None,
-        created_at: Optional[str] = None,
+        request: Optional[
+            Union[
+                models.CreateOrganizationRequestBody,
+                models.CreateOrganizationRequestBodyTypedDict,
+            ]
+        ] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -352,7 +358,6 @@ class OrganizationsSDK(BaseSDK):
         r"""Create an organization
 
         Creates a new organization with the given name for an instance.
-        In order to successfully create an organization you need to provide the ID of the User who will become the organization administrator.
         You can specify an optional slug for the new organization.
         If provided, the organization slug can contain only lowercase alphanumeric characters (letters and digits) and the dash \"-\".
         Organization slugs must be unique for the instance.
@@ -363,13 +368,7 @@ class OrganizationsSDK(BaseSDK):
         The `created_by` user will see this as their [active organization] (https://clerk.com/docs/organizations/overview#active-organization)
         the next time they create a session, presuming they don't explicitly set a different organization as active before then.
 
-        :param name: The name of the new organization. May not contain URLs or HTML.
-        :param created_by: The ID of the User who will become the administrator for the new organization
-        :param private_metadata: Metadata saved on the organization, accessible only from the Backend API
-        :param public_metadata: Metadata saved on the organization, read-only from the Frontend API and fully accessible (read/write) from the Backend API
-        :param slug: A slug for the new organization. Can contain only lowercase alphanumeric characters and the dash \"-\". Must be unique for the instance.
-        :param max_allowed_memberships: The maximum number of memberships allowed for this organization
-        :param created_at: A custom date/time denoting _when_ the organization was created, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`).
+        :param request: The request object to send.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -383,15 +382,11 @@ class OrganizationsSDK(BaseSDK):
         if server_url is not None:
             base_url = server_url
 
-        request = models.CreateOrganizationRequestBody(
-            name=name,
-            created_by=created_by,
-            private_metadata=private_metadata,
-            public_metadata=public_metadata,
-            slug=slug,
-            max_allowed_memberships=max_allowed_memberships,
-            created_at=created_at,
-        )
+        if not isinstance(request, BaseModel):
+            request = utils.unmarshal(
+                request, Optional[models.CreateOrganizationRequestBody]
+            )
+        request = cast(Optional[models.CreateOrganizationRequestBody], request)
 
         req = self._build_request_async(
             method="POST",
@@ -399,7 +394,7 @@ class OrganizationsSDK(BaseSDK):
             base_url=base_url,
             url_variables=url_variables,
             request=request,
-            request_body_required=True,
+            request_body_required=False,
             request_has_path_params=False,
             request_has_query_params=True,
             user_agent_header="user-agent",
@@ -407,7 +402,11 @@ class OrganizationsSDK(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request, False, False, "json", models.CreateOrganizationRequestBody
+                request,
+                False,
+                True,
+                "json",
+                Optional[models.CreateOrganizationRequestBody],
             ),
             timeout_ms=timeout_ms,
         )
@@ -437,7 +436,12 @@ class OrganizationsSDK(BaseSDK):
         if utils.match_response(http_res, ["400", "403", "422"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -527,7 +531,12 @@ class OrganizationsSDK(BaseSDK):
         if utils.match_response(http_res, ["403", "404"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -617,7 +626,12 @@ class OrganizationsSDK(BaseSDK):
         if utils.match_response(http_res, ["403", "404"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -737,7 +751,12 @@ class OrganizationsSDK(BaseSDK):
         if utils.match_response(http_res, ["402", "404", "422"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -857,7 +876,12 @@ class OrganizationsSDK(BaseSDK):
         if utils.match_response(http_res, ["402", "404", "422"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -946,7 +970,12 @@ class OrganizationsSDK(BaseSDK):
         if utils.match_response(http_res, "404", "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -1035,7 +1064,12 @@ class OrganizationsSDK(BaseSDK):
         if utils.match_response(http_res, "404", "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -1145,7 +1179,12 @@ class OrganizationsSDK(BaseSDK):
         ):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -1255,7 +1294,12 @@ class OrganizationsSDK(BaseSDK):
         ):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -1321,7 +1365,7 @@ class OrganizationsSDK(BaseSDK):
             base_url=base_url,
             url_variables=url_variables,
             request=request,
-            request_body_required=True,
+            request_body_required=False,
             request_has_path_params=True,
             request_has_query_params=True,
             user_agent_header="user-agent",
@@ -1331,9 +1375,9 @@ class OrganizationsSDK(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request.request_body,
                 False,
-                False,
+                True,
                 "multipart",
-                models.UploadOrganizationLogoRequestBody,
+                Optional[models.UploadOrganizationLogoRequestBody],
             ),
             timeout_ms=timeout_ms,
         )
@@ -1367,7 +1411,12 @@ class OrganizationsSDK(BaseSDK):
         ):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -1433,7 +1482,7 @@ class OrganizationsSDK(BaseSDK):
             base_url=base_url,
             url_variables=url_variables,
             request=request,
-            request_body_required=True,
+            request_body_required=False,
             request_has_path_params=True,
             request_has_query_params=True,
             user_agent_header="user-agent",
@@ -1443,9 +1492,9 @@ class OrganizationsSDK(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request.request_body,
                 False,
-                False,
+                True,
                 "multipart",
-                models.UploadOrganizationLogoRequestBody,
+                Optional[models.UploadOrganizationLogoRequestBody],
             ),
             timeout_ms=timeout_ms,
         )
@@ -1479,7 +1528,12 @@ class OrganizationsSDK(BaseSDK):
         ):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -1564,7 +1618,12 @@ class OrganizationsSDK(BaseSDK):
         if utils.match_response(http_res, "404", "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -1649,7 +1708,12 @@ class OrganizationsSDK(BaseSDK):
         if utils.match_response(http_res, "404", "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res

@@ -38,7 +38,7 @@ class OrganizationWithLogoTypedDict(TypedDict):
     image_url: str
     members_count: NotRequired[Nullable[int]]
     admin_delete_enabled: NotRequired[bool]
-    created_by: NotRequired[str]
+    created_by: NotRequired[Nullable[str]]
     logo_url: NotRequired[str]
     has_image: NotRequired[bool]
 
@@ -74,7 +74,7 @@ class OrganizationWithLogo(BaseModel):
 
     admin_delete_enabled: Optional[bool] = None
 
-    created_by: Optional[str] = None
+    created_by: OptionalNullable[str] = UNSET
 
     logo_url: Annotated[
         Optional[str],
@@ -94,7 +94,7 @@ class OrganizationWithLogo(BaseModel):
             "logo_url",
             "has_image",
         ]
-        nullable_fields = ["members_count"]
+        nullable_fields = ["members_count", "created_by"]
         null_default_fields = []
 
         serialized = handler(self)

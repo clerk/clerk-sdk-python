@@ -1,0 +1,12 @@
+# FromOAuth
+
+
+## Fields
+
+| Field                                                                          | Type                                                                           | Required                                                                       | Description                                                                    |
+| ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ |
+| `status`                                                                       | [models.FromOAuthVerificationStatus](../models/fromoauthverificationstatus.md) | :heavy_check_mark:                                                             | N/A                                                                            |
+| `strategy`                                                                     | *str*                                                                          | :heavy_check_mark:                                                             | N/A                                                                            |
+| `expire_at`                                                                    | *Nullable[int]*                                                                | :heavy_check_mark:                                                             | N/A                                                                            |
+| `error`                                                                        | [OptionalNullable[models.Error]](../models/error.md)                           | :heavy_minus_sign:                                                             | N/A                                                                            |
+| `attempts`                                                                     | *OptionalNullable[int]*                                                        | :heavy_minus_sign:                                                             | N/A                                                                            |

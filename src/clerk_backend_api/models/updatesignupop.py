@@ -10,6 +10,7 @@ from clerk_backend_api.types import (
 )
 from clerk_backend_api.utils import FieldMetadata, PathParamMetadata, RequestMetadata
 from pydantic import model_serializer
+from typing import Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
 
 
@@ -60,7 +61,7 @@ class UpdateSignUpRequestBody(BaseModel):
 class UpdateSignUpRequestTypedDict(TypedDict):
     id: str
     r"""The ID of the sign-up to update"""
-    request_body: UpdateSignUpRequestBodyTypedDict
+    request_body: NotRequired[UpdateSignUpRequestBodyTypedDict]
 
 
 class UpdateSignUpRequest(BaseModel):
@@ -70,6 +71,6 @@ class UpdateSignUpRequest(BaseModel):
     r"""The ID of the sign-up to update"""
 
     request_body: Annotated[
-        UpdateSignUpRequestBody,
+        Optional[UpdateSignUpRequestBody],
         FieldMetadata(request=RequestMetadata(media_type="application/json")),
-    ]
+    ] = None

@@ -51,6 +51,8 @@ class ResponseBodyTypedDict(TypedDict):
     """
     token_secret: NotRequired[str]
     r"""The token secret. Only present for OAuth 1.0 tokens."""
+    expires_at: NotRequired[Nullable[int]]
+    r"""Unix timestamp of the access token expiration."""
 
 
 class ResponseBody(BaseModel):
@@ -80,6 +82,9 @@ class ResponseBody(BaseModel):
     token_secret: Optional[str] = None
     r"""The token secret. Only present for OAuth 1.0 tokens."""
 
+    expires_at: OptionalNullable[int] = UNSET
+    r"""Unix timestamp of the access token expiration."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = [
@@ -92,8 +97,9 @@ class ResponseBody(BaseModel):
             "label",
             "scopes",
             "token_secret",
+            "expires_at",
         ]
-        nullable_fields = ["label"]
+        nullable_fields = ["label", "expires_at"]
         null_default_fields = []
 
         serialized = handler(self)

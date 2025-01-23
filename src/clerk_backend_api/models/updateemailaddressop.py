@@ -10,6 +10,7 @@ from clerk_backend_api.types import (
 )
 from clerk_backend_api.utils import FieldMetadata, PathParamMetadata, RequestMetadata
 from pydantic import model_serializer
+from typing import Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
 
 
@@ -61,7 +62,7 @@ class UpdateEmailAddressRequestBody(BaseModel):
 class UpdateEmailAddressRequestTypedDict(TypedDict):
     email_address_id: str
     r"""The ID of the email address to update"""
-    request_body: UpdateEmailAddressRequestBodyTypedDict
+    request_body: NotRequired[UpdateEmailAddressRequestBodyTypedDict]
 
 
 class UpdateEmailAddressRequest(BaseModel):
@@ -71,6 +72,6 @@ class UpdateEmailAddressRequest(BaseModel):
     r"""The ID of the email address to update"""
 
     request_body: Annotated[
-        UpdateEmailAddressRequestBody,
+        Optional[UpdateEmailAddressRequestBody],
         FieldMetadata(request=RequestMetadata(media_type="application/json")),
-    ]
+    ] = None

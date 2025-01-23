@@ -24,24 +24,9 @@ class EmailAddressObject(str, Enum, metaclass=utils.OpenEnumMeta):
     EMAIL_ADDRESS = "email_address"
 
 
-class OauthVerificationStatus(str, Enum, metaclass=utils.OpenEnumMeta):
+class FromOAuthVerificationStatus(str, Enum):
     UNVERIFIED = "unverified"
     VERIFIED = "verified"
-    FAILED = "failed"
-    EXPIRED = "expired"
-    TRANSFERABLE = "transferable"
-
-
-class OauthVerificationStrategy(str, Enum, metaclass=utils.OpenEnumMeta):
-    OAUTH_GOOGLE = "oauth_google"
-    OAUTH_MOCK = "oauth_mock"
-    FROM_OAUTH_GOOGLE = "from_oauth_google"
-    FROM_OAUTH_DISCORD = "from_oauth_discord"
-    FROM_OAUTH_MICROSOFT = "from_oauth_microsoft"
-    OAUTH_APPLE = "oauth_apple"
-    OAUTH_MICROSOFT = "oauth_microsoft"
-    OAUTH_GITHUB = "oauth_github"
-    EMAIL_LINK = "email_link"
 
 
 class ErrorMetaTypedDict(TypedDict):
@@ -78,27 +63,20 @@ ErrorTypedDict = ErrorClerkErrorTypedDict
 Error = ErrorClerkError
 
 
-class OauthTypedDict(TypedDict):
-    status: OauthVerificationStatus
-    strategy: OauthVerificationStrategy
-    expire_at: int
-    external_verification_redirect_url: NotRequired[str]
+class FromOAuthTypedDict(TypedDict):
+    status: FromOAuthVerificationStatus
+    strategy: str
+    expire_at: Nullable[int]
     error: NotRequired[Nullable[ErrorTypedDict]]
     attempts: NotRequired[Nullable[int]]
 
 
-class Oauth(BaseModel):
-    status: Annotated[
-        OauthVerificationStatus, PlainValidator(validate_open_enum(False))
-    ]
+class FromOAuth(BaseModel):
+    status: FromOAuthVerificationStatus
 
-    strategy: Annotated[
-        OauthVerificationStrategy, PlainValidator(validate_open_enum(False))
-    ]
+    strategy: str
 
-    expire_at: int
-
-    external_verification_redirect_url: Optional[str] = None
+    expire_at: Nullable[int]
 
     error: OptionalNullable[Error] = UNSET
 
@@ -106,8 +84,8 @@ class Oauth(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["external_verification_redirect_url", "error", "attempts"]
-        nullable_fields = ["error", "attempts"]
+        optional_fields = ["error", "attempts"]
+        nullable_fields = ["expire_at", "error", "attempts"]
         null_default_fields = []
 
         serialized = handler(self)
@@ -227,11 +205,11 @@ class Otp(BaseModel):
 
 
 VerificationTypedDict = TypeAliasType(
-    "VerificationTypedDict", Union[OtpTypedDict, AdminTypedDict, OauthTypedDict]
+    "VerificationTypedDict", Union[OtpTypedDict, AdminTypedDict, FromOAuthTypedDict]
 )
 
 
-Verification = TypeAliasType("Verification", Union[Otp, Admin, Oauth])
+Verification = TypeAliasType("Verification", Union[Otp, Admin, FromOAuth])
 
 
 class EmailAddressTypedDict(TypedDict):
@@ -254,6 +232,10 @@ class EmailAddressTypedDict(TypedDict):
 
     """
     id: NotRequired[str]
+    matches_sso_connection: NotRequired[bool]
+    r"""Indicates whether this email address domain matches an active enterprise connection.
+
+    """
 
 
 class EmailAddress(BaseModel):
@@ -284,9 +266,14 @@ class EmailAddress(BaseModel):
 
     id: Optional[str] = None
 
+    matches_sso_connection: Optional[bool] = None
+    r"""Indicates whether this email address domain matches an active enterprise connection.
+
+    """
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["id"]
+        optional_fields = ["id", "matches_sso_connection"]
         nullable_fields = ["verification"]
         null_default_fields = []
 

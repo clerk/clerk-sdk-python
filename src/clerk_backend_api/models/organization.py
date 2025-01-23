@@ -36,7 +36,7 @@ class OrganizationTypedDict(TypedDict):
     """
     members_count: NotRequired[Nullable[int]]
     admin_delete_enabled: NotRequired[bool]
-    created_by: NotRequired[str]
+    created_by: NotRequired[Nullable[str]]
 
 
 class Organization(BaseModel):
@@ -68,12 +68,12 @@ class Organization(BaseModel):
 
     admin_delete_enabled: Optional[bool] = None
 
-    created_by: Optional[str] = None
+    created_by: OptionalNullable[str] = UNSET
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = ["members_count", "admin_delete_enabled", "created_by"]
-        nullable_fields = ["members_count"]
+        nullable_fields = ["members_count", "created_by"]
         null_default_fields = []
 
         serialized = handler(self)

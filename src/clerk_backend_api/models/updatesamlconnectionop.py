@@ -50,6 +50,8 @@ class UpdateSAMLConnectionRequestBodyTypedDict(TypedDict):
     r"""The URL which serves the IdP metadata. If present, it takes priority over the corresponding individual properties and replaces them"""
     idp_metadata: NotRequired[Nullable[str]]
     r"""The XML content of the IdP metadata file. If present, it takes priority over the corresponding individual properties"""
+    organization_id: NotRequired[Nullable[str]]
+    r"""The ID of the organization to which users of this SAML Connection will be added"""
     attribute_mapping: NotRequired[
         Nullable[UpdateSAMLConnectionAttributeMappingTypedDict]
     ]
@@ -88,6 +90,9 @@ class UpdateSAMLConnectionRequestBody(BaseModel):
     idp_metadata: OptionalNullable[str] = UNSET
     r"""The XML content of the IdP metadata file. If present, it takes priority over the corresponding individual properties"""
 
+    organization_id: OptionalNullable[str] = UNSET
+    r"""The ID of the organization to which users of this SAML Connection will be added"""
+
     attribute_mapping: OptionalNullable[UpdateSAMLConnectionAttributeMapping] = UNSET
     r"""Define the atrtibute name mapping between Identity Provider and Clerk's user properties"""
 
@@ -116,6 +121,7 @@ class UpdateSAMLConnectionRequestBody(BaseModel):
             "idp_certificate",
             "idp_metadata_url",
             "idp_metadata",
+            "organization_id",
             "attribute_mapping",
             "active",
             "sync_user_attributes",
@@ -131,6 +137,7 @@ class UpdateSAMLConnectionRequestBody(BaseModel):
             "idp_certificate",
             "idp_metadata_url",
             "idp_metadata",
+            "organization_id",
             "attribute_mapping",
             "active",
             "sync_user_attributes",

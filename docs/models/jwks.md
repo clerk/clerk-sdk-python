@@ -1,4 +1,4 @@
-# WellKnownJWKS
+# Jwks
 
 Get the JSON Web Key Set
 

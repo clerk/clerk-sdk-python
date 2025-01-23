@@ -1,4 +1,4 @@
-# Jwks
+# JwksSDK
 (*jwks*)
 
 ## Overview
@@ -37,7 +37,7 @@ with Clerk(
 
 ### Response
 
-**[models.WellKnownJWKS](../../models/wellknownjwks.md)**
+**[models.Jwks](../../models/jwks.md)**
 
 ### Errors
 

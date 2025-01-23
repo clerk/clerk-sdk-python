@@ -99,7 +99,12 @@ class OrganizationMembershipsSDK(BaseSDK):
         ):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -205,7 +210,12 @@ class OrganizationMembershipsSDK(BaseSDK):
         ):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -303,7 +313,12 @@ class OrganizationMembershipsSDK(BaseSDK):
         if utils.match_response(http_res, ["401", "422"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -401,7 +416,12 @@ class OrganizationMembershipsSDK(BaseSDK):
         if utils.match_response(http_res, ["401", "422"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -493,7 +513,7 @@ class OrganizationMembershipsSDK(BaseSDK):
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
-            error_status_codes=["400", "404", "422", "4XX", "5XX"],
+            error_status_codes=["404", "422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -502,10 +522,15 @@ class OrganizationMembershipsSDK(BaseSDK):
             return utils.unmarshal_json(
                 http_res.text, Optional[models.OrganizationMembership]
             )
-        if utils.match_response(http_res, ["400", "404", "422"], "application/json"):
+        if utils.match_response(http_res, ["404", "422"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -597,7 +622,7 @@ class OrganizationMembershipsSDK(BaseSDK):
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
-            error_status_codes=["400", "404", "422", "4XX", "5XX"],
+            error_status_codes=["404", "422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -606,10 +631,15 @@ class OrganizationMembershipsSDK(BaseSDK):
             return utils.unmarshal_json(
                 http_res.text, Optional[models.OrganizationMembership]
             )
-        if utils.match_response(http_res, ["400", "404", "422"], "application/json"):
+        if utils.match_response(http_res, ["404", "422"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -689,7 +719,7 @@ class OrganizationMembershipsSDK(BaseSDK):
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
-            error_status_codes=["400", "401", "404", "4XX", "5XX"],
+            error_status_codes=["401", "404", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -698,10 +728,15 @@ class OrganizationMembershipsSDK(BaseSDK):
             return utils.unmarshal_json(
                 http_res.text, Optional[models.OrganizationMembership]
             )
-        if utils.match_response(http_res, ["400", "401", "404"], "application/json"):
+        if utils.match_response(http_res, ["401", "404"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -781,7 +816,7 @@ class OrganizationMembershipsSDK(BaseSDK):
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
-            error_status_codes=["400", "401", "404", "4XX", "5XX"],
+            error_status_codes=["401", "404", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -790,10 +825,15 @@ class OrganizationMembershipsSDK(BaseSDK):
             return utils.unmarshal_json(
                 http_res.text, Optional[models.OrganizationMembership]
             )
-        if utils.match_response(http_res, ["400", "401", "404"], "application/json"):
+        if utils.match_response(http_res, ["401", "404"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -858,7 +898,7 @@ class OrganizationMembershipsSDK(BaseSDK):
             base_url=base_url,
             url_variables=url_variables,
             request=request,
-            request_body_required=True,
+            request_body_required=False,
             request_has_path_params=True,
             request_has_query_params=True,
             user_agent_header="user-agent",
@@ -868,9 +908,9 @@ class OrganizationMembershipsSDK(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request.request_body,
                 False,
-                False,
+                True,
                 "json",
-                models.UpdateOrganizationMembershipMetadataRequestBody,
+                Optional[models.UpdateOrganizationMembershipMetadataRequestBody],
             ),
             timeout_ms=timeout_ms,
         )
@@ -902,7 +942,12 @@ class OrganizationMembershipsSDK(BaseSDK):
         if utils.match_response(http_res, ["400", "404", "422"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -967,7 +1012,7 @@ class OrganizationMembershipsSDK(BaseSDK):
             base_url=base_url,
             url_variables=url_variables,
             request=request,
-            request_body_required=True,
+            request_body_required=False,
             request_has_path_params=True,
             request_has_query_params=True,
             user_agent_header="user-agent",
@@ -977,9 +1022,9 @@ class OrganizationMembershipsSDK(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request.request_body,
                 False,
-                False,
+                True,
                 "json",
-                models.UpdateOrganizationMembershipMetadataRequestBody,
+                Optional[models.UpdateOrganizationMembershipMetadataRequestBody],
             ),
             timeout_ms=timeout_ms,
         )
@@ -1011,7 +1056,12 @@ class OrganizationMembershipsSDK(BaseSDK):
         if utils.match_response(http_res, ["400", "404", "422"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -1103,12 +1153,18 @@ class OrganizationMembershipsSDK(BaseSDK):
             return utils.unmarshal_json(
                 http_res.text, Optional[models.OrganizationMemberships]
             )
-        if utils.match_response(
-            http_res, ["400", "401", "422", "500"], "application/json"
-        ):
+        if utils.match_response(http_res, ["400", "401", "422"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "500", "application/json"):
+            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=data)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -1200,12 +1256,18 @@ class OrganizationMembershipsSDK(BaseSDK):
             return utils.unmarshal_json(
                 http_res.text, Optional[models.OrganizationMemberships]
             )
-        if utils.match_response(
-            http_res, ["400", "401", "422", "500"], "application/json"
-        ):
+        if utils.match_response(http_res, ["400", "401", "422"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "500", "application/json"):
+            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=data)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res

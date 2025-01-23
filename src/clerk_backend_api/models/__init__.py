@@ -50,6 +50,7 @@ from .createblocklistidentifierop import (
     CreateBlocklistIdentifierRequestBody,
     CreateBlocklistIdentifierRequestBodyTypedDict,
 )
+from .createbulkinvitationsop import RequestBody, RequestBodyTypedDict
 from .createemailaddressop import (
     CreateEmailAddressRequestBody,
     CreateEmailAddressRequestBodyTypedDict,
@@ -57,6 +58,7 @@ from .createemailaddressop import (
 from .createinvitationop import (
     CreateInvitationRequestBody,
     CreateInvitationRequestBodyTypedDict,
+    TemplateSlug,
 )
 from .createjwttemplateop import (
     CreateJWTTemplateClaims,
@@ -76,9 +78,9 @@ from .createorganizationdomainop import (
 )
 from .createorganizationinvitationbulkop import (
     CreateOrganizationInvitationBulkRequest,
+    CreateOrganizationInvitationBulkRequestBody,
+    CreateOrganizationInvitationBulkRequestBodyTypedDict,
     CreateOrganizationInvitationBulkRequestTypedDict,
-    RequestBody,
-    RequestBodyTypedDict,
 )
 from .createorganizationinvitationop import (
     CreateOrganizationInvitationRequest,
@@ -111,12 +113,24 @@ from .createsamlconnectionop import (
     CreateSAMLConnectionRequestBodyTypedDict,
     Provider,
 )
+from .createsessionop import CreateSessionRequestBody, CreateSessionRequestBodyTypedDict
 from .createsessiontokenfromtemplateop import (
     CreateSessionTokenFromTemplateObject,
     CreateSessionTokenFromTemplateRequest,
+    CreateSessionTokenFromTemplateRequestBody,
+    CreateSessionTokenFromTemplateRequestBodyTypedDict,
     CreateSessionTokenFromTemplateRequestTypedDict,
     CreateSessionTokenFromTemplateResponseBody,
     CreateSessionTokenFromTemplateResponseBodyTypedDict,
+)
+from .createsessiontokenop import (
+    CreateSessionTokenObject,
+    CreateSessionTokenRequest,
+    CreateSessionTokenRequestBody,
+    CreateSessionTokenRequestBodyTypedDict,
+    CreateSessionTokenRequestTypedDict,
+    CreateSessionTokenResponseBody,
+    CreateSessionTokenResponseBodyTypedDict,
 )
 from .createsignintokenop import (
     CreateSignInTokenRequestBody,
@@ -124,6 +138,10 @@ from .createsignintokenop import (
 )
 from .createuserop import CreateUserRequestBody, CreateUserRequestBodyTypedDict
 from .createusertotpop import CreateUserTOTPRequest, CreateUserTOTPRequestTypedDict
+from .createwaitlistentryop import (
+    CreateWaitlistEntryRequestBody,
+    CreateWaitlistEntryRequestBodyTypedDict,
+)
 from .deleteallowlistidentifierop import (
     DeleteAllowlistIdentifierRequest,
     DeleteAllowlistIdentifierRequestTypedDict,
@@ -216,10 +234,9 @@ from .emailaddress import (
     ErrorMeta,
     ErrorMetaTypedDict,
     ErrorTypedDict,
-    Oauth,
-    OauthTypedDict,
-    OauthVerificationStatus,
-    OauthVerificationStrategy,
+    FromOAuth,
+    FromOAuthTypedDict,
+    FromOAuthVerificationStatus,
     Otp,
     OtpTypedDict,
     Strategy,
@@ -277,6 +294,7 @@ from .getuserlistop import GetUserListRequest, GetUserListRequestTypedDict
 from .getuserop import GetUserRequest, GetUserRequestTypedDict
 from .getuserscountop import GetUsersCountRequest, GetUsersCountRequestTypedDict
 from .identificationlink import IdentificationLink, IdentificationLinkTypedDict, Type
+from .instance import Instance, InstanceObject, InstanceTypedDict
 from .instancegetorganizationmembershipsop import (
     InstanceGetOrganizationMembershipsRequest,
     InstanceGetOrganizationMembershipsRequestTypedDict,
@@ -303,6 +321,7 @@ from .invitation_revoked import (
     InvitationRevokedStatus,
     InvitationRevokedTypedDict,
 )
+from .jwks import Jwks, JwksTypedDict, Keys, KeysTypedDict
 from .jwttemplate import (
     Claims,
     ClaimsTypedDict,
@@ -348,6 +367,11 @@ from .listpendingorganizationinvitationsop import (
 from .listsamlconnectionsop import (
     ListSAMLConnectionsRequest,
     ListSAMLConnectionsRequestTypedDict,
+)
+from .listwaitlistentriesop import (
+    ListWaitlistEntriesQueryParamStatus,
+    ListWaitlistEntriesRequest,
+    ListWaitlistEntriesRequestTypedDict,
 )
 from .lockuserop import LockUserRequest, LockUserRequestTypedDict
 from .mergeorganizationmetadataop import (
@@ -741,6 +765,17 @@ from .verifytotpop import (
     VerifyTOTPResponseBody,
     VerifyTOTPResponseBodyTypedDict,
 )
+from .waitlistentries import WaitlistEntries, WaitlistEntriesTypedDict
+from .waitlistentry import (
+    WaitlistEntry,
+    WaitlistEntryInvitation,
+    WaitlistEntryInvitationObject,
+    WaitlistEntryInvitationStatus,
+    WaitlistEntryInvitationTypedDict,
+    WaitlistEntryObject,
+    WaitlistEntryStatus,
+    WaitlistEntryTypedDict,
+)
 from .web3wallet import (
     AdminVerificationWeb3WalletStatus,
     AdminVerificationWeb3WalletStrategy,
@@ -756,7 +791,7 @@ from .web3wallet import (
     Web3WalletVerificationAdminTypedDict,
     Web3WalletVerificationTypedDict,
 )
-from .wellknown_jwks import Keys, KeysTypedDict, WellKnownJWKS, WellKnownJWKSTypedDict
+
 
 __all__ = [
     "Actor",
@@ -829,6 +864,8 @@ __all__ = [
     "CreateOrganizationDomainRequestBodyTypedDict",
     "CreateOrganizationDomainRequestTypedDict",
     "CreateOrganizationInvitationBulkRequest",
+    "CreateOrganizationInvitationBulkRequestBody",
+    "CreateOrganizationInvitationBulkRequestBodyTypedDict",
     "CreateOrganizationInvitationBulkRequestTypedDict",
     "CreateOrganizationInvitationRequest",
     "CreateOrganizationInvitationRequestBody",
@@ -848,17 +885,30 @@ __all__ = [
     "CreateSAMLConnectionAttributeMappingTypedDict",
     "CreateSAMLConnectionRequestBody",
     "CreateSAMLConnectionRequestBodyTypedDict",
+    "CreateSessionRequestBody",
+    "CreateSessionRequestBodyTypedDict",
     "CreateSessionTokenFromTemplateObject",
     "CreateSessionTokenFromTemplateRequest",
+    "CreateSessionTokenFromTemplateRequestBody",
+    "CreateSessionTokenFromTemplateRequestBodyTypedDict",
     "CreateSessionTokenFromTemplateRequestTypedDict",
     "CreateSessionTokenFromTemplateResponseBody",
     "CreateSessionTokenFromTemplateResponseBodyTypedDict",
+    "CreateSessionTokenObject",
+    "CreateSessionTokenRequest",
+    "CreateSessionTokenRequestBody",
+    "CreateSessionTokenRequestBodyTypedDict",
+    "CreateSessionTokenRequestTypedDict",
+    "CreateSessionTokenResponseBody",
+    "CreateSessionTokenResponseBodyTypedDict",
     "CreateSignInTokenRequestBody",
     "CreateSignInTokenRequestBodyTypedDict",
     "CreateUserRequestBody",
     "CreateUserRequestBodyTypedDict",
     "CreateUserTOTPRequest",
     "CreateUserTOTPRequestTypedDict",
+    "CreateWaitlistEntryRequestBody",
+    "CreateWaitlistEntryRequestBodyTypedDict",
     "DeleteAllowlistIdentifierRequest",
     "DeleteAllowlistIdentifierRequestTypedDict",
     "DeleteBackupCodeRequest",
@@ -927,6 +977,9 @@ __all__ = [
     "ExternalAccountsTypedDict",
     "File",
     "FileTypedDict",
+    "FromOAuth",
+    "FromOAuthTypedDict",
+    "FromOAuthVerificationStatus",
     "GetClientListRequest",
     "GetClientListRequestTypedDict",
     "GetClientRequest",
@@ -968,14 +1021,17 @@ __all__ = [
     "IdentificationLink",
     "IdentificationLinkTypedDict",
     "IdentifierType",
+    "Instance",
     "InstanceGetOrganizationMembershipsRequest",
     "InstanceGetOrganizationMembershipsRequestTypedDict",
+    "InstanceObject",
     "InstanceRestrictions",
     "InstanceRestrictionsObject",
     "InstanceRestrictionsTypedDict",
     "InstanceSettings",
     "InstanceSettingsObject",
     "InstanceSettingsTypedDict",
+    "InstanceTypedDict",
     "Invitation",
     "InvitationObject",
     "InvitationRevoked",
@@ -987,6 +1043,8 @@ __all__ = [
     "JWTTemplate",
     "JWTTemplateObject",
     "JWTTemplateTypedDict",
+    "Jwks",
+    "JwksTypedDict",
     "Keys",
     "KeysTypedDict",
     "LatestActivity",
@@ -1012,6 +1070,9 @@ __all__ = [
     "ListPendingOrganizationInvitationsRequestTypedDict",
     "ListSAMLConnectionsRequest",
     "ListSAMLConnectionsRequestTypedDict",
+    "ListWaitlistEntriesQueryParamStatus",
+    "ListWaitlistEntriesRequest",
+    "ListWaitlistEntriesRequestTypedDict",
     "LockUserRequest",
     "LockUserRequestTypedDict",
     "MergeOrganizationMetadataRequest",
@@ -1031,10 +1092,6 @@ __all__ = [
     "OAuthApplicationsTypedDict",
     "OTPVerificationStatus",
     "OTPVerificationStrategy",
-    "Oauth",
-    "OauthTypedDict",
-    "OauthVerificationStatus",
-    "OauthVerificationStrategy",
     "Object",
     "Organization",
     "OrganizationDomain",
@@ -1173,6 +1230,7 @@ __all__ = [
     "SvixURLTypedDict",
     "Template",
     "TemplateObject",
+    "TemplateSlug",
     "TemplateType",
     "TemplateTypedDict",
     "TestingToken",
@@ -1318,6 +1376,16 @@ __all__ = [
     "VerifyTOTPRequestTypedDict",
     "VerifyTOTPResponseBody",
     "VerifyTOTPResponseBodyTypedDict",
+    "WaitlistEntries",
+    "WaitlistEntriesTypedDict",
+    "WaitlistEntry",
+    "WaitlistEntryInvitation",
+    "WaitlistEntryInvitationObject",
+    "WaitlistEntryInvitationStatus",
+    "WaitlistEntryInvitationTypedDict",
+    "WaitlistEntryObject",
+    "WaitlistEntryStatus",
+    "WaitlistEntryTypedDict",
     "Web3Signature",
     "Web3SignatureTypedDict",
     "Web3SignatureVerificationStatus",
@@ -1329,6 +1397,4 @@ __all__ = [
     "Web3WalletVerificationAdmin",
     "Web3WalletVerificationAdminTypedDict",
     "Web3WalletVerificationTypedDict",
-    "WellKnownJWKS",
-    "WellKnownJWKSTypedDict",
 ]

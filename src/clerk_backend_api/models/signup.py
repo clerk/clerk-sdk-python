@@ -65,6 +65,10 @@ class SignUpTypedDict(TypedDict):
     external_id: NotRequired[Nullable[str]]
     created_session_id: NotRequired[Nullable[str]]
     created_user_id: NotRequired[Nullable[str]]
+    legal_accepted_at: NotRequired[Nullable[int]]
+    r"""Unix timestamp at which the user accepted the legal requirements.
+
+    """
     external_account: NotRequired[ExternalAccountTypedDict]
 
 
@@ -115,6 +119,11 @@ class SignUp(BaseModel):
 
     created_user_id: OptionalNullable[str] = UNSET
 
+    legal_accepted_at: OptionalNullable[int] = UNSET
+    r"""Unix timestamp at which the user accepted the legal requirements.
+
+    """
+
     external_account: Optional[ExternalAccount] = None
 
     @model_serializer(mode="wrap")
@@ -136,6 +145,7 @@ class SignUp(BaseModel):
             "external_id",
             "created_session_id",
             "created_user_id",
+            "legal_accepted_at",
             "external_account",
         ]
         nullable_fields = [
@@ -148,6 +158,7 @@ class SignUp(BaseModel):
             "external_id",
             "created_session_id",
             "created_user_id",
+            "legal_accepted_at",
         ]
         null_default_fields = []
 

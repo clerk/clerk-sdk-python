@@ -3,8 +3,8 @@
 from .basesdk import BaseSDK
 from clerk_backend_api import models, utils
 from clerk_backend_api._hooks import HookContext
-from clerk_backend_api.types import OptionalNullable, UNSET
-from typing import Any, Mapping, Optional
+from clerk_backend_api.types import BaseModel, OptionalNullable, UNSET
+from typing import Any, Mapping, Optional, Union, cast
 
 
 class DomainsSDK(BaseSDK):
@@ -72,7 +72,12 @@ class DomainsSDK(BaseSDK):
 
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[models.Domains])
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -149,7 +154,12 @@ class DomainsSDK(BaseSDK):
 
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[models.Domains])
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -167,9 +177,9 @@ class DomainsSDK(BaseSDK):
     def add(
         self,
         *,
-        name: str,
-        is_satellite: bool,
-        proxy_url: Optional[str] = None,
+        request: Optional[
+            Union[models.AddDomainRequestBody, models.AddDomainRequestBodyTypedDict]
+        ] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -183,9 +193,7 @@ class DomainsSDK(BaseSDK):
         At the moment, instances can have only one primary domain, so the `is_satellite` parameter must be set to `true`.
         If you're planning to configure the new satellite domain to run behind a proxy, pass the `proxy_url` parameter accordingly.
 
-        :param name: The new domain name. Can contain the port for development instances.
-        :param is_satellite: Marks the new domain as satellite. Only `true` is accepted at the moment.
-        :param proxy_url: The full URL of the proxy which will forward requests to the Clerk Frontend API for this domain. Applicable only to production instances.
+        :param request: The request object to send.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -199,11 +207,9 @@ class DomainsSDK(BaseSDK):
         if server_url is not None:
             base_url = server_url
 
-        request = models.AddDomainRequestBody(
-            name=name,
-            is_satellite=is_satellite,
-            proxy_url=proxy_url,
-        )
+        if not isinstance(request, BaseModel):
+            request = utils.unmarshal(request, Optional[models.AddDomainRequestBody])
+        request = cast(Optional[models.AddDomainRequestBody], request)
 
         req = self._build_request(
             method="POST",
@@ -211,7 +217,7 @@ class DomainsSDK(BaseSDK):
             base_url=base_url,
             url_variables=url_variables,
             request=request,
-            request_body_required=True,
+            request_body_required=False,
             request_has_path_params=False,
             request_has_query_params=True,
             user_agent_header="user-agent",
@@ -219,7 +225,7 @@ class DomainsSDK(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request, False, False, "json", models.AddDomainRequestBody
+                request, False, True, "json", Optional[models.AddDomainRequestBody]
             ),
             timeout_ms=timeout_ms,
         )
@@ -249,7 +255,12 @@ class DomainsSDK(BaseSDK):
         if utils.match_response(http_res, ["400", "402", "422"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -267,9 +278,9 @@ class DomainsSDK(BaseSDK):
     async def add_async(
         self,
         *,
-        name: str,
-        is_satellite: bool,
-        proxy_url: Optional[str] = None,
+        request: Optional[
+            Union[models.AddDomainRequestBody, models.AddDomainRequestBodyTypedDict]
+        ] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -283,9 +294,7 @@ class DomainsSDK(BaseSDK):
         At the moment, instances can have only one primary domain, so the `is_satellite` parameter must be set to `true`.
         If you're planning to configure the new satellite domain to run behind a proxy, pass the `proxy_url` parameter accordingly.
 
-        :param name: The new domain name. Can contain the port for development instances.
-        :param is_satellite: Marks the new domain as satellite. Only `true` is accepted at the moment.
-        :param proxy_url: The full URL of the proxy which will forward requests to the Clerk Frontend API for this domain. Applicable only to production instances.
+        :param request: The request object to send.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -299,11 +308,9 @@ class DomainsSDK(BaseSDK):
         if server_url is not None:
             base_url = server_url
 
-        request = models.AddDomainRequestBody(
-            name=name,
-            is_satellite=is_satellite,
-            proxy_url=proxy_url,
-        )
+        if not isinstance(request, BaseModel):
+            request = utils.unmarshal(request, Optional[models.AddDomainRequestBody])
+        request = cast(Optional[models.AddDomainRequestBody], request)
 
         req = self._build_request_async(
             method="POST",
@@ -311,7 +318,7 @@ class DomainsSDK(BaseSDK):
             base_url=base_url,
             url_variables=url_variables,
             request=request,
-            request_body_required=True,
+            request_body_required=False,
             request_has_path_params=False,
             request_has_query_params=True,
             user_agent_header="user-agent",
@@ -319,7 +326,7 @@ class DomainsSDK(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request, False, False, "json", models.AddDomainRequestBody
+                request, False, True, "json", Optional[models.AddDomainRequestBody]
             ),
             timeout_ms=timeout_ms,
         )
@@ -349,7 +356,12 @@ class DomainsSDK(BaseSDK):
         if utils.match_response(http_res, ["400", "402", "422"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -437,7 +449,12 @@ class DomainsSDK(BaseSDK):
         if utils.match_response(http_res, ["403", "404"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -525,7 +542,12 @@ class DomainsSDK(BaseSDK):
         if utils.match_response(http_res, ["403", "404"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -637,7 +659,12 @@ class DomainsSDK(BaseSDK):
         if utils.match_response(http_res, ["400", "404", "422"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -749,7 +776,12 @@ class DomainsSDK(BaseSDK):
         if utils.match_response(http_res, ["400", "404", "422"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res

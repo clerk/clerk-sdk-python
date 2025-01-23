@@ -5,9 +5,48 @@
 
 ### Available Operations
 
+* [get_instance](#get_instance) - Fetch the current instance
 * [update](#update) - Update instance settings
 * [update_restrictions](#update_restrictions) - Update instance restrictions
 * [update_organization_settings](#update_organization_settings) - Update instance organization settings
+
+## get_instance
+
+Fetches the current instance
+
+### Example Usage
+
+```python
+from clerk_backend_api import Clerk
+
+with Clerk(
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+) as clerk:
+
+    res = clerk.instance_settings.get_instance()
+
+    assert res is not None
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+
+### Response
+
+**[models.Instance](../../models/instance.md)**
+
+### Errors
+
+| Error Type      | Status Code     | Content Type    |
+| --------------- | --------------- | --------------- |
+| models.SDKError | 4XX, 5XX        | \*/\*           |
 
 ## update
 
@@ -149,5 +188,5 @@ with Clerk(
 
 | Error Type         | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
-| models.ClerkErrors | 402, 404, 422      | application/json   |
+| models.ClerkErrors | 400, 402, 404, 422 | application/json   |
 | models.SDKError    | 4XX, 5XX           | \*/\*              |

@@ -8,9 +8,19 @@ from clerk_backend_api.types import (
     UNSET,
     UNSET_SENTINEL,
 )
+from enum import Enum
 from pydantic import model_serializer
 from typing import Any, Dict, Optional
 from typing_extensions import NotRequired, TypedDict
+
+
+class TemplateSlug(str, Enum):
+    r"""The slug of the email template to use for the invitation email.
+    If not provided, the \"invitation\" template will be used.
+    """
+
+    INVITATION = "invitation"
+    WAITLIST_INVITATION = "waitlist_invitation"
 
 
 class CreateInvitationRequestBodyTypedDict(TypedDict):
@@ -29,12 +39,16 @@ class CreateInvitationRequestBodyTypedDict(TypedDict):
     """
     notify: NotRequired[Nullable[bool]]
     r"""Optional flag which denotes whether an email invitation should be sent to the given email address.
-    Defaults to true.
+    Defaults to `true`.
     """
     ignore_existing: NotRequired[Nullable[bool]]
     r"""Whether an invitation should be created if there is already an existing invitation for this email address, or it's claimed by another user."""
     expires_in_days: NotRequired[Nullable[int]]
-    r"""The number of days the invitation will be valid for. By default, the invitation does not expire."""
+    r"""The number of days the invitation will be valid for. By default, the invitation expires after 30 days."""
+    template_slug: NotRequired[Nullable[TemplateSlug]]
+    r"""The slug of the email template to use for the invitation email.
+    If not provided, the \"invitation\" template will be used.
+    """
 
 
 class CreateInvitationRequestBody(BaseModel):
@@ -56,14 +70,19 @@ class CreateInvitationRequestBody(BaseModel):
 
     notify: OptionalNullable[bool] = True
     r"""Optional flag which denotes whether an email invitation should be sent to the given email address.
-    Defaults to true.
+    Defaults to `true`.
     """
 
     ignore_existing: OptionalNullable[bool] = False
     r"""Whether an invitation should be created if there is already an existing invitation for this email address, or it's claimed by another user."""
 
     expires_in_days: OptionalNullable[int] = UNSET
-    r"""The number of days the invitation will be valid for. By default, the invitation does not expire."""
+    r"""The number of days the invitation will be valid for. By default, the invitation expires after 30 days."""
+
+    template_slug: OptionalNullable[TemplateSlug] = UNSET
+    r"""The slug of the email template to use for the invitation email.
+    If not provided, the \"invitation\" template will be used.
+    """
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
@@ -73,8 +92,14 @@ class CreateInvitationRequestBody(BaseModel):
             "notify",
             "ignore_existing",
             "expires_in_days",
+            "template_slug",
         ]
-        nullable_fields = ["notify", "ignore_existing", "expires_in_days"]
+        nullable_fields = [
+            "notify",
+            "ignore_existing",
+            "expires_in_days",
+            "template_slug",
+        ]
         null_default_fields = []
 
         serialized = handler(self)

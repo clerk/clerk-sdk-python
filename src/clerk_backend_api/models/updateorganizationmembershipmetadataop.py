@@ -35,7 +35,7 @@ class UpdateOrganizationMembershipMetadataRequestTypedDict(TypedDict):
     r"""The ID of the organization the membership belongs to"""
     user_id: str
     r"""The ID of the user that this membership belongs to"""
-    request_body: UpdateOrganizationMembershipMetadataRequestBodyTypedDict
+    request_body: NotRequired[UpdateOrganizationMembershipMetadataRequestBodyTypedDict]
 
 
 class UpdateOrganizationMembershipMetadataRequest(BaseModel):
@@ -50,6 +50,6 @@ class UpdateOrganizationMembershipMetadataRequest(BaseModel):
     r"""The ID of the user that this membership belongs to"""
 
     request_body: Annotated[
-        UpdateOrganizationMembershipMetadataRequestBody,
+        Optional[UpdateOrganizationMembershipMetadataRequestBody],
         FieldMetadata(request=RequestMetadata(media_type="application/json")),
-    ]
+    ] = None

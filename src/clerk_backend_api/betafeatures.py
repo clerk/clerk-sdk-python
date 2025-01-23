@@ -12,10 +12,12 @@ class BetaFeatures(BaseSDK):
     def update_instance_settings(
         self,
         *,
-        request: Union[
-            models.UpdateInstanceAuthConfigRequestBody,
-            models.UpdateInstanceAuthConfigRequestBodyTypedDict,
-        ] = models.UpdateInstanceAuthConfigRequestBody(),
+        request: Optional[
+            Union[
+                models.UpdateInstanceAuthConfigRequestBody,
+                models.UpdateInstanceAuthConfigRequestBodyTypedDict,
+            ]
+        ] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -41,9 +43,9 @@ class BetaFeatures(BaseSDK):
 
         if not isinstance(request, BaseModel):
             request = utils.unmarshal(
-                request, models.UpdateInstanceAuthConfigRequestBody
+                request, Optional[models.UpdateInstanceAuthConfigRequestBody]
             )
-        request = cast(models.UpdateInstanceAuthConfigRequestBody, request)
+        request = cast(Optional[models.UpdateInstanceAuthConfigRequestBody], request)
 
         req = self._build_request(
             method="PATCH",
@@ -51,7 +53,7 @@ class BetaFeatures(BaseSDK):
             base_url=base_url,
             url_variables=url_variables,
             request=request,
-            request_body_required=True,
+            request_body_required=False,
             request_has_path_params=False,
             request_has_query_params=True,
             user_agent_header="user-agent",
@@ -95,7 +97,12 @@ class BetaFeatures(BaseSDK):
         if utils.match_response(http_res, ["402", "422"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -113,10 +120,12 @@ class BetaFeatures(BaseSDK):
     async def update_instance_settings_async(
         self,
         *,
-        request: Union[
-            models.UpdateInstanceAuthConfigRequestBody,
-            models.UpdateInstanceAuthConfigRequestBodyTypedDict,
-        ] = models.UpdateInstanceAuthConfigRequestBody(),
+        request: Optional[
+            Union[
+                models.UpdateInstanceAuthConfigRequestBody,
+                models.UpdateInstanceAuthConfigRequestBodyTypedDict,
+            ]
+        ] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -142,9 +151,9 @@ class BetaFeatures(BaseSDK):
 
         if not isinstance(request, BaseModel):
             request = utils.unmarshal(
-                request, models.UpdateInstanceAuthConfigRequestBody
+                request, Optional[models.UpdateInstanceAuthConfigRequestBody]
             )
-        request = cast(models.UpdateInstanceAuthConfigRequestBody, request)
+        request = cast(Optional[models.UpdateInstanceAuthConfigRequestBody], request)
 
         req = self._build_request_async(
             method="PATCH",
@@ -152,7 +161,7 @@ class BetaFeatures(BaseSDK):
             base_url=base_url,
             url_variables=url_variables,
             request=request,
-            request_body_required=True,
+            request_body_required=False,
             request_has_path_params=False,
             request_has_query_params=True,
             user_agent_header="user-agent",
@@ -196,7 +205,12 @@ class BetaFeatures(BaseSDK):
         if utils.match_response(http_res, ["402", "422"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -306,7 +320,12 @@ class BetaFeatures(BaseSDK):
         if utils.match_response(http_res, ["400", "422"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -416,7 +435,12 @@ class BetaFeatures(BaseSDK):
         if utils.match_response(http_res, ["400", "422"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -434,10 +458,12 @@ class BetaFeatures(BaseSDK):
     def change_production_instance_domain(
         self,
         *,
-        request: Union[
-            models.ChangeProductionInstanceDomainRequestBody,
-            models.ChangeProductionInstanceDomainRequestBodyTypedDict,
-        ] = models.ChangeProductionInstanceDomainRequestBody(),
+        request: Optional[
+            Union[
+                models.ChangeProductionInstanceDomainRequestBody,
+                models.ChangeProductionInstanceDomainRequestBodyTypedDict,
+            ]
+        ] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -467,9 +493,11 @@ class BetaFeatures(BaseSDK):
 
         if not isinstance(request, BaseModel):
             request = utils.unmarshal(
-                request, models.ChangeProductionInstanceDomainRequestBody
+                request, Optional[models.ChangeProductionInstanceDomainRequestBody]
             )
-        request = cast(models.ChangeProductionInstanceDomainRequestBody, request)
+        request = cast(
+            Optional[models.ChangeProductionInstanceDomainRequestBody], request
+        )
 
         req = self._build_request(
             method="POST",
@@ -477,7 +505,7 @@ class BetaFeatures(BaseSDK):
             base_url=base_url,
             url_variables=url_variables,
             request=request,
-            request_body_required=True,
+            request_body_required=False,
             request_has_path_params=False,
             request_has_query_params=True,
             user_agent_header="user-agent",
@@ -519,7 +547,12 @@ class BetaFeatures(BaseSDK):
         if utils.match_response(http_res, ["400", "422"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -537,10 +570,12 @@ class BetaFeatures(BaseSDK):
     async def change_production_instance_domain_async(
         self,
         *,
-        request: Union[
-            models.ChangeProductionInstanceDomainRequestBody,
-            models.ChangeProductionInstanceDomainRequestBodyTypedDict,
-        ] = models.ChangeProductionInstanceDomainRequestBody(),
+        request: Optional[
+            Union[
+                models.ChangeProductionInstanceDomainRequestBody,
+                models.ChangeProductionInstanceDomainRequestBodyTypedDict,
+            ]
+        ] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -570,9 +605,11 @@ class BetaFeatures(BaseSDK):
 
         if not isinstance(request, BaseModel):
             request = utils.unmarshal(
-                request, models.ChangeProductionInstanceDomainRequestBody
+                request, Optional[models.ChangeProductionInstanceDomainRequestBody]
             )
-        request = cast(models.ChangeProductionInstanceDomainRequestBody, request)
+        request = cast(
+            Optional[models.ChangeProductionInstanceDomainRequestBody], request
+        )
 
         req = self._build_request_async(
             method="POST",
@@ -580,7 +617,7 @@ class BetaFeatures(BaseSDK):
             base_url=base_url,
             url_variables=url_variables,
             request=request,
-            request_body_required=True,
+            request_body_required=False,
             request_has_path_params=False,
             request_has_query_params=True,
             user_agent_header="user-agent",
@@ -622,7 +659,12 @@ class BetaFeatures(BaseSDK):
         if utils.match_response(http_res, ["400", "422"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
