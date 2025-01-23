@@ -136,7 +136,7 @@ with Clerk(
 
 | Error Type         | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
-| models.ClerkErrors | 400, 404, 422      | application/json   |
+| models.ClerkErrors | 404, 422           | application/json   |
 | models.SDKError    | 4XX, 5XX           | \*/\*              |
 
 ## delete
@@ -177,7 +177,7 @@ with Clerk(
 
 | Error Type         | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
-| models.ClerkErrors | 400, 401, 404      | application/json   |
+| models.ClerkErrors | 401, 404           | application/json   |
 | models.SDKError    | 4XX, 5XX           | \*/\*              |
 
 ## update_metadata
@@ -268,5 +268,6 @@ with Clerk(
 
 | Error Type         | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
-| models.ClerkErrors | 400, 401, 422, 500 | application/json   |
+| models.ClerkErrors | 400, 401, 422      | application/json   |
+| models.ClerkErrors | 500                | application/json   |
 | models.SDKError    | 4XX, 5XX           | \*/\*              |

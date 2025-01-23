@@ -3,8 +3,8 @@
 from .basesdk import BaseSDK
 from clerk_backend_api import models, utils
 from clerk_backend_api._hooks import HookContext
-from clerk_backend_api.types import OptionalNullable, UNSET
-from typing import Any, List, Mapping, Optional
+from clerk_backend_api.types import BaseModel, OptionalNullable, UNSET
+from typing import Any, List, Mapping, Optional, Union, cast
 
 
 class AllowlistBlocklist(BaseSDK):
@@ -75,7 +75,12 @@ class AllowlistBlocklist(BaseSDK):
         if utils.match_response(http_res, ["401", "402"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -157,7 +162,12 @@ class AllowlistBlocklist(BaseSDK):
         if utils.match_response(http_res, ["401", "402"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -175,8 +185,12 @@ class AllowlistBlocklist(BaseSDK):
     def create_allowlist_identifier(
         self,
         *,
-        identifier: str,
-        notify: Optional[bool] = False,
+        request: Optional[
+            Union[
+                models.CreateAllowlistIdentifierRequestBody,
+                models.CreateAllowlistIdentifierRequestBodyTypedDict,
+            ]
+        ] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -186,8 +200,7 @@ class AllowlistBlocklist(BaseSDK):
 
         Create an identifier allowed to sign up to an instance
 
-        :param identifier: The identifier to be added in the allow-list. This can be an email address, a phone number or a web3 wallet.
-        :param notify: This flag denotes whether the given identifier will receive an invitation to join the application. Note that this only works for email address and phone number identifiers.
+        :param request: The request object to send.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -201,10 +214,11 @@ class AllowlistBlocklist(BaseSDK):
         if server_url is not None:
             base_url = server_url
 
-        request = models.CreateAllowlistIdentifierRequestBody(
-            identifier=identifier,
-            notify=notify,
-        )
+        if not isinstance(request, BaseModel):
+            request = utils.unmarshal(
+                request, Optional[models.CreateAllowlistIdentifierRequestBody]
+            )
+        request = cast(Optional[models.CreateAllowlistIdentifierRequestBody], request)
 
         req = self._build_request(
             method="POST",
@@ -212,7 +226,7 @@ class AllowlistBlocklist(BaseSDK):
             base_url=base_url,
             url_variables=url_variables,
             request=request,
-            request_body_required=True,
+            request_body_required=False,
             request_has_path_params=False,
             request_has_query_params=True,
             user_agent_header="user-agent",
@@ -222,9 +236,9 @@ class AllowlistBlocklist(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request,
                 False,
-                False,
+                True,
                 "json",
-                models.CreateAllowlistIdentifierRequestBody,
+                Optional[models.CreateAllowlistIdentifierRequestBody],
             ),
             timeout_ms=timeout_ms,
         )
@@ -256,7 +270,12 @@ class AllowlistBlocklist(BaseSDK):
         if utils.match_response(http_res, ["400", "402", "422"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -274,8 +293,12 @@ class AllowlistBlocklist(BaseSDK):
     async def create_allowlist_identifier_async(
         self,
         *,
-        identifier: str,
-        notify: Optional[bool] = False,
+        request: Optional[
+            Union[
+                models.CreateAllowlistIdentifierRequestBody,
+                models.CreateAllowlistIdentifierRequestBodyTypedDict,
+            ]
+        ] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -285,8 +308,7 @@ class AllowlistBlocklist(BaseSDK):
 
         Create an identifier allowed to sign up to an instance
 
-        :param identifier: The identifier to be added in the allow-list. This can be an email address, a phone number or a web3 wallet.
-        :param notify: This flag denotes whether the given identifier will receive an invitation to join the application. Note that this only works for email address and phone number identifiers.
+        :param request: The request object to send.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -300,10 +322,11 @@ class AllowlistBlocklist(BaseSDK):
         if server_url is not None:
             base_url = server_url
 
-        request = models.CreateAllowlistIdentifierRequestBody(
-            identifier=identifier,
-            notify=notify,
-        )
+        if not isinstance(request, BaseModel):
+            request = utils.unmarshal(
+                request, Optional[models.CreateAllowlistIdentifierRequestBody]
+            )
+        request = cast(Optional[models.CreateAllowlistIdentifierRequestBody], request)
 
         req = self._build_request_async(
             method="POST",
@@ -311,7 +334,7 @@ class AllowlistBlocklist(BaseSDK):
             base_url=base_url,
             url_variables=url_variables,
             request=request,
-            request_body_required=True,
+            request_body_required=False,
             request_has_path_params=False,
             request_has_query_params=True,
             user_agent_header="user-agent",
@@ -321,9 +344,9 @@ class AllowlistBlocklist(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request,
                 False,
-                False,
+                True,
                 "json",
-                models.CreateAllowlistIdentifierRequestBody,
+                Optional[models.CreateAllowlistIdentifierRequestBody],
             ),
             timeout_ms=timeout_ms,
         )
@@ -355,7 +378,12 @@ class AllowlistBlocklist(BaseSDK):
         if utils.match_response(http_res, ["400", "402", "422"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -373,7 +401,12 @@ class AllowlistBlocklist(BaseSDK):
     def create_blocklist_identifier(
         self,
         *,
-        identifier: str,
+        request: Optional[
+            Union[
+                models.CreateBlocklistIdentifierRequestBody,
+                models.CreateBlocklistIdentifierRequestBodyTypedDict,
+            ]
+        ] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -383,7 +416,7 @@ class AllowlistBlocklist(BaseSDK):
 
         Create an identifier that is blocked from accessing an instance
 
-        :param identifier: The identifier to be added in the block-list. This can be an email address, a phone number or a web3 wallet.
+        :param request: The request object to send.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -397,9 +430,11 @@ class AllowlistBlocklist(BaseSDK):
         if server_url is not None:
             base_url = server_url
 
-        request = models.CreateBlocklistIdentifierRequestBody(
-            identifier=identifier,
-        )
+        if not isinstance(request, BaseModel):
+            request = utils.unmarshal(
+                request, Optional[models.CreateBlocklistIdentifierRequestBody]
+            )
+        request = cast(Optional[models.CreateBlocklistIdentifierRequestBody], request)
 
         req = self._build_request(
             method="POST",
@@ -407,7 +442,7 @@ class AllowlistBlocklist(BaseSDK):
             base_url=base_url,
             url_variables=url_variables,
             request=request,
-            request_body_required=True,
+            request_body_required=False,
             request_has_path_params=False,
             request_has_query_params=True,
             user_agent_header="user-agent",
@@ -417,9 +452,9 @@ class AllowlistBlocklist(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request,
                 False,
-                False,
+                True,
                 "json",
-                models.CreateBlocklistIdentifierRequestBody,
+                Optional[models.CreateBlocklistIdentifierRequestBody],
             ),
             timeout_ms=timeout_ms,
         )
@@ -451,7 +486,12 @@ class AllowlistBlocklist(BaseSDK):
         if utils.match_response(http_res, ["400", "402", "422"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -469,7 +509,12 @@ class AllowlistBlocklist(BaseSDK):
     async def create_blocklist_identifier_async(
         self,
         *,
-        identifier: str,
+        request: Optional[
+            Union[
+                models.CreateBlocklistIdentifierRequestBody,
+                models.CreateBlocklistIdentifierRequestBodyTypedDict,
+            ]
+        ] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -479,7 +524,7 @@ class AllowlistBlocklist(BaseSDK):
 
         Create an identifier that is blocked from accessing an instance
 
-        :param identifier: The identifier to be added in the block-list. This can be an email address, a phone number or a web3 wallet.
+        :param request: The request object to send.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -493,9 +538,11 @@ class AllowlistBlocklist(BaseSDK):
         if server_url is not None:
             base_url = server_url
 
-        request = models.CreateBlocklistIdentifierRequestBody(
-            identifier=identifier,
-        )
+        if not isinstance(request, BaseModel):
+            request = utils.unmarshal(
+                request, Optional[models.CreateBlocklistIdentifierRequestBody]
+            )
+        request = cast(Optional[models.CreateBlocklistIdentifierRequestBody], request)
 
         req = self._build_request_async(
             method="POST",
@@ -503,7 +550,7 @@ class AllowlistBlocklist(BaseSDK):
             base_url=base_url,
             url_variables=url_variables,
             request=request,
-            request_body_required=True,
+            request_body_required=False,
             request_has_path_params=False,
             request_has_query_params=True,
             user_agent_header="user-agent",
@@ -513,9 +560,9 @@ class AllowlistBlocklist(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request,
                 False,
-                False,
+                True,
                 "json",
-                models.CreateBlocklistIdentifierRequestBody,
+                Optional[models.CreateBlocklistIdentifierRequestBody],
             ),
             timeout_ms=timeout_ms,
         )
@@ -547,7 +594,12 @@ class AllowlistBlocklist(BaseSDK):
         if utils.match_response(http_res, ["400", "402", "422"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -634,7 +686,12 @@ class AllowlistBlocklist(BaseSDK):
         if utils.match_response(http_res, ["402", "404"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -721,7 +778,12 @@ class AllowlistBlocklist(BaseSDK):
         if utils.match_response(http_res, ["402", "404"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res

@@ -67,7 +67,6 @@ with Clerk(
 ## create
 
 Creates a new organization with the given name for an instance.
-In order to successfully create an organization you need to provide the ID of the User who will become the organization administrator.
 You can specify an optional slug for the new organization.
 If provided, the organization slug can contain only lowercase alphanumeric characters (letters and digits) and the dash "-".
 Organization slugs must be unique for the instance.
@@ -87,11 +86,19 @@ with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 ) as clerk:
 
-    res = clerk.organizations.create(name="NewOrg", created_by="user_123", private_metadata={
-        "internal_code": "ABC123",
-    }, public_metadata={
-        "public_event": "Annual Summit",
-    }, slug="neworg", max_allowed_memberships=100, created_at="<value>")
+    res = clerk.organizations.create(request={
+        "name": "NewOrg",
+        "created_by": "user_123",
+        "private_metadata": {
+            "internal_code": "ABC123",
+        },
+        "public_metadata": {
+            "public_event": "Annual Summit",
+        },
+        "slug": "neworg",
+        "max_allowed_memberships": 100,
+        "created_at": "1721474962525",
+    })
 
     assert res is not None
 
@@ -102,16 +109,10 @@ with Clerk(
 
 ### Parameters
 
-| Parameter                                                                                                                              | Type                                                                                                                                   | Required                                                                                                                               | Description                                                                                                                            | Example                                                                                                                                |
-| -------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
-| `name`                                                                                                                                 | *str*                                                                                                                                  | :heavy_check_mark:                                                                                                                     | The name of the new organization.<br/>May not contain URLs or HTML.                                                                    | NewOrg                                                                                                                                 |
-| `created_by`                                                                                                                           | *str*                                                                                                                                  | :heavy_check_mark:                                                                                                                     | The ID of the User who will become the administrator for the new organization                                                          | user_123                                                                                                                               |
-| `private_metadata`                                                                                                                     | Dict[str, *Any*]                                                                                                                       | :heavy_minus_sign:                                                                                                                     | Metadata saved on the organization, accessible only from the Backend API                                                               | {<br/>"internal_code": "ABC123"<br/>}                                                                                                  |
-| `public_metadata`                                                                                                                      | Dict[str, *Any*]                                                                                                                       | :heavy_minus_sign:                                                                                                                     | Metadata saved on the organization, read-only from the Frontend API and fully accessible (read/write) from the Backend API             | {<br/>"public_event": "Annual Summit"<br/>}                                                                                            |
-| `slug`                                                                                                                                 | *Optional[str]*                                                                                                                        | :heavy_minus_sign:                                                                                                                     | A slug for the new organization.<br/>Can contain only lowercase alphanumeric characters and the dash "-".<br/>Must be unique for the instance. | neworg                                                                                                                                 |
-| `max_allowed_memberships`                                                                                                              | *Optional[int]*                                                                                                                        | :heavy_minus_sign:                                                                                                                     | The maximum number of memberships allowed for this organization                                                                        | 100                                                                                                                                    |
-| `created_at`                                                                                                                           | *Optional[str]*                                                                                                                        | :heavy_minus_sign:                                                                                                                     | A custom date/time denoting _when_ the organization was created, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`).        |                                                                                                                                        |
-| `retries`                                                                                                                              | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                       | :heavy_minus_sign:                                                                                                                     | Configuration to override the default retry behavior of the client.                                                                    |                                                                                                                                        |
+| Parameter                                                                             | Type                                                                                  | Required                                                                              | Description                                                                           |
+| ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| `request`                                                                             | [models.CreateOrganizationRequestBody](../../models/createorganizationrequestbody.md) | :heavy_check_mark:                                                                    | The request object to use for the request.                                            |
+| `retries`                                                                             | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                      | :heavy_minus_sign:                                                                    | Configuration to override the default retry behavior of the client.                   |
 
 ### Response
 
@@ -182,8 +183,9 @@ with Clerk(
 
     }, private_metadata={
 
-    }, name="New Organization Name", slug="new-org-slug", max_allowed_memberships=100, admin_delete_enabled=True, created_at="<value>", additional_properties={
-
+    }, name="New Organization Name", slug="new-org-slug", max_allowed_memberships=100, admin_delete_enabled=True, created_at="1733171278360", additional_properties={
+        "key": "<value>",
+        "key1": "<value>",
     })
 
     assert res is not None
@@ -282,7 +284,9 @@ with Clerk(
     }, private_metadata={
         "internal_use_only": "Future plans discussion.",
     }, additional_properties={
-
+        "key": "<value>",
+        "key1": "<value>",
+        "key2": "<value>",
     })
 
     assert res is not None

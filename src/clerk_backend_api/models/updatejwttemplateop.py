@@ -108,7 +108,7 @@ class UpdateJWTTemplateRequestBody(BaseModel):
 class UpdateJWTTemplateRequestTypedDict(TypedDict):
     template_id: str
     r"""The ID of the JWT template to update"""
-    request_body: UpdateJWTTemplateRequestBodyTypedDict
+    request_body: NotRequired[UpdateJWTTemplateRequestBodyTypedDict]
 
 
 class UpdateJWTTemplateRequest(BaseModel):
@@ -118,6 +118,6 @@ class UpdateJWTTemplateRequest(BaseModel):
     r"""The ID of the JWT template to update"""
 
     request_body: Annotated[
-        UpdateJWTTemplateRequestBody,
+        Optional[UpdateJWTTemplateRequestBody],
         FieldMetadata(request=RequestMetadata(media_type="application/json")),
-    ]
+    ] = None

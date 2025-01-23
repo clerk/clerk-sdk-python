@@ -3,8 +3,8 @@
 from .basesdk import BaseSDK
 from clerk_backend_api import models, utils
 from clerk_backend_api._hooks import HookContext
-from clerk_backend_api.types import OptionalNullable, UNSET
-from typing import Any, Mapping, Optional, Union
+from clerk_backend_api.types import BaseModel, OptionalNullable, UNSET
+from typing import Any, List, Mapping, Optional, Union, cast
 
 
 class SamlConnectionsSDK(BaseSDK):
@@ -13,6 +13,7 @@ class SamlConnectionsSDK(BaseSDK):
         *,
         limit: Optional[int] = 10,
         offset: Optional[int] = 0,
+        organization_id: Optional[List[str]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -26,6 +27,7 @@ class SamlConnectionsSDK(BaseSDK):
 
         :param limit: Applies a limit to the number of results returned. Can be used for paginating the results together with `offset`.
         :param offset: Skip the first `offset` results when paginating. Needs to be an integer greater or equal to zero. To be used in conjunction with `limit`.
+        :param organization_id: Returns SAML connections that have an associated organization ID to the given organizations. For each organization id, the `+` and `-` can be prepended to the id, which denote whether the respective organization should be included or excluded from the result set. Accepts up to 100 organization ids.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -42,6 +44,7 @@ class SamlConnectionsSDK(BaseSDK):
         request = models.ListSAMLConnectionsRequest(
             limit=limit,
             offset=offset,
+            organization_id=organization_id,
         )
 
         req = self._build_request(
@@ -85,7 +88,12 @@ class SamlConnectionsSDK(BaseSDK):
         if utils.match_response(http_res, ["402", "403", "422"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -105,6 +113,7 @@ class SamlConnectionsSDK(BaseSDK):
         *,
         limit: Optional[int] = 10,
         offset: Optional[int] = 0,
+        organization_id: Optional[List[str]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -118,6 +127,7 @@ class SamlConnectionsSDK(BaseSDK):
 
         :param limit: Applies a limit to the number of results returned. Can be used for paginating the results together with `offset`.
         :param offset: Skip the first `offset` results when paginating. Needs to be an integer greater or equal to zero. To be used in conjunction with `limit`.
+        :param organization_id: Returns SAML connections that have an associated organization ID to the given organizations. For each organization id, the `+` and `-` can be prepended to the id, which denote whether the respective organization should be included or excluded from the result set. Accepts up to 100 organization ids.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -134,6 +144,7 @@ class SamlConnectionsSDK(BaseSDK):
         request = models.ListSAMLConnectionsRequest(
             limit=limit,
             offset=offset,
+            organization_id=organization_id,
         )
 
         req = self._build_request_async(
@@ -177,7 +188,12 @@ class SamlConnectionsSDK(BaseSDK):
         if utils.match_response(http_res, ["402", "403", "422"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -195,20 +211,12 @@ class SamlConnectionsSDK(BaseSDK):
     def create(
         self,
         *,
-        name: str,
-        domain: str,
-        provider: models.Provider,
-        idp_entity_id: OptionalNullable[str] = UNSET,
-        idp_sso_url: OptionalNullable[str] = UNSET,
-        idp_certificate: OptionalNullable[str] = UNSET,
-        idp_metadata_url: OptionalNullable[str] = UNSET,
-        idp_metadata: OptionalNullable[str] = UNSET,
-        attribute_mapping: OptionalNullable[
+        request: Optional[
             Union[
-                models.CreateSAMLConnectionAttributeMapping,
-                models.CreateSAMLConnectionAttributeMappingTypedDict,
+                models.CreateSAMLConnectionRequestBody,
+                models.CreateSAMLConnectionRequestBodyTypedDict,
             ]
-        ] = UNSET,
+        ] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -218,15 +226,7 @@ class SamlConnectionsSDK(BaseSDK):
 
         Create a new SAML Connection.
 
-        :param name: The name to use as a label for this SAML Connection
-        :param domain: The domain of your organization. Sign in flows using an email with this domain, will use this SAML Connection.
-        :param provider: The IdP provider of the connection.
-        :param idp_entity_id: The Entity ID as provided by the IdP
-        :param idp_sso_url: The Single-Sign On URL as provided by the IdP
-        :param idp_certificate: The X.509 certificate as provided by the IdP
-        :param idp_metadata_url: The URL which serves the IdP metadata. If present, it takes priority over the corresponding individual properties
-        :param idp_metadata: The XML content of the IdP metadata file. If present, it takes priority over the corresponding individual properties
-        :param attribute_mapping: Define the attribute name mapping between Identity Provider and Clerk's user properties
+        :param request: The request object to send.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -240,20 +240,11 @@ class SamlConnectionsSDK(BaseSDK):
         if server_url is not None:
             base_url = server_url
 
-        request = models.CreateSAMLConnectionRequestBody(
-            name=name,
-            domain=domain,
-            provider=provider,
-            idp_entity_id=idp_entity_id,
-            idp_sso_url=idp_sso_url,
-            idp_certificate=idp_certificate,
-            idp_metadata_url=idp_metadata_url,
-            idp_metadata=idp_metadata,
-            attribute_mapping=utils.get_pydantic_model(
-                attribute_mapping,
-                OptionalNullable[models.CreateSAMLConnectionAttributeMapping],
-            ),
-        )
+        if not isinstance(request, BaseModel):
+            request = utils.unmarshal(
+                request, Optional[models.CreateSAMLConnectionRequestBody]
+            )
+        request = cast(Optional[models.CreateSAMLConnectionRequestBody], request)
 
         req = self._build_request(
             method="POST",
@@ -261,7 +252,7 @@ class SamlConnectionsSDK(BaseSDK):
             base_url=base_url,
             url_variables=url_variables,
             request=request,
-            request_body_required=True,
+            request_body_required=False,
             request_has_path_params=False,
             request_has_query_params=True,
             user_agent_header="user-agent",
@@ -269,7 +260,11 @@ class SamlConnectionsSDK(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request, False, False, "json", models.CreateSAMLConnectionRequestBody
+                request,
+                False,
+                True,
+                "json",
+                Optional[models.CreateSAMLConnectionRequestBody],
             ),
             timeout_ms=timeout_ms,
         )
@@ -289,7 +284,7 @@ class SamlConnectionsSDK(BaseSDK):
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
-            error_status_codes=["402", "403", "422", "4XX", "5XX"],
+            error_status_codes=["402", "403", "404", "422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -298,10 +293,17 @@ class SamlConnectionsSDK(BaseSDK):
             return utils.unmarshal_json(
                 http_res.text, Optional[models.SchemasSAMLConnection]
             )
-        if utils.match_response(http_res, ["402", "403", "422"], "application/json"):
+        if utils.match_response(
+            http_res, ["402", "403", "404", "422"], "application/json"
+        ):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -319,20 +321,12 @@ class SamlConnectionsSDK(BaseSDK):
     async def create_async(
         self,
         *,
-        name: str,
-        domain: str,
-        provider: models.Provider,
-        idp_entity_id: OptionalNullable[str] = UNSET,
-        idp_sso_url: OptionalNullable[str] = UNSET,
-        idp_certificate: OptionalNullable[str] = UNSET,
-        idp_metadata_url: OptionalNullable[str] = UNSET,
-        idp_metadata: OptionalNullable[str] = UNSET,
-        attribute_mapping: OptionalNullable[
+        request: Optional[
             Union[
-                models.CreateSAMLConnectionAttributeMapping,
-                models.CreateSAMLConnectionAttributeMappingTypedDict,
+                models.CreateSAMLConnectionRequestBody,
+                models.CreateSAMLConnectionRequestBodyTypedDict,
             ]
-        ] = UNSET,
+        ] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -342,15 +336,7 @@ class SamlConnectionsSDK(BaseSDK):
 
         Create a new SAML Connection.
 
-        :param name: The name to use as a label for this SAML Connection
-        :param domain: The domain of your organization. Sign in flows using an email with this domain, will use this SAML Connection.
-        :param provider: The IdP provider of the connection.
-        :param idp_entity_id: The Entity ID as provided by the IdP
-        :param idp_sso_url: The Single-Sign On URL as provided by the IdP
-        :param idp_certificate: The X.509 certificate as provided by the IdP
-        :param idp_metadata_url: The URL which serves the IdP metadata. If present, it takes priority over the corresponding individual properties
-        :param idp_metadata: The XML content of the IdP metadata file. If present, it takes priority over the corresponding individual properties
-        :param attribute_mapping: Define the attribute name mapping between Identity Provider and Clerk's user properties
+        :param request: The request object to send.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -364,20 +350,11 @@ class SamlConnectionsSDK(BaseSDK):
         if server_url is not None:
             base_url = server_url
 
-        request = models.CreateSAMLConnectionRequestBody(
-            name=name,
-            domain=domain,
-            provider=provider,
-            idp_entity_id=idp_entity_id,
-            idp_sso_url=idp_sso_url,
-            idp_certificate=idp_certificate,
-            idp_metadata_url=idp_metadata_url,
-            idp_metadata=idp_metadata,
-            attribute_mapping=utils.get_pydantic_model(
-                attribute_mapping,
-                OptionalNullable[models.CreateSAMLConnectionAttributeMapping],
-            ),
-        )
+        if not isinstance(request, BaseModel):
+            request = utils.unmarshal(
+                request, Optional[models.CreateSAMLConnectionRequestBody]
+            )
+        request = cast(Optional[models.CreateSAMLConnectionRequestBody], request)
 
         req = self._build_request_async(
             method="POST",
@@ -385,7 +362,7 @@ class SamlConnectionsSDK(BaseSDK):
             base_url=base_url,
             url_variables=url_variables,
             request=request,
-            request_body_required=True,
+            request_body_required=False,
             request_has_path_params=False,
             request_has_query_params=True,
             user_agent_header="user-agent",
@@ -393,7 +370,11 @@ class SamlConnectionsSDK(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request, False, False, "json", models.CreateSAMLConnectionRequestBody
+                request,
+                False,
+                True,
+                "json",
+                Optional[models.CreateSAMLConnectionRequestBody],
             ),
             timeout_ms=timeout_ms,
         )
@@ -413,7 +394,7 @@ class SamlConnectionsSDK(BaseSDK):
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
-            error_status_codes=["402", "403", "422", "4XX", "5XX"],
+            error_status_codes=["402", "403", "404", "422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -422,10 +403,17 @@ class SamlConnectionsSDK(BaseSDK):
             return utils.unmarshal_json(
                 http_res.text, Optional[models.SchemasSAMLConnection]
             )
-        if utils.match_response(http_res, ["402", "403", "422"], "application/json"):
+        if utils.match_response(
+            http_res, ["402", "403", "404", "422"], "application/json"
+        ):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -514,7 +502,12 @@ class SamlConnectionsSDK(BaseSDK):
         if utils.match_response(http_res, ["402", "403", "404"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -603,7 +596,12 @@ class SamlConnectionsSDK(BaseSDK):
         if utils.match_response(http_res, ["402", "403", "404"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -629,6 +627,7 @@ class SamlConnectionsSDK(BaseSDK):
         idp_certificate: OptionalNullable[str] = UNSET,
         idp_metadata_url: OptionalNullable[str] = UNSET,
         idp_metadata: OptionalNullable[str] = UNSET,
+        organization_id: OptionalNullable[str] = UNSET,
         attribute_mapping: OptionalNullable[
             Union[
                 models.UpdateSAMLConnectionAttributeMapping,
@@ -657,6 +656,7 @@ class SamlConnectionsSDK(BaseSDK):
         :param idp_certificate: The x509 certificated as provided by the IdP
         :param idp_metadata_url: The URL which serves the IdP metadata. If present, it takes priority over the corresponding individual properties and replaces them
         :param idp_metadata: The XML content of the IdP metadata file. If present, it takes priority over the corresponding individual properties
+        :param organization_id: The ID of the organization to which users of this SAML Connection will be added
         :param attribute_mapping: Define the atrtibute name mapping between Identity Provider and Clerk's user properties
         :param active: Activate or de-activate the SAML Connection
         :param sync_user_attributes: Controls whether to update the user's attributes in each sign-in
@@ -686,6 +686,7 @@ class SamlConnectionsSDK(BaseSDK):
                 idp_certificate=idp_certificate,
                 idp_metadata_url=idp_metadata_url,
                 idp_metadata=idp_metadata,
+                organization_id=organization_id,
                 attribute_mapping=utils.get_pydantic_model(
                     attribute_mapping,
                     OptionalNullable[models.UpdateSAMLConnectionAttributeMapping],
@@ -750,7 +751,12 @@ class SamlConnectionsSDK(BaseSDK):
         ):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -776,6 +782,7 @@ class SamlConnectionsSDK(BaseSDK):
         idp_certificate: OptionalNullable[str] = UNSET,
         idp_metadata_url: OptionalNullable[str] = UNSET,
         idp_metadata: OptionalNullable[str] = UNSET,
+        organization_id: OptionalNullable[str] = UNSET,
         attribute_mapping: OptionalNullable[
             Union[
                 models.UpdateSAMLConnectionAttributeMapping,
@@ -804,6 +811,7 @@ class SamlConnectionsSDK(BaseSDK):
         :param idp_certificate: The x509 certificated as provided by the IdP
         :param idp_metadata_url: The URL which serves the IdP metadata. If present, it takes priority over the corresponding individual properties and replaces them
         :param idp_metadata: The XML content of the IdP metadata file. If present, it takes priority over the corresponding individual properties
+        :param organization_id: The ID of the organization to which users of this SAML Connection will be added
         :param attribute_mapping: Define the atrtibute name mapping between Identity Provider and Clerk's user properties
         :param active: Activate or de-activate the SAML Connection
         :param sync_user_attributes: Controls whether to update the user's attributes in each sign-in
@@ -833,6 +841,7 @@ class SamlConnectionsSDK(BaseSDK):
                 idp_certificate=idp_certificate,
                 idp_metadata_url=idp_metadata_url,
                 idp_metadata=idp_metadata,
+                organization_id=organization_id,
                 attribute_mapping=utils.get_pydantic_model(
                     attribute_mapping,
                     OptionalNullable[models.UpdateSAMLConnectionAttributeMapping],
@@ -897,7 +906,12 @@ class SamlConnectionsSDK(BaseSDK):
         ):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -984,7 +998,12 @@ class SamlConnectionsSDK(BaseSDK):
         if utils.match_response(http_res, ["402", "403", "404"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -1071,7 +1090,12 @@ class SamlConnectionsSDK(BaseSDK):
         if utils.match_response(http_res, ["402", "403", "404"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res

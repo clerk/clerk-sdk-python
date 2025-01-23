@@ -20,7 +20,7 @@ class VerifyPasswordRequestBody(BaseModel):
 class VerifyPasswordRequestTypedDict(TypedDict):
     user_id: str
     r"""The ID of the user for whom to verify the password"""
-    request_body: VerifyPasswordRequestBodyTypedDict
+    request_body: NotRequired[VerifyPasswordRequestBodyTypedDict]
 
 
 class VerifyPasswordRequest(BaseModel):
@@ -30,9 +30,9 @@ class VerifyPasswordRequest(BaseModel):
     r"""The ID of the user for whom to verify the password"""
 
     request_body: Annotated[
-        VerifyPasswordRequestBody,
+        Optional[VerifyPasswordRequestBody],
         FieldMetadata(request=RequestMetadata(media_type="application/json")),
-    ]
+    ] = None
 
 
 class VerifyPasswordResponseBodyTypedDict(TypedDict):

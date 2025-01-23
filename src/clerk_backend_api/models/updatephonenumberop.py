@@ -10,6 +10,7 @@ from clerk_backend_api.types import (
 )
 from clerk_backend_api.utils import FieldMetadata, PathParamMetadata, RequestMetadata
 from pydantic import model_serializer
+from typing import Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
 
 
@@ -72,7 +73,7 @@ class UpdatePhoneNumberRequestBody(BaseModel):
 class UpdatePhoneNumberRequestTypedDict(TypedDict):
     phone_number_id: str
     r"""The ID of the phone number to update"""
-    request_body: UpdatePhoneNumberRequestBodyTypedDict
+    request_body: NotRequired[UpdatePhoneNumberRequestBodyTypedDict]
 
 
 class UpdatePhoneNumberRequest(BaseModel):
@@ -82,6 +83,6 @@ class UpdatePhoneNumberRequest(BaseModel):
     r"""The ID of the phone number to update"""
 
     request_body: Annotated[
-        UpdatePhoneNumberRequestBody,
+        Optional[UpdatePhoneNumberRequestBody],
         FieldMetadata(request=RequestMetadata(media_type="application/json")),
-    ]
+    ] = None

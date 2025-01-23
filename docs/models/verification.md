@@ -15,9 +15,9 @@ value: models.Otp = /* values here */
 value: models.Admin = /* values here */
 ```
 
-### `models.Oauth`
+### `models.FromOAuth`
 
 ```python
-value: models.Oauth = /* values here */
+value: models.FromOAuth = /* values here */
 ```
 

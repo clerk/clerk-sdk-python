@@ -11,7 +11,7 @@ class CreateOrganizationRequestBodyTypedDict(TypedDict):
     r"""The name of the new organization.
     May not contain URLs or HTML.
     """
-    created_by: str
+    created_by: NotRequired[str]
     r"""The ID of the User who will become the administrator for the new organization"""
     private_metadata: NotRequired[Dict[str, Any]]
     r"""Metadata saved on the organization, accessible only from the Backend API"""
@@ -34,7 +34,7 @@ class CreateOrganizationRequestBody(BaseModel):
     May not contain URLs or HTML.
     """
 
-    created_by: str
+    created_by: Optional[str] = None
     r"""The ID of the User who will become the administrator for the new organization"""
 
     private_metadata: Optional[Dict[str, Any]] = None

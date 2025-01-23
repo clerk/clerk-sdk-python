@@ -60,6 +60,7 @@ class SchemasSAMLConnectionTypedDict(TypedDict):
     """
     idp_metadata_url: NotRequired[Nullable[str]]
     idp_metadata: NotRequired[Nullable[str]]
+    organization_id: NotRequired[Nullable[str]]
     attribute_mapping: NotRequired[AttributeMappingTypedDict]
     allow_subdomains: NotRequired[bool]
     allow_idp_initiated: NotRequired[bool]
@@ -109,6 +110,8 @@ class SchemasSAMLConnection(BaseModel):
 
     idp_metadata: OptionalNullable[str] = UNSET
 
+    organization_id: OptionalNullable[str] = UNSET
+
     attribute_mapping: Optional[AttributeMapping] = None
 
     allow_subdomains: Optional[bool] = None
@@ -122,6 +125,7 @@ class SchemasSAMLConnection(BaseModel):
         optional_fields = [
             "idp_metadata_url",
             "idp_metadata",
+            "organization_id",
             "attribute_mapping",
             "allow_subdomains",
             "allow_idp_initiated",
@@ -133,6 +137,7 @@ class SchemasSAMLConnection(BaseModel):
             "idp_certificate",
             "idp_metadata_url",
             "idp_metadata",
+            "organization_id",
         ]
         null_default_fields = []
 

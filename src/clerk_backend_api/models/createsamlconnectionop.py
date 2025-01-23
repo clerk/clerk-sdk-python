@@ -61,6 +61,8 @@ class CreateSAMLConnectionRequestBodyTypedDict(TypedDict):
     r"""The URL which serves the IdP metadata. If present, it takes priority over the corresponding individual properties"""
     idp_metadata: NotRequired[Nullable[str]]
     r"""The XML content of the IdP metadata file. If present, it takes priority over the corresponding individual properties"""
+    organization_id: NotRequired[Nullable[str]]
+    r"""The ID of the organization to which users of this SAML Connection will be added"""
     attribute_mapping: NotRequired[
         Nullable[CreateSAMLConnectionAttributeMappingTypedDict]
     ]
@@ -92,6 +94,9 @@ class CreateSAMLConnectionRequestBody(BaseModel):
     idp_metadata: OptionalNullable[str] = UNSET
     r"""The XML content of the IdP metadata file. If present, it takes priority over the corresponding individual properties"""
 
+    organization_id: OptionalNullable[str] = UNSET
+    r"""The ID of the organization to which users of this SAML Connection will be added"""
+
     attribute_mapping: OptionalNullable[CreateSAMLConnectionAttributeMapping] = UNSET
     r"""Define the attribute name mapping between Identity Provider and Clerk's user properties"""
 
@@ -103,6 +108,7 @@ class CreateSAMLConnectionRequestBody(BaseModel):
             "idp_certificate",
             "idp_metadata_url",
             "idp_metadata",
+            "organization_id",
             "attribute_mapping",
         ]
         nullable_fields = [
@@ -111,6 +117,7 @@ class CreateSAMLConnectionRequestBody(BaseModel):
             "idp_certificate",
             "idp_metadata_url",
             "idp_metadata",
+            "organization_id",
             "attribute_mapping",
         ]
         null_default_fields = []

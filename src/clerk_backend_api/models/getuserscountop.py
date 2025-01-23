@@ -43,6 +43,21 @@ class GetUsersCountRequestTypedDict(TypedDict):
     For possible matches, we check the email addresses, phone numbers, usernames, web3 wallets, user ids, first and last names.
     The query value doesn't need to match the exact value you are looking for, it is capable of partial matches as well.
     """
+    email_address_query: NotRequired[str]
+    r"""Counts users with emails that match the given query, via case-insensitive partial match.
+    For example, `email_address_query=ello` will match a user with the email `HELLO@example.com`,
+    and will be included in the resulting count.
+    """
+    phone_number_query: NotRequired[str]
+    r"""Counts users with phone numbers that match the given query, via case-insensitive partial match.
+    For example, `phone_number_query=555` will match a user with the phone number `+1555xxxxxxx`,
+    and will be included in the resulting count.
+    """
+    username_query: NotRequired[str]
+    r"""Counts users with usernames that match the given query, via case-insensitive partial match.
+    For example, `username_query=CoolUser` will match a user with the username `SomeCoolUser`,
+    and will be included in the resulting count.
+    """
 
 
 class GetUsersCountRequest(BaseModel):
@@ -107,4 +122,31 @@ class GetUsersCountRequest(BaseModel):
     r"""Counts users that match the given query.
     For possible matches, we check the email addresses, phone numbers, usernames, web3 wallets, user ids, first and last names.
     The query value doesn't need to match the exact value you are looking for, it is capable of partial matches as well.
+    """
+
+    email_address_query: Annotated[
+        Optional[str],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Counts users with emails that match the given query, via case-insensitive partial match.
+    For example, `email_address_query=ello` will match a user with the email `HELLO@example.com`,
+    and will be included in the resulting count.
+    """
+
+    phone_number_query: Annotated[
+        Optional[str],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Counts users with phone numbers that match the given query, via case-insensitive partial match.
+    For example, `phone_number_query=555` will match a user with the phone number `+1555xxxxxxx`,
+    and will be included in the resulting count.
+    """
+
+    username_query: Annotated[
+        Optional[str],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Counts users with usernames that match the given query, via case-insensitive partial match.
+    For example, `username_query=CoolUser` will match a user with the username `SomeCoolUser`,
+    and will be included in the resulting count.
     """

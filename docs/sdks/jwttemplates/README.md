@@ -150,7 +150,7 @@ with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 ) as clerk:
 
-    res = clerk.jwt_templates.update(template_id="<id>", name="<value>", claims={}, lifetime=8574.77, allowed_clock_skew=5971.29, custom_signing_key=True, signing_algorithm="<value>", signing_key="<value>")
+    res = clerk.jwt_templates.update(template_id="<id>", name="<value>", claims={}, lifetime=8574.78, allowed_clock_skew=5971.29, custom_signing_key=True, signing_algorithm="<value>", signing_key="<value>")
 
     assert res is not None
 

@@ -3,6 +3,7 @@
 from __future__ import annotations
 from clerk_backend_api.types import BaseModel
 from clerk_backend_api.utils import FieldMetadata, QueryParamMetadata
+import pydantic
 from typing import List, Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
 
@@ -60,10 +61,40 @@ class GetUserListRequestTypedDict(TypedDict):
     For possible matches, we check the email addresses, phone numbers, usernames, web3 wallets, user ids, first and last names.
     The query value doesn't need to match the exact value you are looking for, it is capable of partial matches as well.
     """
+    email_address_query: NotRequired[str]
+    r"""Returns users with emails that match the given query, via case-insensitive partial match.
+    For example, `email_address_query=ello` will match a user with the email `HELLO@example.com`.
+    """
+    phone_number_query: NotRequired[str]
+    r"""Returns users with phone numbers that match the given query, via case-insensitive partial match.
+    For example, `phone_number_query=555` will match a user with the phone number `+1555xxxxxxx`.
+    """
+    username_query: NotRequired[str]
+    r"""Returns users with usernames that match the given query, via case-insensitive partial match.
+    For example, `username_query=CoolUser` will match a user with the username `SomeCoolUser`.
+    """
+    name_query: NotRequired[str]
+    r"""Returns users with names that match the given query, via case-insensitive partial match."""
+    last_active_at_before: NotRequired[int]
+    r"""Returns users whose last session activity was before the given date (with millisecond precision).
+    Example: use 1700690400000 to retrieve users whose last session activity was before 2023-11-23.
+    """
+    last_active_at_after: NotRequired[int]
+    r"""Returns users whose last session activity was after the given date (with millisecond precision).
+    Example: use 1700690400000 to retrieve users whose last session activity was after 2023-11-23.
+    """
     last_active_at_since: NotRequired[int]
-    r"""Returns users that had session activity since the given date, with day precision.
-    Providing a value with higher precision than day will result in an error.
+    r"""Returns users that had session activity since the given date.
     Example: use 1700690400000 to retrieve users that had session activity from 2023-11-23 until the current day.
+    Deprecated in favor of `last_active_at_after`.
+    """
+    created_at_before: NotRequired[int]
+    r"""Returns users who have been created before the given date (with millisecond precision).
+    Example: use 1730160000000 to retrieve users who have been created before 2024-10-29.
+    """
+    created_at_after: NotRequired[int]
+    r"""Returns users who have been created after the given date (with millisecond precision).
+    Example: use 1730160000000 to retrieve users who have been created after 2024-10-29.
     """
     limit: NotRequired[int]
     r"""Applies a limit to the number of results returned.
@@ -169,13 +200,78 @@ class GetUserListRequest(BaseModel):
     The query value doesn't need to match the exact value you are looking for, it is capable of partial matches as well.
     """
 
-    last_active_at_since: Annotated[
+    email_address_query: Annotated[
+        Optional[str],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Returns users with emails that match the given query, via case-insensitive partial match.
+    For example, `email_address_query=ello` will match a user with the email `HELLO@example.com`.
+    """
+
+    phone_number_query: Annotated[
+        Optional[str],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Returns users with phone numbers that match the given query, via case-insensitive partial match.
+    For example, `phone_number_query=555` will match a user with the phone number `+1555xxxxxxx`.
+    """
+
+    username_query: Annotated[
+        Optional[str],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Returns users with usernames that match the given query, via case-insensitive partial match.
+    For example, `username_query=CoolUser` will match a user with the username `SomeCoolUser`.
+    """
+
+    name_query: Annotated[
+        Optional[str],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Returns users with names that match the given query, via case-insensitive partial match."""
+
+    last_active_at_before: Annotated[
         Optional[int],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = None
-    r"""Returns users that had session activity since the given date, with day precision.
-    Providing a value with higher precision than day will result in an error.
+    r"""Returns users whose last session activity was before the given date (with millisecond precision).
+    Example: use 1700690400000 to retrieve users whose last session activity was before 2023-11-23.
+    """
+
+    last_active_at_after: Annotated[
+        Optional[int],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Returns users whose last session activity was after the given date (with millisecond precision).
+    Example: use 1700690400000 to retrieve users whose last session activity was after 2023-11-23.
+    """
+
+    last_active_at_since: Annotated[
+        Optional[int],
+        pydantic.Field(
+            deprecated="warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
+        ),
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Returns users that had session activity since the given date.
     Example: use 1700690400000 to retrieve users that had session activity from 2023-11-23 until the current day.
+    Deprecated in favor of `last_active_at_after`.
+    """
+
+    created_at_before: Annotated[
+        Optional[int],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Returns users who have been created before the given date (with millisecond precision).
+    Example: use 1730160000000 to retrieve users who have been created before 2024-10-29.
+    """
+
+    created_at_after: Annotated[
+        Optional[int],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Returns users who have been created after the given date (with millisecond precision).
+    Example: use 1730160000000 to retrieve users who have been created after 2024-10-29.
     """
 
     limit: Annotated[

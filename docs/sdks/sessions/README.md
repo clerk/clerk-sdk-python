@@ -11,9 +11,11 @@ Sessions are created when a user successfully goes through the sign in or sign u
 ### Available Operations
 
 * [list](#list) - List all sessions
+* [create_session](#create_session) - Create a new active session
 * [get](#get) - Retrieve a session
 * [revoke](#revoke) - Revoke a session
 * [~~verify~~](#verify) - Verify a session :warning: **Deprecated**
+* [create_session_token](#create_session_token) - Create a session token
 * [create_token_from_template](#create_token_from_template) - Create a session token from a jwt template
 
 ## list
@@ -62,6 +64,50 @@ with Clerk(
 | Error Type         | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
 | models.ClerkErrors | 400, 401, 422      | application/json   |
+| models.SDKError    | 4XX, 5XX           | \*/\*              |
+
+## create_session
+
+Create a new active session for the provided user ID.
+
+This operation is only available for Clerk Development instances.
+
+### Example Usage
+
+```python
+from clerk_backend_api import Clerk
+
+with Clerk(
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+) as clerk:
+
+    res = clerk.sessions.create_session(request={
+        "user_id": "<id>",
+    })
+
+    assert res is not None
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                                   | Type                                                                        | Required                                                                    | Description                                                                 |
+| --------------------------------------------------------------------------- | --------------------------------------------------------------------------- | --------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| `request`                                                                   | [models.CreateSessionRequestBody](../../models/createsessionrequestbody.md) | :heavy_check_mark:                                                          | The request object to use for the request.                                  |
+| `retries`                                                                   | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)            | :heavy_minus_sign:                                                          | Configuration to override the default retry behavior of the client.         |
+
+### Response
+
+**[models.Session](../../models/session.md)**
+
+### Errors
+
+| Error Type         | Status Code        | Content Type       |
+| ------------------ | ------------------ | ------------------ |
+| models.ClerkErrors | 400, 401, 404, 422 | application/json   |
 | models.SDKError    | 4XX, 5XX           | \*/\*              |
 
 ## get
@@ -191,6 +237,47 @@ with Clerk(
 | models.ClerkErrors | 400, 401, 404, 410 | application/json   |
 | models.SDKError    | 4XX, 5XX           | \*/\*              |
 
+## create_session_token
+
+Creates a session JSON Web Token (JWT) based on a session.
+
+### Example Usage
+
+```python
+from clerk_backend_api import Clerk
+
+with Clerk(
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+) as clerk:
+
+    res = clerk.sessions.create_session_token(session_id="<id>", expires_in_seconds=6005.84)
+
+    assert res is not None
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `session_id`                                                        | *str*                                                               | :heavy_check_mark:                                                  | The ID of the session                                               |
+| `expires_in_seconds`                                                | *OptionalNullable[float]*                                           | :heavy_minus_sign:                                                  | Use this parameter to override the default session token lifetime.  |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+
+### Response
+
+**[models.CreateSessionTokenResponseBody](../../models/createsessiontokenresponsebody.md)**
+
+### Errors
+
+| Error Type         | Status Code        | Content Type       |
+| ------------------ | ------------------ | ------------------ |
+| models.ClerkErrors | 401, 404           | application/json   |
+| models.SDKError    | 4XX, 5XX           | \*/\*              |
+
 ## create_token_from_template
 
 Creates a JSON Web Token(JWT) based on a session and a JWT Template name defined for your instance
@@ -204,7 +291,7 @@ with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 ) as clerk:
 
-    res = clerk.sessions.create_token_from_template(session_id="ses_123abcd4567", template_name="custom_hasura")
+    res = clerk.sessions.create_token_from_template(session_id="ses_123abcd4567", template_name="custom_hasura", expires_in_seconds=2299.84)
 
     assert res is not None
 
@@ -219,6 +306,7 @@ with Clerk(
 | ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
 | `session_id`                                                                  | *str*                                                                         | :heavy_check_mark:                                                            | The ID of the session                                                         | ses_123abcd4567                                                               |
 | `template_name`                                                               | *str*                                                                         | :heavy_check_mark:                                                            | The name of the JWT Template defined in your instance (e.g. `custom_hasura`). | custom_hasura                                                                 |
+| `expires_in_seconds`                                                          | *OptionalNullable[float]*                                                     | :heavy_minus_sign:                                                            | Use this parameter to override the JWT token lifetime.                        |                                                                               |
 | `retries`                                                                     | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)              | :heavy_minus_sign:                                                            | Configuration to override the default retry behavior of the client.           |                                                                               |
 
 ### Response

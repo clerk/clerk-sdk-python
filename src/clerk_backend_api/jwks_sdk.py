@@ -7,7 +7,7 @@ from clerk_backend_api.types import OptionalNullable, UNSET
 from typing import Mapping, Optional
 
 
-class Jwks(BaseSDK):
+class JwksSDK(BaseSDK):
     def get(
         self,
         *,
@@ -15,7 +15,7 @@ class Jwks(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.WellKnownJWKS]:
+    ) -> Optional[models.Jwks]:
         r"""Retrieve the JSON Web Key Set of the instance
 
         Retrieve the JSON Web Key Set of the instance
@@ -68,8 +68,13 @@ class Jwks(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, Optional[models.WellKnownJWKS])
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            return utils.unmarshal_json(http_res.text, Optional[models.Jwks])
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -91,7 +96,7 @@ class Jwks(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.WellKnownJWKS]:
+    ) -> Optional[models.Jwks]:
         r"""Retrieve the JSON Web Key Set of the instance
 
         Retrieve the JSON Web Key Set of the instance
@@ -144,8 +149,13 @@ class Jwks(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, Optional[models.WellKnownJWKS])
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            return utils.unmarshal_json(http_res.text, Optional[models.Jwks])
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res

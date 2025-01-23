@@ -18,9 +18,9 @@ from clerk_backend_api.domains_sdk import DomainsSDK
 from clerk_backend_api.emailaddresses import EmailAddresses
 from clerk_backend_api.emailandsmstemplates import EmailAndSmsTemplates
 from clerk_backend_api.emailsmstemplates import EmailSMSTemplates
-from clerk_backend_api.instancesettings_sdk import InstanceSettingsSDK
+from clerk_backend_api.instance_settings_sdk import InstanceSettingsSDK
 from clerk_backend_api.invitations import Invitations
-from clerk_backend_api.jwks import Jwks
+from clerk_backend_api.jwks_sdk import JwksSDK
 from clerk_backend_api.jwttemplates import JwtTemplates
 from clerk_backend_api.miscellaneous import Miscellaneous
 from clerk_backend_api.oauthapplications_sdk import OauthApplicationsSDK
@@ -40,6 +40,7 @@ from clerk_backend_api.templates import Templates
 from clerk_backend_api.testingtokens import TestingTokens
 from clerk_backend_api.types import OptionalNullable, UNSET
 from clerk_backend_api.users import Users
+from clerk_backend_api.waitlist_entries_sdk import WaitlistEntriesSDK
 from clerk_backend_api.webhooks import Webhooks
 import httpx
 from typing import Any, Callable, Dict, Optional, Union
@@ -61,7 +62,7 @@ class Clerk(BaseSDK):
 
     miscellaneous: Miscellaneous
     r"""Various endpoints that do not belong in any particular category."""
-    jwks: Jwks
+    jwks: JwksSDK
     clients: Clients
     r"""The Client object tracks sessions, as well as the state of any sign in and sign up attempts, for a given device.
     https://clerk.com/docs/reference/clerkjs/client
@@ -114,6 +115,7 @@ class Clerk(BaseSDK):
     oauth_applications: OauthApplicationsSDK
     saml_connections: SamlConnectionsSDK
     testing_tokens: TestingTokens
+    waitlist_entries: WaitlistEntriesSDK
 
     def __init__(
         self,
@@ -157,7 +159,8 @@ class Clerk(BaseSDK):
 
         security: Any = None
         if callable(bearer_auth):
-            security = lambda: models.Security(bearer_auth=bearer_auth())  # pylint: disable=unnecessary-lambda-assignment
+            # pylint: disable=unnecessary-lambda-assignment
+            security = lambda: models.Security(bearer_auth=bearer_auth())
         else:
             security = models.Security(bearer_auth=bearer_auth)
 
@@ -195,7 +198,7 @@ class Clerk(BaseSDK):
 
     def _init_sdks(self):
         self.miscellaneous = Miscellaneous(self.sdk_configuration)
-        self.jwks = Jwks(self.sdk_configuration)
+        self.jwks = JwksSDK(self.sdk_configuration)
         self.clients = Clients(self.sdk_configuration)
         self.email_addresses = EmailAddresses(self.sdk_configuration)
         self.phone_numbers = PhoneNumbers(self.sdk_configuration)
@@ -231,6 +234,7 @@ class Clerk(BaseSDK):
         self.oauth_applications = OauthApplicationsSDK(self.sdk_configuration)
         self.saml_connections = SamlConnectionsSDK(self.sdk_configuration)
         self.testing_tokens = TestingTokens(self.sdk_configuration)
+        self.waitlist_entries = WaitlistEntriesSDK(self.sdk_configuration)
 
     def __enter__(self):
         return self

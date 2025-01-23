@@ -245,6 +245,7 @@ If the request is correctly authenticated, the token's payload is made available
 
 ### [instance_settings](docs/sdks/instancesettingssdk/README.md)
 
+* [get_instance](docs/sdks/instancesettingssdk/README.md#get_instance) - Fetch the current instance
 * [update](docs/sdks/instancesettingssdk/README.md#update) - Update instance settings
 * [update_restrictions](docs/sdks/instancesettingssdk/README.md#update_restrictions) - Update instance restrictions
 * [update_organization_settings](docs/sdks/instancesettingssdk/README.md#update_organization_settings) - Update instance organization settings
@@ -253,11 +254,12 @@ If the request is correctly authenticated, the token's payload is made available
 
 * [create](docs/sdks/invitations/README.md#create) - Create an invitation
 * [list](docs/sdks/invitations/README.md#list) - List all invitations
+* [create_bulk_invitations](docs/sdks/invitations/README.md#create_bulk_invitations) - Create multiple invitations
 * [revoke](docs/sdks/invitations/README.md#revoke) - Revokes an invitation
 
-### [jwks](docs/sdks/jwks/README.md)
+### [jwks](docs/sdks/jwkssdk/README.md)
 
-* [get](docs/sdks/jwks/README.md#get) - Retrieve the JSON Web Key Set of the instance
+* [get](docs/sdks/jwkssdk/README.md#get) - Retrieve the JSON Web Key Set of the instance
 
 ### [jwt_templates](docs/sdks/jwttemplates/README.md)
 
@@ -352,9 +354,11 @@ If the request is correctly authenticated, the token's payload is made available
 ### [sessions](docs/sdks/sessions/README.md)
 
 * [list](docs/sdks/sessions/README.md#list) - List all sessions
+* [create_session](docs/sdks/sessions/README.md#create_session) - Create a new active session
 * [get](docs/sdks/sessions/README.md#get) - Retrieve a session
 * [revoke](docs/sdks/sessions/README.md#revoke) - Revoke a session
 * [~~verify~~](docs/sdks/sessions/README.md#verify) - Verify a session :warning: **Deprecated**
+* [create_session_token](docs/sdks/sessions/README.md#create_session_token) - Create a session token
 * [create_token_from_template](docs/sdks/sessions/README.md#create_token_from_template) - Create a session token from a jwt template
 
 ### [sign_in_tokens](docs/sdks/signintokens/README.md)
@@ -401,6 +405,11 @@ If the request is correctly authenticated, the token's payload is made available
 * [create_totp](docs/sdks/users/README.md#create_totp) - Create a TOTP for a user
 * [delete_totp](docs/sdks/users/README.md#delete_totp) - Delete all the user's TOTPs
 * [delete_external_account](docs/sdks/users/README.md#delete_external_account) - Delete External Account
+
+### [waitlist_entries](docs/sdks/waitlistentriessdk/README.md)
+
+* [list_waitlist_entries](docs/sdks/waitlistentriessdk/README.md#list_waitlist_entries) - List all waitlist entries
+* [create_waitlist_entry](docs/sdks/waitlistentriessdk/README.md#create_waitlist_entry) - Create a waitlist entry
 
 ### [webhooks](docs/sdks/webhooks/README.md)
 

@@ -3,7 +3,7 @@
 from __future__ import annotations
 from clerk_backend_api.types import BaseModel
 from clerk_backend_api.utils import FieldMetadata, QueryParamMetadata
-from typing import Optional
+from typing import List, Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
 
 
@@ -16,6 +16,15 @@ class ListSAMLConnectionsRequestTypedDict(TypedDict):
     r"""Skip the first `offset` results when paginating.
     Needs to be an integer greater or equal to zero.
     To be used in conjunction with `limit`.
+    """
+    organization_id: NotRequired[List[str]]
+    r"""Returns SAML connections that have an associated organization ID to the
+    given organizations.
+    For each organization id, the `+` and `-` can be
+    prepended to the id, which denote whether the
+    respective organization should be included or
+    excluded from the result set.
+    Accepts up to 100 organization ids.
     """
 
 
@@ -35,4 +44,17 @@ class ListSAMLConnectionsRequest(BaseModel):
     r"""Skip the first `offset` results when paginating.
     Needs to be an integer greater or equal to zero.
     To be used in conjunction with `limit`.
+    """
+
+    organization_id: Annotated[
+        Optional[List[str]],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Returns SAML connections that have an associated organization ID to the
+    given organizations.
+    For each organization id, the `+` and `-` can be
+    prepended to the id, which denote whether the
+    respective organization should be included or
+    excluded from the result set.
+    Accepts up to 100 organization ids.
     """

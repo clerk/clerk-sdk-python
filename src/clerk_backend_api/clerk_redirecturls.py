@@ -11,10 +11,12 @@ class ClerkRedirectUrls(BaseSDK):
     def create(
         self,
         *,
-        request: Union[
-            models.CreateRedirectURLRequestBody,
-            models.CreateRedirectURLRequestBodyTypedDict,
-        ] = models.CreateRedirectURLRequestBody(),
+        request: Optional[
+            Union[
+                models.CreateRedirectURLRequestBody,
+                models.CreateRedirectURLRequestBodyTypedDict,
+            ]
+        ] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -39,8 +41,10 @@ class ClerkRedirectUrls(BaseSDK):
             base_url = server_url
 
         if not isinstance(request, BaseModel):
-            request = utils.unmarshal(request, models.CreateRedirectURLRequestBody)
-        request = cast(models.CreateRedirectURLRequestBody, request)
+            request = utils.unmarshal(
+                request, Optional[models.CreateRedirectURLRequestBody]
+            )
+        request = cast(Optional[models.CreateRedirectURLRequestBody], request)
 
         req = self._build_request(
             method="POST",
@@ -48,7 +52,7 @@ class ClerkRedirectUrls(BaseSDK):
             base_url=base_url,
             url_variables=url_variables,
             request=request,
-            request_body_required=True,
+            request_body_required=False,
             request_has_path_params=False,
             request_has_query_params=True,
             user_agent_header="user-agent",
@@ -90,7 +94,12 @@ class ClerkRedirectUrls(BaseSDK):
         if utils.match_response(http_res, ["400", "422"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -108,10 +117,12 @@ class ClerkRedirectUrls(BaseSDK):
     async def create_async(
         self,
         *,
-        request: Union[
-            models.CreateRedirectURLRequestBody,
-            models.CreateRedirectURLRequestBodyTypedDict,
-        ] = models.CreateRedirectURLRequestBody(),
+        request: Optional[
+            Union[
+                models.CreateRedirectURLRequestBody,
+                models.CreateRedirectURLRequestBodyTypedDict,
+            ]
+        ] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -136,8 +147,10 @@ class ClerkRedirectUrls(BaseSDK):
             base_url = server_url
 
         if not isinstance(request, BaseModel):
-            request = utils.unmarshal(request, models.CreateRedirectURLRequestBody)
-        request = cast(models.CreateRedirectURLRequestBody, request)
+            request = utils.unmarshal(
+                request, Optional[models.CreateRedirectURLRequestBody]
+            )
+        request = cast(Optional[models.CreateRedirectURLRequestBody], request)
 
         req = self._build_request_async(
             method="POST",
@@ -145,7 +158,7 @@ class ClerkRedirectUrls(BaseSDK):
             base_url=base_url,
             url_variables=url_variables,
             request=request,
-            request_body_required=True,
+            request_body_required=False,
             request_has_path_params=False,
             request_has_query_params=True,
             user_agent_header="user-agent",
@@ -187,7 +200,12 @@ class ClerkRedirectUrls(BaseSDK):
         if utils.match_response(http_res, ["400", "422"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -274,7 +292,12 @@ class ClerkRedirectUrls(BaseSDK):
         if utils.match_response(http_res, "404", "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -361,7 +384,12 @@ class ClerkRedirectUrls(BaseSDK):
         if utils.match_response(http_res, "404", "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -448,7 +476,12 @@ class ClerkRedirectUrls(BaseSDK):
         if utils.match_response(http_res, "404", "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -535,7 +568,12 @@ class ClerkRedirectUrls(BaseSDK):
         if utils.match_response(http_res, "404", "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res

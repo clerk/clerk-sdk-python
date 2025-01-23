@@ -9,7 +9,7 @@ from typing_extensions import NotRequired, TypedDict
 class CreateOAuthApplicationRequestBodyTypedDict(TypedDict):
     name: str
     r"""The name of the new OAuth application"""
-    callback_url: str
+    callback_url: NotRequired[str]
     r"""The callback URL of the new OAuth application"""
     scopes: NotRequired[str]
     r"""Define the allowed scopes for the new OAuth applications that dictate the user payload of the OAuth user info endpoint. Available scopes are `profile`, `email`, `public_metadata`, `private_metadata`. Provide the requested scopes as a string, separated by spaces."""
@@ -24,7 +24,7 @@ class CreateOAuthApplicationRequestBody(BaseModel):
     name: str
     r"""The name of the new OAuth application"""
 
-    callback_url: str
+    callback_url: Optional[str] = None
     r"""The callback URL of the new OAuth application"""
 
     scopes: Optional[str] = "profile email"

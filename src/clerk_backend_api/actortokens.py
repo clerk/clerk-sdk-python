@@ -3,20 +3,20 @@
 from .basesdk import BaseSDK
 from clerk_backend_api import models, utils
 from clerk_backend_api._hooks import HookContext
-from clerk_backend_api.types import OptionalNullable, UNSET
-from typing import Any, Mapping, Optional, Union
+from clerk_backend_api.types import BaseModel, OptionalNullable, UNSET
+from typing import Any, Mapping, Optional, Union, cast
 
 
 class ActorTokens(BaseSDK):
     def create(
         self,
         *,
-        user_id: str,
-        actor: Union[
-            models.CreateActorTokenActor, models.CreateActorTokenActorTypedDict
-        ],
-        expires_in_seconds: Optional[int] = 3600,
-        session_max_duration_in_seconds: Optional[int] = 1800,
+        request: Optional[
+            Union[
+                models.CreateActorTokenRequestBody,
+                models.CreateActorTokenRequestBodyTypedDict,
+            ]
+        ] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -27,10 +27,7 @@ class ActorTokens(BaseSDK):
         Create an actor token that can be used to impersonate the given user.
         The `actor` parameter needs to include at least a \"sub\" key whose value is the ID of the actor (impersonating) user.
 
-        :param user_id: The ID of the user being impersonated.
-        :param actor: The actor payload. It needs to include a sub property which should contain the ID of the actor. This whole payload will be also included in the JWT session token.
-        :param expires_in_seconds: Optional parameter to specify the life duration of the actor token in seconds. By default, the duration is 1 hour.
-        :param session_max_duration_in_seconds: The maximum duration that the session which will be created by the generated actor token should last. By default, the duration of a session created via an actor token, lasts 30 minutes.
+        :param request: The request object to send.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -44,12 +41,11 @@ class ActorTokens(BaseSDK):
         if server_url is not None:
             base_url = server_url
 
-        request = models.CreateActorTokenRequestBody(
-            user_id=user_id,
-            actor=utils.get_pydantic_model(actor, models.CreateActorTokenActor),
-            expires_in_seconds=expires_in_seconds,
-            session_max_duration_in_seconds=session_max_duration_in_seconds,
-        )
+        if not isinstance(request, BaseModel):
+            request = utils.unmarshal(
+                request, Optional[models.CreateActorTokenRequestBody]
+            )
+        request = cast(Optional[models.CreateActorTokenRequestBody], request)
 
         req = self._build_request(
             method="POST",
@@ -57,7 +53,7 @@ class ActorTokens(BaseSDK):
             base_url=base_url,
             url_variables=url_variables,
             request=request,
-            request_body_required=True,
+            request_body_required=False,
             request_has_path_params=False,
             request_has_query_params=True,
             user_agent_header="user-agent",
@@ -65,7 +61,11 @@ class ActorTokens(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request, False, False, "json", models.CreateActorTokenRequestBody
+                request,
+                False,
+                True,
+                "json",
+                Optional[models.CreateActorTokenRequestBody],
             ),
             timeout_ms=timeout_ms,
         )
@@ -95,7 +95,12 @@ class ActorTokens(BaseSDK):
         if utils.match_response(http_res, ["400", "402", "422"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -113,12 +118,12 @@ class ActorTokens(BaseSDK):
     async def create_async(
         self,
         *,
-        user_id: str,
-        actor: Union[
-            models.CreateActorTokenActor, models.CreateActorTokenActorTypedDict
-        ],
-        expires_in_seconds: Optional[int] = 3600,
-        session_max_duration_in_seconds: Optional[int] = 1800,
+        request: Optional[
+            Union[
+                models.CreateActorTokenRequestBody,
+                models.CreateActorTokenRequestBodyTypedDict,
+            ]
+        ] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -129,10 +134,7 @@ class ActorTokens(BaseSDK):
         Create an actor token that can be used to impersonate the given user.
         The `actor` parameter needs to include at least a \"sub\" key whose value is the ID of the actor (impersonating) user.
 
-        :param user_id: The ID of the user being impersonated.
-        :param actor: The actor payload. It needs to include a sub property which should contain the ID of the actor. This whole payload will be also included in the JWT session token.
-        :param expires_in_seconds: Optional parameter to specify the life duration of the actor token in seconds. By default, the duration is 1 hour.
-        :param session_max_duration_in_seconds: The maximum duration that the session which will be created by the generated actor token should last. By default, the duration of a session created via an actor token, lasts 30 minutes.
+        :param request: The request object to send.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -146,12 +148,11 @@ class ActorTokens(BaseSDK):
         if server_url is not None:
             base_url = server_url
 
-        request = models.CreateActorTokenRequestBody(
-            user_id=user_id,
-            actor=utils.get_pydantic_model(actor, models.CreateActorTokenActor),
-            expires_in_seconds=expires_in_seconds,
-            session_max_duration_in_seconds=session_max_duration_in_seconds,
-        )
+        if not isinstance(request, BaseModel):
+            request = utils.unmarshal(
+                request, Optional[models.CreateActorTokenRequestBody]
+            )
+        request = cast(Optional[models.CreateActorTokenRequestBody], request)
 
         req = self._build_request_async(
             method="POST",
@@ -159,7 +160,7 @@ class ActorTokens(BaseSDK):
             base_url=base_url,
             url_variables=url_variables,
             request=request,
-            request_body_required=True,
+            request_body_required=False,
             request_has_path_params=False,
             request_has_query_params=True,
             user_agent_header="user-agent",
@@ -167,7 +168,11 @@ class ActorTokens(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request, False, False, "json", models.CreateActorTokenRequestBody
+                request,
+                False,
+                True,
+                "json",
+                Optional[models.CreateActorTokenRequestBody],
             ),
             timeout_ms=timeout_ms,
         )
@@ -197,7 +202,12 @@ class ActorTokens(BaseSDK):
         if utils.match_response(http_res, ["400", "402", "422"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -284,7 +294,12 @@ class ActorTokens(BaseSDK):
         if utils.match_response(http_res, ["400", "404"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -371,7 +386,12 @@ class ActorTokens(BaseSDK):
         if utils.match_response(http_res, ["400", "404"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res

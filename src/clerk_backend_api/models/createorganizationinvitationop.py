@@ -24,11 +24,17 @@ class CreateOrganizationInvitationRequestBodyTypedDict(TypedDict):
     Must be an administrator in the organization.
     """
     public_metadata: NotRequired[Dict[str, Any]]
-    r"""Metadata saved on the organization invitation, read-only from the Frontend API and fully accessible (read/write) from the Backend API."""
+    r"""Metadata saved on the organization invitation, read-only from the Frontend API and fully accessible (read/write) from the Backend API.
+    When the organization invitation is accepted, the metadata will be transferred to the newly created organization membership.
+    """
     private_metadata: NotRequired[Dict[str, Any]]
-    r"""Metadata saved on the organization invitation, fully accessible (read/write) from the Backend API but not visible from the Frontend API."""
+    r"""Metadata saved on the organization invitation, fully accessible (read/write) from the Backend API but not visible from the Frontend API.
+    When the organization invitation is accepted, the metadata will be transferred to the newly created organization membership.
+    """
     redirect_url: NotRequired[str]
     r"""Optional URL that the invitee will be redirected to once they accept the invitation by clicking the join link in the invitation email."""
+    expires_in_days: NotRequired[Nullable[int]]
+    r"""The number of days the invitation will be valid for. By default, the invitation has a 30 days expire."""
 
 
 class CreateOrganizationInvitationRequestBody(BaseModel):
@@ -44,13 +50,20 @@ class CreateOrganizationInvitationRequestBody(BaseModel):
     """
 
     public_metadata: Optional[Dict[str, Any]] = None
-    r"""Metadata saved on the organization invitation, read-only from the Frontend API and fully accessible (read/write) from the Backend API."""
+    r"""Metadata saved on the organization invitation, read-only from the Frontend API and fully accessible (read/write) from the Backend API.
+    When the organization invitation is accepted, the metadata will be transferred to the newly created organization membership.
+    """
 
     private_metadata: Optional[Dict[str, Any]] = None
-    r"""Metadata saved on the organization invitation, fully accessible (read/write) from the Backend API but not visible from the Frontend API."""
+    r"""Metadata saved on the organization invitation, fully accessible (read/write) from the Backend API but not visible from the Frontend API.
+    When the organization invitation is accepted, the metadata will be transferred to the newly created organization membership.
+    """
 
     redirect_url: Optional[str] = None
     r"""Optional URL that the invitee will be redirected to once they accept the invitation by clicking the join link in the invitation email."""
+
+    expires_in_days: OptionalNullable[int] = UNSET
+    r"""The number of days the invitation will be valid for. By default, the invitation has a 30 days expire."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
@@ -59,8 +72,9 @@ class CreateOrganizationInvitationRequestBody(BaseModel):
             "public_metadata",
             "private_metadata",
             "redirect_url",
+            "expires_in_days",
         ]
-        nullable_fields = ["inviter_user_id"]
+        nullable_fields = ["inviter_user_id", "expires_in_days"]
         null_default_fields = []
 
         serialized = handler(self)
@@ -91,7 +105,7 @@ class CreateOrganizationInvitationRequestBody(BaseModel):
 class CreateOrganizationInvitationRequestTypedDict(TypedDict):
     organization_id: str
     r"""The ID of the organization for which to send the invitation"""
-    request_body: CreateOrganizationInvitationRequestBodyTypedDict
+    request_body: NotRequired[CreateOrganizationInvitationRequestBodyTypedDict]
 
 
 class CreateOrganizationInvitationRequest(BaseModel):
@@ -101,6 +115,6 @@ class CreateOrganizationInvitationRequest(BaseModel):
     r"""The ID of the organization for which to send the invitation"""
 
     request_body: Annotated[
-        CreateOrganizationInvitationRequestBody,
+        Optional[CreateOrganizationInvitationRequestBody],
         FieldMetadata(request=RequestMetadata(media_type="application/json")),
-    ]
+    ] = None

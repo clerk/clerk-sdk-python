@@ -100,12 +100,18 @@ class OrganizationInvitationsSDK(BaseSDK):
                 http_res.text,
                 Optional[models.OrganizationInvitationsWithPublicOrganizationData],
             )
-        if utils.match_response(
-            http_res, ["400", "404", "422", "500"], "application/json"
-        ):
+        if utils.match_response(http_res, ["400", "404", "422"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "500", "application/json"):
+            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=data)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -211,12 +217,18 @@ class OrganizationInvitationsSDK(BaseSDK):
                 http_res.text,
                 Optional[models.OrganizationInvitationsWithPublicOrganizationData],
             )
-        if utils.match_response(
-            http_res, ["400", "404", "422", "500"], "application/json"
-        ):
+        if utils.match_response(http_res, ["400", "404", "422"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "500", "application/json"):
+            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=data)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -241,6 +253,7 @@ class OrganizationInvitationsSDK(BaseSDK):
         public_metadata: Optional[Dict[str, Any]] = None,
         private_metadata: Optional[Dict[str, Any]] = None,
         redirect_url: Optional[str] = None,
+        expires_in_days: OptionalNullable[int] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -269,9 +282,10 @@ class OrganizationInvitationsSDK(BaseSDK):
         :param email_address: The email address of the new member that is going to be invited to the organization
         :param role: The role of the new member in the organization
         :param inviter_user_id: The ID of the user that invites the new member to the organization. Must be an administrator in the organization.
-        :param public_metadata: Metadata saved on the organization invitation, read-only from the Frontend API and fully accessible (read/write) from the Backend API.
-        :param private_metadata: Metadata saved on the organization invitation, fully accessible (read/write) from the Backend API but not visible from the Frontend API.
+        :param public_metadata: Metadata saved on the organization invitation, read-only from the Frontend API and fully accessible (read/write) from the Backend API. When the organization invitation is accepted, the metadata will be transferred to the newly created organization membership.
+        :param private_metadata: Metadata saved on the organization invitation, fully accessible (read/write) from the Backend API but not visible from the Frontend API. When the organization invitation is accepted, the metadata will be transferred to the newly created organization membership.
         :param redirect_url: Optional URL that the invitee will be redirected to once they accept the invitation by clicking the join link in the invitation email.
+        :param expires_in_days: The number of days the invitation will be valid for. By default, the invitation has a 30 days expire.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -294,6 +308,7 @@ class OrganizationInvitationsSDK(BaseSDK):
                 public_metadata=public_metadata,
                 private_metadata=private_metadata,
                 redirect_url=redirect_url,
+                expires_in_days=expires_in_days,
             ),
         )
 
@@ -303,7 +318,7 @@ class OrganizationInvitationsSDK(BaseSDK):
             base_url=base_url,
             url_variables=url_variables,
             request=request,
-            request_body_required=True,
+            request_body_required=False,
             request_has_path_params=True,
             request_has_query_params=True,
             user_agent_header="user-agent",
@@ -313,9 +328,9 @@ class OrganizationInvitationsSDK(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request.request_body,
                 False,
-                False,
+                True,
                 "json",
-                models.CreateOrganizationInvitationRequestBody,
+                Optional[models.CreateOrganizationInvitationRequestBody],
             ),
             timeout_ms=timeout_ms,
         )
@@ -349,7 +364,12 @@ class OrganizationInvitationsSDK(BaseSDK):
         ):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -374,6 +394,7 @@ class OrganizationInvitationsSDK(BaseSDK):
         public_metadata: Optional[Dict[str, Any]] = None,
         private_metadata: Optional[Dict[str, Any]] = None,
         redirect_url: Optional[str] = None,
+        expires_in_days: OptionalNullable[int] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -402,9 +423,10 @@ class OrganizationInvitationsSDK(BaseSDK):
         :param email_address: The email address of the new member that is going to be invited to the organization
         :param role: The role of the new member in the organization
         :param inviter_user_id: The ID of the user that invites the new member to the organization. Must be an administrator in the organization.
-        :param public_metadata: Metadata saved on the organization invitation, read-only from the Frontend API and fully accessible (read/write) from the Backend API.
-        :param private_metadata: Metadata saved on the organization invitation, fully accessible (read/write) from the Backend API but not visible from the Frontend API.
+        :param public_metadata: Metadata saved on the organization invitation, read-only from the Frontend API and fully accessible (read/write) from the Backend API. When the organization invitation is accepted, the metadata will be transferred to the newly created organization membership.
+        :param private_metadata: Metadata saved on the organization invitation, fully accessible (read/write) from the Backend API but not visible from the Frontend API. When the organization invitation is accepted, the metadata will be transferred to the newly created organization membership.
         :param redirect_url: Optional URL that the invitee will be redirected to once they accept the invitation by clicking the join link in the invitation email.
+        :param expires_in_days: The number of days the invitation will be valid for. By default, the invitation has a 30 days expire.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -427,6 +449,7 @@ class OrganizationInvitationsSDK(BaseSDK):
                 public_metadata=public_metadata,
                 private_metadata=private_metadata,
                 redirect_url=redirect_url,
+                expires_in_days=expires_in_days,
             ),
         )
 
@@ -436,7 +459,7 @@ class OrganizationInvitationsSDK(BaseSDK):
             base_url=base_url,
             url_variables=url_variables,
             request=request,
-            request_body_required=True,
+            request_body_required=False,
             request_has_path_params=True,
             request_has_query_params=True,
             user_agent_header="user-agent",
@@ -446,9 +469,9 @@ class OrganizationInvitationsSDK(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request.request_body,
                 False,
-                False,
+                True,
                 "json",
-                models.CreateOrganizationInvitationRequestBody,
+                Optional[models.CreateOrganizationInvitationRequestBody],
             ),
             timeout_ms=timeout_ms,
         )
@@ -482,7 +505,12 @@ class OrganizationInvitationsSDK(BaseSDK):
         ):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -585,7 +613,12 @@ class OrganizationInvitationsSDK(BaseSDK):
         if utils.match_response(http_res, ["400", "404"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -688,7 +721,12 @@ class OrganizationInvitationsSDK(BaseSDK):
         if utils.match_response(http_res, ["400", "404"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -708,7 +746,8 @@ class OrganizationInvitationsSDK(BaseSDK):
         *,
         organization_id: str,
         request_body: Union[
-            List[models.RequestBody], List[models.RequestBodyTypedDict]
+            List[models.CreateOrganizationInvitationBulkRequestBody],
+            List[models.CreateOrganizationInvitationBulkRequestBodyTypedDict],
         ],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -749,7 +788,7 @@ class OrganizationInvitationsSDK(BaseSDK):
         request = models.CreateOrganizationInvitationBulkRequest(
             organization_id=organization_id,
             request_body=utils.get_pydantic_model(
-                request_body, List[models.RequestBody]
+                request_body, List[models.CreateOrganizationInvitationBulkRequestBody]
             ),
         )
 
@@ -767,7 +806,11 @@ class OrganizationInvitationsSDK(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.request_body, False, False, "json", List[models.RequestBody]
+                request.request_body,
+                False,
+                False,
+                "json",
+                List[models.CreateOrganizationInvitationBulkRequestBody],
             ),
             timeout_ms=timeout_ms,
         )
@@ -801,7 +844,12 @@ class OrganizationInvitationsSDK(BaseSDK):
         ):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -821,7 +869,8 @@ class OrganizationInvitationsSDK(BaseSDK):
         *,
         organization_id: str,
         request_body: Union[
-            List[models.RequestBody], List[models.RequestBodyTypedDict]
+            List[models.CreateOrganizationInvitationBulkRequestBody],
+            List[models.CreateOrganizationInvitationBulkRequestBodyTypedDict],
         ],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -862,7 +911,7 @@ class OrganizationInvitationsSDK(BaseSDK):
         request = models.CreateOrganizationInvitationBulkRequest(
             organization_id=organization_id,
             request_body=utils.get_pydantic_model(
-                request_body, List[models.RequestBody]
+                request_body, List[models.CreateOrganizationInvitationBulkRequestBody]
             ),
         )
 
@@ -880,7 +929,11 @@ class OrganizationInvitationsSDK(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request.request_body, False, False, "json", List[models.RequestBody]
+                request.request_body,
+                False,
+                False,
+                "json",
+                List[models.CreateOrganizationInvitationBulkRequestBody],
             ),
             timeout_ms=timeout_ms,
         )
@@ -914,7 +967,12 @@ class OrganizationInvitationsSDK(BaseSDK):
         ):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -1017,7 +1075,12 @@ class OrganizationInvitationsSDK(BaseSDK):
         if utils.match_response(http_res, ["400", "404"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -1120,7 +1183,12 @@ class OrganizationInvitationsSDK(BaseSDK):
         if utils.match_response(http_res, ["400", "404"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -1212,7 +1280,12 @@ class OrganizationInvitationsSDK(BaseSDK):
         if utils.match_response(http_res, ["400", "403", "404"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -1304,7 +1377,12 @@ class OrganizationInvitationsSDK(BaseSDK):
         if utils.match_response(http_res, ["400", "403", "404"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -1412,7 +1490,12 @@ class OrganizationInvitationsSDK(BaseSDK):
         if utils.match_response(http_res, ["400", "403", "404"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -1520,7 +1603,12 @@ class OrganizationInvitationsSDK(BaseSDK):
         if utils.match_response(http_res, ["400", "403", "404"], "application/json"):
             data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
