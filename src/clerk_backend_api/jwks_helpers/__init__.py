@@ -24,7 +24,3 @@ __all__ = [
     "VerifyTokenOptions",
     "verify_token"
 ]
-
-
-# Attach authenticate_request method to the Clerk class
-setattr(Clerk, 'authenticate_request', authenticate_request)

@@ -45,6 +45,7 @@ More information about the API can be found at https://clerk.com/docs
   * [Error Handling](#error-handling)
   * [Server Selection](#server-selection)
   * [Custom HTTP Client](#custom-http-client)
+  * [Resource Management](#resource-management)
   * [Debugging](#debugging)
 * [Development](#development)
   * [Maturity](#maturity)
@@ -54,6 +55,11 @@ More information about the API can be found at https://clerk.com/docs
 
 <!-- Start SDK Installation [installation] -->
 ## SDK Installation
+
+> [!NOTE]
+> **Python version upgrade policy**
+>
+> Once a Python version reaches its [official end of life date](https://devguide.python.org/versions/), a 3-month grace period is provided for users to upgrade. Following this grace period, the minimum python version supported in the SDK will be updated.
 
 The SDK can be installed with either *pip* or *poetry* package managers.
 
@@ -157,7 +163,7 @@ with Clerk(
 
 ## Request Authentication
 
-Use the [authenticate_request](https://github.com/clerk/clerk-sdk-python/blob/main/src/clerk_backend_api/jwks_helpers/authenticaterequest.py) method to authenticate a request from your app's frontend (when using a Clerk frontend SDK) to a Python backend (Django, Flask, and other Python web frameworks). For example the following utility function checks if the user is effectively signed in:
+Use the client's `authenticate_request` method to authenticate a request from your app's frontend (when using a Clerk frontend SDK) to a Python backend (Django, Flask, and other Python web frameworks). For example the following utility function checks if the user is effectively signed in:
 
 ```python
 import os
@@ -167,8 +173,7 @@ from clerk_backend_api.jwks_helpers import authenticate_request, AuthenticateReq
 
 def is_signed_in(request: httpx.Request):
     sdk = Clerk(bearer_auth=os.getenv('CLERK_SECRET_KEY'))
-    request_state = authenticate_request(
-        sdk,
+    request_state = sdk.authenticate_request(
         request,
         AuthenticateRequestOptions(
             authorized_parties=['https://example.com']
@@ -636,6 +641,31 @@ class CustomClient(AsyncHttpClient):
 s = Clerk(async_client=CustomClient(httpx.AsyncClient()))
 ```
 <!-- End Custom HTTP Client [http-client] -->
+
+<!-- Start Resource Management [resource-management] -->
+## Resource Management
+
+The `Clerk` class implements the context manager protocol and registers a finalizer function to close the underlying sync and async HTTPX clients it uses under the hood. This will close HTTP connections, release memory and free up other resources held by the SDK. In short-lived Python programs and notebooks that make a few SDK method calls, resource management may not be a concern. However, in longer-lived programs, it is beneficial to create a single SDK instance via a [context manager][context-manager] and reuse it across the application.
+
+[context-manager]: https://docs.python.org/3/reference/datamodel.html#context-managers
+
+```python
+from clerk_backend_api import Clerk
+def main():
+    with Clerk(
+        bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+    ) as clerk:
+        # Rest of application here...
+
+
+# Or when using async:
+async def amain():
+    async with Clerk(
+        bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+    ) as clerk:
+        # Rest of application here...
+```
+<!-- End Resource Management [resource-management] -->
 
 <!-- Start Debugging [debug] -->
 ## Debugging
