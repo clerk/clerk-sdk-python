@@ -47,7 +47,7 @@ from typing import Any, Callable, Dict, Optional, Union, cast
 import weakref
 
 # region imports
-from .jwks_helpers.authenticaterequest import authenticate_request
+from .jwks_helpers import AuthenticateRequestOptions, RequestState, authenticate_request
 # endregion imports
 
 
@@ -264,5 +264,23 @@ class Clerk(BaseSDK):
             await self.sdk_configuration.async_client.aclose()
 
     # region sdk-class-body
-    authenticate_request = authenticate_request
+    def authenticate_request(self, request: httpx.Request, options: AuthenticateRequestOptions) -> RequestState:
+        """
+        Authenticates the session token. Networkless if the options.jwt_key is provided.
+        Otherwise, performs a network call to retrieve the JWKS from Clerk's Backend API.
+
+        If the secret_key is not provided, an attempt is made to retrieve it from the bearer_auth token that
+        was used to instantiate the SDK. WARNING: this relies on bearerAuth being the only security scheme.
+        """
+
+        if options.secret_key is None:
+            security = self.sdk_configuration.security
+            if security is not None:
+                # WARNING: the following assumes bearerAuth is the only security scheme
+                if callable(security):
+                    options.secret_key = security().bearer_auth
+                else:
+                    options.secret_key = security.bearer_auth
+
+        return authenticate_request(request, options)
     # endregion sdk-class-body

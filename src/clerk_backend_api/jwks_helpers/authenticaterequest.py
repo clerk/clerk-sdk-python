@@ -5,7 +5,6 @@ from http.cookies import SimpleCookie
 from typing import Any, Dict, List, Union, Optional
 from warnings import warn
 
-from ..sdk import Clerk
 from .verifytoken import TokenVerificationErrorReason, TokenVerificationError, VerifyTokenOptions, verify_token
 
 
@@ -69,28 +68,12 @@ class AuthenticateRequestOptions:
     authorized_parties: Optional[List[str]] = None
     clock_skew_in_ms: int = 5000
 
-def authenticate_request(self: Clerk, request: httpx.Request, options: AuthenticateRequestOptions) -> RequestState:
+def authenticate_request(request: httpx.Request, options: AuthenticateRequestOptions) -> RequestState:
     """ Authenticates the session token. Networkless if the options.jwt_key is provided.
     Otherwise, performs a network call to retrieve the JWKS from Clerk's Backend API.
     """
 
     warn('authenticate_request method is applicable in the context of Backend APIs only.')
-
-    def get_secret_key(clerk: Clerk, options) -> Optional[str]:
-        """If not provided, try retrieving the secret_key from the SDK security """
-
-        if options.secret_key is not None:
-            return options.secret_key
-
-        security = clerk.sdk_configuration.security
-        if security is None:
-            return None
-
-        # WARNING: this relies on bearerAuth being the only security scheme
-        if callable(security):
-            return security().bearer_auth
-        return security.bearer_auth
-
 
     def get_session_token(request: httpx.Request) -> Optional[str]:
         """Retrieve token from __session cookie or Authorization header."""
@@ -112,8 +95,7 @@ def authenticate_request(self: Clerk, request: httpx.Request, options: Authentic
     if session_token is None:
         return RequestState(status=AuthStatus.SIGNED_OUT, reason=AuthErrorReason.SESSION_TOKEN_MISSING)
 
-    secret_key = get_secret_key(self, options)
-    if secret_key is None:
+    if options.secret_key is None:
         return RequestState(status=AuthStatus.SIGNED_OUT, reason=AuthErrorReason.SECRET_KEY_MISSING)
 
     try:
@@ -122,7 +104,7 @@ def authenticate_request(self: Clerk, request: httpx.Request, options: Authentic
             VerifyTokenOptions(
                 audience=options.audience,
                 authorized_parties=options.authorized_parties,
-                secret_key=secret_key,
+                secret_key=options.secret_key,
                 clock_skew_in_ms=options.clock_skew_in_ms,
                 jwt_key=options.jwt_key,
             ),
