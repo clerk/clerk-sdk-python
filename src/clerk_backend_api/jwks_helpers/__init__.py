@@ -1,4 +1,3 @@
-from ..sdk import Clerk
 from .authenticaterequest import (
     AuthErrorReason,
     AuthStatus,
