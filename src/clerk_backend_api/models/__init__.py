@@ -293,7 +293,7 @@ from .gettemplateop import (
 from .getuserlistop import GetUserListRequest, GetUserListRequestTypedDict
 from .getuserop import GetUserRequest, GetUserRequestTypedDict
 from .getuserscountop import GetUsersCountRequest, GetUsersCountRequestTypedDict
-from .identificationlink import IdentificationLink, IdentificationLinkTypedDict, Type
+from .identificationlink import IdentificationLink, IdentificationLinkTypedDict
 from .instance import Instance, InstanceObject, InstanceTypedDict
 from .instancegetorganizationmembershipsop import (
     InstanceGetOrganizationMembershipsRequest,
@@ -1250,7 +1250,6 @@ __all__ = [
     "TotalCountTypedDict",
     "Totp",
     "TotpTypedDict",
-    "Type",
     "UnbanUserRequest",
     "UnbanUserRequestTypedDict",
     "UnlockUserRequest",
