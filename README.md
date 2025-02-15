@@ -78,6 +78,37 @@ pip install clerk-backend-api
 ```bash
 poetry add clerk-backend-api
 ```
+
+### Shell and script usage with `uv`
+
+You can use this SDK in a Python shell with [uv](https://docs.astral.sh/uv/) and the `uvx` command that comes with it like so:
+
+```shell
+uvx --from clerk-backend-api python
+```
+
+It's also possible to write a standalone Python script without needing to set up a whole project like so:
+
+```python
+#!/usr/bin/env -S uv run --script
+# /// script
+# requires-python = ">=3.9"
+# dependencies = [
+#     "clerk-backend-api",
+# ]
+# ///
+
+from clerk_backend_api import Clerk
+
+sdk = Clerk(
+  # SDK arguments
+)
+
+# Rest of script here...
+```
+
+Once that is saved to a file, you can run it with `uv run script.py` where
+`script.py` can be replaced with the actual file name.
 <!-- End SDK Installation [installation] -->
 
 <!-- Start IDE Support [idesupport] -->
@@ -407,7 +438,6 @@ If the request is correctly authenticated, the token's payload is made available
 * [delete_backup_codes](docs/sdks/users/README.md#delete_backup_codes) - Disable all user's Backup codes
 * [delete_passkey](docs/sdks/users/README.md#delete_passkey) - Delete a user passkey
 * [delete_web3_wallet](docs/sdks/users/README.md#delete_web3_wallet) - Delete a user web3 wallet
-* [create_totp](docs/sdks/users/README.md#create_totp) - Create a TOTP for a user
 * [delete_totp](docs/sdks/users/README.md#delete_totp) - Delete all the user's TOTPs
 * [delete_external_account](docs/sdks/users/README.md#delete_external_account) - Delete External Account
 

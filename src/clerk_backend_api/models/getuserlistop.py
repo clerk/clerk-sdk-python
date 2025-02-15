@@ -75,6 +75,8 @@ class GetUserListRequestTypedDict(TypedDict):
     """
     name_query: NotRequired[str]
     r"""Returns users with names that match the given query, via case-insensitive partial match."""
+    banned: NotRequired[bool]
+    r"""Returns users which are either banned (`banned=true`) or not banned (`banned=false`)."""
     last_active_at_before: NotRequired[int]
     r"""Returns users whose last session activity was before the given date (with millisecond precision).
     Example: use 1700690400000 to retrieve users whose last session activity was before 2023-11-23.
@@ -229,6 +231,12 @@ class GetUserListRequest(BaseModel):
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = None
     r"""Returns users with names that match the given query, via case-insensitive partial match."""
+
+    banned: Annotated[
+        Optional[bool],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Returns users which are either banned (`banned=true`) or not banned (`banned=false`)."""
 
     last_active_at_before: Annotated[
         Optional[int],

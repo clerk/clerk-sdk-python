@@ -34,8 +34,9 @@ class AdminVerificationWeb3WalletStrategy(str, Enum, metaclass=utils.OpenEnumMet
 class Web3WalletVerificationAdminTypedDict(TypedDict):
     status: AdminVerificationWeb3WalletStatus
     strategy: AdminVerificationWeb3WalletStrategy
-    attempts: NotRequired[Nullable[int]]
-    expire_at: NotRequired[Nullable[int]]
+    attempts: Nullable[int]
+    expire_at: Nullable[int]
+    verified_at_client: NotRequired[Nullable[str]]
 
 
 class Web3WalletVerificationAdmin(BaseModel):
@@ -45,14 +46,16 @@ class Web3WalletVerificationAdmin(BaseModel):
         AdminVerificationWeb3WalletStrategy, PlainValidator(validate_open_enum(False))
     ]
 
-    attempts: OptionalNullable[int] = UNSET
+    attempts: Nullable[int]
 
-    expire_at: OptionalNullable[int] = UNSET
+    expire_at: Nullable[int]
+
+    verified_at_client: OptionalNullable[str] = UNSET
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["attempts", "expire_at"]
-        nullable_fields = ["attempts", "expire_at"]
+        optional_fields = ["verified_at_client"]
+        nullable_fields = ["attempts", "expire_at", "verified_at_client"]
         null_default_fields = []
 
         serialized = handler(self)
@@ -96,10 +99,11 @@ class Web3SignatureVerificationStrategy(str, Enum):
 class Web3SignatureTypedDict(TypedDict):
     status: Web3SignatureVerificationStatus
     strategy: Web3SignatureVerificationStrategy
+    attempts: Nullable[int]
+    expire_at: Nullable[int]
     nonce: NotRequired[Nullable[str]]
     message: NotRequired[Nullable[str]]
-    attempts: NotRequired[Nullable[int]]
-    expire_at: NotRequired[Nullable[int]]
+    verified_at_client: NotRequired[Nullable[str]]
 
 
 class Web3Signature(BaseModel):
@@ -107,18 +111,26 @@ class Web3Signature(BaseModel):
 
     strategy: Web3SignatureVerificationStrategy
 
+    attempts: Nullable[int]
+
+    expire_at: Nullable[int]
+
     nonce: OptionalNullable[str] = UNSET
 
     message: OptionalNullable[str] = UNSET
 
-    attempts: OptionalNullable[int] = UNSET
-
-    expire_at: OptionalNullable[int] = UNSET
+    verified_at_client: OptionalNullable[str] = UNSET
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["nonce", "message", "attempts", "expire_at"]
-        nullable_fields = ["nonce", "message", "attempts", "expire_at"]
+        optional_fields = ["nonce", "message", "verified_at_client"]
+        nullable_fields = [
+            "attempts",
+            "expire_at",
+            "nonce",
+            "message",
+            "verified_at_client",
+        ]
         null_default_fields = []
 
         serialized = handler(self)

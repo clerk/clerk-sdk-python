@@ -35,9 +35,11 @@ class Nonce(str, Enum):
 class PasskeyTypedDict(TypedDict):
     status: PasskeyVerificationStatus
     strategy: PasskeyVerificationStrategy
+    attempts: Nullable[int]
+    expire_at: Nullable[int]
     nonce: NotRequired[Nonce]
-    attempts: NotRequired[Nullable[int]]
-    expire_at: NotRequired[Nullable[int]]
+    message: NotRequired[Nullable[str]]
+    verified_at_client: NotRequired[Nullable[str]]
 
 
 class Passkey(BaseModel):
@@ -45,16 +47,20 @@ class Passkey(BaseModel):
 
     strategy: PasskeyVerificationStrategy
 
+    attempts: Nullable[int]
+
+    expire_at: Nullable[int]
+
     nonce: Optional[Nonce] = None
 
-    attempts: OptionalNullable[int] = UNSET
+    message: OptionalNullable[str] = UNSET
 
-    expire_at: OptionalNullable[int] = UNSET
+    verified_at_client: OptionalNullable[str] = UNSET
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["nonce", "attempts", "expire_at"]
-        nullable_fields = ["attempts", "expire_at"]
+        optional_fields = ["nonce", "message", "verified_at_client"]
+        nullable_fields = ["attempts", "expire_at", "message", "verified_at_client"]
         null_default_fields = []
 
         serialized = handler(self)

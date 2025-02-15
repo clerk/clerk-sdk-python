@@ -3,8 +3,9 @@
 from __future__ import annotations
 from clerk_backend_api.types import BaseModel
 from enum import Enum
-from typing import Optional
-from typing_extensions import NotRequired, TypedDict
+import pydantic
+from typing import List, Optional
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class OAuthApplicationWithSecretObject(str, Enum):
@@ -19,6 +20,7 @@ class OAuthApplicationWithSecretTypedDict(TypedDict):
     client_id: str
     public: bool
     scopes: str
+    redirect_uris: List[str]
     callback_url: str
     authorize_url: str
     token_fetch_url: str
@@ -54,7 +56,14 @@ class OAuthApplicationWithSecret(BaseModel):
 
     scopes: str
 
-    callback_url: str
+    redirect_uris: List[str]
+
+    callback_url: Annotated[
+        str,
+        pydantic.Field(
+            deprecated="warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
+        ),
+    ]
 
     authorize_url: str
 

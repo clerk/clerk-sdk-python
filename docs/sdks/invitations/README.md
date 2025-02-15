@@ -35,8 +35,6 @@ with Clerk(
 
         },
         "redirect_url": "https://example.com/welcome",
-        "notify": True,
-        "ignore_existing": True,
         "expires_in_days": 486589,
         "template_slug": clerk_backend_api.TemplateSlug.WAITLIST_INVITATION,
     })
@@ -80,7 +78,7 @@ with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 ) as clerk:
 
-    res = clerk.invitations.list(limit=20, offset=10, status=clerk_backend_api.ListInvitationsQueryParamStatus.PENDING, query="<value>")
+    res = clerk.invitations.list(status=clerk_backend_api.ListInvitationsQueryParamStatus.PENDING, query="<value>")
 
     assert res is not None
 
@@ -132,8 +130,6 @@ with Clerk(
                 "key": "<value>",
             },
             "redirect_url": "https://dreary-advancement.net/",
-            "notify": True,
-            "ignore_existing": False,
             "expires_in_days": 123536,
         },
         {
@@ -142,8 +138,6 @@ with Clerk(
                 "key": "<value>",
             },
             "redirect_url": "https://shrill-jet.net/",
-            "notify": True,
-            "ignore_existing": False,
             "expires_in_days": 665767,
         },
     ])

@@ -35,8 +35,9 @@ class AdminVerificationStrategy(str, Enum, metaclass=utils.OpenEnumMeta):
 class VerificationAdminTypedDict(TypedDict):
     status: AdminVerificationPhoneNumberStatus
     strategy: AdminVerificationStrategy
-    attempts: NotRequired[Nullable[int]]
-    expire_at: NotRequired[Nullable[int]]
+    attempts: Nullable[int]
+    expire_at: Nullable[int]
+    verified_at_client: NotRequired[Nullable[str]]
 
 
 class VerificationAdmin(BaseModel):
@@ -46,14 +47,16 @@ class VerificationAdmin(BaseModel):
         AdminVerificationStrategy, PlainValidator(validate_open_enum(False))
     ]
 
-    attempts: OptionalNullable[int] = UNSET
+    attempts: Nullable[int]
 
-    expire_at: OptionalNullable[int] = UNSET
+    expire_at: Nullable[int]
+
+    verified_at_client: OptionalNullable[str] = UNSET
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["attempts", "expire_at"]
-        nullable_fields = ["attempts", "expire_at"]
+        optional_fields = ["verified_at_client"]
+        nullable_fields = ["attempts", "expire_at", "verified_at_client"]
         null_default_fields = []
 
         serialized = handler(self)
@@ -103,8 +106,9 @@ class OTPVerificationStrategy(str, Enum, metaclass=utils.OpenEnumMeta):
 class VerificationOTPTypedDict(TypedDict):
     status: OTPVerificationStatus
     strategy: OTPVerificationStrategy
-    attempts: int
-    expire_at: int
+    attempts: Nullable[int]
+    expire_at: Nullable[int]
+    verified_at_client: NotRequired[Nullable[str]]
 
 
 class VerificationOTP(BaseModel):
@@ -114,9 +118,41 @@ class VerificationOTP(BaseModel):
         OTPVerificationStrategy, PlainValidator(validate_open_enum(False))
     ]
 
-    attempts: int
+    attempts: Nullable[int]
 
-    expire_at: int
+    expire_at: Nullable[int]
+
+    verified_at_client: OptionalNullable[str] = UNSET
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = ["verified_at_client"]
+        nullable_fields = ["attempts", "expire_at", "verified_at_client"]
+        null_default_fields = []
+
+        serialized = handler(self)
+
+        m = {}
+
+        for n, f in self.model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k)
+            serialized.pop(k, None)
+
+            optional_nullable = k in optional_fields and k in nullable_fields
+            is_set = (
+                self.__pydantic_fields_set__.intersection({n})
+                or k in null_default_fields
+            )  # pylint: disable=no-member
+
+            if val is not None and val != UNSET_SENTINEL:
+                m[k] = val
+            elif val != UNSET_SENTINEL and (
+                not k in optional_fields or (optional_nullable and is_set)
+            ):
+                m[k] = val
+
+        return m
 
 
 PhoneNumberVerificationTypedDict = TypeAliasType(

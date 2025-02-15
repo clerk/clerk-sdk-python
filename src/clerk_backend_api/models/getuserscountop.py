@@ -58,6 +58,8 @@ class GetUsersCountRequestTypedDict(TypedDict):
     For example, `username_query=CoolUser` will match a user with the username `SomeCoolUser`,
     and will be included in the resulting count.
     """
+    banned: NotRequired[bool]
+    r"""Counts users which are either banned (`banned=true`) or not banned (`banned=false`)."""
 
 
 class GetUsersCountRequest(BaseModel):
@@ -150,3 +152,9 @@ class GetUsersCountRequest(BaseModel):
     For example, `username_query=CoolUser` will match a user with the username `SomeCoolUser`,
     and will be included in the resulting count.
     """
+
+    banned: Annotated[
+        Optional[bool],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Counts users which are either banned (`banned=true`) or not banned (`banned=false`)."""
