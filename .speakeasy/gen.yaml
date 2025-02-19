@@ -7,13 +7,15 @@ generation:
   useClassNamesForArrayFields: true
   fixes:
     nameResolutionDec2023: true
+    nameResolutionFeb2025: false
     parameterOrderingFeb2024: true
     requestResponseComponentNamesFeb2024: true
+    securityFeb2025: false
   auth:
     oAuth2ClientCredentialsEnabled: true
     oAuth2PasswordEnabled: false
 python:
-  version: 1.7.2
+  version: 1.8.0
   additionalDependencies:
     dev:
       pytest: ^8.3.3
@@ -46,5 +48,6 @@ python:
   methodArguments: infer-optional-args
   outputModelSuffix: output
   packageName: clerk-backend-api
+  pytestTimeout: 0
   responseFormat: flat
   templateVersion: v2

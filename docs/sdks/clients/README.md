@@ -29,7 +29,7 @@ with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 ) as clerk:
 
-    res = clerk.clients.list(limit=20, offset=10)
+    res = clerk.clients.list()
 
     assert res is not None
 

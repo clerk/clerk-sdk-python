@@ -67,7 +67,7 @@ with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 ) as clerk:
 
-    res = clerk.organization_memberships.list(organization_id="org_789", limit=20, offset=10, order_by="+created_at")
+    res = clerk.organization_memberships.list(organization_id="org_789", order_by="+created_at")
 
     assert res is not None
 
@@ -242,7 +242,7 @@ with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 ) as clerk:
 
-    res = clerk.organization_memberships.get_all(limit=20, offset=10, order_by="<value>")
+    res = clerk.organization_memberships.get_all(order_by="<value>")
 
     assert res is not None
 

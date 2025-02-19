@@ -3,7 +3,7 @@
 from __future__ import annotations
 from clerk_backend_api.types import BaseModel
 from clerk_backend_api.utils import FieldMetadata, QueryParamMetadata
-from typing import Optional
+from typing import List, Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
 
 
@@ -22,6 +22,16 @@ class ListOrganizationsRequestTypedDict(TypedDict):
     query: NotRequired[str]
     r"""Returns organizations with ID, name, or slug that match the given query.
     Uses exact match for organization ID and partial match for name and slug.
+    """
+    organization_id: NotRequired[List[str]]
+    r"""Returns organizations with the organization ids specified.
+    Any organization ids not found are ignored.
+    For each organization id, the `+` and `-` can be
+    prepended to the id, which denote whether the
+    respective organization should be included or
+    excluded from the result set.
+    Accepts up to 100 organization ids.
+    Example: ?organization_id=+org_1&organization_id=-org_2
     """
     order_by: NotRequired[str]
     r"""Allows to return organizations in a particular order.
@@ -63,6 +73,20 @@ class ListOrganizationsRequest(BaseModel):
     ] = None
     r"""Returns organizations with ID, name, or slug that match the given query.
     Uses exact match for organization ID and partial match for name and slug.
+    """
+
+    organization_id: Annotated[
+        Optional[List[str]],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Returns organizations with the organization ids specified.
+    Any organization ids not found are ignored.
+    For each organization id, the `+` and `-` can be
+    prepended to the id, which denote whether the
+    respective organization should be included or
+    excluded from the result set.
+    Accepts up to 100 organization ids.
+    Example: ?organization_id=+org_1&organization_id=-org_2
     """
 
     order_by: Annotated[

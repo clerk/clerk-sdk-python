@@ -28,7 +28,7 @@ class ListWaitlistEntriesRequestTypedDict(TypedDict):
     To be used in conjunction with `limit`.
     """
     query: NotRequired[str]
-    r"""Filter waitlist entries by email address"""
+    r"""Filter waitlist entries by `email_address` or `id`"""
     status: NotRequired[ListWaitlistEntriesQueryParamStatus]
     r"""Filter waitlist entries by their status"""
     order_by: NotRequired[str]
@@ -63,7 +63,7 @@ class ListWaitlistEntriesRequest(BaseModel):
         Optional[str],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = None
-    r"""Filter waitlist entries by email address"""
+    r"""Filter waitlist entries by `email_address` or `id`"""
 
     status: Annotated[
         Optional[ListWaitlistEntriesQueryParamStatus],

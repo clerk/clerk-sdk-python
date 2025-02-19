@@ -15,26 +15,9 @@ class Users(BaseSDK):
     def list(
         self,
         *,
-        email_address: Optional[List[str]] = None,
-        phone_number: Optional[List[str]] = None,
-        external_id: Optional[List[str]] = None,
-        username: Optional[List[str]] = None,
-        web3_wallet: Optional[List[str]] = None,
-        user_id: Optional[List[str]] = None,
-        organization_id: Optional[List[str]] = None,
-        query: Optional[str] = None,
-        email_address_query: Optional[str] = None,
-        phone_number_query: Optional[str] = None,
-        username_query: Optional[str] = None,
-        name_query: Optional[str] = None,
-        last_active_at_before: Optional[int] = None,
-        last_active_at_after: Optional[int] = None,
-        last_active_at_since: Optional[int] = None,
-        created_at_before: Optional[int] = None,
-        created_at_after: Optional[int] = None,
-        limit: Optional[int] = 10,
-        offset: Optional[int] = 0,
-        order_by: Optional[str] = "-created_at",
+        request: Union[
+            models.GetUserListRequest, models.GetUserListRequestTypedDict
+        ] = models.GetUserListRequest(),
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -45,26 +28,7 @@ class Users(BaseSDK):
         Returns a list of all users.
         The users are returned sorted by creation date, with the newest users appearing first.
 
-        :param email_address: Returns users with the specified email addresses. Accepts up to 100 email addresses. Any email addresses not found are ignored.
-        :param phone_number: Returns users with the specified phone numbers. Accepts up to 100 phone numbers. Any phone numbers not found are ignored.
-        :param external_id: Returns users with the specified external ids. For each external id, the `+` and `-` can be prepended to the id, which denote whether the respective external id should be included or excluded from the result set. Accepts up to 100 external ids. Any external ids not found are ignored.
-        :param username: Returns users with the specified usernames. Accepts up to 100 usernames. Any usernames not found are ignored.
-        :param web3_wallet: Returns users with the specified web3 wallet addresses. Accepts up to 100 web3 wallet addresses. Any web3 wallet addressed not found are ignored.
-        :param user_id: Returns users with the user ids specified. For each user id, the `+` and `-` can be prepended to the id, which denote whether the respective user id should be included or excluded from the result set. Accepts up to 100 user ids. Any user ids not found are ignored.
-        :param organization_id: Returns users that have memberships to the given organizations. For each organization id, the `+` and `-` can be prepended to the id, which denote whether the respective organization should be included or excluded from the result set. Accepts up to 100 organization ids.
-        :param query: Returns users that match the given query. For possible matches, we check the email addresses, phone numbers, usernames, web3 wallets, user ids, first and last names. The query value doesn't need to match the exact value you are looking for, it is capable of partial matches as well.
-        :param email_address_query: Returns users with emails that match the given query, via case-insensitive partial match. For example, `email_address_query=ello` will match a user with the email `HELLO@example.com`.
-        :param phone_number_query: Returns users with phone numbers that match the given query, via case-insensitive partial match. For example, `phone_number_query=555` will match a user with the phone number `+1555xxxxxxx`.
-        :param username_query: Returns users with usernames that match the given query, via case-insensitive partial match. For example, `username_query=CoolUser` will match a user with the username `SomeCoolUser`.
-        :param name_query: Returns users with names that match the given query, via case-insensitive partial match.
-        :param last_active_at_before: Returns users whose last session activity was before the given date (with millisecond precision). Example: use 1700690400000 to retrieve users whose last session activity was before 2023-11-23.
-        :param last_active_at_after: Returns users whose last session activity was after the given date (with millisecond precision). Example: use 1700690400000 to retrieve users whose last session activity was after 2023-11-23.
-        :param last_active_at_since: Returns users that had session activity since the given date. Example: use 1700690400000 to retrieve users that had session activity from 2023-11-23 until the current day. Deprecated in favor of `last_active_at_after`.
-        :param created_at_before: Returns users who have been created before the given date (with millisecond precision). Example: use 1730160000000 to retrieve users who have been created before 2024-10-29.
-        :param created_at_after: Returns users who have been created after the given date (with millisecond precision). Example: use 1730160000000 to retrieve users who have been created after 2024-10-29.
-        :param limit: Applies a limit to the number of results returned. Can be used for paginating the results together with `offset`.
-        :param offset: Skip the first `offset` results when paginating. Needs to be an integer greater or equal to zero. To be used in conjunction with `limit`.
-        :param order_by: Allows to return users in a particular order. At the moment, you can order the returned users by their `created_at`,`updated_at`,`email_address`,`web3wallet`,`first_name`,`last_name`,`phone_number`,`username`,`last_active_at`,`last_sign_in_at`. In order to specify the direction, you can use the `+/-` symbols prepended in the property to order by. For example, if you want users to be returned in descending order according to their `created_at` property, you can use `-created_at`. If you don't use `+` or `-`, then `+` is implied. We only support one `order_by` parameter, and if multiple `order_by` parameters are provided, we will only keep the first one. For example, if you pass `order_by=username&order_by=created_at`, we will consider only the first `order_by` parameter, which is `username`. The `created_at` parameter will be ignored in this case.
+        :param request: The request object to send.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -77,29 +41,12 @@ class Users(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
-        request = models.GetUserListRequest(
-            email_address=email_address,
-            phone_number=phone_number,
-            external_id=external_id,
-            username=username,
-            web3_wallet=web3_wallet,
-            user_id=user_id,
-            organization_id=organization_id,
-            query=query,
-            email_address_query=email_address_query,
-            phone_number_query=phone_number_query,
-            username_query=username_query,
-            name_query=name_query,
-            last_active_at_before=last_active_at_before,
-            last_active_at_after=last_active_at_after,
-            last_active_at_since=last_active_at_since,
-            created_at_before=created_at_before,
-            created_at_after=created_at_after,
-            limit=limit,
-            offset=offset,
-            order_by=order_by,
-        )
+        if not isinstance(request, BaseModel):
+            request = utils.unmarshal(request, models.GetUserListRequest)
+        request = cast(models.GetUserListRequest, request)
 
         req = self._build_request(
             method="GET",
@@ -120,13 +67,18 @@ class Users(BaseSDK):
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
+            retry_config = (retries, ["5XX"])
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="GetUserList",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -136,12 +88,12 @@ class Users(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[List[models.User]])
         if utils.match_response(http_res, ["400", "401", "422"], "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
+            response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=response_data)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
@@ -165,26 +117,9 @@ class Users(BaseSDK):
     async def list_async(
         self,
         *,
-        email_address: Optional[List[str]] = None,
-        phone_number: Optional[List[str]] = None,
-        external_id: Optional[List[str]] = None,
-        username: Optional[List[str]] = None,
-        web3_wallet: Optional[List[str]] = None,
-        user_id: Optional[List[str]] = None,
-        organization_id: Optional[List[str]] = None,
-        query: Optional[str] = None,
-        email_address_query: Optional[str] = None,
-        phone_number_query: Optional[str] = None,
-        username_query: Optional[str] = None,
-        name_query: Optional[str] = None,
-        last_active_at_before: Optional[int] = None,
-        last_active_at_after: Optional[int] = None,
-        last_active_at_since: Optional[int] = None,
-        created_at_before: Optional[int] = None,
-        created_at_after: Optional[int] = None,
-        limit: Optional[int] = 10,
-        offset: Optional[int] = 0,
-        order_by: Optional[str] = "-created_at",
+        request: Union[
+            models.GetUserListRequest, models.GetUserListRequestTypedDict
+        ] = models.GetUserListRequest(),
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -195,26 +130,7 @@ class Users(BaseSDK):
         Returns a list of all users.
         The users are returned sorted by creation date, with the newest users appearing first.
 
-        :param email_address: Returns users with the specified email addresses. Accepts up to 100 email addresses. Any email addresses not found are ignored.
-        :param phone_number: Returns users with the specified phone numbers. Accepts up to 100 phone numbers. Any phone numbers not found are ignored.
-        :param external_id: Returns users with the specified external ids. For each external id, the `+` and `-` can be prepended to the id, which denote whether the respective external id should be included or excluded from the result set. Accepts up to 100 external ids. Any external ids not found are ignored.
-        :param username: Returns users with the specified usernames. Accepts up to 100 usernames. Any usernames not found are ignored.
-        :param web3_wallet: Returns users with the specified web3 wallet addresses. Accepts up to 100 web3 wallet addresses. Any web3 wallet addressed not found are ignored.
-        :param user_id: Returns users with the user ids specified. For each user id, the `+` and `-` can be prepended to the id, which denote whether the respective user id should be included or excluded from the result set. Accepts up to 100 user ids. Any user ids not found are ignored.
-        :param organization_id: Returns users that have memberships to the given organizations. For each organization id, the `+` and `-` can be prepended to the id, which denote whether the respective organization should be included or excluded from the result set. Accepts up to 100 organization ids.
-        :param query: Returns users that match the given query. For possible matches, we check the email addresses, phone numbers, usernames, web3 wallets, user ids, first and last names. The query value doesn't need to match the exact value you are looking for, it is capable of partial matches as well.
-        :param email_address_query: Returns users with emails that match the given query, via case-insensitive partial match. For example, `email_address_query=ello` will match a user with the email `HELLO@example.com`.
-        :param phone_number_query: Returns users with phone numbers that match the given query, via case-insensitive partial match. For example, `phone_number_query=555` will match a user with the phone number `+1555xxxxxxx`.
-        :param username_query: Returns users with usernames that match the given query, via case-insensitive partial match. For example, `username_query=CoolUser` will match a user with the username `SomeCoolUser`.
-        :param name_query: Returns users with names that match the given query, via case-insensitive partial match.
-        :param last_active_at_before: Returns users whose last session activity was before the given date (with millisecond precision). Example: use 1700690400000 to retrieve users whose last session activity was before 2023-11-23.
-        :param last_active_at_after: Returns users whose last session activity was after the given date (with millisecond precision). Example: use 1700690400000 to retrieve users whose last session activity was after 2023-11-23.
-        :param last_active_at_since: Returns users that had session activity since the given date. Example: use 1700690400000 to retrieve users that had session activity from 2023-11-23 until the current day. Deprecated in favor of `last_active_at_after`.
-        :param created_at_before: Returns users who have been created before the given date (with millisecond precision). Example: use 1730160000000 to retrieve users who have been created before 2024-10-29.
-        :param created_at_after: Returns users who have been created after the given date (with millisecond precision). Example: use 1730160000000 to retrieve users who have been created after 2024-10-29.
-        :param limit: Applies a limit to the number of results returned. Can be used for paginating the results together with `offset`.
-        :param offset: Skip the first `offset` results when paginating. Needs to be an integer greater or equal to zero. To be used in conjunction with `limit`.
-        :param order_by: Allows to return users in a particular order. At the moment, you can order the returned users by their `created_at`,`updated_at`,`email_address`,`web3wallet`,`first_name`,`last_name`,`phone_number`,`username`,`last_active_at`,`last_sign_in_at`. In order to specify the direction, you can use the `+/-` symbols prepended in the property to order by. For example, if you want users to be returned in descending order according to their `created_at` property, you can use `-created_at`. If you don't use `+` or `-`, then `+` is implied. We only support one `order_by` parameter, and if multiple `order_by` parameters are provided, we will only keep the first one. For example, if you pass `order_by=username&order_by=created_at`, we will consider only the first `order_by` parameter, which is `username`. The `created_at` parameter will be ignored in this case.
+        :param request: The request object to send.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -227,29 +143,12 @@ class Users(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
-        request = models.GetUserListRequest(
-            email_address=email_address,
-            phone_number=phone_number,
-            external_id=external_id,
-            username=username,
-            web3_wallet=web3_wallet,
-            user_id=user_id,
-            organization_id=organization_id,
-            query=query,
-            email_address_query=email_address_query,
-            phone_number_query=phone_number_query,
-            username_query=username_query,
-            name_query=name_query,
-            last_active_at_before=last_active_at_before,
-            last_active_at_after=last_active_at_after,
-            last_active_at_since=last_active_at_since,
-            created_at_before=created_at_before,
-            created_at_after=created_at_after,
-            limit=limit,
-            offset=offset,
-            order_by=order_by,
-        )
+        if not isinstance(request, BaseModel):
+            request = utils.unmarshal(request, models.GetUserListRequest)
+        request = cast(models.GetUserListRequest, request)
 
         req = self._build_request_async(
             method="GET",
@@ -270,13 +169,18 @@ class Users(BaseSDK):
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
+            retry_config = (retries, ["5XX"])
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="GetUserList",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -286,12 +190,12 @@ class Users(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[List[models.User]])
         if utils.match_response(http_res, ["400", "401", "422"], "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
+            response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=response_data)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
@@ -346,6 +250,8 @@ class Users(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         if not isinstance(request, BaseModel):
             request = utils.unmarshal(request, models.CreateUserRequestBody)
@@ -373,13 +279,18 @@ class Users(BaseSDK):
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
+            retry_config = (retries, ["5XX"])
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="CreateUser",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -389,14 +300,14 @@ class Users(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[models.User])
         if utils.match_response(
             http_res, ["400", "401", "403", "422"], "application/json"
         ):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
+            response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=response_data)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
@@ -451,6 +362,8 @@ class Users(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         if not isinstance(request, BaseModel):
             request = utils.unmarshal(request, models.CreateUserRequestBody)
@@ -478,13 +391,18 @@ class Users(BaseSDK):
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
+            retry_config = (retries, ["5XX"])
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="CreateUser",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -494,14 +412,14 @@ class Users(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[models.User])
         if utils.match_response(
             http_res, ["400", "401", "403", "422"], "application/json"
         ):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
+            response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=response_data)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
@@ -535,6 +453,7 @@ class Users(BaseSDK):
         email_address_query: Optional[str] = None,
         phone_number_query: Optional[str] = None,
         username_query: Optional[str] = None,
+        banned: Optional[bool] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -554,6 +473,7 @@ class Users(BaseSDK):
         :param email_address_query: Counts users with emails that match the given query, via case-insensitive partial match. For example, `email_address_query=ello` will match a user with the email `HELLO@example.com`, and will be included in the resulting count.
         :param phone_number_query: Counts users with phone numbers that match the given query, via case-insensitive partial match. For example, `phone_number_query=555` will match a user with the phone number `+1555xxxxxxx`, and will be included in the resulting count.
         :param username_query: Counts users with usernames that match the given query, via case-insensitive partial match. For example, `username_query=CoolUser` will match a user with the username `SomeCoolUser`, and will be included in the resulting count.
+        :param banned: Counts users which are either banned (`banned=true`) or not banned (`banned=false`).
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -566,6 +486,8 @@ class Users(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = models.GetUsersCountRequest(
             email_address=email_address,
@@ -578,6 +500,7 @@ class Users(BaseSDK):
             email_address_query=email_address_query,
             phone_number_query=phone_number_query,
             username_query=username_query,
+            banned=banned,
         )
 
         req = self._build_request(
@@ -599,13 +522,18 @@ class Users(BaseSDK):
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
+            retry_config = (retries, ["5XX"])
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="GetUsersCount",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -615,12 +543,12 @@ class Users(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[models.TotalCount])
         if utils.match_response(http_res, "422", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
+            response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=response_data)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
@@ -654,6 +582,7 @@ class Users(BaseSDK):
         email_address_query: Optional[str] = None,
         phone_number_query: Optional[str] = None,
         username_query: Optional[str] = None,
+        banned: Optional[bool] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -673,6 +602,7 @@ class Users(BaseSDK):
         :param email_address_query: Counts users with emails that match the given query, via case-insensitive partial match. For example, `email_address_query=ello` will match a user with the email `HELLO@example.com`, and will be included in the resulting count.
         :param phone_number_query: Counts users with phone numbers that match the given query, via case-insensitive partial match. For example, `phone_number_query=555` will match a user with the phone number `+1555xxxxxxx`, and will be included in the resulting count.
         :param username_query: Counts users with usernames that match the given query, via case-insensitive partial match. For example, `username_query=CoolUser` will match a user with the username `SomeCoolUser`, and will be included in the resulting count.
+        :param banned: Counts users which are either banned (`banned=true`) or not banned (`banned=false`).
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -685,6 +615,8 @@ class Users(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = models.GetUsersCountRequest(
             email_address=email_address,
@@ -697,6 +629,7 @@ class Users(BaseSDK):
             email_address_query=email_address_query,
             phone_number_query=phone_number_query,
             username_query=username_query,
+            banned=banned,
         )
 
         req = self._build_request_async(
@@ -718,13 +651,18 @@ class Users(BaseSDK):
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
+            retry_config = (retries, ["5XX"])
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="GetUsersCount",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -734,12 +672,12 @@ class Users(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[models.TotalCount])
         if utils.match_response(http_res, "422", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
+            response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=response_data)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
@@ -786,6 +724,8 @@ class Users(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = models.GetUserRequest(
             user_id=user_id,
@@ -810,13 +750,18 @@ class Users(BaseSDK):
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
+            retry_config = (retries, ["5XX"])
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="GetUser",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -826,12 +771,12 @@ class Users(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[models.User])
         if utils.match_response(http_res, ["400", "401", "404"], "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
+            response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=response_data)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
@@ -878,6 +823,8 @@ class Users(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = models.GetUserRequest(
             user_id=user_id,
@@ -902,13 +849,18 @@ class Users(BaseSDK):
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
+            retry_config = (retries, ["5XX"])
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="GetUser",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -918,12 +870,12 @@ class Users(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[models.User])
         if utils.match_response(http_res, ["400", "401", "404"], "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
+            response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=response_data)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
@@ -1031,6 +983,8 @@ class Users(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = models.UpdateUserRequest(
             user_id=user_id,
@@ -1085,13 +1039,18 @@ class Users(BaseSDK):
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
+            retry_config = (retries, ["5XX"])
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="UpdateUser",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -1101,14 +1060,14 @@ class Users(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[models.User])
         if utils.match_response(
             http_res, ["400", "401", "404", "422"], "application/json"
         ):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
+            response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=response_data)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
@@ -1216,6 +1175,8 @@ class Users(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = models.UpdateUserRequest(
             user_id=user_id,
@@ -1270,13 +1231,18 @@ class Users(BaseSDK):
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
+            retry_config = (retries, ["5XX"])
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="UpdateUser",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -1286,14 +1252,14 @@ class Users(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[models.User])
         if utils.match_response(
             http_res, ["400", "401", "404", "422"], "application/json"
         ):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
+            response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=response_data)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
@@ -1340,6 +1306,8 @@ class Users(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = models.DeleteUserRequest(
             user_id=user_id,
@@ -1364,13 +1332,18 @@ class Users(BaseSDK):
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
+            retry_config = (retries, ["5XX"])
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="DeleteUser",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -1380,12 +1353,12 @@ class Users(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[models.DeletedObject])
         if utils.match_response(http_res, ["400", "401", "404"], "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
+            response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=response_data)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
@@ -1432,6 +1405,8 @@ class Users(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = models.DeleteUserRequest(
             user_id=user_id,
@@ -1456,13 +1431,18 @@ class Users(BaseSDK):
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
+            retry_config = (retries, ["5XX"])
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="DeleteUser",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -1472,12 +1452,12 @@ class Users(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[models.DeletedObject])
         if utils.match_response(http_res, ["400", "401", "404"], "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
+            response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=response_data)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
@@ -1524,6 +1504,8 @@ class Users(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = models.BanUserRequest(
             user_id=user_id,
@@ -1548,13 +1530,18 @@ class Users(BaseSDK):
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
+            retry_config = (retries, ["5XX"])
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="BanUser",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -1564,12 +1551,12 @@ class Users(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[models.User])
         if utils.match_response(http_res, "402", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
+            response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=response_data)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
@@ -1616,6 +1603,8 @@ class Users(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = models.BanUserRequest(
             user_id=user_id,
@@ -1640,13 +1629,18 @@ class Users(BaseSDK):
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
+            retry_config = (retries, ["5XX"])
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="BanUser",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -1656,12 +1650,12 @@ class Users(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[models.User])
         if utils.match_response(http_res, "402", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
+            response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=response_data)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
@@ -1708,6 +1702,8 @@ class Users(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = models.UnbanUserRequest(
             user_id=user_id,
@@ -1732,13 +1728,18 @@ class Users(BaseSDK):
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
+            retry_config = (retries, ["5XX"])
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="UnbanUser",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -1748,12 +1749,12 @@ class Users(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[models.User])
         if utils.match_response(http_res, "402", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
+            response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=response_data)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
@@ -1800,6 +1801,8 @@ class Users(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = models.UnbanUserRequest(
             user_id=user_id,
@@ -1824,13 +1827,18 @@ class Users(BaseSDK):
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
+            retry_config = (retries, ["5XX"])
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="UnbanUser",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -1840,12 +1848,12 @@ class Users(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[models.User])
         if utils.match_response(http_res, "402", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
+            response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=response_data)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
@@ -1893,6 +1901,8 @@ class Users(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = models.LockUserRequest(
             user_id=user_id,
@@ -1917,13 +1927,18 @@ class Users(BaseSDK):
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
+            retry_config = (retries, ["5XX"])
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="LockUser",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -1933,12 +1948,12 @@ class Users(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[models.User])
         if utils.match_response(http_res, "403", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
+            response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=response_data)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
@@ -1986,6 +2001,8 @@ class Users(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = models.LockUserRequest(
             user_id=user_id,
@@ -2010,13 +2027,18 @@ class Users(BaseSDK):
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
+            retry_config = (retries, ["5XX"])
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="LockUser",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -2026,12 +2048,12 @@ class Users(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[models.User])
         if utils.match_response(http_res, "403", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
+            response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=response_data)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
@@ -2078,6 +2100,8 @@ class Users(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = models.UnlockUserRequest(
             user_id=user_id,
@@ -2102,13 +2126,18 @@ class Users(BaseSDK):
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
+            retry_config = (retries, ["5XX"])
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="UnlockUser",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -2118,12 +2147,12 @@ class Users(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[models.User])
         if utils.match_response(http_res, "403", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
+            response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=response_data)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
@@ -2170,6 +2199,8 @@ class Users(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = models.UnlockUserRequest(
             user_id=user_id,
@@ -2194,13 +2225,18 @@ class Users(BaseSDK):
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
+            retry_config = (retries, ["5XX"])
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="UnlockUser",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -2210,12 +2246,12 @@ class Users(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[models.User])
         if utils.match_response(http_res, "403", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
+            response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=response_data)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
@@ -2264,6 +2300,8 @@ class Users(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = models.SetUserProfileImageRequest(
             user_id=user_id,
@@ -2298,13 +2336,18 @@ class Users(BaseSDK):
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
+            retry_config = (retries, ["5XX"])
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="SetUserProfileImage",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -2314,12 +2357,12 @@ class Users(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[models.User])
         if utils.match_response(http_res, ["400", "401", "404"], "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
+            response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=response_data)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
@@ -2368,6 +2411,8 @@ class Users(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = models.SetUserProfileImageRequest(
             user_id=user_id,
@@ -2402,13 +2447,18 @@ class Users(BaseSDK):
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
+            retry_config = (retries, ["5XX"])
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="SetUserProfileImage",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -2418,12 +2468,12 @@ class Users(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[models.User])
         if utils.match_response(http_res, ["400", "401", "404"], "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
+            response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=response_data)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
@@ -2470,6 +2520,8 @@ class Users(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = models.DeleteUserProfileImageRequest(
             user_id=user_id,
@@ -2494,13 +2546,18 @@ class Users(BaseSDK):
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
+            retry_config = (retries, ["5XX"])
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="DeleteUserProfileImage",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -2510,12 +2567,12 @@ class Users(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[models.User])
         if utils.match_response(http_res, "404", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
+            response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=response_data)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
@@ -2562,6 +2619,8 @@ class Users(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = models.DeleteUserProfileImageRequest(
             user_id=user_id,
@@ -2586,13 +2645,18 @@ class Users(BaseSDK):
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
+            retry_config = (retries, ["5XX"])
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="DeleteUserProfileImage",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -2602,12 +2666,12 @@ class Users(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[models.User])
         if utils.match_response(http_res, "404", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
+            response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=response_data)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
@@ -2667,6 +2731,8 @@ class Users(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = models.UpdateUserMetadataRequest(
             user_id=user_id,
@@ -2703,13 +2769,18 @@ class Users(BaseSDK):
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
+            retry_config = (retries, ["5XX"])
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="UpdateUserMetadata",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -2719,14 +2790,14 @@ class Users(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[models.User])
         if utils.match_response(
             http_res, ["400", "401", "404", "422"], "application/json"
         ):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
+            response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=response_data)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
@@ -2786,6 +2857,8 @@ class Users(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = models.UpdateUserMetadataRequest(
             user_id=user_id,
@@ -2822,13 +2895,18 @@ class Users(BaseSDK):
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
+            retry_config = (retries, ["5XX"])
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="UpdateUserMetadata",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -2838,14 +2916,14 @@ class Users(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[models.User])
         if utils.match_response(
             http_res, ["400", "401", "404", "422"], "application/json"
         ):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
+            response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=response_data)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
@@ -2895,6 +2973,8 @@ class Users(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = models.GetOAuthAccessTokenRequest(
             user_id=user_id,
@@ -2920,13 +3000,18 @@ class Users(BaseSDK):
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
+            retry_config = (retries, ["5XX"])
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="GetOAuthAccessToken",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -2936,14 +3021,14 @@ class Users(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(
                 http_res.text, Optional[List[models.ResponseBody]]
             )
         if utils.match_response(http_res, ["400", "404", "422"], "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
+            response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=response_data)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
@@ -2993,6 +3078,8 @@ class Users(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = models.GetOAuthAccessTokenRequest(
             user_id=user_id,
@@ -3018,13 +3105,18 @@ class Users(BaseSDK):
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
+            retry_config = (retries, ["5XX"])
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="GetOAuthAccessToken",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -3034,14 +3126,14 @@ class Users(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(
                 http_res.text, Optional[List[models.ResponseBody]]
             )
         if utils.match_response(http_res, ["400", "404", "422"], "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
+            response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=response_data)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
@@ -3092,6 +3184,8 @@ class Users(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = models.UsersGetOrganizationMembershipsRequest(
             user_id=user_id,
@@ -3118,13 +3212,18 @@ class Users(BaseSDK):
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
+            retry_config = (retries, ["5XX"])
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="UsersGetOrganizationMemberships",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -3134,14 +3233,14 @@ class Users(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(
                 http_res.text, Optional[models.OrganizationMemberships]
             )
         if utils.match_response(http_res, "403", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
+            response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=response_data)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
@@ -3192,6 +3291,8 @@ class Users(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = models.UsersGetOrganizationMembershipsRequest(
             user_id=user_id,
@@ -3218,13 +3319,18 @@ class Users(BaseSDK):
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
+            retry_config = (retries, ["5XX"])
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="UsersGetOrganizationMemberships",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -3234,14 +3340,14 @@ class Users(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(
                 http_res.text, Optional[models.OrganizationMemberships]
             )
         if utils.match_response(http_res, "403", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
+            response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=response_data)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
@@ -3294,6 +3400,8 @@ class Users(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = models.UsersGetOrganizationInvitationsRequest(
             user_id=user_id,
@@ -3321,13 +3429,18 @@ class Users(BaseSDK):
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
+            retry_config = (retries, ["5XX"])
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="UsersGetOrganizationInvitations",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -3337,15 +3450,15 @@ class Users(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(
                 http_res.text,
                 Optional[models.OrganizationInvitationsWithPublicOrganizationData],
             )
         if utils.match_response(http_res, ["400", "403", "404"], "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
+            response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=response_data)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
@@ -3398,6 +3511,8 @@ class Users(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = models.UsersGetOrganizationInvitationsRequest(
             user_id=user_id,
@@ -3425,13 +3540,18 @@ class Users(BaseSDK):
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
+            retry_config = (retries, ["5XX"])
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="UsersGetOrganizationInvitations",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -3441,15 +3561,15 @@ class Users(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(
                 http_res.text,
                 Optional[models.OrganizationInvitationsWithPublicOrganizationData],
             )
         if utils.match_response(http_res, ["400", "403", "404"], "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
+            response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=response_data)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
@@ -3499,6 +3619,8 @@ class Users(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = models.VerifyPasswordRequest(
             user_id=user_id,
@@ -3533,13 +3655,18 @@ class Users(BaseSDK):
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
+            retry_config = (retries, ["5XX"])
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="VerifyPassword",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -3549,19 +3676,19 @@ class Users(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(
                 http_res.text, Optional[models.VerifyPasswordResponseBody]
             )
+        if utils.match_response(http_res, "500", "application/json"):
+            response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=response_data)
         if utils.match_response(http_res, ["400", "404", "422", "4XX"], "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
             )
-        if utils.match_response(http_res, "500", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
@@ -3606,6 +3733,8 @@ class Users(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = models.VerifyPasswordRequest(
             user_id=user_id,
@@ -3640,13 +3769,18 @@ class Users(BaseSDK):
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
+            retry_config = (retries, ["5XX"])
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="VerifyPassword",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -3656,19 +3790,19 @@ class Users(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(
                 http_res.text, Optional[models.VerifyPasswordResponseBody]
             )
+        if utils.match_response(http_res, "500", "application/json"):
+            response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=response_data)
         if utils.match_response(http_res, ["400", "404", "422", "4XX"], "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
             )
-        if utils.match_response(http_res, "500", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
@@ -3715,6 +3849,8 @@ class Users(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = models.VerifyTOTPRequest(
             user_id=user_id,
@@ -3749,13 +3885,18 @@ class Users(BaseSDK):
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
+            retry_config = (retries, ["5XX"])
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="VerifyTOTP",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -3765,19 +3906,19 @@ class Users(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(
                 http_res.text, Optional[models.VerifyTOTPResponseBody]
             )
+        if utils.match_response(http_res, "500", "application/json"):
+            response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=response_data)
         if utils.match_response(http_res, ["400", "404", "422", "4XX"], "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
             )
-        if utils.match_response(http_res, "500", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
@@ -3824,6 +3965,8 @@ class Users(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = models.VerifyTOTPRequest(
             user_id=user_id,
@@ -3858,13 +4001,18 @@ class Users(BaseSDK):
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
+            retry_config = (retries, ["5XX"])
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="VerifyTOTP",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -3874,19 +4022,19 @@ class Users(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(
                 http_res.text, Optional[models.VerifyTOTPResponseBody]
             )
+        if utils.match_response(http_res, "500", "application/json"):
+            response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=response_data)
         if utils.match_response(http_res, ["400", "404", "422", "4XX"], "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
             )
-        if utils.match_response(http_res, "500", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
         if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
@@ -3928,6 +4076,8 @@ class Users(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = models.DisableMFARequest(
             user_id=user_id,
@@ -3952,13 +4102,18 @@ class Users(BaseSDK):
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
+            retry_config = (retries, ["5XX"])
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="DisableMFA",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -3968,17 +4123,17 @@ class Users(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(
                 http_res.text, Optional[models.DisableMFAResponseBody]
             )
         if utils.match_response(http_res, "404", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
+            response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=response_data)
         if utils.match_response(http_res, "500", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
+            response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=response_data)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
@@ -4025,6 +4180,8 @@ class Users(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = models.DisableMFARequest(
             user_id=user_id,
@@ -4049,13 +4206,18 @@ class Users(BaseSDK):
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
+            retry_config = (retries, ["5XX"])
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="DisableMFA",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -4065,17 +4227,17 @@ class Users(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(
                 http_res.text, Optional[models.DisableMFAResponseBody]
             )
         if utils.match_response(http_res, "404", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
+            response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=response_data)
         if utils.match_response(http_res, "500", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
+            response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=response_data)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
@@ -4122,6 +4284,8 @@ class Users(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = models.DeleteBackupCodeRequest(
             user_id=user_id,
@@ -4146,13 +4310,18 @@ class Users(BaseSDK):
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
+            retry_config = (retries, ["5XX"])
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="DeleteBackupCode",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -4162,17 +4331,17 @@ class Users(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(
                 http_res.text, Optional[models.DeleteBackupCodeResponseBody]
             )
         if utils.match_response(http_res, "404", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
+            response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=response_data)
         if utils.match_response(http_res, "500", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
+            response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=response_data)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
@@ -4219,6 +4388,8 @@ class Users(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = models.DeleteBackupCodeRequest(
             user_id=user_id,
@@ -4243,13 +4414,18 @@ class Users(BaseSDK):
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
+            retry_config = (retries, ["5XX"])
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="DeleteBackupCode",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -4259,17 +4435,17 @@ class Users(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(
                 http_res.text, Optional[models.DeleteBackupCodeResponseBody]
             )
         if utils.match_response(http_res, "404", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
+            response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=response_data)
         if utils.match_response(http_res, "500", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
+            response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=response_data)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
@@ -4318,6 +4494,8 @@ class Users(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = models.UserPasskeyDeleteRequest(
             user_id=user_id,
@@ -4343,13 +4521,18 @@ class Users(BaseSDK):
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
+            retry_config = (retries, ["5XX"])
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="UserPasskeyDelete",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -4359,15 +4542,15 @@ class Users(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[models.DeletedObject])
         if utils.match_response(http_res, ["403", "404"], "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
+            response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=response_data)
         if utils.match_response(http_res, "500", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
+            response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=response_data)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
@@ -4416,6 +4599,8 @@ class Users(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = models.UserPasskeyDeleteRequest(
             user_id=user_id,
@@ -4441,13 +4626,18 @@ class Users(BaseSDK):
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
+            retry_config = (retries, ["5XX"])
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="UserPasskeyDelete",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -4457,15 +4647,15 @@ class Users(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[models.DeletedObject])
         if utils.match_response(http_res, ["403", "404"], "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
+            response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=response_data)
         if utils.match_response(http_res, "500", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
+            response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=response_data)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
@@ -4514,6 +4704,8 @@ class Users(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = models.UserWeb3WalletDeleteRequest(
             user_id=user_id,
@@ -4539,13 +4731,18 @@ class Users(BaseSDK):
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
+            retry_config = (retries, ["5XX"])
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="UserWeb3WalletDelete",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -4555,15 +4752,15 @@ class Users(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[models.DeletedObject])
         if utils.match_response(http_res, ["400", "403", "404"], "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
+            response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=response_data)
         if utils.match_response(http_res, "500", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
+            response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=response_data)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
@@ -4612,6 +4809,8 @@ class Users(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = models.UserWeb3WalletDeleteRequest(
             user_id=user_id,
@@ -4637,13 +4836,18 @@ class Users(BaseSDK):
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
+            retry_config = (retries, ["5XX"])
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="UserWeb3WalletDelete",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -4653,207 +4857,15 @@ class Users(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[models.DeletedObject])
         if utils.match_response(http_res, ["400", "403", "404"], "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
+            response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=response_data)
         if utils.match_response(http_res, "500", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, "4XX", "*"):
-            http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
-        if utils.match_response(http_res, "5XX", "*"):
-            http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
-
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = await utils.stream_to_text_async(http_res)
-        raise models.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
-
-    def create_totp(
-        self,
-        *,
-        user_id: str,
-        retries: OptionalNullable[utils.RetryConfig] = UNSET,
-        server_url: Optional[str] = None,
-        timeout_ms: Optional[int] = None,
-        http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.Totp]:
-        r"""Create a TOTP for a user
-
-        Creates a TOTP (Time-based One-Time Password) for a given user, returning both the TOTP secret and the URI.
-
-
-        :param user_id: The ID of the user for whom the TOTP is being created.
-        :param retries: Override the default retry configuration for this method
-        :param server_url: Override the default server URL for this method
-        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
-        :param http_headers: Additional headers to set or replace on requests.
-        """
-        base_url = None
-        url_variables = None
-        if timeout_ms is None:
-            timeout_ms = self.sdk_configuration.timeout_ms
-
-        if server_url is not None:
-            base_url = server_url
-
-        request = models.CreateUserTOTPRequest(
-            user_id=user_id,
-        )
-
-        req = self._build_request(
-            method="POST",
-            path="/users/{user_id}/totp",
-            base_url=base_url,
-            url_variables=url_variables,
-            request=request,
-            request_body_required=False,
-            request_has_path_params=True,
-            request_has_query_params=True,
-            user_agent_header="user-agent",
-            accept_header_value="application/json",
-            http_headers=http_headers,
-            security=self.sdk_configuration.security,
-            timeout_ms=timeout_ms,
-        )
-
-        if retries == UNSET:
-            if self.sdk_configuration.retry_config is not UNSET:
-                retries = self.sdk_configuration.retry_config
-
-        retry_config = None
-        if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
-
-        http_res = self.do_request(
-            hook_ctx=HookContext(
-                operation_id="CreateUserTOTP",
-                oauth2_scopes=[],
-                security_source=self.sdk_configuration.security,
-            ),
-            request=req,
-            error_status_codes=["403", "404", "4XX", "500", "5XX"],
-            retry_config=retry_config,
-        )
-
-        data: Any = None
-        if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, Optional[models.Totp])
-        if utils.match_response(http_res, ["403", "404"], "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, "500", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, "4XX", "*"):
-            http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
-        if utils.match_response(http_res, "5XX", "*"):
-            http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
-
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = utils.stream_to_text(http_res)
-        raise models.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
-
-    async def create_totp_async(
-        self,
-        *,
-        user_id: str,
-        retries: OptionalNullable[utils.RetryConfig] = UNSET,
-        server_url: Optional[str] = None,
-        timeout_ms: Optional[int] = None,
-        http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.Totp]:
-        r"""Create a TOTP for a user
-
-        Creates a TOTP (Time-based One-Time Password) for a given user, returning both the TOTP secret and the URI.
-
-
-        :param user_id: The ID of the user for whom the TOTP is being created.
-        :param retries: Override the default retry configuration for this method
-        :param server_url: Override the default server URL for this method
-        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
-        :param http_headers: Additional headers to set or replace on requests.
-        """
-        base_url = None
-        url_variables = None
-        if timeout_ms is None:
-            timeout_ms = self.sdk_configuration.timeout_ms
-
-        if server_url is not None:
-            base_url = server_url
-
-        request = models.CreateUserTOTPRequest(
-            user_id=user_id,
-        )
-
-        req = self._build_request_async(
-            method="POST",
-            path="/users/{user_id}/totp",
-            base_url=base_url,
-            url_variables=url_variables,
-            request=request,
-            request_body_required=False,
-            request_has_path_params=True,
-            request_has_query_params=True,
-            user_agent_header="user-agent",
-            accept_header_value="application/json",
-            http_headers=http_headers,
-            security=self.sdk_configuration.security,
-            timeout_ms=timeout_ms,
-        )
-
-        if retries == UNSET:
-            if self.sdk_configuration.retry_config is not UNSET:
-                retries = self.sdk_configuration.retry_config
-
-        retry_config = None
-        if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
-
-        http_res = await self.do_request_async(
-            hook_ctx=HookContext(
-                operation_id="CreateUserTOTP",
-                oauth2_scopes=[],
-                security_source=self.sdk_configuration.security,
-            ),
-            request=req,
-            error_status_codes=["403", "404", "4XX", "500", "5XX"],
-            retry_config=retry_config,
-        )
-
-        data: Any = None
-        if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(http_res.text, Optional[models.Totp])
-        if utils.match_response(http_res, ["403", "404"], "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
-        if utils.match_response(http_res, "500", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
+            response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=response_data)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
@@ -4900,6 +4912,8 @@ class Users(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = models.DeleteTOTPRequest(
             user_id=user_id,
@@ -4924,13 +4938,18 @@ class Users(BaseSDK):
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
+            retry_config = (retries, ["5XX"])
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="DeleteTOTP",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -4940,17 +4959,17 @@ class Users(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(
                 http_res.text, Optional[models.DeleteTOTPResponseBody]
             )
         if utils.match_response(http_res, "404", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
+            response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=response_data)
         if utils.match_response(http_res, "500", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
+            response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=response_data)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
@@ -4997,6 +5016,8 @@ class Users(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = models.DeleteTOTPRequest(
             user_id=user_id,
@@ -5021,13 +5042,18 @@ class Users(BaseSDK):
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
+            retry_config = (retries, ["5XX"])
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="DeleteTOTP",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -5037,17 +5063,17 @@ class Users(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(
                 http_res.text, Optional[models.DeleteTOTPResponseBody]
             )
         if utils.match_response(http_res, "404", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
+            response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=response_data)
         if utils.match_response(http_res, "500", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
+            response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=response_data)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
@@ -5096,6 +5122,8 @@ class Users(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = models.DeleteExternalAccountRequest(
             user_id=user_id,
@@ -5121,13 +5149,18 @@ class Users(BaseSDK):
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
+            retry_config = (retries, ["5XX"])
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="DeleteExternalAccount",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -5137,15 +5170,15 @@ class Users(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[models.DeletedObject])
         if utils.match_response(http_res, ["400", "403", "404"], "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
+            response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=response_data)
         if utils.match_response(http_res, "500", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
+            response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=response_data)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
@@ -5194,6 +5227,8 @@ class Users(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
 
         request = models.DeleteExternalAccountRequest(
             user_id=user_id,
@@ -5219,13 +5254,18 @@ class Users(BaseSDK):
         if retries == UNSET:
             if self.sdk_configuration.retry_config is not UNSET:
                 retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
 
         retry_config = None
         if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
+            retry_config = (retries, ["5XX"])
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="DeleteExternalAccount",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -5235,15 +5275,15 @@ class Users(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[models.DeletedObject])
         if utils.match_response(http_res, ["400", "403", "404"], "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
+            response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=response_data)
         if utils.match_response(http_res, "500", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=data)
+            response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=response_data)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
