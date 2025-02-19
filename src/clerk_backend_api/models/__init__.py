@@ -137,7 +137,6 @@ from .createsignintokenop import (
     CreateSignInTokenRequestBodyTypedDict,
 )
 from .createuserop import CreateUserRequestBody, CreateUserRequestBodyTypedDict
-from .createusertotpop import CreateUserTOTPRequest, CreateUserTOTPRequestTypedDict
 from .createwaitlistentryop import (
     CreateWaitlistEntryRequestBody,
     CreateWaitlistEntryRequestBodyTypedDict,
@@ -593,7 +592,6 @@ from .toggletemplatedeliveryop import (
     ToggleTemplateDeliveryRequestTypedDict,
 )
 from .totalcount import TotalCount, TotalCountObject, TotalCountTypedDict
-from .totp import Totp, TotpTypedDict
 from .unbanuserop import UnbanUserRequest, UnbanUserRequestTypedDict
 from .unlockuserop import UnlockUserRequest, UnlockUserRequestTypedDict
 from .updatedomainop import (
@@ -905,8 +903,6 @@ __all__ = [
     "CreateSignInTokenRequestBodyTypedDict",
     "CreateUserRequestBody",
     "CreateUserRequestBodyTypedDict",
-    "CreateUserTOTPRequest",
-    "CreateUserTOTPRequestTypedDict",
     "CreateWaitlistEntryRequestBody",
     "CreateWaitlistEntryRequestBodyTypedDict",
     "DeleteAllowlistIdentifierRequest",
@@ -1248,8 +1244,6 @@ __all__ = [
     "TotalCount",
     "TotalCountObject",
     "TotalCountTypedDict",
-    "Totp",
-    "TotpTypedDict",
     "UnbanUserRequest",
     "UnbanUserRequestTypedDict",
     "UnlockUserRequest",

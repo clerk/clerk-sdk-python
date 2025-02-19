@@ -25,7 +25,6 @@ with Clerk(
 
     res = clerk.sign_in_tokens.create(request={
         "user_id": "user_12345",
-        "expires_in_seconds": 2592000,
     })
 
     assert res is not None

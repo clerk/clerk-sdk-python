@@ -26,7 +26,7 @@ with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 ) as clerk:
 
-    res = clerk.saml_connections.list(limit=20, offset=10, organization_id=[
+    res = clerk.saml_connections.list(organization_id=[
         "<id>",
         "<id>",
         "<id>",

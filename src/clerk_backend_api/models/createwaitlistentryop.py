@@ -10,7 +10,7 @@ class CreateWaitlistEntryRequestBodyTypedDict(TypedDict):
     email_address: str
     r"""The email address to add to the waitlist"""
     notify: NotRequired[bool]
-    r"""Optional flag which denotes whether an email invitation should be sent to the given email address.
+    r"""Optional flag which denotes whether a confirmation email should be sent to the given email address.
     Defaults to `true`.
     """
 
@@ -20,6 +20,6 @@ class CreateWaitlistEntryRequestBody(BaseModel):
     r"""The email address to add to the waitlist"""
 
     notify: Optional[bool] = None
-    r"""Optional flag which denotes whether an email invitation should be sent to the given email address.
+    r"""Optional flag which denotes whether a confirmation email should be sent to the given email address.
     Defaults to `true`.
     """

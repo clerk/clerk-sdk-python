@@ -64,7 +64,6 @@ with Clerk(
 
     res = clerk.allowlist_blocklist.create_allowlist_identifier(request={
         "identifier": "user@example.com",
-        "notify": True,
     })
 
     assert res is not None

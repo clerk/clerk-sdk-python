@@ -34,8 +34,9 @@ class TicketVerificationStrategy(str, Enum):
 class TicketTypedDict(TypedDict):
     status: TicketVerificationStatus
     strategy: TicketVerificationStrategy
-    attempts: NotRequired[Nullable[int]]
-    expire_at: NotRequired[Nullable[int]]
+    attempts: Nullable[int]
+    expire_at: Nullable[int]
+    verified_at_client: NotRequired[Nullable[str]]
 
 
 class Ticket(BaseModel):
@@ -43,14 +44,16 @@ class Ticket(BaseModel):
 
     strategy: TicketVerificationStrategy
 
-    attempts: OptionalNullable[int] = UNSET
+    attempts: Nullable[int]
 
-    expire_at: OptionalNullable[int] = UNSET
+    expire_at: Nullable[int]
+
+    verified_at_client: OptionalNullable[str] = UNSET
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["attempts", "expire_at"]
-        nullable_fields = ["attempts", "expire_at"]
+        optional_fields = ["verified_at_client"]
+        nullable_fields = ["attempts", "expire_at", "verified_at_client"]
         null_default_fields = []
 
         serialized = handler(self)
@@ -129,8 +132,9 @@ class SamlTypedDict(TypedDict):
     strategy: SAMLVerificationStrategy
     external_verification_redirect_url: Nullable[str]
     expire_at: int
+    attempts: Nullable[int]
     error: NotRequired[Nullable[VerificationErrorTypedDict]]
-    attempts: NotRequired[Nullable[int]]
+    verified_at_client: NotRequired[Nullable[str]]
 
 
 class Saml(BaseModel):
@@ -142,14 +146,21 @@ class Saml(BaseModel):
 
     expire_at: int
 
+    attempts: Nullable[int]
+
     error: OptionalNullable[VerificationError] = UNSET
 
-    attempts: OptionalNullable[int] = UNSET
+    verified_at_client: OptionalNullable[str] = UNSET
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["error", "attempts"]
-        nullable_fields = ["external_verification_redirect_url", "error", "attempts"]
+        optional_fields = ["error", "verified_at_client"]
+        nullable_fields = [
+            "external_verification_redirect_url",
+            "attempts",
+            "error",
+            "verified_at_client",
+        ]
         null_default_fields = []
 
         serialized = handler(self)

@@ -23,7 +23,6 @@ with Clerk(
 ) as clerk:
 
     res = clerk.beta_features.update_instance_settings(request={
-        "restricted_to_allowlist": False,
         "from_email_address": "noreply",
         "progressive_sign_up": True,
         "session_token_template": "defaultSessionToken",

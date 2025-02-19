@@ -264,7 +264,9 @@ class Clerk(BaseSDK):
             await self.sdk_configuration.async_client.aclose()
 
     # region sdk-class-body
-    def authenticate_request(self, request: httpx.Request, options: AuthenticateRequestOptions) -> RequestState:
+    def authenticate_request(
+        self, request: httpx.Request, options: AuthenticateRequestOptions
+    ) -> RequestState:
         """
         Authenticates the session token. Networkless if the options.jwt_key is provided.
         Otherwise, performs a network call to retrieve the JWKS from Clerk's Backend API.
@@ -283,4 +285,5 @@ class Clerk(BaseSDK):
                     options.secret_key = security.bearer_auth
 
         return authenticate_request(request, options)
+
     # endregion sdk-class-body
