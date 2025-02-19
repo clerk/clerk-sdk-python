@@ -174,3 +174,15 @@ actions:
   - target: $["components"]["schemas"]["Ticket"]["properties"]["strategy"]["enum"]
     update:
       - saml
+  - target: $
+    update:
+      x-speakeasy-retries:
+        strategy: backoff
+        backoff:
+          initialInterval: 500 # 500 milliseconds
+          maxInterval: 60000 # 60 seconds
+          maxElapsedTime: 3600000 # 5 minutes
+          exponent: 1.5
+        statusCodes:
+          - 5XX
+        retryConnectionErrors: true
