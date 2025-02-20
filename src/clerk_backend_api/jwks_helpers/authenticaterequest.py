@@ -73,8 +73,6 @@ def authenticate_request(request: httpx.Request, options: AuthenticateRequestOpt
     Otherwise, performs a network call to retrieve the JWKS from Clerk's Backend API.
     """
 
-    warn('authenticate_request method is applicable in the context of Backend APIs only.')
-
     def get_session_token(request: httpx.Request) -> Optional[str]:
         """Retrieve token from __session cookie or Authorization header."""
 
