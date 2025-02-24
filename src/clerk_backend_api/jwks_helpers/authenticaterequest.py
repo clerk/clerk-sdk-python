@@ -1,11 +1,15 @@
-import httpx
 from dataclasses import dataclass
 from enum import Enum
 from http.cookies import SimpleCookie
-from typing import Any, Dict, List, Union, Optional
+from typing import Any, Dict, List, Union, Optional, Protocol
 from warnings import warn
 
 from .verifytoken import TokenVerificationErrorReason, TokenVerificationError, VerifyTokenOptions, verify_token
+
+
+class Requestish(Protocol):
+    def headers(self) -> Dict[str, str]: ...
+
 
 
 class AuthErrorReason(Enum):
@@ -68,14 +72,14 @@ class AuthenticateRequestOptions:
     authorized_parties: Optional[List[str]] = None
     clock_skew_in_ms: int = 5000
 
-def authenticate_request(request: httpx.Request, options: AuthenticateRequestOptions) -> RequestState:
+def authenticate_request(request: Requestish, options: AuthenticateRequestOptions) -> RequestState:
     """ Authenticates the session token. Networkless if the options.jwt_key is provided.
     Otherwise, performs a network call to retrieve the JWKS from Clerk's Backend API.
     """
 
     warn('authenticate_request method is applicable in the context of Backend APIs only.')
 
-    def get_session_token(request: httpx.Request) -> Optional[str]:
+    def get_session_token(request: Requestish) -> Optional[str]:
         """Retrieve token from __session cookie or Authorization header."""
 
         bearer_token = request.headers.get('Authorization')
