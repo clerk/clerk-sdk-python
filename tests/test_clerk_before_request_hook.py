@@ -52,14 +52,14 @@ def test_before_request_preserves_existing_headers(hook, before_request_context)
     request = httpx.Request(
         "GET", 
         "https://api.clerk.dev/v1/users",
-        headers={"Authorization": "Bearer sdk_test_123", "Content-Type": "application/json"}
+        headers={"Authorization": "Bearer sdk_test_foo", "Content-Type": "application/json"}
     )
     
     # Call the before_request method
     modified_request = hook.before_request(before_request_context, request)
     
     # Assert that existing headers are preserved
-    assert modified_request.headers["Authorization"] == "Bearer sdk_test_123"
+    assert modified_request.headers["Authorization"] == "Bearer sdk_test_foo"
     assert modified_request.headers["Content-Type"] == "application/json"
     
     # Assert that the Clerk-API-Version header is added
