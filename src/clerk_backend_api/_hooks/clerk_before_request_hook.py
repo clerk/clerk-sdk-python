@@ -2,16 +2,12 @@ from typing import Union
 
 import httpx
 
-from ..types import (
-    AfterErrorHook,
-    AfterSuccessHook,
+from .types import (
     BeforeRequestContext,
     BeforeRequestHook,
-    SDKInitHook,
 )
 
-
-class ClerkBeforeRequestHook(SDKInitHook, BeforeRequestHook, AfterSuccessHook, AfterErrorHook):
+class ClerkBeforeRequestHook(BeforeRequestHook):
     def before_request(
         self, hook_ctx: BeforeRequestContext, request: httpx.Request
     ) -> Union[httpx.Request, Exception]:
