@@ -79,6 +79,9 @@ class LiveTelemetryCollector(TelemetryCollector):
         self.logger = logging.getLogger(__name__)
         self.samplers = samplers
         self.endpoint = endpoint
+        # Python 3.11 allows for arbitrary thread factories so that
+        # we can use daemon threads. Until then, the threads will only
+        # terminate after the httpx client fires a timeout / response.
         self.executor = concurrent.futures.ThreadPoolExecutor(
             max_workers=1, thread_name_prefix="telemetry_worker"
         )
@@ -93,7 +96,7 @@ class LiveTelemetryCollector(TelemetryCollector):
     def _send_events(self, events: List[Dict[str, Any]]):
         try:
             with httpx.Client() as client:
-                response = client.post(self.endpoint, json=events)
+                response = client.post(self.endpoint, json=events, timeout=1)
                 response.raise_for_status()
         except Exception as e:
             self.logger.warning(f"Failed to send telemetry events: {e}")
