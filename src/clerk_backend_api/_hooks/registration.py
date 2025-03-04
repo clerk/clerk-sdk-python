@@ -1,4 +1,8 @@
+import os
+
 from .clerk_before_request_hook import ClerkBeforeRequestHook
+from .telemetry_hooks import TelemetryBeforeRequestHook, TelemetryAfterSuccessHook, TelemetryAfterErrorHook
+from .telemetry.collector import LiveTelemetryCollector, DebugTelemetryCollector
 from .types import Hooks
 
 
@@ -13,3 +17,16 @@ def init_hooks(hooks: Hooks):
     with an instance of a hook that implements that specific Hook interface
     Hooks are registered per SDK instance, and are valid for the lifetime of the SDK instance"""
     hooks.register_before_request_hook(ClerkBeforeRequestHook())
+    configure_telemetry(hooks)
+
+def configure_telemetry(hooks: Hooks):
+    if os.environ.get('CLERK_TELEMETRY_DISABLED') == '1':
+        return
+
+    collectors = [LiveTelemetryCollector()]
+    if os.environ.get('CLERK_TELEMETRY_DEBUG') == '1':
+        collectors.append(DebugTelemetryCollector())
+
+    hooks.register_before_request_hook(TelemetryBeforeRequestHook(collectors))
+    hooks.register_after_success_hook(TelemetryAfterSuccessHook(collectors))
+    hooks.register_after_error_hook(TelemetryAfterErrorHook(collectors))
