@@ -20,6 +20,9 @@ def init_hooks(hooks: Hooks):
     configure_telemetry(hooks)
 
 def configure_telemetry(hooks: Hooks):
+    # one of two filters for telemetry
+    # the other is when we can detect that it's a development environment
+    # which we can only see when we see the secret key starting with sk_test
     if os.environ.get('CLERK_TELEMETRY_DISABLED') == '1':
         return
 
