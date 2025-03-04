@@ -6,6 +6,10 @@ EVENT_METHOD_FAILED = "METHOD_FAILED"
 
 
 class TelemetryEvent:
+    """
+    The minimum amount of information needed to log a telemetry event.
+    Collectors will inject the SDK name and SDK version fields.
+    """
     def __init__(
         self,
         sk: str,

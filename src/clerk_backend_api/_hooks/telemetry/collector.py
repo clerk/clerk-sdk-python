@@ -2,9 +2,7 @@ import concurrent.futures
 import importlib.metadata
 import json
 import logging
-import queue
 import sys
-import threading
 from abc import ABC, abstractmethod
 from typing import List, Dict, Any
 from typing import Union
@@ -16,9 +14,15 @@ from .samplers import TelemetrySampler
 
 
 class TelemetryCollector(ABC):
+    # It would be better to pick this off the name of the package
+    # but that ends up being a bit brittle if we need to walk up
+    # the package hierarchy. A fixed name here also makes it easier
+    # for us to keep a consistent telemetry target.
     CLERK_SDK = "clerk-backend-api"
 
     def __init__(self):
+        # Python doesn't have an obvious convention like @clerk/nodejs
+        # that identifies the name, so we choose 'python' prefix
         self.sdk = f"python/{TelemetryCollector.CLERK_SDK}"
         self.sdkv = TelemetryCollector._get_sdk_version()
 
@@ -49,17 +53,21 @@ class TelemetryCollector(ABC):
 
 
 class DebugTelemetryCollector(TelemetryCollector):
-    # we intentionally do not use `logging` here to avoid
-    # interfering with the application's logging configuration
+    """
+    Logs telemetry events to stderr for debugging purposes.
+    Intentionally does not sample events.
+    """
     def _collect(self, event: TelemetryEvent):
+        # we intentionally do not use `logging` here to avoid
+        # interfering with the application's logging configuration
         print(json.dumps(self._prepare_event(event), default=str), file=sys.stderr)
 
 
 class LiveTelemetryCollector(TelemetryCollector):
     """
     Sends telemetry events to the Clerk Telemetry service immediately.
-    This SDK is intended for server use so process lifecycle is not guaranteed.
-    Hence, we do not buffer telemetry events for later
+    This SDK is intended for server use where process lifecycle is not guaranteed.
+    Hence, we do not buffer telemetry events for later.
     """
 
     def __init__(

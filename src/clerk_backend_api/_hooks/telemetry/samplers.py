@@ -34,10 +34,7 @@ class DeduplicatingSampler(TelemetrySampler):
         key = self._generate_key(prepared_event)
         last_sampled = self._seen.get(key, None)
 
-        if last_sampled is None:
-            self._seen[key] = now
-            return True
-        elif now - last_sampled > self.window:
+        if last_sampled is None or now - last_sampled > self.window:
             self._seen[key] = now
             return True
         else:
@@ -45,11 +42,14 @@ class DeduplicatingSampler(TelemetrySampler):
 
     @staticmethod
     def _generate_key(prepared_event):
+        """Remove sensitive information and spread the payload into the top level so it can be hashed."""
         sanitized_event = prepared_event.copy()
         sanitized_event.pop("sk", None)
         sanitized_event.pop("pk", None)
         payload = sanitized_event.pop("payload", None)
         sanitized_event = {**sanitized_event, **payload} if payload else sanitized_event
+        # in theory, sort_keys isn't required since dicts are ordered in Python 3.7+
+        # and we're consistent about insertion order, but it doesn't hurt to be explicit
         return json.dumps(sanitized_event, sort_keys=True)
 
 
