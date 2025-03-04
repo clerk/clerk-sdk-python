@@ -62,13 +62,15 @@ class LiveTelemetryCollector(TelemetryCollector):
     Hence, we do not buffer telemetry events for later
     """
 
-    def __init__(self, samplers: List[TelemetrySampler]):
+    def __init__(
+        self,
+        samplers: List[TelemetrySampler],
+        endpoint: str = 'http://localhost:3000/'
+    ):
         super().__init__()
         self.logger = logging.getLogger(__name__)
         self.samplers = samplers
-        self.endpoint = "https://staging.clerk-telemetry.com"
-        # override temporarily so that I can test locally
-        self.endpoint = "http://localhost:3000/"
+        self.endpoint = endpoint
         self.executor = concurrent.futures.ThreadPoolExecutor(
             max_workers=1, thread_name_prefix="telemetry_worker"
         )
