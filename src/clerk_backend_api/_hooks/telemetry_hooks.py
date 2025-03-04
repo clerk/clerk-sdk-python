@@ -25,13 +25,15 @@ class ClerkTelemetryHook:
         self,
         hook_ctx: HookContext,
         event: str,
-        additional_payload: Optional[dict[str, Any]] = None
+        additional_payload: Optional[dict[str, Any]] = None,
+        sampling_rate: Optional[float] = 1.0
     ) -> TelemetryEvent:
         additional_payload = {} if additional_payload is None else additional_payload
         return TelemetryEvent(
             self._get_sk(hook_ctx),
             event,
-            {'method': hook_ctx.operation_id, **additional_payload}
+            {'method': hook_ctx.operation_id, **additional_payload},
+            sampling_rate=sampling_rate
         )
 
 
@@ -44,7 +46,8 @@ class TelemetryBeforeRequestHook(ClerkTelemetryHook, BeforeRequestHook):
         for collector in self.collectors:
             collector.collect(self._construct_event(
                 hook_ctx,
-                EVENT_METHOD_CALLED
+                EVENT_METHOD_CALLED,
+                sampling_rate=0.1
             ))
         return request
 
@@ -59,7 +62,8 @@ class TelemetryAfterSuccessHook(ClerkTelemetryHook, AfterSuccessHook):
             collector.collect(self._construct_event(
                 hook_ctx,
                 EVENT_METHOD_SUCCEEDED,
-                {'status_code': response.status_code}
+                {'status_code': response.status_code},
+                sampling_rate=0.1
             ))
         return response
 
@@ -83,7 +87,8 @@ class TelemetryAfterErrorHook(ClerkTelemetryHook, AfterErrorHook):
             collector.collect(self._construct_event(
                 hook_ctx,
                 EVENT_METHOD_FAILED,
-                additional_payload
+                additional_payload,
+                sampling_rate=0.1
             ))
         return response, error
 

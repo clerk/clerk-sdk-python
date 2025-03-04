@@ -3,6 +3,7 @@ import os
 from .clerk_before_request_hook import ClerkBeforeRequestHook
 from .telemetry_hooks import TelemetryBeforeRequestHook, TelemetryAfterSuccessHook, TelemetryAfterErrorHook
 from .telemetry.collector import LiveTelemetryCollector, DebugTelemetryCollector
+from .telemetry.samplers import RandomSampler, DeduplicatingSampler
 from .types import Hooks
 
 
@@ -26,7 +27,7 @@ def configure_telemetry(hooks: Hooks):
     if os.environ.get('CLERK_TELEMETRY_DISABLED') == '1':
         return
 
-    collectors = [LiveTelemetryCollector()]
+    collectors = [LiveTelemetryCollector([DeduplicatingSampler()])]
     if os.environ.get('CLERK_TELEMETRY_DEBUG') == '1':
         collectors.append(DebugTelemetryCollector())
 
