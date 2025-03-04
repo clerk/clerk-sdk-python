@@ -16,14 +16,14 @@ from .samplers import TelemetrySampler
 
 
 class TelemetryCollector(ABC):
-    CLERK_SDK = 'clerk-backend-api'
+    CLERK_SDK = "clerk-backend-api"
 
     def __init__(self):
-        self.sdk = f'python/{TelemetryCollector.CLERK_SDK}'
+        self.sdk = f"python/{TelemetryCollector.CLERK_SDK}"
         self.sdkv = TelemetryCollector._get_sdk_version()
 
     def collect(self, event: TelemetryEvent):
-        if event.it == 'development':
+        if event.it == "development":
             self._collect(event)
 
     @abstractmethod
@@ -35,16 +35,16 @@ class TelemetryCollector(ABC):
         try:
             return importlib.metadata.version(TelemetryCollector.CLERK_SDK)
         except (importlib.metadata.PackageNotFoundError, ImportError):
-            return 'unknown'
+            return "unknown"
 
     def _prepare_event(self, event) -> dict[str, Union[str, dict[str, str]]]:
         return {
-            'event': event.event,
-            'it': event.it,
-            'sdk': self.sdk,
-            'sdkv': self.sdkv,
-            'sk': event.sk,
-            'payload': event.payload
+            "event": event.event,
+            "it": event.it,
+            "sdk": self.sdk,
+            "sdkv": self.sdkv,
+            "sk": event.sk,
+            "payload": event.payload,
         }
 
 
@@ -66,11 +66,11 @@ class LiveTelemetryCollector(TelemetryCollector):
         super().__init__()
         self.logger = logging.getLogger(__name__)
         self.samplers = samplers
-        self.endpoint = 'https://staging.clerk-telemetry.com'
-        self.endpoint = 'http://localhost:3000/' # override temporarily so that I can test locally
+        self.endpoint = "https://staging.clerk-telemetry.com"
+        # override temporarily so that I can test locally
+        self.endpoint = "http://localhost:3000/"
         self.executor = concurrent.futures.ThreadPoolExecutor(
-            max_workers=1,
-            thread_name_prefix='telemetry_worker'
+            max_workers=1, thread_name_prefix="telemetry_worker"
         )
 
     def _collect(self, event: TelemetryEvent):
@@ -86,4 +86,4 @@ class LiveTelemetryCollector(TelemetryCollector):
                 response = client.post(self.endpoint, json=events)
                 response.raise_for_status()
         except Exception as e:
-            self.logger.warning(f'Failed to send telemetry events: {e}')
+            self.logger.warning(f"Failed to send telemetry events: {e}")
