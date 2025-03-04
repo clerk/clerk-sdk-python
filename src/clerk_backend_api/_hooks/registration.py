@@ -27,7 +27,7 @@ def configure_telemetry(hooks: Hooks):
     if os.environ.get('CLERK_TELEMETRY_DISABLED') == '1':
         return
 
-    collectors = [LiveTelemetryCollector([DeduplicatingSampler()])]
+    collectors = [LiveTelemetryCollector([RandomSampler(), DeduplicatingSampler()])]
     if os.environ.get('CLERK_TELEMETRY_DEBUG') == '1':
         collectors.append(DebugTelemetryCollector())
 

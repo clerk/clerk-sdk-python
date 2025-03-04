@@ -64,4 +64,7 @@ class RandomSampler(TelemetrySampler):
         if event.sampling_rate is None:
             return True
         else:
-            return self.random.random() < event.sampling_rate
+            test = self.random.uniform(0, 1)
+            res = test < event.sampling_rate
+            print(f'RandomSampler.should_sample: {res} = {test} < {event.sampling_rate}')
+            return res
