@@ -9,8 +9,13 @@ from typing_extensions import NotRequired, TypedDict
 class UpdateProductionInstanceDomainRequestBodyTypedDict(TypedDict):
     home_url: NotRequired[str]
     r"""The new home URL of the production instance e.g. https://www.example.com"""
+    is_secondary: NotRequired[bool]
+    r"""Whether the domain is a secondary app."""
 
 
 class UpdateProductionInstanceDomainRequestBody(BaseModel):
     home_url: Optional[str] = None
     r"""The new home URL of the production instance e.g. https://www.example.com"""
+
+    is_secondary: Optional[bool] = None
+    r"""Whether the domain is a secondary app."""

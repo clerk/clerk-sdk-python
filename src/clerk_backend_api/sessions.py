@@ -9,18 +9,13 @@ from typing_extensions import deprecated
 
 
 class Sessions(BaseSDK):
-    r"""The Session object is an abstraction over an HTTP session.
-    It models the period of information exchange between a user and the server.
-    Sessions are created when a user successfully goes through the sign in or sign up flows.
-    https://clerk.com/docs/reference/clerkjs/session
-    """
-
     def list(
         self,
         *,
         client_id: Optional[str] = None,
         user_id: Optional[str] = None,
         status: Optional[models.QueryParamStatus] = None,
+        paginated: Optional[bool] = None,
         limit: Optional[int] = 10,
         offset: Optional[int] = 0,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -38,6 +33,7 @@ class Sessions(BaseSDK):
         :param client_id: List sessions for the given client
         :param user_id: List sessions for the given user
         :param status: Filter sessions by the provided status
+        :param paginated: Whether to paginate the results. If true, the results will be paginated. If false, the results will not be paginated.
         :param limit: Applies a limit to the number of results returned. Can be used for paginating the results together with `offset`.
         :param offset: Skip the first `offset` results when paginating. Needs to be an integer greater or equal to zero. To be used in conjunction with `limit`.
         :param retries: Override the default retry configuration for this method
@@ -59,6 +55,7 @@ class Sessions(BaseSDK):
             client_id=client_id,
             user_id=user_id,
             status=status,
+            paginated=paginated,
             limit=limit,
             offset=offset,
         )
@@ -135,6 +132,7 @@ class Sessions(BaseSDK):
         client_id: Optional[str] = None,
         user_id: Optional[str] = None,
         status: Optional[models.QueryParamStatus] = None,
+        paginated: Optional[bool] = None,
         limit: Optional[int] = 10,
         offset: Optional[int] = 0,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -152,6 +150,7 @@ class Sessions(BaseSDK):
         :param client_id: List sessions for the given client
         :param user_id: List sessions for the given user
         :param status: Filter sessions by the provided status
+        :param paginated: Whether to paginate the results. If true, the results will be paginated. If false, the results will not be paginated.
         :param limit: Applies a limit to the number of results returned. Can be used for paginating the results together with `offset`.
         :param offset: Skip the first `offset` results when paginating. Needs to be an integer greater or equal to zero. To be used in conjunction with `limit`.
         :param retries: Override the default retry configuration for this method
@@ -173,6 +172,7 @@ class Sessions(BaseSDK):
             client_id=client_id,
             user_id=user_id,
             status=status,
+            paginated=paginated,
             limit=limit,
             offset=offset,
         )
@@ -243,7 +243,7 @@ class Sessions(BaseSDK):
             http_res,
         )
 
-    def create_session(
+    def create(
         self,
         *,
         request: Optional[
@@ -357,7 +357,7 @@ class Sessions(BaseSDK):
             http_res,
         )
 
-    async def create_session_async(
+    async def create_async(
         self,
         *,
         request: Optional[
@@ -1107,7 +1107,7 @@ class Sessions(BaseSDK):
             http_res,
         )
 
-    def create_session_token(
+    def create_token(
         self,
         *,
         session_id: str,
@@ -1220,7 +1220,7 @@ class Sessions(BaseSDK):
             http_res,
         )
 
-    async def create_session_token_async(
+    async def create_token_async(
         self,
         *,
         session_id: str,

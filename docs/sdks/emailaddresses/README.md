@@ -19,6 +19,7 @@ Create a new email address
 ```python
 from clerk_backend_api import Clerk
 
+
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 ) as clerk:
@@ -64,6 +65,7 @@ Returns the details of an email address.
 ```python
 from clerk_backend_api import Clerk
 
+
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 ) as clerk:
@@ -104,6 +106,7 @@ Delete the email address with the given ID
 ```python
 from clerk_backend_api import Clerk
 
+
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 ) as clerk:
@@ -143,6 +146,7 @@ Updates an email address.
 
 ```python
 from clerk_backend_api import Clerk
+
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",

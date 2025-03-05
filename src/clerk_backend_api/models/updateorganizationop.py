@@ -9,20 +9,20 @@ from clerk_backend_api.types import (
     UNSET_SENTINEL,
 )
 from clerk_backend_api.utils import FieldMetadata, PathParamMetadata, RequestMetadata
-import pydantic
-from pydantic import ConfigDict, model_serializer
-from typing import Any, Dict, Optional
+from pydantic import model_serializer
+from typing import Any, Dict
 from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class UpdateOrganizationRequestBodyTypedDict(TypedDict):
-    public_metadata: NotRequired[Dict[str, Any]]
+    public_metadata: NotRequired[Nullable[Dict[str, Any]]]
     r"""Metadata saved on the organization, that is visible to both your frontend and backend."""
-    private_metadata: NotRequired[Dict[str, Any]]
+    private_metadata: NotRequired[Nullable[Dict[str, Any]]]
     r"""Metadata saved on the organization that is only visible to your backend."""
     name: NotRequired[Nullable[str]]
     r"""The new name of the organization.
     May not contain URLs or HTML.
+    Max length: 256
     """
     slug: NotRequired[Nullable[str]]
     r"""The new slug of the organization, which needs to be unique in the instance"""
@@ -30,25 +30,21 @@ class UpdateOrganizationRequestBodyTypedDict(TypedDict):
     r"""The maximum number of memberships allowed for this organization"""
     admin_delete_enabled: NotRequired[Nullable[bool]]
     r"""If true, an admin can delete this organization with the Frontend API."""
-    created_at: NotRequired[str]
+    created_at: NotRequired[Nullable[str]]
     r"""A custom date/time denoting _when_ the organization was created, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`)."""
 
 
 class UpdateOrganizationRequestBody(BaseModel):
-    model_config = ConfigDict(
-        populate_by_name=True, arbitrary_types_allowed=True, extra="allow"
-    )
-    __pydantic_extra__: Dict[str, Any] = pydantic.Field(init=False)
-
-    public_metadata: Optional[Dict[str, Any]] = None
+    public_metadata: OptionalNullable[Dict[str, Any]] = UNSET
     r"""Metadata saved on the organization, that is visible to both your frontend and backend."""
 
-    private_metadata: Optional[Dict[str, Any]] = None
+    private_metadata: OptionalNullable[Dict[str, Any]] = UNSET
     r"""Metadata saved on the organization that is only visible to your backend."""
 
     name: OptionalNullable[str] = UNSET
     r"""The new name of the organization.
     May not contain URLs or HTML.
+    Max length: 256
     """
 
     slug: OptionalNullable[str] = UNSET
@@ -60,16 +56,8 @@ class UpdateOrganizationRequestBody(BaseModel):
     admin_delete_enabled: OptionalNullable[bool] = UNSET
     r"""If true, an admin can delete this organization with the Frontend API."""
 
-    created_at: Optional[str] = None
+    created_at: OptionalNullable[str] = UNSET
     r"""A custom date/time denoting _when_ the organization was created, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`)."""
-
-    @property
-    def additional_properties(self):
-        return self.__pydantic_extra__
-
-    @additional_properties.setter
-    def additional_properties(self, value):
-        self.__pydantic_extra__ = value  # pyright: ignore[reportIncompatibleVariableOverride]
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
@@ -83,10 +71,13 @@ class UpdateOrganizationRequestBody(BaseModel):
             "created_at",
         ]
         nullable_fields = [
+            "public_metadata",
+            "private_metadata",
             "name",
             "slug",
             "max_allowed_memberships",
             "admin_delete_enabled",
+            "created_at",
         ]
         null_default_fields = []
 
@@ -111,9 +102,6 @@ class UpdateOrganizationRequestBody(BaseModel):
                 not k in optional_fields or (optional_nullable and is_set)
             ):
                 m[k] = val
-
-        for k, v in serialized.items():
-            m[k] = v
 
         return m
 

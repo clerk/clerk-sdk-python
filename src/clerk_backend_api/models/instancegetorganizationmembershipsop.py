@@ -8,6 +8,11 @@ from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class InstanceGetOrganizationMembershipsRequestTypedDict(TypedDict):
+    order_by: NotRequired[str]
+    r"""Sorts organizations memberships by phone_number, email_address, created_at, first_name, last_name or username.
+    By prepending one of those values with + or -,
+    we can choose to sort in ascending (ASC) or descending (DESC) order.
+    """
     limit: NotRequired[int]
     r"""Applies a limit to the number of results returned.
     Can be used for paginating the results together with `offset`.
@@ -17,14 +22,18 @@ class InstanceGetOrganizationMembershipsRequestTypedDict(TypedDict):
     Needs to be an integer greater or equal to zero.
     To be used in conjunction with `limit`.
     """
-    order_by: NotRequired[str]
+
+
+class InstanceGetOrganizationMembershipsRequest(BaseModel):
+    order_by: Annotated[
+        Optional[str],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
     r"""Sorts organizations memberships by phone_number, email_address, created_at, first_name, last_name or username.
     By prepending one of those values with + or -,
     we can choose to sort in ascending (ASC) or descending (DESC) order.
     """
 
-
-class InstanceGetOrganizationMembershipsRequest(BaseModel):
     limit: Annotated[
         Optional[int],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
@@ -40,13 +49,4 @@ class InstanceGetOrganizationMembershipsRequest(BaseModel):
     r"""Skip the first `offset` results when paginating.
     Needs to be an integer greater or equal to zero.
     To be used in conjunction with `limit`.
-    """
-
-    order_by: Annotated[
-        Optional[str],
-        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
-    ] = None
-    r"""Sorts organizations memberships by phone_number, email_address, created_at, first_name, last_name or username.
-    By prepending one of those values with + or -,
-    we can choose to sort in ascending (ASC) or descending (DESC) order.
     """

@@ -23,6 +23,7 @@ a different proxy URL than the one provided. It can also be used to re-validate 
 ```python
 from clerk_backend_api import Clerk
 
+
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 ) as clerk:

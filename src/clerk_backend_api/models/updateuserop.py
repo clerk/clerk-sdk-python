@@ -23,19 +23,19 @@ class UpdateUserRequestBodyTypedDict(TypedDict):
     r"""The first name to assign to the user"""
     last_name: NotRequired[Nullable[str]]
     r"""The last name to assign to the user"""
-    primary_email_address_id: NotRequired[str]
+    primary_email_address_id: NotRequired[Nullable[str]]
     r"""The ID of the email address to set as primary.
     It must be verified, and present on the current user.
     """
-    notify_primary_email_address_changed: NotRequired[bool]
+    notify_primary_email_address_changed: NotRequired[Nullable[bool]]
     r"""If set to `true`, the user will be notified that their primary email address has changed.
     By default, no notification is sent.
     """
-    primary_phone_number_id: NotRequired[str]
+    primary_phone_number_id: NotRequired[Nullable[str]]
     r"""The ID of the phone number to set as primary.
     It must be verified, and present on the current user.
     """
-    primary_web3_wallet_id: NotRequired[str]
+    primary_web3_wallet_id: NotRequired[Nullable[str]]
     r"""The ID of the web3 wallets to set as primary.
     It must be verified, and present on the current user.
     """
@@ -68,7 +68,7 @@ class UpdateUserRequestBodyTypedDict(TypedDict):
     r"""Set it to `true` if you're updating the user's password and want to skip any password policy settings check. This parameter can only be used when providing a `password`."""
     sign_out_of_other_sessions: NotRequired[Nullable[bool]]
     r"""Set to `true` to sign out the user from all their active sessions once their password is updated. This parameter can only be used when providing a `password`."""
-    totp_secret: NotRequired[str]
+    totp_secret: NotRequired[Nullable[str]]
     r"""In case TOTP is configured on the instance, you can provide the secret to enable it on the specific user without the need to reset it.
     Please note that currently the supported options are:
     * Period: 30 seconds
@@ -79,11 +79,11 @@ class UpdateUserRequestBodyTypedDict(TypedDict):
     r"""If Backup Codes are configured on the instance, you can provide them to enable it on the specific user without the need to reset them.
     You must provide the backup codes in plain format or the corresponding bcrypt digest.
     """
-    public_metadata: NotRequired[Dict[str, Any]]
+    public_metadata: NotRequired[Nullable[Dict[str, Any]]]
     r"""Metadata saved on the user, that is visible to both your Frontend and Backend APIs"""
-    private_metadata: NotRequired[Dict[str, Any]]
+    private_metadata: NotRequired[Nullable[Dict[str, Any]]]
     r"""Metadata saved on the user, that is only visible to your Backend API"""
-    unsafe_metadata: NotRequired[Dict[str, Any]]
+    unsafe_metadata: NotRequired[Nullable[Dict[str, Any]]]
     r"""Metadata saved on the user, that can be updated from both the Frontend and Backend APIs.
     Note: Since this data can be modified from the frontend, it is not guaranteed to be safe.
     """
@@ -99,7 +99,7 @@ class UpdateUserRequestBodyTypedDict(TypedDict):
     """
     create_organizations_limit: NotRequired[Nullable[int]]
     r"""The maximum number of organizations the user can create. 0 means unlimited."""
-    created_at: NotRequired[str]
+    created_at: NotRequired[Nullable[str]]
     r"""A custom date/time denoting _when_ the user signed up to the application, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`)."""
 
 
@@ -115,22 +115,22 @@ class UpdateUserRequestBody(BaseModel):
     last_name: OptionalNullable[str] = UNSET
     r"""The last name to assign to the user"""
 
-    primary_email_address_id: Optional[str] = None
+    primary_email_address_id: OptionalNullable[str] = UNSET
     r"""The ID of the email address to set as primary.
     It must be verified, and present on the current user.
     """
 
-    notify_primary_email_address_changed: Optional[bool] = False
+    notify_primary_email_address_changed: OptionalNullable[bool] = False
     r"""If set to `true`, the user will be notified that their primary email address has changed.
     By default, no notification is sent.
     """
 
-    primary_phone_number_id: Optional[str] = None
+    primary_phone_number_id: OptionalNullable[str] = UNSET
     r"""The ID of the phone number to set as primary.
     It must be verified, and present on the current user.
     """
 
-    primary_web3_wallet_id: Optional[str] = None
+    primary_web3_wallet_id: OptionalNullable[str] = UNSET
     r"""The ID of the web3 wallets to set as primary.
     It must be verified, and present on the current user.
     """
@@ -171,7 +171,7 @@ class UpdateUserRequestBody(BaseModel):
     sign_out_of_other_sessions: OptionalNullable[bool] = UNSET
     r"""Set to `true` to sign out the user from all their active sessions once their password is updated. This parameter can only be used when providing a `password`."""
 
-    totp_secret: Optional[str] = None
+    totp_secret: OptionalNullable[str] = UNSET
     r"""In case TOTP is configured on the instance, you can provide the secret to enable it on the specific user without the need to reset it.
     Please note that currently the supported options are:
     * Period: 30 seconds
@@ -184,13 +184,13 @@ class UpdateUserRequestBody(BaseModel):
     You must provide the backup codes in plain format or the corresponding bcrypt digest.
     """
 
-    public_metadata: Optional[Dict[str, Any]] = None
+    public_metadata: OptionalNullable[Dict[str, Any]] = UNSET
     r"""Metadata saved on the user, that is visible to both your Frontend and Backend APIs"""
 
-    private_metadata: Optional[Dict[str, Any]] = None
+    private_metadata: OptionalNullable[Dict[str, Any]] = UNSET
     r"""Metadata saved on the user, that is only visible to your Backend API"""
 
-    unsafe_metadata: Optional[Dict[str, Any]] = None
+    unsafe_metadata: OptionalNullable[Dict[str, Any]] = UNSET
     r"""Metadata saved on the user, that can be updated from both the Frontend and Backend APIs.
     Note: Since this data can be modified from the frontend, it is not guaranteed to be safe.
     """
@@ -212,7 +212,7 @@ class UpdateUserRequestBody(BaseModel):
     create_organizations_limit: OptionalNullable[int] = UNSET
     r"""The maximum number of organizations the user can create. 0 means unlimited."""
 
-    created_at: Optional[str] = None
+    created_at: OptionalNullable[str] = UNSET
     r"""A custom date/time denoting _when_ the user signed up to the application, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`)."""
 
     @model_serializer(mode="wrap")
@@ -248,16 +248,25 @@ class UpdateUserRequestBody(BaseModel):
             "external_id",
             "first_name",
             "last_name",
+            "primary_email_address_id",
+            "notify_primary_email_address_changed",
+            "primary_phone_number_id",
+            "primary_web3_wallet_id",
             "username",
             "profile_image_id",
             "password",
             "skip_password_checks",
             "sign_out_of_other_sessions",
+            "totp_secret",
+            "public_metadata",
+            "private_metadata",
+            "unsafe_metadata",
             "delete_self_enabled",
             "create_organization_enabled",
             "legal_accepted_at",
             "skip_legal_checks",
             "create_organizations_limit",
+            "created_at",
         ]
         null_default_fields = []
 

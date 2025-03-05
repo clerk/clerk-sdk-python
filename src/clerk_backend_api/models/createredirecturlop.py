@@ -2,15 +2,14 @@
 
 from __future__ import annotations
 from clerk_backend_api.types import BaseModel
-from typing import Optional
-from typing_extensions import NotRequired, TypedDict
+from typing_extensions import TypedDict
 
 
 class CreateRedirectURLRequestBodyTypedDict(TypedDict):
-    url: NotRequired[str]
+    url: str
     r"""The full url value prefixed with `https://` or a custom scheme e.g. `\"https://my-app.com/oauth-callback\"` or `\"my-app://oauth-callback\"`"""
 
 
 class CreateRedirectURLRequestBody(BaseModel):
-    url: Optional[str] = None
+    url: str
     r"""The full url value prefixed with `https://` or a custom scheme e.g. `\"https://my-app.com/oauth-callback\"` or `\"my-app://oauth-callback\"`"""

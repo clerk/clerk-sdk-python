@@ -2,15 +2,14 @@
 
 from __future__ import annotations
 from clerk_backend_api.types import BaseModel
-from typing import Optional
-from typing_extensions import NotRequired, TypedDict
+from typing_extensions import TypedDict
 
 
 class CreateSessionRequestBodyTypedDict(TypedDict):
-    user_id: NotRequired[str]
+    user_id: str
     r"""The ID representing the user"""
 
 
 class CreateSessionRequestBody(BaseModel):
-    user_id: Optional[str] = None
+    user_id: str
     r"""The ID representing the user"""

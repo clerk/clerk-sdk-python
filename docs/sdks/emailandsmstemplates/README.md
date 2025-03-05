@@ -19,6 +19,7 @@ Updates the existing template of the given type and slug
 import clerk_backend_api
 from clerk_backend_api import Clerk
 
+
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 ) as clerk:
