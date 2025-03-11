@@ -94,9 +94,9 @@ def authenticate_request(request: Requestish, options: AuthenticateRequestOption
         if cookie_header is not None:
             if cookie_header is not None:
                 cookies = SimpleCookie(cookie_header)
-                for key in cookies.keys():
+                for key, value in cookies.items():
                     if key.startswith("__session"):
-                        return cookies[key].value
+                        return value.value
 
         return None
 
