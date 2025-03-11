@@ -94,7 +94,7 @@ def assert_payload(session_token: str, vt_options: VerifyTokenOptions):
     if expired:
         assert payload == {}
     else:
-        assert payload.get('azp') in vt_options.authorized_parties
+        assert payload.get('azp') in vt_options.authorized_parties # type:ignore
 
 
 @pytest.mark.skipif(

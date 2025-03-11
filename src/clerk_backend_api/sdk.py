@@ -265,7 +265,7 @@ class Clerk(BaseSDK):
 
     # region sdk-class-body
     def authenticate_request(
-        self, request: httpx.Request, options: AuthenticateRequestOptions
+        self, request: Requestish, options: AuthenticateRequestOptions
     ) -> RequestState:
         """
         Authenticates the session token. Networkless if the options.jwt_key is provided.
