@@ -47,7 +47,7 @@ from typing import Any, Callable, Dict, Optional, Union, cast
 import weakref
 
 # region imports
-from .jwks_helpers import AuthenticateRequestOptions, RequestState, authenticate_request
+from .jwks_helpers import AuthenticateRequestOptions, RequestState, authenticate_request, Requestish
 # endregion imports
 
 
