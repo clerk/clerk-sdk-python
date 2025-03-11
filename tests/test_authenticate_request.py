@@ -7,32 +7,36 @@ from clerk_backend_api.jwks_helpers import (
     AuthErrorReason,
     AuthenticateRequestOptions,
     RequestState,
-    TokenVerificationErrorReason
+    TokenVerificationErrorReason,
 )
 
 
 @pytest.mark.skipif(
-    not has_env_vars(['CLERK_JWT_KEY']),
-    reason="CLERK_JWT_KEY environment variable must be set"
+    not has_env_vars(["CLERK_JWT_KEY"]),
+    reason="CLERK_JWT_KEY environment variable must be set",
 )
 def test_authenticate_request_no_session_token(clerk, request_url, ar_options):
-    request = httpx.Request('GET', request_url)
+    request = httpx.Request("GET", request_url)
 
     state = clerk.authenticate_request(request, ar_options)
     assert not state.is_signed_in
     assert state.reason == AuthErrorReason.SESSION_TOKEN_MISSING
-    assert 'Could not retrieve session token' in state.message
+    assert "Could not retrieve session token" in state.message
     assert state.token is None
     assert state.payload is None
 
 
-def assert_request_state(state: RequestState, session_token: str, ar_options: AuthenticateRequestOptions):
+def assert_request_state(
+    state: RequestState, session_token: str, ar_options: AuthenticateRequestOptions
+):
+
     if state.is_signed_in:
         assert state.message is None
         assert state.token is not None
         assert state.token == session_token
         assert state.payload is not None
-        assert state.payload.get('azp') in ar_options.authorized_parties
+        assert state.payload.get("azp") in ar_options.authorized_parties # type:ignore
+
     else:
         assert state.reason == TokenVerificationErrorReason.TOKEN_EXPIRED
         assert state.token is None

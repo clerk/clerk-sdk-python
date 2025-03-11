@@ -3,13 +3,14 @@ from .authenticaterequest import (
     AuthStatus,
     AuthenticateRequestOptions,
     RequestState,
-    authenticate_request
+    authenticate_request,
+    Requestish,
 )
 from .verifytoken import (
     TokenVerificationError,
     TokenVerificationErrorReason,
     VerifyTokenOptions,
-    verify_token
+    verify_token,
 )
 
 __all__ = [
@@ -21,5 +22,6 @@ __all__ = [
     "TokenVerificationError",
     "TokenVerificationErrorReason",
     "VerifyTokenOptions",
-    "verify_token"
+    "verify_token",
+    "Requestish",
 ]

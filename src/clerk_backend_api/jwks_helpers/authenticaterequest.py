@@ -4,12 +4,16 @@ from http.cookies import SimpleCookie
 from typing import Any, Dict, List, Union, Optional, Protocol
 from warnings import warn
 
-from .verifytoken import TokenVerificationErrorReason, TokenVerificationError, VerifyTokenOptions, verify_token
+from .verifytoken import (
+    TokenVerificationErrorReason,
+    TokenVerificationError,
+    VerifyTokenOptions,
+    verify_token,
+)
 
 
 class Requestish(Protocol):
-    def headers(self) -> Dict[str, str]: ...
-
+    headers: Dict[str, str]
 
 
 class AuthErrorReason(Enum):
