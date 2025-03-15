@@ -20,11 +20,12 @@ List all templates
 ```python
 from clerk_backend_api import Clerk
 
+
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 ) as clerk:
 
-    res = clerk.jwt_templates.list()
+    res = clerk.jwt_templates.list(paginated=False)
 
     assert res is not None
 
@@ -35,9 +36,12 @@ with Clerk(
 
 ### Parameters
 
-| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
-| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+| Parameter                                                                                                                                 | Type                                                                                                                                      | Required                                                                                                                                  | Description                                                                                                                               | Example                                                                                                                                   |
+| ----------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| `paginated`                                                                                                                               | *Optional[bool]*                                                                                                                          | :heavy_minus_sign:                                                                                                                        | Whether to paginate the results.<br/>If true, the results will be paginated.<br/>If false, the results will not be paginated.             |                                                                                                                                           |
+| `limit`                                                                                                                                   | *Optional[int]*                                                                                                                           | :heavy_minus_sign:                                                                                                                        | Applies a limit to the number of results returned.<br/>Can be used for paginating the results together with `offset`.                     | 20                                                                                                                                        |
+| `offset`                                                                                                                                  | *Optional[int]*                                                                                                                           | :heavy_minus_sign:                                                                                                                        | Skip the first `offset` results when paginating.<br/>Needs to be an integer greater or equal to zero.<br/>To be used in conjunction with `limit`. | 10                                                                                                                                        |
+| `retries`                                                                                                                                 | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                          | :heavy_minus_sign:                                                                                                                        | Configuration to override the default retry behavior of the client.                                                                       |                                                                                                                                           |
 
 ### Response
 
@@ -57,6 +61,7 @@ Create a new JWT template
 
 ```python
 from clerk_backend_api import Clerk
+
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
@@ -106,6 +111,7 @@ Retrieve the details of a given JWT template
 ```python
 from clerk_backend_api import Clerk
 
+
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 ) as clerk:
@@ -146,6 +152,7 @@ Updates an existing JWT template
 ```python
 from clerk_backend_api import Clerk
 
+
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 ) as clerk:
@@ -161,17 +168,17 @@ with Clerk(
 
 ### Parameters
 
-| Parameter                                                                           | Type                                                                                | Required                                                                            | Description                                                                         |
-| ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
-| `template_id`                                                                       | *str*                                                                               | :heavy_check_mark:                                                                  | The ID of the JWT template to update                                                |
-| `name`                                                                              | *Optional[str]*                                                                     | :heavy_minus_sign:                                                                  | JWT template name                                                                   |
-| `claims`                                                                            | [Optional[models.UpdateJWTTemplateClaims]](../../models/updatejwttemplateclaims.md) | :heavy_minus_sign:                                                                  | JWT template claims in JSON format                                                  |
-| `lifetime`                                                                          | *OptionalNullable[float]*                                                           | :heavy_minus_sign:                                                                  | JWT token lifetime                                                                  |
-| `allowed_clock_skew`                                                                | *OptionalNullable[float]*                                                           | :heavy_minus_sign:                                                                  | JWT token allowed clock skew                                                        |
-| `custom_signing_key`                                                                | *Optional[bool]*                                                                    | :heavy_minus_sign:                                                                  | Whether a custom signing key/algorithm is also provided for this template           |
-| `signing_algorithm`                                                                 | *OptionalNullable[str]*                                                             | :heavy_minus_sign:                                                                  | The custom signing algorithm to use when minting JWTs                               |
-| `signing_key`                                                                       | *OptionalNullable[str]*                                                             | :heavy_minus_sign:                                                                  | The custom signing private key to use when minting JWTs                             |
-| `retries`                                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                    | :heavy_minus_sign:                                                                  | Configuration to override the default retry behavior of the client.                 |
+| Parameter                                                                                            | Type                                                                                                 | Required                                                                                             | Description                                                                                          |
+| ---------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| `template_id`                                                                                        | *str*                                                                                                | :heavy_check_mark:                                                                                   | The ID of the JWT template to update                                                                 |
+| `name`                                                                                               | *str*                                                                                                | :heavy_check_mark:                                                                                   | JWT template name                                                                                    |
+| `claims`                                                                                             | [models.UpdateJWTTemplateClaims](../../models/updatejwttemplateclaims.md)                            | :heavy_check_mark:                                                                                   | JWT template claims in JSON format                                                                   |
+| `lifetime`                                                                                           | *OptionalNullable[float]*                                                                            | :heavy_minus_sign:                                                                                   | JWT token lifetime                                                                                   |
+| `allowed_clock_skew`                                                                                 | *OptionalNullable[float]*                                                                            | :heavy_minus_sign:                                                                                   | JWT token allowed clock skew                                                                         |
+| `custom_signing_key`                                                                                 | *Optional[bool]*                                                                                     | :heavy_minus_sign:                                                                                   | Whether a custom signing key/algorithm is also provided for this template                            |
+| `signing_algorithm`                                                                                  | *OptionalNullable[str]*                                                                              | :heavy_minus_sign:                                                                                   | The custom signing algorithm to use when minting JWTs. Required if `custom_signing_key` is `true`.   |
+| `signing_key`                                                                                        | *OptionalNullable[str]*                                                                              | :heavy_minus_sign:                                                                                   | The custom signing private key to use when minting JWTs. Required if `custom_signing_key` is `true`. |
+| `retries`                                                                                            | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                     | :heavy_minus_sign:                                                                                   | Configuration to override the default retry behavior of the client.                                  |
 
 ### Response
 
@@ -192,6 +199,7 @@ Delete a Template
 
 ```python
 from clerk_backend_api import Clerk
+
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",

@@ -8,7 +8,7 @@ from typing import Mapping, Optional
 
 
 class JwksSDK(BaseSDK):
-    def get(
+    def get_jwks(
         self,
         *,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -96,7 +96,7 @@ class JwksSDK(BaseSDK):
             http_res,
         )
 
-    async def get_async(
+    async def get_jwks_async(
         self,
         *,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,

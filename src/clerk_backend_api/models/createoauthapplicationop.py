@@ -16,7 +16,9 @@ from typing_extensions import Annotated, NotRequired, TypedDict
 
 class CreateOAuthApplicationRequestBodyTypedDict(TypedDict):
     name: str
-    r"""The name of the new OAuth application"""
+    r"""The name of the new OAuth application.
+    Max length: 256
+    """
     redirect_uris: NotRequired[Nullable[List[str]]]
     r"""An array of redirect URIs of the new OAuth application"""
     callback_url: NotRequired[Nullable[str]]
@@ -29,7 +31,9 @@ class CreateOAuthApplicationRequestBodyTypedDict(TypedDict):
 
 class CreateOAuthApplicationRequestBody(BaseModel):
     name: str
-    r"""The name of the new OAuth application"""
+    r"""The name of the new OAuth application.
+    Max length: 256
+    """
 
     redirect_uris: OptionalNullable[List[str]] = UNSET
     r"""An array of redirect URIs of the new OAuth application"""

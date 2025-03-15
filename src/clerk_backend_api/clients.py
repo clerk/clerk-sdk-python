@@ -9,16 +9,13 @@ from typing_extensions import deprecated
 
 
 class Clients(BaseSDK):
-    r"""The Client object tracks sessions, as well as the state of any sign in and sign up attempts, for a given device.
-    https://clerk.com/docs/reference/clerkjs/client
-    """
-
     @deprecated(
         "warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
     )
     def list(
         self,
         *,
+        paginated: Optional[bool] = None,
         limit: Optional[int] = 10,
         offset: Optional[int] = 0,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -32,6 +29,7 @@ class Clients(BaseSDK):
         with the newest clients appearing first.
         Warning: the endpoint is being deprecated and will be removed in future versions.
 
+        :param paginated: Whether to paginate the results. If true, the results will be paginated. If false, the results will not be paginated.
         :param limit: Applies a limit to the number of results returned. Can be used for paginating the results together with `offset`.
         :param offset: Skip the first `offset` results when paginating. Needs to be an integer greater or equal to zero. To be used in conjunction with `limit`.
         :param retries: Override the default retry configuration for this method
@@ -50,6 +48,7 @@ class Clients(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.GetClientListRequest(
+            paginated=paginated,
             limit=limit,
             offset=offset,
         )
@@ -128,6 +127,7 @@ class Clients(BaseSDK):
     async def list_async(
         self,
         *,
+        paginated: Optional[bool] = None,
         limit: Optional[int] = 10,
         offset: Optional[int] = 0,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -141,6 +141,7 @@ class Clients(BaseSDK):
         with the newest clients appearing first.
         Warning: the endpoint is being deprecated and will be removed in future versions.
 
+        :param paginated: Whether to paginate the results. If true, the results will be paginated. If false, the results will not be paginated.
         :param limit: Applies a limit to the number of results returned. Can be used for paginating the results together with `offset`.
         :param offset: Skip the first `offset` results when paginating. Needs to be an integer greater or equal to zero. To be used in conjunction with `limit`.
         :param retries: Override the default retry configuration for this method
@@ -159,6 +160,7 @@ class Clients(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.GetClientListRequest(
+            paginated=paginated,
             limit=limit,
             offset=offset,
         )

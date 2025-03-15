@@ -9,16 +9,36 @@ from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class GetPublicInterstitialRequestTypedDict(TypedDict):
-    frontend_api: NotRequired[str]
+    frontend_api_query_parameter: NotRequired[str]
+    r"""Please use `frontend_api` instead"""
+    frontend_api_query_parameter1: NotRequired[str]
     r"""The Frontend API key of your instance"""
     publishable_key: NotRequired[str]
     r"""The publishable key of your instance"""
+    proxy_url: NotRequired[str]
+    r"""The proxy URL of your instance"""
+    domain: NotRequired[str]
+    r"""The domain of your instance"""
+    sign_in_url: NotRequired[str]
+    r"""The sign in URL of your instance"""
+    use_domain_for_script: NotRequired[bool]
+    r"""Whether to use the domain for the script URL"""
 
 
 class GetPublicInterstitialRequest(BaseModel):
-    frontend_api: Annotated[
+    frontend_api_query_parameter: Annotated[
         Optional[str],
-        pydantic.Field(alias="frontendApi"),
+        pydantic.Field(
+            deprecated="warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible.",
+            alias="frontendApi",
+        ),
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Please use `frontend_api` instead"""
+
+    frontend_api_query_parameter1: Annotated[
+        Optional[str],
+        pydantic.Field(alias="frontend_api"),
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = None
     r"""The Frontend API key of your instance"""
@@ -28,3 +48,27 @@ class GetPublicInterstitialRequest(BaseModel):
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = None
     r"""The publishable key of your instance"""
+
+    proxy_url: Annotated[
+        Optional[str],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""The proxy URL of your instance"""
+
+    domain: Annotated[
+        Optional[str],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""The domain of your instance"""
+
+    sign_in_url: Annotated[
+        Optional[str],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""The sign in URL of your instance"""
+
+    use_domain_for_script: Annotated[
+        Optional[bool],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Whether to use the domain for the script URL"""

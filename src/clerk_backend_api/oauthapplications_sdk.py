@@ -666,7 +666,7 @@ class OauthApplicationsSDK(BaseSDK):
         redirect_uris: OptionalNullable[List[str]] = UNSET,
         callback_url: OptionalNullable[str] = UNSET,
         scopes: OptionalNullable[str] = "profile email",
-        public: Optional[bool] = None,
+        public: OptionalNullable[bool] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -677,7 +677,7 @@ class OauthApplicationsSDK(BaseSDK):
         Updates an existing OAuth application
 
         :param oauth_application_id: The ID of the OAuth application to update
-        :param name: The new name of the OAuth application
+        :param name: The new name of the OAuth application. Max length: 256
         :param redirect_uris: An array of redirect URIs of the new OAuth application
         :param callback_url: The new callback URL of the OAuth application
         :param scopes: Define the allowed scopes for the new OAuth applications that dictate the user payload of the OAuth user info endpoint. Available scopes are `profile`, `email`, `public_metadata`, `private_metadata`. Provide the requested scopes as a string, separated by spaces.
@@ -793,7 +793,7 @@ class OauthApplicationsSDK(BaseSDK):
         redirect_uris: OptionalNullable[List[str]] = UNSET,
         callback_url: OptionalNullable[str] = UNSET,
         scopes: OptionalNullable[str] = "profile email",
-        public: Optional[bool] = None,
+        public: OptionalNullable[bool] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -804,7 +804,7 @@ class OauthApplicationsSDK(BaseSDK):
         Updates an existing OAuth application
 
         :param oauth_application_id: The ID of the OAuth application to update
-        :param name: The new name of the OAuth application
+        :param name: The new name of the OAuth application. Max length: 256
         :param redirect_uris: An array of redirect URIs of the new OAuth application
         :param callback_url: The new callback URL of the OAuth application
         :param scopes: Define the allowed scopes for the new OAuth applications that dictate the user payload of the OAuth user info endpoint. Available scopes are `profile`, `email`, `public_metadata`, `private_metadata`. Provide the requested scopes as a string, separated by spaces.

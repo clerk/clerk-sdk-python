@@ -3,6 +3,7 @@
 from __future__ import annotations
 from clerk_backend_api.types import BaseModel
 from clerk_backend_api.utils import FieldMetadata, QueryParamMetadata
+import pydantic
 from typing import List, Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
 
@@ -38,6 +39,11 @@ class GetUsersCountRequestTypedDict(TypedDict):
     Accepts up to 100 user ids.
     Any user ids not found are ignored.
     """
+    organization_id: NotRequired[List[str]]
+    r"""Returns users that have memberships to the given organizations. For each organization id, the `+` and `-`
+    can be prepended to the id, which denote whether the respective organization should be included or
+    excluded from the result set. Accepts up to 100 organization ids.
+    """
     query: NotRequired[str]
     r"""Counts users that match the given query.
     For possible matches, we check the email addresses, phone numbers, usernames, web3 wallets, user ids, first and last names.
@@ -58,8 +64,31 @@ class GetUsersCountRequestTypedDict(TypedDict):
     For example, `username_query=CoolUser` will match a user with the username `SomeCoolUser`,
     and will be included in the resulting count.
     """
+    name_query: NotRequired[str]
+    r"""Returns users with names that match the given query, via case-insensitive partial match."""
     banned: NotRequired[bool]
     r"""Counts users which are either banned (`banned=true`) or not banned (`banned=false`)."""
+    last_active_at_before: NotRequired[int]
+    r"""Returns users whose last session activity was before the given date (with millisecond precision).
+    Example: use 1700690400000 to retrieve users whose last session activity was before 2023-11-23.
+    """
+    last_active_at_after: NotRequired[int]
+    r"""Returns users whose last session activity was after the given date (with millisecond precision).
+    Example: use 1700690400000 to retrieve users whose last session activity was after 2023-11-23.
+    """
+    last_active_at_since: NotRequired[int]
+    r"""Returns users that had session activity since the given date.
+    Example: use 1700690400000 to retrieve users that had session activity from 2023-11-23 until the current day.
+    Deprecated in favor of `last_active_at_after`.
+    """
+    created_at_before: NotRequired[int]
+    r"""Returns users who have been created before the given date (with millisecond precision).
+    Example: use 1730160000000 to retrieve users who have been created before 2024-10-29.
+    """
+    created_at_after: NotRequired[int]
+    r"""Returns users who have been created after the given date (with millisecond precision).
+    Example: use 1730160000000 to retrieve users who have been created after 2024-10-29.
+    """
 
 
 class GetUsersCountRequest(BaseModel):
@@ -117,6 +146,15 @@ class GetUsersCountRequest(BaseModel):
     Any user ids not found are ignored.
     """
 
+    organization_id: Annotated[
+        Optional[List[str]],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Returns users that have memberships to the given organizations. For each organization id, the `+` and `-`
+    can be prepended to the id, which denote whether the respective organization should be included or
+    excluded from the result set. Accepts up to 100 organization ids.
+    """
+
     query: Annotated[
         Optional[str],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
@@ -153,8 +191,58 @@ class GetUsersCountRequest(BaseModel):
     and will be included in the resulting count.
     """
 
+    name_query: Annotated[
+        Optional[str],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Returns users with names that match the given query, via case-insensitive partial match."""
+
     banned: Annotated[
         Optional[bool],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = None
     r"""Counts users which are either banned (`banned=true`) or not banned (`banned=false`)."""
+
+    last_active_at_before: Annotated[
+        Optional[int],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Returns users whose last session activity was before the given date (with millisecond precision).
+    Example: use 1700690400000 to retrieve users whose last session activity was before 2023-11-23.
+    """
+
+    last_active_at_after: Annotated[
+        Optional[int],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Returns users whose last session activity was after the given date (with millisecond precision).
+    Example: use 1700690400000 to retrieve users whose last session activity was after 2023-11-23.
+    """
+
+    last_active_at_since: Annotated[
+        Optional[int],
+        pydantic.Field(
+            deprecated="warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
+        ),
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Returns users that had session activity since the given date.
+    Example: use 1700690400000 to retrieve users that had session activity from 2023-11-23 until the current day.
+    Deprecated in favor of `last_active_at_after`.
+    """
+
+    created_at_before: Annotated[
+        Optional[int],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Returns users who have been created before the given date (with millisecond precision).
+    Example: use 1730160000000 to retrieve users who have been created before 2024-10-29.
+    """
+
+    created_at_after: Annotated[
+        Optional[int],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Returns users who have been created after the given date (with millisecond precision).
+    Example: use 1730160000000 to retrieve users who have been created after 2024-10-29.
+    """

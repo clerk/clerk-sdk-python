@@ -18,6 +18,22 @@ class ListInvitationsQueryParamStatus(str, Enum):
 
 
 class ListInvitationsRequestTypedDict(TypedDict):
+    status: NotRequired[ListInvitationsQueryParamStatus]
+    r"""Filter invitations based on their status"""
+    query: NotRequired[str]
+    r"""Filter invitations based on their `email_address` or `id`"""
+    order_by: NotRequired[str]
+    r"""Allows to return organizations in a particular order.
+    At the moment, you can order the returned organizations either by their `name`, `created_at` or `members_count`.
+    In order to specify the direction, you can use the `+/-` symbols prepended in the property to order by.
+    For example, if you want organizations to be returned in descending order according to their `created_at` property, you can use `-created_at`.
+    If you don't use `+` or `-`, then `+` is implied.
+    """
+    paginated: NotRequired[bool]
+    r"""Whether to paginate the results.
+    If true, the results will be paginated.
+    If false, the results will not be paginated.
+    """
     limit: NotRequired[int]
     r"""Applies a limit to the number of results returned.
     Can be used for paginating the results together with `offset`.
@@ -27,13 +43,41 @@ class ListInvitationsRequestTypedDict(TypedDict):
     Needs to be an integer greater or equal to zero.
     To be used in conjunction with `limit`.
     """
-    status: NotRequired[ListInvitationsQueryParamStatus]
-    r"""Filter invitations based on their status"""
-    query: NotRequired[str]
-    r"""Filter invitations based on their `email_address` or `id`"""
 
 
 class ListInvitationsRequest(BaseModel):
+    status: Annotated[
+        Optional[ListInvitationsQueryParamStatus],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Filter invitations based on their status"""
+
+    query: Annotated[
+        Optional[str],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Filter invitations based on their `email_address` or `id`"""
+
+    order_by: Annotated[
+        Optional[str],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Allows to return organizations in a particular order.
+    At the moment, you can order the returned organizations either by their `name`, `created_at` or `members_count`.
+    In order to specify the direction, you can use the `+/-` symbols prepended in the property to order by.
+    For example, if you want organizations to be returned in descending order according to their `created_at` property, you can use `-created_at`.
+    If you don't use `+` or `-`, then `+` is implied.
+    """
+
+    paginated: Annotated[
+        Optional[bool],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Whether to paginate the results.
+    If true, the results will be paginated.
+    If false, the results will not be paginated.
+    """
+
     limit: Annotated[
         Optional[int],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
@@ -50,15 +94,3 @@ class ListInvitationsRequest(BaseModel):
     Needs to be an integer greater or equal to zero.
     To be used in conjunction with `limit`.
     """
-
-    status: Annotated[
-        Optional[ListInvitationsQueryParamStatus],
-        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
-    ] = None
-    r"""Filter invitations based on their status"""
-
-    query: Annotated[
-        Optional[str],
-        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
-    ] = None
-    r"""Filter invitations based on their `email_address` or `id`"""

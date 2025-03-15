@@ -8,29 +8,23 @@ from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class ListOrganizationsRequestTypedDict(TypedDict):
-    limit: NotRequired[int]
-    r"""Applies a limit to the number of results returned.
-    Can be used for paginating the results together with `offset`.
-    """
-    offset: NotRequired[int]
-    r"""Skip the first `offset` results when paginating.
-    Needs to be an integer greater or equal to zero.
-    To be used in conjunction with `limit`.
-    """
     include_members_count: NotRequired[bool]
     r"""Flag to denote whether the member counts of each organization should be included in the response or not."""
+    include_missing_member_with_elevated_permissions: NotRequired[bool]
+    r"""Flag to denote whether or not to include a member with elevated permissions who is not currently a member of the organization."""
     query: NotRequired[str]
     r"""Returns organizations with ID, name, or slug that match the given query.
     Uses exact match for organization ID and partial match for name and slug.
     """
+    user_id: NotRequired[List[str]]
+    r"""Returns organizations with the user ids specified. Any user ids not found are ignored.
+    For each user id, the `+` and `-` can be prepended to the id, which denote whether the
+    respective organization should be included or excluded from the result set.
+    """
     organization_id: NotRequired[List[str]]
-    r"""Returns organizations with the organization ids specified.
-    Any organization ids not found are ignored.
-    For each organization id, the `+` and `-` can be
-    prepended to the id, which denote whether the
-    respective organization should be included or
-    excluded from the result set.
-    Accepts up to 100 organization ids.
+    r"""Returns organizations with the organization ids specified. Any organization ids not found are ignored.
+    For each organization id, the `+` and `-` can be prepended to the id, which denote whether the
+    respective organization should be included or excluded from the result set. Accepts up to 100 organization ids.
     Example: ?organization_id=+org_1&organization_id=-org_2
     """
     order_by: NotRequired[str]
@@ -41,9 +35,69 @@ class ListOrganizationsRequestTypedDict(TypedDict):
     If you don't use `+` or `-`, then `+` is implied.
     Defaults to `-created_at`.
     """
+    limit: NotRequired[int]
+    r"""Applies a limit to the number of results returned.
+    Can be used for paginating the results together with `offset`.
+    """
+    offset: NotRequired[int]
+    r"""Skip the first `offset` results when paginating.
+    Needs to be an integer greater or equal to zero.
+    To be used in conjunction with `limit`.
+    """
 
 
 class ListOrganizationsRequest(BaseModel):
+    include_members_count: Annotated[
+        Optional[bool],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Flag to denote whether the member counts of each organization should be included in the response or not."""
+
+    include_missing_member_with_elevated_permissions: Annotated[
+        Optional[bool],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Flag to denote whether or not to include a member with elevated permissions who is not currently a member of the organization."""
+
+    query: Annotated[
+        Optional[str],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Returns organizations with ID, name, or slug that match the given query.
+    Uses exact match for organization ID and partial match for name and slug.
+    """
+
+    user_id: Annotated[
+        Optional[List[str]],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Returns organizations with the user ids specified. Any user ids not found are ignored.
+    For each user id, the `+` and `-` can be prepended to the id, which denote whether the
+    respective organization should be included or excluded from the result set.
+    """
+
+    organization_id: Annotated[
+        Optional[List[str]],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Returns organizations with the organization ids specified. Any organization ids not found are ignored.
+    For each organization id, the `+` and `-` can be prepended to the id, which denote whether the
+    respective organization should be included or excluded from the result set. Accepts up to 100 organization ids.
+    Example: ?organization_id=+org_1&organization_id=-org_2
+    """
+
+    order_by: Annotated[
+        Optional[str],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = "-created_at"
+    r"""Allows to return organizations in a particular order.
+    At the moment, you can order the returned organizations either by their `name`, `created_at` or `members_count`.
+    In order to specify the direction, you can use the `+/-` symbols prepended in the property to order by.
+    For example, if you want organizations to be returned in descending order according to their `created_at` property, you can use `-created_at`.
+    If you don't use `+` or `-`, then `+` is implied.
+    Defaults to `-created_at`.
+    """
+
     limit: Annotated[
         Optional[int],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
@@ -59,44 +113,4 @@ class ListOrganizationsRequest(BaseModel):
     r"""Skip the first `offset` results when paginating.
     Needs to be an integer greater or equal to zero.
     To be used in conjunction with `limit`.
-    """
-
-    include_members_count: Annotated[
-        Optional[bool],
-        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
-    ] = None
-    r"""Flag to denote whether the member counts of each organization should be included in the response or not."""
-
-    query: Annotated[
-        Optional[str],
-        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
-    ] = None
-    r"""Returns organizations with ID, name, or slug that match the given query.
-    Uses exact match for organization ID and partial match for name and slug.
-    """
-
-    organization_id: Annotated[
-        Optional[List[str]],
-        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
-    ] = None
-    r"""Returns organizations with the organization ids specified.
-    Any organization ids not found are ignored.
-    For each organization id, the `+` and `-` can be
-    prepended to the id, which denote whether the
-    respective organization should be included or
-    excluded from the result set.
-    Accepts up to 100 organization ids.
-    Example: ?organization_id=+org_1&organization_id=-org_2
-    """
-
-    order_by: Annotated[
-        Optional[str],
-        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
-    ] = "-created_at"
-    r"""Allows to return organizations in a particular order.
-    At the moment, you can order the returned organizations either by their `name`, `created_at` or `members_count`.
-    In order to specify the direction, you can use the `+/-` symbols prepended in the property to order by.
-    For example, if you want organizations to be returned in descending order according to their `created_at` property, you can use `-created_at`.
-    If you don't use `+` or `-`, then `+` is implied.
-    Defaults to `-created_at`.
     """

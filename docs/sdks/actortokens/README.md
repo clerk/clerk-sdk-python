@@ -16,16 +16,23 @@ The `actor` parameter needs to include at least a "sub" key whose value is the I
 ### Example Usage
 
 ```python
+import clerk_backend_api
 from clerk_backend_api import Clerk
+
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 ) as clerk:
 
-    res = clerk.actor_tokens.create(request={
-        "user_id": "user_1a2b3c",
-        "actor": {},
-    })
+    res = clerk.actor_tokens.create(request=clerk_backend_api.CreateActorTokenRequestBody(
+        user_id="user_1a2b3c",
+        actor=clerk_backend_api.CreateActorTokenActor(
+            sub="user_2OEpKhcCN1Lat9NQ0G6puh7q5Rb",
+            **{
+                "sub": "user_2OEpKhcCN1Lat9NQ0G6puh7q5Rb",
+            },
+        ),
+    ))
 
     assert res is not None
 
@@ -60,6 +67,7 @@ Revokes a pending actor token.
 
 ```python
 from clerk_backend_api import Clerk
+
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",

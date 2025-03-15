@@ -19,6 +19,8 @@ class ListOrganizationInvitationsQueryParamStatus(str, Enum):
 class ListOrganizationInvitationsRequestTypedDict(TypedDict):
     organization_id: str
     r"""The organization ID."""
+    status: NotRequired[ListOrganizationInvitationsQueryParamStatus]
+    r"""Filter organization invitations based on their status"""
     limit: NotRequired[int]
     r"""Applies a limit to the number of results returned.
     Can be used for paginating the results together with `offset`.
@@ -28,8 +30,6 @@ class ListOrganizationInvitationsRequestTypedDict(TypedDict):
     Needs to be an integer greater or equal to zero.
     To be used in conjunction with `limit`.
     """
-    status: NotRequired[ListOrganizationInvitationsQueryParamStatus]
-    r"""Filter organization invitations based on their status"""
 
 
 class ListOrganizationInvitationsRequest(BaseModel):
@@ -37,6 +37,12 @@ class ListOrganizationInvitationsRequest(BaseModel):
         str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))
     ]
     r"""The organization ID."""
+
+    status: Annotated[
+        Optional[ListOrganizationInvitationsQueryParamStatus],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Filter organization invitations based on their status"""
 
     limit: Annotated[
         Optional[int],
@@ -54,9 +60,3 @@ class ListOrganizationInvitationsRequest(BaseModel):
     Needs to be an integer greater or equal to zero.
     To be used in conjunction with `limit`.
     """
-
-    status: Annotated[
-        Optional[ListOrganizationInvitationsQueryParamStatus],
-        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
-    ] = None
-    r"""Filter organization invitations based on their status"""

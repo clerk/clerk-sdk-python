@@ -8,8 +8,6 @@ from typing import Any, Mapping, Optional, Union, cast
 
 
 class DomainsSDK(BaseSDK):
-    r"""Domains represent each instance's URLs and DNS setup."""
-
     def list(
         self,
         *,

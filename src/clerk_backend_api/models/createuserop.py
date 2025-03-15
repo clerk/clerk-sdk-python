@@ -45,7 +45,7 @@ class CreateUserRequestBodyTypedDict(TypedDict):
     r"""The plaintext password to give the user.
     Must be at least 8 characters long, and can not be in any list of hacked passwords.
     """
-    password_digest: NotRequired[str]
+    password_digest: NotRequired[Nullable[str]]
     r"""In case you already have the password digests and not the passwords, you can use them for the newly created user via this property.
     The digests should be generated with one of the supported algorithms.
     The hashing algorithm can be specified using the `password_hasher` property.
@@ -60,17 +60,17 @@ class CreateUserRequestBodyTypedDict(TypedDict):
 
     Each of the supported hashers expects the incoming digest to be in a particular format. See the [Clerk docs](https://clerk.com/docs/references/backend/user/create-user) for more information.
     """
-    skip_password_checks: NotRequired[bool]
+    skip_password_checks: NotRequired[Nullable[bool]]
     r"""When set to `true` all password checks are skipped.
     It is recommended to use this method only when migrating plaintext passwords to Clerk.
     Upon migration the user base should be prompted to pick stronger password.
     """
-    skip_password_requirement: NotRequired[bool]
+    skip_password_requirement: NotRequired[Nullable[bool]]
     r"""When set to `true`, `password` is not required anymore when creating the user and can be omitted.
     This is useful when you are trying to create a user that doesn't have a password, in an instance that is using passwords.
     Please note that you cannot use this flag if password is the only way for a user to sign into your instance.
     """
-    totp_secret: NotRequired[str]
+    totp_secret: NotRequired[Nullable[str]]
     r"""In case TOTP is configured on the instance, you can provide the secret to enable it on the newly created user without the need to reset it.
     Please note that currently the supported options are:
     * Period: 30 seconds
@@ -107,7 +107,7 @@ class CreateUserRequestBodyTypedDict(TypedDict):
     r"""The maximum number of organizations the user can create. 0 means unlimited.
 
     """
-    created_at: NotRequired[str]
+    created_at: NotRequired[Nullable[str]]
     r"""A custom date/time denoting _when_ the user signed up to the application, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`)."""
 
 
@@ -151,7 +151,7 @@ class CreateUserRequestBody(BaseModel):
     Must be at least 8 characters long, and can not be in any list of hacked passwords.
     """
 
-    password_digest: Optional[str] = None
+    password_digest: OptionalNullable[str] = UNSET
     r"""In case you already have the password digests and not the passwords, you can use them for the newly created user via this property.
     The digests should be generated with one of the supported algorithms.
     The hashing algorithm can be specified using the `password_hasher` property.
@@ -168,19 +168,19 @@ class CreateUserRequestBody(BaseModel):
     Each of the supported hashers expects the incoming digest to be in a particular format. See the [Clerk docs](https://clerk.com/docs/references/backend/user/create-user) for more information.
     """
 
-    skip_password_checks: Optional[bool] = None
+    skip_password_checks: OptionalNullable[bool] = UNSET
     r"""When set to `true` all password checks are skipped.
     It is recommended to use this method only when migrating plaintext passwords to Clerk.
     Upon migration the user base should be prompted to pick stronger password.
     """
 
-    skip_password_requirement: Optional[bool] = None
+    skip_password_requirement: OptionalNullable[bool] = UNSET
     r"""When set to `true`, `password` is not required anymore when creating the user and can be omitted.
     This is useful when you are trying to create a user that doesn't have a password, in an instance that is using passwords.
     Please note that you cannot use this flag if password is the only way for a user to sign into your instance.
     """
 
-    totp_secret: Optional[str] = None
+    totp_secret: OptionalNullable[str] = UNSET
     r"""In case TOTP is configured on the instance, you can provide the secret to enable it on the newly created user without the need to reset it.
     Please note that currently the supported options are:
     * Period: 30 seconds
@@ -227,7 +227,7 @@ class CreateUserRequestBody(BaseModel):
 
     """
 
-    created_at: Optional[str] = None
+    created_at: OptionalNullable[str] = UNSET
     r"""A custom date/time denoting _when_ the user signed up to the application, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`)."""
 
     @model_serializer(mode="wrap")
@@ -263,11 +263,16 @@ class CreateUserRequestBody(BaseModel):
             "last_name",
             "username",
             "password",
+            "password_digest",
+            "skip_password_checks",
+            "skip_password_requirement",
+            "totp_secret",
             "delete_self_enabled",
             "legal_accepted_at",
             "skip_legal_checks",
             "create_organization_enabled",
             "create_organizations_limit",
+            "created_at",
         ]
         null_default_fields = []
 

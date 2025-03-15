@@ -3,8 +3,7 @@
 from __future__ import annotations
 from clerk_backend_api.types import BaseModel
 from enum import Enum
-from typing import Optional
-from typing_extensions import NotRequired, TypedDict
+from typing_extensions import TypedDict
 
 
 class JWTTemplateObject(str, Enum):
@@ -28,6 +27,8 @@ class JWTTemplateTypedDict(TypedDict):
     claims: ClaimsTypedDict
     lifetime: int
     allowed_clock_skew: int
+    custom_signing_key: bool
+    signing_algorithm: str
     created_at: int
     r"""Unix timestamp of creation.
 
@@ -36,8 +37,6 @@ class JWTTemplateTypedDict(TypedDict):
     r"""Unix timestamp of last update.
 
     """
-    custom_signing_key: NotRequired[bool]
-    signing_algorithm: NotRequired[str]
 
 
 class JWTTemplate(BaseModel):
@@ -55,6 +54,10 @@ class JWTTemplate(BaseModel):
 
     allowed_clock_skew: int
 
+    custom_signing_key: bool
+
+    signing_algorithm: str
+
     created_at: int
     r"""Unix timestamp of creation.
 
@@ -64,7 +67,3 @@ class JWTTemplate(BaseModel):
     r"""Unix timestamp of last update.
 
     """
-
-    custom_signing_key: Optional[bool] = None
-
-    signing_algorithm: Optional[str] = None

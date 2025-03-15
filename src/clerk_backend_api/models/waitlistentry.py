@@ -40,6 +40,7 @@ class WaitlistEntryInvitationTypedDict(TypedDict):
     object: WaitlistEntryInvitationObject
     id: str
     email_address: str
+    public_metadata: Dict[str, Any]
     status: WaitlistEntryInvitationStatus
     created_at: int
     r"""Unix timestamp of creation.
@@ -49,9 +50,8 @@ class WaitlistEntryInvitationTypedDict(TypedDict):
     r"""Unix timestamp of last update.
 
     """
-    public_metadata: NotRequired[Dict[str, Any]]
     revoked: NotRequired[bool]
-    url: NotRequired[Nullable[str]]
+    url: NotRequired[str]
     expires_at: NotRequired[Nullable[int]]
     r"""Unix timestamp of expiration.
 
@@ -65,6 +65,8 @@ class WaitlistEntryInvitation(BaseModel):
 
     email_address: str
 
+    public_metadata: Dict[str, Any]
+
     status: WaitlistEntryInvitationStatus
 
     created_at: int
@@ -77,11 +79,9 @@ class WaitlistEntryInvitation(BaseModel):
 
     """
 
-    public_metadata: Optional[Dict[str, Any]] = None
-
     revoked: Optional[bool] = None
 
-    url: OptionalNullable[str] = UNSET
+    url: Optional[str] = None
 
     expires_at: OptionalNullable[int] = UNSET
     r"""Unix timestamp of expiration.
@@ -90,8 +90,8 @@ class WaitlistEntryInvitation(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["public_metadata", "revoked", "url", "expires_at"]
-        nullable_fields = ["url", "expires_at"]
+        optional_fields = ["revoked", "url", "expires_at"]
+        nullable_fields = ["expires_at"]
         null_default_fields = []
 
         serialized = handler(self)

@@ -3,8 +3,6 @@
 
 ## Overview
 
-Domains represent each instance's URLs and DNS setup.
-
 ### Available Operations
 
 * [list](#list) - List all instance domains
@@ -21,6 +19,7 @@ The response will contain the primary domain for the instance and any satellite 
 
 ```python
 from clerk_backend_api import Clerk
+
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
@@ -63,6 +62,7 @@ If you're planning to configure the new satellite domain to run behind a proxy, 
 
 ```python
 from clerk_backend_api import Clerk
+
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
@@ -108,6 +108,7 @@ It is currently not possible to delete the instance's primary domain.
 
 ```python
 from clerk_backend_api import Clerk
+
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
@@ -155,6 +156,7 @@ update the instance's home origin, affecting the default application paths.
 
 ```python
 from clerk_backend_api import Clerk
+
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",

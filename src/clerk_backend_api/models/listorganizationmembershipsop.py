@@ -3,13 +3,73 @@
 from __future__ import annotations
 from clerk_backend_api.types import BaseModel
 from clerk_backend_api.utils import FieldMetadata, PathParamMetadata, QueryParamMetadata
-from typing import Optional
+from typing import List, Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class ListOrganizationMembershipsRequestTypedDict(TypedDict):
     organization_id: str
     r"""The organization ID."""
+    order_by: NotRequired[str]
+    r"""Sorts organizations memberships by phone_number, email_address, created_at, first_name, last_name or username.
+    By prepending one of those values with + or -, we can choose to sort in ascending (ASC) or descending (DESC) order.\" 
+    """
+    user_id: NotRequired[List[str]]
+    r"""Returns users with the user ids specified. For each user id, the `+` and `-` can be
+    prepended to the id, which denote whether the respective user id should be included or
+    excluded from the result set. Accepts up to 100 user ids. Any user ids not found are ignored.
+    """
+    email_address: NotRequired[List[str]]
+    r"""Returns users with the specified email addresses. Accepts up to 100 email addresses. Any email addresses not found are ignored."""
+    phone_number: NotRequired[List[str]]
+    r"""Returns users with the specified phone numbers. Accepts up to 100 phone numbers. Any phone numbers not found are ignored."""
+    username: NotRequired[List[str]]
+    r"""Returns users with the specified usernames.
+    Accepts up to 100 usernames.
+    Any usernames not found are ignored.
+    """
+    web3_wallet: NotRequired[List[str]]
+    r"""Returns users with the specified web3 wallet addresses.
+    Accepts up to 100 web3 wallet addresses.
+    Any web3 wallet addressed not found are ignored.
+    """
+    role: NotRequired[List[str]]
+    r"""Returns users with the specified roles. Accepts up to 100 roles. Any roles not found are ignored."""
+    query: NotRequired[str]
+    r"""Returns users that match the given query.
+    For possible matches, we check the email addresses, phone numbers, usernames, web3 wallets, user ids, first and last names.
+    The query value doesn't need to match the exact value you are looking for, it is capable of partial matches as well.
+    """
+    email_address_query: NotRequired[str]
+    r"""Returns users with emails that match the given query, via case-insensitive partial match.
+    For example, `email_address_query=ello` will match a user with the email `HELLO@example.com`.
+    """
+    phone_number_query: NotRequired[str]
+    r"""Returns users with phone numbers that match the given query, via case-insensitive partial match.
+    For example, `phone_number_query=555` will match a user with the phone number `+1555xxxxxxx`.
+    """
+    username_query: NotRequired[str]
+    r"""Returns users with usernames that match the given query, via case-insensitive partial match.
+    For example, `username_query=CoolUser` will match a user with the username `SomeCoolUser`.
+    """
+    name_query: NotRequired[str]
+    r"""Returns users with names that match the given query, via case-insensitive partial match."""
+    last_active_at_before: NotRequired[int]
+    r"""Returns users whose last session activity was before the given date (with millisecond precision).
+    Example: use 1700690400000 to retrieve users whose last session activity was before 2023-11-23.
+    """
+    last_active_at_after: NotRequired[int]
+    r"""Returns users whose last session activity was after the given date (with millisecond precision).
+    Example: use 1700690400000 to retrieve users whose last session activity was after 2023-11-23.
+    """
+    created_at_before: NotRequired[int]
+    r"""Returns users who have been created before the given date (with millisecond precision).
+    Example: use 1730160000000 to retrieve users who have been created before 2024-10-29.
+    """
+    created_at_after: NotRequired[int]
+    r"""Returns users who have been created after the given date (with millisecond precision).
+    Example: use 1730160000000 to retrieve users who have been created after 2024-10-29.
+    """
     limit: NotRequired[int]
     r"""Applies a limit to the number of results returned.
     Can be used for paginating the results together with `offset`.
@@ -19,11 +79,6 @@ class ListOrganizationMembershipsRequestTypedDict(TypedDict):
     Needs to be an integer greater or equal to zero.
     To be used in conjunction with `limit`.
     """
-    order_by: NotRequired[str]
-    r"""Sorts organizations memberships by phone_number, email_address, created_at, first_name, last_name or username.
-    By prepending one of those values with + or -,
-    we can choose to sort in ascending (ASC) or descending (DESC) order.\" 
-    """
 
 
 class ListOrganizationMembershipsRequest(BaseModel):
@@ -31,6 +86,130 @@ class ListOrganizationMembershipsRequest(BaseModel):
         str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))
     ]
     r"""The organization ID."""
+
+    order_by: Annotated[
+        Optional[str],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Sorts organizations memberships by phone_number, email_address, created_at, first_name, last_name or username.
+    By prepending one of those values with + or -, we can choose to sort in ascending (ASC) or descending (DESC) order.\" 
+    """
+
+    user_id: Annotated[
+        Optional[List[str]],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Returns users with the user ids specified. For each user id, the `+` and `-` can be
+    prepended to the id, which denote whether the respective user id should be included or
+    excluded from the result set. Accepts up to 100 user ids. Any user ids not found are ignored.
+    """
+
+    email_address: Annotated[
+        Optional[List[str]],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Returns users with the specified email addresses. Accepts up to 100 email addresses. Any email addresses not found are ignored."""
+
+    phone_number: Annotated[
+        Optional[List[str]],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Returns users with the specified phone numbers. Accepts up to 100 phone numbers. Any phone numbers not found are ignored."""
+
+    username: Annotated[
+        Optional[List[str]],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Returns users with the specified usernames.
+    Accepts up to 100 usernames.
+    Any usernames not found are ignored.
+    """
+
+    web3_wallet: Annotated[
+        Optional[List[str]],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Returns users with the specified web3 wallet addresses.
+    Accepts up to 100 web3 wallet addresses.
+    Any web3 wallet addressed not found are ignored.
+    """
+
+    role: Annotated[
+        Optional[List[str]],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Returns users with the specified roles. Accepts up to 100 roles. Any roles not found are ignored."""
+
+    query: Annotated[
+        Optional[str],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Returns users that match the given query.
+    For possible matches, we check the email addresses, phone numbers, usernames, web3 wallets, user ids, first and last names.
+    The query value doesn't need to match the exact value you are looking for, it is capable of partial matches as well.
+    """
+
+    email_address_query: Annotated[
+        Optional[str],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Returns users with emails that match the given query, via case-insensitive partial match.
+    For example, `email_address_query=ello` will match a user with the email `HELLO@example.com`.
+    """
+
+    phone_number_query: Annotated[
+        Optional[str],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Returns users with phone numbers that match the given query, via case-insensitive partial match.
+    For example, `phone_number_query=555` will match a user with the phone number `+1555xxxxxxx`.
+    """
+
+    username_query: Annotated[
+        Optional[str],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Returns users with usernames that match the given query, via case-insensitive partial match.
+    For example, `username_query=CoolUser` will match a user with the username `SomeCoolUser`.
+    """
+
+    name_query: Annotated[
+        Optional[str],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Returns users with names that match the given query, via case-insensitive partial match."""
+
+    last_active_at_before: Annotated[
+        Optional[int],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Returns users whose last session activity was before the given date (with millisecond precision).
+    Example: use 1700690400000 to retrieve users whose last session activity was before 2023-11-23.
+    """
+
+    last_active_at_after: Annotated[
+        Optional[int],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Returns users whose last session activity was after the given date (with millisecond precision).
+    Example: use 1700690400000 to retrieve users whose last session activity was after 2023-11-23.
+    """
+
+    created_at_before: Annotated[
+        Optional[int],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Returns users who have been created before the given date (with millisecond precision).
+    Example: use 1730160000000 to retrieve users who have been created before 2024-10-29.
+    """
+
+    created_at_after: Annotated[
+        Optional[int],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Returns users who have been created after the given date (with millisecond precision).
+    Example: use 1730160000000 to retrieve users who have been created after 2024-10-29.
+    """
 
     limit: Annotated[
         Optional[int],
@@ -47,13 +226,4 @@ class ListOrganizationMembershipsRequest(BaseModel):
     r"""Skip the first `offset` results when paginating.
     Needs to be an integer greater or equal to zero.
     To be used in conjunction with `limit`.
-    """
-
-    order_by: Annotated[
-        Optional[str],
-        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
-    ] = None
-    r"""Sorts organizations memberships by phone_number, email_address, created_at, first_name, last_name or username.
-    By prepending one of those values with + or -,
-    we can choose to sort in ascending (ASC) or descending (DESC) order.\" 
     """

@@ -8,10 +8,6 @@ from typing import Any, Mapping, Optional
 
 
 class Webhooks(BaseSDK):
-    r"""You can configure webhooks to be notified about various events that happen on your instance.
-    https://clerk.com/docs/integration/webhooks
-    """
-
     def create_svix_app(
         self,
         *,

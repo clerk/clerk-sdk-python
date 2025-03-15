@@ -22,8 +22,6 @@ class UpdateInstanceAuthConfigRequestBodyTypedDict(TypedDict):
     """
     progressive_sign_up: NotRequired[Nullable[bool]]
     r"""Enable the Progressive Sign Up algorithm. Refer to the [docs](https://clerk.com/docs/upgrade-guides/progressive-sign-up) for more info."""
-    session_token_template: NotRequired[Nullable[str]]
-    r"""The name of the JWT Template used to augment your session tokens. To disable this, pass an empty string."""
     enhanced_email_deliverability: NotRequired[Nullable[bool]]
     r"""The \"enhanced_email_deliverability\" feature will send emails from \"verifications@clerk.dev\" instead of your domain.
     This can be helpful if you do not have a high domain reputation.
@@ -47,9 +45,6 @@ class UpdateInstanceAuthConfigRequestBody(BaseModel):
     progressive_sign_up: OptionalNullable[bool] = UNSET
     r"""Enable the Progressive Sign Up algorithm. Refer to the [docs](https://clerk.com/docs/upgrade-guides/progressive-sign-up) for more info."""
 
-    session_token_template: OptionalNullable[str] = UNSET
-    r"""The name of the JWT Template used to augment your session tokens. To disable this, pass an empty string."""
-
     enhanced_email_deliverability: OptionalNullable[bool] = UNSET
     r"""The \"enhanced_email_deliverability\" feature will send emails from \"verifications@clerk.dev\" instead of your domain.
     This can be helpful if you do not have a high domain reputation.
@@ -66,7 +61,6 @@ class UpdateInstanceAuthConfigRequestBody(BaseModel):
             "restricted_to_allowlist",
             "from_email_address",
             "progressive_sign_up",
-            "session_token_template",
             "enhanced_email_deliverability",
             "test_mode",
         ]
@@ -74,7 +68,6 @@ class UpdateInstanceAuthConfigRequestBody(BaseModel):
             "restricted_to_allowlist",
             "from_email_address",
             "progressive_sign_up",
-            "session_token_template",
             "enhanced_email_deliverability",
             "test_mode",
         ]

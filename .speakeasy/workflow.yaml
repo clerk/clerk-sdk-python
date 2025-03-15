@@ -4,12 +4,11 @@ sources:
     clerk-openapi:
         inputs:
             - location: https://raw.githubusercontent.com/clerk/openapi-specs/refs/heads/main/bapi/2024-10-01.yml
-        registry:
-            location: registry.speakeasyapi.dev/clerk/clerk/clerk-openapi
         overlays:
             - location: ./examples.yaml
             - location: https://raw.githubusercontent.com/clerk/openapi-specs/refs/heads/main/.speakeasy/bapi/fixes.yml
-            
+        registry:
+            location: registry.speakeasyapi.dev/clerk/clerk/clerk-openapi
 targets:
     clerk-sdk-python:
         target: python

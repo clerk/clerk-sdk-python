@@ -11,26 +11,30 @@ from clerk_backend_api.types import (
 from clerk_backend_api.utils import FieldMetadata, PathParamMetadata, RequestMetadata
 import pydantic
 from pydantic import model_serializer
-from typing import List, Optional
+from typing import List
 from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class UpdateOAuthApplicationRequestBodyTypedDict(TypedDict):
     name: NotRequired[Nullable[str]]
-    r"""The new name of the OAuth application"""
+    r"""The new name of the OAuth application.
+    Max length: 256
+    """
     redirect_uris: NotRequired[Nullable[List[str]]]
     r"""An array of redirect URIs of the new OAuth application"""
     callback_url: NotRequired[Nullable[str]]
     r"""The new callback URL of the OAuth application"""
     scopes: NotRequired[Nullable[str]]
     r"""Define the allowed scopes for the new OAuth applications that dictate the user payload of the OAuth user info endpoint. Available scopes are `profile`, `email`, `public_metadata`, `private_metadata`. Provide the requested scopes as a string, separated by spaces."""
-    public: NotRequired[bool]
+    public: NotRequired[Nullable[bool]]
     r"""If true, this client is public and you can use the Proof Key of Code Exchange (PKCE) flow."""
 
 
 class UpdateOAuthApplicationRequestBody(BaseModel):
     name: OptionalNullable[str] = UNSET
-    r"""The new name of the OAuth application"""
+    r"""The new name of the OAuth application.
+    Max length: 256
+    """
 
     redirect_uris: OptionalNullable[List[str]] = UNSET
     r"""An array of redirect URIs of the new OAuth application"""
@@ -46,13 +50,13 @@ class UpdateOAuthApplicationRequestBody(BaseModel):
     scopes: OptionalNullable[str] = "profile email"
     r"""Define the allowed scopes for the new OAuth applications that dictate the user payload of the OAuth user info endpoint. Available scopes are `profile`, `email`, `public_metadata`, `private_metadata`. Provide the requested scopes as a string, separated by spaces."""
 
-    public: Optional[bool] = None
+    public: OptionalNullable[bool] = UNSET
     r"""If true, this client is public and you can use the Proof Key of Code Exchange (PKCE) flow."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = ["name", "redirect_uris", "callback_url", "scopes", "public"]
-        nullable_fields = ["name", "redirect_uris", "callback_url", "scopes"]
+        nullable_fields = ["name", "redirect_uris", "callback_url", "scopes", "public"]
         null_default_fields = []
 
         serialized = handler(self)

@@ -5,9 +5,9 @@
 
 ### Available Operations
 
-* [get](#get) - Retrieve the JSON Web Key Set of the instance
+* [get_jwks](#get_jwks) - Retrieve the JSON Web Key Set of the instance
 
-## get
+## get_jwks
 
 Retrieve the JSON Web Key Set of the instance
 
@@ -16,11 +16,12 @@ Retrieve the JSON Web Key Set of the instance
 ```python
 from clerk_backend_api import Clerk
 
+
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 ) as clerk:
 
-    res = clerk.jwks.get()
+    res = clerk.jwks.get_jwks()
 
     assert res is not None
 
