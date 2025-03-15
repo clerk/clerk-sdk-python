@@ -8,13 +8,16 @@ from typing import Mapping, Optional
 
 
 class Miscellaneous(BaseSDK):
-    r"""Various endpoints that do not belong in any particular category."""
-
-    def get_interstitial(
+    def get_public_interstitial(
         self,
         *,
-        frontend_api: Optional[str] = None,
+        frontend_api_query_parameter: Optional[str] = None,
+        frontend_api_query_parameter1: Optional[str] = None,
         publishable_key: Optional[str] = None,
+        proxy_url: Optional[str] = None,
+        domain: Optional[str] = None,
+        sign_in_url: Optional[str] = None,
+        use_domain_for_script: Optional[bool] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -25,8 +28,13 @@ class Miscellaneous(BaseSDK):
         The Clerk interstitial endpoint serves an html page that loads clerk.js in order to check the user's authentication state.
         It is used by Clerk SDKs when the user's authentication state cannot be immediately determined.
 
-        :param frontend_api: The Frontend API key of your instance
+        :param frontend_api_query_parameter: Please use `frontend_api` instead
+        :param frontend_api_query_parameter1: The Frontend API key of your instance
         :param publishable_key: The publishable key of your instance
+        :param proxy_url: The proxy URL of your instance
+        :param domain: The domain of your instance
+        :param sign_in_url: The sign in URL of your instance
+        :param use_domain_for_script: Whether to use the domain for the script URL
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -43,8 +51,13 @@ class Miscellaneous(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.GetPublicInterstitialRequest(
-            frontend_api=frontend_api,
+            frontend_api_query_parameter=frontend_api_query_parameter,
+            frontend_api_query_parameter1=frontend_api_query_parameter1,
             publishable_key=publishable_key,
+            proxy_url=proxy_url,
+            domain=domain,
+            sign_in_url=sign_in_url,
+            use_domain_for_script=use_domain_for_script,
         )
 
         req = self._build_request(
@@ -108,11 +121,16 @@ class Miscellaneous(BaseSDK):
             http_res,
         )
 
-    async def get_interstitial_async(
+    async def get_public_interstitial_async(
         self,
         *,
-        frontend_api: Optional[str] = None,
+        frontend_api_query_parameter: Optional[str] = None,
+        frontend_api_query_parameter1: Optional[str] = None,
         publishable_key: Optional[str] = None,
+        proxy_url: Optional[str] = None,
+        domain: Optional[str] = None,
+        sign_in_url: Optional[str] = None,
+        use_domain_for_script: Optional[bool] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -123,8 +141,13 @@ class Miscellaneous(BaseSDK):
         The Clerk interstitial endpoint serves an html page that loads clerk.js in order to check the user's authentication state.
         It is used by Clerk SDKs when the user's authentication state cannot be immediately determined.
 
-        :param frontend_api: The Frontend API key of your instance
+        :param frontend_api_query_parameter: Please use `frontend_api` instead
+        :param frontend_api_query_parameter1: The Frontend API key of your instance
         :param publishable_key: The publishable key of your instance
+        :param proxy_url: The proxy URL of your instance
+        :param domain: The domain of your instance
+        :param sign_in_url: The sign in URL of your instance
+        :param use_domain_for_script: Whether to use the domain for the script URL
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -141,8 +164,13 @@ class Miscellaneous(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.GetPublicInterstitialRequest(
-            frontend_api=frontend_api,
+            frontend_api_query_parameter=frontend_api_query_parameter,
+            frontend_api_query_parameter1=frontend_api_query_parameter1,
             publishable_key=publishable_key,
+            proxy_url=proxy_url,
+            domain=domain,
+            sign_in_url=sign_in_url,
+            use_domain_for_script=use_domain_for_script,
         )
 
         req = self._build_request_async(

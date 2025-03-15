@@ -22,9 +22,9 @@ class UpdateInstanceOrganizationSettingsRequestBodyTypedDict(TypedDict):
     r"""Specify which enrollment modes to enable for your Organization Domains.
     Supported modes are 'automatic_invitation' & 'automatic_suggestion'.
     """
-    creator_role_id: NotRequired[str]
+    creator_role_id: NotRequired[Nullable[str]]
     r"""Specify what the default organization role is for an organization creator."""
-    domains_default_role_id: NotRequired[str]
+    domains_default_role_id: NotRequired[Nullable[str]]
     r"""Specify what the default organization role is for the organization domains."""
 
 
@@ -42,10 +42,10 @@ class UpdateInstanceOrganizationSettingsRequestBody(BaseModel):
     Supported modes are 'automatic_invitation' & 'automatic_suggestion'.
     """
 
-    creator_role_id: Optional[str] = None
+    creator_role_id: OptionalNullable[str] = UNSET
     r"""Specify what the default organization role is for an organization creator."""
 
-    domains_default_role_id: Optional[str] = None
+    domains_default_role_id: OptionalNullable[str] = UNSET
     r"""Specify what the default organization role is for the organization domains."""
 
     @model_serializer(mode="wrap")
@@ -64,6 +64,8 @@ class UpdateInstanceOrganizationSettingsRequestBody(BaseModel):
             "max_allowed_memberships",
             "admin_delete_enabled",
             "domains_enabled",
+            "creator_role_id",
+            "domains_default_role_id",
         ]
         null_default_fields = []
 

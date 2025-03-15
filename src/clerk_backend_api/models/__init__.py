@@ -50,7 +50,11 @@ from .createblocklistidentifierop import (
     CreateBlocklistIdentifierRequestBody,
     CreateBlocklistIdentifierRequestBodyTypedDict,
 )
-from .createbulkinvitationsop import RequestBody, RequestBodyTypedDict
+from .createbulkinvitationsop import (
+    CreateBulkInvitationsTemplateSlug,
+    RequestBody,
+    RequestBodyTypedDict,
+)
 from .createemailaddressop import (
     CreateEmailAddressRequestBody,
     CreateEmailAddressRequestBodyTypedDict,
@@ -107,8 +111,8 @@ from .createredirecturlop import (
     CreateRedirectURLRequestBodyTypedDict,
 )
 from .createsamlconnectionop import (
-    CreateSAMLConnectionAttributeMapping,
-    CreateSAMLConnectionAttributeMappingTypedDict,
+    AttributeMapping,
+    AttributeMappingTypedDict,
     CreateSAMLConnectionRequestBody,
     CreateSAMLConnectionRequestBodyTypedDict,
     Provider,
@@ -239,6 +243,10 @@ from .emailaddress import (
     Otp,
     OtpTypedDict,
     Strategy,
+    Ticket,
+    TicketTypedDict,
+    TicketVerificationStatus,
+    TicketVerificationStrategy,
     Verification,
     VerificationStatus,
     VerificationStrategy,
@@ -279,6 +287,7 @@ from .getsessionlistop import (
     QueryParamStatus,
 )
 from .getsessionop import GetSessionRequest, GetSessionRequestTypedDict
+from .getsignupop import GetSignUpRequest, GetSignUpRequestTypedDict
 from .gettemplatelistop import (
     GetTemplateListRequest,
     GetTemplateListRequestTypedDict,
@@ -328,6 +337,10 @@ from .jwttemplate import (
     JWTTemplateObject,
     JWTTemplateTypedDict,
 )
+from .listallowlistidentifiersop import (
+    ListAllowlistIdentifiersRequest,
+    ListAllowlistIdentifiersRequestTypedDict,
+)
 from .listinstanceorganizationinvitationsop import (
     ListInstanceOrganizationInvitationsQueryParamStatus,
     ListInstanceOrganizationInvitationsRequest,
@@ -337,6 +350,10 @@ from .listinvitationsop import (
     ListInvitationsQueryParamStatus,
     ListInvitationsRequest,
     ListInvitationsRequestTypedDict,
+)
+from .listjwttemplatesop import (
+    ListJWTTemplatesRequest,
+    ListJWTTemplatesRequestTypedDict,
 )
 from .listoauthapplicationsop import (
     ListOAuthApplicationsRequest,
@@ -362,6 +379,10 @@ from .listorganizationsop import (
 from .listpendingorganizationinvitationsop import (
     ListPendingOrganizationInvitationsRequest,
     ListPendingOrganizationInvitationsRequestTypedDict,
+)
+from .listredirecturlsop import (
+    ListRedirectURLsRequest,
+    ListRedirectURLsRequestTypedDict,
 )
 from .listsamlconnectionsop import (
     ListSAMLConnectionsRequest,
@@ -406,6 +427,10 @@ from .organizationinvitation import (
     OrganizationInvitationObject,
     OrganizationInvitationTypedDict,
 )
+from .organizationinvitationpublicorganizationdata import (
+    OrganizationInvitationPublicOrganizationData,
+    OrganizationInvitationPublicOrganizationDataTypedDict,
+)
 from .organizationinvitations import (
     OrganizationInvitations,
     OrganizationInvitationsTypedDict,
@@ -418,8 +443,6 @@ from .organizationinvitationwithpublicorganizationdata import (
     OrganizationInvitationWithPublicOrganizationData,
     OrganizationInvitationWithPublicOrganizationDataObject,
     OrganizationInvitationWithPublicOrganizationDataTypedDict,
-    PublicOrganizationData,
-    PublicOrganizationDataTypedDict,
 )
 from .organizationmembership import (
     OrganizationMembership,
@@ -428,8 +451,10 @@ from .organizationmembership import (
     OrganizationMembershipOrganizationObject,
     OrganizationMembershipOrganizationTypedDict,
     OrganizationMembershipTypedDict,
-    PublicUserData,
-    PublicUserDataTypedDict,
+)
+from .organizationmembershippublicuserdata import (
+    OrganizationMembershipPublicUserData,
+    OrganizationMembershipPublicUserDataTypedDict,
 )
 from .organizationmemberships import (
     OrganizationMemberships,
@@ -518,12 +543,16 @@ from .samlaccount import (
     SamlConnection,
     SamlConnectionTypedDict,
     SamlTypedDict,
-    Ticket,
-    TicketTypedDict,
-    TicketVerificationStatus,
-    TicketVerificationStrategy,
+    TicketVerificationSAMLAccountStatus,
+    TicketVerificationSAMLAccountStrategy,
     VerificationError,
     VerificationErrorTypedDict,
+    VerificationTicket,
+    VerificationTicketTypedDict,
+)
+from .samlconnectionattributemapping import (
+    SAMLConnectionAttributeMapping,
+    SAMLConnectionAttributeMappingTypedDict,
 )
 from .samlconnections import SAMLConnections, SAMLConnectionsTypedDict
 from .schemas_passkey import (
@@ -539,8 +568,6 @@ from .schemas_passkey import (
     SchemasPasskeyVerificationTypedDict,
 )
 from .schemas_samlconnection import (
-    AttributeMapping,
-    AttributeMappingTypedDict,
     SchemasSAMLConnection,
     SchemasSAMLConnectionObject,
     SchemasSAMLConnectionTypedDict,
@@ -550,12 +577,14 @@ from .security import Security, SecurityTypedDict
 from .session import (
     Actor,
     ActorTypedDict,
-    LatestActivity,
-    LatestActivityTypedDict,
     Session,
     SessionObject,
     SessionTypedDict,
     Status,
+)
+from .sessionactivityresponse import (
+    SessionActivityResponse,
+    SessionActivityResponseTypedDict,
 )
 from .setuserprofileimageop import (
     File,
@@ -572,14 +601,23 @@ from .signintoken import (
     SignInTokenTypedDict,
 )
 from .signup import (
-    ExternalAccount,
-    ExternalAccountTypedDict,
     SignUp,
+    SignUpExternalAccount,
+    SignUpExternalAccountTypedDict,
     SignUpObject,
     SignUpStatus,
     SignUpTypedDict,
-    Verifications,
-    VerificationsTypedDict,
+)
+from .signupverification import (
+    NextAction,
+    SignUpVerification,
+    SignUpVerificationTypedDict,
+)
+from .signupverifications import (
+    ExternalAccount,
+    ExternalAccountTypedDict,
+    SignUpVerifications,
+    SignUpVerificationsTypedDict,
 )
 from .svixurl import SvixURL, SvixURLTypedDict
 from .template import Template, TemplateObject, TemplateTypedDict
@@ -847,6 +885,7 @@ __all__ = [
     "CreateAllowlistIdentifierRequestBodyTypedDict",
     "CreateBlocklistIdentifierRequestBody",
     "CreateBlocklistIdentifierRequestBodyTypedDict",
+    "CreateBulkInvitationsTemplateSlug",
     "CreateEmailAddressRequestBody",
     "CreateEmailAddressRequestBodyTypedDict",
     "CreateInvitationRequestBody",
@@ -879,8 +918,6 @@ __all__ = [
     "CreatePhoneNumberRequestBodyTypedDict",
     "CreateRedirectURLRequestBody",
     "CreateRedirectURLRequestBodyTypedDict",
-    "CreateSAMLConnectionAttributeMapping",
-    "CreateSAMLConnectionAttributeMappingTypedDict",
     "CreateSAMLConnectionRequestBody",
     "CreateSAMLConnectionRequestBodyTypedDict",
     "CreateSessionRequestBody",
@@ -1004,6 +1041,8 @@ __all__ = [
     "GetSessionListRequestTypedDict",
     "GetSessionRequest",
     "GetSessionRequestTypedDict",
+    "GetSignUpRequest",
+    "GetSignUpRequestTypedDict",
     "GetTemplateListRequest",
     "GetTemplateListRequestTypedDict",
     "GetTemplateRequest",
@@ -1043,14 +1082,16 @@ __all__ = [
     "JwksTypedDict",
     "Keys",
     "KeysTypedDict",
-    "LatestActivity",
-    "LatestActivityTypedDict",
+    "ListAllowlistIdentifiersRequest",
+    "ListAllowlistIdentifiersRequestTypedDict",
     "ListInstanceOrganizationInvitationsQueryParamStatus",
     "ListInstanceOrganizationInvitationsRequest",
     "ListInstanceOrganizationInvitationsRequestTypedDict",
     "ListInvitationsQueryParamStatus",
     "ListInvitationsRequest",
     "ListInvitationsRequestTypedDict",
+    "ListJWTTemplatesRequest",
+    "ListJWTTemplatesRequestTypedDict",
     "ListOAuthApplicationsRequest",
     "ListOAuthApplicationsRequestTypedDict",
     "ListOrganizationDomainsRequest",
@@ -1064,6 +1105,8 @@ __all__ = [
     "ListOrganizationsRequestTypedDict",
     "ListPendingOrganizationInvitationsRequest",
     "ListPendingOrganizationInvitationsRequestTypedDict",
+    "ListRedirectURLsRequest",
+    "ListRedirectURLsRequestTypedDict",
     "ListSAMLConnectionsRequest",
     "ListSAMLConnectionsRequestTypedDict",
     "ListWaitlistEntriesQueryParamStatus",
@@ -1077,6 +1120,7 @@ __all__ = [
     "MergeOrganizationMetadataRequestTypedDict",
     "Meta",
     "MetaTypedDict",
+    "NextAction",
     "Nonce",
     "OAuthApplication",
     "OAuthApplicationObject",
@@ -1100,6 +1144,8 @@ __all__ = [
     "OrganizationDomainsTypedDict",
     "OrganizationInvitation",
     "OrganizationInvitationObject",
+    "OrganizationInvitationPublicOrganizationData",
+    "OrganizationInvitationPublicOrganizationDataTypedDict",
     "OrganizationInvitationTypedDict",
     "OrganizationInvitationWithPublicOrganizationData",
     "OrganizationInvitationWithPublicOrganizationDataObject",
@@ -1113,6 +1159,8 @@ __all__ = [
     "OrganizationMembershipOrganization",
     "OrganizationMembershipOrganizationObject",
     "OrganizationMembershipOrganizationTypedDict",
+    "OrganizationMembershipPublicUserData",
+    "OrganizationMembershipPublicUserDataTypedDict",
     "OrganizationMembershipTypedDict",
     "OrganizationMemberships",
     "OrganizationMembershipsTypedDict",
@@ -1148,10 +1196,6 @@ __all__ = [
     "ProxyCheck",
     "ProxyCheckObject",
     "ProxyCheckTypedDict",
-    "PublicOrganizationData",
-    "PublicOrganizationDataTypedDict",
-    "PublicUserData",
-    "PublicUserDataTypedDict",
     "QueryParamStatus",
     "RedirectURL",
     "RedirectURLObject",
@@ -1182,6 +1226,8 @@ __all__ = [
     "SAMLAccountTypedDict",
     "SAMLAccountVerification",
     "SAMLAccountVerificationTypedDict",
+    "SAMLConnectionAttributeMapping",
+    "SAMLConnectionAttributeMappingTypedDict",
     "SAMLConnectionSAMLConnection",
     "SAMLConnectionSAMLConnectionTypedDict",
     "SAMLConnections",
@@ -1206,6 +1252,8 @@ __all__ = [
     "Security",
     "SecurityTypedDict",
     "Session",
+    "SessionActivityResponse",
+    "SessionActivityResponseTypedDict",
     "SessionObject",
     "SessionTypedDict",
     "SetUserProfileImageRequest",
@@ -1217,9 +1265,15 @@ __all__ = [
     "SignInTokenStatus",
     "SignInTokenTypedDict",
     "SignUp",
+    "SignUpExternalAccount",
+    "SignUpExternalAccountTypedDict",
     "SignUpObject",
     "SignUpStatus",
     "SignUpTypedDict",
+    "SignUpVerification",
+    "SignUpVerificationTypedDict",
+    "SignUpVerifications",
+    "SignUpVerificationsTypedDict",
     "Status",
     "Strategy",
     "SvixURL",
@@ -1234,6 +1288,8 @@ __all__ = [
     "TestingTokenTypedDict",
     "Ticket",
     "TicketTypedDict",
+    "TicketVerificationSAMLAccountStatus",
+    "TicketVerificationSAMLAccountStrategy",
     "TicketVerificationStatus",
     "TicketVerificationStrategy",
     "ToggleTemplateDeliveryPathParamTemplateType",
@@ -1346,9 +1402,9 @@ __all__ = [
     "VerificationOTPTypedDict",
     "VerificationStatus",
     "VerificationStrategy",
+    "VerificationTicket",
+    "VerificationTicketTypedDict",
     "VerificationTypedDict",
-    "Verifications",
-    "VerificationsTypedDict",
     "VerifyClientRequestBody",
     "VerifyClientRequestBodyTypedDict",
     "VerifyDomainProxyRequestBody",

@@ -11,6 +11,9 @@ class JwtTemplates(BaseSDK):
     def list(
         self,
         *,
+        paginated: Optional[bool] = None,
+        limit: Optional[int] = 10,
+        offset: Optional[int] = 0,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -18,6 +21,9 @@ class JwtTemplates(BaseSDK):
     ) -> Optional[List[models.JWTTemplate]]:
         r"""List all templates
 
+        :param paginated: Whether to paginate the results. If true, the results will be paginated. If false, the results will not be paginated.
+        :param limit: Applies a limit to the number of results returned. Can be used for paginating the results together with `offset`.
+        :param offset: Skip the first `offset` results when paginating. Needs to be an integer greater or equal to zero. To be used in conjunction with `limit`.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -32,12 +38,19 @@ class JwtTemplates(BaseSDK):
             base_url = server_url
         else:
             base_url = self._get_url(base_url, url_variables)
+
+        request = models.ListJWTTemplatesRequest(
+            paginated=paginated,
+            limit=limit,
+            offset=offset,
+        )
+
         req = self._build_request(
             method="GET",
             path="/jwt_templates",
             base_url=base_url,
             url_variables=url_variables,
-            request=None,
+            request=request,
             request_body_required=False,
             request_has_path_params=False,
             request_has_query_params=True,
@@ -99,6 +112,9 @@ class JwtTemplates(BaseSDK):
     async def list_async(
         self,
         *,
+        paginated: Optional[bool] = None,
+        limit: Optional[int] = 10,
+        offset: Optional[int] = 0,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -106,6 +122,9 @@ class JwtTemplates(BaseSDK):
     ) -> Optional[List[models.JWTTemplate]]:
         r"""List all templates
 
+        :param paginated: Whether to paginate the results. If true, the results will be paginated. If false, the results will not be paginated.
+        :param limit: Applies a limit to the number of results returned. Can be used for paginating the results together with `offset`.
+        :param offset: Skip the first `offset` results when paginating. Needs to be an integer greater or equal to zero. To be used in conjunction with `limit`.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -120,12 +139,19 @@ class JwtTemplates(BaseSDK):
             base_url = server_url
         else:
             base_url = self._get_url(base_url, url_variables)
+
+        request = models.ListJWTTemplatesRequest(
+            paginated=paginated,
+            limit=limit,
+            offset=offset,
+        )
+
         req = self._build_request_async(
             method="GET",
             path="/jwt_templates",
             base_url=base_url,
             url_variables=url_variables,
-            request=None,
+            request=request,
             request_body_required=False,
             request_has_path_params=False,
             request_has_query_params=True,
@@ -612,12 +638,10 @@ class JwtTemplates(BaseSDK):
         self,
         *,
         template_id: str,
-        name: Optional[str] = None,
-        claims: Optional[
-            Union[
-                models.UpdateJWTTemplateClaims, models.UpdateJWTTemplateClaimsTypedDict
-            ]
-        ] = None,
+        name: str,
+        claims: Union[
+            models.UpdateJWTTemplateClaims, models.UpdateJWTTemplateClaimsTypedDict
+        ],
         lifetime: OptionalNullable[float] = UNSET,
         allowed_clock_skew: OptionalNullable[float] = UNSET,
         custom_signing_key: Optional[bool] = None,
@@ -638,8 +662,8 @@ class JwtTemplates(BaseSDK):
         :param lifetime: JWT token lifetime
         :param allowed_clock_skew: JWT token allowed clock skew
         :param custom_signing_key: Whether a custom signing key/algorithm is also provided for this template
-        :param signing_algorithm: The custom signing algorithm to use when minting JWTs
-        :param signing_key: The custom signing private key to use when minting JWTs
+        :param signing_algorithm: The custom signing algorithm to use when minting JWTs. Required if `custom_signing_key` is `true`.
+        :param signing_key: The custom signing private key to use when minting JWTs. Required if `custom_signing_key` is `true`.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -659,9 +683,7 @@ class JwtTemplates(BaseSDK):
             template_id=template_id,
             request_body=models.UpdateJWTTemplateRequestBody(
                 name=name,
-                claims=utils.get_pydantic_model(
-                    claims, Optional[models.UpdateJWTTemplateClaims]
-                ),
+                claims=utils.get_pydantic_model(claims, models.UpdateJWTTemplateClaims),
                 lifetime=lifetime,
                 allowed_clock_skew=allowed_clock_skew,
                 custom_signing_key=custom_signing_key,
@@ -747,12 +769,10 @@ class JwtTemplates(BaseSDK):
         self,
         *,
         template_id: str,
-        name: Optional[str] = None,
-        claims: Optional[
-            Union[
-                models.UpdateJWTTemplateClaims, models.UpdateJWTTemplateClaimsTypedDict
-            ]
-        ] = None,
+        name: str,
+        claims: Union[
+            models.UpdateJWTTemplateClaims, models.UpdateJWTTemplateClaimsTypedDict
+        ],
         lifetime: OptionalNullable[float] = UNSET,
         allowed_clock_skew: OptionalNullable[float] = UNSET,
         custom_signing_key: Optional[bool] = None,
@@ -773,8 +793,8 @@ class JwtTemplates(BaseSDK):
         :param lifetime: JWT token lifetime
         :param allowed_clock_skew: JWT token allowed clock skew
         :param custom_signing_key: Whether a custom signing key/algorithm is also provided for this template
-        :param signing_algorithm: The custom signing algorithm to use when minting JWTs
-        :param signing_key: The custom signing private key to use when minting JWTs
+        :param signing_algorithm: The custom signing algorithm to use when minting JWTs. Required if `custom_signing_key` is `true`.
+        :param signing_key: The custom signing private key to use when minting JWTs. Required if `custom_signing_key` is `true`.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -794,9 +814,7 @@ class JwtTemplates(BaseSDK):
             template_id=template_id,
             request_body=models.UpdateJWTTemplateRequestBody(
                 name=name,
-                claims=utils.get_pydantic_model(
-                    claims, Optional[models.UpdateJWTTemplateClaims]
-                ),
+                claims=utils.get_pydantic_model(claims, models.UpdateJWTTemplateClaims),
                 lifetime=lifetime,
                 allowed_clock_skew=allowed_clock_skew,
                 custom_signing_key=custom_signing_key,

@@ -8,10 +8,6 @@ from typing import Any, List, Mapping, Optional, Union, cast
 
 
 class Invitations(BaseSDK):
-    r"""Invitations allow you to invite someone to sign up to your application, via email.
-    https://clerk.com/docs/authentication/invitations
-    """
-
     def create(
         self,
         *,
@@ -245,10 +241,12 @@ class Invitations(BaseSDK):
     def list(
         self,
         *,
-        limit: Optional[int] = 10,
-        offset: Optional[int] = 0,
         status: Optional[models.ListInvitationsQueryParamStatus] = None,
         query: Optional[str] = None,
+        order_by: Optional[str] = None,
+        paginated: Optional[bool] = None,
+        limit: Optional[int] = 10,
+        offset: Optional[int] = 0,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -258,10 +256,12 @@ class Invitations(BaseSDK):
 
         Returns all non-revoked invitations for your application, sorted by creation date
 
-        :param limit: Applies a limit to the number of results returned. Can be used for paginating the results together with `offset`.
-        :param offset: Skip the first `offset` results when paginating. Needs to be an integer greater or equal to zero. To be used in conjunction with `limit`.
         :param status: Filter invitations based on their status
         :param query: Filter invitations based on their `email_address` or `id`
+        :param order_by: Allows to return organizations in a particular order. At the moment, you can order the returned organizations either by their `name`, `created_at` or `members_count`. In order to specify the direction, you can use the `+/-` symbols prepended in the property to order by. For example, if you want organizations to be returned in descending order according to their `created_at` property, you can use `-created_at`. If you don't use `+` or `-`, then `+` is implied.
+        :param paginated: Whether to paginate the results. If true, the results will be paginated. If false, the results will not be paginated.
+        :param limit: Applies a limit to the number of results returned. Can be used for paginating the results together with `offset`.
+        :param offset: Skip the first `offset` results when paginating. Needs to be an integer greater or equal to zero. To be used in conjunction with `limit`.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -278,10 +278,12 @@ class Invitations(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.ListInvitationsRequest(
-            limit=limit,
-            offset=offset,
             status=status,
             query=query,
+            order_by=order_by,
+            paginated=paginated,
+            limit=limit,
+            offset=offset,
         )
 
         req = self._build_request(
@@ -351,10 +353,12 @@ class Invitations(BaseSDK):
     async def list_async(
         self,
         *,
-        limit: Optional[int] = 10,
-        offset: Optional[int] = 0,
         status: Optional[models.ListInvitationsQueryParamStatus] = None,
         query: Optional[str] = None,
+        order_by: Optional[str] = None,
+        paginated: Optional[bool] = None,
+        limit: Optional[int] = 10,
+        offset: Optional[int] = 0,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -364,10 +368,12 @@ class Invitations(BaseSDK):
 
         Returns all non-revoked invitations for your application, sorted by creation date
 
-        :param limit: Applies a limit to the number of results returned. Can be used for paginating the results together with `offset`.
-        :param offset: Skip the first `offset` results when paginating. Needs to be an integer greater or equal to zero. To be used in conjunction with `limit`.
         :param status: Filter invitations based on their status
         :param query: Filter invitations based on their `email_address` or `id`
+        :param order_by: Allows to return organizations in a particular order. At the moment, you can order the returned organizations either by their `name`, `created_at` or `members_count`. In order to specify the direction, you can use the `+/-` symbols prepended in the property to order by. For example, if you want organizations to be returned in descending order according to their `created_at` property, you can use `-created_at`. If you don't use `+` or `-`, then `+` is implied.
+        :param paginated: Whether to paginate the results. If true, the results will be paginated. If false, the results will not be paginated.
+        :param limit: Applies a limit to the number of results returned. Can be used for paginating the results together with `offset`.
+        :param offset: Skip the first `offset` results when paginating. Needs to be an integer greater or equal to zero. To be used in conjunction with `limit`.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -384,10 +390,12 @@ class Invitations(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.ListInvitationsRequest(
-            limit=limit,
-            offset=offset,
             status=status,
             query=query,
+            order_by=order_by,
+            paginated=paginated,
+            limit=limit,
+            offset=offset,
         )
 
         req = self._build_request_async(
@@ -454,7 +462,7 @@ class Invitations(BaseSDK):
             http_res,
         )
 
-    def create_bulk_invitations(
+    def bulk_create(
         self,
         *,
         request: Optional[
@@ -563,7 +571,7 @@ class Invitations(BaseSDK):
             http_res,
         )
 
-    async def create_bulk_invitations_async(
+    async def bulk_create_async(
         self,
         *,
         request: Optional[

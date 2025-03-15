@@ -21,3 +21,9 @@ value: models.Admin = /* values here */
 value: models.FromOAuth = /* values here */
 ```
 
+### `models.Ticket`
+
+```python
+value: models.Ticket = /* values here */
+```
+

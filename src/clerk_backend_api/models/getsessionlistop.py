@@ -27,6 +27,11 @@ class GetSessionListRequestTypedDict(TypedDict):
     r"""List sessions for the given user"""
     status: NotRequired[QueryParamStatus]
     r"""Filter sessions by the provided status"""
+    paginated: NotRequired[bool]
+    r"""Whether to paginate the results.
+    If true, the results will be paginated.
+    If false, the results will not be paginated.
+    """
     limit: NotRequired[int]
     r"""Applies a limit to the number of results returned.
     Can be used for paginating the results together with `offset`.
@@ -56,6 +61,15 @@ class GetSessionListRequest(BaseModel):
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = None
     r"""Filter sessions by the provided status"""
+
+    paginated: Annotated[
+        Optional[bool],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Whether to paginate the results.
+    If true, the results will be paginated.
+    If false, the results will not be paginated.
+    """
 
     limit: Annotated[
         Optional[int],

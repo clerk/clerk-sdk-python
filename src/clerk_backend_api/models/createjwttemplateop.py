@@ -22,9 +22,9 @@ class CreateJWTTemplateClaims(BaseModel):
 
 
 class CreateJWTTemplateRequestBodyTypedDict(TypedDict):
-    name: NotRequired[str]
+    name: str
     r"""JWT template name"""
-    claims: NotRequired[CreateJWTTemplateClaimsTypedDict]
+    claims: CreateJWTTemplateClaimsTypedDict
     r"""JWT template claims in JSON format"""
     lifetime: NotRequired[Nullable[float]]
     r"""JWT token lifetime"""
@@ -33,16 +33,16 @@ class CreateJWTTemplateRequestBodyTypedDict(TypedDict):
     custom_signing_key: NotRequired[bool]
     r"""Whether a custom signing key/algorithm is also provided for this template"""
     signing_algorithm: NotRequired[Nullable[str]]
-    r"""The custom signing algorithm to use when minting JWTs"""
+    r"""The custom signing algorithm to use when minting JWTs. Required if `custom_signing_key` is `true`."""
     signing_key: NotRequired[Nullable[str]]
-    r"""The custom signing private key to use when minting JWTs"""
+    r"""The custom signing private key to use when minting JWTs. Required if `custom_signing_key` is `true`."""
 
 
 class CreateJWTTemplateRequestBody(BaseModel):
-    name: Optional[str] = None
+    name: str
     r"""JWT template name"""
 
-    claims: Optional[CreateJWTTemplateClaims] = None
+    claims: CreateJWTTemplateClaims
     r"""JWT template claims in JSON format"""
 
     lifetime: OptionalNullable[float] = UNSET
@@ -55,16 +55,14 @@ class CreateJWTTemplateRequestBody(BaseModel):
     r"""Whether a custom signing key/algorithm is also provided for this template"""
 
     signing_algorithm: OptionalNullable[str] = UNSET
-    r"""The custom signing algorithm to use when minting JWTs"""
+    r"""The custom signing algorithm to use when minting JWTs. Required if `custom_signing_key` is `true`."""
 
     signing_key: OptionalNullable[str] = UNSET
-    r"""The custom signing private key to use when minting JWTs"""
+    r"""The custom signing private key to use when minting JWTs. Required if `custom_signing_key` is `true`."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = [
-            "name",
-            "claims",
             "lifetime",
             "allowed_clock_skew",
             "custom_signing_key",

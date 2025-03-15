@@ -3,8 +3,8 @@
 from __future__ import annotations
 from clerk_backend_api.types import BaseModel
 from enum import Enum
-from typing import List, Optional
-from typing_extensions import NotRequired, TypedDict
+from typing import List
+from typing_extensions import TypedDict
 
 
 class OrganizationSettingsObject(str, Enum):
@@ -26,6 +26,8 @@ class OrganizationSettingsTypedDict(TypedDict):
     r"""String representing the object's type. Objects of the same type share the same value."""
     enabled: bool
     max_allowed_memberships: int
+    max_allowed_roles: int
+    max_allowed_permissions: int
     creator_role: str
     r"""The role key that a user will be assigned after creating an organization."""
     admin_delete_enabled: bool
@@ -34,8 +36,6 @@ class OrganizationSettingsTypedDict(TypedDict):
     domains_enrollment_modes: List[DomainsEnrollmentModes]
     domains_default_role: str
     r"""The role key that it will be used in order to create an organization invitation or suggestion."""
-    max_allowed_roles: NotRequired[int]
-    max_allowed_permissions: NotRequired[int]
 
 
 class OrganizationSettings(BaseModel):
@@ -48,6 +48,10 @@ class OrganizationSettings(BaseModel):
 
     max_allowed_memberships: int
 
+    max_allowed_roles: int
+
+    max_allowed_permissions: int
+
     creator_role: str
     r"""The role key that a user will be assigned after creating an organization."""
 
@@ -60,7 +64,3 @@ class OrganizationSettings(BaseModel):
 
     domains_default_role: str
     r"""The role key that it will be used in order to create an organization invitation or suggestion."""
-
-    max_allowed_roles: Optional[int] = None
-
-    max_allowed_permissions: Optional[int] = None

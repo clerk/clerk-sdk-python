@@ -3,8 +3,7 @@
 from __future__ import annotations
 from clerk_backend_api.types import BaseModel
 from enum import Enum
-from typing import Optional
-from typing_extensions import NotRequired, TypedDict
+from typing_extensions import TypedDict
 
 
 class InstanceRestrictionsObject(str, Enum):
@@ -16,24 +15,27 @@ class InstanceRestrictionsObject(str, Enum):
 class InstanceRestrictionsTypedDict(TypedDict):
     r"""Success"""
 
-    object: NotRequired[InstanceRestrictionsObject]
+    object: InstanceRestrictionsObject
     r"""String representing the object's type. Objects of the same type share the same value."""
-    allowlist: NotRequired[bool]
-    blocklist: NotRequired[bool]
-    block_email_subaddresses: NotRequired[bool]
-    ignore_dots_for_gmail_addresses: NotRequired[bool]
+    allowlist: bool
+    blocklist: bool
+    block_email_subaddresses: bool
+    block_disposable_email_domains: bool
+    ignore_dots_for_gmail_addresses: bool
 
 
 class InstanceRestrictions(BaseModel):
     r"""Success"""
 
-    object: Optional[InstanceRestrictionsObject] = None
+    object: InstanceRestrictionsObject
     r"""String representing the object's type. Objects of the same type share the same value."""
 
-    allowlist: Optional[bool] = None
+    allowlist: bool
 
-    blocklist: Optional[bool] = None
+    blocklist: bool
 
-    block_email_subaddresses: Optional[bool] = None
+    block_email_subaddresses: bool
 
-    ignore_dots_for_gmail_addresses: Optional[bool] = None
+    block_disposable_email_domains: bool
+
+    ignore_dots_for_gmail_addresses: bool

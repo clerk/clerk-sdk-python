@@ -32,11 +32,11 @@ class UpdateInstanceRequestBodyTypedDict(TypedDict):
     r"""For browser-like stacks such as browser extensions, Electron, or Capacitor.js the instance allowed origins need to be updated with the request origin value.
     For Chrome extensions popup, background, or service worker pages the origin is chrome-extension://extension_uiid. For Electron apps the default origin is http://localhost:3000. For Capacitor, the origin is capacitor://localhost.
     """
-    cookieless_dev: NotRequired[bool]
+    cookieless_dev: NotRequired[Nullable[bool]]
     r"""Whether the instance should operate in cookieless development mode (i.e. without third-party cookies).
     Deprecated: Please use `url_based_session_syncing` instead.
     """
-    url_based_session_syncing: NotRequired[bool]
+    url_based_session_syncing: NotRequired[Nullable[bool]]
     r"""Whether the instance should use URL-based session syncing in development mode (i.e. without third-party cookies)."""
 
 
@@ -66,16 +66,16 @@ class UpdateInstanceRequestBody(BaseModel):
     """
 
     cookieless_dev: Annotated[
-        Optional[bool],
+        OptionalNullable[bool],
         pydantic.Field(
             deprecated="warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
         ),
-    ] = None
+    ] = UNSET
     r"""Whether the instance should operate in cookieless development mode (i.e. without third-party cookies).
     Deprecated: Please use `url_based_session_syncing` instead.
     """
 
-    url_based_session_syncing: Optional[bool] = None
+    url_based_session_syncing: OptionalNullable[bool] = UNSET
     r"""Whether the instance should use URL-based session syncing in development mode (i.e. without third-party cookies)."""
 
     @model_serializer(mode="wrap")
@@ -98,6 +98,8 @@ class UpdateInstanceRequestBody(BaseModel):
             "support_email",
             "clerk_js_version",
             "development_origin",
+            "cookieless_dev",
+            "url_based_session_syncing",
         ]
         null_default_fields = []
 

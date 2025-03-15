@@ -4,7 +4,7 @@ from .basesdk import BaseSDK
 from clerk_backend_api import models, utils
 from clerk_backend_api._hooks import HookContext
 from clerk_backend_api.types import OptionalNullable, UNSET
-from typing import Any, Dict, Mapping, Optional
+from typing import Any, Dict, List, Mapping, Optional
 
 
 class OrganizationMembershipsSDK(BaseSDK):
@@ -248,9 +248,24 @@ class OrganizationMembershipsSDK(BaseSDK):
         self,
         *,
         organization_id: str,
+        order_by: Optional[str] = None,
+        user_id: Optional[List[str]] = None,
+        email_address: Optional[List[str]] = None,
+        phone_number: Optional[List[str]] = None,
+        username: Optional[List[str]] = None,
+        web3_wallet: Optional[List[str]] = None,
+        role: Optional[List[str]] = None,
+        query: Optional[str] = None,
+        email_address_query: Optional[str] = None,
+        phone_number_query: Optional[str] = None,
+        username_query: Optional[str] = None,
+        name_query: Optional[str] = None,
+        last_active_at_before: Optional[int] = None,
+        last_active_at_after: Optional[int] = None,
+        created_at_before: Optional[int] = None,
+        created_at_after: Optional[int] = None,
         limit: Optional[int] = 10,
         offset: Optional[int] = 0,
-        order_by: Optional[str] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -261,9 +276,24 @@ class OrganizationMembershipsSDK(BaseSDK):
         Retrieves all user memberships for the given organization
 
         :param organization_id: The organization ID.
+        :param order_by: Sorts organizations memberships by phone_number, email_address, created_at, first_name, last_name or username. By prepending one of those values with + or -, we can choose to sort in ascending (ASC) or descending (DESC) order.\"
+        :param user_id: Returns users with the user ids specified. For each user id, the `+` and `-` can be prepended to the id, which denote whether the respective user id should be included or excluded from the result set. Accepts up to 100 user ids. Any user ids not found are ignored.
+        :param email_address: Returns users with the specified email addresses. Accepts up to 100 email addresses. Any email addresses not found are ignored.
+        :param phone_number: Returns users with the specified phone numbers. Accepts up to 100 phone numbers. Any phone numbers not found are ignored.
+        :param username: Returns users with the specified usernames. Accepts up to 100 usernames. Any usernames not found are ignored.
+        :param web3_wallet: Returns users with the specified web3 wallet addresses. Accepts up to 100 web3 wallet addresses. Any web3 wallet addressed not found are ignored.
+        :param role: Returns users with the specified roles. Accepts up to 100 roles. Any roles not found are ignored.
+        :param query: Returns users that match the given query. For possible matches, we check the email addresses, phone numbers, usernames, web3 wallets, user ids, first and last names. The query value doesn't need to match the exact value you are looking for, it is capable of partial matches as well.
+        :param email_address_query: Returns users with emails that match the given query, via case-insensitive partial match. For example, `email_address_query=ello` will match a user with the email `HELLO@example.com`.
+        :param phone_number_query: Returns users with phone numbers that match the given query, via case-insensitive partial match. For example, `phone_number_query=555` will match a user with the phone number `+1555xxxxxxx`.
+        :param username_query: Returns users with usernames that match the given query, via case-insensitive partial match. For example, `username_query=CoolUser` will match a user with the username `SomeCoolUser`.
+        :param name_query: Returns users with names that match the given query, via case-insensitive partial match.
+        :param last_active_at_before: Returns users whose last session activity was before the given date (with millisecond precision). Example: use 1700690400000 to retrieve users whose last session activity was before 2023-11-23.
+        :param last_active_at_after: Returns users whose last session activity was after the given date (with millisecond precision). Example: use 1700690400000 to retrieve users whose last session activity was after 2023-11-23.
+        :param created_at_before: Returns users who have been created before the given date (with millisecond precision). Example: use 1730160000000 to retrieve users who have been created before 2024-10-29.
+        :param created_at_after: Returns users who have been created after the given date (with millisecond precision). Example: use 1730160000000 to retrieve users who have been created after 2024-10-29.
         :param limit: Applies a limit to the number of results returned. Can be used for paginating the results together with `offset`.
         :param offset: Skip the first `offset` results when paginating. Needs to be an integer greater or equal to zero. To be used in conjunction with `limit`.
-        :param order_by: Sorts organizations memberships by phone_number, email_address, created_at, first_name, last_name or username. By prepending one of those values with + or -, we can choose to sort in ascending (ASC) or descending (DESC) order.\"
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -281,9 +311,24 @@ class OrganizationMembershipsSDK(BaseSDK):
 
         request = models.ListOrganizationMembershipsRequest(
             organization_id=organization_id,
+            order_by=order_by,
+            user_id=user_id,
+            email_address=email_address,
+            phone_number=phone_number,
+            username=username,
+            web3_wallet=web3_wallet,
+            role=role,
+            query=query,
+            email_address_query=email_address_query,
+            phone_number_query=phone_number_query,
+            username_query=username_query,
+            name_query=name_query,
+            last_active_at_before=last_active_at_before,
+            last_active_at_after=last_active_at_after,
+            created_at_before=created_at_before,
+            created_at_after=created_at_after,
             limit=limit,
             offset=offset,
-            order_by=order_by,
         )
 
         req = self._build_request(
@@ -358,9 +403,24 @@ class OrganizationMembershipsSDK(BaseSDK):
         self,
         *,
         organization_id: str,
+        order_by: Optional[str] = None,
+        user_id: Optional[List[str]] = None,
+        email_address: Optional[List[str]] = None,
+        phone_number: Optional[List[str]] = None,
+        username: Optional[List[str]] = None,
+        web3_wallet: Optional[List[str]] = None,
+        role: Optional[List[str]] = None,
+        query: Optional[str] = None,
+        email_address_query: Optional[str] = None,
+        phone_number_query: Optional[str] = None,
+        username_query: Optional[str] = None,
+        name_query: Optional[str] = None,
+        last_active_at_before: Optional[int] = None,
+        last_active_at_after: Optional[int] = None,
+        created_at_before: Optional[int] = None,
+        created_at_after: Optional[int] = None,
         limit: Optional[int] = 10,
         offset: Optional[int] = 0,
-        order_by: Optional[str] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -371,9 +431,24 @@ class OrganizationMembershipsSDK(BaseSDK):
         Retrieves all user memberships for the given organization
 
         :param organization_id: The organization ID.
+        :param order_by: Sorts organizations memberships by phone_number, email_address, created_at, first_name, last_name or username. By prepending one of those values with + or -, we can choose to sort in ascending (ASC) or descending (DESC) order.\"
+        :param user_id: Returns users with the user ids specified. For each user id, the `+` and `-` can be prepended to the id, which denote whether the respective user id should be included or excluded from the result set. Accepts up to 100 user ids. Any user ids not found are ignored.
+        :param email_address: Returns users with the specified email addresses. Accepts up to 100 email addresses. Any email addresses not found are ignored.
+        :param phone_number: Returns users with the specified phone numbers. Accepts up to 100 phone numbers. Any phone numbers not found are ignored.
+        :param username: Returns users with the specified usernames. Accepts up to 100 usernames. Any usernames not found are ignored.
+        :param web3_wallet: Returns users with the specified web3 wallet addresses. Accepts up to 100 web3 wallet addresses. Any web3 wallet addressed not found are ignored.
+        :param role: Returns users with the specified roles. Accepts up to 100 roles. Any roles not found are ignored.
+        :param query: Returns users that match the given query. For possible matches, we check the email addresses, phone numbers, usernames, web3 wallets, user ids, first and last names. The query value doesn't need to match the exact value you are looking for, it is capable of partial matches as well.
+        :param email_address_query: Returns users with emails that match the given query, via case-insensitive partial match. For example, `email_address_query=ello` will match a user with the email `HELLO@example.com`.
+        :param phone_number_query: Returns users with phone numbers that match the given query, via case-insensitive partial match. For example, `phone_number_query=555` will match a user with the phone number `+1555xxxxxxx`.
+        :param username_query: Returns users with usernames that match the given query, via case-insensitive partial match. For example, `username_query=CoolUser` will match a user with the username `SomeCoolUser`.
+        :param name_query: Returns users with names that match the given query, via case-insensitive partial match.
+        :param last_active_at_before: Returns users whose last session activity was before the given date (with millisecond precision). Example: use 1700690400000 to retrieve users whose last session activity was before 2023-11-23.
+        :param last_active_at_after: Returns users whose last session activity was after the given date (with millisecond precision). Example: use 1700690400000 to retrieve users whose last session activity was after 2023-11-23.
+        :param created_at_before: Returns users who have been created before the given date (with millisecond precision). Example: use 1730160000000 to retrieve users who have been created before 2024-10-29.
+        :param created_at_after: Returns users who have been created after the given date (with millisecond precision). Example: use 1730160000000 to retrieve users who have been created after 2024-10-29.
         :param limit: Applies a limit to the number of results returned. Can be used for paginating the results together with `offset`.
         :param offset: Skip the first `offset` results when paginating. Needs to be an integer greater or equal to zero. To be used in conjunction with `limit`.
-        :param order_by: Sorts organizations memberships by phone_number, email_address, created_at, first_name, last_name or username. By prepending one of those values with + or -, we can choose to sort in ascending (ASC) or descending (DESC) order.\"
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -391,9 +466,24 @@ class OrganizationMembershipsSDK(BaseSDK):
 
         request = models.ListOrganizationMembershipsRequest(
             organization_id=organization_id,
+            order_by=order_by,
+            user_id=user_id,
+            email_address=email_address,
+            phone_number=phone_number,
+            username=username,
+            web3_wallet=web3_wallet,
+            role=role,
+            query=query,
+            email_address_query=email_address_query,
+            phone_number_query=phone_number_query,
+            username_query=username_query,
+            name_query=name_query,
+            last_active_at_before=last_active_at_before,
+            last_active_at_after=last_active_at_after,
+            created_at_before=created_at_before,
+            created_at_after=created_at_after,
             limit=limit,
             offset=offset,
-            order_by=order_by,
         )
 
         req = self._build_request_async(
@@ -1124,226 +1214,6 @@ class OrganizationMembershipsSDK(BaseSDK):
                 http_res.text, Optional[models.OrganizationMembership]
             )
         if utils.match_response(http_res, ["400", "404", "422"], "application/json"):
-            response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=response_data)
-        if utils.match_response(http_res, "4XX", "*"):
-            http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
-        if utils.match_response(http_res, "5XX", "*"):
-            http_res_text = await utils.stream_to_text_async(http_res)
-            raise models.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
-
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = await utils.stream_to_text_async(http_res)
-        raise models.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
-
-    def get_all(
-        self,
-        *,
-        limit: Optional[int] = 10,
-        offset: Optional[int] = 0,
-        order_by: Optional[str] = None,
-        retries: OptionalNullable[utils.RetryConfig] = UNSET,
-        server_url: Optional[str] = None,
-        timeout_ms: Optional[int] = None,
-        http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.OrganizationMemberships]:
-        r"""Get a list of all organization memberships within an instance.
-
-        Retrieves all organization user memberships for the given instance.
-
-        :param limit: Applies a limit to the number of results returned. Can be used for paginating the results together with `offset`.
-        :param offset: Skip the first `offset` results when paginating. Needs to be an integer greater or equal to zero. To be used in conjunction with `limit`.
-        :param order_by: Sorts organizations memberships by phone_number, email_address, created_at, first_name, last_name or username. By prepending one of those values with + or -, we can choose to sort in ascending (ASC) or descending (DESC) order.
-        :param retries: Override the default retry configuration for this method
-        :param server_url: Override the default server URL for this method
-        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
-        :param http_headers: Additional headers to set or replace on requests.
-        """
-        base_url = None
-        url_variables = None
-        if timeout_ms is None:
-            timeout_ms = self.sdk_configuration.timeout_ms
-
-        if server_url is not None:
-            base_url = server_url
-        else:
-            base_url = self._get_url(base_url, url_variables)
-
-        request = models.InstanceGetOrganizationMembershipsRequest(
-            limit=limit,
-            offset=offset,
-            order_by=order_by,
-        )
-
-        req = self._build_request(
-            method="GET",
-            path="/organization_memberships",
-            base_url=base_url,
-            url_variables=url_variables,
-            request=request,
-            request_body_required=False,
-            request_has_path_params=False,
-            request_has_query_params=True,
-            user_agent_header="user-agent",
-            accept_header_value="application/json",
-            http_headers=http_headers,
-            security=self.sdk_configuration.security,
-            timeout_ms=timeout_ms,
-        )
-
-        if retries == UNSET:
-            if self.sdk_configuration.retry_config is not UNSET:
-                retries = self.sdk_configuration.retry_config
-            else:
-                retries = utils.RetryConfig(
-                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
-                )
-
-        retry_config = None
-        if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["5XX"])
-
-        http_res = self.do_request(
-            hook_ctx=HookContext(
-                base_url=base_url or "",
-                operation_id="InstanceGetOrganizationMemberships",
-                oauth2_scopes=[],
-                security_source=self.sdk_configuration.security,
-            ),
-            request=req,
-            error_status_codes=["400", "401", "422", "4XX", "500", "5XX"],
-            retry_config=retry_config,
-        )
-
-        response_data: Any = None
-        if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(
-                http_res.text, Optional[models.OrganizationMemberships]
-            )
-        if utils.match_response(http_res, ["400", "401", "422"], "application/json"):
-            response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=response_data)
-        if utils.match_response(http_res, "500", "application/json"):
-            response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=response_data)
-        if utils.match_response(http_res, "4XX", "*"):
-            http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
-        if utils.match_response(http_res, "5XX", "*"):
-            http_res_text = utils.stream_to_text(http_res)
-            raise models.SDKError(
-                "API error occurred", http_res.status_code, http_res_text, http_res
-            )
-
-        content_type = http_res.headers.get("Content-Type")
-        http_res_text = utils.stream_to_text(http_res)
-        raise models.SDKError(
-            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
-            http_res.status_code,
-            http_res_text,
-            http_res,
-        )
-
-    async def get_all_async(
-        self,
-        *,
-        limit: Optional[int] = 10,
-        offset: Optional[int] = 0,
-        order_by: Optional[str] = None,
-        retries: OptionalNullable[utils.RetryConfig] = UNSET,
-        server_url: Optional[str] = None,
-        timeout_ms: Optional[int] = None,
-        http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.OrganizationMemberships]:
-        r"""Get a list of all organization memberships within an instance.
-
-        Retrieves all organization user memberships for the given instance.
-
-        :param limit: Applies a limit to the number of results returned. Can be used for paginating the results together with `offset`.
-        :param offset: Skip the first `offset` results when paginating. Needs to be an integer greater or equal to zero. To be used in conjunction with `limit`.
-        :param order_by: Sorts organizations memberships by phone_number, email_address, created_at, first_name, last_name or username. By prepending one of those values with + or -, we can choose to sort in ascending (ASC) or descending (DESC) order.
-        :param retries: Override the default retry configuration for this method
-        :param server_url: Override the default server URL for this method
-        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
-        :param http_headers: Additional headers to set or replace on requests.
-        """
-        base_url = None
-        url_variables = None
-        if timeout_ms is None:
-            timeout_ms = self.sdk_configuration.timeout_ms
-
-        if server_url is not None:
-            base_url = server_url
-        else:
-            base_url = self._get_url(base_url, url_variables)
-
-        request = models.InstanceGetOrganizationMembershipsRequest(
-            limit=limit,
-            offset=offset,
-            order_by=order_by,
-        )
-
-        req = self._build_request_async(
-            method="GET",
-            path="/organization_memberships",
-            base_url=base_url,
-            url_variables=url_variables,
-            request=request,
-            request_body_required=False,
-            request_has_path_params=False,
-            request_has_query_params=True,
-            user_agent_header="user-agent",
-            accept_header_value="application/json",
-            http_headers=http_headers,
-            security=self.sdk_configuration.security,
-            timeout_ms=timeout_ms,
-        )
-
-        if retries == UNSET:
-            if self.sdk_configuration.retry_config is not UNSET:
-                retries = self.sdk_configuration.retry_config
-            else:
-                retries = utils.RetryConfig(
-                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
-                )
-
-        retry_config = None
-        if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["5XX"])
-
-        http_res = await self.do_request_async(
-            hook_ctx=HookContext(
-                base_url=base_url or "",
-                operation_id="InstanceGetOrganizationMemberships",
-                oauth2_scopes=[],
-                security_source=self.sdk_configuration.security,
-            ),
-            request=req,
-            error_status_codes=["400", "401", "422", "4XX", "500", "5XX"],
-            retry_config=retry_config,
-        )
-
-        response_data: Any = None
-        if utils.match_response(http_res, "200", "application/json"):
-            return utils.unmarshal_json(
-                http_res.text, Optional[models.OrganizationMemberships]
-            )
-        if utils.match_response(http_res, ["400", "401", "422"], "application/json"):
-            response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
-            raise models.ClerkErrors(data=response_data)
-        if utils.match_response(http_res, "500", "application/json"):
             response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=response_data)
         if utils.match_response(http_res, "4XX", "*"):

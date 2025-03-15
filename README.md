@@ -17,14 +17,12 @@
 <!-- Start Summary [summary] -->
 ## Summary
 
-Clerk Backend API: The Clerk REST Backend API, meant to be accessed by backend
-servers.
+Clerk Backend API: The Clerk REST Backend API, meant to be accessed by backend servers.
 
 ### Versions
 
 When the API changes in a way that isn't compatible with older versions, a new version is released.
-Each version is identified by its release date, e.g. `2021-02-05`. For more information, please see [Clerk API Versions](https://clerk.com/docs/backend-requests/versioning/overview).
-
+Each version is identified by its release date, e.g. `2024-10-01`. For more information, please see [Clerk API Versions](https://clerk.com/docs/versioning/available-versions).
 
 Please see https://clerk.com/docs for more information.
 
@@ -130,16 +128,12 @@ Generally, the SDK will work well with most IDEs out of the box. However, when u
 # Synchronous Example
 from clerk_backend_api import Clerk
 
-with Clerk(
-    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as clerk:
 
-    res = clerk.email_addresses.get(email_address_id="email_address_id_example")
+with Clerk() as clerk:
 
-    assert res is not None
+    clerk.miscellaneous.get_public_interstitial(frontend_api_query_parameter="frontend-api_1a2b3c4d", frontend_api_query_parameter1="pub_1a2b3c4d", publishable_key="pub_1a2b3c4d", proxy_url="https://mean-orchid.com/", domain="plump-reach.com", sign_in_url="https://delicious-costume.org/", use_domain_for_script=True)
 
-    # Handle response
-    print(res)
+    # Use the SDK ...
 ```
 
 </br>
@@ -151,16 +145,12 @@ import asyncio
 from clerk_backend_api import Clerk
 
 async def main():
-    async with Clerk(
-        bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-    ) as clerk:
 
-        res = await clerk.email_addresses.get_async(email_address_id="email_address_id_example")
+    async with Clerk() as clerk:
 
-        assert res is not None
+        await clerk.miscellaneous.get_public_interstitial_async(frontend_api_query_parameter="frontend-api_1a2b3c4d", frontend_api_query_parameter1="pub_1a2b3c4d", publishable_key="pub_1a2b3c4d", proxy_url="https://mean-orchid.com/", domain="plump-reach.com", sign_in_url="https://delicious-costume.org/", use_domain_for_script=True)
 
-        # Handle response
-        print(res)
+        # Use the SDK ...
 
 asyncio.run(main())
 ```
@@ -181,11 +171,12 @@ To authenticate with the API the `bearer_auth` parameter must be set when initia
 ```python
 from clerk_backend_api import Clerk
 
+
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 ) as clerk:
 
-    clerk.miscellaneous.get_interstitial(frontend_api="frontend-api_1a2b3c4d", publishable_key="pub_1a2b3c4d")
+    clerk.miscellaneous.get_public_interstitial(frontend_api_query_parameter="frontend-api_1a2b3c4d", frontend_api_query_parameter1="pub_1a2b3c4d", publishable_key="pub_1a2b3c4d", proxy_url="https://mean-orchid.com/", domain="plump-reach.com", sign_in_url="https://delicious-costume.org/", use_domain_for_script=True)
 
     # Use the SDK ...
 
@@ -226,26 +217,22 @@ If the request is correctly authenticated, the token's payload is made available
 * [create](docs/sdks/actortokens/README.md#create) - Create actor token
 * [revoke](docs/sdks/actortokens/README.md#revoke) - Revoke actor token
 
-### [allowlist_blocklist](docs/sdks/allowlistblocklist/README.md)
-
-* [list_allowlist_identifiers](docs/sdks/allowlistblocklist/README.md#list_allowlist_identifiers) - List all identifiers on the allow-list
-* [create_allowlist_identifier](docs/sdks/allowlistblocklist/README.md#create_allowlist_identifier) - Add identifier to the allow-list
-* [create_blocklist_identifier](docs/sdks/allowlistblocklist/README.md#create_blocklist_identifier) - Add identifier to the block-list
-* [delete_blocklist_identifier](docs/sdks/allowlistblocklist/README.md#delete_blocklist_identifier) - Delete identifier from block-list
-
 ### [allowlist_identifiers](docs/sdks/allowlistidentifiers/README.md)
 
+* [list](docs/sdks/allowlistidentifiers/README.md#list) - List all identifiers on the allow-list
+* [create](docs/sdks/allowlistidentifiers/README.md#create) - Add identifier to the allow-list
 * [delete](docs/sdks/allowlistidentifiers/README.md#delete) - Delete identifier from allow-list
 
 ### [beta_features](docs/sdks/betafeatures/README.md)
 
 * [update_instance_settings](docs/sdks/betafeatures/README.md#update_instance_settings) - Update instance settings
-* [~~update_domain~~](docs/sdks/betafeatures/README.md#update_domain) - Update production instance domain :warning: **Deprecated**
-* [change_production_instance_domain](docs/sdks/betafeatures/README.md#change_production_instance_domain) - Update production instance domain
+* [~~update_production_instance_domain~~](docs/sdks/betafeatures/README.md#update_production_instance_domain) - Update production instance domain :warning: **Deprecated**
 
 ### [blocklist_identifiers](docs/sdks/blocklistidentifierssdk/README.md)
 
 * [list](docs/sdks/blocklistidentifierssdk/README.md#list) - List all identifiers on the block-list
+* [create](docs/sdks/blocklistidentifierssdk/README.md#create) - Add identifier to the block-list
+* [delete](docs/sdks/blocklistidentifierssdk/README.md#delete) - Delete identifier from block-list
 
 
 ### [clients](docs/sdks/clients/README.md)
@@ -275,27 +262,28 @@ If the request is correctly authenticated, the token's payload is made available
 ### [~~email_sms_templates~~](docs/sdks/emailsmstemplates/README.md)
 
 * [~~list~~](docs/sdks/emailsmstemplates/README.md#list) - List all templates :warning: **Deprecated**
-* [~~revert~~](docs/sdks/emailsmstemplates/README.md#revert) - Revert a template :warning: **Deprecated**
 * [~~get~~](docs/sdks/emailsmstemplates/README.md#get) - Retrieve a template :warning: **Deprecated**
+* [~~revert~~](docs/sdks/emailsmstemplates/README.md#revert) - Revert a template :warning: **Deprecated**
 * [~~toggle_template_delivery~~](docs/sdks/emailsmstemplates/README.md#toggle_template_delivery) - Toggle the delivery by Clerk for a template of a given type and slug :warning: **Deprecated**
 
 ### [instance_settings](docs/sdks/instancesettingssdk/README.md)
 
-* [get_instance](docs/sdks/instancesettingssdk/README.md#get_instance) - Fetch the current instance
+* [get](docs/sdks/instancesettingssdk/README.md#get) - Fetch the current instance
 * [update](docs/sdks/instancesettingssdk/README.md#update) - Update instance settings
 * [update_restrictions](docs/sdks/instancesettingssdk/README.md#update_restrictions) - Update instance restrictions
+* [change_domain](docs/sdks/instancesettingssdk/README.md#change_domain) - Update production instance domain
 * [update_organization_settings](docs/sdks/instancesettingssdk/README.md#update_organization_settings) - Update instance organization settings
 
 ### [invitations](docs/sdks/invitations/README.md)
 
 * [create](docs/sdks/invitations/README.md#create) - Create an invitation
 * [list](docs/sdks/invitations/README.md#list) - List all invitations
-* [create_bulk_invitations](docs/sdks/invitations/README.md#create_bulk_invitations) - Create multiple invitations
+* [bulk_create](docs/sdks/invitations/README.md#bulk_create) - Create multiple invitations
 * [revoke](docs/sdks/invitations/README.md#revoke) - Revokes an invitation
 
 ### [jwks](docs/sdks/jwkssdk/README.md)
 
-* [get](docs/sdks/jwkssdk/README.md#get) - Retrieve the JSON Web Key Set of the instance
+* [get_jwks](docs/sdks/jwkssdk/README.md#get_jwks) - Retrieve the JSON Web Key Set of the instance
 
 ### [jwt_templates](docs/sdks/jwttemplates/README.md)
 
@@ -307,7 +295,7 @@ If the request is correctly authenticated, the token's payload is made available
 
 ### [miscellaneous](docs/sdks/miscellaneous/README.md)
 
-* [get_interstitial](docs/sdks/miscellaneous/README.md#get_interstitial) - Returns the markup for the interstitial page
+* [get_public_interstitial](docs/sdks/miscellaneous/README.md#get_public_interstitial) - Returns the markup for the interstitial page
 
 ### [oauth_applications](docs/sdks/oauthapplicationssdk/README.md)
 
@@ -318,14 +306,11 @@ If the request is correctly authenticated, the token's payload is made available
 * [delete](docs/sdks/oauthapplicationssdk/README.md#delete) - Delete an OAuth application
 * [rotate_secret](docs/sdks/oauthapplicationssdk/README.md#rotate_secret) - Rotate the client secret of the given OAuth application
 
-### [organization_domain](docs/sdks/organizationdomainsdk/README.md)
-
-* [update](docs/sdks/organizationdomainsdk/README.md#update) - Update an organization domain.
-
 ### [organization_domains](docs/sdks/organizationdomainssdk/README.md)
 
 * [create](docs/sdks/organizationdomainssdk/README.md#create) - Create a new organization domain.
 * [list](docs/sdks/organizationdomainssdk/README.md#list) - Get a list of all domains of an organization.
+* [update](docs/sdks/organizationdomainssdk/README.md#update) - Update an organization domain.
 * [delete](docs/sdks/organizationdomainssdk/README.md#delete) - Remove a domain from an organization.
 
 ### [organization_invitations](docs/sdks/organizationinvitationssdk/README.md)
@@ -345,7 +330,6 @@ If the request is correctly authenticated, the token's payload is made available
 * [update](docs/sdks/organizationmembershipssdk/README.md#update) - Update an organization membership
 * [delete](docs/sdks/organizationmembershipssdk/README.md#delete) - Remove a member from an organization
 * [update_metadata](docs/sdks/organizationmembershipssdk/README.md#update_metadata) - Merge and update organization membership metadata
-* [get_all](docs/sdks/organizationmembershipssdk/README.md#get_all) - Get a list of all organization memberships within an instance.
 
 ### [organizations](docs/sdks/organizationssdk/README.md)
 
@@ -369,15 +353,12 @@ If the request is correctly authenticated, the token's payload is made available
 
 * [verify](docs/sdks/proxychecks/README.md#verify) - Verify the proxy configuration for your domain
 
-### [redirect_ur_ls](docs/sdks/redirecturls/README.md)
+### [redirect_urls](docs/sdks/redirecturls/README.md)
 
 * [list](docs/sdks/redirecturls/README.md#list) - List all redirect URLs
-
-### [redirect_urls](docs/sdks/clerkredirecturls/README.md)
-
-* [create](docs/sdks/clerkredirecturls/README.md#create) - Create a redirect URL
-* [get](docs/sdks/clerkredirecturls/README.md#get) - Retrieve a redirect URL
-* [delete](docs/sdks/clerkredirecturls/README.md#delete) - Delete a redirect URL
+* [create](docs/sdks/redirecturls/README.md#create) - Create a redirect URL
+* [get](docs/sdks/redirecturls/README.md#get) - Retrieve a redirect URL
+* [delete](docs/sdks/redirecturls/README.md#delete) - Delete a redirect URL
 
 ### [saml_connections](docs/sdks/samlconnectionssdk/README.md)
 
@@ -390,11 +371,11 @@ If the request is correctly authenticated, the token's payload is made available
 ### [sessions](docs/sdks/sessions/README.md)
 
 * [list](docs/sdks/sessions/README.md#list) - List all sessions
-* [create_session](docs/sdks/sessions/README.md#create_session) - Create a new active session
+* [create](docs/sdks/sessions/README.md#create) - Create a new active session
 * [get](docs/sdks/sessions/README.md#get) - Retrieve a session
 * [revoke](docs/sdks/sessions/README.md#revoke) - Revoke a session
 * [~~verify~~](docs/sdks/sessions/README.md#verify) - Verify a session :warning: **Deprecated**
-* [create_session_token](docs/sdks/sessions/README.md#create_session_token) - Create a session token
+* [create_token](docs/sdks/sessions/README.md#create_token) - Create a session token
 * [create_token_from_template](docs/sdks/sessions/README.md#create_token_from_template) - Create a session token from a jwt template
 
 ### [sign_in_tokens](docs/sdks/signintokens/README.md)
@@ -404,6 +385,7 @@ If the request is correctly authenticated, the token's payload is made available
 
 ### [sign_ups](docs/sdks/signups/README.md)
 
+* [get](docs/sdks/signups/README.md#get) - Retrieve a sign-up by ID
 * [update](docs/sdks/signups/README.md#update) - Update a sign-up
 
 ### [~~templates~~](docs/sdks/templates/README.md)
@@ -440,11 +422,12 @@ If the request is correctly authenticated, the token's payload is made available
 * [delete_web3_wallet](docs/sdks/users/README.md#delete_web3_wallet) - Delete a user web3 wallet
 * [delete_totp](docs/sdks/users/README.md#delete_totp) - Delete all the user's TOTPs
 * [delete_external_account](docs/sdks/users/README.md#delete_external_account) - Delete External Account
+* [get_instance_organization_memberships](docs/sdks/users/README.md#get_instance_organization_memberships) - Get a list of all organization memberships within an instance.
 
 ### [waitlist_entries](docs/sdks/waitlistentriessdk/README.md)
 
-* [list_waitlist_entries](docs/sdks/waitlistentriessdk/README.md#list_waitlist_entries) - List all waitlist entries
-* [create_waitlist_entry](docs/sdks/waitlistentriessdk/README.md#create_waitlist_entry) - Create a waitlist entry
+* [list](docs/sdks/waitlistentriessdk/README.md#list) - List all waitlist entries
+* [create](docs/sdks/waitlistentriessdk/README.md#create) - Create a waitlist entry
 
 ### [webhooks](docs/sdks/webhooks/README.md)
 
@@ -467,6 +450,7 @@ Certain SDK methods accept file objects as part of a request body or multi-part 
 
 ```python
 from clerk_backend_api import Clerk
+
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
@@ -496,9 +480,10 @@ To change the default retry strategy for a single API call, simply provide a `Re
 from clerk_backend_api import Clerk
 from clerk_backend_api.utils import BackoffStrategy, RetryConfig
 
+
 with Clerk() as clerk:
 
-    clerk.miscellaneous.get_interstitial(frontend_api="frontend-api_1a2b3c4d", publishable_key="pub_1a2b3c4d",
+    clerk.miscellaneous.get_public_interstitial(frontend_api_query_parameter="frontend-api_1a2b3c4d", frontend_api_query_parameter1="pub_1a2b3c4d", publishable_key="pub_1a2b3c4d", proxy_url="https://mean-orchid.com/", domain="plump-reach.com", sign_in_url="https://delicious-costume.org/", use_domain_for_script=True,
         RetryConfig("backoff", BackoffStrategy(1, 50, 1.1, 100), False))
 
     # Use the SDK ...
@@ -510,11 +495,12 @@ If you'd like to override the default retry strategy for all operations that sup
 from clerk_backend_api import Clerk
 from clerk_backend_api.utils import BackoffStrategy, RetryConfig
 
+
 with Clerk(
     retry_config=RetryConfig("backoff", BackoffStrategy(1, 50, 1.1, 100), False),
 ) as clerk:
 
-    clerk.miscellaneous.get_interstitial(frontend_api="frontend-api_1a2b3c4d", publishable_key="pub_1a2b3c4d")
+    clerk.miscellaneous.get_public_interstitial(frontend_api_query_parameter="frontend-api_1a2b3c4d", frontend_api_query_parameter1="pub_1a2b3c4d", publishable_key="pub_1a2b3c4d", proxy_url="https://mean-orchid.com/", domain="plump-reach.com", sign_in_url="https://delicious-costume.org/", use_domain_for_script=True)
 
     # Use the SDK ...
 
@@ -546,6 +532,7 @@ When custom error responses are specified for an operation, the SDK may also rai
 
 ```python
 from clerk_backend_api import Clerk, models
+
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
@@ -580,11 +567,12 @@ The default server can be overridden globally by passing a URL to the `server_ur
 ```python
 from clerk_backend_api import Clerk
 
+
 with Clerk(
     server_url="https://api.clerk.com/v1",
 ) as clerk:
 
-    clerk.miscellaneous.get_interstitial(frontend_api="frontend-api_1a2b3c4d", publishable_key="pub_1a2b3c4d")
+    clerk.miscellaneous.get_public_interstitial(frontend_api_query_parameter="frontend-api_1a2b3c4d", frontend_api_query_parameter1="pub_1a2b3c4d", publishable_key="pub_1a2b3c4d", proxy_url="https://mean-orchid.com/", domain="plump-reach.com", sign_in_url="https://delicious-costume.org/", use_domain_for_script=True)
 
     # Use the SDK ...
 
@@ -682,17 +670,15 @@ The `Clerk` class implements the context manager protocol and registers a finali
 ```python
 from clerk_backend_api import Clerk
 def main():
-    with Clerk(
-        bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-    ) as clerk:
+
+    with Clerk() as clerk:
         # Rest of application here...
 
 
 # Or when using async:
 async def amain():
-    async with Clerk(
-        bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-    ) as clerk:
+
+    async with Clerk() as clerk:
         # Rest of application here...
 ```
 <!-- End Resource Management [resource-management] -->

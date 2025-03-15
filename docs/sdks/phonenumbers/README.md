@@ -19,6 +19,7 @@ Create a new phone number
 ```python
 from clerk_backend_api import Clerk
 
+
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 ) as clerk:
@@ -65,6 +66,7 @@ Returns the details of a phone number
 ```python
 from clerk_backend_api import Clerk
 
+
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 ) as clerk:
@@ -105,6 +107,7 @@ Delete the phone number with the given ID
 ```python
 from clerk_backend_api import Clerk
 
+
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 ) as clerk:
@@ -144,6 +147,7 @@ Updates a phone number
 
 ```python
 from clerk_backend_api import Clerk
+
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",

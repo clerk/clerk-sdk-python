@@ -8,6 +8,11 @@ from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class GetClientListRequestTypedDict(TypedDict):
+    paginated: NotRequired[bool]
+    r"""Whether to paginate the results.
+    If true, the results will be paginated.
+    If false, the results will not be paginated.
+    """
     limit: NotRequired[int]
     r"""Applies a limit to the number of results returned.
     Can be used for paginating the results together with `offset`.
@@ -20,6 +25,15 @@ class GetClientListRequestTypedDict(TypedDict):
 
 
 class GetClientListRequest(BaseModel):
+    paginated: Annotated[
+        Optional[bool],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Whether to paginate the results.
+    If true, the results will be paginated.
+    If false, the results will not be paginated.
+    """
+
     limit: Annotated[
         Optional[int],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),

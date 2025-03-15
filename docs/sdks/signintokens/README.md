@@ -19,6 +19,7 @@ You can optionally supply a different duration in seconds using the `expires_in_
 ```python
 from clerk_backend_api import Clerk
 
+
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 ) as clerk:
@@ -60,6 +61,7 @@ Revokes a pending sign-in token
 
 ```python
 from clerk_backend_api import Clerk
+
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",

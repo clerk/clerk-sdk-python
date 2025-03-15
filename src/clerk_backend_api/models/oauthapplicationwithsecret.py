@@ -22,6 +22,9 @@ class OAuthApplicationWithSecretTypedDict(TypedDict):
     scopes: str
     redirect_uris: List[str]
     callback_url: str
+    r"""Deprecated: Use redirect_uris instead.
+
+    """
     authorize_url: str
     token_fetch_url: str
     user_info_url: str
@@ -64,6 +67,9 @@ class OAuthApplicationWithSecret(BaseModel):
             deprecated="warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
         ),
     ]
+    r"""Deprecated: Use redirect_uris instead.
+
+    """
 
     authorize_url: str
 

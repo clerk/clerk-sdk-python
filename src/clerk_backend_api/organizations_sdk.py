@@ -8,19 +8,17 @@ from typing import Any, Dict, List, Mapping, Optional, Union, cast
 
 
 class OrganizationsSDK(BaseSDK):
-    r"""Organizations are used to group members under a common entity and provide shared access to resources.
-    https://clerk.com/docs/organizations/overview
-    """
-
     def list(
         self,
         *,
-        limit: Optional[int] = 10,
-        offset: Optional[int] = 0,
         include_members_count: Optional[bool] = None,
+        include_missing_member_with_elevated_permissions: Optional[bool] = None,
         query: Optional[str] = None,
+        user_id: Optional[List[str]] = None,
         organization_id: Optional[List[str]] = None,
         order_by: Optional[str] = "-created_at",
+        limit: Optional[int] = 10,
+        offset: Optional[int] = 0,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -33,12 +31,14 @@ class OrganizationsSDK(BaseSDK):
         The organizations are ordered by descending creation date.
         Most recent organizations will be returned first.
 
-        :param limit: Applies a limit to the number of results returned. Can be used for paginating the results together with `offset`.
-        :param offset: Skip the first `offset` results when paginating. Needs to be an integer greater or equal to zero. To be used in conjunction with `limit`.
         :param include_members_count: Flag to denote whether the member counts of each organization should be included in the response or not.
+        :param include_missing_member_with_elevated_permissions: Flag to denote whether or not to include a member with elevated permissions who is not currently a member of the organization.
         :param query: Returns organizations with ID, name, or slug that match the given query. Uses exact match for organization ID and partial match for name and slug.
+        :param user_id: Returns organizations with the user ids specified. Any user ids not found are ignored. For each user id, the `+` and `-` can be prepended to the id, which denote whether the respective organization should be included or excluded from the result set.
         :param organization_id: Returns organizations with the organization ids specified. Any organization ids not found are ignored. For each organization id, the `+` and `-` can be prepended to the id, which denote whether the respective organization should be included or excluded from the result set. Accepts up to 100 organization ids. Example: ?organization_id=+org_1&organization_id=-org_2
         :param order_by: Allows to return organizations in a particular order. At the moment, you can order the returned organizations either by their `name`, `created_at` or `members_count`. In order to specify the direction, you can use the `+/-` symbols prepended in the property to order by. For example, if you want organizations to be returned in descending order according to their `created_at` property, you can use `-created_at`. If you don't use `+` or `-`, then `+` is implied. Defaults to `-created_at`.
+        :param limit: Applies a limit to the number of results returned. Can be used for paginating the results together with `offset`.
+        :param offset: Skip the first `offset` results when paginating. Needs to be an integer greater or equal to zero. To be used in conjunction with `limit`.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -55,12 +55,14 @@ class OrganizationsSDK(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.ListOrganizationsRequest(
-            limit=limit,
-            offset=offset,
             include_members_count=include_members_count,
+            include_missing_member_with_elevated_permissions=include_missing_member_with_elevated_permissions,
             query=query,
+            user_id=user_id,
             organization_id=organization_id,
             order_by=order_by,
+            limit=limit,
+            offset=offset,
         )
 
         req = self._build_request(
@@ -132,12 +134,14 @@ class OrganizationsSDK(BaseSDK):
     async def list_async(
         self,
         *,
-        limit: Optional[int] = 10,
-        offset: Optional[int] = 0,
         include_members_count: Optional[bool] = None,
+        include_missing_member_with_elevated_permissions: Optional[bool] = None,
         query: Optional[str] = None,
+        user_id: Optional[List[str]] = None,
         organization_id: Optional[List[str]] = None,
         order_by: Optional[str] = "-created_at",
+        limit: Optional[int] = 10,
+        offset: Optional[int] = 0,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -150,12 +154,14 @@ class OrganizationsSDK(BaseSDK):
         The organizations are ordered by descending creation date.
         Most recent organizations will be returned first.
 
-        :param limit: Applies a limit to the number of results returned. Can be used for paginating the results together with `offset`.
-        :param offset: Skip the first `offset` results when paginating. Needs to be an integer greater or equal to zero. To be used in conjunction with `limit`.
         :param include_members_count: Flag to denote whether the member counts of each organization should be included in the response or not.
+        :param include_missing_member_with_elevated_permissions: Flag to denote whether or not to include a member with elevated permissions who is not currently a member of the organization.
         :param query: Returns organizations with ID, name, or slug that match the given query. Uses exact match for organization ID and partial match for name and slug.
+        :param user_id: Returns organizations with the user ids specified. Any user ids not found are ignored. For each user id, the `+` and `-` can be prepended to the id, which denote whether the respective organization should be included or excluded from the result set.
         :param organization_id: Returns organizations with the organization ids specified. Any organization ids not found are ignored. For each organization id, the `+` and `-` can be prepended to the id, which denote whether the respective organization should be included or excluded from the result set. Accepts up to 100 organization ids. Example: ?organization_id=+org_1&organization_id=-org_2
         :param order_by: Allows to return organizations in a particular order. At the moment, you can order the returned organizations either by their `name`, `created_at` or `members_count`. In order to specify the direction, you can use the `+/-` symbols prepended in the property to order by. For example, if you want organizations to be returned in descending order according to their `created_at` property, you can use `-created_at`. If you don't use `+` or `-`, then `+` is implied. Defaults to `-created_at`.
+        :param limit: Applies a limit to the number of results returned. Can be used for paginating the results together with `offset`.
+        :param offset: Skip the first `offset` results when paginating. Needs to be an integer greater or equal to zero. To be used in conjunction with `limit`.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -172,12 +178,14 @@ class OrganizationsSDK(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.ListOrganizationsRequest(
-            limit=limit,
-            offset=offset,
             include_members_count=include_members_count,
+            include_missing_member_with_elevated_permissions=include_missing_member_with_elevated_permissions,
             query=query,
+            user_id=user_id,
             organization_id=organization_id,
             order_by=order_by,
+            limit=limit,
+            offset=offset,
         )
 
         req = self._build_request_async(
@@ -495,6 +503,7 @@ class OrganizationsSDK(BaseSDK):
         *,
         organization_id: str,
         include_members_count: Optional[bool] = None,
+        include_missing_member_with_elevated_permissions: Optional[bool] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -506,6 +515,7 @@ class OrganizationsSDK(BaseSDK):
 
         :param organization_id: The ID or slug of the organization
         :param include_members_count: Flag to denote whether or not the organization's members count should be included in the response.
+        :param include_missing_member_with_elevated_permissions: Flag to denote whether or not to include a member with elevated permissions who is not currently a member of the organization.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -524,6 +534,7 @@ class OrganizationsSDK(BaseSDK):
         request = models.GetOrganizationRequest(
             organization_id=organization_id,
             include_members_count=include_members_count,
+            include_missing_member_with_elevated_permissions=include_missing_member_with_elevated_permissions,
         )
 
         req = self._build_request(
@@ -597,6 +608,7 @@ class OrganizationsSDK(BaseSDK):
         *,
         organization_id: str,
         include_members_count: Optional[bool] = None,
+        include_missing_member_with_elevated_permissions: Optional[bool] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -608,6 +620,7 @@ class OrganizationsSDK(BaseSDK):
 
         :param organization_id: The ID or slug of the organization
         :param include_members_count: Flag to denote whether or not the organization's members count should be included in the response.
+        :param include_missing_member_with_elevated_permissions: Flag to denote whether or not to include a member with elevated permissions who is not currently a member of the organization.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -626,6 +639,7 @@ class OrganizationsSDK(BaseSDK):
         request = models.GetOrganizationRequest(
             organization_id=organization_id,
             include_members_count=include_members_count,
+            include_missing_member_with_elevated_permissions=include_missing_member_with_elevated_permissions,
         )
 
         req = self._build_request_async(
@@ -698,14 +712,13 @@ class OrganizationsSDK(BaseSDK):
         self,
         *,
         organization_id: str,
-        public_metadata: Optional[Dict[str, Any]] = None,
-        private_metadata: Optional[Dict[str, Any]] = None,
+        public_metadata: OptionalNullable[Dict[str, Any]] = UNSET,
+        private_metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         name: OptionalNullable[str] = UNSET,
         slug: OptionalNullable[str] = UNSET,
         max_allowed_memberships: OptionalNullable[int] = UNSET,
         admin_delete_enabled: OptionalNullable[bool] = UNSET,
-        created_at: Optional[str] = None,
-        additional_properties: Optional[Dict[str, Any]] = None,
+        created_at: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -718,12 +731,11 @@ class OrganizationsSDK(BaseSDK):
         :param organization_id: The ID of the organization to update
         :param public_metadata: Metadata saved on the organization, that is visible to both your frontend and backend.
         :param private_metadata: Metadata saved on the organization that is only visible to your backend.
-        :param name: The new name of the organization. May not contain URLs or HTML.
+        :param name: The new name of the organization. May not contain URLs or HTML. Max length: 256
         :param slug: The new slug of the organization, which needs to be unique in the instance
         :param max_allowed_memberships: The maximum number of memberships allowed for this organization
         :param admin_delete_enabled: If true, an admin can delete this organization with the Frontend API.
         :param created_at: A custom date/time denoting _when_ the organization was created, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`).
-        :param additional_properties:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -749,7 +761,6 @@ class OrganizationsSDK(BaseSDK):
                 max_allowed_memberships=max_allowed_memberships,
                 admin_delete_enabled=admin_delete_enabled,
                 created_at=created_at,
-                **(additional_properties or {}),
             ),
         )
 
@@ -830,14 +841,13 @@ class OrganizationsSDK(BaseSDK):
         self,
         *,
         organization_id: str,
-        public_metadata: Optional[Dict[str, Any]] = None,
-        private_metadata: Optional[Dict[str, Any]] = None,
+        public_metadata: OptionalNullable[Dict[str, Any]] = UNSET,
+        private_metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         name: OptionalNullable[str] = UNSET,
         slug: OptionalNullable[str] = UNSET,
         max_allowed_memberships: OptionalNullable[int] = UNSET,
         admin_delete_enabled: OptionalNullable[bool] = UNSET,
-        created_at: Optional[str] = None,
-        additional_properties: Optional[Dict[str, Any]] = None,
+        created_at: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -850,12 +860,11 @@ class OrganizationsSDK(BaseSDK):
         :param organization_id: The ID of the organization to update
         :param public_metadata: Metadata saved on the organization, that is visible to both your frontend and backend.
         :param private_metadata: Metadata saved on the organization that is only visible to your backend.
-        :param name: The new name of the organization. May not contain URLs or HTML.
+        :param name: The new name of the organization. May not contain URLs or HTML. Max length: 256
         :param slug: The new slug of the organization, which needs to be unique in the instance
         :param max_allowed_memberships: The maximum number of memberships allowed for this organization
         :param admin_delete_enabled: If true, an admin can delete this organization with the Frontend API.
         :param created_at: A custom date/time denoting _when_ the organization was created, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`).
-        :param additional_properties:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -881,7 +890,6 @@ class OrganizationsSDK(BaseSDK):
                 max_allowed_memberships=max_allowed_memberships,
                 admin_delete_enabled=admin_delete_enabled,
                 created_at=created_at,
-                **(additional_properties or {}),
             ),
         )
 
@@ -1166,7 +1174,6 @@ class OrganizationsSDK(BaseSDK):
         organization_id: str,
         public_metadata: Optional[Dict[str, Any]] = None,
         private_metadata: Optional[Dict[str, Any]] = None,
-        additional_properties: Optional[Dict[str, Any]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1182,7 +1189,6 @@ class OrganizationsSDK(BaseSDK):
         :param organization_id: The ID of the organization for which metadata will be merged or updated
         :param public_metadata: Metadata saved on the organization, that is visible to both your frontend and backend. The new object will be merged with the existing value.
         :param private_metadata: Metadata saved on the organization that is only visible to your backend. The new object will be merged with the existing value.
-        :param additional_properties:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1203,7 +1209,6 @@ class OrganizationsSDK(BaseSDK):
             request_body=models.MergeOrganizationMetadataRequestBody(
                 public_metadata=public_metadata,
                 private_metadata=private_metadata,
-                **(additional_properties or {}),
             ),
         )
 
@@ -1288,7 +1293,6 @@ class OrganizationsSDK(BaseSDK):
         organization_id: str,
         public_metadata: Optional[Dict[str, Any]] = None,
         private_metadata: Optional[Dict[str, Any]] = None,
-        additional_properties: Optional[Dict[str, Any]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1304,7 +1308,6 @@ class OrganizationsSDK(BaseSDK):
         :param organization_id: The ID of the organization for which metadata will be merged or updated
         :param public_metadata: Metadata saved on the organization, that is visible to both your frontend and backend. The new object will be merged with the existing value.
         :param private_metadata: Metadata saved on the organization that is only visible to your backend. The new object will be merged with the existing value.
-        :param additional_properties:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1325,7 +1328,6 @@ class OrganizationsSDK(BaseSDK):
             request_body=models.MergeOrganizationMetadataRequestBody(
                 public_metadata=public_metadata,
                 private_metadata=private_metadata,
-                **(additional_properties or {}),
             ),
         )
 
@@ -1663,6 +1665,8 @@ class OrganizationsSDK(BaseSDK):
     ) -> Optional[models.Organization]:
         r"""Delete the organization's logo.
 
+        Delete the organization's logo.
+
         :param organization_id: The ID of the organization for which the logo will be deleted.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -1759,6 +1763,8 @@ class OrganizationsSDK(BaseSDK):
         http_headers: Optional[Mapping[str, str]] = None,
     ) -> Optional[models.Organization]:
         r"""Delete the organization's logo.
+
+        Delete the organization's logo.
 
         :param organization_id: The ID of the organization for which the logo will be deleted.
         :param retries: Override the default retry configuration for this method

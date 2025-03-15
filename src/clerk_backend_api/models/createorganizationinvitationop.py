@@ -23,15 +23,15 @@ class CreateOrganizationInvitationRequestBodyTypedDict(TypedDict):
     r"""The ID of the user that invites the new member to the organization.
     Must be an administrator in the organization.
     """
-    public_metadata: NotRequired[Dict[str, Any]]
+    public_metadata: NotRequired[Nullable[Dict[str, Any]]]
     r"""Metadata saved on the organization invitation, read-only from the Frontend API and fully accessible (read/write) from the Backend API.
     When the organization invitation is accepted, the metadata will be transferred to the newly created organization membership.
     """
-    private_metadata: NotRequired[Dict[str, Any]]
+    private_metadata: NotRequired[Nullable[Dict[str, Any]]]
     r"""Metadata saved on the organization invitation, fully accessible (read/write) from the Backend API but not visible from the Frontend API.
     When the organization invitation is accepted, the metadata will be transferred to the newly created organization membership.
     """
-    redirect_url: NotRequired[str]
+    redirect_url: NotRequired[Nullable[str]]
     r"""Optional URL that the invitee will be redirected to once they accept the invitation by clicking the join link in the invitation email."""
     expires_in_days: NotRequired[Nullable[int]]
     r"""The number of days the invitation will be valid for. By default, the invitation has a 30 days expire."""
@@ -49,17 +49,17 @@ class CreateOrganizationInvitationRequestBody(BaseModel):
     Must be an administrator in the organization.
     """
 
-    public_metadata: Optional[Dict[str, Any]] = None
+    public_metadata: OptionalNullable[Dict[str, Any]] = UNSET
     r"""Metadata saved on the organization invitation, read-only from the Frontend API and fully accessible (read/write) from the Backend API.
     When the organization invitation is accepted, the metadata will be transferred to the newly created organization membership.
     """
 
-    private_metadata: Optional[Dict[str, Any]] = None
+    private_metadata: OptionalNullable[Dict[str, Any]] = UNSET
     r"""Metadata saved on the organization invitation, fully accessible (read/write) from the Backend API but not visible from the Frontend API.
     When the organization invitation is accepted, the metadata will be transferred to the newly created organization membership.
     """
 
-    redirect_url: Optional[str] = None
+    redirect_url: OptionalNullable[str] = UNSET
     r"""Optional URL that the invitee will be redirected to once they accept the invitation by clicking the join link in the invitation email."""
 
     expires_in_days: OptionalNullable[int] = UNSET
@@ -74,7 +74,13 @@ class CreateOrganizationInvitationRequestBody(BaseModel):
             "redirect_url",
             "expires_in_days",
         ]
-        nullable_fields = ["inviter_user_id", "expires_in_days"]
+        nullable_fields = [
+            "inviter_user_id",
+            "public_metadata",
+            "private_metadata",
+            "redirect_url",
+            "expires_in_days",
+        ]
         null_default_fields = []
 
         serialized = handler(self)

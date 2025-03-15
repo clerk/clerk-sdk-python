@@ -9,9 +9,9 @@
 value: models.Saml = /* values here */
 ```
 
-### `models.Ticket`
+### `models.VerificationTicket`
 
 ```python
-value: models.Ticket = /* values here */
+value: models.VerificationTicket = /* values here */
 ```
 

@@ -3,19 +3,14 @@
 
 ## Overview
 
-The Session object is an abstraction over an HTTP session.
-It models the period of information exchange between a user and the server.
-Sessions are created when a user successfully goes through the sign in or sign up flows.
-<https://clerk.com/docs/reference/clerkjs/session>
-
 ### Available Operations
 
 * [list](#list) - List all sessions
-* [create_session](#create_session) - Create a new active session
+* [create](#create) - Create a new active session
 * [get](#get) - Retrieve a session
 * [revoke](#revoke) - Revoke a session
 * [~~verify~~](#verify) - Verify a session :warning: **Deprecated**
-* [create_session_token](#create_session_token) - Create a session token
+* [create_token](#create_token) - Create a session token
 * [create_token_from_template](#create_token_from_template) - Create a session token from a jwt template
 
 ## list
@@ -31,11 +26,12 @@ moving forward at least one of `client_id` or `user_id` parameters should be pro
 import clerk_backend_api
 from clerk_backend_api import Clerk
 
+
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 ) as clerk:
 
-    res = clerk.sessions.list(client_id="client_123", user_id="user_456", status=clerk_backend_api.QueryParamStatus.ACTIVE)
+    res = clerk.sessions.list(client_id="client_123", user_id="user_456", status=clerk_backend_api.QueryParamStatus.ACTIVE, paginated=False)
 
     assert res is not None
 
@@ -51,6 +47,7 @@ with Clerk(
 | `client_id`                                                                                                                               | *Optional[str]*                                                                                                                           | :heavy_minus_sign:                                                                                                                        | List sessions for the given client                                                                                                        | client_123                                                                                                                                |
 | `user_id`                                                                                                                                 | *Optional[str]*                                                                                                                           | :heavy_minus_sign:                                                                                                                        | List sessions for the given user                                                                                                          | user_456                                                                                                                                  |
 | `status`                                                                                                                                  | [Optional[models.QueryParamStatus]](../../models/queryparamstatus.md)                                                                     | :heavy_minus_sign:                                                                                                                        | Filter sessions by the provided status                                                                                                    | active                                                                                                                                    |
+| `paginated`                                                                                                                               | *Optional[bool]*                                                                                                                          | :heavy_minus_sign:                                                                                                                        | Whether to paginate the results.<br/>If true, the results will be paginated.<br/>If false, the results will not be paginated.             |                                                                                                                                           |
 | `limit`                                                                                                                                   | *Optional[int]*                                                                                                                           | :heavy_minus_sign:                                                                                                                        | Applies a limit to the number of results returned.<br/>Can be used for paginating the results together with `offset`.                     | 20                                                                                                                                        |
 | `offset`                                                                                                                                  | *Optional[int]*                                                                                                                           | :heavy_minus_sign:                                                                                                                        | Skip the first `offset` results when paginating.<br/>Needs to be an integer greater or equal to zero.<br/>To be used in conjunction with `limit`. | 10                                                                                                                                        |
 | `retries`                                                                                                                                 | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                          | :heavy_minus_sign:                                                                                                                        | Configuration to override the default retry behavior of the client.                                                                       |                                                                                                                                           |
@@ -66,7 +63,7 @@ with Clerk(
 | models.ClerkErrors | 400, 401, 422      | application/json   |
 | models.SDKError    | 4XX, 5XX           | \*/\*              |
 
-## create_session
+## create
 
 Create a new active session for the provided user ID.
 
@@ -78,11 +75,12 @@ we recommend using the [Sign-in Tokens](https://clerk.com/docs/reference/backend
 ```python
 from clerk_backend_api import Clerk
 
+
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 ) as clerk:
 
-    res = clerk.sessions.create_session(request={
+    res = clerk.sessions.create(request={
         "user_id": "<id>",
     })
 
@@ -119,6 +117,7 @@ Retrieve the details of a session
 
 ```python
 from clerk_backend_api import Clerk
+
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
@@ -160,6 +159,7 @@ In multi-session mode, a revoked session will still be returned along with its c
 
 ```python
 from clerk_backend_api import Clerk
+
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
@@ -206,6 +206,7 @@ WARNING: This endpoint is deprecated and will be removed in future versions. We 
 ```python
 from clerk_backend_api import Clerk
 
+
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 ) as clerk:
@@ -238,7 +239,7 @@ with Clerk(
 | models.ClerkErrors | 400, 401, 404, 410 | application/json   |
 | models.SDKError    | 4XX, 5XX           | \*/\*              |
 
-## create_session_token
+## create_token
 
 Creates a session JSON Web Token (JWT) based on a session.
 
@@ -247,11 +248,12 @@ Creates a session JSON Web Token (JWT) based on a session.
 ```python
 from clerk_backend_api import Clerk
 
+
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 ) as clerk:
 
-    res = clerk.sessions.create_session_token(session_id="<id>", expires_in_seconds=6005.84)
+    res = clerk.sessions.create_token(session_id="<id>", expires_in_seconds=6005.84)
 
     assert res is not None
 
@@ -287,6 +289,7 @@ Creates a JSON Web Token(JWT) based on a session and a JWT Template name defined
 
 ```python
 from clerk_backend_api import Clerk
+
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
