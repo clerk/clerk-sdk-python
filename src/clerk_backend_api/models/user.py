@@ -2,6 +2,10 @@
 
 from __future__ import annotations
 from .emailaddress import EmailAddress, EmailAddressTypedDict
+from .externalaccountwithverification import (
+    ExternalAccountWithVerification,
+    ExternalAccountWithVerificationTypedDict,
+)
 from .phonenumber import PhoneNumber, PhoneNumberTypedDict
 from .samlaccount import SAMLAccount, SAMLAccountTypedDict
 from .schemas_passkey import SchemasPasskey, SchemasPasskeyTypedDict
@@ -24,14 +28,6 @@ class UserObject(str, Enum):
     r"""String representing the object's type. Objects of the same type share the same value."""
 
     USER = "user"
-
-
-class ExternalAccountsTypedDict(TypedDict):
-    pass
-
-
-class ExternalAccounts(BaseModel):
-    pass
 
 
 class UserTypedDict(TypedDict):
@@ -71,7 +67,7 @@ class UserTypedDict(TypedDict):
     r"""Unix timestamp of when MFA was last disabled for this user. It should be noted that this field is not nullified if MFA is enabled again.
 
     """
-    external_accounts: NotRequired[List[ExternalAccountsTypedDict]]
+    external_accounts: NotRequired[List[ExternalAccountWithVerificationTypedDict]]
     saml_accounts: NotRequired[List[SAMLAccountTypedDict]]
     last_sign_in_at: NotRequired[Nullable[int]]
     r"""Unix timestamp of last sign-in.
@@ -190,7 +186,7 @@ class User(BaseModel):
 
     """
 
-    external_accounts: Optional[List[ExternalAccounts]] = None
+    external_accounts: Optional[List[ExternalAccountWithVerification]] = None
 
     saml_accounts: Optional[List[SAMLAccount]] = None
 

@@ -10,6 +10,10 @@ from typing_extensions import Annotated, NotRequired, TypedDict
 class ListOrganizationDomainsRequestTypedDict(TypedDict):
     organization_id: str
     r"""The organization ID."""
+    verified: NotRequired[str]
+    r"""Filter domains by their verification status. `true` or `false`"""
+    enrollment_mode: NotRequired[str]
+    r"""Filter domains by their enrollment mode"""
     limit: NotRequired[int]
     r"""Applies a limit to the number of results returned.
     Can be used for paginating the results together with `offset`.
@@ -19,10 +23,6 @@ class ListOrganizationDomainsRequestTypedDict(TypedDict):
     Needs to be an integer greater or equal to zero.
     To be used in conjunction with `limit`.
     """
-    verified: NotRequired[str]
-    r"""Filter domains by their verification status. `true` or `false`"""
-    enrollment_mode: NotRequired[str]
-    r"""Filter domains by their enrollment mode"""
 
 
 class ListOrganizationDomainsRequest(BaseModel):
@@ -30,6 +30,18 @@ class ListOrganizationDomainsRequest(BaseModel):
         str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))
     ]
     r"""The organization ID."""
+
+    verified: Annotated[
+        Optional[str],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Filter domains by their verification status. `true` or `false`"""
+
+    enrollment_mode: Annotated[
+        Optional[str],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Filter domains by their enrollment mode"""
 
     limit: Annotated[
         Optional[int],
@@ -47,15 +59,3 @@ class ListOrganizationDomainsRequest(BaseModel):
     Needs to be an integer greater or equal to zero.
     To be used in conjunction with `limit`.
     """
-
-    verified: Annotated[
-        Optional[str],
-        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
-    ] = None
-    r"""Filter domains by their verification status. `true` or `false`"""
-
-    enrollment_mode: Annotated[
-        Optional[str],
-        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
-    ] = None
-    r"""Filter domains by their enrollment mode"""

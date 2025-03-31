@@ -1,21 +1,21 @@
-speakeasyVersion: 1.495.1
+speakeasyVersion: 1.526.0
 sources:
     clerk-openapi:
         sourceNamespace: clerk-openapi
-        sourceRevisionDigest: sha256:d4b68e7b261c9fd23c346291e7ca8c925d1c834140e3f0a1807a11ef7f3d41bb
-        sourceBlobDigest: sha256:d384523908f855f5394f6242512679e5215cfdaf50bc8a7053f15a46cc565a61
+        sourceRevisionDigest: sha256:4b76964b95ad3e33217b064a1b3ed6b8476367f79af5c7d315cbda1aca00a0cc
+        sourceBlobDigest: sha256:c8365d3a47ede89b14cfccf2db48766e3c4e4ea221613255240707f1c338630e
         tags:
             - latest
-            - speakeasy-sdk-regen-1739751656
-            - v1
+            - speakeasy-sdk-regen-1741709715
+            - "2024-10-01"
 targets:
     clerk-sdk-python:
         source: clerk-openapi
         sourceNamespace: clerk-openapi
-        sourceRevisionDigest: sha256:d4b68e7b261c9fd23c346291e7ca8c925d1c834140e3f0a1807a11ef7f3d41bb
-        sourceBlobDigest: sha256:d384523908f855f5394f6242512679e5215cfdaf50bc8a7053f15a46cc565a61
+        sourceRevisionDigest: sha256:4b76964b95ad3e33217b064a1b3ed6b8476367f79af5c7d315cbda1aca00a0cc
+        sourceBlobDigest: sha256:c8365d3a47ede89b14cfccf2db48766e3c4e4ea221613255240707f1c338630e
         codeSamplesNamespace: clerk-openapi-python-code-samples
-        codeSamplesRevisionDigest: sha256:366daf506ce8c8a843d3a1fb9b5a300d0afec1dac988ef6aa32b312f43e49f0e
+        codeSamplesRevisionDigest: sha256:795f55c1fea544513070db2d6f1c48ab20550d3ce50a5693e9742362fe868958
 workflow:
     workflowVersion: 1.0.0
     speakeasyVersion: latest
@@ -24,9 +24,8 @@ workflow:
             inputs:
                 - location: https://raw.githubusercontent.com/clerk/openapi-specs/refs/heads/main/bapi/2024-10-01.yml
             overlays:
-                - location: ./fixes.yaml
                 - location: ./examples.yaml
-                - location: .speakeasy/speakeasy-suggestions.yaml
+                - location: https://raw.githubusercontent.com/clerk/openapi-specs/refs/heads/main/.speakeasy/bapi/fixes.yml
             registry:
                 location: registry.speakeasyapi.dev/clerk/clerk/clerk-openapi
     targets:

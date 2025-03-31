@@ -3,9 +3,6 @@
 
 ## Overview
 
-You can configure webhooks to be notified about various events that happen on your instance.
-<https://clerk.com/docs/integration/webhooks>
-
 ### Available Operations
 
 * [create_svix_app](#create_svix_app) - Create a Svix app
@@ -20,6 +17,7 @@ Create a Svix app and associate it with the current instance
 
 ```python
 from clerk_backend_api import Clerk
+
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
@@ -60,6 +58,7 @@ Delete a Svix app and disassociate it from the current instance
 ```python
 from clerk_backend_api import Clerk
 
+
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 ) as clerk:
@@ -91,6 +90,7 @@ Generate a new url for accessing the Svix's management dashboard for that partic
 
 ```python
 from clerk_backend_api import Clerk
+
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",

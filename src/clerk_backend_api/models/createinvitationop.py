@@ -15,9 +15,7 @@ from typing_extensions import NotRequired, TypedDict
 
 
 class TemplateSlug(str, Enum):
-    r"""The slug of the email template to use for the invitation email.
-    If not provided, the \"invitation\" template will be used.
-    """
+    r"""The slug of the email template to use for the invitation email."""
 
     INVITATION = "invitation"
     WAITLIST_INVITATION = "waitlist_invitation"
@@ -45,10 +43,8 @@ class CreateInvitationRequestBodyTypedDict(TypedDict):
     r"""Whether an invitation should be created if there is already an existing invitation for this email address, or it's claimed by another user."""
     expires_in_days: NotRequired[Nullable[int]]
     r"""The number of days the invitation will be valid for. By default, the invitation expires after 30 days."""
-    template_slug: NotRequired[Nullable[TemplateSlug]]
-    r"""The slug of the email template to use for the invitation email.
-    If not provided, the \"invitation\" template will be used.
-    """
+    template_slug: NotRequired[TemplateSlug]
+    r"""The slug of the email template to use for the invitation email."""
 
 
 class CreateInvitationRequestBody(BaseModel):
@@ -79,10 +75,8 @@ class CreateInvitationRequestBody(BaseModel):
     expires_in_days: OptionalNullable[int] = UNSET
     r"""The number of days the invitation will be valid for. By default, the invitation expires after 30 days."""
 
-    template_slug: OptionalNullable[TemplateSlug] = UNSET
-    r"""The slug of the email template to use for the invitation email.
-    If not provided, the \"invitation\" template will be used.
-    """
+    template_slug: Optional[TemplateSlug] = None
+    r"""The slug of the email template to use for the invitation email."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
@@ -94,12 +88,7 @@ class CreateInvitationRequestBody(BaseModel):
             "expires_in_days",
             "template_slug",
         ]
-        nullable_fields = [
-            "notify",
-            "ignore_existing",
-            "expires_in_days",
-            "template_slug",
-        ]
+        nullable_fields = ["notify", "ignore_existing", "expires_in_days"]
         null_default_fields = []
 
         serialized = handler(self)

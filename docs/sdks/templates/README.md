@@ -18,6 +18,7 @@ Returns a preview of a template for a given template_type, slug and body
 ```python
 from clerk_backend_api import Clerk
 
+
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 ) as clerk:

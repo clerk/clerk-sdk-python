@@ -12,13 +12,13 @@ class OrganizationInvitationsSDK(BaseSDK):
     def get_all(
         self,
         *,
-        limit: Optional[int] = 10,
-        offset: Optional[int] = 0,
         order_by: Optional[str] = "-created_at",
         status: Optional[
             models.ListInstanceOrganizationInvitationsQueryParamStatus
         ] = None,
         query: Optional[str] = None,
+        limit: Optional[int] = 10,
+        offset: Optional[int] = 0,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -33,11 +33,11 @@ class OrganizationInvitationsSDK(BaseSDK):
         You can filter by the invited user email address providing the `query` query parameter.
         The organization invitations are ordered by descending creation date by default.
 
-        :param limit: Applies a limit to the number of results returned. Can be used for paginating the results together with `offset`.
-        :param offset: Skip the first `offset` results when paginating. Needs to be an integer greater or equal to zero. To be used in conjunction with `limit`.
         :param order_by: Allows to return organization invitations in a particular order. At the moment, you can order the returned organization invitations either by their `created_at` or `email_address`. In order to specify the direction, you can use the `+/-` symbols prepended in the property to order by. For example, if you want organization invitations to be returned in descending order according to their `created_at` property, you can use `-created_at`. If you don't use `+` or `-`, then `+` is implied. Defaults to `-created_at`.
         :param status: Filter organization invitations based on their status
         :param query: Filter organization invitations based on their `email_address`
+        :param limit: Applies a limit to the number of results returned. Can be used for paginating the results together with `offset`.
+        :param offset: Skip the first `offset` results when paginating. Needs to be an integer greater or equal to zero. To be used in conjunction with `limit`.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -54,11 +54,11 @@ class OrganizationInvitationsSDK(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.ListInstanceOrganizationInvitationsRequest(
-            limit=limit,
-            offset=offset,
             order_by=order_by,
             status=status,
             query=query,
+            limit=limit,
+            offset=offset,
         )
 
         req = self._build_request(
@@ -136,13 +136,13 @@ class OrganizationInvitationsSDK(BaseSDK):
     async def get_all_async(
         self,
         *,
-        limit: Optional[int] = 10,
-        offset: Optional[int] = 0,
         order_by: Optional[str] = "-created_at",
         status: Optional[
             models.ListInstanceOrganizationInvitationsQueryParamStatus
         ] = None,
         query: Optional[str] = None,
+        limit: Optional[int] = 10,
+        offset: Optional[int] = 0,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -157,11 +157,11 @@ class OrganizationInvitationsSDK(BaseSDK):
         You can filter by the invited user email address providing the `query` query parameter.
         The organization invitations are ordered by descending creation date by default.
 
-        :param limit: Applies a limit to the number of results returned. Can be used for paginating the results together with `offset`.
-        :param offset: Skip the first `offset` results when paginating. Needs to be an integer greater or equal to zero. To be used in conjunction with `limit`.
         :param order_by: Allows to return organization invitations in a particular order. At the moment, you can order the returned organization invitations either by their `created_at` or `email_address`. In order to specify the direction, you can use the `+/-` symbols prepended in the property to order by. For example, if you want organization invitations to be returned in descending order according to their `created_at` property, you can use `-created_at`. If you don't use `+` or `-`, then `+` is implied. Defaults to `-created_at`.
         :param status: Filter organization invitations based on their status
         :param query: Filter organization invitations based on their `email_address`
+        :param limit: Applies a limit to the number of results returned. Can be used for paginating the results together with `offset`.
+        :param offset: Skip the first `offset` results when paginating. Needs to be an integer greater or equal to zero. To be used in conjunction with `limit`.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -178,11 +178,11 @@ class OrganizationInvitationsSDK(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.ListInstanceOrganizationInvitationsRequest(
-            limit=limit,
-            offset=offset,
             order_by=order_by,
             status=status,
             query=query,
+            limit=limit,
+            offset=offset,
         )
 
         req = self._build_request_async(
@@ -264,9 +264,9 @@ class OrganizationInvitationsSDK(BaseSDK):
         email_address: str,
         role: str,
         inviter_user_id: OptionalNullable[str] = UNSET,
-        public_metadata: Optional[Dict[str, Any]] = None,
-        private_metadata: Optional[Dict[str, Any]] = None,
-        redirect_url: Optional[str] = None,
+        public_metadata: OptionalNullable[Dict[str, Any]] = UNSET,
+        private_metadata: OptionalNullable[Dict[str, Any]] = UNSET,
+        redirect_url: OptionalNullable[str] = UNSET,
         expires_in_days: OptionalNullable[int] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -412,9 +412,9 @@ class OrganizationInvitationsSDK(BaseSDK):
         email_address: str,
         role: str,
         inviter_user_id: OptionalNullable[str] = UNSET,
-        public_metadata: Optional[Dict[str, Any]] = None,
-        private_metadata: Optional[Dict[str, Any]] = None,
-        redirect_url: Optional[str] = None,
+        public_metadata: OptionalNullable[Dict[str, Any]] = UNSET,
+        private_metadata: OptionalNullable[Dict[str, Any]] = UNSET,
+        redirect_url: OptionalNullable[str] = UNSET,
         expires_in_days: OptionalNullable[int] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -557,9 +557,9 @@ class OrganizationInvitationsSDK(BaseSDK):
         self,
         *,
         organization_id: str,
+        status: Optional[models.ListOrganizationInvitationsQueryParamStatus] = None,
         limit: Optional[int] = 10,
         offset: Optional[int] = 0,
-        status: Optional[models.ListOrganizationInvitationsQueryParamStatus] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -575,9 +575,9 @@ class OrganizationInvitationsSDK(BaseSDK):
         Any invitations created as a result of an Organization Domain are not included in the results.
 
         :param organization_id: The organization ID.
+        :param status: Filter organization invitations based on their status
         :param limit: Applies a limit to the number of results returned. Can be used for paginating the results together with `offset`.
         :param offset: Skip the first `offset` results when paginating. Needs to be an integer greater or equal to zero. To be used in conjunction with `limit`.
-        :param status: Filter organization invitations based on their status
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -595,9 +595,9 @@ class OrganizationInvitationsSDK(BaseSDK):
 
         request = models.ListOrganizationInvitationsRequest(
             organization_id=organization_id,
+            status=status,
             limit=limit,
             offset=offset,
-            status=status,
         )
 
         req = self._build_request(
@@ -672,9 +672,9 @@ class OrganizationInvitationsSDK(BaseSDK):
         self,
         *,
         organization_id: str,
+        status: Optional[models.ListOrganizationInvitationsQueryParamStatus] = None,
         limit: Optional[int] = 10,
         offset: Optional[int] = 0,
-        status: Optional[models.ListOrganizationInvitationsQueryParamStatus] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -690,9 +690,9 @@ class OrganizationInvitationsSDK(BaseSDK):
         Any invitations created as a result of an Organization Domain are not included in the results.
 
         :param organization_id: The organization ID.
+        :param status: Filter organization invitations based on their status
         :param limit: Applies a limit to the number of results returned. Can be used for paginating the results together with `offset`.
         :param offset: Skip the first `offset` results when paginating. Needs to be an integer greater or equal to zero. To be used in conjunction with `limit`.
-        :param status: Filter organization invitations based on their status
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -710,9 +710,9 @@ class OrganizationInvitationsSDK(BaseSDK):
 
         request = models.ListOrganizationInvitationsRequest(
             organization_id=organization_id,
+            status=status,
             limit=limit,
             offset=offset,
-            status=status,
         )
 
         req = self._build_request_async(

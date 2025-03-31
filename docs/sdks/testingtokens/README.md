@@ -16,6 +16,7 @@ Retrieve a new testing token.
 ```python
 from clerk_backend_api import Clerk
 
+
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 ) as clerk:

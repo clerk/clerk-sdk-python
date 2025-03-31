@@ -12,6 +12,8 @@ class GetOrganizationRequestTypedDict(TypedDict):
     r"""The ID or slug of the organization"""
     include_members_count: NotRequired[bool]
     r"""Flag to denote whether or not the organization's members count should be included in the response."""
+    include_missing_member_with_elevated_permissions: NotRequired[bool]
+    r"""Flag to denote whether or not to include a member with elevated permissions who is not currently a member of the organization."""
 
 
 class GetOrganizationRequest(BaseModel):
@@ -25,3 +27,9 @@ class GetOrganizationRequest(BaseModel):
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = None
     r"""Flag to denote whether or not the organization's members count should be included in the response."""
+
+    include_missing_member_with_elevated_permissions: Annotated[
+        Optional[bool],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Flag to denote whether or not to include a member with elevated permissions who is not currently a member of the organization."""

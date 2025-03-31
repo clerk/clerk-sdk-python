@@ -5,12 +5,13 @@
 
 ### Available Operations
 
-* [get_instance](#get_instance) - Fetch the current instance
+* [get](#get) - Fetch the current instance
 * [update](#update) - Update instance settings
 * [update_restrictions](#update_restrictions) - Update instance restrictions
+* [change_domain](#change_domain) - Update production instance domain
 * [update_organization_settings](#update_organization_settings) - Update instance organization settings
 
-## get_instance
+## get
 
 Fetches the current instance
 
@@ -19,11 +20,12 @@ Fetches the current instance
 ```python
 from clerk_backend_api import Clerk
 
+
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 ) as clerk:
 
-    res = clerk.instance_settings.get_instance()
+    res = clerk.instance_settings.get()
 
     assert res is not None
 
@@ -56,6 +58,7 @@ Updates the settings of an instance
 
 ```python
 from clerk_backend_api import Clerk
+
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
@@ -103,6 +106,7 @@ Updates the restriction settings of an instance
 ```python
 from clerk_backend_api import Clerk
 
+
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 ) as clerk:
@@ -140,6 +144,47 @@ with Clerk(
 | models.ClerkErrors | 402, 422           | application/json   |
 | models.SDKError    | 4XX, 5XX           | \*/\*              |
 
+## change_domain
+
+Change the domain of a production instance.
+
+Changing the domain requires updating the [DNS records](https://clerk.com/docs/deployments/overview#dns-records) accordingly, deploying new [SSL certificates](https://clerk.com/docs/deployments/overview#deploy), updating your Social Connection's redirect URLs and setting the new keys in your code.
+
+WARNING: Changing your domain will invalidate all current user sessions (i.e. users will be logged out). Also, while your application is being deployed, a small downtime is expected to occur.
+
+### Example Usage
+
+```python
+from clerk_backend_api import Clerk
+
+
+with Clerk(
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+) as clerk:
+
+    clerk.instance_settings.change_domain(request={
+        "home_url": "https://www.newdomain.com",
+        "is_secondary": False,
+    })
+
+    # Use the SDK ...
+
+```
+
+### Parameters
+
+| Parameter                                                                                                     | Type                                                                                                          | Required                                                                                                      | Description                                                                                                   |
+| ------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| `request`                                                                                                     | [models.ChangeProductionInstanceDomainRequestBody](../../models/changeproductioninstancedomainrequestbody.md) | :heavy_check_mark:                                                                                            | The request object to use for the request.                                                                    |
+| `retries`                                                                                                     | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                              | :heavy_minus_sign:                                                                                            | Configuration to override the default retry behavior of the client.                                           |
+
+### Errors
+
+| Error Type         | Status Code        | Content Type       |
+| ------------------ | ------------------ | ------------------ |
+| models.ClerkErrors | 400, 422           | application/json   |
+| models.SDKError    | 4XX, 5XX           | \*/\*              |
+
 ## update_organization_settings
 
 Updates the organization settings of the instance
@@ -148,6 +193,7 @@ Updates the organization settings of the instance
 
 ```python
 from clerk_backend_api import Clerk
+
 
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",

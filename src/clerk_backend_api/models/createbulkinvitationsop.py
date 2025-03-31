@@ -8,20 +8,28 @@ from clerk_backend_api.types import (
     UNSET,
     UNSET_SENTINEL,
 )
+from enum import Enum
 from pydantic import model_serializer
 from typing import Any, Dict, Optional
 from typing_extensions import NotRequired, TypedDict
 
 
+class CreateBulkInvitationsTemplateSlug(str, Enum):
+    r"""The slug of the email template to use for the invitation email."""
+
+    INVITATION = "invitation"
+    WAITLIST_INVITATION = "waitlist_invitation"
+
+
 class RequestBodyTypedDict(TypedDict):
     email_address: str
     r"""The email address the invitation will be sent to"""
-    public_metadata: NotRequired[Dict[str, Any]]
+    public_metadata: NotRequired[Nullable[Dict[str, Any]]]
     r"""Metadata that will be attached to the newly created invitation.
     The value of this property should be a well-formed JSON object.
     Once the user accepts the invitation and signs up, these metadata will end up in the user's public metadata.
     """
-    redirect_url: NotRequired[str]
+    redirect_url: NotRequired[Nullable[str]]
     r"""The URL where the user is redirected upon visiting the invitation link, where they can accept the invitation. Required if you have implemented a [custom flow for handling application invitations](/docs/custom-flows/invitations)."""
     notify: NotRequired[Nullable[bool]]
     r"""Optional flag which denotes whether an email invitation should be sent to the given email address.
@@ -33,19 +41,21 @@ class RequestBodyTypedDict(TypedDict):
     """
     expires_in_days: NotRequired[Nullable[int]]
     r"""The number of days the invitation will be valid for. By default, the invitation expires after 30 days."""
+    template_slug: NotRequired[CreateBulkInvitationsTemplateSlug]
+    r"""The slug of the email template to use for the invitation email."""
 
 
 class RequestBody(BaseModel):
     email_address: str
     r"""The email address the invitation will be sent to"""
 
-    public_metadata: Optional[Dict[str, Any]] = None
+    public_metadata: OptionalNullable[Dict[str, Any]] = UNSET
     r"""Metadata that will be attached to the newly created invitation.
     The value of this property should be a well-formed JSON object.
     Once the user accepts the invitation and signs up, these metadata will end up in the user's public metadata.
     """
 
-    redirect_url: Optional[str] = None
+    redirect_url: OptionalNullable[str] = UNSET
     r"""The URL where the user is redirected upon visiting the invitation link, where they can accept the invitation. Required if you have implemented a [custom flow for handling application invitations](/docs/custom-flows/invitations)."""
 
     notify: OptionalNullable[bool] = True
@@ -61,6 +71,11 @@ class RequestBody(BaseModel):
     expires_in_days: OptionalNullable[int] = UNSET
     r"""The number of days the invitation will be valid for. By default, the invitation expires after 30 days."""
 
+    template_slug: Optional[CreateBulkInvitationsTemplateSlug] = (
+        CreateBulkInvitationsTemplateSlug.INVITATION
+    )
+    r"""The slug of the email template to use for the invitation email."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = [
@@ -69,8 +84,15 @@ class RequestBody(BaseModel):
             "notify",
             "ignore_existing",
             "expires_in_days",
+            "template_slug",
         ]
-        nullable_fields = ["notify", "ignore_existing", "expires_in_days"]
+        nullable_fields = [
+            "public_metadata",
+            "redirect_url",
+            "notify",
+            "ignore_existing",
+            "expires_in_days",
+        ]
         null_default_fields = []
 
         serialized = handler(self)

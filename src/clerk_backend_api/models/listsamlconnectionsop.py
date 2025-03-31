@@ -17,6 +17,13 @@ class ListSAMLConnectionsRequestTypedDict(TypedDict):
     Needs to be an integer greater or equal to zero.
     To be used in conjunction with `limit`.
     """
+    query: NotRequired[str]
+    r"""Returns SAML connections that have a name that matches the given query, via case-insensitive partial match."""
+    order_by: NotRequired[str]
+    r"""Sorts organizations memberships by phone_number, email_address, created_at, first_name, last_name or username.
+    By prepending one of those values with + or -,
+    we can choose to sort in ascending (ASC) or descending (DESC) order.
+    """
     organization_id: NotRequired[List[str]]
     r"""Returns SAML connections that have an associated organization ID to the
     given organizations.
@@ -44,6 +51,21 @@ class ListSAMLConnectionsRequest(BaseModel):
     r"""Skip the first `offset` results when paginating.
     Needs to be an integer greater or equal to zero.
     To be used in conjunction with `limit`.
+    """
+
+    query: Annotated[
+        Optional[str],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Returns SAML connections that have a name that matches the given query, via case-insensitive partial match."""
+
+    order_by: Annotated[
+        Optional[str],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Sorts organizations memberships by phone_number, email_address, created_at, first_name, last_name or username.
+    By prepending one of those values with + or -,
+    we can choose to sort in ascending (ASC) or descending (DESC) order.
     """
 
     organization_id: Annotated[

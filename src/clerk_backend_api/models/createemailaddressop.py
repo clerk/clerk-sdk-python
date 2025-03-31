@@ -9,14 +9,13 @@ from clerk_backend_api.types import (
     UNSET_SENTINEL,
 )
 from pydantic import model_serializer
-from typing import Optional
 from typing_extensions import NotRequired, TypedDict
 
 
 class CreateEmailAddressRequestBodyTypedDict(TypedDict):
-    user_id: NotRequired[str]
+    user_id: str
     r"""The ID representing the user"""
-    email_address: NotRequired[str]
+    email_address: str
     r"""The new email address. Must adhere to the RFC 5322 specification for email address format."""
     verified: NotRequired[Nullable[bool]]
     r"""When created, the email address will be marked as verified."""
@@ -27,10 +26,10 @@ class CreateEmailAddressRequestBodyTypedDict(TypedDict):
 
 
 class CreateEmailAddressRequestBody(BaseModel):
-    user_id: Optional[str] = None
+    user_id: str
     r"""The ID representing the user"""
 
-    email_address: Optional[str] = None
+    email_address: str
     r"""The new email address. Must adhere to the RFC 5322 specification for email address format."""
 
     verified: OptionalNullable[bool] = UNSET
@@ -43,7 +42,7 @@ class CreateEmailAddressRequestBody(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["user_id", "email_address", "verified", "primary"]
+        optional_fields = ["verified", "primary"]
         nullable_fields = ["verified", "primary"]
         null_default_fields = []
 

@@ -13,6 +13,8 @@ class SamlConnectionsSDK(BaseSDK):
         *,
         limit: Optional[int] = 10,
         offset: Optional[int] = 0,
+        query: Optional[str] = None,
+        order_by: Optional[str] = None,
         organization_id: Optional[List[str]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -27,6 +29,8 @@ class SamlConnectionsSDK(BaseSDK):
 
         :param limit: Applies a limit to the number of results returned. Can be used for paginating the results together with `offset`.
         :param offset: Skip the first `offset` results when paginating. Needs to be an integer greater or equal to zero. To be used in conjunction with `limit`.
+        :param query: Returns SAML connections that have a name that matches the given query, via case-insensitive partial match.
+        :param order_by: Sorts organizations memberships by phone_number, email_address, created_at, first_name, last_name or username. By prepending one of those values with + or -, we can choose to sort in ascending (ASC) or descending (DESC) order.
         :param organization_id: Returns SAML connections that have an associated organization ID to the given organizations. For each organization id, the `+` and `-` can be prepended to the id, which denote whether the respective organization should be included or excluded from the result set. Accepts up to 100 organization ids.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -46,6 +50,8 @@ class SamlConnectionsSDK(BaseSDK):
         request = models.ListSAMLConnectionsRequest(
             limit=limit,
             offset=offset,
+            query=query,
+            order_by=order_by,
             organization_id=organization_id,
         )
 
@@ -120,6 +126,8 @@ class SamlConnectionsSDK(BaseSDK):
         *,
         limit: Optional[int] = 10,
         offset: Optional[int] = 0,
+        query: Optional[str] = None,
+        order_by: Optional[str] = None,
         organization_id: Optional[List[str]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -134,6 +142,8 @@ class SamlConnectionsSDK(BaseSDK):
 
         :param limit: Applies a limit to the number of results returned. Can be used for paginating the results together with `offset`.
         :param offset: Skip the first `offset` results when paginating. Needs to be an integer greater or equal to zero. To be used in conjunction with `limit`.
+        :param query: Returns SAML connections that have a name that matches the given query, via case-insensitive partial match.
+        :param order_by: Sorts organizations memberships by phone_number, email_address, created_at, first_name, last_name or username. By prepending one of those values with + or -, we can choose to sort in ascending (ASC) or descending (DESC) order.
         :param organization_id: Returns SAML connections that have an associated organization ID to the given organizations. For each organization id, the `+` and `-` can be prepended to the id, which denote whether the respective organization should be included or excluded from the result set. Accepts up to 100 organization ids.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -153,6 +163,8 @@ class SamlConnectionsSDK(BaseSDK):
         request = models.ListSAMLConnectionsRequest(
             limit=limit,
             offset=offset,
+            query=query,
+            order_by=order_by,
             organization_id=organization_id,
         )
 

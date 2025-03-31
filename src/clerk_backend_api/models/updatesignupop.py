@@ -19,6 +19,8 @@ class UpdateSignUpRequestBodyTypedDict(TypedDict):
     r"""The ID of the guest attempting to sign up as used in your external systems or your previous authentication solution.
     This will be copied to the resulting user when the sign-up is completed.
     """
+    custom_action: NotRequired[Nullable[bool]]
+    r"""If true, the sign-up will be marked as a custom action."""
 
 
 class UpdateSignUpRequestBody(BaseModel):
@@ -27,10 +29,13 @@ class UpdateSignUpRequestBody(BaseModel):
     This will be copied to the resulting user when the sign-up is completed.
     """
 
+    custom_action: OptionalNullable[bool] = UNSET
+    r"""If true, the sign-up will be marked as a custom action."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["external_id"]
-        nullable_fields = ["external_id"]
+        optional_fields = ["external_id", "custom_action"]
+        nullable_fields = ["external_id", "custom_action"]
         null_default_fields = []
 
         serialized = handler(self)
