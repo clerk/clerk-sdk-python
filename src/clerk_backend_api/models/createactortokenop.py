@@ -2,7 +2,9 @@
 
 from __future__ import annotations
 from clerk_backend_api.types import BaseModel
-from typing import Optional
+import pydantic
+from pydantic import ConfigDict
+from typing import Any, Dict, Optional
 from typing_extensions import NotRequired, TypedDict
 
 
@@ -11,11 +13,30 @@ class CreateActorTokenActorTypedDict(TypedDict):
     This whole payload will be also included in the JWT session token.
     """
 
+    sub: str
+    r"""The ID of the actor."""
+
 
 class CreateActorTokenActor(BaseModel):
     r"""The actor payload. It needs to include a sub property which should contain the ID of the actor.
     This whole payload will be also included in the JWT session token.
     """
+
+    model_config = ConfigDict(
+        populate_by_name=True, arbitrary_types_allowed=True, extra="allow"
+    )
+    __pydantic_extra__: Dict[str, Any] = pydantic.Field(init=False)
+
+    sub: str
+    r"""The ID of the actor."""
+
+    @property
+    def additional_properties(self):
+        return self.__pydantic_extra__
+
+    @additional_properties.setter
+    def additional_properties(self, value):
+        self.__pydantic_extra__ = value  # pyright: ignore[reportIncompatibleVariableOverride]
 
 
 class CreateActorTokenRequestBodyTypedDict(TypedDict):

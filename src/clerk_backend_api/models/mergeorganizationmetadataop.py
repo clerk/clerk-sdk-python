@@ -3,8 +3,6 @@
 from __future__ import annotations
 from clerk_backend_api.types import BaseModel
 from clerk_backend_api.utils import FieldMetadata, PathParamMetadata, RequestMetadata
-import pydantic
-from pydantic import ConfigDict
 from typing import Any, Dict, Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
 
@@ -21,11 +19,6 @@ class MergeOrganizationMetadataRequestBodyTypedDict(TypedDict):
 
 
 class MergeOrganizationMetadataRequestBody(BaseModel):
-    model_config = ConfigDict(
-        populate_by_name=True, arbitrary_types_allowed=True, extra="allow"
-    )
-    __pydantic_extra__: Dict[str, Any] = pydantic.Field(init=False)
-
     public_metadata: Optional[Dict[str, Any]] = None
     r"""Metadata saved on the organization, that is visible to both your frontend and backend.
     The new object will be merged with the existing value.
@@ -35,14 +28,6 @@ class MergeOrganizationMetadataRequestBody(BaseModel):
     r"""Metadata saved on the organization that is only visible to your backend.
     The new object will be merged with the existing value.
     """
-
-    @property
-    def additional_properties(self):
-        return self.__pydantic_extra__
-
-    @additional_properties.setter
-    def additional_properties(self, value):
-        self.__pydantic_extra__ = value  # pyright: ignore[reportIncompatibleVariableOverride]
 
 
 class MergeOrganizationMetadataRequestTypedDict(TypedDict):

@@ -4,23 +4,18 @@ from .basesdk import BaseSDK
 from clerk_backend_api import models, utils
 from clerk_backend_api._hooks import HookContext
 from clerk_backend_api.types import BaseModel, OptionalNullable, UNSET
-from typing import Any, List, Mapping, Optional, Union, cast
+from typing import Any, Dict, List, Mapping, Optional, Union, cast
 from typing_extensions import deprecated
 
 
 class Sessions(BaseSDK):
-    r"""The Session object is an abstraction over an HTTP session.
-    It models the period of information exchange between a user and the server.
-    Sessions are created when a user successfully goes through the sign in or sign up flows.
-    https://clerk.com/docs/reference/clerkjs/session
-    """
-
     def list(
         self,
         *,
         client_id: Optional[str] = None,
         user_id: Optional[str] = None,
         status: Optional[models.QueryParamStatus] = None,
+        paginated: Optional[bool] = None,
         limit: Optional[int] = 10,
         offset: Optional[int] = 0,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -38,6 +33,7 @@ class Sessions(BaseSDK):
         :param client_id: List sessions for the given client
         :param user_id: List sessions for the given user
         :param status: Filter sessions by the provided status
+        :param paginated: Whether to paginate the results. If true, the results will be paginated. If false, the results will not be paginated.
         :param limit: Applies a limit to the number of results returned. Can be used for paginating the results together with `offset`.
         :param offset: Skip the first `offset` results when paginating. Needs to be an integer greater or equal to zero. To be used in conjunction with `limit`.
         :param retries: Override the default retry configuration for this method
@@ -59,6 +55,7 @@ class Sessions(BaseSDK):
             client_id=client_id,
             user_id=user_id,
             status=status,
+            paginated=paginated,
             limit=limit,
             offset=offset,
         )
@@ -135,6 +132,7 @@ class Sessions(BaseSDK):
         client_id: Optional[str] = None,
         user_id: Optional[str] = None,
         status: Optional[models.QueryParamStatus] = None,
+        paginated: Optional[bool] = None,
         limit: Optional[int] = 10,
         offset: Optional[int] = 0,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -152,6 +150,7 @@ class Sessions(BaseSDK):
         :param client_id: List sessions for the given client
         :param user_id: List sessions for the given user
         :param status: Filter sessions by the provided status
+        :param paginated: Whether to paginate the results. If true, the results will be paginated. If false, the results will not be paginated.
         :param limit: Applies a limit to the number of results returned. Can be used for paginating the results together with `offset`.
         :param offset: Skip the first `offset` results when paginating. Needs to be an integer greater or equal to zero. To be used in conjunction with `limit`.
         :param retries: Override the default retry configuration for this method
@@ -173,6 +172,7 @@ class Sessions(BaseSDK):
             client_id=client_id,
             user_id=user_id,
             status=status,
+            paginated=paginated,
             limit=limit,
             offset=offset,
         )
@@ -243,7 +243,7 @@ class Sessions(BaseSDK):
             http_res,
         )
 
-    def create_session(
+    def create(
         self,
         *,
         request: Optional[
@@ -357,7 +357,7 @@ class Sessions(BaseSDK):
             http_res,
         )
 
-    async def create_session_async(
+    async def create_async(
         self,
         *,
         request: Optional[
@@ -647,6 +647,260 @@ class Sessions(BaseSDK):
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[models.Session])
         if utils.match_response(http_res, ["400", "401", "404"], "application/json"):
+            response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=response_data)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+
+        content_type = http_res.headers.get("Content-Type")
+        http_res_text = await utils.stream_to_text_async(http_res)
+        raise models.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res_text,
+            http_res,
+        )
+
+    def refresh(
+        self,
+        *,
+        session_id: str,
+        expired_token: str,
+        refresh_token: str,
+        request_origin: str,
+        request_headers: OptionalNullable[Dict[str, Any]] = UNSET,
+        format_: OptionalNullable[models.Format] = models.Format.TOKEN,
+        request_originating_ip: OptionalNullable[str] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> Optional[models.SessionRefresh]:
+        r"""Refresh a session
+
+        Refreshes a session by creating a new session token. A 401 is returned when there
+        are validation errors, which signals the SDKs to fallback to the handshake flow.
+
+        :param session_id: The ID of the session
+        :param expired_token: The JWT that is sent via the `__session` cookie from your frontend. Note: this JWT must be associated with the supplied session ID.
+        :param refresh_token: The JWT that is sent via the `__session` cookie from your frontend.
+        :param request_origin: The origin of the request.
+        :param request_headers: The headers of the request.
+        :param format_: The format of the response.
+        :param request_originating_ip: The IP address of the request.
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.RefreshSessionRequest(
+            session_id=session_id,
+            request_body=models.RefreshSessionRequestBody(
+                expired_token=expired_token,
+                refresh_token=refresh_token,
+                request_origin=request_origin,
+                request_headers=request_headers,
+                format_=format_,
+                request_originating_ip=request_originating_ip,
+            ),
+        )
+
+        req = self._build_request(
+            method="POST",
+            path="/sessions/{session_id}/refresh",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request.request_body,
+                False,
+                True,
+                "json",
+                Optional[models.RefreshSessionRequestBody],
+            ),
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["5XX"])
+
+        http_res = self.do_request(
+            hook_ctx=HookContext(
+                base_url=base_url or "",
+                operation_id="RefreshSession",
+                oauth2_scopes=[],
+                security_source=self.sdk_configuration.security,
+            ),
+            request=req,
+            error_status_codes=["400", "401", "4XX", "5XX"],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return utils.unmarshal_json(http_res.text, Optional[models.SessionRefresh])
+        if utils.match_response(http_res, ["400", "401"], "application/json"):
+            response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=response_data)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+
+        content_type = http_res.headers.get("Content-Type")
+        http_res_text = utils.stream_to_text(http_res)
+        raise models.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res_text,
+            http_res,
+        )
+
+    async def refresh_async(
+        self,
+        *,
+        session_id: str,
+        expired_token: str,
+        refresh_token: str,
+        request_origin: str,
+        request_headers: OptionalNullable[Dict[str, Any]] = UNSET,
+        format_: OptionalNullable[models.Format] = models.Format.TOKEN,
+        request_originating_ip: OptionalNullable[str] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> Optional[models.SessionRefresh]:
+        r"""Refresh a session
+
+        Refreshes a session by creating a new session token. A 401 is returned when there
+        are validation errors, which signals the SDKs to fallback to the handshake flow.
+
+        :param session_id: The ID of the session
+        :param expired_token: The JWT that is sent via the `__session` cookie from your frontend. Note: this JWT must be associated with the supplied session ID.
+        :param refresh_token: The JWT that is sent via the `__session` cookie from your frontend.
+        :param request_origin: The origin of the request.
+        :param request_headers: The headers of the request.
+        :param format_: The format of the response.
+        :param request_originating_ip: The IP address of the request.
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.RefreshSessionRequest(
+            session_id=session_id,
+            request_body=models.RefreshSessionRequestBody(
+                expired_token=expired_token,
+                refresh_token=refresh_token,
+                request_origin=request_origin,
+                request_headers=request_headers,
+                format_=format_,
+                request_originating_ip=request_originating_ip,
+            ),
+        )
+
+        req = self._build_request_async(
+            method="POST",
+            path="/sessions/{session_id}/refresh",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request.request_body,
+                False,
+                True,
+                "json",
+                Optional[models.RefreshSessionRequestBody],
+            ),
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["5XX"])
+
+        http_res = await self.do_request_async(
+            hook_ctx=HookContext(
+                base_url=base_url or "",
+                operation_id="RefreshSession",
+                oauth2_scopes=[],
+                security_source=self.sdk_configuration.security,
+            ),
+            request=req,
+            error_status_codes=["400", "401", "4XX", "5XX"],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return utils.unmarshal_json(http_res.text, Optional[models.SessionRefresh])
+        if utils.match_response(http_res, ["400", "401"], "application/json"):
             response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=response_data)
         if utils.match_response(http_res, "4XX", "*"):
@@ -1107,7 +1361,7 @@ class Sessions(BaseSDK):
             http_res,
         )
 
-    def create_session_token(
+    def create_token(
         self,
         *,
         session_id: str,
@@ -1220,7 +1474,7 @@ class Sessions(BaseSDK):
             http_res,
         )
 
-    async def create_session_token_async(
+    async def create_token_async(
         self,
         *,
         session_id: str,

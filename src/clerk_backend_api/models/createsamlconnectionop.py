@@ -23,7 +23,7 @@ class Provider(str, Enum):
     SAML_MICROSOFT = "saml_microsoft"
 
 
-class CreateSAMLConnectionAttributeMappingTypedDict(TypedDict):
+class AttributeMappingTypedDict(TypedDict):
     r"""Define the attribute name mapping between Identity Provider and Clerk's user properties"""
 
     user_id: NotRequired[str]
@@ -32,7 +32,7 @@ class CreateSAMLConnectionAttributeMappingTypedDict(TypedDict):
     last_name: NotRequired[str]
 
 
-class CreateSAMLConnectionAttributeMapping(BaseModel):
+class AttributeMapping(BaseModel):
     r"""Define the attribute name mapping between Identity Provider and Clerk's user properties"""
 
     user_id: Optional[str] = None
@@ -63,9 +63,7 @@ class CreateSAMLConnectionRequestBodyTypedDict(TypedDict):
     r"""The XML content of the IdP metadata file. If present, it takes priority over the corresponding individual properties"""
     organization_id: NotRequired[Nullable[str]]
     r"""The ID of the organization to which users of this SAML Connection will be added"""
-    attribute_mapping: NotRequired[
-        Nullable[CreateSAMLConnectionAttributeMappingTypedDict]
-    ]
+    attribute_mapping: NotRequired[Nullable[AttributeMappingTypedDict]]
     r"""Define the attribute name mapping between Identity Provider and Clerk's user properties"""
 
 
@@ -97,7 +95,7 @@ class CreateSAMLConnectionRequestBody(BaseModel):
     organization_id: OptionalNullable[str] = UNSET
     r"""The ID of the organization to which users of this SAML Connection will be added"""
 
-    attribute_mapping: OptionalNullable[CreateSAMLConnectionAttributeMapping] = UNSET
+    attribute_mapping: OptionalNullable[AttributeMapping] = UNSET
     r"""Define the attribute name mapping between Identity Provider and Clerk's user properties"""
 
     @model_serializer(mode="wrap")

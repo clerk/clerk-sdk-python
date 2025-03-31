@@ -5,10 +5,10 @@
 
 ### Available Operations
 
-* [list_waitlist_entries](#list_waitlist_entries) - List all waitlist entries
-* [create_waitlist_entry](#create_waitlist_entry) - Create a waitlist entry
+* [list](#list) - List all waitlist entries
+* [create](#create) - Create a waitlist entry
 
-## list_waitlist_entries
+## list
 
 Retrieve a list of waitlist entries for the instance.
 Entries are ordered by creation date in descending order by default.
@@ -20,11 +20,12 @@ Supports filtering by email address or status and pagination with limit and offs
 import clerk_backend_api
 from clerk_backend_api import Clerk
 
+
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 ) as clerk:
 
-    res = clerk.waitlist_entries.list_waitlist_entries(query="<value>", status=clerk_backend_api.ListWaitlistEntriesQueryParamStatus.COMPLETED)
+    res = clerk.waitlist_entries.list(query="<value>", status=clerk_backend_api.ListWaitlistEntriesQueryParamStatus.COMPLETED)
 
     assert res is not None
 
@@ -54,7 +55,7 @@ with Clerk(
 | --------------- | --------------- | --------------- |
 | models.SDKError | 4XX, 5XX        | \*/\*           |
 
-## create_waitlist_entry
+## create
 
 Creates a new waitlist entry for the given email address.
 If the email address is already on the waitlist, no new entry will be created and the existing waitlist entry will be returned.
@@ -64,13 +65,13 @@ If the email address is already on the waitlist, no new entry will be created an
 ```python
 from clerk_backend_api import Clerk
 
+
 with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 ) as clerk:
 
-    res = clerk.waitlist_entries.create_waitlist_entry(request={
+    res = clerk.waitlist_entries.create(request={
         "email_address": "Demond_Willms@hotmail.com",
-        "notify": True,
     })
 
     assert res is not None

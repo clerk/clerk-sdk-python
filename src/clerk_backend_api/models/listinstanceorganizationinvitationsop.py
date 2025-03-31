@@ -17,15 +17,6 @@ class ListInstanceOrganizationInvitationsQueryParamStatus(str, Enum):
 
 
 class ListInstanceOrganizationInvitationsRequestTypedDict(TypedDict):
-    limit: NotRequired[int]
-    r"""Applies a limit to the number of results returned.
-    Can be used for paginating the results together with `offset`.
-    """
-    offset: NotRequired[int]
-    r"""Skip the first `offset` results when paginating.
-    Needs to be an integer greater or equal to zero.
-    To be used in conjunction with `limit`.
-    """
     order_by: NotRequired[str]
     r"""Allows to return organization invitations in a particular order.
     At the moment, you can order the returned organization invitations either by their `created_at` or `email_address`.
@@ -38,26 +29,18 @@ class ListInstanceOrganizationInvitationsRequestTypedDict(TypedDict):
     r"""Filter organization invitations based on their status"""
     query: NotRequired[str]
     r"""Filter organization invitations based on their `email_address`"""
-
-
-class ListInstanceOrganizationInvitationsRequest(BaseModel):
-    limit: Annotated[
-        Optional[int],
-        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
-    ] = 10
+    limit: NotRequired[int]
     r"""Applies a limit to the number of results returned.
     Can be used for paginating the results together with `offset`.
     """
-
-    offset: Annotated[
-        Optional[int],
-        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
-    ] = 0
+    offset: NotRequired[int]
     r"""Skip the first `offset` results when paginating.
     Needs to be an integer greater or equal to zero.
     To be used in conjunction with `limit`.
     """
 
+
+class ListInstanceOrganizationInvitationsRequest(BaseModel):
     order_by: Annotated[
         Optional[str],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
@@ -81,3 +64,20 @@ class ListInstanceOrganizationInvitationsRequest(BaseModel):
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = None
     r"""Filter organization invitations based on their `email_address`"""
+
+    limit: Annotated[
+        Optional[int],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = 10
+    r"""Applies a limit to the number of results returned.
+    Can be used for paginating the results together with `offset`.
+    """
+
+    offset: Annotated[
+        Optional[int],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = 0
+    r"""Skip the first `offset` results when paginating.
+    Needs to be an integer greater or equal to zero.
+    To be used in conjunction with `limit`.
+    """

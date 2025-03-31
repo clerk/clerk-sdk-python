@@ -3,16 +3,12 @@
 # Synchronous Example
 from clerk_backend_api import Clerk
 
-with Clerk(
-    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as clerk:
 
-    res = clerk.email_addresses.get(email_address_id="email_address_id_example")
+with Clerk() as clerk:
 
-    assert res is not None
+    clerk.miscellaneous.get_public_interstitial(frontend_api_query_parameter="frontend-api_1a2b3c4d", frontend_api_query_parameter1="pub_1a2b3c4d", publishable_key="pub_1a2b3c4d", proxy_url="https://mean-orchid.com/", domain="plump-reach.com", sign_in_url="https://delicious-costume.org/", use_domain_for_script=True)
 
-    # Handle response
-    print(res)
+    # Use the SDK ...
 ```
 
 </br>
@@ -24,16 +20,12 @@ import asyncio
 from clerk_backend_api import Clerk
 
 async def main():
-    async with Clerk(
-        bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-    ) as clerk:
 
-        res = await clerk.email_addresses.get_async(email_address_id="email_address_id_example")
+    async with Clerk() as clerk:
 
-        assert res is not None
+        await clerk.miscellaneous.get_public_interstitial_async(frontend_api_query_parameter="frontend-api_1a2b3c4d", frontend_api_query_parameter1="pub_1a2b3c4d", publishable_key="pub_1a2b3c4d", proxy_url="https://mean-orchid.com/", domain="plump-reach.com", sign_in_url="https://delicious-costume.org/", use_domain_for_script=True)
 
-        # Handle response
-        print(res)
+        # Use the SDK ...
 
 asyncio.run(main())
 ```

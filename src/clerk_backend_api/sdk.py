@@ -8,30 +8,27 @@ from .utils.retries import RetryConfig
 from clerk_backend_api import models, utils
 from clerk_backend_api._hooks import SDKHooks
 from clerk_backend_api.actortokens import ActorTokens
-from clerk_backend_api.allowlistblocklist import AllowlistBlocklist
 from clerk_backend_api.allowlistidentifiers import AllowlistIdentifiers
 from clerk_backend_api.betafeatures import BetaFeatures
 from clerk_backend_api.blocklistidentifiers_sdk import BlocklistIdentifiersSDK
-from clerk_backend_api.clerk_redirecturls import ClerkRedirectUrls
 from clerk_backend_api.clients import Clients
 from clerk_backend_api.domains_sdk import DomainsSDK
 from clerk_backend_api.emailaddresses import EmailAddresses
 from clerk_backend_api.emailandsmstemplates import EmailAndSmsTemplates
 from clerk_backend_api.emailsmstemplates import EmailSMSTemplates
-from clerk_backend_api.instance_settings_sdk import InstanceSettingsSDK
+from clerk_backend_api.instancesettings_sdk import InstanceSettingsSDK
 from clerk_backend_api.invitations import Invitations
 from clerk_backend_api.jwks_sdk import JwksSDK
 from clerk_backend_api.jwttemplates import JwtTemplates
 from clerk_backend_api.miscellaneous import Miscellaneous
 from clerk_backend_api.oauthapplications_sdk import OauthApplicationsSDK
-from clerk_backend_api.organizationdomain_sdk import OrganizationDomainSDK
 from clerk_backend_api.organizationdomains_sdk import OrganizationDomainsSDK
 from clerk_backend_api.organizationinvitations_sdk import OrganizationInvitationsSDK
 from clerk_backend_api.organizationmemberships_sdk import OrganizationMembershipsSDK
 from clerk_backend_api.organizations_sdk import OrganizationsSDK
 from clerk_backend_api.phonenumbers import PhoneNumbers
 from clerk_backend_api.proxychecks import ProxyChecks
-from clerk_backend_api.redirecturls import RedirectURLs
+from clerk_backend_api.redirecturls import RedirectUrls
 from clerk_backend_api.samlconnections_sdk import SamlConnectionsSDK
 from clerk_backend_api.sessions import Sessions
 from clerk_backend_api.signintokens import SignInTokens
@@ -40,81 +37,59 @@ from clerk_backend_api.templates import Templates
 from clerk_backend_api.testingtokens import TestingTokens
 from clerk_backend_api.types import OptionalNullable, UNSET
 from clerk_backend_api.users import Users
-from clerk_backend_api.waitlist_entries_sdk import WaitlistEntriesSDK
+from clerk_backend_api.waitlistentries_sdk import WaitlistEntriesSDK
 from clerk_backend_api.webhooks import Webhooks
 import httpx
 from typing import Any, Callable, Dict, Optional, Union, cast
 import weakref
 
 # region imports
-from .jwks_helpers import AuthenticateRequestOptions, RequestState, authenticate_request, Requestish
+from .jwks_helpers import (
+    AuthenticateRequestOptions,
+    RequestState,
+    authenticate_request,
+    Requestish,
+)
 # endregion imports
 
 
 class Clerk(BaseSDK):
-    r"""Clerk Backend API: The Clerk REST Backend API, meant to be accessed by backend
-    servers.
+    r"""Clerk Backend API: The Clerk REST Backend API, meant to be accessed by backend servers.
 
     ### Versions
 
     When the API changes in a way that isn't compatible with older versions, a new version is released.
-    Each version is identified by its release date, e.g. `2021-02-05`. For more information, please see [Clerk API Versions](https://clerk.com/docs/backend-requests/versioning/overview).
-
+    Each version is identified by its release date, e.g. `2024-10-01`. For more information, please see [Clerk API Versions](https://clerk.com/docs/versioning/available-versions).
 
     Please see https://clerk.com/docs for more information.
     https://clerk.com/docs
     """
 
     miscellaneous: Miscellaneous
-    r"""Various endpoints that do not belong in any particular category."""
     jwks: JwksSDK
     clients: Clients
-    r"""The Client object tracks sessions, as well as the state of any sign in and sign up attempts, for a given device.
-    https://clerk.com/docs/reference/clerkjs/client
-    """
     email_addresses: EmailAddresses
     phone_numbers: PhoneNumbers
     sessions: Sessions
-    r"""The Session object is an abstraction over an HTTP session.
-    It models the period of information exchange between a user and the server.
-    Sessions are created when a user successfully goes through the sign in or sign up flows.
-    https://clerk.com/docs/reference/clerkjs/session
-    """
     email_sms_templates: EmailSMSTemplates
     email_and_sms_templates: EmailAndSmsTemplates
     templates: Templates
     users: Users
-    r"""The user object represents a user that has successfully signed up to your application.
-    https://clerk.com/docs/reference/clerkjs/user
-    """
     invitations: Invitations
-    r"""Invitations allow you to invite someone to sign up to your application, via email.
-    https://clerk.com/docs/authentication/invitations
-    """
     organization_invitations: OrganizationInvitationsSDK
-    allowlist_blocklist: AllowlistBlocklist
     allowlist_identifiers: AllowlistIdentifiers
     blocklist_identifiers: BlocklistIdentifiersSDK
     beta_features: BetaFeatures
     actor_tokens: ActorTokens
     domains: DomainsSDK
-    r"""Domains represent each instance's URLs and DNS setup."""
     instance_settings: InstanceSettingsSDK
     webhooks: Webhooks
-    r"""You can configure webhooks to be notified about various events that happen on your instance.
-    https://clerk.com/docs/integration/webhooks
-    """
     jwt_templates: JwtTemplates
     organizations: OrganizationsSDK
-    r"""Organizations are used to group members under a common entity and provide shared access to resources.
-    https://clerk.com/docs/organizations/overview
-    """
     organization_memberships: OrganizationMembershipsSDK
     organization_domains: OrganizationDomainsSDK
-    organization_domain: OrganizationDomainSDK
     proxy_checks: ProxyChecks
-    redirect_ur_ls: RedirectURLs
-    redirect_urls: ClerkRedirectUrls
+    redirect_urls: RedirectUrls
     sign_in_tokens: SignInTokens
     sign_ups: SignUps
     oauth_applications: OauthApplicationsSDK
@@ -145,15 +120,19 @@ class Clerk(BaseSDK):
         :param retry_config: The retry configuration to use for all supported methods
         :param timeout_ms: Optional request timeout applied to each operation in milliseconds
         """
+        client_supplied = True
         if client is None:
             client = httpx.Client()
+            client_supplied = False
 
         assert issubclass(
             type(client), HttpClient
         ), "The provided client must implement the HttpClient protocol."
 
+        async_client_supplied = True
         if async_client is None:
             async_client = httpx.AsyncClient()
+            async_client_supplied = False
 
         if debug_logger is None:
             debug_logger = get_default_logger()
@@ -177,7 +156,9 @@ class Clerk(BaseSDK):
             self,
             SDKConfiguration(
                 client=client,
+                client_supplied=client_supplied,
                 async_client=async_client,
+                async_client_supplied=async_client_supplied,
                 security=security,
                 server_url=server_url,
                 server_idx=server_idx,
@@ -191,7 +172,7 @@ class Clerk(BaseSDK):
 
         current_server_url, *_ = self.sdk_configuration.get_server_details()
         server_url, self.sdk_configuration.client = hooks.sdk_init(
-            current_server_url, self.sdk_configuration.client
+            current_server_url, client
         )
         if current_server_url != server_url:
             self.sdk_configuration.server_url = server_url
@@ -204,7 +185,9 @@ class Clerk(BaseSDK):
             close_clients,
             cast(ClientOwner, self.sdk_configuration),
             self.sdk_configuration.client,
+            self.sdk_configuration.client_supplied,
             self.sdk_configuration.async_client,
+            self.sdk_configuration.async_client_supplied,
         )
 
         self._init_sdks()
@@ -224,7 +207,6 @@ class Clerk(BaseSDK):
         self.organization_invitations = OrganizationInvitationsSDK(
             self.sdk_configuration
         )
-        self.allowlist_blocklist = AllowlistBlocklist(self.sdk_configuration)
         self.allowlist_identifiers = AllowlistIdentifiers(self.sdk_configuration)
         self.blocklist_identifiers = BlocklistIdentifiersSDK(self.sdk_configuration)
         self.beta_features = BetaFeatures(self.sdk_configuration)
@@ -238,10 +220,8 @@ class Clerk(BaseSDK):
             self.sdk_configuration
         )
         self.organization_domains = OrganizationDomainsSDK(self.sdk_configuration)
-        self.organization_domain = OrganizationDomainSDK(self.sdk_configuration)
         self.proxy_checks = ProxyChecks(self.sdk_configuration)
-        self.redirect_ur_ls = RedirectURLs(self.sdk_configuration)
-        self.redirect_urls = ClerkRedirectUrls(self.sdk_configuration)
+        self.redirect_urls = RedirectUrls(self.sdk_configuration)
         self.sign_in_tokens = SignInTokens(self.sdk_configuration)
         self.sign_ups = SignUps(self.sdk_configuration)
         self.oauth_applications = OauthApplicationsSDK(self.sdk_configuration)
@@ -256,12 +236,20 @@ class Clerk(BaseSDK):
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        if self.sdk_configuration.client is not None:
+        if (
+            self.sdk_configuration.client is not None
+            and not self.sdk_configuration.client_supplied
+        ):
             self.sdk_configuration.client.close()
+        self.sdk_configuration.client = None
 
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        if self.sdk_configuration.async_client is not None:
+        if (
+            self.sdk_configuration.async_client is not None
+            and not self.sdk_configuration.async_client_supplied
+        ):
             await self.sdk_configuration.async_client.aclose()
+        self.sdk_configuration.async_client = None
 
     # region sdk-class-body
     def authenticate_request(
