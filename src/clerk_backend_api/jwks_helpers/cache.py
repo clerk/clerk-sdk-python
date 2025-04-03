@@ -1,4 +1,5 @@
 import time
+from typing import Optional
 
 class Cache:
     """ In-memory cache with expiration. """
@@ -7,13 +8,13 @@ class Cache:
         self.cache = {}
         self.expiration_time = 300 # 5 minutes
 
-    def set(self, key: str | None, value: str):
+    def set(self, key: Optional[str], value: str):
         if key is None:
             return
 
         self.cache[key] = (value, time.time() + self.expiration_time)
 
-    def get(self, key: str | None) -> str | None:
+    def get(self, key: Optional[str]) -> Optional[str]:
         if key is None:
             return None
 
