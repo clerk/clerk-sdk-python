@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: bfe29c99-6e67-43fe-b928-64d6a5ed6aa8
 management:
-  docChecksum: b8bda4bc70b0a009b9da921779b0033e
+  docChecksum: b4df7f33efbdd977dd1e3cfcaef7227f
   docVersion: "2024-10-01"
-  speakeasyVersion: 1.526.0
-  generationVersion: 2.563.0
-  releaseVersion: 2.0.0
-  configChecksum: cf797e095fed3f300b8fd3d7ce6ed262
+  speakeasyVersion: 1.528.1
+  generationVersion: 2.565.1
+  releaseVersion: 2.0.1
+  configChecksum: 563dd2cb176a4c56bc746ebac4d70bbc
   repoURL: https://github.com/clerk/clerk-sdk-python.git
   installationURL: https://github.com/clerk/clerk-sdk-python.git
   published: true
@@ -15,7 +15,7 @@ features:
     additionalDependencies: 1.0.0
     additionalProperties: 1.0.1
     constsAndDefaults: 1.0.5
-    core: 5.12.4
+    core: 5.12.5
     customCodeRegions: 0.1.1
     defaultEnabledRetries: 0.2.0
     deprecations: 3.0.2
@@ -32,7 +32,7 @@ features:
     multipartFileContentType: 1.0.0
     nameOverrides: 3.0.1
     nullables: 1.0.1
-    openEnums: 1.0.0
+    openEnums: 1.0.1
     responseFormat: 1.0.1
     retries: 3.0.2
     sdkHooks: 1.0.1
@@ -43,6 +43,8 @@ generatedFiles:
   - .python-version
   - .vscode/settings.json
   - USAGE.md
+  - docs/models/accountlessapplication.md
+  - docs/models/accountlessapplicationobject.md
   - docs/models/actor.md
   - docs/models/actortoken.md
   - docs/models/actortokenactor.md
@@ -219,6 +221,8 @@ generatedFiles:
   - docs/models/nextaction.md
   - docs/models/nonce.md
   - docs/models/oauth.md
+  - docs/models/oauthaccesstoken.md
+  - docs/models/oauthaccesstokenobject.md
   - docs/models/oauthapplication.md
   - docs/models/oauthapplicationobject.md
   - docs/models/oauthapplications.md
@@ -274,7 +278,6 @@ generatedFiles:
   - docs/models/refreshsessionrequest.md
   - docs/models/refreshsessionrequestbody.md
   - docs/models/requestbody.md
-  - docs/models/responsebody.md
   - docs/models/reverttemplatepathparamtemplatetype.md
   - docs/models/reverttemplaterequest.md
   - docs/models/revokeactortokenrequest.md
@@ -428,6 +431,7 @@ generatedFiles:
   - docs/sdks/emailaddresses/README.md
   - docs/sdks/emailandsmstemplates/README.md
   - docs/sdks/emailsmstemplates/README.md
+  - docs/sdks/experimentalaccountlessapplications/README.md
   - docs/sdks/instancesettingssdk/README.md
   - docs/sdks/invitations/README.md
   - docs/sdks/jwkssdk/README.md
@@ -471,6 +475,7 @@ generatedFiles:
   - src/clerk_backend_api/emailaddresses.py
   - src/clerk_backend_api/emailandsmstemplates.py
   - src/clerk_backend_api/emailsmstemplates.py
+  - src/clerk_backend_api/experimentalaccountlessapplications.py
   - src/clerk_backend_api/httpclient.py
   - src/clerk_backend_api/instancesettings_sdk.py
   - src/clerk_backend_api/invitations.py
@@ -478,6 +483,7 @@ generatedFiles:
   - src/clerk_backend_api/jwttemplates.py
   - src/clerk_backend_api/miscellaneous.py
   - src/clerk_backend_api/models/__init__.py
+  - src/clerk_backend_api/models/accountlessapplication.py
   - src/clerk_backend_api/models/actortoken.py
   - src/clerk_backend_api/models/adddomainop.py
   - src/clerk_backend_api/models/allowlistidentifier.py
@@ -580,6 +586,7 @@ generatedFiles:
   - src/clerk_backend_api/models/listwaitlistentriesop.py
   - src/clerk_backend_api/models/lockuserop.py
   - src/clerk_backend_api/models/mergeorganizationmetadataop.py
+  - src/clerk_backend_api/models/oauthaccesstoken.py
   - src/clerk_backend_api/models/oauthapplication.py
   - src/clerk_backend_api/models/oauthapplications.py
   - src/clerk_backend_api/models/oauthapplicationwithsecret.py
@@ -844,7 +851,7 @@ examples:
           paginated: false
       responses:
         "200":
-          application/json: [{"object": "session", "id": "sess_123456789abcd", "user_id": "user_123456789abcd", "client_id": "client_123456789abcd", "actor": null, "status": "active", "last_active_organization_id": "org_123456789abcd", "last_active_at": 1622471123, "latest_activity": {"object": "<value>", "id": "<id>", "device_type": "<value>", "is_mobile": false, "browser_name": "<value>", "browser_version": "<value>", "ip_address": "353d:e0f1:1fbd:018a:1ecd:a17c:0d9e:31d2", "city": "Herminiaview", "country": "Republic of Korea"}, "expire_at": 1685471123, "abandon_at": 1630471123, "updated_at": 1622532323, "created_at": 1622470000}]
+          application/json: [{"object": "session", "id": "sess_123456789abcd", "user_id": "user_123456789abcd", "client_id": "client_123456789abcd", "actor": null, "status": "active", "last_active_organization_id": "org_123456789abcd", "last_active_at": 1622471123, "latest_activity": {"object": "<value>", "id": "<id>", "device_type": "<value>", "is_mobile": false, "browser_name": "<value>", "browser_version": "<value>", "ip_address": "e353:de0f:11fb:d018:a1ec:da17:c0d9:e31d", "city": "South Herminiaview", "country": "Republic of Korea"}, "expire_at": 1685471123, "abandon_at": 1630471123, "updated_at": 1622532323, "created_at": 1622470000}]
         "400":
           application/json: {"errors": [{"message": "Error message", "long_message": "Longer error message with more details", "code": "error_code", "meta": {}, "clerk_trace_id": "trace_id"}], "meta": {}}
   createSession:
@@ -1191,7 +1198,7 @@ examples:
           offset: 10
       responses:
         "200":
-          application/json: [{"object": "oauth_access_token", "external_account_id": "external_account_456", "provider_user_id": "provider_user_789", "token": "access_token_123", "provider": "oauth_google", "label": "Primary account", "scopes": ["email", "profile"], "token_secret": "token_secret_xyz", "expires_at": 187913}]
+          application/json: [{"object": "oauth_access_token", "external_account_id": "external_account_456", "provider_user_id": "provider_user_789", "token": "access_token_123", "expires_at": 187913, "provider": "oauth_google", "public_metadata": {}, "label": "Primary account", "scopes": ["email", "profile"], "token_secret": "token_secret_xyz"}]
         "400":
           application/json: {"errors": [{"message": "Error message", "long_message": "Longer error message with more details", "code": "error_code", "meta": {}, "clerk_trace_id": "trace_id"}], "meta": {}}
   UsersGetOrganizationMemberships:
@@ -1713,7 +1720,7 @@ examples:
           user_id: ["clerk"]
       responses:
         "200":
-          application/json: {"data": [{"object": "organization", "id": "org_123", "name": "Acme Corp", "slug": "acme-corp", "members_count": 150, "missing_member_with_elevated_permissions": false, "pending_invitations_count": 678317, "max_allowed_memberships": 300, "admin_delete_enabled": true, "public_metadata": {"public_info": "Info visible to everyone"}, "private_metadata": {"internal_use_only": "Sensitive data"}, "created_by": "user_123456", "created_at": 1625078400, "updated_at": 1625164800}], "total_count": 1}
+          application/json: {"data": [{"object": "organization", "id": "org_123", "name": "Acme Corp", "slug": "acme-corp", "members_count": 150, "missing_member_with_elevated_permissions": false, "pending_invitations_count": 547272, "max_allowed_memberships": 300, "admin_delete_enabled": true, "public_metadata": {"public_info": "Info visible to everyone"}, "private_metadata": {"internal_use_only": "Sensitive data"}, "created_by": "user_123456", "created_at": 1625078400, "updated_at": 1625164800}], "total_count": 1}
         "400":
           application/json: {"errors": [{"message": "Error message", "long_message": "Longer error message with more details", "code": "error_code", "meta": {}, "clerk_trace_id": "trace_id"}], "meta": {}}
   CreateOrganization:
@@ -2195,6 +2202,20 @@ examples:
         "200":
           application/json: {"object": "sign_up_attempt", "id": "signup_1234567890abcdef", "status": "complete", "required_fields": ["email_address"], "optional_fields": ["first_name", "last_name"], "missing_fields": ["phone_number"], "unverified_fields": ["email_address"], "verifications": {"email_address": {"next_action": "", "supported_strategies": ["<value>", "<value>"], "key": "<value>", "key1": "<value>"}, "phone_number": {"next_action": "needs_attempt", "supported_strategies": ["<value>", "<value>", "<value>"], "key": "<value>", "key1": "<value>"}, "web3_wallet": {"next_action": "needs_attempt", "supported_strategies": ["<value>"], "key": "<value>"}, "external_account": {}}, "username": "user_123456", "email_address": "user@example.com", "phone_number": "+1234567890", "web3_wallet": "0x1234567890abcdef1234567890abcdef12345678", "password_enabled": true, "first_name": "John", "last_name": "Doe", "unsafe_metadata": {"key": "<value>", "key1": "<value>", "key2": "<value>"}, "public_metadata": {"key": "<value>", "key1": "<value>"}, "custom_action": false, "external_id": "ext_id_7890abcdef123456", "created_session_id": "sess_1234567890abcdef", "created_user_id": "user_1234567890abcdef", "abandon_at": 1609459200, "legal_accepted_at": 1700690400000}
         "403":
+          application/json: {"errors": [{"message": "Error message", "long_message": "Longer error message with more details", "code": "error_code", "meta": {}, "clerk_trace_id": "trace_id"}], "meta": {}}
+  CreateAccountlessApplication:
+    speakeasy-default-create-accountless-application:
+      responses:
+        "200":
+          application/json: {"object": "accountless_application", "publishable_key": "<value>", "secret_key": "<value>", "claim_url": "https://probable-heating.com/", "api_keys_url": "https://standard-utilization.com/"}
+        "500":
+          application/json: {"errors": [{"message": "Error message", "long_message": "Longer error message with more details", "code": "error_code", "meta": {}, "clerk_trace_id": "trace_id"}], "meta": {}}
+  CompleteAccountlessApplication:
+    speakeasy-default-complete-accountless-application:
+      responses:
+        "200":
+          application/json: {"object": "accountless_application", "publishable_key": "<value>", "secret_key": "<value>", "claim_url": "https://stormy-step.biz", "api_keys_url": "https://dark-avalanche.net/"}
+        "500":
           application/json: {"errors": [{"message": "Error message", "long_message": "Longer error message with more details", "code": "error_code", "meta": {}, "clerk_trace_id": "trace_id"}], "meta": {}}
 examplesVersion: 1.0.0
 generatedTests: {}

@@ -2994,7 +2994,7 @@ class Users(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[List[models.ResponseBody]]:
+    ) -> Optional[List[models.OAuthAccessToken]]:
         r"""Retrieve the OAuth access token of a user
 
         Fetch the corresponding OAuth access token for a user that has previously authenticated with a particular OAuth provider.
@@ -3071,7 +3071,7 @@ class Users(BaseSDK):
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(
-                http_res.text, Optional[List[models.ResponseBody]]
+                http_res.text, Optional[List[models.OAuthAccessToken]]
             )
         if utils.match_response(http_res, ["400", "404", "422"], "application/json"):
             response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
@@ -3108,7 +3108,7 @@ class Users(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[List[models.ResponseBody]]:
+    ) -> Optional[List[models.OAuthAccessToken]]:
         r"""Retrieve the OAuth access token of a user
 
         Fetch the corresponding OAuth access token for a user that has previously authenticated with a particular OAuth provider.
@@ -3185,7 +3185,7 @@ class Users(BaseSDK):
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(
-                http_res.text, Optional[List[models.ResponseBody]]
+                http_res.text, Optional[List[models.OAuthAccessToken]]
             )
         if utils.match_response(http_res, ["400", "404", "422"], "application/json"):
             response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
