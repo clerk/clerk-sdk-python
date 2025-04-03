@@ -9,6 +9,10 @@ from datetime import timedelta
 from enum import Enum
 from typing import Any, Dict, List, Union, Optional, cast
 
+from .cache import Cache
+
+__jwkcache = Cache()
+
 
 class TokenVerificationErrorReason(Enum):
 
@@ -110,12 +114,20 @@ def fetch_jwks(options: VerifyTokenOptions) -> Dict[str, Any]:
     """ Fetch JWKS from Clerk's Backend API."""
 
     jwks_url = f'{options.api_url}/{options.api_version}/jwks'
-    with httpx.Client() as client:
-        http_res = client.get(jwks_url, headers={
-            'Accept': 'application/json', 'Authorization': f'Bearer {options.secret_key}'
-        })
+    transport = httpx.HTTPTransport(retries=10) # handles ConnectError and ConnectTimeout
+    with httpx.Client(transport=transport) as client:
+        http_res = None
 
-        if http_res.status_code != 200:
+        for _ in range(10):
+            try:
+                http_res = client.get(jwks_url, headers={
+                    'Accept': 'application/json', 'Authorization': f'Bearer {options.secret_key}'
+                })
+            except httpx.TimeoutException:
+                continue
+            break
+
+        if http_res is None or http_res.status_code != 200:
             raise TokenVerificationError(TokenVerificationErrorReason.JWK_FAILED_TO_LOAD)
 
         try:
@@ -136,6 +148,10 @@ def get_remote_jwt_key(token: str, options: VerifyTokenOptions) -> str:
     except jwt.InvalidTokenError as e:
         raise TokenVerificationError(TokenVerificationErrorReason.TOKEN_INVALID) from e
 
+    decoded_pem = __jwkcache.get(kid)
+    if decoded_pem is not None:
+        return decoded_pem
+
     jwks = fetch_jwks(options).get('keys')
     if jwks is None:
         raise TokenVerificationError(TokenVerificationErrorReason.JWK_REMOTE_INVALID)
@@ -149,7 +165,9 @@ def get_remote_jwt_key(token: str, options: VerifyTokenOptions) -> str:
                     encoding=serialization.Encoding.PEM,
                     format=serialization.PublicFormat.SubjectPublicKeyInfo
                 )
-                return pem.decode('utf-8')
+                decoded_pem = pem.decode('utf-8')
+                __jwkcache.set(kid, decoded_pem)
+                return decoded_pem
 
     raise TokenVerificationError(TokenVerificationErrorReason.JWK_KID_MISMATCH)
 
