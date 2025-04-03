@@ -783,7 +783,7 @@ with Clerk(
 
 ### Response
 
-**[List[models.ResponseBody]](../../models/.md)**
+**[List[models.OAuthAccessToken]](../../models/.md)**
 
 ### Errors
 

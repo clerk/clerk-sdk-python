@@ -16,6 +16,9 @@ from clerk_backend_api.domains_sdk import DomainsSDK
 from clerk_backend_api.emailaddresses import EmailAddresses
 from clerk_backend_api.emailandsmstemplates import EmailAndSmsTemplates
 from clerk_backend_api.emailsmstemplates import EmailSMSTemplates
+from clerk_backend_api.experimentalaccountlessapplications import (
+    ExperimentalAccountlessApplications,
+)
 from clerk_backend_api.instancesettings_sdk import InstanceSettingsSDK
 from clerk_backend_api.invitations import Invitations
 from clerk_backend_api.jwks_sdk import JwksSDK
@@ -96,6 +99,7 @@ class Clerk(BaseSDK):
     saml_connections: SamlConnectionsSDK
     testing_tokens: TestingTokens
     waitlist_entries: WaitlistEntriesSDK
+    experimental_accountless_applications: ExperimentalAccountlessApplications
 
     def __init__(
         self,
@@ -228,6 +232,9 @@ class Clerk(BaseSDK):
         self.saml_connections = SamlConnectionsSDK(self.sdk_configuration)
         self.testing_tokens = TestingTokens(self.sdk_configuration)
         self.waitlist_entries = WaitlistEntriesSDK(self.sdk_configuration)
+        self.experimental_accountless_applications = (
+            ExperimentalAccountlessApplications(self.sdk_configuration)
+        )
 
     def __enter__(self):
         return self
