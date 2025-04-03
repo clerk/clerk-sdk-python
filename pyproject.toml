@@ -1,6 +1,6 @@
 [project]
 name = "clerk-backend-api"
-version = "2.0.1"
+version = "2.0.2"
 description = "Python Client SDK for clerk.dev"
 authors = [{ name = "Clerk" },]
 readme = "README-PYPI.md"
