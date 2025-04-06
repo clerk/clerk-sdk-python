@@ -13,7 +13,9 @@ from .verifytoken import (
 
 
 class Requestish(Protocol):
-    headers: Dict[str, str]
+    @property
+    def headers(self) -> Mapping[str, str]:
+        ...
 
 
 class AuthErrorReason(Enum):
