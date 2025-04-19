@@ -161,8 +161,8 @@ class Saml(BaseModel):
         optional_fields = ["error", "verified_at_client"]
         nullable_fields = [
             "external_verification_redirect_url",
-            "attempts",
             "error",
+            "attempts",
             "verified_at_client",
         ]
         null_default_fields = []
@@ -312,10 +312,10 @@ class SAMLAccount(BaseModel):
             "saml_connection",
         ]
         nullable_fields = [
-            "verification",
             "first_name",
             "last_name",
             "provider_user_id",
+            "verification",
             "saml_connection",
         ]
         null_default_fields = []

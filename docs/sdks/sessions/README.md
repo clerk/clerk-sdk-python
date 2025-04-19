@@ -306,7 +306,7 @@ with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 ) as clerk:
 
-    res = clerk.sessions.create_token(session_id="<id>", expires_in_seconds=6005.84)
+    res = clerk.sessions.create_token(session_id="<id>", expires_in_seconds=2072.13)
 
     assert res is not None
 

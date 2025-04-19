@@ -150,7 +150,7 @@ class FromOAuth(BaseModel):
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = ["error", "verified_at_client"]
-        nullable_fields = ["expire_at", "attempts", "error", "verified_at_client"]
+        nullable_fields = ["error", "expire_at", "attempts", "verified_at_client"]
         null_default_fields = []
 
         serialized = handler(self)

@@ -125,10 +125,10 @@ class Web3Signature(BaseModel):
     def serialize_model(self, handler):
         optional_fields = ["nonce", "message", "verified_at_client"]
         nullable_fields = [
-            "attempts",
-            "expire_at",
             "nonce",
             "message",
+            "attempts",
+            "expire_at",
             "verified_at_client",
         ]
         null_default_fields = []
