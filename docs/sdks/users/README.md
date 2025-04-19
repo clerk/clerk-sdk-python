@@ -222,7 +222,7 @@ with Clerk(
         "user-id-123",
     ], organization_id=[
         "John Doe",
-    ], query="John Doe", email_address_query="<value>", phone_number_query="<value>", username_query="<value>", name_query="<value>", banned=True, last_active_at_before=1700690400000, last_active_at_after=1700690400000, last_active_at_since=1700690400000, created_at_before=1730160000000, created_at_after=1730160000000)
+    ], query="<value>", email_address_query="<value>", phone_number_query="<value>", username_query="<value>", name_query="<value>", banned=True, last_active_at_before=1700690400000, last_active_at_after=1700690400000, last_active_at_since=1700690400000, created_at_before=1730160000000, created_at_after=1730160000000)
 
     assert res is not None
 

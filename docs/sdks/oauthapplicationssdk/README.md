@@ -79,7 +79,6 @@ with Clerk(
             "<value>",
             "<value>",
         ],
-        "callback_url": "https://example.com/oauth/callback",
         "public": True,
     })
 
@@ -167,7 +166,7 @@ with Clerk(
         "<value>",
         "<value>",
         "<value>",
-    ], callback_url="https://example.com/oauth/callback", public=False)
+    ], public=False)
 
     assert res is not None
 

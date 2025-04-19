@@ -198,7 +198,7 @@ class Oauth(BaseModel):
             "error",
             "verified_at_client",
         ]
-        nullable_fields = ["attempts", "error", "verified_at_client"]
+        nullable_fields = ["error", "attempts", "verified_at_client"]
         null_default_fields = []
 
         serialized = handler(self)
@@ -331,7 +331,7 @@ class ExternalAccountWithVerification(BaseModel):
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = ["avatar_url", "image_url", "username", "label"]
-        nullable_fields = ["verification", "image_url", "username", "label"]
+        nullable_fields = ["image_url", "username", "label", "verification"]
         null_default_fields = []
 
         serialized = handler(self)

@@ -152,7 +152,7 @@ with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 ) as clerk:
 
-    res = clerk.organization_invitations.list(organization_id="org_12345", status=clerk_backend_api.ListOrganizationInvitationsQueryParamStatus.PENDING)
+    res = clerk.organization_invitations.list(organization_id="org_12345", status=clerk_backend_api.ListOrganizationInvitationsQueryParamStatus.REVOKED)
 
     assert res is not None
 
@@ -208,9 +208,7 @@ with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 ) as clerk:
 
-    res = clerk.organization_invitations.bulk_create(organization_id="org_12345", request_body=[
-
-    ])
+    res = clerk.organization_invitations.bulk_create(organization_id="org_12345", request_body=[])
 
     assert res is not None
 
