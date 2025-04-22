@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from enum import Enum
 from http.cookies import SimpleCookie
-from typing import Any, Dict, List, Union, Optional, Protocol
+from typing import Any, Dict, List, Union, Optional, Protocol, Mapping
 from warnings import warn
 
 from .verifytoken import (
@@ -13,7 +13,9 @@ from .verifytoken import (
 
 
 class Requestish(Protocol):
-    headers: Dict[str, str]
+    @property
+    def headers(self) -> Mapping[str, str]:
+        ...
 
 
 class AuthErrorReason(Enum):
