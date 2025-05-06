@@ -129,11 +129,16 @@ Generally, the SDK will work well with most IDEs out of the box. However, when u
 from clerk_backend_api import Clerk
 
 
-with Clerk() as clerk:
+with Clerk(
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+) as clerk:
 
-    clerk.miscellaneous.get_public_interstitial(frontend_api_query_parameter="frontend-api_1a2b3c4d", frontend_api_query_parameter1="pub_1a2b3c4d", publishable_key="pub_1a2b3c4d", proxy_url="https://mean-orchid.com/", domain="plump-reach.com", sign_in_url="https://delicious-costume.org/", use_domain_for_script=True)
+    res = clerk.email_addresses.get(email_address_id="email_address_id_example")
 
-    # Use the SDK ...
+    assert res is not None
+
+    # Handle response
+    print(res)
 ```
 
 </br>
@@ -146,11 +151,16 @@ from clerk_backend_api import Clerk
 
 async def main():
 
-    async with Clerk() as clerk:
+    async with Clerk(
+        bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+    ) as clerk:
 
-        await clerk.miscellaneous.get_public_interstitial_async(frontend_api_query_parameter="frontend-api_1a2b3c4d", frontend_api_query_parameter1="pub_1a2b3c4d", publishable_key="pub_1a2b3c4d", proxy_url="https://mean-orchid.com/", domain="plump-reach.com", sign_in_url="https://delicious-costume.org/", use_domain_for_script=True)
+        res = await clerk.email_addresses.get_async(email_address_id="email_address_id_example")
 
-        # Use the SDK ...
+        assert res is not None
+
+        # Handle response
+        print(res)
 
 asyncio.run(main())
 ```
@@ -176,7 +186,7 @@ with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 ) as clerk:
 
-    clerk.miscellaneous.get_public_interstitial(frontend_api_query_parameter="frontend-api_1a2b3c4d", frontend_api_query_parameter1="pub_1a2b3c4d", publishable_key="pub_1a2b3c4d", proxy_url="https://mean-orchid.com/", domain="plump-reach.com", sign_in_url="https://delicious-costume.org/", use_domain_for_script=True)
+    clerk.miscellaneous.get_public_interstitial(frontend_api_query_parameter="frontend-api_1a2b3c4d", frontend_api_query_parameter1="pub_1a2b3c4d", publishable_key="<value>", proxy_url="https://mean-orchid.com/", domain="plump-reach.com", sign_in_url="https://delicious-costume.org/", use_domain_for_script=True)
 
     # Use the SDK ...
 
@@ -489,7 +499,7 @@ from clerk_backend_api.utils import BackoffStrategy, RetryConfig
 
 with Clerk() as clerk:
 
-    clerk.miscellaneous.get_public_interstitial(frontend_api_query_parameter="frontend-api_1a2b3c4d", frontend_api_query_parameter1="pub_1a2b3c4d", publishable_key="pub_1a2b3c4d", proxy_url="https://mean-orchid.com/", domain="plump-reach.com", sign_in_url="https://delicious-costume.org/", use_domain_for_script=True,
+    clerk.miscellaneous.get_public_interstitial(frontend_api_query_parameter="frontend-api_1a2b3c4d", frontend_api_query_parameter1="pub_1a2b3c4d", publishable_key="<value>", proxy_url="https://mean-orchid.com/", domain="plump-reach.com", sign_in_url="https://delicious-costume.org/", use_domain_for_script=True,
         RetryConfig("backoff", BackoffStrategy(1, 50, 1.1, 100), False))
 
     # Use the SDK ...
@@ -506,7 +516,7 @@ with Clerk(
     retry_config=RetryConfig("backoff", BackoffStrategy(1, 50, 1.1, 100), False),
 ) as clerk:
 
-    clerk.miscellaneous.get_public_interstitial(frontend_api_query_parameter="frontend-api_1a2b3c4d", frontend_api_query_parameter1="pub_1a2b3c4d", publishable_key="pub_1a2b3c4d", proxy_url="https://mean-orchid.com/", domain="plump-reach.com", sign_in_url="https://delicious-costume.org/", use_domain_for_script=True)
+    clerk.miscellaneous.get_public_interstitial(frontend_api_query_parameter="frontend-api_1a2b3c4d", frontend_api_query_parameter1="pub_1a2b3c4d", publishable_key="<value>", proxy_url="https://mean-orchid.com/", domain="plump-reach.com", sign_in_url="https://delicious-costume.org/", use_domain_for_script=True)
 
     # Use the SDK ...
 
@@ -578,7 +588,7 @@ with Clerk(
     server_url="https://api.clerk.com/v1",
 ) as clerk:
 
-    clerk.miscellaneous.get_public_interstitial(frontend_api_query_parameter="frontend-api_1a2b3c4d", frontend_api_query_parameter1="pub_1a2b3c4d", publishable_key="pub_1a2b3c4d", proxy_url="https://mean-orchid.com/", domain="plump-reach.com", sign_in_url="https://delicious-costume.org/", use_domain_for_script=True)
+    clerk.miscellaneous.get_public_interstitial(frontend_api_query_parameter="frontend-api_1a2b3c4d", frontend_api_query_parameter1="pub_1a2b3c4d", publishable_key="<value>", proxy_url="https://mean-orchid.com/", domain="plump-reach.com", sign_in_url="https://delicious-costume.org/", use_domain_for_script=True)
 
     # Use the SDK ...
 
@@ -677,14 +687,18 @@ The `Clerk` class implements the context manager protocol and registers a finali
 from clerk_backend_api import Clerk
 def main():
 
-    with Clerk() as clerk:
+    with Clerk(
+        bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+    ) as clerk:
         # Rest of application here...
 
 
 # Or when using async:
 async def amain():
 
-    async with Clerk() as clerk:
+    async with Clerk(
+        bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+    ) as clerk:
         # Rest of application here...
 ```
 <!-- End Resource Management [resource-management] -->

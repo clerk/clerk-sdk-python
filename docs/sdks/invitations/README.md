@@ -77,7 +77,7 @@ with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 ) as clerk:
 
-    res = clerk.invitations.list(status=clerk_backend_api.ListInvitationsQueryParamStatus.PENDING, query="<value>", order_by="pending", paginated=False)
+    res = clerk.invitations.list(status=clerk_backend_api.ListInvitationsQueryParamStatus.EXPIRED, query="<value>", order_by="pending", paginated=False)
 
     assert res is not None
 
@@ -127,20 +127,14 @@ with Clerk(
 
     res = clerk.invitations.bulk_create(request=[
         {
-            "email_address": "Jeff_Schiller50@gmail.com",
+            "email_address": "Tony91@hotmail.com",
             "public_metadata": {
                 "key": "<value>",
+                "key1": "<value>",
+                "key2": "<value>",
             },
-            "redirect_url": "https://dreary-advancement.net/",
-            "expires_in_days": 123536,
-        },
-        {
-            "email_address": "Pierce13@hotmail.com",
-            "public_metadata": {
-                "key": "<value>",
-            },
-            "redirect_url": "https://shrill-jet.net/",
-            "expires_in_days": 665767,
+            "redirect_url": "https://impassioned-alligator.name",
+            "expires_in_days": 44431,
         },
     ])
 

@@ -68,7 +68,7 @@ with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 ) as clerk:
 
-    res = clerk.organization_memberships.list(organization_id="org_789", order_by="+created_at", user_id=[
+    res = clerk.organization_memberships.list(organization_id="org_789", order_by="<value>", user_id=[
         "<id>",
         "<id>",
         "<id>",
