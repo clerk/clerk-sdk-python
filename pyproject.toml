@@ -3,7 +3,7 @@ name = "clerk-backend-api"
 version = "2.1.0"
 description = "Python Client SDK for clerk.dev"
 authors = [{ name = "Clerk" },]
-readme = "README-PYPI.md"
+readme = "README.md"
 requires-python = ">=3.9"
 dependencies = [
     "cryptography (>=43.0.1,<44.0.0)",

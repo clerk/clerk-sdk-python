@@ -1,72 +1,132 @@
-import httpx
+from unittest.mock import patch
+
 import pytest
-from http.cookies import SimpleCookie
-from warnings import warn
-from .conftest import has_env_vars
-from clerk_backend_api.jwks_helpers import (
-    AuthErrorReason,
-    AuthenticateRequestOptions,
-    RequestState,
-    TokenVerificationErrorReason,
-)
+from clerk_backend_api.jwks_helpers import authenticate_request, AuthenticateRequestOptions, AuthStatus, AuthErrorReason
+from clerk_backend_api.jwks_helpers.verifytoken import TokenVerificationError, TokenVerificationErrorReason, \
+    VerifyTokenOptions
 
 
-@pytest.mark.skipif(
-    not has_env_vars(["CLERK_JWT_KEY"]),
-    reason="CLERK_JWT_KEY environment variable must be set",
-)
-def test_authenticate_request_no_session_token(clerk, request_url, ar_options):
-    request = httpx.Request("GET", request_url)
+class MockRequest:
+    def __init__(self, headers):
+        self._headers = headers
 
-    state = clerk.authenticate_request(request, ar_options)
-    assert not state.is_signed_in
+    @property
+    def headers(self):
+        return self._headers
+
+@pytest.fixture
+def session_token():
+    return "dummy.jwt.token"
+
+@pytest.fixture
+def default_options():
+    return AuthenticateRequestOptions(
+        secret_key="test-secret",
+        jwt_key="test-jwt-key",
+        audience="test-audience",
+        authorized_parties=["https://example.com"],
+        clock_skew_in_ms=5000
+    )
+
+def make_headers(auth_token=None, cookie=None):
+    headers = {}
+    if auth_token:
+        headers["Authorization"] = f"Bearer {auth_token}"
+    if cookie:
+        headers["cookie"] = cookie
+    return headers
+
+def assert_verify_called_with(mock_verify, token, opts: AuthenticateRequestOptions):
+    assert mock_verify.called
+    actual_token, actual_options = mock_verify.call_args.args
+    assert actual_token == token
+    assert isinstance(actual_options, VerifyTokenOptions)
+    assert actual_options.secret_key == opts.secret_key
+    assert actual_options.jwt_key == opts.jwt_key
+    assert actual_options.audience == opts.audience
+    assert actual_options.authorized_parties == opts.authorized_parties
+    assert actual_options.clock_skew_in_ms == opts.clock_skew_in_ms
+
+def test_missing_token_returns_signed_out(default_options):
+    request = MockRequest(headers={})
+    state = authenticate_request(request, default_options)
+    assert state.status == AuthStatus.SIGNED_OUT
     assert state.reason == AuthErrorReason.SESSION_TOKEN_MISSING
-    assert "Could not retrieve session token" in state.message
-    assert state.token is None
-    assert state.payload is None
 
+def test_missing_secret_key_returns_signed_out(session_token):
+    request = MockRequest(headers=make_headers(auth_token=session_token))
+    opts = AuthenticateRequestOptions(secret_key=None)
+    state = authenticate_request(request, opts)
+    assert state.status == AuthStatus.SIGNED_OUT
+    assert state.reason == AuthErrorReason.SECRET_KEY_MISSING
 
-def assert_request_state(
-    state: RequestState, session_token: str, ar_options: AuthenticateRequestOptions
-):
+@patch("clerk_backend_api.jwks_helpers.authenticaterequest.verify_token", autospec=True)
+def test_valid_v1_token(mock_verify_token, session_token, default_options):
+    mock_verify_token.return_value = {
+        "sub": "user_123",
+        "aud": "test-audience",
+        "iss": "https://api.clerk.com"
+    }
 
-    if state.is_signed_in:
-        assert state.message is None
-        assert state.token is not None
-        assert state.token == session_token
-        assert state.payload is not None
-        assert state.payload.get("azp") in ar_options.authorized_parties # type:ignore
+    request = MockRequest(headers=make_headers(auth_token=session_token))
+    state = authenticate_request(request, default_options)
 
-    else:
-        assert state.reason == TokenVerificationErrorReason.TOKEN_EXPIRED
-        assert state.token is None
-        assert state.payload is None
-        warn("the provided session token is expired.")
+    assert state.status == AuthStatus.SIGNED_IN
+    assert state.payload["sub"] == "user_123"
+    assert "org_permissions" not in state.payload
+    assert_verify_called_with(mock_verify_token, session_token, default_options)
 
+@patch("clerk_backend_api.jwks_helpers.authenticaterequest.verify_token", autospec=True)
+def test_valid_v2_token_without_org(mock_verify_token, session_token, default_options):
+    mock_verify_token.return_value = {
+        "sub": "user_123",
+        "v": 2,
+        "fea": "u:foo,u:bar",
+        "aud": "test-audience",
+        "iss": "https://api.clerk.com"
+    }
 
-@pytest.mark.skipif(
-    not has_env_vars(['CLERK_JWT_KEY', 'CLERK_SESSION_TOKEN']),
-    reason="CLERK_JWT_KEY and CLERK_SESSION_TOKEN environment variables must be set"
-)
-def test_authenticate_request_cookie(clerk, request_url, session_token, ar_options):
-    with httpx.Client(cookies = {'__session': session_token}) as client:
-        request = client.build_request('GET', request_url)
-        cookies = SimpleCookie(request.headers.get('cookie', ''))
-        assert '__session' in cookies.keys()
-        assert cookies['__session'].value == session_token
+    request = MockRequest(headers=make_headers(auth_token=session_token))
+    state = authenticate_request(request, default_options)
 
-        state = clerk.authenticate_request(request, ar_options)
-        assert_request_state(state, session_token, ar_options)
+    assert state.status == AuthStatus.SIGNED_IN
+    assert "org_permissions" not in state.payload
+    assert_verify_called_with(mock_verify_token, session_token, default_options)
 
+@patch("clerk_backend_api.jwks_helpers.authenticaterequest.verify_token", autospec=True)
+def test_valid_v2_token_with_org_permissions(mock_verify_token, session_token, default_options):
+    mock_verify_token.return_value = {
+        "sub": "user_123",
+        "v": 2,
+        "fea": "o:admin,o:reports",
+        "o": {
+            "id": "org_abc",
+            "slg": "org-slug",
+            "rol": "owner",
+            "per": "view,edit",
+            "fpm": "1,2"
+        },
+        "aud": "test-audience",
+        "iss": "https://api.clerk.com"
+    }
 
-@pytest.mark.skipif(
-    not has_env_vars(['CLERK_JWT_KEY', 'CLERK_SESSION_TOKEN']),
-    reason="CLERK_JWT_KEY and CLERK_SESSION_TOKEN environment variables must be set"
-)
-def test_authenticate_request_header(clerk, request_url, session_token, ar_options):
-    request = httpx.Request('GET', request_url)
-    request.headers['Authorization'] = f'Bearer {session_token}'
+    request = MockRequest(headers=make_headers(auth_token=session_token))
+    state = authenticate_request(request, default_options)
 
-    ar_options.secret_key = None
-    state = clerk.authenticate_request(request, ar_options)
-    assert_request_state(state, session_token, ar_options)
+    assert state.status == AuthStatus.SIGNED_IN
+    assert state.payload["org_id"] == "org_abc"
+    assert state.payload["org_slug"] == "org-slug"
+    assert state.payload["org_role"] == "owner"
+    assert "org:admin:view" in state.payload["org_permissions"] or "org:reports:edit" in state.payload["org_permissions"]
+    assert_verify_called_with(mock_verify_token, session_token, default_options)
+
+@patch("clerk_backend_api.jwks_helpers.authenticaterequest.verify_token", autospec=True)
+def test_token_verification_error_returns_signed_out(mock_verify_token, session_token, default_options):
+    mock_verify_token.side_effect = TokenVerificationError(reason=TokenVerificationErrorReason.TOKEN_INVALID)
+
+    request = MockRequest(headers=make_headers(auth_token=session_token))
+    state = authenticate_request(request, default_options)
+
+    assert state.status == AuthStatus.SIGNED_OUT
+    assert state.reason == TokenVerificationErrorReason.TOKEN_INVALID
+    assert_verify_called_with(mock_verify_token, session_token, default_options)
