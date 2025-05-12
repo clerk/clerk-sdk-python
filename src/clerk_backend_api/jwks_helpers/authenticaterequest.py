@@ -149,23 +149,35 @@ def authenticate_request(request: Requestish, options: AuthenticateRequestOption
 
 
     session_token = get_session_token(request)
+
     if session_token is None:
         return RequestState(status=AuthStatus.SIGNED_OUT, reason=AuthErrorReason.SESSION_TOKEN_MISSING)
 
-    if options.secret_key is None:
-        return RequestState(status=AuthStatus.SIGNED_OUT, reason=AuthErrorReason.SECRET_KEY_MISSING)
-
     try:
-        payload = verify_token(
-            session_token,
-            VerifyTokenOptions(
-                audience=options.audience,
-                authorized_parties=options.authorized_parties,
-                secret_key=options.secret_key,
-                clock_skew_in_ms=options.clock_skew_in_ms,
-                jwt_key=options.jwt_key,
-            ),
-        )
+        if options.secret_key:
+            payload = verify_token(
+                session_token,
+                VerifyTokenOptions(
+                    audience=options.audience,
+                    authorized_parties=options.authorized_parties,
+                    secret_key=options.secret_key,
+                    clock_skew_in_ms=options.clock_skew_in_ms,
+                    jwt_key=None,
+                ),
+            )
+        elif options.jwt_key:
+            payload = verify_token(
+                session_token,
+                VerifyTokenOptions(
+                    audience=options.audience,
+                    authorized_parties=options.authorized_parties,
+                    secret_key=None,
+                    clock_skew_in_ms=options.clock_skew_in_ms,
+                    jwt_key=options.jwt_key,
+                ),
+            )
+        else:
+            return RequestState(status=AuthStatus.SIGNED_OUT, reason=AuthErrorReason.SECRET_KEY_MISSING)
 
         if payload is not None and payload.get("v") == 2:
             org_claims = payload.get("o", {})
