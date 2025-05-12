@@ -79,6 +79,51 @@ class AuthenticateRequestOptions:
     clock_skew_in_ms: int = 5000
 
 def authenticate_request(request: Requestish, options: AuthenticateRequestOptions) -> RequestState:
+
+    def __compute_org_permissions(claims: Dict[str, Any]) -> List[str]:
+        features_str = claims.get("fea")
+        if features_str is None:
+            return []
+
+        org_claims = claims.get("o", {})
+        permissions_str = org_claims.get("per")
+        mappings_str = org_claims.get("fpm")
+
+        if not all(isinstance(s, str) for s in [permissions_str, mappings_str]):
+            return []
+
+        features = features_str.split(",")
+        permissions = permissions_str.split(",")
+        mappings = mappings_str.split(",")
+
+        org_permissions = []
+
+        for idx in range(len(mappings)):
+            if idx >= len(features):
+                continue
+
+            mapping = mappings[idx]
+            feature_parts = features[idx].split(":")
+            if len(feature_parts) != 2:
+                continue
+
+            scope, feature = feature_parts
+            if "o" not in scope:
+                continue
+
+            try:
+                binary = bin(int(mapping))[2:].lstrip("0")
+            except ValueError:
+                continue
+
+            reversed_binary = binary[::-1]
+
+            for i, bit in enumerate(reversed_binary):
+                if bit == "1" and i < len(permissions):
+                    org_permissions.append(f"org:{feature}:{permissions[i]}")
+
+        return org_permissions
+
     """ Authenticates the session token. Networkless if the options.jwt_key is provided.
     Otherwise, performs a network call to retrieve the JWKS from Clerk's Backend API.
     """
@@ -104,25 +149,53 @@ def authenticate_request(request: Requestish, options: AuthenticateRequestOption
 
 
     session_token = get_session_token(request)
+
     if session_token is None:
         return RequestState(status=AuthStatus.SIGNED_OUT, reason=AuthErrorReason.SESSION_TOKEN_MISSING)
 
-    if options.secret_key is None:
-        return RequestState(status=AuthStatus.SIGNED_OUT, reason=AuthErrorReason.SECRET_KEY_MISSING)
-
     try:
-        payload = verify_token(
-            session_token,
-            VerifyTokenOptions(
-                audience=options.audience,
-                authorized_parties=options.authorized_parties,
-                secret_key=options.secret_key,
-                clock_skew_in_ms=options.clock_skew_in_ms,
-                jwt_key=options.jwt_key,
-            ),
-        )
+        if options.secret_key:
+            payload = verify_token(
+                session_token,
+                VerifyTokenOptions(
+                    audience=options.audience,
+                    authorized_parties=options.authorized_parties,
+                    secret_key=options.secret_key,
+                    clock_skew_in_ms=options.clock_skew_in_ms,
+                    jwt_key=None,
+                ),
+            )
+        elif options.jwt_key:
+            payload = verify_token(
+                session_token,
+                VerifyTokenOptions(
+                    audience=options.audience,
+                    authorized_parties=options.authorized_parties,
+                    secret_key=None,
+                    clock_skew_in_ms=options.clock_skew_in_ms,
+                    jwt_key=options.jwt_key,
+                ),
+            )
+        else:
+            return RequestState(status=AuthStatus.SIGNED_OUT, reason=AuthErrorReason.SECRET_KEY_MISSING)
+
+        if payload is not None and payload.get("v") == 2:
+            org_claims = payload.get("o", {})
+            if org_claims:
+                payload["org_id"] = org_claims.get("id")
+                payload["org_slug"] = org_claims.get("slg")
+                payload["org_role"] = org_claims.get("rol")
+
+                org_permissions = __compute_org_permissions(payload)
+                if org_permissions:
+                    payload["org_permissions"] = org_permissions
 
         return RequestState(status=AuthStatus.SIGNED_IN, token=session_token, payload=payload)
 
     except TokenVerificationError as e:
         return RequestState(status=AuthStatus.SIGNED_OUT, reason=e.reason)
+
+
+
+
+
