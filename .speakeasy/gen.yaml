@@ -21,7 +21,7 @@ python:
     dev:
       pytest: ^8.3.3
     main:
-      cryptography: ^43.0.1
+      cryptography: ^44.0.1
       pyjwt: ^2.9.0
   author: Clerk
   authors:
