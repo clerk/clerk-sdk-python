@@ -104,8 +104,6 @@ def authenticate_request(request: Requestish, options: AuthenticateRequestOption
         for idx, mapping in enumerate(mappings):
             if idx >= len(features):
                 continue
-
-            mapping = mappings[idx]
             feature_parts = features[idx].split(":")
             if len(feature_parts) != 2:
                 continue
