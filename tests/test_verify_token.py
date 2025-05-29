@@ -1,13 +1,11 @@
 import jwt
 import pytest
 from warnings import warn
+
+from clerk_backend_api.security.verifytoken import verify_token
+from clerk_backend_api.security.types import TokenVerificationError, TokenVerificationErrorReason, VerifyTokenOptions
+
 from .conftest import has_env_vars
-from clerk_backend_api.jwks_helpers import (
-    verify_token,
-    TokenVerificationErrorReason,
-    TokenVerificationError,
-    VerifyTokenOptions,
-)
 
 
 @pytest.mark.skipif(

@@ -1,11 +1,7 @@
 from .authenticaterequest import (
-    AuthErrorReason,
-    AuthStatus,
-    AuthenticateRequestOptions,
-    RequestState,
     authenticate_request,
-    Requestish,
 )
+from .types import AuthErrorReason, AuthStatus, AuthenticateRequestOptions, RequestState, Requestish
 from .verifytoken import (
     TokenVerificationError,
     TokenVerificationErrorReason,
@@ -18,7 +14,7 @@ __all__ = [
     "AuthStatus",
     "AuthenticateRequestOptions",
     "RequestState",
-    "authenticate_request",
+    'authenticate_request',
     "TokenVerificationError",
     "TokenVerificationErrorReason",
     "VerifyTokenOptions",

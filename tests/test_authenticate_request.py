@@ -1,9 +1,11 @@
 from unittest.mock import patch
 
 import pytest
-from clerk_backend_api.jwks_helpers import authenticate_request, AuthenticateRequestOptions, AuthStatus, AuthErrorReason
-from clerk_backend_api.jwks_helpers.verifytoken import TokenVerificationError, TokenVerificationErrorReason, \
+from clerk_backend_api.security.types import AuthenticateRequestOptions, AuthStatus, AuthErrorReason
+from clerk_backend_api.security.verifytoken import TokenVerificationError, TokenVerificationErrorReason, \
     VerifyTokenOptions
+
+from clerk_backend_api import authenticate_request
 
 
 class MockRequest:
@@ -79,7 +81,7 @@ def test_missing_jwt_key_returns_signed_out(session_token):
     assert state.reason == AuthErrorReason.SECRET_KEY_MISSING
 
 
-@patch("clerk_backend_api.jwks_helpers.authenticaterequest.verify_token", autospec=True)
+@patch("clerk_backend_api.security.authenticaterequest.verify_token", autospec=True)
 def test_valid_v1_token(mock_verify_token, session_token, default_options_with_secret_key):
     mock_verify_token.return_value = {
         "sub": "user_123",
@@ -95,7 +97,7 @@ def test_valid_v1_token(mock_verify_token, session_token, default_options_with_s
     assert "org_permissions" not in state.payload
     assert_verify_called_with(mock_verify_token, session_token, default_options_with_secret_key)
 
-@patch("clerk_backend_api.jwks_helpers.authenticaterequest.verify_token", autospec=True)
+@patch("clerk_backend_api.security.authenticaterequest.verify_token", autospec=True)
 def test_valid_v1_token_with_jwt_key(mock_verify_token, session_token, default_options_with_jwt_key):
     mock_verify_token.return_value = {
         "sub": "user_123",
@@ -111,7 +113,7 @@ def test_valid_v1_token_with_jwt_key(mock_verify_token, session_token, default_o
     assert "org_permissions" not in state.payload
     assert_verify_called_with(mock_verify_token, session_token, default_options_with_jwt_key)
 
-@patch("clerk_backend_api.jwks_helpers.authenticaterequest.verify_token", autospec=True)
+@patch("clerk_backend_api.security.authenticaterequest.verify_token", autospec=True)
 def test_valid_v2_token_without_org(mock_verify_token, session_token, default_options_with_secret_key):
     mock_verify_token.return_value = {
         "sub": "user_123",
@@ -128,7 +130,7 @@ def test_valid_v2_token_without_org(mock_verify_token, session_token, default_op
     assert "org_permissions" not in state.payload
     assert_verify_called_with(mock_verify_token, session_token, default_options_with_secret_key)
 
-@patch("clerk_backend_api.jwks_helpers.authenticaterequest.verify_token", autospec=True)
+@patch("clerk_backend_api.security.authenticaterequest.verify_token", autospec=True)
 def test_valid_v2_token_without_org_with_jwt_key(mock_verify_token, session_token, default_options_with_jwt_key):
     mock_verify_token.return_value = {
         "sub": "user_123",
@@ -145,7 +147,7 @@ def test_valid_v2_token_without_org_with_jwt_key(mock_verify_token, session_toke
     assert "org_permissions" not in state.payload
     assert_verify_called_with(mock_verify_token, session_token, default_options_with_jwt_key)
 
-@patch("clerk_backend_api.jwks_helpers.authenticaterequest.verify_token", autospec=True)
+@patch("clerk_backend_api.security.authenticaterequest.verify_token", autospec=True)
 def test_valid_v2_token_with_org_permissions(mock_verify_token, session_token, default_options_with_secret_key):
     mock_verify_token.return_value = {
         "sub": "user_123",
@@ -172,7 +174,7 @@ def test_valid_v2_token_with_org_permissions(mock_verify_token, session_token, d
     assert "org:admin:view" in state.payload["org_permissions"] or "org:reports:edit" in state.payload["org_permissions"]
     assert_verify_called_with(mock_verify_token, session_token, default_options_with_secret_key)
 
-@patch("clerk_backend_api.jwks_helpers.authenticaterequest.verify_token", autospec=True)
+@patch("clerk_backend_api.security.authenticaterequest.verify_token", autospec=True)
 def test_valid_v2_token_with_org_permissions_with_jwt_key(mock_verify_token, session_token, default_options_with_jwt_key):
     mock_verify_token.return_value = {
         "sub": "user_123",
@@ -199,7 +201,7 @@ def test_valid_v2_token_with_org_permissions_with_jwt_key(mock_verify_token, ses
     assert "org:admin:view" in state.payload["org_permissions"] or "org:reports:edit" in state.payload["org_permissions"]
     assert_verify_called_with(mock_verify_token, session_token, default_options_with_jwt_key)
 
-@patch("clerk_backend_api.jwks_helpers.authenticaterequest.verify_token", autospec=True)
+@patch("clerk_backend_api.security.authenticaterequest.verify_token", autospec=True)
 def test_token_verification_error_returns_signed_out(mock_verify_token, session_token, default_options_with_secret_key):
     mock_verify_token.side_effect = TokenVerificationError(reason=TokenVerificationErrorReason.TOKEN_INVALID)
 

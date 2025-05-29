@@ -1,114 +1,30 @@
+import re
+from datetime import timedelta
+from typing import Any, Dict, cast
+
 import httpx
 import jwt
-import re
 from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives.asymmetric.rsa import RSAPublicKey
 from jwt.algorithms import RSAAlgorithm
-from dataclasses import dataclass
-from datetime import timedelta
-from enum import Enum
-from typing import Any, Dict, List, Union, Optional, cast
 
 from .cache import Cache
+from .machine import get_token_type
+from .types import TokenType, VerifyTokenOptions, TokenVerificationError, TokenVerificationErrorReason
 
 __jwkcache = Cache()
 
+verification_apis = {
+    TokenType.MACHINE_TOKEN : '/m2m_tokens/verify',
+    TokenType.OAUTH_TOKEN : '/oauth_applications/access_tokens/verify',
+    TokenType.API_KEY : '/api_keys/verify',
+}
 
-class TokenVerificationErrorReason(Enum):
-
-    JWK_FAILED_TO_LOAD = (
-        'jwk-failed-to-load',
-        'Failed to load JWKS from Clerk Backend API. Contact support@clerk.com.'
-    )
-
-    JWK_REMOTE_INVALID = (
-        'jwk-remote-invalid',
-        'The JWKS endpoint did not contain any signing keys. Contact support@clerk.com.'
-    )
-
-    JWK_FAILED_TO_RESOLVE = (
-        'jwk-failed-to-resolve',
-        'Failed to resolve JWK. Public Key is not in the proper format.'
-    )
-
-    JWK_KID_MISMATCH = (
-        'jwk-kid-mismatch',
-        'Unable to find a signing key in JWKS that matches the kid of the provided session token.'
-    )
-
-    TOKEN_EXPIRED = (
-        'token-expired',
-        'Token has expired and is no longer valid.'
-    )
-
-    TOKEN_INVALID = (
-        'token-invalid',
-        'Token is invalid and could not be verified.'
-    )
-
-    TOKEN_INVALID_AUTHORIZED_PARTIES = (
-        'token-invalid-authorized-parties',
-        'Authorized party claim (azp) does not match any of the authorized parties.',
-    )
-
-    TOKEN_INVALID_AUDIENCE = (
-        'token-invalid-audience',
-        'Token audience claim (aud) does not match one of the expected audience values.',
-    )
-
-    TOKEN_IAT_IN_THE_FUTURE = (
-        'token-iat-in-the-future',
-        'Token Issued At claim (iat) represents a time in the future.'
-        )
-
-    TOKEN_NOT_ACTIVE_YET = (
-        'token-not-active-yet',
-        'Token is not yet valid. Not Before claim (nbf) is in the future.'
-    )
-
-    TOKEN_INVALID_SIGNATURE = (
-        'token-invalid-signature',
-        'Token signature is invalid and could not be verified.'
-    )
-
-    SECRET_KEY_MISSING = (
-        'secret-key-missing',
-        'Missing Clerk Secret Key. Go to https://dashboard.clerk.com and get your key for your instance.'
-    )
-
-
-class TokenVerificationError(Exception):
-    """Exception raised when token verification fails"""
-
-    def __init__(self, reason: TokenVerificationErrorReason):
-        self.reason = reason
-        super().__init__(self.reason.value[1])
-
-
-@dataclass
-class VerifyTokenOptions:
-    """
-    Options to configure verify_token.
-
-    Attributes:
-        audience (Union[str, List[str], None]): An audience or list of audiences to verify against.
-        authorized_parties (Optional[List[str]]): An allowlist of origins to verify against.
-        clock_skew_in_ms (int): Allowed time difference (in milliseconds) between the Clerk server (which generates the token)
-                                and the clock of the user's application server when validating a token. Defaults to 5000 ms.
-        jwt_key (Optional[str]): PEM Public Key used to verify the session token in a networkless manner.
-        secret_key (Optional[str]): The Clerk secret key from the API Keys page in the Clerk Dashboard.
-        api_url (str): The Clerk Backend API endpoint. Defaults to 'https://api.clerk.com'
-        api_version (str): The version passed to the Clerk API. Defaults to 'v1'.
-    """
-
-    audience: Optional[Union[str, List[str]]] = None
-    authorized_parties: Optional[List[str]] = None
-    clock_skew_in_ms: int = 5000
-    jwt_key: Optional[str] = None
-    secret_key: Optional[str] = None
-    api_url: str = 'https://api.clerk.com'
-    api_version: str = 'v1'
-
+verification_methods = {
+    TokenType.API_KEY: 'verify_api_key',
+    TokenType.MACHINE_TOKEN: 'verify_machine_token',
+    TokenType.OAUTH_TOKEN: 'verify_oauth_token',
+}
 
 def fetch_jwks(options: VerifyTokenOptions) -> Dict[str, Any]:
     """ Fetch JWKS from Clerk's Backend API."""
@@ -173,15 +89,21 @@ def get_remote_jwt_key(token: str, options: VerifyTokenOptions) -> str:
 
 
 def verify_token(token: str, options: VerifyTokenOptions) -> Dict[str, Any]:
+    token_type = get_token_type(token)
+    if token_type == TokenType.SESSION_TOKEN:
+        return verify_session_token(token, options)
+    elif token_type in (TokenType.MACHINE_TOKEN, TokenType.OAUTH_TOKEN, TokenType.API_KEY):
+        return verify_machine_token(token, options, token_type)
+    raise TokenVerificationError(TokenVerificationErrorReason.INVALID_TOKEN_TYPE)
+
+def verify_session_token(token: str, options: VerifyTokenOptions) -> Dict[str, Any]:
     """ Verifies a Clerk-generated token signature. Networkless if the options.jwt_key is provided.
-    Otherwise, performs a network call to retrieve the JWKS from Clerk's Backend API.
+        Otherwise, performs a network call to retrieve the JWKS from Clerk's Backend API.
 
-    Args:
-        token (str): The token to verify.
-        options (VerifyTokenOptions): Options to configure the verification.
-    """
-
-
+        Args:
+            token (str): The token to verify.
+            options (VerifyTokenOptions): Options to configure the verification.
+        """
     if options.jwt_key is not None:
         jwt_key = re.sub(r'(\r\n|\n|\r)', '', options.jwt_key)
 
@@ -222,3 +144,29 @@ def verify_token(token: str, options: VerifyTokenOptions) -> Dict[str, Any]:
         raise TokenVerificationError(TokenVerificationErrorReason.TOKEN_NOT_ACTIVE_YET) from e
     except jwt.InvalidTokenError as e:
         raise TokenVerificationError(TokenVerificationErrorReason.TOKEN_INVALID) from e
+
+def verify_machine_token(token: str, verify_token_options: VerifyTokenOptions, token_type: TokenType) -> Dict[str, Any]:
+    payload = {
+        'secret' : f"{token}"
+    }
+    client = httpx.Client(base_url=verify_token_options.api_url)
+    endpoint = verification_apis.get(token_type, None)
+    try:
+        response = client.post(
+            endpoint,
+            json=payload,
+            headers={
+                'Authorization': f'Bearer {verify_token_options.secret_key}',
+                'Content-Type': 'application/json'
+            }
+        )
+        if response.status_code != 200:
+            raise TokenVerificationError(TokenVerificationErrorReason.TOKEN_INVALID)
+        return response.json()
+    except httpx.HTTPStatusError as e:
+        raise TokenVerificationError(TokenVerificationErrorReason.TOKEN_INVALID) from e
+    except httpx.RequestError as e:
+        raise TokenVerificationError(TokenVerificationErrorReason.SERVER_ERROR) from e
+
+
+
