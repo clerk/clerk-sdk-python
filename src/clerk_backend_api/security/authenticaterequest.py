@@ -2,7 +2,7 @@ from http.cookies import SimpleCookie
 from typing import Any, Dict, List, Optional
 from warnings import warn
 
-from .machine import get_token_type, is_machine_token
+from .machine import is_machine_token
 from .types import Requestish, AuthenticateRequestOptions, RequestState, AuthStatus, AuthErrorReason
 from .verifytoken import (
     TokenVerificationError,

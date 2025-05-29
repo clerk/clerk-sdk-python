@@ -8,9 +8,9 @@ def is_machine_token(token: str) -> bool:
 def get_token_type(token: str) -> TokenType:
     if token.startswith(TokenPrefix.MACHINE_TOKEN_PREFIX.value):
         return TokenType.MACHINE_TOKEN
-    elif token.startswith(TokenPrefix.API_KEY_PREFIX.value):
+    if token.startswith(TokenPrefix.API_KEY_PREFIX.value):
         return TokenType.API_KEY
-    elif token.startswith(TokenPrefix.OAUTH_TOKEN_PREFIX.value):
+    if token.startswith(TokenPrefix.OAUTH_TOKEN_PREFIX.value):
         return TokenType.OAUTH_TOKEN
-    else:
-        return TokenType.SESSION_TOKEN
+
+    return TokenType.SESSION_TOKEN
