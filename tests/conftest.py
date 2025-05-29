@@ -2,7 +2,7 @@ import os
 import pytest
 from typing import Optional, Union, List
 from clerk_backend_api import Clerk
-from clerk_backend_api.jwks_helpers import AuthenticateRequestOptions, VerifyTokenOptions
+from clerk_backend_api.security.types import AuthenticateRequestOptions, VerifyTokenOptions
 
 
 def has_env_vars(env_vars: List[str]) -> bool:
