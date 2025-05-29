@@ -20,12 +20,6 @@ verification_apis = {
     TokenType.API_KEY : '/api_keys/verify',
 }
 
-verification_methods = {
-    TokenType.API_KEY: 'verify_api_key',
-    TokenType.MACHINE_TOKEN: 'verify_machine_token',
-    TokenType.OAUTH_TOKEN: 'verify_oauth_token',
-}
-
 def verify_token(token: str, options: VerifyTokenOptions) -> Dict[str, Any]:
     token_type = get_token_type(token)
     if token_type == TokenType.SESSION_TOKEN:
