@@ -129,6 +129,11 @@ class AuthErrorReason(Enum):
         'Missing Clerk Secret Key. Go to https://dashboard.clerk.com and get your key for your instance.'
     )
 
+    TOKEN_TYPE_NOT_SUPPORTED = (
+        'token-type-not-supported',
+        'The provided token type is not supported. Expected one of: session_token, machine_token, oauth_token, or api_key.'
+    )
+
 
 class AuthStatus(Enum):
     """Authentication Status"""

@@ -2,7 +2,7 @@ from http.cookies import SimpleCookie
 from typing import Any, Dict, List, Optional
 from warnings import warn
 
-from .machine import is_machine_token
+from .machine import is_machine_token, get_token_type
 from .types import Requestish, AuthenticateRequestOptions, RequestState, AuthStatus, AuthErrorReason
 from .verifytoken import (
     TokenVerificationError,
@@ -82,6 +82,13 @@ def authenticate_request(request: Requestish, options: AuthenticateRequestOption
 
     if session_token is None:
         return RequestState(status=AuthStatus.SIGNED_OUT, reason=AuthErrorReason.SESSION_TOKEN_MISSING)
+
+    token_type = get_token_type(session_token)
+    if not (token_type.value in options.accepts_token or 'any' in options.accepts_token):
+        return RequestState(
+            status=AuthStatus.SIGNED_OUT,
+            reason=AuthErrorReason.TOKEN_TYPE_NOT_SUPPORTED,
+        )
 
     if is_machine_token(session_token):
         verify_token_options = VerifyTokenOptions(secret_key=options.secret_key)

@@ -211,3 +211,45 @@ def test_token_verification_error_returns_signed_out(mock_verify_token, session_
     assert state.status == AuthStatus.SIGNED_OUT
     assert state.reason == TokenVerificationErrorReason.TOKEN_INVALID
     assert_verify_called_with(mock_verify_token, session_token, default_options_with_secret_key)
+
+def test_invalid_token_type_returns_signed_out(session_token):
+    request = MockRequest(headers=make_headers(auth_token=session_token))
+    opts = AuthenticateRequestOptions(
+        secret_key="test-secret",
+        jwt_key=None,
+        audience="test-audience",
+        authorized_parties=["https://example.com"],
+        clock_skew_in_ms=5000,
+        accepts_token=["machine_token"]  # Only accepts machine tokens
+    )
+    state = authenticate_request(request, opts)
+    assert state.status == AuthStatus.SIGNED_OUT
+    assert state.reason == AuthErrorReason.TOKEN_TYPE_NOT_SUPPORTED
+
+@patch("clerk_backend_api.security.authenticaterequest.verify_token", autospec=True)
+def test_if_no_token_type_is_passed_then_any_token_type_is_accepted(mock_verify_token, session_token, default_options_with_jwt_key):
+    mock_verify_token.return_value = {
+        "sub": "user_123",
+        "v": 2,
+        "fea": "o:admin,o:reports",
+        "o": {
+            "id": "org_abc",
+            "slg": "org-slug",
+            "rol": "owner",
+            "per": "view,edit",
+            "fpm": "1,2"
+        },
+        "aud": "test-audience",
+        "iss": "https://api.clerk.com"
+    }
+    request = MockRequest(headers=make_headers(auth_token=session_token))
+    opts = AuthenticateRequestOptions(
+        secret_key="test-secret",
+        jwt_key=None,
+        audience="test-audience",
+        authorized_parties=["https://example.com"],
+        clock_skew_in_ms=5000,
+    )
+    state = authenticate_request(request, opts)
+    assert state.status == AuthStatus.SIGNED_IN
+    assert state.token == session_token
