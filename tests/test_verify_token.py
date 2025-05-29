@@ -133,11 +133,11 @@ class TestVerifyToken:
     def test_verify_session_token_success(self, mock_get_remote_jwt_key, mock_jwt_decode, options):
         token = "some.jwt.token"
         mock_get_remote_jwt_key.return_value = "pem_public_key"
-        mock_jwt_decode.return_value = {"sub": "user_123"}
+        mock_jwt_decode.return_value = {"subject": "user_123"}
 
         result = verify_token(token, options)
 
-        assert result == {"sub": "user_123"}
+        assert result == {"subject": "user_123"}
         mock_get_remote_jwt_key.assert_called_once()
         mock_jwt_decode.assert_called_once()
 
@@ -157,12 +157,12 @@ class TestVerifyToken:
         token = "mt_exampletoken"
         response = MagicMock()
         response.status_code = 200
-        response.json.return_value = {"sub": "machine_123"}
+        response.json.return_value = {"subject": "machine_123"}
         mock_post.return_value = response
 
         result = verify_token(token, options)
 
-        assert result == {"sub": "machine_123"}
+        assert result == {"subject": "machine_123"}
         mock_post.assert_called_once()
 
     @patch("httpx.Client.post")
@@ -170,12 +170,12 @@ class TestVerifyToken:
         token = "oat_exampletoken"
         response = MagicMock()
         response.status_code = 200
-        response.json.return_value = {"sub": "oauth_456"}
+        response.json.return_value = {"subject": "oauth_456"}
         mock_post.return_value = response
 
         result = verify_token(token, options)
 
-        assert result == {"sub": "oauth_456"}
+        assert result == {"subject": "oauth_456"}
         mock_post.assert_called_once()
 
     @patch("httpx.Client.post")
@@ -183,12 +183,12 @@ class TestVerifyToken:
         token = "ak_exampletoken"
         response = MagicMock()
         response.status_code = 200
-        response.json.return_value = {"sub": "apikey_789"}
+        response.json.return_value = {"subject": "apikey_789"}
         mock_post.return_value = response
 
         result = verify_token(token, options)
 
-        assert result == {"sub": "apikey_789"}
+        assert result == {"subject": "apikey_789"}
         mock_post.assert_called_once()
 
     @patch("httpx.Client.post")
