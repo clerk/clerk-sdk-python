@@ -12,6 +12,9 @@ from .verifytoken import (
 
 
 def authenticate_request(request: Requestish, options: AuthenticateRequestOptions) -> RequestState:
+    """ Authenticates the session token. Networkless if the options.jwt_key is provided.
+       Otherwise, performs a network call to retrieve the JWKS from Clerk's Backend API."""
+
 
     def __compute_org_permissions(claims: Dict[str, Any]) -> List[str]:
         features_str = claims.get("fea")
@@ -31,11 +34,9 @@ def authenticate_request(request: Requestish, options: AuthenticateRequestOption
 
         org_permissions = []
 
-        for idx in range(len(mappings)):
+        for idx, mapping in enumerate(mappings):
             if idx >= len(features):
                 continue
-
-            mapping = mappings[idx]
             feature_parts = features[idx].split(":")
             if len(feature_parts) != 2:
                 continue
@@ -56,10 +57,6 @@ def authenticate_request(request: Requestish, options: AuthenticateRequestOption
                     org_permissions.append(f"org:{feature}:{permissions[i]}")
 
         return org_permissions
-
-    """ Authenticates the session token. Networkless if the options.jwt_key is provided.
-    Otherwise, performs a network call to retrieve the JWKS from Clerk's Backend API.
-    """
 
     warn('authenticate_request method is applicable in the context of Backend APIs only.')
 
