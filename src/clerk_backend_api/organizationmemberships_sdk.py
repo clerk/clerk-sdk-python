@@ -86,6 +86,7 @@ class OrganizationMembershipsSDK(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="CreateOrganizationMembership",
                 oauth2_scopes=[],
@@ -204,6 +205,7 @@ class OrganizationMembershipsSDK(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="CreateOrganizationMembership",
                 oauth2_scopes=[],
@@ -361,6 +363,7 @@ class OrganizationMembershipsSDK(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="ListOrganizationMemberships",
                 oauth2_scopes=[],
@@ -516,6 +519,7 @@ class OrganizationMembershipsSDK(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="ListOrganizationMemberships",
                 oauth2_scopes=[],
@@ -632,6 +636,7 @@ class OrganizationMembershipsSDK(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="UpdateOrganizationMembership",
                 oauth2_scopes=[],
@@ -748,6 +753,7 @@ class OrganizationMembershipsSDK(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="UpdateOrganizationMembership",
                 oauth2_scopes=[],
@@ -852,6 +858,7 @@ class OrganizationMembershipsSDK(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="DeleteOrganizationMembership",
                 oauth2_scopes=[],
@@ -956,6 +963,7 @@ class OrganizationMembershipsSDK(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="DeleteOrganizationMembership",
                 oauth2_scopes=[],
@@ -1077,6 +1085,7 @@ class OrganizationMembershipsSDK(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="UpdateOrganizationMembershipMetadata",
                 oauth2_scopes=[],
@@ -1198,6 +1207,7 @@ class OrganizationMembershipsSDK(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="UpdateOrganizationMembershipMetadata",
                 oauth2_scopes=[],

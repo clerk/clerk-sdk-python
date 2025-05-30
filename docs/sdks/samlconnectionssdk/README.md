@@ -28,9 +28,7 @@ with Clerk(
 ) as clerk:
 
     res = clerk.saml_connections.list(query="<value>", order_by="<value>", organization_id=[
-        "<id>",
-        "<id>",
-        "<id>",
+        "<id 1>",
     ])
 
     assert res is not None

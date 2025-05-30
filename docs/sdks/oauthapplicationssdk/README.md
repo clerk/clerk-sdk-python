@@ -76,8 +76,7 @@ with Clerk(
     res = clerk.oauth_applications.create(request={
         "name": "Example App",
         "redirect_uris": [
-            "<value>",
-            "<value>",
+            "<value 1>",
         ],
         "public": True,
     })
@@ -162,11 +161,7 @@ with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 ) as clerk:
 
-    res = clerk.oauth_applications.update(oauth_application_id="oauth_app_67890", name="Updated OAuth App Name", redirect_uris=[
-        "<value>",
-        "<value>",
-        "<value>",
-    ], public=False)
+    res = clerk.oauth_applications.update(oauth_application_id="oauth_app_67890", name="Updated OAuth App Name", redirect_uris=None, public=None)
 
     assert res is not None
 

@@ -33,8 +33,8 @@ with Clerk(
 
         },
         "redirect_url": "https://example.com/welcome",
-        "expires_in_days": 486589,
-        "template_slug": clerk_backend_api.TemplateSlug.WAITLIST_INVITATION,
+        "expires_in_days": 177398,
+        "template_slug": clerk_backend_api.TemplateSlug.INVITATION,
     })
 
     assert res is not None
@@ -77,7 +77,7 @@ with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 ) as clerk:
 
-    res = clerk.invitations.list(status=clerk_backend_api.ListInvitationsQueryParamStatus.EXPIRED, query="<value>", order_by="pending", paginated=False)
+    res = clerk.invitations.list(status=clerk_backend_api.ListInvitationsQueryParamStatus.ACCEPTED, query="<value>", order_by="pending", paginated=False)
 
     assert res is not None
 
@@ -127,14 +127,20 @@ with Clerk(
 
     res = clerk.invitations.bulk_create(request=[
         {
-            "email_address": "Tony91@hotmail.com",
+            "email_address": "Edwardo86@yahoo.com",
             "public_metadata": {
                 "key": "<value>",
-                "key1": "<value>",
-                "key2": "<value>",
             },
-            "redirect_url": "https://impassioned-alligator.name",
-            "expires_in_days": 44431,
+            "redirect_url": "https://devoted-government.net",
+            "expires_in_days": 606004,
+        },
+        {
+            "email_address": "Edwardo86@yahoo.com",
+            "public_metadata": {
+                "key": "<value>",
+            },
+            "redirect_url": "https://devoted-government.net",
+            "expires_in_days": 606004,
         },
     ])
 

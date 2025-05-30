@@ -5,6 +5,7 @@ from .sessionactivityresponse import (
     SessionActivityResponse,
     SessionActivityResponseTypedDict,
 )
+from .sessiontask import SessionTask, SessionTaskTypedDict
 from clerk_backend_api.types import (
     BaseModel,
     Nullable,
@@ -14,6 +15,7 @@ from clerk_backend_api.types import (
 )
 from enum import Enum
 from pydantic import model_serializer
+from typing import List
 from typing_extensions import NotRequired, TypedDict
 
 
@@ -39,6 +41,7 @@ class Status(str, Enum):
     REMOVED = "removed"
     ABANDONED = "abandoned"
     REPLACED = "replaced"
+    PENDING = "pending"
 
 
 class SessionTypedDict(TypedDict):
@@ -70,6 +73,7 @@ class SessionTypedDict(TypedDict):
     actor: NotRequired[Nullable[ActorTypedDict]]
     last_active_organization_id: NotRequired[Nullable[str]]
     latest_activity: NotRequired[Nullable[SessionActivityResponseTypedDict]]
+    tasks: NotRequired[Nullable[List[SessionTaskTypedDict]]]
 
 
 class Session(BaseModel):
@@ -114,10 +118,22 @@ class Session(BaseModel):
 
     latest_activity: OptionalNullable[SessionActivityResponse] = UNSET
 
+    tasks: OptionalNullable[List[SessionTask]] = UNSET
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["actor", "last_active_organization_id", "latest_activity"]
-        nullable_fields = ["actor", "last_active_organization_id", "latest_activity"]
+        optional_fields = [
+            "actor",
+            "last_active_organization_id",
+            "latest_activity",
+            "tasks",
+        ]
+        nullable_fields = [
+            "actor",
+            "last_active_organization_id",
+            "latest_activity",
+            "tasks",
+        ]
         null_default_fields = []
 
         serialized = handler(self)

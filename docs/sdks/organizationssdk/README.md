@@ -31,7 +31,7 @@ with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 ) as clerk:
 
-    res = clerk.organizations.list(include_members_count=False, include_missing_member_with_elevated_permissions=False, query="false", user_id=[
+    res = clerk.organizations.list(include_members_count=True, include_missing_member_with_elevated_permissions=True, query="false", user_id=[
         "clerk",
     ], organization_id=[
         "-name",
@@ -103,7 +103,7 @@ with Clerk(
         },
         "slug": "neworg",
         "max_allowed_memberships": 100,
-        "created_at": "1730300047269",
+        "created_at": "1718855032267",
     })
 
     assert res is not None
@@ -192,7 +192,7 @@ with Clerk(
 
     }, private_metadata={
 
-    }, name="New Organization Name", slug="new-org-slug", max_allowed_memberships=100, admin_delete_enabled=True, created_at="1741996363103")
+    }, name="New Organization Name", slug="new-org-slug", max_allowed_memberships=100, admin_delete_enabled=True, created_at="1720203056033")
 
     assert res is not None
 

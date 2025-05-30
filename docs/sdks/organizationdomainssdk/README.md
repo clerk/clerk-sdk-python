@@ -24,7 +24,7 @@ with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 ) as clerk:
 
-    res = clerk.organization_domains.create(organization_id="<id>", name="<value>", enrollment_mode="<value>", verified=True)
+    res = clerk.organization_domains.create(organization_id="<id>", name="<value>", enrollment_mode="<value>", verified=False)
 
     assert res is not None
 
@@ -113,7 +113,7 @@ with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 ) as clerk:
 
-    res = clerk.organization_domains.update(organization_id="<id>", domain_id="<id>", enrollment_mode="<value>", verified=False)
+    res = clerk.organization_domains.update(organization_id="<id>", domain_id="<id>", enrollment_mode="<value>", verified=True)
 
     assert res is not None
 
