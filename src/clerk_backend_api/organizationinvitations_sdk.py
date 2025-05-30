@@ -91,6 +91,7 @@ class OrganizationInvitationsSDK(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="ListInstanceOrganizationInvitations",
                 oauth2_scopes=[],
@@ -215,6 +216,7 @@ class OrganizationInvitationsSDK(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="ListInstanceOrganizationInvitations",
                 oauth2_scopes=[],
@@ -365,6 +367,7 @@ class OrganizationInvitationsSDK(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="CreateOrganizationInvitation",
                 oauth2_scopes=[],
@@ -513,6 +516,7 @@ class OrganizationInvitationsSDK(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="CreateOrganizationInvitation",
                 oauth2_scopes=[],
@@ -630,6 +634,7 @@ class OrganizationInvitationsSDK(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="ListOrganizationInvitations",
                 oauth2_scopes=[],
@@ -745,6 +750,7 @@ class OrganizationInvitationsSDK(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="ListOrganizationInvitations",
                 oauth2_scopes=[],
@@ -873,6 +879,7 @@ class OrganizationInvitationsSDK(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="CreateOrganizationInvitationBulk",
                 oauth2_scopes=[],
@@ -1003,6 +1010,7 @@ class OrganizationInvitationsSDK(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="CreateOrganizationInvitationBulk",
                 oauth2_scopes=[],
@@ -1120,6 +1128,7 @@ class OrganizationInvitationsSDK(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="ListPendingOrganizationInvitations",
                 oauth2_scopes=[],
@@ -1235,6 +1244,7 @@ class OrganizationInvitationsSDK(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="ListPendingOrganizationInvitations",
                 oauth2_scopes=[],
@@ -1339,6 +1349,7 @@ class OrganizationInvitationsSDK(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="GetOrganizationInvitation",
                 oauth2_scopes=[],
@@ -1443,6 +1454,7 @@ class OrganizationInvitationsSDK(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="GetOrganizationInvitation",
                 oauth2_scopes=[],
@@ -1563,6 +1575,7 @@ class OrganizationInvitationsSDK(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="RevokeOrganizationInvitation",
                 oauth2_scopes=[],
@@ -1683,6 +1696,7 @@ class OrganizationInvitationsSDK(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="RevokeOrganizationInvitation",
                 oauth2_scopes=[],

@@ -12,3 +12,4 @@
 | `REMOVED`   | removed     |
 | `ABANDONED` | abandoned   |
 | `REPLACED`  | replaced    |
+| `PENDING`   | pending     |

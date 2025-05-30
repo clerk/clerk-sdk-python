@@ -32,7 +32,7 @@ with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 ) as clerk:
 
-    res = clerk.sessions.list(client_id="client_123", user_id="user_456", status=clerk_backend_api.QueryParamStatus.ACTIVE, paginated=False)
+    res = clerk.sessions.list(client_id="client_123", user_id="user_456", status=clerk_backend_api.QueryParamStatus.ACTIVE, paginated=True)
 
     assert res is not None
 
@@ -306,7 +306,7 @@ with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 ) as clerk:
 
-    res = clerk.sessions.create_token(session_id="<id>", expires_in_seconds=2072.13)
+    res = clerk.sessions.create_token(session_id="<id>", expires_in_seconds=None)
 
     assert res is not None
 
@@ -348,7 +348,7 @@ with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 ) as clerk:
 
-    res = clerk.sessions.create_token_from_template(session_id="ses_123abcd4567", template_name="custom_hasura", expires_in_seconds=2299.84)
+    res = clerk.sessions.create_token_from_template(session_id="ses_123abcd4567", template_name="custom_hasura", expires_in_seconds=1880.22)
 
     assert res is not None
 

@@ -69,21 +69,19 @@ with Clerk(
 ) as clerk:
 
     res = clerk.organization_memberships.list(organization_id="org_789", order_by="<value>", user_id=[
-        "<id>",
-        "<id>",
-        "<id>",
+        "<id 1>",
     ], email_address=[
         "+created_at",
     ], phone_number=[
-        "1-321-760-7006 x5600",
-        "(509) 684-0380 x849",
+        "596.653.0471 x2778",
+        "642.321.6837",
     ], username=[
-        "Aracely.Collins",
+        "Ramon7",
+        "Gerard_Mayert86",
     ], web3_wallet=[
-        "<value>",
-        "<value>",
+        "<value 1>",
     ], role=[
-        "<value>",
+        "<value 1>",
     ], query="<value>", email_address_query="<value>", phone_number_query="<value>", username_query="<value>", name_query="<value>", last_active_at_before=1700690400000, last_active_at_after=1700690400000, created_at_before=1730160000000, created_at_after=1730160000000)
 
     assert res is not None

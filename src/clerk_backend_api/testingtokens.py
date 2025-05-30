@@ -64,6 +64,7 @@ class TestingTokens(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="CreateTestingToken",
                 oauth2_scopes=[],
@@ -152,6 +153,7 @@ class TestingTokens(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="CreateTestingToken",
                 oauth2_scopes=[],

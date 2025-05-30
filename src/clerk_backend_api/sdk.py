@@ -7,43 +7,10 @@ from .utils.logger import Logger, get_default_logger
 from .utils.retries import RetryConfig
 from clerk_backend_api import models, utils
 from clerk_backend_api._hooks import SDKHooks
-from clerk_backend_api.actortokens import ActorTokens
-from clerk_backend_api.allowlistidentifiers import AllowlistIdentifiers
-from clerk_backend_api.betafeatures import BetaFeatures
-from clerk_backend_api.blocklistidentifiers_sdk import BlocklistIdentifiersSDK
-from clerk_backend_api.clients import Clients
-from clerk_backend_api.domains_sdk import DomainsSDK
-from clerk_backend_api.emailaddresses import EmailAddresses
-from clerk_backend_api.emailandsmstemplates import EmailAndSmsTemplates
-from clerk_backend_api.emailsmstemplates import EmailSMSTemplates
-from clerk_backend_api.experimentalaccountlessapplications import (
-    ExperimentalAccountlessApplications,
-)
-from clerk_backend_api.instancesettings_sdk import InstanceSettingsSDK
-from clerk_backend_api.invitations import Invitations
-from clerk_backend_api.jwks_sdk import JwksSDK
-from clerk_backend_api.jwttemplates import JwtTemplates
-from clerk_backend_api.miscellaneous import Miscellaneous
-from clerk_backend_api.oauthapplications_sdk import OauthApplicationsSDK
-from clerk_backend_api.organizationdomains_sdk import OrganizationDomainsSDK
-from clerk_backend_api.organizationinvitations_sdk import OrganizationInvitationsSDK
-from clerk_backend_api.organizationmemberships_sdk import OrganizationMembershipsSDK
-from clerk_backend_api.organizations_sdk import OrganizationsSDK
-from clerk_backend_api.phonenumbers import PhoneNumbers
-from clerk_backend_api.proxychecks import ProxyChecks
-from clerk_backend_api.redirecturls import RedirectUrls
-from clerk_backend_api.samlconnections_sdk import SamlConnectionsSDK
-from clerk_backend_api.sessions import Sessions
-from clerk_backend_api.signintokens import SignInTokens
-from clerk_backend_api.signups import SignUps
-from clerk_backend_api.templates import Templates
-from clerk_backend_api.testingtokens import TestingTokens
 from clerk_backend_api.types import OptionalNullable, UNSET
-from clerk_backend_api.users import Users
-from clerk_backend_api.waitlistentries_sdk import WaitlistEntriesSDK
-from clerk_backend_api.webhooks import Webhooks
 import httpx
-from typing import Any, Callable, Dict, Optional, Union, cast
+import importlib
+from typing import Any, Callable, Dict, Optional, TYPE_CHECKING, Union, cast
 import weakref
 
 # region imports
@@ -55,6 +22,42 @@ from .jwks_helpers import (
 )
 # endregion imports
 
+if TYPE_CHECKING:
+    from clerk_backend_api.actortokens import ActorTokens
+    from clerk_backend_api.allowlistidentifiers import AllowlistIdentifiers
+    from clerk_backend_api.betafeatures import BetaFeatures
+    from clerk_backend_api.blocklistidentifiers_sdk import BlocklistIdentifiersSDK
+    from clerk_backend_api.clients import Clients
+    from clerk_backend_api.domains_sdk import DomainsSDK
+    from clerk_backend_api.emailaddresses import EmailAddresses
+    from clerk_backend_api.emailandsmstemplates import EmailAndSmsTemplates
+    from clerk_backend_api.emailsmstemplates import EmailSMSTemplates
+    from clerk_backend_api.experimentalaccountlessapplications import (
+        ExperimentalAccountlessApplications,
+    )
+    from clerk_backend_api.instancesettings_sdk import InstanceSettingsSDK
+    from clerk_backend_api.invitations import Invitations
+    from clerk_backend_api.jwks_sdk import JwksSDK
+    from clerk_backend_api.jwttemplates import JwtTemplates
+    from clerk_backend_api.miscellaneous import Miscellaneous
+    from clerk_backend_api.oauthapplications_sdk import OauthApplicationsSDK
+    from clerk_backend_api.organizationdomains_sdk import OrganizationDomainsSDK
+    from clerk_backend_api.organizationinvitations_sdk import OrganizationInvitationsSDK
+    from clerk_backend_api.organizationmemberships_sdk import OrganizationMembershipsSDK
+    from clerk_backend_api.organizations_sdk import OrganizationsSDK
+    from clerk_backend_api.phonenumbers import PhoneNumbers
+    from clerk_backend_api.proxychecks import ProxyChecks
+    from clerk_backend_api.redirecturls import RedirectUrls
+    from clerk_backend_api.samlconnections_sdk import SamlConnectionsSDK
+    from clerk_backend_api.sessions import Sessions
+    from clerk_backend_api.signintokens import SignInTokens
+    from clerk_backend_api.signups import SignUps
+    from clerk_backend_api.templates import Templates
+    from clerk_backend_api.testingtokens import TestingTokens
+    from clerk_backend_api.users import Users
+    from clerk_backend_api.waitlistentries_sdk import WaitlistEntriesSDK
+    from clerk_backend_api.webhooks import Webhooks
+
 
 class Clerk(BaseSDK):
     r"""Clerk Backend API: The Clerk REST Backend API, meant to be accessed by backend servers.
@@ -62,44 +65,114 @@ class Clerk(BaseSDK):
     ### Versions
 
     When the API changes in a way that isn't compatible with older versions, a new version is released.
-    Each version is identified by its release date, e.g. `2024-10-01`. For more information, please see [Clerk API Versions](https://clerk.com/docs/versioning/available-versions).
+    Each version is identified by its release date, e.g. `2025-03-12`. For more information, please see [Clerk API Versions](https://clerk.com/docs/versioning/available-versions).
 
     Please see https://clerk.com/docs for more information.
     https://clerk.com/docs
     """
 
-    miscellaneous: Miscellaneous
-    jwks: JwksSDK
-    clients: Clients
-    email_addresses: EmailAddresses
-    phone_numbers: PhoneNumbers
-    sessions: Sessions
-    email_sms_templates: EmailSMSTemplates
-    email_and_sms_templates: EmailAndSmsTemplates
-    templates: Templates
-    users: Users
-    invitations: Invitations
-    organization_invitations: OrganizationInvitationsSDK
-    allowlist_identifiers: AllowlistIdentifiers
-    blocklist_identifiers: BlocklistIdentifiersSDK
-    beta_features: BetaFeatures
-    actor_tokens: ActorTokens
-    domains: DomainsSDK
-    instance_settings: InstanceSettingsSDK
-    webhooks: Webhooks
-    jwt_templates: JwtTemplates
-    organizations: OrganizationsSDK
-    organization_memberships: OrganizationMembershipsSDK
-    organization_domains: OrganizationDomainsSDK
-    proxy_checks: ProxyChecks
-    redirect_urls: RedirectUrls
-    sign_in_tokens: SignInTokens
-    sign_ups: SignUps
-    oauth_applications: OauthApplicationsSDK
-    saml_connections: SamlConnectionsSDK
-    testing_tokens: TestingTokens
-    waitlist_entries: WaitlistEntriesSDK
-    experimental_accountless_applications: ExperimentalAccountlessApplications
+    miscellaneous: "Miscellaneous"
+    jwks: "JwksSDK"
+    clients: "Clients"
+    email_addresses: "EmailAddresses"
+    phone_numbers: "PhoneNumbers"
+    sessions: "Sessions"
+    email_sms_templates: "EmailSMSTemplates"
+    email_and_sms_templates: "EmailAndSmsTemplates"
+    templates: "Templates"
+    users: "Users"
+    invitations: "Invitations"
+    organization_invitations: "OrganizationInvitationsSDK"
+    allowlist_identifiers: "AllowlistIdentifiers"
+    blocklist_identifiers: "BlocklistIdentifiersSDK"
+    beta_features: "BetaFeatures"
+    actor_tokens: "ActorTokens"
+    domains: "DomainsSDK"
+    instance_settings: "InstanceSettingsSDK"
+    webhooks: "Webhooks"
+    jwt_templates: "JwtTemplates"
+    organizations: "OrganizationsSDK"
+    organization_memberships: "OrganizationMembershipsSDK"
+    organization_domains: "OrganizationDomainsSDK"
+    proxy_checks: "ProxyChecks"
+    redirect_urls: "RedirectUrls"
+    sign_in_tokens: "SignInTokens"
+    sign_ups: "SignUps"
+    oauth_applications: "OauthApplicationsSDK"
+    saml_connections: "SamlConnectionsSDK"
+    testing_tokens: "TestingTokens"
+    waitlist_entries: "WaitlistEntriesSDK"
+    experimental_accountless_applications: "ExperimentalAccountlessApplications"
+    _sub_sdk_map = {
+        "miscellaneous": ("clerk_backend_api.miscellaneous", "Miscellaneous"),
+        "jwks": ("clerk_backend_api.jwks_sdk", "JwksSDK"),
+        "clients": ("clerk_backend_api.clients", "Clients"),
+        "email_addresses": ("clerk_backend_api.emailaddresses", "EmailAddresses"),
+        "phone_numbers": ("clerk_backend_api.phonenumbers", "PhoneNumbers"),
+        "sessions": ("clerk_backend_api.sessions", "Sessions"),
+        "email_sms_templates": (
+            "clerk_backend_api.emailsmstemplates",
+            "EmailSMSTemplates",
+        ),
+        "email_and_sms_templates": (
+            "clerk_backend_api.emailandsmstemplates",
+            "EmailAndSmsTemplates",
+        ),
+        "templates": ("clerk_backend_api.templates", "Templates"),
+        "users": ("clerk_backend_api.users", "Users"),
+        "invitations": ("clerk_backend_api.invitations", "Invitations"),
+        "organization_invitations": (
+            "clerk_backend_api.organizationinvitations_sdk",
+            "OrganizationInvitationsSDK",
+        ),
+        "allowlist_identifiers": (
+            "clerk_backend_api.allowlistidentifiers",
+            "AllowlistIdentifiers",
+        ),
+        "blocklist_identifiers": (
+            "clerk_backend_api.blocklistidentifiers_sdk",
+            "BlocklistIdentifiersSDK",
+        ),
+        "beta_features": ("clerk_backend_api.betafeatures", "BetaFeatures"),
+        "actor_tokens": ("clerk_backend_api.actortokens", "ActorTokens"),
+        "domains": ("clerk_backend_api.domains_sdk", "DomainsSDK"),
+        "instance_settings": (
+            "clerk_backend_api.instancesettings_sdk",
+            "InstanceSettingsSDK",
+        ),
+        "webhooks": ("clerk_backend_api.webhooks", "Webhooks"),
+        "jwt_templates": ("clerk_backend_api.jwttemplates", "JwtTemplates"),
+        "organizations": ("clerk_backend_api.organizations_sdk", "OrganizationsSDK"),
+        "organization_memberships": (
+            "clerk_backend_api.organizationmemberships_sdk",
+            "OrganizationMembershipsSDK",
+        ),
+        "organization_domains": (
+            "clerk_backend_api.organizationdomains_sdk",
+            "OrganizationDomainsSDK",
+        ),
+        "proxy_checks": ("clerk_backend_api.proxychecks", "ProxyChecks"),
+        "redirect_urls": ("clerk_backend_api.redirecturls", "RedirectUrls"),
+        "sign_in_tokens": ("clerk_backend_api.signintokens", "SignInTokens"),
+        "sign_ups": ("clerk_backend_api.signups", "SignUps"),
+        "oauth_applications": (
+            "clerk_backend_api.oauthapplications_sdk",
+            "OauthApplicationsSDK",
+        ),
+        "saml_connections": (
+            "clerk_backend_api.samlconnections_sdk",
+            "SamlConnectionsSDK",
+        ),
+        "testing_tokens": ("clerk_backend_api.testingtokens", "TestingTokens"),
+        "waitlist_entries": (
+            "clerk_backend_api.waitlistentries_sdk",
+            "WaitlistEntriesSDK",
+        ),
+        "experimental_accountless_applications": (
+            "clerk_backend_api.experimentalaccountlessapplications",
+            "ExperimentalAccountlessApplications",
+        ),
+    }
 
     def __init__(
         self,
@@ -174,15 +247,15 @@ class Clerk(BaseSDK):
 
         hooks = SDKHooks()
 
+        # pylint: disable=protected-access
+        self.sdk_configuration.__dict__["_hooks"] = hooks
+
         current_server_url, *_ = self.sdk_configuration.get_server_details()
         server_url, self.sdk_configuration.client = hooks.sdk_init(
             current_server_url, client
         )
         if current_server_url != server_url:
             self.sdk_configuration.server_url = server_url
-
-        # pylint: disable=protected-access
-        self.sdk_configuration.__dict__["_hooks"] = hooks
 
         weakref.finalize(
             self,
@@ -194,47 +267,32 @@ class Clerk(BaseSDK):
             self.sdk_configuration.async_client_supplied,
         )
 
-        self._init_sdks()
+    def __getattr__(self, name: str):
+        if name in self._sub_sdk_map:
+            module_path, class_name = self._sub_sdk_map[name]
+            try:
+                module = importlib.import_module(module_path)
+                klass = getattr(module, class_name)
+                instance = klass(self.sdk_configuration)
+                setattr(self, name, instance)
+                return instance
+            except ImportError as e:
+                raise AttributeError(
+                    f"Failed to import module {module_path} for attribute {name}: {e}"
+                ) from e
+            except AttributeError as e:
+                raise AttributeError(
+                    f"Failed to find class {class_name} in module {module_path} for attribute {name}: {e}"
+                ) from e
 
-    def _init_sdks(self):
-        self.miscellaneous = Miscellaneous(self.sdk_configuration)
-        self.jwks = JwksSDK(self.sdk_configuration)
-        self.clients = Clients(self.sdk_configuration)
-        self.email_addresses = EmailAddresses(self.sdk_configuration)
-        self.phone_numbers = PhoneNumbers(self.sdk_configuration)
-        self.sessions = Sessions(self.sdk_configuration)
-        self.email_sms_templates = EmailSMSTemplates(self.sdk_configuration)
-        self.email_and_sms_templates = EmailAndSmsTemplates(self.sdk_configuration)
-        self.templates = Templates(self.sdk_configuration)
-        self.users = Users(self.sdk_configuration)
-        self.invitations = Invitations(self.sdk_configuration)
-        self.organization_invitations = OrganizationInvitationsSDK(
-            self.sdk_configuration
+        raise AttributeError(
+            f"'{type(self).__name__}' object has no attribute '{name}'"
         )
-        self.allowlist_identifiers = AllowlistIdentifiers(self.sdk_configuration)
-        self.blocklist_identifiers = BlocklistIdentifiersSDK(self.sdk_configuration)
-        self.beta_features = BetaFeatures(self.sdk_configuration)
-        self.actor_tokens = ActorTokens(self.sdk_configuration)
-        self.domains = DomainsSDK(self.sdk_configuration)
-        self.instance_settings = InstanceSettingsSDK(self.sdk_configuration)
-        self.webhooks = Webhooks(self.sdk_configuration)
-        self.jwt_templates = JwtTemplates(self.sdk_configuration)
-        self.organizations = OrganizationsSDK(self.sdk_configuration)
-        self.organization_memberships = OrganizationMembershipsSDK(
-            self.sdk_configuration
-        )
-        self.organization_domains = OrganizationDomainsSDK(self.sdk_configuration)
-        self.proxy_checks = ProxyChecks(self.sdk_configuration)
-        self.redirect_urls = RedirectUrls(self.sdk_configuration)
-        self.sign_in_tokens = SignInTokens(self.sdk_configuration)
-        self.sign_ups = SignUps(self.sdk_configuration)
-        self.oauth_applications = OauthApplicationsSDK(self.sdk_configuration)
-        self.saml_connections = SamlConnectionsSDK(self.sdk_configuration)
-        self.testing_tokens = TestingTokens(self.sdk_configuration)
-        self.waitlist_entries = WaitlistEntriesSDK(self.sdk_configuration)
-        self.experimental_accountless_applications = (
-            ExperimentalAccountlessApplications(self.sdk_configuration)
-        )
+
+    def __dir__(self):
+        default_attrs = list(super().__dir__())
+        lazy_attrs = list(self._sub_sdk_map.keys())
+        return sorted(list(set(default_attrs + lazy_attrs)))
 
     def __enter__(self):
         return self

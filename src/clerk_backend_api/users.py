@@ -74,6 +74,7 @@ class Users(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="GetUserList",
                 oauth2_scopes=[],
@@ -176,6 +177,7 @@ class Users(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="GetUserList",
                 oauth2_scopes=[],
@@ -286,6 +288,7 @@ class Users(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="CreateUser",
                 oauth2_scopes=[],
@@ -398,6 +401,7 @@ class Users(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="CreateUser",
                 oauth2_scopes=[],
@@ -550,6 +554,7 @@ class Users(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="GetUsersCount",
                 oauth2_scopes=[],
@@ -700,6 +705,7 @@ class Users(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="GetUsersCount",
                 oauth2_scopes=[],
@@ -799,6 +805,7 @@ class Users(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="GetUser",
                 oauth2_scopes=[],
@@ -898,6 +905,7 @@ class Users(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="GetUser",
                 oauth2_scopes=[],
@@ -1088,6 +1096,7 @@ class Users(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="UpdateUser",
                 oauth2_scopes=[],
@@ -1280,6 +1289,7 @@ class Users(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="UpdateUser",
                 oauth2_scopes=[],
@@ -1381,6 +1391,7 @@ class Users(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="DeleteUser",
                 oauth2_scopes=[],
@@ -1480,6 +1491,7 @@ class Users(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="DeleteUser",
                 oauth2_scopes=[],
@@ -1579,6 +1591,7 @@ class Users(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="BanUser",
                 oauth2_scopes=[],
@@ -1678,6 +1691,7 @@ class Users(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="BanUser",
                 oauth2_scopes=[],
@@ -1777,6 +1791,7 @@ class Users(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="UnbanUser",
                 oauth2_scopes=[],
@@ -1876,6 +1891,7 @@ class Users(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="UnbanUser",
                 oauth2_scopes=[],
@@ -1976,6 +1992,7 @@ class Users(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="LockUser",
                 oauth2_scopes=[],
@@ -2076,6 +2093,7 @@ class Users(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="LockUser",
                 oauth2_scopes=[],
@@ -2175,6 +2193,7 @@ class Users(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="UnlockUser",
                 oauth2_scopes=[],
@@ -2274,6 +2293,7 @@ class Users(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="UnlockUser",
                 oauth2_scopes=[],
@@ -2385,6 +2405,7 @@ class Users(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="SetUserProfileImage",
                 oauth2_scopes=[],
@@ -2496,6 +2517,7 @@ class Users(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="SetUserProfileImage",
                 oauth2_scopes=[],
@@ -2595,6 +2617,7 @@ class Users(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="DeleteUserProfileImage",
                 oauth2_scopes=[],
@@ -2694,6 +2717,7 @@ class Users(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="DeleteUserProfileImage",
                 oauth2_scopes=[],
@@ -2818,6 +2842,7 @@ class Users(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="UpdateUserMetadata",
                 oauth2_scopes=[],
@@ -2944,6 +2969,7 @@ class Users(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="UpdateUserMetadata",
                 oauth2_scopes=[],
@@ -3058,6 +3084,7 @@ class Users(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="GetOAuthAccessToken",
                 oauth2_scopes=[],
@@ -3172,6 +3199,7 @@ class Users(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="GetOAuthAccessToken",
                 oauth2_scopes=[],
@@ -3279,6 +3307,7 @@ class Users(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="UsersGetOrganizationMemberships",
                 oauth2_scopes=[],
@@ -3386,6 +3415,7 @@ class Users(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="UsersGetOrganizationMemberships",
                 oauth2_scopes=[],
@@ -3496,6 +3526,7 @@ class Users(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="UsersGetOrganizationInvitations",
                 oauth2_scopes=[],
@@ -3607,6 +3638,7 @@ class Users(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="UsersGetOrganizationInvitations",
                 oauth2_scopes=[],
@@ -3722,6 +3754,7 @@ class Users(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="VerifyPassword",
                 oauth2_scopes=[],
@@ -3836,6 +3869,7 @@ class Users(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="VerifyPassword",
                 oauth2_scopes=[],
@@ -3952,6 +3986,7 @@ class Users(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="VerifyTOTP",
                 oauth2_scopes=[],
@@ -4068,6 +4103,7 @@ class Users(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="VerifyTOTP",
                 oauth2_scopes=[],
@@ -4169,6 +4205,7 @@ class Users(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="DisableMFA",
                 oauth2_scopes=[],
@@ -4273,6 +4310,7 @@ class Users(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="DisableMFA",
                 oauth2_scopes=[],
@@ -4377,6 +4415,7 @@ class Users(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="DeleteBackupCode",
                 oauth2_scopes=[],
@@ -4481,6 +4520,7 @@ class Users(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="DeleteBackupCode",
                 oauth2_scopes=[],
@@ -4588,6 +4628,7 @@ class Users(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="UserPasskeyDelete",
                 oauth2_scopes=[],
@@ -4693,6 +4734,7 @@ class Users(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="UserPasskeyDelete",
                 oauth2_scopes=[],
@@ -4798,6 +4840,7 @@ class Users(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="UserWeb3WalletDelete",
                 oauth2_scopes=[],
@@ -4903,6 +4946,7 @@ class Users(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="UserWeb3WalletDelete",
                 oauth2_scopes=[],
@@ -5005,6 +5049,7 @@ class Users(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="DeleteTOTP",
                 oauth2_scopes=[],
@@ -5109,6 +5154,7 @@ class Users(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="DeleteTOTP",
                 oauth2_scopes=[],
@@ -5216,6 +5262,7 @@ class Users(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="DeleteExternalAccount",
                 oauth2_scopes=[],
@@ -5321,6 +5368,7 @@ class Users(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="DeleteExternalAccount",
                 oauth2_scopes=[],
@@ -5429,6 +5477,7 @@ class Users(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="InstanceGetOrganizationMemberships",
                 oauth2_scopes=[],
@@ -5539,6 +5588,7 @@ class Users(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="InstanceGetOrganizationMemberships",
                 oauth2_scopes=[],

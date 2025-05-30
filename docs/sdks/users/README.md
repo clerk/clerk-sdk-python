@@ -73,7 +73,7 @@ with Clerk(
         "phone_number_query": "<value>",
         "username_query": "<value>",
         "name_query": "<value>",
-        "banned": False,
+        "banned": True,
         "last_active_at_before": 1700690400000,
         "last_active_at_after": 1700690400000,
         "last_active_at_since": 1700690400000,
@@ -164,8 +164,8 @@ with Clerk(
         "delete_self_enabled": True,
         "legal_accepted_at": "<value>",
         "skip_legal_checks": False,
-        "create_organization_enabled": True,
-        "create_organizations_limit": 134365,
+        "create_organization_enabled": None,
+        "create_organizations_limit": 81560,
         "created_at": "2023-03-15T07:15:20.902Z",
     })
 
@@ -341,7 +341,7 @@ with Clerk(
         "vip": True,
     }, unsafe_metadata={
         "age": 30,
-    }, delete_self_enabled=True, create_organization_enabled=False, legal_accepted_at="<value>", skip_legal_checks=False, create_organizations_limit=597129, created_at="2021-04-05T14:30:00.000Z")
+    }, delete_self_enabled=True, create_organization_enabled=False, legal_accepted_at="<value>", skip_legal_checks=False, create_organizations_limit=824457, created_at="2021-04-05T14:30:00.000Z")
 
     assert res is not None
 
@@ -709,13 +709,12 @@ with Clerk(
 
     res = clerk.users.update_metadata(user_id="user_123456789", public_metadata={
         "key": "<value>",
-        "key1": "<value>",
     }, private_metadata={
         "key": "<value>",
         "key1": "<value>",
-        "key2": "<value>",
     }, unsafe_metadata={
         "key": "<value>",
+        "key1": "<value>",
     })
 
     assert res is not None

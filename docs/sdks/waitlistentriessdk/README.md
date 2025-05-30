@@ -25,7 +25,7 @@ with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 ) as clerk:
 
-    res = clerk.waitlist_entries.list(query="<value>", status=clerk_backend_api.ListWaitlistEntriesQueryParamStatus.REJECTED)
+    res = clerk.waitlist_entries.list(query="<value>", status=clerk_backend_api.ListWaitlistEntriesQueryParamStatus.INVITED)
 
     assert res is not None
 
@@ -71,7 +71,7 @@ with Clerk(
 ) as clerk:
 
     res = clerk.waitlist_entries.create(request={
-        "email_address": "Loyal79@yahoo.com",
+        "email_address": "Victoria21@gmail.com",
     })
 
     assert res is not None

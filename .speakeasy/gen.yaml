@@ -4,6 +4,7 @@ generation:
   maintainOpenAPIOrder: true
   usageSnippets:
     optionalPropertyRendering: always
+    sdkInitStyle: constructor
   useClassNamesForArrayFields: true
   fixes:
     nameResolutionDec2023: true
@@ -16,7 +17,7 @@ generation:
     oAuth2ClientCredentialsEnabled: true
     oAuth2PasswordEnabled: false
 python:
-  version: 2.2.0
+  version: 3.0.0
   additionalDependencies:
     dev:
       pytest: ^8.3.3
@@ -47,8 +48,10 @@ python:
   inputModelSuffix: input
   maxMethodParams: 20
   methodArguments: infer-optional-args
+  moduleName: ""
   outputModelSuffix: output
   packageName: clerk-backend-api
+  pytestFilterWarnings: []
   pytestTimeout: 0
   responseFormat: flat
   templateVersion: v2

@@ -90,6 +90,7 @@ class Sessions(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="GetSessionList",
                 oauth2_scopes=[],
@@ -207,6 +208,7 @@ class Sessions(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="GetSessionList",
                 oauth2_scopes=[],
@@ -319,6 +321,7 @@ class Sessions(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="createSession",
                 oauth2_scopes=[],
@@ -433,6 +436,7 @@ class Sessions(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="createSession",
                 oauth2_scopes=[],
@@ -534,6 +538,7 @@ class Sessions(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="GetSession",
                 oauth2_scopes=[],
@@ -633,6 +638,7 @@ class Sessions(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="GetSession",
                 oauth2_scopes=[],
@@ -760,6 +766,7 @@ class Sessions(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="RefreshSession",
                 oauth2_scopes=[],
@@ -887,6 +894,7 @@ class Sessions(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="RefreshSession",
                 oauth2_scopes=[],
@@ -987,6 +995,7 @@ class Sessions(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="RevokeSession",
                 oauth2_scopes=[],
@@ -1087,6 +1096,7 @@ class Sessions(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="RevokeSession",
                 oauth2_scopes=[],
@@ -1204,6 +1214,7 @@ class Sessions(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="VerifySession",
                 oauth2_scopes=[],
@@ -1323,6 +1334,7 @@ class Sessions(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="VerifySession",
                 oauth2_scopes=[],
@@ -1436,6 +1448,7 @@ class Sessions(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="CreateSessionToken",
                 oauth2_scopes=[],
@@ -1549,6 +1562,7 @@ class Sessions(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="CreateSessionToken",
                 oauth2_scopes=[],
@@ -1665,6 +1679,7 @@ class Sessions(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="CreateSessionTokenFromTemplate",
                 oauth2_scopes=[],
@@ -1782,6 +1797,7 @@ class Sessions(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="CreateSessionTokenFromTemplate",
                 oauth2_scopes=[],

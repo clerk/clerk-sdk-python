@@ -76,7 +76,7 @@ with Clerk(
 
     clerk.beta_features.update_production_instance_domain(request={
         "home_url": "https://www.example.com",
-        "is_secondary": False,
+        "is_secondary": True,
     })
 
     # Use the SDK ...

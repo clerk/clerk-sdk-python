@@ -115,42 +115,12 @@ def close_clients(
             pass
 
     if async_client is not None and not async_client_supplied:
-        # First, try the simplest approach - use asyncio.run()
-        # This works when we're not in an async context
         try:
-            asyncio.run(async_client.aclose())
-        except RuntimeError as e:
-            # If we get "RuntimeError: This event loop is already running",
-            # it means we're in an async context
-            if "already running" in str(e):
-                try:
-                    # We're in an async context, so get the running loop
-                    loop = asyncio.get_running_loop()
-                    # Create a task but don't wait for it
-                    loop.create_task(async_client.aclose())
-                except Exception:
-                    # If we can't get the loop or create a task, just ignore
-                    # The GC will eventually clean up the resources
-                    pass
-            # If we get "RuntimeError: There is no current event loop in thread",
-            # we're not in an async context, but asyncio.run() failed for some reason
-            # In this case, we can try to create a new event loop explicitly
-            elif "no current event loop" in str(e):
-                try:
-                    # Create a new event loop and run the coroutine
-                    loop = asyncio.new_event_loop()
-                    asyncio.set_event_loop(loop)
-                    try:
-                        loop.run_until_complete(async_client.aclose())
-                    finally:
-                        loop.close()
-                        asyncio.set_event_loop(None)
-                except Exception:
-                    # If this also fails, just ignore
-                    pass
-            # For any other RuntimeError, just ignore
-            else:
+            loop = asyncio.get_running_loop()
+            asyncio.run_coroutine_threadsafe(async_client.aclose(), loop)
+        except RuntimeError:
+            try:
+                asyncio.run(async_client.aclose())
+            except RuntimeError:
+                # best effort
                 pass
-        except Exception:
-            # For any other exception, just ignore
-            pass

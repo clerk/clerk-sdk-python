@@ -98,7 +98,7 @@ with Clerk(
         "key": "value",
     }, private_metadata={
         "private_key": "secret_value",
-    }, redirect_url="https://example.com/welcome", expires_in_days=486589)
+    }, redirect_url="https://example.com/welcome", expires_in_days=785754)
 
     assert res is not None
 
@@ -152,7 +152,7 @@ with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 ) as clerk:
 
-    res = clerk.organization_invitations.list(organization_id="org_12345", status=clerk_backend_api.ListOrganizationInvitationsQueryParamStatus.REVOKED)
+    res = clerk.organization_invitations.list(organization_id="org_12345", status=clerk_backend_api.ListOrganizationInvitationsQueryParamStatus.ACCEPTED)
 
     assert res is not None
 
@@ -208,7 +208,34 @@ with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 ) as clerk:
 
-    res = clerk.organization_invitations.bulk_create(organization_id="org_12345", request_body=[])
+    res = clerk.organization_invitations.bulk_create(organization_id="org_12345", request_body=[
+        {
+            "email_address": "newmember@example.com",
+            "inviter_user_id": "user_67890",
+            "role": "admin",
+            "public_metadata": {
+
+            },
+            "private_metadata": {
+
+            },
+            "redirect_url": "https://example.com/welcome",
+            "expires_in_days": 488764,
+        },
+        {
+            "email_address": "newmember@example.com",
+            "inviter_user_id": "user_67890",
+            "role": "admin",
+            "public_metadata": {
+
+            },
+            "private_metadata": {
+
+            },
+            "redirect_url": "https://example.com/welcome",
+            "expires_in_days": 488764,
+        },
+    ])
 
     assert res is not None
 

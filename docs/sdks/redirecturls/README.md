@@ -24,7 +24,7 @@ with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 ) as clerk:
 
-    res = clerk.redirect_urls.list(paginated=False)
+    res = clerk.redirect_urls.list(paginated=True)
 
     assert res is not None
 

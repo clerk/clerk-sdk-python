@@ -25,7 +25,7 @@ with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 ) as clerk:
 
-    res = clerk.jwt_templates.list(paginated=False)
+    res = clerk.jwt_templates.list(paginated=True)
 
     assert res is not None
 
@@ -157,7 +157,7 @@ with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 ) as clerk:
 
-    res = clerk.jwt_templates.update(template_id="<id>", name="<value>", claims={}, lifetime=8574.78, allowed_clock_skew=5971.29, custom_signing_key=True, signing_algorithm="<value>", signing_key="<value>")
+    res = clerk.jwt_templates.update(template_id="<id>", name="<value>", claims={}, lifetime=62.24, allowed_clock_skew=258.27, custom_signing_key=False, signing_algorithm="<value>", signing_key=None)
 
     assert res is not None
 
