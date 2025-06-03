@@ -82,7 +82,9 @@ def _verify_machine_token(token: str, verify_token_options: VerifyTokenOptions, 
         'secret' : f"{token}"
     }
     client = httpx.Client(base_url=verify_token_options.api_url)
-    endpoint = verification_apis.get(token_type, None)
+    endpoint = verification_apis.get(token_type)
+    if not endpoint:
+        raise TokenVerificationError(TokenVerificationErrorReason.INVALID_TOKEN_TYPE)
     try:
         response = client.post(
             endpoint,
