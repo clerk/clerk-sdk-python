@@ -3,10 +3,10 @@ id: bfe29c99-6e67-43fe-b928-64d6a5ed6aa8
 management:
   docChecksum: 988da0b376f34c1dad41f86578b90dd5
   docVersion: "2025-03-12"
-  speakeasyVersion: 1.554.1
-  generationVersion: 2.616.1
-  releaseVersion: 3.0.1
-  configChecksum: f7965f407ac04f74f320fabb89eb3796
+  speakeasyVersion: 1.555.0
+  generationVersion: 2.618.0
+  releaseVersion: 3.0.2
+  configChecksum: bac9e9ccd199045c7c1bdc55ea1c3795
   repoURL: https://github.com/clerk/clerk-sdk-python.git
   installationURL: https://github.com/clerk/clerk-sdk-python.git
   published: true
