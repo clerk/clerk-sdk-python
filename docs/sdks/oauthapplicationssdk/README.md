@@ -29,7 +29,7 @@ with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 ) as clerk:
 
-    res = clerk.oauth_applications.list()
+    res = clerk.oauth_applications.list(limit=20, offset=10)
 
     assert res is not None
 
@@ -78,6 +78,7 @@ with Clerk(
         "redirect_uris": [
             "<value 1>",
         ],
+        "scopes": "profile email public_metadata",
         "public": True,
     })
 
@@ -161,7 +162,7 @@ with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 ) as clerk:
 
-    res = clerk.oauth_applications.update(oauth_application_id="oauth_app_67890", name="Updated OAuth App Name", redirect_uris=None, public=None)
+    res = clerk.oauth_applications.update(oauth_application_id="oauth_app_67890", name="Updated OAuth App Name", redirect_uris=None, scopes="profile email public_metadata private_metadata", public=None)
 
     assert res is not None
 

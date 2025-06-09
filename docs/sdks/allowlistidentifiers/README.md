@@ -23,7 +23,7 @@ with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 ) as clerk:
 
-    res = clerk.allowlist_identifiers.list(paginated=False)
+    res = clerk.allowlist_identifiers.list(paginated=False, limit=20, offset=10)
 
     assert res is not None
 
@@ -68,6 +68,7 @@ with Clerk(
 
     res = clerk.allowlist_identifiers.create(request={
         "identifier": "user@example.com",
+        "notify": True,
     })
 
     assert res is not None

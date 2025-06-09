@@ -68,7 +68,7 @@ with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 ) as clerk:
 
-    res = clerk.organization_domains.list(organization_id="<id>", verified="<value>", enrollment_mode="<value>")
+    res = clerk.organization_domains.list(organization_id="<id>", verified="<value>", enrollment_mode="<value>", limit=20, offset=10)
 
     assert res is not None
 

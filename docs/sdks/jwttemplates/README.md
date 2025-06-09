@@ -25,7 +25,7 @@ with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 ) as clerk:
 
-    res = clerk.jwt_templates.list(paginated=True)
+    res = clerk.jwt_templates.list(paginated=True, limit=20, offset=10)
 
     assert res is not None
 

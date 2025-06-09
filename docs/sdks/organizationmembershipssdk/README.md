@@ -82,7 +82,7 @@ with Clerk(
         "<value 1>",
     ], role=[
         "<value 1>",
-    ], query="<value>", email_address_query="<value>", phone_number_query="<value>", username_query="<value>", name_query="<value>", last_active_at_before=1700690400000, last_active_at_after=1700690400000, created_at_before=1730160000000, created_at_after=1730160000000)
+    ], query="<value>", email_address_query="<value>", phone_number_query="<value>", username_query="<value>", name_query="<value>", last_active_at_before=1700690400000, last_active_at_after=1700690400000, created_at_before=1730160000000, created_at_after=1730160000000, limit=20, offset=10)
 
     assert res is not None
 

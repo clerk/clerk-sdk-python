@@ -217,9 +217,29 @@ class Users(BaseSDK):
     def create(
         self,
         *,
-        request: Union[
-            models.CreateUserRequestBody, models.CreateUserRequestBodyTypedDict
-        ] = models.CreateUserRequestBody(),
+        external_id: OptionalNullable[str] = UNSET,
+        first_name: OptionalNullable[str] = UNSET,
+        last_name: OptionalNullable[str] = UNSET,
+        email_address: Optional[List[str]] = None,
+        phone_number: Optional[List[str]] = None,
+        web3_wallet: Optional[List[str]] = None,
+        username: OptionalNullable[str] = UNSET,
+        password: OptionalNullable[str] = UNSET,
+        password_digest: OptionalNullable[str] = UNSET,
+        password_hasher: Optional[str] = None,
+        skip_password_checks: OptionalNullable[bool] = UNSET,
+        skip_password_requirement: OptionalNullable[bool] = UNSET,
+        totp_secret: OptionalNullable[str] = UNSET,
+        backup_codes: Optional[List[str]] = None,
+        public_metadata: Optional[Dict[str, Any]] = None,
+        private_metadata: Optional[Dict[str, Any]] = None,
+        unsafe_metadata: Optional[Dict[str, Any]] = None,
+        delete_self_enabled: OptionalNullable[bool] = UNSET,
+        legal_accepted_at: OptionalNullable[str] = UNSET,
+        skip_legal_checks: OptionalNullable[bool] = UNSET,
+        create_organization_enabled: OptionalNullable[bool] = UNSET,
+        create_organizations_limit: OptionalNullable[int] = UNSET,
+        created_at: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -235,7 +255,29 @@ class Users(BaseSDK):
 
         A rate limit rule of 20 requests per 10 seconds is applied to this endpoint.
 
-        :param request: The request object to send.
+        :param external_id: The ID of the user as used in your external systems or your previous authentication solution. Must be unique across your instance.
+        :param first_name: The first name to assign to the user
+        :param last_name: The last name to assign to the user
+        :param email_address: Email addresses to add to the user. Must be unique across your instance. The first email address will be set as the user's primary email address.
+        :param phone_number: Phone numbers to add to the user. Must be unique across your instance. The first phone number will be set as the user's primary phone number.
+        :param web3_wallet: Web3 wallets to add to the user. Must be unique across your instance. The first wallet will be set as the user's primary wallet.
+        :param username: The username to give to the user. It must be unique across your instance.
+        :param password: The plaintext password to give the user. Must be at least 8 characters long, and can not be in any list of hacked passwords.
+        :param password_digest: In case you already have the password digests and not the passwords, you can use them for the newly created user via this property. The digests should be generated with one of the supported algorithms. The hashing algorithm can be specified using the `password_hasher` property.
+        :param password_hasher: The hashing algorithm that was used to generate the password digest.  The algorithms we support at the moment are [`bcrypt`](https://en.wikipedia.org/wiki/Bcrypt), [`bcrypt_sha256_django`](https://docs.djangoproject.com/en/4.0/topics/auth/passwords/), [`md5`](https://en.wikipedia.org/wiki/MD5), `pbkdf2_sha1`, `pbkdf2_sha256`, [`pbkdf2_sha256_django`](https://docs.djangoproject.com/en/4.0/topics/auth/passwords/), [`phpass`](https://www.openwall.com/phpass/), [`scrypt_firebase`](https://firebaseopensource.com/projects/firebase/scrypt/), [`scrypt_werkzeug`](https://werkzeug.palletsprojects.com/en/3.0.x/utils/#werkzeug.security.generate_password_hash), [`sha256`](https://en.wikipedia.org/wiki/SHA-2), and the [`argon2`](https://argon2.online/) variants: `argon2i` and `argon2id`.  Each of the supported hashers expects the incoming digest to be in a particular format. See the [Clerk docs](https://clerk.com/docs/references/backend/user/create-user) for more information.
+        :param skip_password_checks: When set to `true` all password checks are skipped. It is recommended to use this method only when migrating plaintext passwords to Clerk. Upon migration the user base should be prompted to pick stronger password.
+        :param skip_password_requirement: When set to `true`, `password` is not required anymore when creating the user and can be omitted. This is useful when you are trying to create a user that doesn't have a password, in an instance that is using passwords. Please note that you cannot use this flag if password is the only way for a user to sign into your instance.
+        :param totp_secret: In case TOTP is configured on the instance, you can provide the secret to enable it on the newly created user without the need to reset it. Please note that currently the supported options are: * Period: 30 seconds * Code length: 6 digits * Algorithm: SHA1
+        :param backup_codes: If Backup Codes are configured on the instance, you can provide them to enable it on the newly created user without the need to reset them. You must provide the backup codes in plain format or the corresponding bcrypt digest.
+        :param public_metadata: Metadata saved on the user, that is visible to both your Frontend and Backend APIs
+        :param private_metadata: Metadata saved on the user, that is only visible to your Backend API
+        :param unsafe_metadata: Metadata saved on the user, that can be updated from both the Frontend and Backend APIs. Note: Since this data can be modified from the frontend, it is not guaranteed to be safe.
+        :param delete_self_enabled: If enabled, user can delete themselves via FAPI.
+        :param legal_accepted_at: A custom timestamp denoting _when_ the user accepted legal requirements, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`).
+        :param skip_legal_checks: When set to `true` all legal checks are skipped. It is not recommended to skip legal checks unless you are migrating a user to Clerk.
+        :param create_organization_enabled: If enabled, user can create organizations via FAPI.
+        :param create_organizations_limit: The maximum number of organizations the user can create. 0 means unlimited.
+        :param created_at: A custom date/time denoting _when_ the user signed up to the application, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`).
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -251,9 +293,31 @@ class Users(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        if not isinstance(request, BaseModel):
-            request = utils.unmarshal(request, models.CreateUserRequestBody)
-        request = cast(models.CreateUserRequestBody, request)
+        request = models.CreateUserRequestBody(
+            external_id=external_id,
+            first_name=first_name,
+            last_name=last_name,
+            email_address=email_address,
+            phone_number=phone_number,
+            web3_wallet=web3_wallet,
+            username=username,
+            password=password,
+            password_digest=password_digest,
+            password_hasher=password_hasher,
+            skip_password_checks=skip_password_checks,
+            skip_password_requirement=skip_password_requirement,
+            totp_secret=totp_secret,
+            backup_codes=backup_codes,
+            public_metadata=public_metadata,
+            private_metadata=private_metadata,
+            unsafe_metadata=unsafe_metadata,
+            delete_self_enabled=delete_self_enabled,
+            legal_accepted_at=legal_accepted_at,
+            skip_legal_checks=skip_legal_checks,
+            create_organization_enabled=create_organization_enabled,
+            create_organizations_limit=create_organizations_limit,
+            created_at=created_at,
+        )
 
         req = self._build_request(
             method="POST",
@@ -269,7 +333,7 @@ class Users(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request, False, True, "json", Optional[models.CreateUserRequestBody]
+                request, False, False, "json", models.CreateUserRequestBody
             ),
             timeout_ms=timeout_ms,
         )
@@ -330,9 +394,29 @@ class Users(BaseSDK):
     async def create_async(
         self,
         *,
-        request: Union[
-            models.CreateUserRequestBody, models.CreateUserRequestBodyTypedDict
-        ] = models.CreateUserRequestBody(),
+        external_id: OptionalNullable[str] = UNSET,
+        first_name: OptionalNullable[str] = UNSET,
+        last_name: OptionalNullable[str] = UNSET,
+        email_address: Optional[List[str]] = None,
+        phone_number: Optional[List[str]] = None,
+        web3_wallet: Optional[List[str]] = None,
+        username: OptionalNullable[str] = UNSET,
+        password: OptionalNullable[str] = UNSET,
+        password_digest: OptionalNullable[str] = UNSET,
+        password_hasher: Optional[str] = None,
+        skip_password_checks: OptionalNullable[bool] = UNSET,
+        skip_password_requirement: OptionalNullable[bool] = UNSET,
+        totp_secret: OptionalNullable[str] = UNSET,
+        backup_codes: Optional[List[str]] = None,
+        public_metadata: Optional[Dict[str, Any]] = None,
+        private_metadata: Optional[Dict[str, Any]] = None,
+        unsafe_metadata: Optional[Dict[str, Any]] = None,
+        delete_self_enabled: OptionalNullable[bool] = UNSET,
+        legal_accepted_at: OptionalNullable[str] = UNSET,
+        skip_legal_checks: OptionalNullable[bool] = UNSET,
+        create_organization_enabled: OptionalNullable[bool] = UNSET,
+        create_organizations_limit: OptionalNullable[int] = UNSET,
+        created_at: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -348,7 +432,29 @@ class Users(BaseSDK):
 
         A rate limit rule of 20 requests per 10 seconds is applied to this endpoint.
 
-        :param request: The request object to send.
+        :param external_id: The ID of the user as used in your external systems or your previous authentication solution. Must be unique across your instance.
+        :param first_name: The first name to assign to the user
+        :param last_name: The last name to assign to the user
+        :param email_address: Email addresses to add to the user. Must be unique across your instance. The first email address will be set as the user's primary email address.
+        :param phone_number: Phone numbers to add to the user. Must be unique across your instance. The first phone number will be set as the user's primary phone number.
+        :param web3_wallet: Web3 wallets to add to the user. Must be unique across your instance. The first wallet will be set as the user's primary wallet.
+        :param username: The username to give to the user. It must be unique across your instance.
+        :param password: The plaintext password to give the user. Must be at least 8 characters long, and can not be in any list of hacked passwords.
+        :param password_digest: In case you already have the password digests and not the passwords, you can use them for the newly created user via this property. The digests should be generated with one of the supported algorithms. The hashing algorithm can be specified using the `password_hasher` property.
+        :param password_hasher: The hashing algorithm that was used to generate the password digest.  The algorithms we support at the moment are [`bcrypt`](https://en.wikipedia.org/wiki/Bcrypt), [`bcrypt_sha256_django`](https://docs.djangoproject.com/en/4.0/topics/auth/passwords/), [`md5`](https://en.wikipedia.org/wiki/MD5), `pbkdf2_sha1`, `pbkdf2_sha256`, [`pbkdf2_sha256_django`](https://docs.djangoproject.com/en/4.0/topics/auth/passwords/), [`phpass`](https://www.openwall.com/phpass/), [`scrypt_firebase`](https://firebaseopensource.com/projects/firebase/scrypt/), [`scrypt_werkzeug`](https://werkzeug.palletsprojects.com/en/3.0.x/utils/#werkzeug.security.generate_password_hash), [`sha256`](https://en.wikipedia.org/wiki/SHA-2), and the [`argon2`](https://argon2.online/) variants: `argon2i` and `argon2id`.  Each of the supported hashers expects the incoming digest to be in a particular format. See the [Clerk docs](https://clerk.com/docs/references/backend/user/create-user) for more information.
+        :param skip_password_checks: When set to `true` all password checks are skipped. It is recommended to use this method only when migrating plaintext passwords to Clerk. Upon migration the user base should be prompted to pick stronger password.
+        :param skip_password_requirement: When set to `true`, `password` is not required anymore when creating the user and can be omitted. This is useful when you are trying to create a user that doesn't have a password, in an instance that is using passwords. Please note that you cannot use this flag if password is the only way for a user to sign into your instance.
+        :param totp_secret: In case TOTP is configured on the instance, you can provide the secret to enable it on the newly created user without the need to reset it. Please note that currently the supported options are: * Period: 30 seconds * Code length: 6 digits * Algorithm: SHA1
+        :param backup_codes: If Backup Codes are configured on the instance, you can provide them to enable it on the newly created user without the need to reset them. You must provide the backup codes in plain format or the corresponding bcrypt digest.
+        :param public_metadata: Metadata saved on the user, that is visible to both your Frontend and Backend APIs
+        :param private_metadata: Metadata saved on the user, that is only visible to your Backend API
+        :param unsafe_metadata: Metadata saved on the user, that can be updated from both the Frontend and Backend APIs. Note: Since this data can be modified from the frontend, it is not guaranteed to be safe.
+        :param delete_self_enabled: If enabled, user can delete themselves via FAPI.
+        :param legal_accepted_at: A custom timestamp denoting _when_ the user accepted legal requirements, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`).
+        :param skip_legal_checks: When set to `true` all legal checks are skipped. It is not recommended to skip legal checks unless you are migrating a user to Clerk.
+        :param create_organization_enabled: If enabled, user can create organizations via FAPI.
+        :param create_organizations_limit: The maximum number of organizations the user can create. 0 means unlimited.
+        :param created_at: A custom date/time denoting _when_ the user signed up to the application, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`).
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -364,9 +470,31 @@ class Users(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        if not isinstance(request, BaseModel):
-            request = utils.unmarshal(request, models.CreateUserRequestBody)
-        request = cast(models.CreateUserRequestBody, request)
+        request = models.CreateUserRequestBody(
+            external_id=external_id,
+            first_name=first_name,
+            last_name=last_name,
+            email_address=email_address,
+            phone_number=phone_number,
+            web3_wallet=web3_wallet,
+            username=username,
+            password=password,
+            password_digest=password_digest,
+            password_hasher=password_hasher,
+            skip_password_checks=skip_password_checks,
+            skip_password_requirement=skip_password_requirement,
+            totp_secret=totp_secret,
+            backup_codes=backup_codes,
+            public_metadata=public_metadata,
+            private_metadata=private_metadata,
+            unsafe_metadata=unsafe_metadata,
+            delete_self_enabled=delete_self_enabled,
+            legal_accepted_at=legal_accepted_at,
+            skip_legal_checks=skip_legal_checks,
+            create_organization_enabled=create_organization_enabled,
+            create_organizations_limit=create_organizations_limit,
+            created_at=created_at,
+        )
 
         req = self._build_request_async(
             method="POST",
@@ -382,7 +510,7 @@ class Users(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request, False, True, "json", Optional[models.CreateUserRequestBody]
+                request, False, False, "json", models.CreateUserRequestBody
             ),
             timeout_ms=timeout_ms,
         )

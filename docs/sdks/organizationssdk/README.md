@@ -35,7 +35,7 @@ with Clerk(
         "clerk",
     ], organization_id=[
         "-name",
-    ])
+    ], order_by="-created_at", limit=20, offset=10)
 
     assert res is not None
 
@@ -339,7 +339,6 @@ with Clerk(
     res = clerk.organizations.upload_logo(organization_id="org_12345", file={
         "file_name": "example.file",
         "content": open("example.file", "rb"),
-        "content_type": "<value>",
     }, uploader_user_id="user_67890")
 
     assert res is not None
