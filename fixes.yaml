@@ -1,0 +1,9 @@
+overlay: 1.0.0
+info:
+  title: Overlay File for specification fixes
+  version: 0.0.1
+extends: file://clerk.yaml
+actions:
+  - target: $["components"]["schemas"]["OrganizationMembership"]["properties"]["permissions"]
+    update:
+      nullable: true
