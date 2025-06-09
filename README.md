@@ -465,7 +465,6 @@ with Clerk(
     res = clerk.users.set_profile_image(user_id="usr_test123", file={
         "file_name": "example.file",
         "content": open("example.file", "rb"),
-        "content_type": "<value>",
     })
 
     assert res is not None

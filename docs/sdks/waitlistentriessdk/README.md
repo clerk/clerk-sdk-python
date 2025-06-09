@@ -25,7 +25,7 @@ with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 ) as clerk:
 
-    res = clerk.waitlist_entries.list(query="<value>", status=clerk_backend_api.ListWaitlistEntriesQueryParamStatus.INVITED)
+    res = clerk.waitlist_entries.list(limit=20, offset=10, query="<value>", status=clerk_backend_api.ListWaitlistEntriesQueryParamStatus.INVITED, order_by="-created_at")
 
     assert res is not None
 

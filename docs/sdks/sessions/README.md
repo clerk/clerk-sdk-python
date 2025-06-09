@@ -32,7 +32,7 @@ with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 ) as clerk:
 
-    res = clerk.sessions.list(client_id="client_123", user_id="user_456", status=clerk_backend_api.QueryParamStatus.ACTIVE, paginated=True)
+    res = clerk.sessions.list(client_id="client_123", user_id="user_456", status=clerk_backend_api.QueryParamStatus.ACTIVE, paginated=True, limit=20, offset=10)
 
     assert res is not None
 
@@ -159,6 +159,7 @@ are validation errors, which signals the SDKs to fallback to the handshake flow.
 ### Example Usage
 
 ```python
+import clerk_backend_api
 from clerk_backend_api import Clerk
 
 
@@ -170,7 +171,7 @@ with Clerk(
         "key": "<value>",
         "key1": "<value>",
         "key2": "<value>",
-    }, request_originating_ip="<value>")
+    }, format_=clerk_backend_api.Format.TOKEN, request_originating_ip="<value>")
 
     assert res is not None
 

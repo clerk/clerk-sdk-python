@@ -77,7 +77,7 @@ with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 ) as clerk:
 
-    res = clerk.invitations.list(status=clerk_backend_api.ListInvitationsQueryParamStatus.ACCEPTED, query="<value>", order_by="pending", paginated=False)
+    res = clerk.invitations.list(status=clerk_backend_api.ListInvitationsQueryParamStatus.ACCEPTED, query="<value>", order_by="pending", paginated=False, limit=20, offset=10)
 
     assert res is not None
 

@@ -28,7 +28,7 @@ with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 ) as clerk:
 
-    res = clerk.email_sms_templates.list(template_type=clerk_backend_api.TemplateType.EMAIL, paginated=True)
+    res = clerk.email_sms_templates.list(template_type=clerk_backend_api.TemplateType.EMAIL, paginated=True, limit=20, offset=10)
 
     assert res is not None
 
