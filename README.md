@@ -206,6 +206,27 @@ def is_signed_in(request: httpx.Request):
 
 If the request is correctly authenticated, the token's payload is made available in `request_state.payload`. Otherwise the reason for the token verification failure is given by `request_state.reason`.
 
+### Authenticating Machine Tokens
+
+If you need to authenticate a machine token rather than a session token, this can be done using the `accepts_token` param as such:
+
+```python
+import os
+import httpx
+from clerk_backend_api import Clerk
+from clerk_backend_api.jwks_helpers import authenticate_request, AuthenticateRequestOptions
+
+def verify_machine_token(request: httpx.Request):
+    sdk = Clerk(bearer_auth=os.getenv('CLERK_SECRET_KEY'))
+    request_state = sdk.authenticate_request(
+        request,
+        AuthenticateRequestOptions(
+            accepts_token=['oauth_token']  # Only accepts oauth access tokens
+        )
+    )
+    return request_state.is_signed_in
+```
+
 <!-- Start Available Resources and Operations [operations] -->
 ## Available Resources and Operations
 
