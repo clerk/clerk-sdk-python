@@ -1,3 +1,4 @@
+from abc import ABC
 from dataclasses import dataclass, field
 from enum import Enum
 from typing import Any, Dict, List, Union, Optional, Protocol, Mapping
@@ -76,6 +77,18 @@ class TokenVerificationErrorReason(Enum):
     )
 
 
+class TokenType(Enum):
+    SESSION_TOKEN = 'session_token'
+    API_KEY = 'api_key'
+    MACHINE_TOKEN = 'machine_token'
+    OAUTH_TOKEN = 'oauth_token'
+
+class TokenPrefix(Enum):
+    API_KEY_PREFIX = 'ak_'
+    OAUTH_TOKEN_PREFIX = 'oat_'
+    MACHINE_TOKEN_PREFIX = 'm2m_'
+
+
 class TokenVerificationError(Exception):
     """Exception raised when token verification fails"""
 
@@ -136,10 +149,66 @@ class AuthErrorReason(Enum):
 
 
 class AuthStatus(Enum):
-    """Authentication Status"""
-
     SIGNED_IN = 'signed-in'
     SIGNED_OUT = 'signed-out'
+
+class AuthObject(ABC):
+    pass
+
+@dataclass
+class SessionAuthObjectV2(AuthObject):
+    exp: int
+    iat: int
+    iss: str
+    sid: str
+    sub: str
+    v: int
+    jti: Optional[str] = None
+    role: Optional[str] = None
+    fva: Optional[list[int]] = None
+    nbf: Optional[int] = None
+    email: Optional[str] = None
+    azp: Optional[str] = None
+
+
+@dataclass
+class SessionAuthObjectV1(AuthObject):
+    session_id: str
+    user_id: str
+    org_id: Optional[str] = None
+    org_role: Optional[str] = None
+    org_permissions: Optional[List[str]] = None
+    factor_verification_age: Optional[List[int]] = None
+    claims: Optional[Dict[str, Any]] = None
+
+@dataclass
+class OAuthMachineAuthObject(AuthObject):
+    token_type: TokenType = TokenType.OAUTH_TOKEN
+    id: Optional[str] = None
+    user_id: Optional[str] = None
+    client_id: Optional[str] = None
+    name: Optional[str] = None
+    scopes: Optional[List[str]] = None
+
+@dataclass
+class APIKeyMachineAuthObject(AuthObject):
+    token_type: TokenType = TokenType.API_KEY
+    id: Optional[str] = None
+    user_id: Optional[str] = None
+    org_id: Optional[str] = None
+    name: Optional[str] = None
+    scopes: Optional[List[str]] = None
+    claims: Optional[Dict[str, Any]] = None
+
+@dataclass
+class M2MMachineAuthObject(AuthObject):
+    token_type: TokenType = TokenType.MACHINE_TOKEN
+    id: Optional[str] = None
+    machine_id: Optional[str] = None
+    client_id: Optional[str] = None
+    name: Optional[str] = None
+    scopes: Optional[List[str]] = None
+    claims: Optional[Dict[str, Any]] = None
 
 
 @dataclass
@@ -151,6 +220,11 @@ class RequestState:
     token: Optional[str] = None
     payload: Optional[Dict[str, Any]] = None
 
+
+    @property
+    def is_authenticated(self) -> bool:
+        return self.status == AuthStatus.SIGNED_IN
+
     @property
     def is_signed_in(self) -> bool:
         return self.status == AuthStatus.SIGNED_IN
@@ -160,6 +234,65 @@ class RequestState:
         if self.reason is None:
             return None
         return self.reason.value[1]
+
+    def to_auth(self) -> AuthObject:
+        from clerk_backend_api.security.machine import get_token_type
+        if self.status == AuthStatus.SIGNED_IN:
+            if self.payload is None:
+                raise ValueError("Payload must be provided for authenticated states.")
+            token_type = get_token_type(self.token)
+            if token_type == TokenType.SESSION_TOKEN:
+                if self.payload.get('v') == 2:
+                    return SessionAuthObjectV2(
+                        azp=self.payload.get('azp'),
+                        email=self.payload.get('email'),
+                        exp=self.payload.get('exp'),
+                        fva=self.payload.get('fva'),
+                        iat=self.payload.get('iat'),
+                        iss=self.payload.get('iss'),
+                        jti=self.payload.get('jti'),
+                        nbf=self.payload.get('nbf'),
+                        role=self.payload.get('role'),
+                        sid=self.payload.get('sid'),
+                        sub=self.payload.get('sub'),
+                        v=self.payload.get('v')
+                    )
+
+                return SessionAuthObjectV1(
+                    session_id=self.payload.get('sid'),
+                    user_id=self.payload.get('sub'),
+                    org_id=self.payload.get('org_id'),
+                    org_role=self.payload.get('org_role'),
+                    org_permissions=self.payload.get('org_permissions'),
+                    factor_verification_age=self.payload.get('fva'),
+                    claims=self.payload,
+                )
+            elif token_type == TokenType.OAUTH_TOKEN:
+                return OAuthMachineAuthObject(id=self.payload.get('id'),
+                                              user_id=self.payload.get('subject'),
+                                              client_id=self.payload.get('client_id'),
+                                              name=self.payload.get('name'),
+                                              scopes=self.payload.get('scopes'))
+            elif token_type == TokenType.API_KEY:
+                return APIKeyMachineAuthObject(id=self.payload.get('id'),
+                                                user_id=self.payload.get('subject'),
+                                                org_id=self.payload.get('org_id'),
+                                                name=self.payload.get('name'),
+                                                scopes=self.payload.get('scopes'),
+                                                claims=self.payload.get('claims'))
+            elif token_type == TokenType.MACHINE_TOKEN:
+                return M2MMachineAuthObject(id=self.payload.get('id'),
+                                     machine_id=self.payload.get('subject'),
+                                     client_id=self.payload.get('client_id'),
+                                     name=self.payload.get('name'),
+                                     scopes=self.payload.get('scopes'),
+                                     claims=self.payload.get('claims'))
+
+            else:
+                raise ValueError(f"Unsupported token type: {self.token_type}")
+        else :
+            raise ValueError("Cannot convert to AuthObject in unauthenticated state.")
+
 
 
 @dataclass
@@ -183,13 +316,3 @@ class AuthenticateRequestOptions:
     clock_skew_in_ms: int = 5000
     accepts_token: List[str] = field(default_factory=lambda: ['any'])
 
-class TokenType(Enum):
-    SESSION_TOKEN = 'session_token'
-    API_KEY = 'api_key'
-    MACHINE_TOKEN = 'machine_token'
-    OAUTH_TOKEN = 'oauth_token'
-
-class TokenPrefix(Enum):
-    API_KEY_PREFIX = 'ak_'
-    OAUTH_TOKEN_PREFIX = 'oat_'
-    MACHINE_TOKEN_PREFIX = 'mt_'
