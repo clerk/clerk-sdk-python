@@ -156,12 +156,12 @@ class AuthObject(ABC):
 
 @dataclass
 class SessionAuthObjectV2(AuthObject):
-    exp: int
-    iat: int
-    iss: str
-    sid: str
-    sub: str
-    v: int
+    exp: Optional[int] = None
+    iat: Optional[int] = None
+    iss: Optional[str] = None
+    sid: Optional[str] = None
+    sub: Optional[str] = None
+    v: Optional[int] = None
     jti: Optional[str] = None
     role: Optional[str] = None
     fva: Optional[list[int]] = None
@@ -172,8 +172,8 @@ class SessionAuthObjectV2(AuthObject):
 
 @dataclass
 class SessionAuthObjectV1(AuthObject):
-    session_id: str
-    user_id: str
+    session_id: Optional[str] = None
+    user_id: Optional[str] = None
     org_id: Optional[str] = None
     org_role: Optional[str] = None
     org_permissions: Optional[List[str]] = None
@@ -239,6 +239,8 @@ class RequestState:
         if self.status == AuthStatus.SIGNED_IN:
             if self.payload is None:
                 raise ValueError("Payload must be provided for authenticated states.")
+            if self.token is None:
+                raise ValueError("Token must be provided for authenticated states.")
             token_type = get_token_type(self.token)
             if token_type == TokenType.SESSION_TOKEN:
                 if self.payload.get('v') == 2:
