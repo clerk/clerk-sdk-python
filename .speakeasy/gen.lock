@@ -5,8 +5,8 @@ management:
   docVersion: "2025-03-12"
   speakeasyVersion: 1.558.0
   generationVersion: 2.623.2
-  releaseVersion: 3.0.3
-  configChecksum: a1fc8a1a970474b0e9bd06b2727c69c6
+  releaseVersion: 3.0.5
+  configChecksum: b2beb70406e86c699ba3f0800fe50403
   repoURL: https://github.com/clerk/clerk-sdk-python.git
   installationURL: https://github.com/clerk/clerk-sdk-python.git
   published: true
@@ -948,6 +948,19 @@ examples:
           application/json: [{"id": "temp_12345", "object": "template", "instance_id": "inst_67890", "resource_type": "system", "template_type": "email", "name": "Welcome Email", "slug": "welcome_email", "position": 1, "can_revert": false, "can_delete": true, "can_toggle": true, "subject": "Welcome to our service!", "markup": "<p>Hello, {{ user.name }}</p>", "body": "You are now signed up. Welcome!", "available_variables": ["user.name", "user.email"], "required_variables": ["user.name"], "from_email_name": "Clerk Support", "reply_to_email_name": "support@clerk.com", "delivered_by_clerk": true, "enabled": true, "updated_at": 1610000000, "created_at": 1600000000}, {"id": "temp_12345", "object": "template", "instance_id": "inst_67890", "resource_type": "system", "template_type": "email", "name": "Welcome Email", "slug": "welcome_email", "position": 1, "can_revert": false, "can_delete": true, "can_toggle": true, "subject": "Welcome to our service!", "markup": "<p>Hello, {{ user.name }}</p>", "body": "You are now signed up. Welcome!", "available_variables": ["user.name", "user.email"], "required_variables": ["user.name"], "from_email_name": "Clerk Support", "reply_to_email_name": "support@clerk.com", "delivered_by_clerk": true, "enabled": true, "updated_at": 1610000000, "created_at": 1600000000}, {"id": "temp_12345", "object": "template", "instance_id": "inst_67890", "resource_type": "system", "template_type": "email", "name": "Welcome Email", "slug": "welcome_email", "position": 1, "can_revert": false, "can_delete": true, "can_toggle": true, "subject": "Welcome to our service!", "markup": "<p>Hello, {{ user.name }}</p>", "body": "You are now signed up. Welcome!", "available_variables": ["user.name", "user.email"], "required_variables": ["user.name"], "from_email_name": "Clerk Support", "reply_to_email_name": "support@clerk.com", "delivered_by_clerk": true, "enabled": true, "updated_at": 1610000000, "created_at": 1600000000}]
         "400":
           application/json: {"errors": [{"message": "Invalid input", "long_message": "The input provided does not meet the requirements.", "code": "400_bad_request", "meta": {}, "clerk_trace_id": "trace_123456789abcd"}], "meta": {}}
+    speakeasy-default-get-template-list:
+      parameters:
+        path:
+          template_type: "email"
+        query:
+          paginated: true
+          limit: 20
+          offset: 10
+      responses:
+        "200":
+          application/json: [{"id": "temp_12345", "object": "template", "instance_id": "inst_67890", "resource_type": "system", "template_type": "email", "name": "Welcome Email", "slug": "welcome_email", "position": 1, "can_revert": false, "can_delete": true, "can_toggle": false, "subject": "Welcome to our service!", "markup": "<p>Hello, {{ user.name }}</p>", "body": "You are now signed up. Welcome!", "available_variables": ["user.name", "user.email"], "required_variables": ["user.name"], "from_email_name": "Clerk Support", "reply_to_email_name": "support@clerk.com", "delivered_by_clerk": true, "enabled": true, "updated_at": 1610000000, "created_at": 1600000000}]
+        "400":
+          application/json: {"errors": [{"message": "Invalid input", "long_message": "The input provided does not meet the requirements.", "code": "400_bad_request", "meta": {}, "clerk_trace_id": "trace_123456789abcd"}], "meta": {}}
   GetTemplate:
     speakeasy-default-get-template:
       parameters:
@@ -1039,6 +1052,34 @@ examples:
           application/json: [{"id": "user_id_123", "object": "user", "external_id": "external_user_id_123", "primary_email_address_id": "email_id_123", "primary_phone_number_id": "phone_id_123", "primary_web3_wallet_id": "wallet_id_123", "username": "john_doe", "first_name": "John", "last_name": "Doe", "image_url": "https://example.com/new-profile.jpg", "has_image": true, "public_metadata": {"role": "admin"}, "private_metadata": {"ssn": "123-45-6789"}, "unsafe_metadata": {"theme": "dark"}, "email_addresses": [{"id": "email_id_123", "object": "email_address", "email_address": "john.doe@example.com", "reserved": false, "verification": {"status": "verified", "strategy": "ticket", "attempts": null, "expire_at": null, "verified_at_client": "<value>"}, "linked_to": [{"type": "oauth_google", "id": "link_12345"}], "matches_sso_connection": false, "created_at": 1609459200, "updated_at": 1609459200}], "phone_numbers": [{"id": "phone_id_123", "object": "phone_number", "phone_number": "+12345678901", "reserved_for_second_factor": false, "default_second_factor": true, "reserved": false, "verification": {"status": "verified", "strategy": "admin", "attempts": 2, "expire_at": 1622852400, "verified_at_client": "<value>"}, "linked_to": [{"type": "oauth_google", "id": "link_id_123"}], "backup_codes": ["code1", "code2", "code3"], "created_at": 1609459200, "updated_at": 1609459200}], "web3_wallets": [{"id": "wallet_id_123", "object": "web3_wallet", "web3_wallet": "0x123456789abcdef", "verification": {"status": "verified", "strategy": "web3_metamask_signature", "nonce": "nonce_value", "message": "<value>", "attempts": null, "expire_at": null, "verified_at_client": "<value>"}, "created_at": 1609459200, "updated_at": 1609459200}], "passkeys": [{"id": "passkey_id_123", "object": "passkey", "name": "My Passkey", "last_used_at": 1615852800, "verification": {"status": "verified", "strategy": "passkey", "nonce": "nonce", "message": "<value>", "attempts": null, "expire_at": null, "verified_at_client": "<value>"}}], "password_enabled": true, "two_factor_enabled": true, "totp_enabled": true, "backup_code_enabled": true, "mfa_enabled_at": 1615852800, "mfa_disabled_at": null, "external_accounts": [{"object": "facebook_account", "id": "ext_account_id_123", "provider": "Facebook", "identification_id": "<id>", "provider_user_id": "<id>", "approved_scopes": "<value>", "email_address": "Kenna_Schneider62@hotmail.com", "first_name": "Linnea", "last_name": "Herzog", "image_url": "https://pushy-mythology.name", "username": "Anabel_Dach20", "public_metadata": {"key": "<value>"}, "label": "<value>", "created_at": 761414, "updated_at": 331920, "verification": {"status": "verified", "strategy": "oauth_google", "external_verification_redirect_url": "https://oauth.google.com/verify", "error": null, "expire_at": 1615462399, "attempts": 1, "verified_at_client": "<value>"}, "user_id": "user_id_at_provider"}], "saml_accounts": [{"id": "saml_account_id_123", "object": "saml_account", "provider": "SAML Provider", "active": true, "email_address": "user@example.com", "first_name": "John", "last_name": "Doe", "provider_user_id": "prov_user_id_123", "public_metadata": {"department": "IT"}, "verification": {"status": "verified", "strategy": "saml", "external_verification_redirect_url": "https://example.com/saml_callback", "error": null, "expire_at": 1622852400, "attempts": null, "verified_at_client": "<value>"}, "saml_connection": {"id": "sc_1234567890", "name": "My Company SAML Config", "domain": "mycompany.com", "active": true, "provider": "saml_custom", "sync_user_attributes": true, "allow_subdomains": false, "allow_idp_initiated": true, "disable_additional_identifications": false, "created_at": 1614768000, "updated_at": 1622540800}}], "last_sign_in_at": 1622852400, "banned": false, "locked": false, "lockout_expires_in_seconds": null, "verification_attempts_remaining": 5, "updated_at": 1622852400, "created_at": 1609459200, "delete_self_enabled": true, "create_organization_enabled": true, "create_organizations_limit": 422834, "last_active_at": 1700690400000, "legal_accepted_at": 1700690400000}, {"id": "user_id_123", "object": "user", "external_id": "external_user_id_123", "primary_email_address_id": "email_id_123", "primary_phone_number_id": "phone_id_123", "primary_web3_wallet_id": "wallet_id_123", "username": "john_doe", "first_name": "John", "last_name": "Doe", "image_url": "https://example.com/new-profile.jpg", "has_image": true, "public_metadata": {"role": "admin"}, "private_metadata": {"ssn": "123-45-6789"}, "unsafe_metadata": {"theme": "dark"}, "email_addresses": [{"id": "email_id_123", "object": "email_address", "email_address": "john.doe@example.com", "reserved": false, "verification": {"status": "verified", "strategy": "ticket", "attempts": null, "expire_at": null, "verified_at_client": "<value>"}, "linked_to": [{"type": "oauth_google", "id": "link_12345"}], "matches_sso_connection": false, "created_at": 1609459200, "updated_at": 1609459200}], "phone_numbers": [{"id": "phone_id_123", "object": "phone_number", "phone_number": "+12345678901", "reserved_for_second_factor": false, "default_second_factor": true, "reserved": false, "verification": {"status": "verified", "strategy": "admin", "attempts": 2, "expire_at": 1622852400, "verified_at_client": "<value>"}, "linked_to": [{"type": "oauth_google", "id": "link_id_123"}], "backup_codes": ["code1", "code2", "code3"], "created_at": 1609459200, "updated_at": 1609459200}], "web3_wallets": [{"id": "wallet_id_123", "object": "web3_wallet", "web3_wallet": "0x123456789abcdef", "verification": {"status": "verified", "strategy": "web3_metamask_signature", "nonce": "nonce_value", "message": "<value>", "attempts": null, "expire_at": null, "verified_at_client": "<value>"}, "created_at": 1609459200, "updated_at": 1609459200}], "passkeys": [{"id": "passkey_id_123", "object": "passkey", "name": "My Passkey", "last_used_at": 1615852800, "verification": {"status": "verified", "strategy": "passkey", "nonce": "nonce", "message": "<value>", "attempts": null, "expire_at": null, "verified_at_client": "<value>"}}], "password_enabled": true, "two_factor_enabled": true, "totp_enabled": true, "backup_code_enabled": true, "mfa_enabled_at": 1615852800, "mfa_disabled_at": null, "external_accounts": [{"object": "facebook_account", "id": "ext_account_id_123", "provider": "Facebook", "identification_id": "<id>", "provider_user_id": "<id>", "approved_scopes": "<value>", "email_address": "Kenna_Schneider62@hotmail.com", "first_name": "Linnea", "last_name": "Herzog", "image_url": "https://pushy-mythology.name", "username": "Anabel_Dach20", "public_metadata": {"key": "<value>"}, "label": "<value>", "created_at": 761414, "updated_at": 331920, "verification": {"status": "verified", "strategy": "oauth_google", "external_verification_redirect_url": "https://oauth.google.com/verify", "error": null, "expire_at": 1615462399, "attempts": 1, "verified_at_client": "<value>"}, "user_id": "user_id_at_provider"}], "saml_accounts": [{"id": "saml_account_id_123", "object": "saml_account", "provider": "SAML Provider", "active": true, "email_address": "user@example.com", "first_name": "John", "last_name": "Doe", "provider_user_id": "prov_user_id_123", "public_metadata": {"department": "IT"}, "verification": {"status": "verified", "strategy": "saml", "external_verification_redirect_url": "https://example.com/saml_callback", "error": null, "expire_at": 1622852400, "attempts": null, "verified_at_client": "<value>"}, "saml_connection": {"id": "sc_1234567890", "name": "My Company SAML Config", "domain": "mycompany.com", "active": true, "provider": "saml_custom", "sync_user_attributes": true, "allow_subdomains": false, "allow_idp_initiated": true, "disable_additional_identifications": false, "created_at": 1614768000, "updated_at": 1622540800}}], "last_sign_in_at": 1622852400, "banned": false, "locked": false, "lockout_expires_in_seconds": null, "verification_attempts_remaining": 5, "updated_at": 1622852400, "created_at": 1609459200, "delete_self_enabled": true, "create_organization_enabled": true, "create_organizations_limit": 422834, "last_active_at": 1700690400000, "legal_accepted_at": 1700690400000}]
         "400":
           application/json: {"errors": [{"message": "Invalid input", "long_message": "The input provided does not meet the requirements.", "code": "400_bad_request", "meta": {}, "clerk_trace_id": "trace_123456789abcd"}], "meta": {}}
+    speakeasy-default-get-user-list:
+      parameters:
+        query:
+          email_address: ["test@example.com"]
+          phone_number: ["+12345678901"]
+          external_id: ["external-id-123"]
+          username: ["user123"]
+          web3_wallet: ["0x123456789abcdef0x123456789abcdef"]
+          user_id: ["user-id-123"]
+          organization_id: ["org-id-123"]
+          query: "John"
+          email_address_query: "<value>"
+          phone_number_query: "<value>"
+          username_query: "<value>"
+          name_query: "<value>"
+          banned: true
+          last_active_at_before: 1700690400000
+          last_active_at_after: 1700690400000
+          created_at_before: 1730160000000
+          created_at_after: 1730160000000
+          limit: 20
+          offset: 10
+          order_by: "-created_at"
+      responses:
+        "200":
+          application/json: [{"id": "user_id_123", "object": "user", "external_id": "external_user_id_123", "primary_email_address_id": "email_id_123", "primary_phone_number_id": "phone_id_123", "primary_web3_wallet_id": "wallet_id_123", "username": "john_doe", "first_name": "John", "last_name": "Doe", "image_url": "https://example.com/new-profile.jpg", "has_image": true, "public_metadata": {"role": "admin"}, "private_metadata": {"ssn": "123-45-6789"}, "unsafe_metadata": {"theme": "dark"}, "email_addresses": [{"id": "email_id_123", "object": "email_address", "email_address": "john.doe@example.com", "reserved": false, "verification": {"status": "verified", "strategy": "admin", "attempts": 0, "expire_at": 1620000000, "verified_at_client": "<value>"}, "linked_to": [{"type": "oauth_google", "id": "link_12345"}], "matches_sso_connection": false, "created_at": 1609459200, "updated_at": 1609459200}], "phone_numbers": [{"id": "phone_id_123", "object": "phone_number", "phone_number": "+12345678901", "reserved_for_second_factor": false, "default_second_factor": true, "reserved": false, "verification": {"status": "verified", "strategy": "admin", "attempts": 2, "expire_at": 1622852400, "verified_at_client": "<value>"}, "linked_to": [{"type": "oauth_google", "id": "link_id_123"}], "backup_codes": ["code1", "code2", "code3"], "created_at": 1609459200, "updated_at": 1609459200}], "web3_wallets": [{"id": "wallet_id_123", "object": "web3_wallet", "web3_wallet": "0x123456789abcdef", "verification": {"status": "verified", "strategy": "web3_metamask_signature", "nonce": "nonce_value", "message": null, "attempts": null, "expire_at": null, "verified_at_client": "<value>"}, "created_at": 1609459200, "updated_at": 1609459200}], "passkeys": [{"id": "passkey_id_123", "object": "passkey", "name": "My Passkey", "last_used_at": 1615852800, "verification": {"status": "verified", "strategy": "passkey", "nonce": "nonce", "message": "<value>", "attempts": null, "expire_at": null, "verified_at_client": "<value>"}}], "password_enabled": true, "two_factor_enabled": true, "totp_enabled": true, "backup_code_enabled": true, "mfa_enabled_at": 1615852800, "mfa_disabled_at": null, "external_accounts": [{"object": "external_account", "id": "ext_account_id_123", "provider": "Facebook", "identification_id": "<id>", "provider_user_id": "<id>", "approved_scopes": "<value>", "email_address": "Timothy_Armstrong@yahoo.com", "first_name": "Amya", "last_name": "Nicolas", "image_url": "https://sore-patroller.name", "username": "Thurman.Smith90", "public_metadata": {}, "label": "<value>", "created_at": 470136, "updated_at": 761414, "verification": {"status": "unverified", "strategy": "google_one_tap", "expire_at": 101458, "attempts": 827691, "verified_at_client": "<value>", "error": {"message": "Error message", "long_message": "Longer error message with more details", "code": "error_code", "meta": {}, "clerk_trace_id": "trace_id"}}, "user_id": "user_id_at_provider"}], "saml_accounts": [{"id": "saml_account_id_123", "object": "saml_account", "provider": "SAML Provider", "active": true, "email_address": "user@example.com", "first_name": "John", "last_name": "Doe", "provider_user_id": "prov_user_id_123", "public_metadata": {"department": "IT"}, "verification": {"status": "verified", "strategy": "saml", "external_verification_redirect_url": "https://example.com/saml_callback", "error": null, "expire_at": 1622852400, "attempts": null, "verified_at_client": "<value>"}, "saml_connection": null}], "last_sign_in_at": 1622852400, "banned": false, "locked": false, "lockout_expires_in_seconds": null, "verification_attempts_remaining": 5, "updated_at": 1622852400, "created_at": 1609459200, "delete_self_enabled": true, "create_organization_enabled": true, "create_organizations_limit": 908237, "last_active_at": 1700690400000, "legal_accepted_at": 1700690400000}]
+        "400":
+          application/json: {"errors": [{"message": "Invalid input", "long_message": "The input provided does not meet the requirements.", "code": "400_bad_request", "meta": {}, "clerk_trace_id": "trace_123456789abcd"}], "meta": {}}
   CreateUser:
     speakeasy-default-create-user:
       requestBody:
@@ -1068,6 +1109,31 @@ examples:
           last_active_at_before: 1700690400000
           last_active_at_after: 1700690400000
           last_active_at_since: 1700690400000
+          created_at_before: 1730160000000
+          created_at_after: 1730160000000
+      responses:
+        "200":
+          application/json: {"object": "total_count", "total_count": 100}
+        "422":
+          application/json: {"errors": [{"message": "Invalid input", "long_message": "The input provided does not meet the requirements.", "code": "400_bad_request", "meta": {}, "clerk_trace_id": "trace_123456789abcd"}], "meta": {}}
+    speakeasy-default-get-users-count:
+      parameters:
+        query:
+          email_address: ["user@example.com"]
+          phone_number: ["+1234567890"]
+          external_id: ["external-id-123"]
+          username: ["username123"]
+          web3_wallet: ["0x123456789abcdef"]
+          user_id: ["user-id-123"]
+          organization_id: ["John Doe"]
+          query: "<value>"
+          email_address_query: "<value>"
+          phone_number_query: "<value>"
+          username_query: "<value>"
+          name_query: "<value>"
+          banned: true
+          last_active_at_before: 1700690400000
+          last_active_at_after: 1700690400000
           created_at_before: 1730160000000
           created_at_after: 1730160000000
       responses:
@@ -1433,6 +1499,18 @@ examples:
           application/json: {"errors": [{"message": "Invalid input", "long_message": "The input provided does not meet the requirements.", "code": "400_bad_request", "meta": {}, "clerk_trace_id": "trace_123456789abcd"}], "meta": {}}
   ListPendingOrganizationInvitations:
     "":
+      parameters:
+        path:
+          organization_id: "org_12345"
+        query:
+          limit: 20
+          offset: 10
+      responses:
+        "200":
+          application/json: {"data": [{"object": "organization_invitation", "id": "inv_12345", "email_address": "user@example.com", "role": "member", "role_name": "<value>", "organization_id": "org_12345", "status": "pending", "public_metadata": {"key": "value"}, "private_metadata": {"private_key": "secret_value"}, "url": "https://junior-tribe.com", "expires_at": 713465, "created_at": 1617981379, "updated_at": 1625581379}], "total_count": 10}
+        "400":
+          application/json: {"errors": [{"message": "Invalid input", "long_message": "The input provided does not meet the requirements.", "code": "400_bad_request", "meta": {}, "clerk_trace_id": "trace_123456789abcd"}], "meta": {}}
+    speakeasy-default-list-pending-organization-invitations:
       parameters:
         path:
           organization_id: "org_12345"
@@ -1812,6 +1890,34 @@ examples:
           application/json: {"errors": [{"message": "Invalid input", "long_message": "The input provided does not meet the requirements.", "code": "400_bad_request", "meta": {}, "clerk_trace_id": "trace_123456789abcd"}], "meta": {}}
   ListOrganizationMemberships:
     "":
+      parameters:
+        path:
+          organization_id: "org_789"
+        query:
+          order_by: "<value>"
+          user_id: ["<id 1>"]
+          email_address: ["+created_at"]
+          phone_number: ["596.653.0471 x2778", "642.321.6837"]
+          username: ["Ramon7", "Gerard_Mayert86"]
+          web3_wallet: ["<value 1>"]
+          role: ["<value 1>"]
+          query: "<value>"
+          email_address_query: "<value>"
+          phone_number_query: "<value>"
+          username_query: "<value>"
+          name_query: "<value>"
+          last_active_at_before: 1700690400000
+          last_active_at_after: 1700690400000
+          created_at_before: 1730160000000
+          created_at_after: 1730160000000
+          limit: 20
+          offset: 10
+      responses:
+        "200":
+          application/json: {"data": [], "total_count": 1}
+        "401":
+          application/json: {"errors": [{"message": "Invalid input", "long_message": "The input provided does not meet the requirements.", "code": "400_bad_request", "meta": {}, "clerk_trace_id": "trace_123456789abcd"}], "meta": {}}
+    speakeasy-default-list-organization-memberships:
       parameters:
         path:
           organization_id: "org_789"
