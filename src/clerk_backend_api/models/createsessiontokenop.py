@@ -16,12 +16,12 @@ from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class CreateSessionTokenRequestBodyTypedDict(TypedDict):
-    expires_in_seconds: NotRequired[Nullable[float]]
+    expires_in_seconds: NotRequired[Nullable[int]]
     r"""Use this parameter to override the default session token lifetime."""
 
 
 class CreateSessionTokenRequestBody(BaseModel):
-    expires_in_seconds: OptionalNullable[float] = UNSET
+    expires_in_seconds: OptionalNullable[int] = UNSET
     r"""Use this parameter to override the default session token lifetime."""
 
     @model_serializer(mode="wrap")
