@@ -1,6 +1,5 @@
 from http.cookies import SimpleCookie
 from typing import Any, Dict, List, Optional
-from warnings import warn
 
 from .machine import is_machine_token, get_token_type
 from .types import Requestish, AuthenticateRequestOptions, RequestState, AuthStatus, AuthErrorReason
