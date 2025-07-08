@@ -3,7 +3,6 @@ from dataclasses import dataclass, field
 from enum import Enum
 from typing import Any, Dict, List, Union, Optional, Protocol, Mapping
 
-
 class TokenVerificationErrorReason(Enum):
 
     JWK_FAILED_TO_LOAD = (
@@ -236,7 +235,7 @@ class RequestState:
         return self.reason.value[1]
 
     def to_auth(self) -> AuthObject:
-        from clerk_backend_api.security.machine import get_token_type
+        from clerk_backend_api.security.machine import get_token_type #pylint: disable=C0415
         if self.status == AuthStatus.SIGNED_IN:
             if self.payload is None:
                 raise ValueError("Payload must be provided for authenticated states.")
@@ -267,20 +266,21 @@ class RequestState:
                     factor_verification_age=self.payload.get('fva'),
                     claims=self.payload,
                 )
-            elif token_type == TokenType.OAUTH_TOKEN:
+
+            if token_type == TokenType.OAUTH_TOKEN:
                 return OAuthMachineAuthObject(id=self.payload.get('id'),
                                               user_id=self.payload.get('subject'),
                                               client_id=self.payload.get('client_id'),
                                               name=self.payload.get('name'),
                                               scopes=self.payload.get('scopes'))
-            elif token_type == TokenType.API_KEY:
+            if token_type == TokenType.API_KEY:
                 return APIKeyMachineAuthObject(id=self.payload.get('id'),
                                                 user_id=self.payload.get('subject'),
                                                 org_id=self.payload.get('org_id'),
                                                 name=self.payload.get('name'),
                                                 scopes=self.payload.get('scopes'),
                                                 claims=self.payload.get('claims'))
-            elif token_type == TokenType.MACHINE_TOKEN:
+            if token_type == TokenType.MACHINE_TOKEN:
                 return M2MMachineAuthObject(id=self.payload.get('id'),
                                      machine_id=self.payload.get('subject'),
                                      client_id=self.payload.get('client_id'),
@@ -288,9 +288,8 @@ class RequestState:
                                      scopes=self.payload.get('scopes'),
                                      claims=self.payload.get('claims'))
 
-            else:
-                raise ValueError(f"Unsupported token type: {self.token_type}")
-        else :
+            raise ValueError(f"Unsupported token type: {token_type}")
+        else:
             raise ValueError("Cannot convert to AuthObject in unauthenticated state.")
 
 

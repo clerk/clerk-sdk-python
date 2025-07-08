@@ -1,6 +1,5 @@
 from http.cookies import SimpleCookie
 from typing import Any, Dict, List, Optional
-from warnings import warn
 
 from .machine import is_machine_token, get_token_type
 from .types import Requestish, AuthenticateRequestOptions, RequestState, AuthStatus, AuthErrorReason
@@ -57,8 +56,6 @@ def authenticate_request(request: Requestish, options: AuthenticateRequestOption
                     org_permissions.append(f"org:{feature}:{permissions[i]}")
 
         return org_permissions
-
-    warn('authenticate_request method is applicable in the context of Backend APIs only.')
 
     def get_session_token(request: Requestish) -> Optional[str]:
         """Retrieve token from __session cookie or Authorization header."""
