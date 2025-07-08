@@ -58,8 +58,6 @@ def authenticate_request(request: Requestish, options: AuthenticateRequestOption
 
         return org_permissions
 
-    warn('authenticate_request method is applicable in the context of Backend APIs only.')
-
     def get_session_token(request: Requestish) -> Optional[str]:
         """Retrieve token from __session cookie or Authorization header."""
 
