@@ -648,8 +648,8 @@ class JwtTemplates(BaseSDK):
         claims: Union[
             models.UpdateJWTTemplateClaims, models.UpdateJWTTemplateClaimsTypedDict
         ],
-        lifetime: OptionalNullable[float] = UNSET,
-        allowed_clock_skew: OptionalNullable[float] = UNSET,
+        lifetime: OptionalNullable[int] = UNSET,
+        allowed_clock_skew: OptionalNullable[int] = UNSET,
         custom_signing_key: Optional[bool] = None,
         signing_algorithm: OptionalNullable[str] = UNSET,
         signing_key: OptionalNullable[str] = UNSET,
@@ -780,8 +780,8 @@ class JwtTemplates(BaseSDK):
         claims: Union[
             models.UpdateJWTTemplateClaims, models.UpdateJWTTemplateClaimsTypedDict
         ],
-        lifetime: OptionalNullable[float] = UNSET,
-        allowed_clock_skew: OptionalNullable[float] = UNSET,
+        lifetime: OptionalNullable[int] = UNSET,
+        allowed_clock_skew: OptionalNullable[int] = UNSET,
         custom_signing_key: Optional[bool] = None,
         signing_algorithm: OptionalNullable[str] = UNSET,
         signing_key: OptionalNullable[str] = UNSET,

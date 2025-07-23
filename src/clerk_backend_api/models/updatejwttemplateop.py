@@ -27,9 +27,9 @@ class UpdateJWTTemplateRequestBodyTypedDict(TypedDict):
     r"""JWT template name"""
     claims: UpdateJWTTemplateClaimsTypedDict
     r"""JWT template claims in JSON format"""
-    lifetime: NotRequired[Nullable[float]]
+    lifetime: NotRequired[Nullable[int]]
     r"""JWT token lifetime"""
-    allowed_clock_skew: NotRequired[Nullable[float]]
+    allowed_clock_skew: NotRequired[Nullable[int]]
     r"""JWT token allowed clock skew"""
     custom_signing_key: NotRequired[bool]
     r"""Whether a custom signing key/algorithm is also provided for this template"""
@@ -46,10 +46,10 @@ class UpdateJWTTemplateRequestBody(BaseModel):
     claims: UpdateJWTTemplateClaims
     r"""JWT template claims in JSON format"""
 
-    lifetime: OptionalNullable[float] = UNSET
+    lifetime: OptionalNullable[int] = UNSET
     r"""JWT token lifetime"""
 
-    allowed_clock_skew: OptionalNullable[float] = UNSET
+    allowed_clock_skew: OptionalNullable[int] = UNSET
     r"""JWT token allowed clock skew"""
 
     custom_signing_key: Optional[bool] = None
