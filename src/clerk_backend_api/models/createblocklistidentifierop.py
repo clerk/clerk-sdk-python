@@ -8,12 +8,12 @@ from typing_extensions import TypedDict
 class CreateBlocklistIdentifierRequestBodyTypedDict(TypedDict):
     identifier: str
     r"""The identifier to be added in the block-list.
-    This can be an email address, a phone number or a web3 wallet.
+    This can be an email address, a phone number, or a web3 wallet.
     """
 
 
 class CreateBlocklistIdentifierRequestBody(BaseModel):
     identifier: str
     r"""The identifier to be added in the block-list.
-    This can be an email address, a phone number or a web3 wallet.
+    This can be an email address, a phone number, or a web3 wallet.
     """

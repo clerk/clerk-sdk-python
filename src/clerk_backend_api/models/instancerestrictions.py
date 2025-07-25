@@ -21,7 +21,6 @@ class InstanceRestrictionsTypedDict(TypedDict):
     blocklist: bool
     block_email_subaddresses: bool
     block_disposable_email_domains: bool
-    ignore_dots_for_gmail_addresses: bool
 
 
 class InstanceRestrictions(BaseModel):
@@ -37,5 +36,3 @@ class InstanceRestrictions(BaseModel):
     block_email_subaddresses: bool
 
     block_disposable_email_domains: bool
-
-    ignore_dots_for_gmail_addresses: bool

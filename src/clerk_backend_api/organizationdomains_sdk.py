@@ -4,7 +4,7 @@ from .basesdk import BaseSDK
 from clerk_backend_api import models, utils
 from clerk_backend_api._hooks import HookContext
 from clerk_backend_api.types import OptionalNullable, UNSET
-from typing import Any, Mapping, Optional
+from typing import Any, List, Mapping, Optional
 
 
 class OrganizationDomainsSDK(BaseSDK):
@@ -904,6 +904,258 @@ class OrganizationDomainsSDK(BaseSDK):
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[models.DeletedObject])
         if utils.match_response(http_res, ["400", "401", "404"], "application/json"):
+            response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=response_data)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+
+        content_type = http_res.headers.get("Content-Type")
+        http_res_text = await utils.stream_to_text_async(http_res)
+        raise models.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res_text,
+            http_res,
+        )
+
+    def list_all(
+        self,
+        *,
+        organization_id: Optional[str] = None,
+        verified: Optional[models.Verified] = None,
+        enrollment_mode: Optional[List[models.QueryParamEnrollmentMode]] = None,
+        query: Optional[str] = None,
+        order_by: Optional[str] = "-created_at",
+        offset: Optional[int] = 0,
+        limit: Optional[int] = 10,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> Optional[models.OrganizationDomains]:
+        r"""List all organization domains
+
+        Retrieves a list of all organization domains within the current instance.
+        This endpoint can be used to list all domains across all organizations
+        or filter domains by organization, verification status, enrollment mode, or search query.
+
+        The response includes pagination information and details about each domain
+        including its verification status, enrollment mode, and associated counts.
+
+
+        :param organization_id: The ID of the organization to filter domains by
+        :param verified: Filter by verification status
+        :param enrollment_mode: Filter by enrollment mode
+        :param query: Search domains by name or organization ID. If the query starts with \"org_\", it will search by exact organization ID match. Otherwise, it performs a case-insensitive partial match on the domain name.  Note: An empty string or whitespace-only value is not allowed and will result in a validation error.
+        :param order_by: Allows to return organization domains in a particular order. At the moment, you can order the returned domains by their `name` or `created_at`. In order to specify the direction, you can use the `+/-` symbols prepended to the property to order by. For example, if you want domains to be returned in descending order according to their `created_at` property, you can use `-created_at`. If you don't use `+` or `-`, then `+` is implied. Defaults to `-created_at`.
+        :param offset: Skip the first `offset` results when paginating. Needs to be an integer greater or equal to zero. To be used in conjunction with `limit`.
+        :param limit: Applies a limit to the number of results returned. Can be used for paginating the results together with `offset`.
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.ListAllOrganizationDomainsRequest(
+            organization_id=organization_id,
+            verified=verified,
+            enrollment_mode=enrollment_mode,
+            query=query,
+            order_by=order_by,
+            offset=offset,
+            limit=limit,
+        )
+
+        req = self._build_request(
+            method="GET",
+            path="/organization_domains",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=False,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["5XX"])
+
+        http_res = self.do_request(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="ListAllOrganizationDomains",
+                oauth2_scopes=[],
+                security_source=self.sdk_configuration.security,
+            ),
+            request=req,
+            error_status_codes=["401", "403", "422", "4XX", "5XX"],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return utils.unmarshal_json(
+                http_res.text, Optional[models.OrganizationDomains]
+            )
+        if utils.match_response(http_res, ["401", "403", "422"], "application/json"):
+            response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=response_data)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+
+        content_type = http_res.headers.get("Content-Type")
+        http_res_text = utils.stream_to_text(http_res)
+        raise models.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res_text,
+            http_res,
+        )
+
+    async def list_all_async(
+        self,
+        *,
+        organization_id: Optional[str] = None,
+        verified: Optional[models.Verified] = None,
+        enrollment_mode: Optional[List[models.QueryParamEnrollmentMode]] = None,
+        query: Optional[str] = None,
+        order_by: Optional[str] = "-created_at",
+        offset: Optional[int] = 0,
+        limit: Optional[int] = 10,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> Optional[models.OrganizationDomains]:
+        r"""List all organization domains
+
+        Retrieves a list of all organization domains within the current instance.
+        This endpoint can be used to list all domains across all organizations
+        or filter domains by organization, verification status, enrollment mode, or search query.
+
+        The response includes pagination information and details about each domain
+        including its verification status, enrollment mode, and associated counts.
+
+
+        :param organization_id: The ID of the organization to filter domains by
+        :param verified: Filter by verification status
+        :param enrollment_mode: Filter by enrollment mode
+        :param query: Search domains by name or organization ID. If the query starts with \"org_\", it will search by exact organization ID match. Otherwise, it performs a case-insensitive partial match on the domain name.  Note: An empty string or whitespace-only value is not allowed and will result in a validation error.
+        :param order_by: Allows to return organization domains in a particular order. At the moment, you can order the returned domains by their `name` or `created_at`. In order to specify the direction, you can use the `+/-` symbols prepended to the property to order by. For example, if you want domains to be returned in descending order according to their `created_at` property, you can use `-created_at`. If you don't use `+` or `-`, then `+` is implied. Defaults to `-created_at`.
+        :param offset: Skip the first `offset` results when paginating. Needs to be an integer greater or equal to zero. To be used in conjunction with `limit`.
+        :param limit: Applies a limit to the number of results returned. Can be used for paginating the results together with `offset`.
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.ListAllOrganizationDomainsRequest(
+            organization_id=organization_id,
+            verified=verified,
+            enrollment_mode=enrollment_mode,
+            query=query,
+            order_by=order_by,
+            offset=offset,
+            limit=limit,
+        )
+
+        req = self._build_request_async(
+            method="GET",
+            path="/organization_domains",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=False,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["5XX"])
+
+        http_res = await self.do_request_async(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="ListAllOrganizationDomains",
+                oauth2_scopes=[],
+                security_source=self.sdk_configuration.security,
+            ),
+            request=req,
+            error_status_codes=["401", "403", "422", "4XX", "5XX"],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return utils.unmarshal_json(
+                http_res.text, Optional[models.OrganizationDomains]
+            )
+        if utils.match_response(http_res, ["401", "403", "422"], "application/json"):
             response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=response_data)
         if utils.match_response(http_res, "4XX", "*"):

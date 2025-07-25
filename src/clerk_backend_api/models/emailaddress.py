@@ -10,9 +10,9 @@ from clerk_backend_api.types import (
     UNSET,
     UNSET_SENTINEL,
 )
-from clerk_backend_api.utils import validate_open_enum
+from clerk_backend_api.utils import get_discriminator, validate_open_enum
 from enum import Enum
-from pydantic import model_serializer
+from pydantic import Discriminator, Tag, model_serializer
 from pydantic.functional_validators import PlainValidator
 from typing import List, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
@@ -24,40 +24,48 @@ class EmailAddressObject(str, Enum, metaclass=utils.OpenEnumMeta):
     EMAIL_ADDRESS = "email_address"
 
 
-class TicketVerificationStatus(str, Enum):
+class VerificationTicketVerificationObject(str, Enum):
+    VERIFICATION_TICKET = "verification_ticket"
+
+
+class VerificationTicketVerificationStatus(str, Enum):
     UNVERIFIED = "unverified"
     VERIFIED = "verified"
     EXPIRED = "expired"
 
 
-class TicketVerificationStrategy(str, Enum, metaclass=utils.OpenEnumMeta):
+class VerificationTicketVerificationStrategy(str, Enum, metaclass=utils.OpenEnumMeta):
     TICKET = "ticket"
 
 
 class TicketTypedDict(TypedDict):
-    status: TicketVerificationStatus
-    strategy: TicketVerificationStrategy
+    status: VerificationTicketVerificationStatus
+    strategy: VerificationTicketVerificationStrategy
     attempts: Nullable[int]
     expire_at: Nullable[int]
+    object: NotRequired[VerificationTicketVerificationObject]
     verified_at_client: NotRequired[Nullable[str]]
 
 
 class Ticket(BaseModel):
-    status: TicketVerificationStatus
+    status: VerificationTicketVerificationStatus
 
     strategy: Annotated[
-        TicketVerificationStrategy, PlainValidator(validate_open_enum(False))
+        VerificationTicketVerificationStrategy,
+        PlainValidator(validate_open_enum(False)),
     ]
 
     attempts: Nullable[int]
 
     expire_at: Nullable[int]
 
+    object: Optional[VerificationTicketVerificationObject] = None
+
     verified_at_client: OptionalNullable[str] = UNSET
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["verified_at_client"]
+        optional_fields = ["object", "verified_at_client"]
         nullable_fields = ["attempts", "expire_at", "verified_at_client"]
         null_default_fields = []
 
@@ -86,7 +94,11 @@ class Ticket(BaseModel):
         return m
 
 
-class FromOAuthVerificationStatus(str, Enum):
+class VerificationFromOauthVerificationObject(str, Enum):
+    VERIFICATION_FROM_OAUTH = "verification_from_oauth"
+
+
+class VerificationFromOauthVerificationStatus(str, Enum):
     UNVERIFIED = "unverified"
     VERIFIED = "verified"
 
@@ -126,22 +138,25 @@ Error = ErrorClerkError
 
 
 class FromOAuthTypedDict(TypedDict):
-    status: FromOAuthVerificationStatus
+    status: VerificationFromOauthVerificationStatus
     strategy: str
     expire_at: Nullable[int]
     attempts: Nullable[int]
+    object: NotRequired[VerificationFromOauthVerificationObject]
     error: NotRequired[Nullable[ErrorTypedDict]]
     verified_at_client: NotRequired[Nullable[str]]
 
 
 class FromOAuth(BaseModel):
-    status: FromOAuthVerificationStatus
+    status: VerificationFromOauthVerificationStatus
 
     strategy: str
 
     expire_at: Nullable[int]
 
     attempts: Nullable[int]
+
+    object: Optional[VerificationFromOauthVerificationObject] = None
 
     error: OptionalNullable[Error] = UNSET
 
@@ -149,7 +164,7 @@ class FromOAuth(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["error", "verified_at_client"]
+        optional_fields = ["object", "error", "verified_at_client"]
         nullable_fields = ["error", "expire_at", "attempts", "verified_at_client"]
         null_default_fields = []
 
@@ -178,7 +193,11 @@ class FromOAuth(BaseModel):
         return m
 
 
-class AdminVerificationStatus(str, Enum):
+class VerificationAdminVerificationObject(str, Enum):
+    VERIFICATION_ADMIN = "verification_admin"
+
+
+class VerificationAdminVerificationStatus(str, Enum):
     VERIFIED = "verified"
 
 
@@ -187,15 +206,16 @@ class VerificationStrategy(str, Enum, metaclass=utils.OpenEnumMeta):
 
 
 class AdminTypedDict(TypedDict):
-    status: AdminVerificationStatus
+    status: VerificationAdminVerificationStatus
     strategy: VerificationStrategy
     attempts: Nullable[int]
     expire_at: Nullable[int]
+    object: NotRequired[VerificationAdminVerificationObject]
     verified_at_client: NotRequired[Nullable[str]]
 
 
 class Admin(BaseModel):
-    status: AdminVerificationStatus
+    status: VerificationAdminVerificationStatus
 
     strategy: Annotated[VerificationStrategy, PlainValidator(validate_open_enum(False))]
 
@@ -203,11 +223,13 @@ class Admin(BaseModel):
 
     expire_at: Nullable[int]
 
+    object: Optional[VerificationAdminVerificationObject] = None
+
     verified_at_client: OptionalNullable[str] = UNSET
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["verified_at_client"]
+        optional_fields = ["object", "verified_at_client"]
         nullable_fields = ["attempts", "expire_at", "verified_at_client"]
         null_default_fields = []
 
@@ -236,6 +258,10 @@ class Admin(BaseModel):
         return m
 
 
+class VerificationObject(str, Enum):
+    VERIFICATION_OTP = "verification_otp"
+
+
 class VerificationStatus(str, Enum):
     UNVERIFIED = "unverified"
     VERIFIED = "verified"
@@ -254,6 +280,7 @@ class OtpTypedDict(TypedDict):
     strategy: Strategy
     attempts: Nullable[int]
     expire_at: Nullable[int]
+    object: NotRequired[VerificationObject]
     verified_at_client: NotRequired[Nullable[str]]
 
 
@@ -266,11 +293,13 @@ class Otp(BaseModel):
 
     expire_at: Nullable[int]
 
+    object: Optional[VerificationObject] = None
+
     verified_at_client: OptionalNullable[str] = UNSET
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["verified_at_client"]
+        optional_fields = ["object", "verified_at_client"]
         nullable_fields = ["attempts", "expire_at", "verified_at_client"]
         null_default_fields = []
 
@@ -305,7 +334,15 @@ VerificationTypedDict = TypeAliasType(
 )
 
 
-Verification = TypeAliasType("Verification", Union[Otp, Admin, Ticket, FromOAuth])
+Verification = Annotated[
+    Union[
+        Annotated[Otp, Tag("verification_otp")],
+        Annotated[Admin, Tag("verification_admin")],
+        Annotated[FromOAuth, Tag("verification_from_oauth")],
+        Annotated[Ticket, Tag("verification_ticket")],
+    ],
+    Discriminator(lambda m: get_discriminator(m, "object", "object")),
+]
 
 
 class EmailAddressTypedDict(TypedDict):

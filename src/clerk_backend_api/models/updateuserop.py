@@ -47,7 +47,7 @@ class UpdateUserRequestBodyTypedDict(TypedDict):
     r"""The ID of the image to set as the user's profile image"""
     password: NotRequired[Nullable[str]]
     r"""The plaintext password to give the user.
-    Must be at least 8 characters long, and can not be in any list of hacked passwords.
+    Must be at least 8 characters long, and cannot be in any list of hacked passwords.
     """
     password_digest: NotRequired[str]
     r"""In case you already have the password digests and not the passwords, you can use them for the newly created user via this property.
@@ -58,9 +58,9 @@ class UpdateUserRequestBodyTypedDict(TypedDict):
     r"""The hashing algorithm that was used to generate the password digest.
 
     The algorithms we support at the moment are [`bcrypt`](https://en.wikipedia.org/wiki/Bcrypt), [`bcrypt_sha256_django`](https://docs.djangoproject.com/en/4.0/topics/auth/passwords/), [`md5`](https://en.wikipedia.org/wiki/MD5), `pbkdf2_sha1`, `pbkdf2_sha256`, [`pbkdf2_sha256_django`](https://docs.djangoproject.com/en/4.0/topics/auth/passwords/),
-    [`phpass`](https://www.openwall.com/phpass/), [`scrypt_firebase`](https://firebaseopensource.com/projects/firebase/scrypt/),
+    [`phpass`](https://www.openwall.com/phpass/), `md5_phpass`, [`scrypt_firebase`](https://firebaseopensource.com/projects/firebase/scrypt/),
     [`scrypt_werkzeug`](https://werkzeug.palletsprojects.com/en/3.0.x/utils/#werkzeug.security.generate_password_hash), [`sha256`](https://en.wikipedia.org/wiki/SHA-2),
-    and the [`argon2`](https://argon2.online/) variants: `argon2i` and `argon2id`.
+    [`ldap_ssha`](https://www.openldap.org/faq/data/cache/347.html) and the [`argon2`](https://argon2.online/) variants: `argon2i` and `argon2id`.
 
     Each of the supported hashers expects the incoming digest to be in a particular format. See the [Clerk docs](https://clerk.com/docs/references/backend/user/create-user) for more information.
     """
@@ -145,7 +145,7 @@ class UpdateUserRequestBody(BaseModel):
 
     password: OptionalNullable[str] = UNSET
     r"""The plaintext password to give the user.
-    Must be at least 8 characters long, and can not be in any list of hacked passwords.
+    Must be at least 8 characters long, and cannot be in any list of hacked passwords.
     """
 
     password_digest: Optional[str] = None
@@ -158,9 +158,9 @@ class UpdateUserRequestBody(BaseModel):
     r"""The hashing algorithm that was used to generate the password digest.
 
     The algorithms we support at the moment are [`bcrypt`](https://en.wikipedia.org/wiki/Bcrypt), [`bcrypt_sha256_django`](https://docs.djangoproject.com/en/4.0/topics/auth/passwords/), [`md5`](https://en.wikipedia.org/wiki/MD5), `pbkdf2_sha1`, `pbkdf2_sha256`, [`pbkdf2_sha256_django`](https://docs.djangoproject.com/en/4.0/topics/auth/passwords/),
-    [`phpass`](https://www.openwall.com/phpass/), [`scrypt_firebase`](https://firebaseopensource.com/projects/firebase/scrypt/),
+    [`phpass`](https://www.openwall.com/phpass/), `md5_phpass`, [`scrypt_firebase`](https://firebaseopensource.com/projects/firebase/scrypt/),
     [`scrypt_werkzeug`](https://werkzeug.palletsprojects.com/en/3.0.x/utils/#werkzeug.security.generate_password_hash), [`sha256`](https://en.wikipedia.org/wiki/SHA-2),
-    and the [`argon2`](https://argon2.online/) variants: `argon2i` and `argon2id`.
+    [`ldap_ssha`](https://www.openldap.org/faq/data/cache/347.html) and the [`argon2`](https://argon2.online/) variants: `argon2i` and `argon2id`.
 
     Each of the supported hashers expects the incoming digest to be in a particular format. See the [Clerk docs](https://clerk.com/docs/references/backend/user/create-user) for more information.
     """

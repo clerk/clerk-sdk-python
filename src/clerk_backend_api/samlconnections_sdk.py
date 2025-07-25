@@ -682,6 +682,7 @@ class SamlConnectionsSDK(BaseSDK):
         saml_connection_id: str,
         name: OptionalNullable[str] = UNSET,
         domain: OptionalNullable[str] = UNSET,
+        domains: OptionalNullable[List[str]] = UNSET,
         idp_entity_id: OptionalNullable[str] = UNSET,
         idp_sso_url: OptionalNullable[str] = UNSET,
         idp_certificate: OptionalNullable[str] = UNSET,
@@ -689,10 +690,7 @@ class SamlConnectionsSDK(BaseSDK):
         idp_metadata: OptionalNullable[str] = UNSET,
         organization_id: OptionalNullable[str] = UNSET,
         attribute_mapping: OptionalNullable[
-            Union[
-                models.UpdateSAMLConnectionAttributeMapping,
-                models.UpdateSAMLConnectionAttributeMappingTypedDict,
-            ]
+            Union[models.AttributeMapping, models.AttributeMappingTypedDict]
         ] = UNSET,
         active: OptionalNullable[bool] = UNSET,
         sync_user_attributes: OptionalNullable[bool] = UNSET,
@@ -711,6 +709,7 @@ class SamlConnectionsSDK(BaseSDK):
         :param saml_connection_id: The ID of the SAML Connection to update
         :param name: The name of the new SAML Connection
         :param domain: The domain to use for the new SAML Connection
+        :param domains: A list of the domains on use for the SAML connection
         :param idp_entity_id: The entity id as provided by the IdP
         :param idp_sso_url: The SSO url as provided by the IdP
         :param idp_certificate: The x509 certificated as provided by the IdP
@@ -743,6 +742,7 @@ class SamlConnectionsSDK(BaseSDK):
             request_body=models.UpdateSAMLConnectionRequestBody(
                 name=name,
                 domain=domain,
+                domains=domains,
                 idp_entity_id=idp_entity_id,
                 idp_sso_url=idp_sso_url,
                 idp_certificate=idp_certificate,
@@ -750,8 +750,7 @@ class SamlConnectionsSDK(BaseSDK):
                 idp_metadata=idp_metadata,
                 organization_id=organization_id,
                 attribute_mapping=utils.get_pydantic_model(
-                    attribute_mapping,
-                    OptionalNullable[models.UpdateSAMLConnectionAttributeMapping],
+                    attribute_mapping, OptionalNullable[models.AttributeMapping]
                 ),
                 active=active,
                 sync_user_attributes=sync_user_attributes,
@@ -845,6 +844,7 @@ class SamlConnectionsSDK(BaseSDK):
         saml_connection_id: str,
         name: OptionalNullable[str] = UNSET,
         domain: OptionalNullable[str] = UNSET,
+        domains: OptionalNullable[List[str]] = UNSET,
         idp_entity_id: OptionalNullable[str] = UNSET,
         idp_sso_url: OptionalNullable[str] = UNSET,
         idp_certificate: OptionalNullable[str] = UNSET,
@@ -852,10 +852,7 @@ class SamlConnectionsSDK(BaseSDK):
         idp_metadata: OptionalNullable[str] = UNSET,
         organization_id: OptionalNullable[str] = UNSET,
         attribute_mapping: OptionalNullable[
-            Union[
-                models.UpdateSAMLConnectionAttributeMapping,
-                models.UpdateSAMLConnectionAttributeMappingTypedDict,
-            ]
+            Union[models.AttributeMapping, models.AttributeMappingTypedDict]
         ] = UNSET,
         active: OptionalNullable[bool] = UNSET,
         sync_user_attributes: OptionalNullable[bool] = UNSET,
@@ -874,6 +871,7 @@ class SamlConnectionsSDK(BaseSDK):
         :param saml_connection_id: The ID of the SAML Connection to update
         :param name: The name of the new SAML Connection
         :param domain: The domain to use for the new SAML Connection
+        :param domains: A list of the domains on use for the SAML connection
         :param idp_entity_id: The entity id as provided by the IdP
         :param idp_sso_url: The SSO url as provided by the IdP
         :param idp_certificate: The x509 certificated as provided by the IdP
@@ -906,6 +904,7 @@ class SamlConnectionsSDK(BaseSDK):
             request_body=models.UpdateSAMLConnectionRequestBody(
                 name=name,
                 domain=domain,
+                domains=domains,
                 idp_entity_id=idp_entity_id,
                 idp_sso_url=idp_sso_url,
                 idp_certificate=idp_certificate,
@@ -913,8 +912,7 @@ class SamlConnectionsSDK(BaseSDK):
                 idp_metadata=idp_metadata,
                 organization_id=organization_id,
                 attribute_mapping=utils.get_pydantic_model(
-                    attribute_mapping,
-                    OptionalNullable[models.UpdateSAMLConnectionAttributeMapping],
+                    attribute_mapping, OptionalNullable[models.AttributeMapping]
                 ),
                 active=active,
                 sync_user_attributes=sync_user_attributes,

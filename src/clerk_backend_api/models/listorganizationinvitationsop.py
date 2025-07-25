@@ -21,6 +21,16 @@ class ListOrganizationInvitationsRequestTypedDict(TypedDict):
     r"""The organization ID."""
     status: NotRequired[ListOrganizationInvitationsQueryParamStatus]
     r"""Filter organization invitations based on their status"""
+    email_address: NotRequired[str]
+    r"""Returns organization invitations inviting the specified email address."""
+    order_by: NotRequired[str]
+    r"""Allows to return organization invitations in a particular order.
+    You can order the returned organization invitations either by their `created_at` or `email_address`.
+    In order to specify the direction, you can use the `+/-` symbols prepended in the property to order by.
+    For example, if you want organization invitations to be returned in descending order according to their `created_at` property, you can use `-created_at`.
+    If you don't use `+` or `-`, then `+` is implied.
+    Defaults to `-created_at`.
+    """
     limit: NotRequired[int]
     r"""Applies a limit to the number of results returned.
     Can be used for paginating the results together with `offset`.
@@ -43,6 +53,24 @@ class ListOrganizationInvitationsRequest(BaseModel):
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = None
     r"""Filter organization invitations based on their status"""
+
+    email_address: Annotated[
+        Optional[str],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Returns organization invitations inviting the specified email address."""
+
+    order_by: Annotated[
+        Optional[str],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = "-created_at"
+    r"""Allows to return organization invitations in a particular order.
+    You can order the returned organization invitations either by their `created_at` or `email_address`.
+    In order to specify the direction, you can use the `+/-` symbols prepended in the property to order by.
+    For example, if you want organization invitations to be returned in descending order according to their `created_at` property, you can use `-created_at`.
+    If you don't use `+` or `-`, then `+` is implied.
+    Defaults to `-created_at`.
+    """
 
     limit: Annotated[
         Optional[int],

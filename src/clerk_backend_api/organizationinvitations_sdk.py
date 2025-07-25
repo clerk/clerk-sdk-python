@@ -562,6 +562,8 @@ class OrganizationInvitationsSDK(BaseSDK):
         *,
         organization_id: str,
         status: Optional[models.ListOrganizationInvitationsQueryParamStatus] = None,
+        email_address: Optional[str] = None,
+        order_by: Optional[str] = "-created_at",
         limit: Optional[int] = 10,
         offset: Optional[int] = 0,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -580,6 +582,8 @@ class OrganizationInvitationsSDK(BaseSDK):
 
         :param organization_id: The organization ID.
         :param status: Filter organization invitations based on their status
+        :param email_address: Returns organization invitations inviting the specified email address.
+        :param order_by: Allows to return organization invitations in a particular order. You can order the returned organization invitations either by their `created_at` or `email_address`. In order to specify the direction, you can use the `+/-` symbols prepended in the property to order by. For example, if you want organization invitations to be returned in descending order according to their `created_at` property, you can use `-created_at`. If you don't use `+` or `-`, then `+` is implied. Defaults to `-created_at`.
         :param limit: Applies a limit to the number of results returned. Can be used for paginating the results together with `offset`.
         :param offset: Skip the first `offset` results when paginating. Needs to be an integer greater or equal to zero. To be used in conjunction with `limit`.
         :param retries: Override the default retry configuration for this method
@@ -600,6 +604,8 @@ class OrganizationInvitationsSDK(BaseSDK):
         request = models.ListOrganizationInvitationsRequest(
             organization_id=organization_id,
             status=status,
+            email_address=email_address,
+            order_by=order_by,
             limit=limit,
             offset=offset,
         )
@@ -641,7 +647,7 @@ class OrganizationInvitationsSDK(BaseSDK):
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
-            error_status_codes=["400", "404", "4XX", "5XX"],
+            error_status_codes=["400", "404", "422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -650,7 +656,7 @@ class OrganizationInvitationsSDK(BaseSDK):
             return utils.unmarshal_json(
                 http_res.text, Optional[models.OrganizationInvitations]
             )
-        if utils.match_response(http_res, ["400", "404"], "application/json"):
+        if utils.match_response(http_res, ["400", "404", "422"], "application/json"):
             response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=response_data)
         if utils.match_response(http_res, "4XX", "*"):
@@ -678,6 +684,8 @@ class OrganizationInvitationsSDK(BaseSDK):
         *,
         organization_id: str,
         status: Optional[models.ListOrganizationInvitationsQueryParamStatus] = None,
+        email_address: Optional[str] = None,
+        order_by: Optional[str] = "-created_at",
         limit: Optional[int] = 10,
         offset: Optional[int] = 0,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -696,6 +704,8 @@ class OrganizationInvitationsSDK(BaseSDK):
 
         :param organization_id: The organization ID.
         :param status: Filter organization invitations based on their status
+        :param email_address: Returns organization invitations inviting the specified email address.
+        :param order_by: Allows to return organization invitations in a particular order. You can order the returned organization invitations either by their `created_at` or `email_address`. In order to specify the direction, you can use the `+/-` symbols prepended in the property to order by. For example, if you want organization invitations to be returned in descending order according to their `created_at` property, you can use `-created_at`. If you don't use `+` or `-`, then `+` is implied. Defaults to `-created_at`.
         :param limit: Applies a limit to the number of results returned. Can be used for paginating the results together with `offset`.
         :param offset: Skip the first `offset` results when paginating. Needs to be an integer greater or equal to zero. To be used in conjunction with `limit`.
         :param retries: Override the default retry configuration for this method
@@ -716,6 +726,8 @@ class OrganizationInvitationsSDK(BaseSDK):
         request = models.ListOrganizationInvitationsRequest(
             organization_id=organization_id,
             status=status,
+            email_address=email_address,
+            order_by=order_by,
             limit=limit,
             offset=offset,
         )
@@ -757,7 +769,7 @@ class OrganizationInvitationsSDK(BaseSDK):
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
-            error_status_codes=["400", "404", "4XX", "5XX"],
+            error_status_codes=["400", "404", "422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -766,7 +778,7 @@ class OrganizationInvitationsSDK(BaseSDK):
             return utils.unmarshal_json(
                 http_res.text, Optional[models.OrganizationInvitations]
             )
-        if utils.match_response(http_res, ["400", "404"], "application/json"):
+        if utils.match_response(http_res, ["400", "404", "422"], "application/json"):
             response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=response_data)
         if utils.match_response(http_res, "4XX", "*"):

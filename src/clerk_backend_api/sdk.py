@@ -25,6 +25,7 @@ from .security import (
 if TYPE_CHECKING:
     from clerk_backend_api.actortokens import ActorTokens
     from clerk_backend_api.allowlistidentifiers import AllowlistIdentifiers
+    from clerk_backend_api.awscredentials import AwsCredentials
     from clerk_backend_api.betafeatures import BetaFeatures
     from clerk_backend_api.blocklistidentifiers_sdk import BlocklistIdentifiersSDK
     from clerk_backend_api.clients import Clients
@@ -39,7 +40,11 @@ if TYPE_CHECKING:
     from clerk_backend_api.invitations import Invitations
     from clerk_backend_api.jwks_sdk import JwksSDK
     from clerk_backend_api.jwttemplates import JwtTemplates
+    from clerk_backend_api.machines import Machines
+    from clerk_backend_api.machinetokens import MachineTokens
+    from clerk_backend_api.management import Management
     from clerk_backend_api.miscellaneous import Miscellaneous
+    from clerk_backend_api.oauthaccesstokens import OauthAccessTokens
     from clerk_backend_api.oauthapplications_sdk import OauthApplicationsSDK
     from clerk_backend_api.organizationdomains_sdk import OrganizationDomainsSDK
     from clerk_backend_api.organizationinvitations_sdk import OrganizationInvitationsSDK
@@ -65,7 +70,7 @@ class Clerk(BaseSDK):
     ### Versions
 
     When the API changes in a way that isn't compatible with older versions, a new version is released.
-    Each version is identified by its release date, e.g. `2025-03-12`. For more information, please see [Clerk API Versions](https://clerk.com/docs/versioning/available-versions).
+    Each version is identified by its release date, e.g. `2025-04-10`. For more information, please see [Clerk API Versions](https://clerk.com/docs/versioning/available-versions).
 
     Please see https://clerk.com/docs for more information.
     https://clerk.com/docs
@@ -73,6 +78,7 @@ class Clerk(BaseSDK):
 
     miscellaneous: "Miscellaneous"
     jwks: "JwksSDK"
+    aws_credentials: "AwsCredentials"
     clients: "Clients"
     email_addresses: "EmailAddresses"
     phone_numbers: "PhoneNumbers"
@@ -91,6 +97,8 @@ class Clerk(BaseSDK):
     instance_settings: "InstanceSettingsSDK"
     webhooks: "Webhooks"
     jwt_templates: "JwtTemplates"
+    machine_tokens: "MachineTokens"
+    machines: "Machines"
     organizations: "OrganizationsSDK"
     organization_memberships: "OrganizationMembershipsSDK"
     organization_domains: "OrganizationDomainsSDK"
@@ -103,9 +111,12 @@ class Clerk(BaseSDK):
     testing_tokens: "TestingTokens"
     waitlist_entries: "WaitlistEntriesSDK"
     experimental_accountless_applications: "ExperimentalAccountlessApplications"
+    management: "Management"
+    oauth_access_tokens: "OauthAccessTokens"
     _sub_sdk_map = {
         "miscellaneous": ("clerk_backend_api.miscellaneous", "Miscellaneous"),
         "jwks": ("clerk_backend_api.jwks_sdk", "JwksSDK"),
+        "aws_credentials": ("clerk_backend_api.awscredentials", "AwsCredentials"),
         "clients": ("clerk_backend_api.clients", "Clients"),
         "email_addresses": ("clerk_backend_api.emailaddresses", "EmailAddresses"),
         "phone_numbers": ("clerk_backend_api.phonenumbers", "PhoneNumbers"),
@@ -142,6 +153,8 @@ class Clerk(BaseSDK):
         ),
         "webhooks": ("clerk_backend_api.webhooks", "Webhooks"),
         "jwt_templates": ("clerk_backend_api.jwttemplates", "JwtTemplates"),
+        "machine_tokens": ("clerk_backend_api.machinetokens", "MachineTokens"),
+        "machines": ("clerk_backend_api.machines", "Machines"),
         "organizations": ("clerk_backend_api.organizations_sdk", "OrganizationsSDK"),
         "organization_memberships": (
             "clerk_backend_api.organizationmemberships_sdk",
@@ -171,6 +184,11 @@ class Clerk(BaseSDK):
         "experimental_accountless_applications": (
             "clerk_backend_api.experimentalaccountlessapplications",
             "ExperimentalAccountlessApplications",
+        ),
+        "management": ("clerk_backend_api.management", "Management"),
+        "oauth_access_tokens": (
+            "clerk_backend_api.oauthaccesstokens",
+            "OauthAccessTokens",
         ),
     }
 

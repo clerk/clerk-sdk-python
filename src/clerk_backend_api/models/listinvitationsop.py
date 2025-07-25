@@ -23,11 +23,12 @@ class ListInvitationsRequestTypedDict(TypedDict):
     query: NotRequired[str]
     r"""Filter invitations based on their `email_address` or `id`"""
     order_by: NotRequired[str]
-    r"""Allows to return organizations in a particular order.
-    At the moment, you can order the returned organizations either by their `name`, `created_at` or `members_count`.
+    r"""Allows to return invitations in a particular order.
+    At the moment, you can order the returned invitations either by their `created_at`, `email_address` or `expires_at`.
     In order to specify the direction, you can use the `+/-` symbols prepended in the property to order by.
-    For example, if you want organizations to be returned in descending order according to their `created_at` property, you can use `-created_at`.
+    For example, if you want invitations to be returned in descending order according to their `created_at` property, you can use `-created_at`.
     If you don't use `+` or `-`, then `+` is implied.
+    Defaults to `-created_at`.
     """
     paginated: NotRequired[bool]
     r"""Whether to paginate the results.
@@ -61,12 +62,13 @@ class ListInvitationsRequest(BaseModel):
     order_by: Annotated[
         Optional[str],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
-    ] = None
-    r"""Allows to return organizations in a particular order.
-    At the moment, you can order the returned organizations either by their `name`, `created_at` or `members_count`.
+    ] = "-created_at"
+    r"""Allows to return invitations in a particular order.
+    At the moment, you can order the returned invitations either by their `created_at`, `email_address` or `expires_at`.
     In order to specify the direction, you can use the `+/-` symbols prepended in the property to order by.
-    For example, if you want organizations to be returned in descending order according to their `created_at` property, you can use `-created_at`.
+    For example, if you want invitations to be returned in descending order according to their `created_at` property, you can use `-created_at`.
     If you don't use `+` or `-`, then `+` is implied.
+    Defaults to `-created_at`.
     """
 
     paginated: Annotated[

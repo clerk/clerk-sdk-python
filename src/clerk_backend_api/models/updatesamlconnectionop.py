@@ -9,12 +9,13 @@ from clerk_backend_api.types import (
     UNSET_SENTINEL,
 )
 from clerk_backend_api.utils import FieldMetadata, PathParamMetadata, RequestMetadata
+import pydantic
 from pydantic import model_serializer
-from typing import Optional
+from typing import List, Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
 
 
-class UpdateSAMLConnectionAttributeMappingTypedDict(TypedDict):
+class AttributeMappingTypedDict(TypedDict):
     r"""Define the atrtibute name mapping between Identity Provider and Clerk's user properties"""
 
     user_id: NotRequired[str]
@@ -23,7 +24,7 @@ class UpdateSAMLConnectionAttributeMappingTypedDict(TypedDict):
     last_name: NotRequired[str]
 
 
-class UpdateSAMLConnectionAttributeMapping(BaseModel):
+class AttributeMapping(BaseModel):
     r"""Define the atrtibute name mapping between Identity Provider and Clerk's user properties"""
 
     user_id: Optional[str] = None
@@ -40,6 +41,8 @@ class UpdateSAMLConnectionRequestBodyTypedDict(TypedDict):
     r"""The name of the new SAML Connection"""
     domain: NotRequired[Nullable[str]]
     r"""The domain to use for the new SAML Connection"""
+    domains: NotRequired[Nullable[List[str]]]
+    r"""A list of the domains on use for the SAML connection"""
     idp_entity_id: NotRequired[Nullable[str]]
     r"""The entity id as provided by the IdP"""
     idp_sso_url: NotRequired[Nullable[str]]
@@ -52,9 +55,7 @@ class UpdateSAMLConnectionRequestBodyTypedDict(TypedDict):
     r"""The XML content of the IdP metadata file. If present, it takes priority over the corresponding individual properties"""
     organization_id: NotRequired[Nullable[str]]
     r"""The ID of the organization to which users of this SAML Connection will be added"""
-    attribute_mapping: NotRequired[
-        Nullable[UpdateSAMLConnectionAttributeMappingTypedDict]
-    ]
+    attribute_mapping: NotRequired[Nullable[AttributeMappingTypedDict]]
     r"""Define the atrtibute name mapping between Identity Provider and Clerk's user properties"""
     active: NotRequired[Nullable[bool]]
     r"""Activate or de-activate the SAML Connection"""
@@ -72,8 +73,16 @@ class UpdateSAMLConnectionRequestBody(BaseModel):
     name: OptionalNullable[str] = UNSET
     r"""The name of the new SAML Connection"""
 
-    domain: OptionalNullable[str] = UNSET
+    domain: Annotated[
+        OptionalNullable[str],
+        pydantic.Field(
+            deprecated="warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
+        ),
+    ] = UNSET
     r"""The domain to use for the new SAML Connection"""
+
+    domains: OptionalNullable[List[str]] = UNSET
+    r"""A list of the domains on use for the SAML connection"""
 
     idp_entity_id: OptionalNullable[str] = UNSET
     r"""The entity id as provided by the IdP"""
@@ -93,7 +102,7 @@ class UpdateSAMLConnectionRequestBody(BaseModel):
     organization_id: OptionalNullable[str] = UNSET
     r"""The ID of the organization to which users of this SAML Connection will be added"""
 
-    attribute_mapping: OptionalNullable[UpdateSAMLConnectionAttributeMapping] = UNSET
+    attribute_mapping: OptionalNullable[AttributeMapping] = UNSET
     r"""Define the atrtibute name mapping between Identity Provider and Clerk's user properties"""
 
     active: OptionalNullable[bool] = UNSET
@@ -116,6 +125,7 @@ class UpdateSAMLConnectionRequestBody(BaseModel):
         optional_fields = [
             "name",
             "domain",
+            "domains",
             "idp_entity_id",
             "idp_sso_url",
             "idp_certificate",
@@ -132,6 +142,7 @@ class UpdateSAMLConnectionRequestBody(BaseModel):
         nullable_fields = [
             "name",
             "domain",
+            "domains",
             "idp_entity_id",
             "idp_sso_url",
             "idp_certificate",

@@ -9,12 +9,13 @@ from clerk_backend_api.types import (
     UNSET_SENTINEL,
 )
 from enum import Enum
+import pydantic
 from pydantic import model_serializer
-from typing import Optional
-from typing_extensions import NotRequired, TypedDict
+from typing import List, Optional, Union
+from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 
-class Provider(str, Enum):
+class RequestBodyProvider(str, Enum):
     r"""The IdP provider of the connection."""
 
     SAML_CUSTOM = "saml_custom"
@@ -23,7 +24,7 @@ class Provider(str, Enum):
     SAML_MICROSOFT = "saml_microsoft"
 
 
-class AttributeMappingTypedDict(TypedDict):
+class RequestBodyAttributeMappingTypedDict(TypedDict):
     r"""Define the attribute name mapping between Identity Provider and Clerk's user properties"""
 
     user_id: NotRequired[str]
@@ -32,7 +33,7 @@ class AttributeMappingTypedDict(TypedDict):
     last_name: NotRequired[str]
 
 
-class AttributeMapping(BaseModel):
+class RequestBodyAttributeMapping(BaseModel):
     r"""Define the attribute name mapping between Identity Provider and Clerk's user properties"""
 
     user_id: Optional[str] = None
@@ -44,13 +45,15 @@ class AttributeMapping(BaseModel):
     last_name: Optional[str] = None
 
 
-class CreateSAMLConnectionRequestBodyTypedDict(TypedDict):
+class RequestBody2TypedDict(TypedDict):
     name: str
     r"""The name to use as a label for this SAML Connection"""
-    domain: str
-    r"""The domain of your organization. Sign in flows using an email with this domain, will use this SAML Connection."""
-    provider: Provider
+    domains: List[str]
+    r"""The domains of your organization. Sign in flows using an email with one of these domains, will use this SAML Connection."""
+    provider: RequestBodyProvider
     r"""The IdP provider of the connection."""
+    domain: NotRequired[str]
+    r"""The domain of your organization. Sign in flows using an email with this domain, will use this SAML Connection."""
     idp_entity_id: NotRequired[Nullable[str]]
     r"""The Entity ID as provided by the IdP"""
     idp_sso_url: NotRequired[Nullable[str]]
@@ -63,19 +66,27 @@ class CreateSAMLConnectionRequestBodyTypedDict(TypedDict):
     r"""The XML content of the IdP metadata file. If present, it takes priority over the corresponding individual properties"""
     organization_id: NotRequired[Nullable[str]]
     r"""The ID of the organization to which users of this SAML Connection will be added"""
-    attribute_mapping: NotRequired[Nullable[AttributeMappingTypedDict]]
+    attribute_mapping: NotRequired[Nullable[RequestBodyAttributeMappingTypedDict]]
     r"""Define the attribute name mapping between Identity Provider and Clerk's user properties"""
 
 
-class CreateSAMLConnectionRequestBody(BaseModel):
+class RequestBody2(BaseModel):
     name: str
     r"""The name to use as a label for this SAML Connection"""
 
-    domain: str
-    r"""The domain of your organization. Sign in flows using an email with this domain, will use this SAML Connection."""
+    domains: List[str]
+    r"""The domains of your organization. Sign in flows using an email with one of these domains, will use this SAML Connection."""
 
-    provider: Provider
+    provider: RequestBodyProvider
     r"""The IdP provider of the connection."""
+
+    domain: Annotated[
+        Optional[str],
+        pydantic.Field(
+            deprecated="warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
+        ),
+    ] = None
+    r"""The domain of your organization. Sign in flows using an email with this domain, will use this SAML Connection."""
 
     idp_entity_id: OptionalNullable[str] = UNSET
     r"""The Entity ID as provided by the IdP"""
@@ -95,12 +106,13 @@ class CreateSAMLConnectionRequestBody(BaseModel):
     organization_id: OptionalNullable[str] = UNSET
     r"""The ID of the organization to which users of this SAML Connection will be added"""
 
-    attribute_mapping: OptionalNullable[AttributeMapping] = UNSET
+    attribute_mapping: OptionalNullable[RequestBodyAttributeMapping] = UNSET
     r"""Define the attribute name mapping between Identity Provider and Clerk's user properties"""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = [
+            "domain",
             "idp_entity_id",
             "idp_sso_url",
             "idp_certificate",
@@ -143,3 +155,160 @@ class CreateSAMLConnectionRequestBody(BaseModel):
                 m[k] = val
 
         return m
+
+
+class Provider(str, Enum):
+    r"""The IdP provider of the connection."""
+
+    SAML_CUSTOM = "saml_custom"
+    SAML_OKTA = "saml_okta"
+    SAML_GOOGLE = "saml_google"
+    SAML_MICROSOFT = "saml_microsoft"
+
+
+class CreateSAMLConnectionRequestBodyAttributeMappingTypedDict(TypedDict):
+    r"""Define the attribute name mapping between Identity Provider and Clerk's user properties"""
+
+    user_id: NotRequired[str]
+    email_address: NotRequired[str]
+    first_name: NotRequired[str]
+    last_name: NotRequired[str]
+
+
+class CreateSAMLConnectionRequestBodyAttributeMapping(BaseModel):
+    r"""Define the attribute name mapping between Identity Provider and Clerk's user properties"""
+
+    user_id: Optional[str] = None
+
+    email_address: Optional[str] = None
+
+    first_name: Optional[str] = None
+
+    last_name: Optional[str] = None
+
+
+class RequestBody1TypedDict(TypedDict):
+    name: str
+    r"""The name to use as a label for this SAML Connection"""
+    domain: str
+    r"""The domain of your organization. Sign in flows using an email with this domain, will use this SAML Connection."""
+    provider: Provider
+    r"""The IdP provider of the connection."""
+    domains: NotRequired[List[str]]
+    r"""The domains of your organization. Sign in flows using an email with one of these domains, will use this SAML Connection."""
+    idp_entity_id: NotRequired[Nullable[str]]
+    r"""The Entity ID as provided by the IdP"""
+    idp_sso_url: NotRequired[Nullable[str]]
+    r"""The Single-Sign On URL as provided by the IdP"""
+    idp_certificate: NotRequired[Nullable[str]]
+    r"""The X.509 certificate as provided by the IdP"""
+    idp_metadata_url: NotRequired[Nullable[str]]
+    r"""The URL which serves the IdP metadata. If present, it takes priority over the corresponding individual properties"""
+    idp_metadata: NotRequired[Nullable[str]]
+    r"""The XML content of the IdP metadata file. If present, it takes priority over the corresponding individual properties"""
+    organization_id: NotRequired[Nullable[str]]
+    r"""The ID of the organization to which users of this SAML Connection will be added"""
+    attribute_mapping: NotRequired[
+        Nullable[CreateSAMLConnectionRequestBodyAttributeMappingTypedDict]
+    ]
+    r"""Define the attribute name mapping between Identity Provider and Clerk's user properties"""
+
+
+class RequestBody1(BaseModel):
+    name: str
+    r"""The name to use as a label for this SAML Connection"""
+
+    domain: Annotated[
+        str,
+        pydantic.Field(
+            deprecated="warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
+        ),
+    ]
+    r"""The domain of your organization. Sign in flows using an email with this domain, will use this SAML Connection."""
+
+    provider: Provider
+    r"""The IdP provider of the connection."""
+
+    domains: Optional[List[str]] = None
+    r"""The domains of your organization. Sign in flows using an email with one of these domains, will use this SAML Connection."""
+
+    idp_entity_id: OptionalNullable[str] = UNSET
+    r"""The Entity ID as provided by the IdP"""
+
+    idp_sso_url: OptionalNullable[str] = UNSET
+    r"""The Single-Sign On URL as provided by the IdP"""
+
+    idp_certificate: OptionalNullable[str] = UNSET
+    r"""The X.509 certificate as provided by the IdP"""
+
+    idp_metadata_url: OptionalNullable[str] = UNSET
+    r"""The URL which serves the IdP metadata. If present, it takes priority over the corresponding individual properties"""
+
+    idp_metadata: OptionalNullable[str] = UNSET
+    r"""The XML content of the IdP metadata file. If present, it takes priority over the corresponding individual properties"""
+
+    organization_id: OptionalNullable[str] = UNSET
+    r"""The ID of the organization to which users of this SAML Connection will be added"""
+
+    attribute_mapping: OptionalNullable[
+        CreateSAMLConnectionRequestBodyAttributeMapping
+    ] = UNSET
+    r"""Define the attribute name mapping between Identity Provider and Clerk's user properties"""
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = [
+            "domains",
+            "idp_entity_id",
+            "idp_sso_url",
+            "idp_certificate",
+            "idp_metadata_url",
+            "idp_metadata",
+            "organization_id",
+            "attribute_mapping",
+        ]
+        nullable_fields = [
+            "idp_entity_id",
+            "idp_sso_url",
+            "idp_certificate",
+            "idp_metadata_url",
+            "idp_metadata",
+            "organization_id",
+            "attribute_mapping",
+        ]
+        null_default_fields = []
+
+        serialized = handler(self)
+
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k)
+            serialized.pop(k, None)
+
+            optional_nullable = k in optional_fields and k in nullable_fields
+            is_set = (
+                self.__pydantic_fields_set__.intersection({n})
+                or k in null_default_fields
+            )  # pylint: disable=no-member
+
+            if val is not None and val != UNSET_SENTINEL:
+                m[k] = val
+            elif val != UNSET_SENTINEL and (
+                not k in optional_fields or (optional_nullable and is_set)
+            ):
+                m[k] = val
+
+        return m
+
+
+CreateSAMLConnectionRequestBodyTypedDict = TypeAliasType(
+    "CreateSAMLConnectionRequestBodyTypedDict",
+    Union[RequestBody1TypedDict, RequestBody2TypedDict],
+)
+
+
+CreateSAMLConnectionRequestBody = TypeAliasType(
+    "CreateSAMLConnectionRequestBody", Union[RequestBody1, RequestBody2]
+)

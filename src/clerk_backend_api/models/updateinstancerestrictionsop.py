@@ -17,7 +17,6 @@ class UpdateInstanceRestrictionsRequestBodyTypedDict(TypedDict):
     blocklist: NotRequired[Nullable[bool]]
     block_email_subaddresses: NotRequired[Nullable[bool]]
     block_disposable_email_domains: NotRequired[Nullable[bool]]
-    ignore_dots_for_gmail_addresses: NotRequired[Nullable[bool]]
 
 
 class UpdateInstanceRestrictionsRequestBody(BaseModel):
@@ -29,8 +28,6 @@ class UpdateInstanceRestrictionsRequestBody(BaseModel):
 
     block_disposable_email_domains: OptionalNullable[bool] = UNSET
 
-    ignore_dots_for_gmail_addresses: OptionalNullable[bool] = UNSET
-
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = [
@@ -38,14 +35,12 @@ class UpdateInstanceRestrictionsRequestBody(BaseModel):
             "blocklist",
             "block_email_subaddresses",
             "block_disposable_email_domains",
-            "ignore_dots_for_gmail_addresses",
         ]
         nullable_fields = [
             "allowlist",
             "blocklist",
             "block_email_subaddresses",
             "block_disposable_email_domains",
-            "ignore_dots_for_gmail_addresses",
         ]
         null_default_fields = []
 

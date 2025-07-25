@@ -17,6 +17,16 @@ class ListOAuthApplicationsRequestTypedDict(TypedDict):
     Needs to be an integer greater or equal to zero.
     To be used in conjunction with `limit`.
     """
+    order_by: NotRequired[str]
+    r"""Allows to return OAuth applications in a particular order.
+    At the moment, you can order the returned OAuth applications by their `created_at` and `name`.
+    In order to specify the direction, you can use the `+/-` symbols prepended in the property to order by.
+    For example, if you want OAuth applications to be returned in descending order according to their `created_at` property, you can use `-created_at`.
+    If you don't use `+` or `-`, then `+` is implied. We only support one `order_by` parameter, and if multiple `order_by` parameters are provided, we will only keep the first one. For example,
+    if you pass `order_by=name&order_by=created_at`, we will consider only the first `order_by` parameter, which is `name`. The `created_at` parameter will be ignored in this case.
+    """
+    name_query: NotRequired[str]
+    r"""Returns OAuth applications with names that match the given query, via case-insensitive partial match."""
 
 
 class ListOAuthApplicationsRequest(BaseModel):
@@ -36,3 +46,21 @@ class ListOAuthApplicationsRequest(BaseModel):
     Needs to be an integer greater or equal to zero.
     To be used in conjunction with `limit`.
     """
+
+    order_by: Annotated[
+        Optional[str],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = "+created_at"
+    r"""Allows to return OAuth applications in a particular order.
+    At the moment, you can order the returned OAuth applications by their `created_at` and `name`.
+    In order to specify the direction, you can use the `+/-` symbols prepended in the property to order by.
+    For example, if you want OAuth applications to be returned in descending order according to their `created_at` property, you can use `-created_at`.
+    If you don't use `+` or `-`, then `+` is implied. We only support one `order_by` parameter, and if multiple `order_by` parameters are provided, we will only keep the first one. For example,
+    if you pass `order_by=name&order_by=created_at`, we will consider only the first `order_by` parameter, which is `name`. The `created_at` parameter will be ignored in this case.
+    """
+
+    name_query: Annotated[
+        Optional[str],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Returns OAuth applications with names that match the given query, via case-insensitive partial match."""

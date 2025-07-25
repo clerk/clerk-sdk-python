@@ -9,7 +9,7 @@ from typing import List
 from typing_extensions import TypedDict
 
 
-class Object(str, Enum):
+class ClientObject(str, Enum):
     r"""String representing the object's type. Objects of the same type share the same value."""
 
     CLIENT = "client"
@@ -18,7 +18,7 @@ class Object(str, Enum):
 class ClientTypedDict(TypedDict):
     r"""Success"""
 
-    object: Object
+    object: ClientObject
     r"""String representing the object's type. Objects of the same type share the same value.
 
     """
@@ -47,7 +47,7 @@ class ClientTypedDict(TypedDict):
 class Client(BaseModel):
     r"""Success"""
 
-    object: Object
+    object: ClientObject
     r"""String representing the object's type. Objects of the same type share the same value.
 
     """

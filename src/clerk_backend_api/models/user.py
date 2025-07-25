@@ -6,9 +6,9 @@ from .externalaccountwithverification import (
     ExternalAccountWithVerification,
     ExternalAccountWithVerificationTypedDict,
 )
+from .passkey import Passkey, PasskeyTypedDict
 from .phonenumber import PhoneNumber, PhoneNumberTypedDict
 from .samlaccount import SAMLAccount, SAMLAccountTypedDict
-from .schemas_passkey import SchemasPasskey, SchemasPasskeyTypedDict
 from .web3wallet import Web3Wallet, Web3WalletTypedDict
 from clerk_backend_api.types import (
     BaseModel,
@@ -33,88 +33,88 @@ class UserObject(str, Enum):
 class UserTypedDict(TypedDict):
     r"""Success"""
 
-    id: NotRequired[str]
-    object: NotRequired[UserObject]
+    id: str
+    object: UserObject
     r"""String representing the object's type. Objects of the same type share the same value.
 
     """
-    external_id: NotRequired[Nullable[str]]
-    primary_email_address_id: NotRequired[Nullable[str]]
-    primary_phone_number_id: NotRequired[Nullable[str]]
-    primary_web3_wallet_id: NotRequired[Nullable[str]]
-    username: NotRequired[Nullable[str]]
-    first_name: NotRequired[Nullable[str]]
-    last_name: NotRequired[Nullable[str]]
-    profile_image_url: NotRequired[str]
-    image_url: NotRequired[str]
-    has_image: NotRequired[bool]
-    public_metadata: NotRequired[Dict[str, Any]]
-    private_metadata: NotRequired[Nullable[Dict[str, Any]]]
-    unsafe_metadata: NotRequired[Dict[str, Any]]
-    email_addresses: NotRequired[List[EmailAddressTypedDict]]
-    phone_numbers: NotRequired[List[PhoneNumberTypedDict]]
-    web3_wallets: NotRequired[List[Web3WalletTypedDict]]
-    passkeys: NotRequired[List[SchemasPasskeyTypedDict]]
-    password_enabled: NotRequired[bool]
-    two_factor_enabled: NotRequired[bool]
-    totp_enabled: NotRequired[bool]
-    backup_code_enabled: NotRequired[bool]
-    mfa_enabled_at: NotRequired[Nullable[int]]
+    external_id: Nullable[str]
+    primary_email_address_id: Nullable[str]
+    primary_phone_number_id: Nullable[str]
+    primary_web3_wallet_id: Nullable[str]
+    username: Nullable[str]
+    first_name: Nullable[str]
+    last_name: Nullable[str]
+    has_image: bool
+    public_metadata: Dict[str, Any]
+    email_addresses: List[EmailAddressTypedDict]
+    phone_numbers: List[PhoneNumberTypedDict]
+    web3_wallets: List[Web3WalletTypedDict]
+    passkeys: List[PasskeyTypedDict]
+    password_enabled: bool
+    two_factor_enabled: bool
+    totp_enabled: bool
+    backup_code_enabled: bool
+    mfa_enabled_at: Nullable[int]
     r"""Unix timestamp of when MFA was last enabled for this user. It should be noted that this field is not nullified if MFA is disabled.
 
     """
-    mfa_disabled_at: NotRequired[Nullable[int]]
+    mfa_disabled_at: Nullable[int]
     r"""Unix timestamp of when MFA was last disabled for this user. It should be noted that this field is not nullified if MFA is enabled again.
 
     """
-    external_accounts: NotRequired[List[ExternalAccountWithVerificationTypedDict]]
-    saml_accounts: NotRequired[List[SAMLAccountTypedDict]]
-    last_sign_in_at: NotRequired[Nullable[int]]
+    external_accounts: List[ExternalAccountWithVerificationTypedDict]
+    saml_accounts: List[SAMLAccountTypedDict]
+    last_sign_in_at: Nullable[int]
     r"""Unix timestamp of last sign-in.
 
     """
-    banned: NotRequired[bool]
+    banned: bool
     r"""Flag to denote whether user is banned or not.
 
     """
-    locked: NotRequired[bool]
+    locked: bool
     r"""Flag to denote whether user is currently locked, i.e. restricted from signing in or not.
 
     """
-    lockout_expires_in_seconds: NotRequired[Nullable[int]]
+    lockout_expires_in_seconds: Nullable[int]
     r"""The number of seconds remaining until the lockout period expires for a locked user. A null value for a locked user indicates that lockout never expires.
 
     """
-    verification_attempts_remaining: NotRequired[Nullable[int]]
+    verification_attempts_remaining: Nullable[int]
     r"""The number of verification attempts remaining until the user is locked. Null if account lockout is not enabled. Note: if a user is locked explicitly via the Backend API, they may still have verification attempts remaining.
 
     """
-    updated_at: NotRequired[int]
+    updated_at: int
     r"""Unix timestamp of last update.
 
     """
-    created_at: NotRequired[int]
+    created_at: int
     r"""Unix timestamp of creation.
 
     """
-    delete_self_enabled: NotRequired[bool]
+    delete_self_enabled: bool
     r"""If enabled, user can delete themselves via FAPI.
 
     """
-    create_organization_enabled: NotRequired[bool]
+    create_organization_enabled: bool
     r"""If enabled, user can create organizations via FAPI.
 
     """
-    create_organizations_limit: NotRequired[Nullable[int]]
-    r"""The maximum number of organizations the user can create. 0 means unlimited.
-
-    """
-    last_active_at: NotRequired[Nullable[int]]
+    last_active_at: Nullable[int]
     r"""Unix timestamp of the latest session activity, with day precision.
 
     """
-    legal_accepted_at: NotRequired[Nullable[int]]
+    legal_accepted_at: Nullable[int]
     r"""Unix timestamp of when the user accepted the legal requirements.
+
+    """
+    profile_image_url: NotRequired[str]
+    image_url: NotRequired[str]
+    private_metadata: NotRequired[Nullable[Dict[str, Any]]]
+    unsafe_metadata: NotRequired[Dict[str, Any]]
+    create_organizations_limit: NotRequired[Nullable[int]]
+    r"""The maximum number of organizations the user can create. 0 means unlimited.
 
     """
 
@@ -122,26 +122,115 @@ class UserTypedDict(TypedDict):
 class User(BaseModel):
     r"""Success"""
 
-    id: Optional[str] = None
+    id: str
 
-    object: Optional[UserObject] = None
+    object: UserObject
     r"""String representing the object's type. Objects of the same type share the same value.
 
     """
 
-    external_id: OptionalNullable[str] = UNSET
+    external_id: Nullable[str]
 
-    primary_email_address_id: OptionalNullable[str] = UNSET
+    primary_email_address_id: Nullable[str]
 
-    primary_phone_number_id: OptionalNullable[str] = UNSET
+    primary_phone_number_id: Nullable[str]
 
-    primary_web3_wallet_id: OptionalNullable[str] = UNSET
+    primary_web3_wallet_id: Nullable[str]
 
-    username: OptionalNullable[str] = UNSET
+    username: Nullable[str]
 
-    first_name: OptionalNullable[str] = UNSET
+    first_name: Nullable[str]
 
-    last_name: OptionalNullable[str] = UNSET
+    last_name: Nullable[str]
+
+    has_image: bool
+
+    public_metadata: Dict[str, Any]
+
+    email_addresses: List[EmailAddress]
+
+    phone_numbers: List[PhoneNumber]
+
+    web3_wallets: List[Web3Wallet]
+
+    passkeys: List[Passkey]
+
+    password_enabled: bool
+
+    two_factor_enabled: bool
+
+    totp_enabled: bool
+
+    backup_code_enabled: bool
+
+    mfa_enabled_at: Nullable[int]
+    r"""Unix timestamp of when MFA was last enabled for this user. It should be noted that this field is not nullified if MFA is disabled.
+
+    """
+
+    mfa_disabled_at: Nullable[int]
+    r"""Unix timestamp of when MFA was last disabled for this user. It should be noted that this field is not nullified if MFA is enabled again.
+
+    """
+
+    external_accounts: List[ExternalAccountWithVerification]
+
+    saml_accounts: List[SAMLAccount]
+
+    last_sign_in_at: Nullable[int]
+    r"""Unix timestamp of last sign-in.
+
+    """
+
+    banned: bool
+    r"""Flag to denote whether user is banned or not.
+
+    """
+
+    locked: bool
+    r"""Flag to denote whether user is currently locked, i.e. restricted from signing in or not.
+
+    """
+
+    lockout_expires_in_seconds: Nullable[int]
+    r"""The number of seconds remaining until the lockout period expires for a locked user. A null value for a locked user indicates that lockout never expires.
+
+    """
+
+    verification_attempts_remaining: Nullable[int]
+    r"""The number of verification attempts remaining until the user is locked. Null if account lockout is not enabled. Note: if a user is locked explicitly via the Backend API, they may still have verification attempts remaining.
+
+    """
+
+    updated_at: int
+    r"""Unix timestamp of last update.
+
+    """
+
+    created_at: int
+    r"""Unix timestamp of creation.
+
+    """
+
+    delete_self_enabled: bool
+    r"""If enabled, user can delete themselves via FAPI.
+
+    """
+
+    create_organization_enabled: bool
+    r"""If enabled, user can create organizations via FAPI.
+
+    """
+
+    last_active_at: Nullable[int]
+    r"""Unix timestamp of the latest session activity, with day precision.
+
+    """
+
+    legal_accepted_at: Nullable[int]
+    r"""Unix timestamp of when the user accepted the legal requirements.
+
+    """
 
     profile_image_url: Annotated[
         Optional[str],
@@ -152,146 +241,23 @@ class User(BaseModel):
 
     image_url: Optional[str] = None
 
-    has_image: Optional[bool] = None
-
-    public_metadata: Optional[Dict[str, Any]] = None
-
     private_metadata: OptionalNullable[Dict[str, Any]] = UNSET
 
     unsafe_metadata: Optional[Dict[str, Any]] = None
-
-    email_addresses: Optional[List[EmailAddress]] = None
-
-    phone_numbers: Optional[List[PhoneNumber]] = None
-
-    web3_wallets: Optional[List[Web3Wallet]] = None
-
-    passkeys: Optional[List[SchemasPasskey]] = None
-
-    password_enabled: Optional[bool] = None
-
-    two_factor_enabled: Optional[bool] = None
-
-    totp_enabled: Optional[bool] = None
-
-    backup_code_enabled: Optional[bool] = None
-
-    mfa_enabled_at: OptionalNullable[int] = UNSET
-    r"""Unix timestamp of when MFA was last enabled for this user. It should be noted that this field is not nullified if MFA is disabled.
-
-    """
-
-    mfa_disabled_at: OptionalNullable[int] = UNSET
-    r"""Unix timestamp of when MFA was last disabled for this user. It should be noted that this field is not nullified if MFA is enabled again.
-
-    """
-
-    external_accounts: Optional[List[ExternalAccountWithVerification]] = None
-
-    saml_accounts: Optional[List[SAMLAccount]] = None
-
-    last_sign_in_at: OptionalNullable[int] = UNSET
-    r"""Unix timestamp of last sign-in.
-
-    """
-
-    banned: Optional[bool] = None
-    r"""Flag to denote whether user is banned or not.
-
-    """
-
-    locked: Optional[bool] = None
-    r"""Flag to denote whether user is currently locked, i.e. restricted from signing in or not.
-
-    """
-
-    lockout_expires_in_seconds: OptionalNullable[int] = UNSET
-    r"""The number of seconds remaining until the lockout period expires for a locked user. A null value for a locked user indicates that lockout never expires.
-
-    """
-
-    verification_attempts_remaining: OptionalNullable[int] = UNSET
-    r"""The number of verification attempts remaining until the user is locked. Null if account lockout is not enabled. Note: if a user is locked explicitly via the Backend API, they may still have verification attempts remaining.
-
-    """
-
-    updated_at: Optional[int] = None
-    r"""Unix timestamp of last update.
-
-    """
-
-    created_at: Optional[int] = None
-    r"""Unix timestamp of creation.
-
-    """
-
-    delete_self_enabled: Optional[bool] = None
-    r"""If enabled, user can delete themselves via FAPI.
-
-    """
-
-    create_organization_enabled: Optional[bool] = None
-    r"""If enabled, user can create organizations via FAPI.
-
-    """
 
     create_organizations_limit: OptionalNullable[int] = UNSET
     r"""The maximum number of organizations the user can create. 0 means unlimited.
 
     """
 
-    last_active_at: OptionalNullable[int] = UNSET
-    r"""Unix timestamp of the latest session activity, with day precision.
-
-    """
-
-    legal_accepted_at: OptionalNullable[int] = UNSET
-    r"""Unix timestamp of when the user accepted the legal requirements.
-
-    """
-
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = [
-            "id",
-            "object",
-            "external_id",
-            "primary_email_address_id",
-            "primary_phone_number_id",
-            "primary_web3_wallet_id",
-            "username",
-            "first_name",
-            "last_name",
             "profile_image_url",
             "image_url",
-            "has_image",
-            "public_metadata",
             "private_metadata",
             "unsafe_metadata",
-            "email_addresses",
-            "phone_numbers",
-            "web3_wallets",
-            "passkeys",
-            "password_enabled",
-            "two_factor_enabled",
-            "totp_enabled",
-            "backup_code_enabled",
-            "mfa_enabled_at",
-            "mfa_disabled_at",
-            "external_accounts",
-            "saml_accounts",
-            "last_sign_in_at",
-            "banned",
-            "locked",
-            "lockout_expires_in_seconds",
-            "verification_attempts_remaining",
-            "updated_at",
-            "created_at",
-            "delete_self_enabled",
-            "create_organization_enabled",
             "create_organizations_limit",
-            "last_active_at",
-            "legal_accepted_at",
         ]
         nullable_fields = [
             "external_id",

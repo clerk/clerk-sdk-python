@@ -13,6 +13,8 @@ class OauthApplicationsSDK(BaseSDK):
         *,
         limit: Optional[int] = 10,
         offset: Optional[int] = 0,
+        order_by: Optional[str] = "+created_at",
+        name_query: Optional[str] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -27,6 +29,8 @@ class OauthApplicationsSDK(BaseSDK):
 
         :param limit: Applies a limit to the number of results returned. Can be used for paginating the results together with `offset`.
         :param offset: Skip the first `offset` results when paginating. Needs to be an integer greater or equal to zero. To be used in conjunction with `limit`.
+        :param order_by: Allows to return OAuth applications in a particular order. At the moment, you can order the returned OAuth applications by their `created_at` and `name`. In order to specify the direction, you can use the `+/-` symbols prepended in the property to order by. For example, if you want OAuth applications to be returned in descending order according to their `created_at` property, you can use `-created_at`. If you don't use `+` or `-`, then `+` is implied. We only support one `order_by` parameter, and if multiple `order_by` parameters are provided, we will only keep the first one. For example, if you pass `order_by=name&order_by=created_at`, we will consider only the first `order_by` parameter, which is `name`. The `created_at` parameter will be ignored in this case.
+        :param name_query: Returns OAuth applications with names that match the given query, via case-insensitive partial match.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -45,6 +49,8 @@ class OauthApplicationsSDK(BaseSDK):
         request = models.ListOAuthApplicationsRequest(
             limit=limit,
             offset=offset,
+            order_by=order_by,
+            name_query=name_query,
         )
 
         req = self._build_request(
@@ -121,6 +127,8 @@ class OauthApplicationsSDK(BaseSDK):
         *,
         limit: Optional[int] = 10,
         offset: Optional[int] = 0,
+        order_by: Optional[str] = "+created_at",
+        name_query: Optional[str] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -135,6 +143,8 @@ class OauthApplicationsSDK(BaseSDK):
 
         :param limit: Applies a limit to the number of results returned. Can be used for paginating the results together with `offset`.
         :param offset: Skip the first `offset` results when paginating. Needs to be an integer greater or equal to zero. To be used in conjunction with `limit`.
+        :param order_by: Allows to return OAuth applications in a particular order. At the moment, you can order the returned OAuth applications by their `created_at` and `name`. In order to specify the direction, you can use the `+/-` symbols prepended in the property to order by. For example, if you want OAuth applications to be returned in descending order according to their `created_at` property, you can use `-created_at`. If you don't use `+` or `-`, then `+` is implied. We only support one `order_by` parameter, and if multiple `order_by` parameters are provided, we will only keep the first one. For example, if you pass `order_by=name&order_by=created_at`, we will consider only the first `order_by` parameter, which is `name`. The `created_at` parameter will be ignored in this case.
+        :param name_query: Returns OAuth applications with names that match the given query, via case-insensitive partial match.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -153,6 +163,8 @@ class OauthApplicationsSDK(BaseSDK):
         request = models.ListOAuthApplicationsRequest(
             limit=limit,
             offset=offset,
+            order_by=order_by,
+            name_query=name_query,
         )
 
         req = self._build_request_async(
@@ -672,6 +684,8 @@ class OauthApplicationsSDK(BaseSDK):
         redirect_uris: OptionalNullable[List[str]] = UNSET,
         callback_url: OptionalNullable[str] = UNSET,
         scopes: OptionalNullable[str] = "profile email",
+        consent_screen_enabled: OptionalNullable[bool] = UNSET,
+        pkce_required: OptionalNullable[bool] = UNSET,
         public: OptionalNullable[bool] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -687,6 +701,8 @@ class OauthApplicationsSDK(BaseSDK):
         :param redirect_uris: An array of redirect URIs of the new OAuth application
         :param callback_url: The new callback URL of the OAuth application
         :param scopes: Define the allowed scopes for the new OAuth applications that dictate the user payload of the OAuth user info endpoint. Available scopes are `profile`, `email`, `public_metadata`, `private_metadata`. Provide the requested scopes as a string, separated by spaces.
+        :param consent_screen_enabled: True to enable a consent screen to display in the authentication flow. This cannot be disabled for dynamically registered OAuth Applications.
+        :param pkce_required: True to require the Proof Key of Code Exchange (PKCE) flow.
         :param public: If true, this client is public and you can use the Proof Key of Code Exchange (PKCE) flow.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -710,6 +726,8 @@ class OauthApplicationsSDK(BaseSDK):
                 redirect_uris=redirect_uris,
                 callback_url=callback_url,
                 scopes=scopes,
+                consent_screen_enabled=consent_screen_enabled,
+                pkce_required=pkce_required,
                 public=public,
             ),
         )
@@ -800,6 +818,8 @@ class OauthApplicationsSDK(BaseSDK):
         redirect_uris: OptionalNullable[List[str]] = UNSET,
         callback_url: OptionalNullable[str] = UNSET,
         scopes: OptionalNullable[str] = "profile email",
+        consent_screen_enabled: OptionalNullable[bool] = UNSET,
+        pkce_required: OptionalNullable[bool] = UNSET,
         public: OptionalNullable[bool] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -815,6 +835,8 @@ class OauthApplicationsSDK(BaseSDK):
         :param redirect_uris: An array of redirect URIs of the new OAuth application
         :param callback_url: The new callback URL of the OAuth application
         :param scopes: Define the allowed scopes for the new OAuth applications that dictate the user payload of the OAuth user info endpoint. Available scopes are `profile`, `email`, `public_metadata`, `private_metadata`. Provide the requested scopes as a string, separated by spaces.
+        :param consent_screen_enabled: True to enable a consent screen to display in the authentication flow. This cannot be disabled for dynamically registered OAuth Applications.
+        :param pkce_required: True to require the Proof Key of Code Exchange (PKCE) flow.
         :param public: If true, this client is public and you can use the Proof Key of Code Exchange (PKCE) flow.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -838,6 +860,8 @@ class OauthApplicationsSDK(BaseSDK):
                 redirect_uris=redirect_uris,
                 callback_url=callback_url,
                 scopes=scopes,
+                consent_screen_enabled=consent_screen_enabled,
+                pkce_required=pkce_required,
                 public=public,
             ),
         )

@@ -116,7 +116,6 @@ with Clerk(
         "blocklist": True,
         "block_email_subaddresses": True,
         "block_disposable_email_domains": True,
-        "ignore_dots_for_gmail_addresses": False,
     })
 
     assert res is not None
