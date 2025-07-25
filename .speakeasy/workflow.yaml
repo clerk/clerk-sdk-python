@@ -3,7 +3,7 @@ speakeasyVersion: latest
 sources:
     clerk-openapi:
         inputs:
-            - location: https://raw.githubusercontent.com/clerk/openapi-specs/refs/heads/main/bapi/2025-03-12.yml
+            - location: https://raw.githubusercontent.com/clerk/openapi-specs/refs/heads/main/bapi/2025-04-10.yml
         overlays:
             - location: ./examples.yaml
             - location: ./fixes.yaml
