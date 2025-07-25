@@ -1,0 +1,14 @@
+# ManagementCreateOrganizationRequest
+
+
+## Fields
+
+| Field                                                                | Type                                                                 | Required                                                             | Description                                                          |
+| -------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- |
+| `name`                                                               | *str*                                                                | :heavy_check_mark:                                                   | The name of the organization.                                        |
+| `slug`                                                               | *str*                                                                | :heavy_check_mark:                                                   | The slug of the organization.                                        |
+| `created_by`                                                         | *Optional[str]*                                                      | :heavy_minus_sign:                                                   | The ID of the user who created the organization.                     |
+| `max_allowed_memberships`                                            | *Optional[int]*                                                      | :heavy_minus_sign:                                                   | The maximum allowed memberships for the organization.                |
+| `public_metadata`                                                    | [Optional[models.PublicMetadata]](../models/publicmetadata.md)       | :heavy_minus_sign:                                                   | Public metadata for the organization.                                |
+| `private_metadata`                                                   | [Optional[models.PrivateMetadata]](../models/privatemetadata.md)     | :heavy_minus_sign:                                                   | Private metadata for the organization.                               |
+| `created_at`                                                         | [date](https://docs.python.org/3/library/datetime.html#date-objects) | :heavy_minus_sign:                                                   | The creation timestamp in RFC3339 format.                            |

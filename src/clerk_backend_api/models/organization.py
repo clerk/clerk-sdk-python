@@ -16,10 +16,10 @@ class OrganizationTypedDict(TypedDict):
     id: str
     name: str
     slug: str
+    has_image: bool
     max_allowed_memberships: int
     admin_delete_enabled: bool
     public_metadata: Dict[str, Any]
-    private_metadata: Dict[str, Any]
     created_at: int
     r"""Unix timestamp of creation.
 
@@ -28,9 +28,11 @@ class OrganizationTypedDict(TypedDict):
     r"""Unix timestamp of last update.
 
     """
+    image_url: NotRequired[str]
     members_count: NotRequired[int]
     missing_member_with_elevated_permissions: NotRequired[bool]
     pending_invitations_count: NotRequired[int]
+    private_metadata: NotRequired[Dict[str, Any]]
     created_by: NotRequired[str]
 
 
@@ -43,13 +45,13 @@ class Organization(BaseModel):
 
     slug: str
 
+    has_image: bool
+
     max_allowed_memberships: int
 
     admin_delete_enabled: bool
 
     public_metadata: Dict[str, Any]
-
-    private_metadata: Dict[str, Any]
 
     created_at: int
     r"""Unix timestamp of creation.
@@ -61,10 +63,14 @@ class Organization(BaseModel):
 
     """
 
+    image_url: Optional[str] = None
+
     members_count: Optional[int] = None
 
     missing_member_with_elevated_permissions: Optional[bool] = None
 
     pending_invitations_count: Optional[int] = None
+
+    private_metadata: Optional[Dict[str, Any]] = None
 
     created_by: Optional[str] = None

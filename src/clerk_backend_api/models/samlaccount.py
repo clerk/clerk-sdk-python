@@ -9,11 +9,12 @@ from clerk_backend_api.types import (
     UNSET,
     UNSET_SENTINEL,
 )
-from clerk_backend_api.utils import validate_open_enum
+from clerk_backend_api.utils import get_discriminator, validate_open_enum
 from enum import Enum
-from pydantic import model_serializer
+import pydantic
+from pydantic import Discriminator, Tag, model_serializer
 from pydantic.functional_validators import PlainValidator
-from typing import Any, Dict, Optional, Union
+from typing import Any, Dict, List, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 
@@ -23,40 +24,50 @@ class SAMLAccountObject(str, Enum):
     SAML_ACCOUNT = "saml_account"
 
 
-class TicketVerificationSAMLAccountStatus(str, Enum):
+class VerificationTicketVerificationSAMLAccountObject(str, Enum):
+    VERIFICATION_TICKET = "verification_ticket"
+
+
+class VerificationTicketVerificationSAMLAccountStatus(str, Enum):
     UNVERIFIED = "unverified"
     VERIFIED = "verified"
     EXPIRED = "expired"
 
 
-class TicketVerificationSAMLAccountStrategy(str, Enum, metaclass=utils.OpenEnumMeta):
+class VerificationTicketVerificationSAMLAccountStrategy(
+    str, Enum, metaclass=utils.OpenEnumMeta
+):
     TICKET = "ticket"
 
 
 class VerificationTicketTypedDict(TypedDict):
-    status: TicketVerificationSAMLAccountStatus
-    strategy: TicketVerificationSAMLAccountStrategy
+    status: VerificationTicketVerificationSAMLAccountStatus
+    strategy: VerificationTicketVerificationSAMLAccountStrategy
     attempts: Nullable[int]
     expire_at: Nullable[int]
+    object: NotRequired[VerificationTicketVerificationSAMLAccountObject]
     verified_at_client: NotRequired[Nullable[str]]
 
 
 class VerificationTicket(BaseModel):
-    status: TicketVerificationSAMLAccountStatus
+    status: VerificationTicketVerificationSAMLAccountStatus
 
     strategy: Annotated[
-        TicketVerificationSAMLAccountStrategy, PlainValidator(validate_open_enum(False))
+        VerificationTicketVerificationSAMLAccountStrategy,
+        PlainValidator(validate_open_enum(False)),
     ]
 
     attempts: Nullable[int]
 
     expire_at: Nullable[int]
 
+    object: Optional[VerificationTicketVerificationSAMLAccountObject] = None
+
     verified_at_client: OptionalNullable[str] = UNSET
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["verified_at_client"]
+        optional_fields = ["object", "verified_at_client"]
         nullable_fields = ["attempts", "expire_at", "verified_at_client"]
         null_default_fields = []
 
@@ -85,7 +96,11 @@ class VerificationTicket(BaseModel):
         return m
 
 
-class SAMLVerificationStatus(str, Enum):
+class VerificationSamlVerificationObject(str, Enum):
+    VERIFICATION_SAML = "verification_saml"
+
+
+class VerificationSamlVerificationStatus(str, Enum):
     UNVERIFIED = "unverified"
     VERIFIED = "verified"
     FAILED = "failed"
@@ -93,7 +108,7 @@ class SAMLVerificationStatus(str, Enum):
     TRANSFERABLE = "transferable"
 
 
-class SAMLVerificationStrategy(str, Enum):
+class VerificationSamlVerificationStrategy(str, Enum):
     SAML = "saml"
 
 
@@ -105,7 +120,7 @@ class ClerkErrorErrorSAMLAccountMeta(BaseModel):
     pass
 
 
-class SAMLErrorClerkErrorTypedDict(TypedDict):
+class VerificationSamlErrorClerkErrorTypedDict(TypedDict):
     message: str
     long_message: str
     code: str
@@ -113,7 +128,7 @@ class SAMLErrorClerkErrorTypedDict(TypedDict):
     clerk_trace_id: NotRequired[str]
 
 
-class SAMLErrorClerkError(BaseModel):
+class VerificationSamlErrorClerkError(BaseModel):
     message: str
 
     long_message: str
@@ -125,26 +140,27 @@ class SAMLErrorClerkError(BaseModel):
     clerk_trace_id: Optional[str] = None
 
 
-SAMLVerificationErrorTypedDict = SAMLErrorClerkErrorTypedDict
+VerificationSamlVerificationErrorTypedDict = VerificationSamlErrorClerkErrorTypedDict
 
 
-SAMLVerificationError = SAMLErrorClerkError
+VerificationSamlVerificationError = VerificationSamlErrorClerkError
 
 
 class SamlTypedDict(TypedDict):
-    status: SAMLVerificationStatus
-    strategy: SAMLVerificationStrategy
+    status: VerificationSamlVerificationStatus
+    strategy: VerificationSamlVerificationStrategy
     external_verification_redirect_url: Nullable[str]
     expire_at: int
     attempts: Nullable[int]
-    error: NotRequired[Nullable[SAMLVerificationErrorTypedDict]]
+    object: NotRequired[VerificationSamlVerificationObject]
+    error: NotRequired[Nullable[VerificationSamlVerificationErrorTypedDict]]
     verified_at_client: NotRequired[Nullable[str]]
 
 
 class Saml(BaseModel):
-    status: SAMLVerificationStatus
+    status: VerificationSamlVerificationStatus
 
-    strategy: SAMLVerificationStrategy
+    strategy: VerificationSamlVerificationStrategy
 
     external_verification_redirect_url: Nullable[str]
 
@@ -152,13 +168,15 @@ class Saml(BaseModel):
 
     attempts: Nullable[int]
 
-    error: OptionalNullable[SAMLVerificationError] = UNSET
+    object: Optional[VerificationSamlVerificationObject] = None
+
+    error: OptionalNullable[VerificationSamlVerificationError] = UNSET
 
     verified_at_client: OptionalNullable[str] = UNSET
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["error", "verified_at_client"]
+        optional_fields = ["object", "error", "verified_at_client"]
         nullable_fields = [
             "external_verification_redirect_url",
             "error",
@@ -198,15 +216,19 @@ SAMLAccountVerificationTypedDict = TypeAliasType(
 )
 
 
-SAMLAccountVerification = TypeAliasType(
-    "SAMLAccountVerification", Union[VerificationTicket, Saml]
-)
+SAMLAccountVerification = Annotated[
+    Union[
+        Annotated[Saml, Tag("verification_saml")],
+        Annotated[VerificationTicket, Tag("verification_ticket")],
+    ],
+    Discriminator(lambda m: get_discriminator(m, "object", "object")),
+]
 
 
-class SAMLConnectionSAMLConnectionTypedDict(TypedDict):
+class SAMLConnection2TypedDict(TypedDict):
     id: str
     name: str
-    domain: str
+    domains: List[str]
     active: bool
     provider: str
     sync_user_attributes: bool
@@ -218,17 +240,18 @@ class SAMLConnectionSAMLConnectionTypedDict(TypedDict):
     r"""Unix timestamp of last update.
 
     """
+    domain: NotRequired[str]
     allow_subdomains: NotRequired[bool]
     allow_idp_initiated: NotRequired[bool]
     disable_additional_identifications: NotRequired[bool]
 
 
-class SAMLConnectionSAMLConnection(BaseModel):
+class SAMLConnection2(BaseModel):
     id: str
 
     name: str
 
-    domain: str
+    domains: List[str]
 
     active: bool
 
@@ -245,12 +268,88 @@ class SAMLConnectionSAMLConnection(BaseModel):
     r"""Unix timestamp of last update.
 
     """
+
+    domain: Annotated[
+        Optional[str],
+        pydantic.Field(
+            deprecated="warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
+        ),
+    ] = None
 
     allow_subdomains: Optional[bool] = None
 
     allow_idp_initiated: Optional[bool] = None
 
     disable_additional_identifications: Optional[bool] = None
+
+
+class SAMLConnection1TypedDict(TypedDict):
+    id: str
+    name: str
+    domain: str
+    active: bool
+    provider: str
+    sync_user_attributes: bool
+    created_at: int
+    r"""Unix timestamp of creation.
+
+    """
+    updated_at: int
+    r"""Unix timestamp of last update.
+
+    """
+    domains: NotRequired[List[str]]
+    allow_subdomains: NotRequired[bool]
+    allow_idp_initiated: NotRequired[bool]
+    disable_additional_identifications: NotRequired[bool]
+
+
+class SAMLConnection1(BaseModel):
+    id: str
+
+    name: str
+
+    domain: Annotated[
+        str,
+        pydantic.Field(
+            deprecated="warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
+        ),
+    ]
+
+    active: bool
+
+    provider: str
+
+    sync_user_attributes: bool
+
+    created_at: int
+    r"""Unix timestamp of creation.
+
+    """
+
+    updated_at: int
+    r"""Unix timestamp of last update.
+
+    """
+
+    domains: Optional[List[str]] = None
+
+    allow_subdomains: Optional[bool] = None
+
+    allow_idp_initiated: Optional[bool] = None
+
+    disable_additional_identifications: Optional[bool] = None
+
+
+SAMLConnectionSAMLConnectionTypedDict = TypeAliasType(
+    "SAMLConnectionSAMLConnectionTypedDict",
+    Union[SAMLConnection1TypedDict, SAMLConnection2TypedDict],
+)
+
+
+SAMLConnectionSAMLConnection = TypeAliasType(
+    "SAMLConnectionSAMLConnection", Union[SAMLConnection1, SAMLConnection2]
+)
 
 
 SamlConnectionTypedDict = SAMLConnectionSAMLConnectionTypedDict

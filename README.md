@@ -22,7 +22,7 @@ Clerk Backend API: The Clerk REST Backend API, meant to be accessed by backend s
 ### Versions
 
 When the API changes in a way that isn't compatible with older versions, a new version is released.
-Each version is identified by its release date, e.g. `2025-03-12`. For more information, please see [Clerk API Versions](https://clerk.com/docs/versioning/available-versions).
+Each version is identified by its release date, e.g. `2025-04-10`. For more information, please see [Clerk API Versions](https://clerk.com/docs/versioning/available-versions).
 
 Please see https://clerk.com/docs for more information.
 
@@ -129,11 +129,16 @@ Generally, the SDK will work well with most IDEs out of the box. However, when u
 from clerk_backend_api import Clerk
 
 
-with Clerk() as clerk:
+with Clerk(
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+) as clerk:
 
-    clerk.miscellaneous.get_public_interstitial(frontend_api_query_parameter1="pub_1a2b3c4d", publishable_key="<value>", proxy_url="https://fine-tarragon.info", domain="great-director.net", sign_in_url="https://likable-freckle.net/", use_domain_for_script=False)
+    res = clerk.email_addresses.get(email_address_id="email_address_id_example")
 
-    # Use the SDK ...
+    assert res is not None
+
+    # Handle response
+    print(res)
 ```
 
 </br>
@@ -146,11 +151,16 @@ from clerk_backend_api import Clerk
 
 async def main():
 
-    async with Clerk() as clerk:
+    async with Clerk(
+        bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+    ) as clerk:
 
-        await clerk.miscellaneous.get_public_interstitial_async(frontend_api_query_parameter1="pub_1a2b3c4d", publishable_key="<value>", proxy_url="https://fine-tarragon.info", domain="great-director.net", sign_in_url="https://likable-freckle.net/", use_domain_for_script=False)
+        res = await clerk.email_addresses.get_async(email_address_id="email_address_id_example")
 
-        # Use the SDK ...
+        assert res is not None
+
+        # Handle response
+        print(res)
 
 asyncio.run(main())
 ```
@@ -179,6 +189,27 @@ with Clerk(
     clerk.miscellaneous.get_public_interstitial(frontend_api_query_parameter1="pub_1a2b3c4d", publishable_key="<value>", proxy_url="https://fine-tarragon.info", domain="great-director.net", sign_in_url="https://likable-freckle.net/", use_domain_for_script=False)
 
     # Use the SDK ...
+
+```
+
+### Per-Operation Security Schemes
+
+Some operations in this SDK require the security scheme to be specified at the request level. For example:
+```python
+import clerk_backend_api
+from clerk_backend_api import Clerk
+
+
+with Clerk() as clerk:
+
+    res = clerk.management.upsert_user(security=clerk_backend_api.ManagementUpsertUserSecurity(
+        management_token="<YOUR_BEARER_TOKEN_HERE>",
+    ), email_address="Roger_OReilly-Dibbert10@hotmail.com", first_name="Diana", last_name="Schmidt-Kutch")
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 <!-- End Authentication [security] -->
@@ -245,6 +276,14 @@ def verify_machine_token(request: httpx.Request):
 * [list](docs/sdks/allowlistidentifiers/README.md#list) - List all identifiers on the allow-list
 * [create](docs/sdks/allowlistidentifiers/README.md#create) - Add identifier to the allow-list
 * [delete](docs/sdks/allowlistidentifiers/README.md#delete) - Delete identifier from allow-list
+
+### [aws_credentials](docs/sdks/awscredentials/README.md)
+
+* [list](docs/sdks/awscredentials/README.md#list) - List all AWS Credentials
+* [create](docs/sdks/awscredentials/README.md#create) - Create an AWS Credential
+* [get](docs/sdks/awscredentials/README.md#get) - Retrieve an AWS Credential
+* [delete](docs/sdks/awscredentials/README.md#delete) - Delete an AWS Credential
+* [update](docs/sdks/awscredentials/README.md#update) - Update an AWS Credential
 
 ### [beta_features](docs/sdks/betafeatures/README.md)
 
@@ -321,9 +360,34 @@ def verify_machine_token(request: httpx.Request):
 * [update](docs/sdks/jwttemplates/README.md#update) - Update a JWT template
 * [delete](docs/sdks/jwttemplates/README.md#delete) - Delete a Template
 
+### [machine_tokens](docs/sdks/machinetokens/README.md)
+
+* [create](docs/sdks/machinetokens/README.md#create) - Create a machine token
+
+### [machines](docs/sdks/machines/README.md)
+
+* [list](docs/sdks/machines/README.md#list) - Get a list of machines for an instance
+* [create](docs/sdks/machines/README.md#create) - Create a machine
+* [get](docs/sdks/machines/README.md#get) - Retrieve a machine
+* [update](docs/sdks/machines/README.md#update) - Update a machine
+* [delete](docs/sdks/machines/README.md#delete) - Delete a machine
+* [get_secret_key](docs/sdks/machines/README.md#get_secret_key) - Retrieve a machine secret key
+* [create_scope](docs/sdks/machines/README.md#create_scope) - Create a machine scope
+* [delete_scope](docs/sdks/machines/README.md#delete_scope) - Delete a machine scope
+
+### [management](docs/sdks/management/README.md)
+
+* [upsert_user](docs/sdks/management/README.md#upsert_user) - Upsert a user
+* [create_organization](docs/sdks/management/README.md#create_organization) - Create an organization
+* [create_application](docs/sdks/management/README.md#create_application) - Create an application (instance)
+
 ### [miscellaneous](docs/sdks/miscellaneous/README.md)
 
 * [get_public_interstitial](docs/sdks/miscellaneous/README.md#get_public_interstitial) - Returns the markup for the interstitial page
+
+### [oauth_access_tokens](docs/sdks/oauthaccesstokens/README.md)
+
+* [verify](docs/sdks/oauthaccesstokens/README.md#verify) - Verify an OAuth Access Token
 
 ### [oauth_applications](docs/sdks/oauthapplicationssdk/README.md)
 
@@ -340,6 +404,7 @@ def verify_machine_token(request: httpx.Request):
 * [list](docs/sdks/organizationdomainssdk/README.md#list) - Get a list of all domains of an organization.
 * [update](docs/sdks/organizationdomainssdk/README.md#update) - Update an organization domain.
 * [delete](docs/sdks/organizationdomainssdk/README.md#delete) - Remove a domain from an organization.
+* [list_all](docs/sdks/organizationdomainssdk/README.md#list_all) - List all organization domains
 
 ### [organization_invitations](docs/sdks/organizationinvitationssdk/README.md)
 
@@ -403,7 +468,6 @@ def verify_machine_token(request: httpx.Request):
 * [get](docs/sdks/sessions/README.md#get) - Retrieve a session
 * [refresh](docs/sdks/sessions/README.md#refresh) - Refresh a session
 * [revoke](docs/sdks/sessions/README.md#revoke) - Revoke a session
-* [~~verify~~](docs/sdks/sessions/README.md#verify) - Verify a session :warning: **Deprecated**
 * [create_token](docs/sdks/sessions/README.md#create_token) - Create a session token
 * [create_token_from_template](docs/sdks/sessions/README.md#create_token_from_template) - Create a session token from a jwt template
 
@@ -435,6 +499,8 @@ def verify_machine_token(request: httpx.Request):
 * [delete](docs/sdks/users/README.md#delete) - Delete a user
 * [ban](docs/sdks/users/README.md#ban) - Ban a user
 * [unban](docs/sdks/users/README.md#unban) - Unban a user
+* [bulk_ban](docs/sdks/users/README.md#bulk_ban) - Ban multiple users
+* [bulk_unban](docs/sdks/users/README.md#bulk_unban) - Unban multiple users
 * [lock](docs/sdks/users/README.md#lock) - Lock a user
 * [unlock](docs/sdks/users/README.md#unlock) - Unlock a user
 * [set_profile_image](docs/sdks/users/README.md#set_profile_image) - Set user profile image
@@ -549,12 +615,12 @@ By default, an API error will raise a models.SDKError exception, which has the f
 | `.raw_response` | *httpx.Response* | The raw HTTP response |
 | `.body`         | *str*            | The response content  |
 
-When custom error responses are specified for an operation, the SDK may also raise their associated exceptions. You can refer to respective *Errors* tables in SDK docs for more details on possible exception types for each operation. For example, the `verify_async` method may raise the following exceptions:
+When custom error responses are specified for an operation, the SDK may also raise their associated exceptions. You can refer to respective *Errors* tables in SDK docs for more details on possible exception types for each operation. For example, the `create_async` method may raise the following exceptions:
 
-| Error Type         | Status Code   | Content Type     |
-| ------------------ | ------------- | ---------------- |
-| models.ClerkErrors | 400, 401, 404 | application/json |
-| models.SDKError    | 4XX, 5XX      | \*/\*            |
+| Error Type         | Status Code             | Content Type     |
+| ------------------ | ----------------------- | ---------------- |
+| models.ClerkErrors | 400, 401, 403, 404, 422 | application/json |
+| models.SDKError    | 4XX, 5XX                | \*/\*            |
 
 ### Example
 
@@ -568,8 +634,10 @@ with Clerk(
     res = None
     try:
 
-        res = clerk.clients.verify(request={
-            "token": "jwt_token_example",
+        res = clerk.aws_credentials.create(request={
+            "access_key_id": "<id>",
+            "secret_access_key": "<value>",
+            "user_pool_ids": [],
         })
 
         assert res is not None
@@ -699,14 +767,18 @@ The `Clerk` class implements the context manager protocol and registers a finali
 from clerk_backend_api import Clerk
 def main():
 
-    with Clerk() as clerk:
+    with Clerk(
+        bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+    ) as clerk:
         # Rest of application here...
 
 
 # Or when using async:
 async def amain():
 
-    async with Clerk() as clerk:
+    async with Clerk(
+        bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+    ) as clerk:
         # Rest of application here...
 ```
 <!-- End Resource Management [resource-management] -->

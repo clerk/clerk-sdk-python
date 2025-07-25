@@ -26,6 +26,10 @@ class UpdateOAuthApplicationRequestBodyTypedDict(TypedDict):
     r"""The new callback URL of the OAuth application"""
     scopes: NotRequired[Nullable[str]]
     r"""Define the allowed scopes for the new OAuth applications that dictate the user payload of the OAuth user info endpoint. Available scopes are `profile`, `email`, `public_metadata`, `private_metadata`. Provide the requested scopes as a string, separated by spaces."""
+    consent_screen_enabled: NotRequired[Nullable[bool]]
+    r"""True to enable a consent screen to display in the authentication flow. This cannot be disabled for dynamically registered OAuth Applications."""
+    pkce_required: NotRequired[Nullable[bool]]
+    r"""True to require the Proof Key of Code Exchange (PKCE) flow."""
     public: NotRequired[Nullable[bool]]
     r"""If true, this client is public and you can use the Proof Key of Code Exchange (PKCE) flow."""
 
@@ -50,13 +54,35 @@ class UpdateOAuthApplicationRequestBody(BaseModel):
     scopes: OptionalNullable[str] = "profile email"
     r"""Define the allowed scopes for the new OAuth applications that dictate the user payload of the OAuth user info endpoint. Available scopes are `profile`, `email`, `public_metadata`, `private_metadata`. Provide the requested scopes as a string, separated by spaces."""
 
+    consent_screen_enabled: OptionalNullable[bool] = UNSET
+    r"""True to enable a consent screen to display in the authentication flow. This cannot be disabled for dynamically registered OAuth Applications."""
+
+    pkce_required: OptionalNullable[bool] = UNSET
+    r"""True to require the Proof Key of Code Exchange (PKCE) flow."""
+
     public: OptionalNullable[bool] = UNSET
     r"""If true, this client is public and you can use the Proof Key of Code Exchange (PKCE) flow."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["name", "redirect_uris", "callback_url", "scopes", "public"]
-        nullable_fields = ["name", "redirect_uris", "callback_url", "scopes", "public"]
+        optional_fields = [
+            "name",
+            "redirect_uris",
+            "callback_url",
+            "scopes",
+            "consent_screen_enabled",
+            "pkce_required",
+            "public",
+        ]
+        nullable_fields = [
+            "name",
+            "redirect_uris",
+            "callback_url",
+            "scopes",
+            "consent_screen_enabled",
+            "pkce_required",
+            "public",
+        ]
         null_default_fields = []
 
         serialized = handler(self)

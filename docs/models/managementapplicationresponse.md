@@ -1,0 +1,10 @@
+# ManagementApplicationResponse
+
+
+## Fields
+
+| Field                                                                                                | Type                                                                                                 | Required                                                                                             | Description                                                                                          |
+| ---------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| `application_id`                                                                                     | *str*                                                                                                | :heavy_check_mark:                                                                                   | The ID of the application.                                                                           |
+| `subscription`                                                                                       | [Optional[models.ManagementApplicationSubscription]](../models/managementapplicationsubscription.md) | :heavy_minus_sign:                                                                                   | N/A                                                                                                  |
+| `instances`                                                                                          | List[[models.ManagementApplicationInstance](../models/managementapplicationinstance.md)]             | :heavy_check_mark:                                                                                   | List of instances associated with this application.                                                  |

@@ -9,7 +9,7 @@ from typing_extensions import NotRequired, TypedDict
 class CreateAllowlistIdentifierRequestBodyTypedDict(TypedDict):
     identifier: str
     r"""The identifier to be added in the allow-list.
-    This can be an email address, a phone number or a web3 wallet.
+    This can be an email address, a phone number, or a web3 wallet.
     """
     notify: NotRequired[bool]
     r"""This flag denotes whether the given identifier will receive an invitation to join the application.
@@ -20,7 +20,7 @@ class CreateAllowlistIdentifierRequestBodyTypedDict(TypedDict):
 class CreateAllowlistIdentifierRequestBody(BaseModel):
     identifier: str
     r"""The identifier to be added in the allow-list.
-    This can be an email address, a phone number or a web3 wallet.
+    This can be an email address, a phone number, or a web3 wallet.
     """
 
     notify: Optional[bool] = False

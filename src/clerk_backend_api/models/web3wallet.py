@@ -9,9 +9,9 @@ from clerk_backend_api.types import (
     UNSET,
     UNSET_SENTINEL,
 )
-from clerk_backend_api.utils import validate_open_enum
+from clerk_backend_api.utils import get_discriminator, validate_open_enum
 from enum import Enum
-from pydantic import model_serializer
+from pydantic import Discriminator, Tag, model_serializer
 from pydantic.functional_validators import PlainValidator
 from typing import Optional, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
@@ -23,38 +23,48 @@ class Web3WalletObject(str, Enum):
     WEB3_WALLET = "web3_wallet"
 
 
-class AdminVerificationWeb3WalletStatus(str, Enum):
+class VerificationAdminVerificationWeb3WalletObject(str, Enum):
+    VERIFICATION_ADMIN = "verification_admin"
+
+
+class VerificationAdminVerificationWeb3WalletStatus(str, Enum):
     VERIFIED = "verified"
 
 
-class AdminVerificationWeb3WalletStrategy(str, Enum, metaclass=utils.OpenEnumMeta):
+class VerificationAdminVerificationWeb3WalletStrategy(
+    str, Enum, metaclass=utils.OpenEnumMeta
+):
     ADMIN = "admin"
 
 
-class Web3WalletVerificationAdminTypedDict(TypedDict):
-    status: AdminVerificationWeb3WalletStatus
-    strategy: AdminVerificationWeb3WalletStrategy
+class VerificationAdminVerificationAdminTypedDict(TypedDict):
+    status: VerificationAdminVerificationWeb3WalletStatus
+    strategy: VerificationAdminVerificationWeb3WalletStrategy
     attempts: Nullable[int]
     expire_at: Nullable[int]
+    object: NotRequired[VerificationAdminVerificationWeb3WalletObject]
     verified_at_client: NotRequired[Nullable[str]]
 
 
-class Web3WalletVerificationAdmin(BaseModel):
-    status: AdminVerificationWeb3WalletStatus
+class VerificationAdminVerificationAdmin(BaseModel):
+    status: VerificationAdminVerificationWeb3WalletStatus
 
     strategy: Annotated[
-        AdminVerificationWeb3WalletStrategy, PlainValidator(validate_open_enum(False))
+        VerificationAdminVerificationWeb3WalletStrategy,
+        PlainValidator(validate_open_enum(False)),
     ]
 
     attempts: Nullable[int]
 
     expire_at: Nullable[int]
 
+    object: Optional[VerificationAdminVerificationWeb3WalletObject] = None
+
     verified_at_client: OptionalNullable[str] = UNSET
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["verified_at_client"]
+        optional_fields = ["object", "verified_at_client"]
         nullable_fields = ["attempts", "expire_at", "verified_at_client"]
         null_default_fields = []
 
@@ -83,37 +93,44 @@ class Web3WalletVerificationAdmin(BaseModel):
         return m
 
 
-class Web3SignatureVerificationStatus(str, Enum):
+class VerificationWeb3VerificationObject(str, Enum):
+    VERIFICATION_WEB3 = "verification_web3"
+
+
+class VerificationWeb3VerificationStatus(str, Enum):
     UNVERIFIED = "unverified"
     VERIFIED = "verified"
     FAILED = "failed"
     EXPIRED = "expired"
 
 
-class Web3SignatureVerificationStrategy(str, Enum):
+class VerificationWeb3VerificationStrategy(str, Enum):
     WEB3_METAMASK_SIGNATURE = "web3_metamask_signature"
     WEB3_COINBASE_WALLET_SIGNATURE = "web3_coinbase_wallet_signature"
     WEB3_OKX_WALLET_SIGNATURE = "web3_okx_wallet_signature"
 
 
 class Web3SignatureTypedDict(TypedDict):
-    status: Web3SignatureVerificationStatus
-    strategy: Web3SignatureVerificationStrategy
+    status: VerificationWeb3VerificationStatus
+    strategy: VerificationWeb3VerificationStrategy
     attempts: Nullable[int]
     expire_at: Nullable[int]
+    object: NotRequired[VerificationWeb3VerificationObject]
     nonce: NotRequired[Nullable[str]]
     message: NotRequired[Nullable[str]]
     verified_at_client: NotRequired[Nullable[str]]
 
 
 class Web3Signature(BaseModel):
-    status: Web3SignatureVerificationStatus
+    status: VerificationWeb3VerificationStatus
 
-    strategy: Web3SignatureVerificationStrategy
+    strategy: VerificationWeb3VerificationStrategy
 
     attempts: Nullable[int]
 
     expire_at: Nullable[int]
+
+    object: Optional[VerificationWeb3VerificationObject] = None
 
     nonce: OptionalNullable[str] = UNSET
 
@@ -123,7 +140,7 @@ class Web3Signature(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["nonce", "message", "verified_at_client"]
+        optional_fields = ["object", "nonce", "message", "verified_at_client"]
         nullable_fields = [
             "nonce",
             "message",
@@ -160,13 +177,17 @@ class Web3Signature(BaseModel):
 
 Web3WalletVerificationTypedDict = TypeAliasType(
     "Web3WalletVerificationTypedDict",
-    Union[Web3WalletVerificationAdminTypedDict, Web3SignatureTypedDict],
+    Union[VerificationAdminVerificationAdminTypedDict, Web3SignatureTypedDict],
 )
 
 
-Web3WalletVerification = TypeAliasType(
-    "Web3WalletVerification", Union[Web3WalletVerificationAdmin, Web3Signature]
-)
+Web3WalletVerification = Annotated[
+    Union[
+        Annotated[Web3Signature, Tag("verification_web3")],
+        Annotated[VerificationAdminVerificationAdmin, Tag("verification_admin")],
+    ],
+    Discriminator(lambda m: get_discriminator(m, "object", "object")),
+]
 
 
 class Web3WalletTypedDict(TypedDict):

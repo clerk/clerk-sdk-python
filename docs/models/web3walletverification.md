@@ -9,9 +9,9 @@
 value: models.Web3Signature = /* values here */
 ```
 
-### `models.Web3WalletVerificationAdmin`
+### `models.VerificationAdminVerificationAdmin`
 
 ```python
-value: models.Web3WalletVerificationAdmin = /* values here */
+value: models.VerificationAdminVerificationAdmin = /* values here */
 ```
 

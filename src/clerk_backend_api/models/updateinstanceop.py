@@ -29,9 +29,7 @@ class UpdateInstanceRequestBodyTypedDict(TypedDict):
     clerk_js_version: NotRequired[Nullable[str]]
     development_origin: NotRequired[Nullable[str]]
     allowed_origins: NotRequired[List[str]]
-    r"""For browser-like stacks such as browser extensions, Electron, or Capacitor.js the instance allowed origins need to be updated with the request origin value.
-    For Chrome extensions popup, background, or service worker pages the origin is chrome-extension://extension_uiid. For Electron apps the default origin is http://localhost:3000. For Capacitor, the origin is capacitor://localhost.
-    """
+    r"""For browser-like stacks such as browser extensions, Electron (not officially supported), or Capacitor.js (not officially supported), the instance allowed origins need to be updated with the request origin value. For Chrome extensions popup, background, or service worker pages, the origin is chrome-extension://extension_uuid. For Electron apps the default origin is http://localhost:3000. For Capacitor, the origin is capacitor://localhost."""
     cookieless_dev: NotRequired[Nullable[bool]]
     r"""Whether the instance should operate in cookieless development mode (i.e. without third-party cookies).
     Deprecated: Please use `url_based_session_syncing` instead.
@@ -61,9 +59,7 @@ class UpdateInstanceRequestBody(BaseModel):
     development_origin: OptionalNullable[str] = UNSET
 
     allowed_origins: Optional[List[str]] = None
-    r"""For browser-like stacks such as browser extensions, Electron, or Capacitor.js the instance allowed origins need to be updated with the request origin value.
-    For Chrome extensions popup, background, or service worker pages the origin is chrome-extension://extension_uiid. For Electron apps the default origin is http://localhost:3000. For Capacitor, the origin is capacitor://localhost.
-    """
+    r"""For browser-like stacks such as browser extensions, Electron (not officially supported), or Capacitor.js (not officially supported), the instance allowed origins need to be updated with the request origin value. For Chrome extensions popup, background, or service worker pages, the origin is chrome-extension://extension_uuid. For Electron apps the default origin is http://localhost:3000. For Capacitor, the origin is capacitor://localhost."""
 
     cookieless_dev: Annotated[
         OptionalNullable[bool],

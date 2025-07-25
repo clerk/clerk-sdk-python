@@ -29,7 +29,7 @@ class TemplateTypedDict(TypedDict):
 
     """
     instance_id: NotRequired[Nullable[str]]
-    r"""the id of the instance the template belongs to"""
+    r"""The id of the instance to which this template belongs"""
     resource_type: NotRequired[str]
     r"""whether this is a system (default) or user overridden) template"""
     template_type: NotRequired[str]
@@ -44,6 +44,8 @@ class TemplateTypedDict(TypedDict):
     r"""whether this template can be reverted to the corresponding system default"""
     can_delete: NotRequired[bool]
     r"""whether this template can be deleted"""
+    can_edit_body: NotRequired[bool]
+    r"""whether the body of this template can be edited"""
     can_toggle: NotRequired[bool]
     r"""whether this template can be enabled or disabled, true only for notification SMS templates"""
     subject: NotRequired[Nullable[str]]
@@ -81,7 +83,7 @@ class Template(BaseModel):
     """
 
     instance_id: OptionalNullable[str] = UNSET
-    r"""the id of the instance the template belongs to"""
+    r"""The id of the instance to which this template belongs"""
 
     resource_type: Optional[str] = None
     r"""whether this is a system (default) or user overridden) template"""
@@ -103,6 +105,9 @@ class Template(BaseModel):
 
     can_delete: Optional[bool] = None
     r"""whether this template can be deleted"""
+
+    can_edit_body: Optional[bool] = None
+    r"""whether the body of this template can be edited"""
 
     can_toggle: Optional[bool] = None
     r"""whether this template can be enabled or disabled, true only for notification SMS templates"""
@@ -153,6 +158,7 @@ class Template(BaseModel):
             "position",
             "can_revert",
             "can_delete",
+            "can_edit_body",
             "can_toggle",
             "subject",
             "markup",

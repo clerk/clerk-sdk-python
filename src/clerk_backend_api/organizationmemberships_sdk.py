@@ -573,7 +573,7 @@ class OrganizationMembershipsSDK(BaseSDK):
 
         Updates the properties of an existing organization membership
 
-        :param organization_id: The ID of the organization the membership belongs to
+        :param organization_id: The ID of the organization to which the membership belongs
         :param user_id: The ID of the user that this membership belongs to
         :param role: The new role of the given membership.
         :param retries: Override the default retry configuration for this method
@@ -690,7 +690,7 @@ class OrganizationMembershipsSDK(BaseSDK):
 
         Updates the properties of an existing organization membership
 
-        :param organization_id: The ID of the organization the membership belongs to
+        :param organization_id: The ID of the organization to which the membership belongs
         :param user_id: The ID of the user that this membership belongs to
         :param role: The new role of the given membership.
         :param retries: Override the default retry configuration for this method
@@ -806,7 +806,7 @@ class OrganizationMembershipsSDK(BaseSDK):
 
         Removes the given membership from the organization
 
-        :param organization_id: The ID of the organization the membership belongs to
+        :param organization_id: The ID of the organization to which the membership belongs
         :param user_id: The ID of the user that this membership belongs to
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -865,7 +865,7 @@ class OrganizationMembershipsSDK(BaseSDK):
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
-            error_status_codes=["401", "404", "4XX", "5XX"],
+            error_status_codes=["401", "404", "422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -874,7 +874,7 @@ class OrganizationMembershipsSDK(BaseSDK):
             return utils.unmarshal_json(
                 http_res.text, Optional[models.OrganizationMembership]
             )
-        if utils.match_response(http_res, ["401", "404"], "application/json"):
+        if utils.match_response(http_res, ["401", "404", "422"], "application/json"):
             response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=response_data)
         if utils.match_response(http_res, "4XX", "*"):
@@ -911,7 +911,7 @@ class OrganizationMembershipsSDK(BaseSDK):
 
         Removes the given membership from the organization
 
-        :param organization_id: The ID of the organization the membership belongs to
+        :param organization_id: The ID of the organization to which the membership belongs
         :param user_id: The ID of the user that this membership belongs to
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -970,7 +970,7 @@ class OrganizationMembershipsSDK(BaseSDK):
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
-            error_status_codes=["401", "404", "4XX", "5XX"],
+            error_status_codes=["401", "404", "422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -979,7 +979,7 @@ class OrganizationMembershipsSDK(BaseSDK):
             return utils.unmarshal_json(
                 http_res.text, Optional[models.OrganizationMembership]
             )
-        if utils.match_response(http_res, ["401", "404"], "application/json"):
+        if utils.match_response(http_res, ["401", "404", "422"], "application/json"):
             response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=response_data)
         if utils.match_response(http_res, "4XX", "*"):
@@ -1020,7 +1020,7 @@ class OrganizationMembershipsSDK(BaseSDK):
         Metadata values will be updated via a deep merge. Deep means that any nested JSON objects will be merged as well.
         You can remove metadata keys at any level by setting their value to `null`.
 
-        :param organization_id: The ID of the organization the membership belongs to
+        :param organization_id: The ID of the organization to which the membership belongs
         :param user_id: The ID of the user that this membership belongs to
         :param public_metadata: Metadata saved on the organization membership, that is visible to both your frontend and backend. The new object will be merged with the existing value.
         :param private_metadata: Metadata saved on the organization membership that is only visible to your backend. The new object will be merged with the existing value.
@@ -1142,7 +1142,7 @@ class OrganizationMembershipsSDK(BaseSDK):
         Metadata values will be updated via a deep merge. Deep means that any nested JSON objects will be merged as well.
         You can remove metadata keys at any level by setting their value to `null`.
 
-        :param organization_id: The ID of the organization the membership belongs to
+        :param organization_id: The ID of the organization to which the membership belongs
         :param user_id: The ID of the user that this membership belongs to
         :param public_metadata: Metadata saved on the organization membership, that is visible to both your frontend and backend. The new object will be merged with the existing value.
         :param private_metadata: Metadata saved on the organization membership that is only visible to your backend. The new object will be merged with the existing value.

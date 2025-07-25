@@ -9,10 +9,10 @@ from clerk_backend_api.types import (
     UNSET,
     UNSET_SENTINEL,
 )
-from clerk_backend_api.utils import validate_open_enum
+from clerk_backend_api.utils import get_discriminator, validate_open_enum
 from enum import Enum
 import pydantic
-from pydantic import ConfigDict, model_serializer
+from pydantic import ConfigDict, Discriminator, Tag, model_serializer
 from pydantic.functional_validators import PlainValidator
 from typing import Any, Dict, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
@@ -26,12 +26,16 @@ class ExternalAccountWithVerificationObject(str, Enum):
     GOOGLE_ACCOUNT = "google_account"
 
 
-class GoogleOneTapVerificationStatus(str, Enum):
+class VerificationGoogleOneTapVerificationObject(str, Enum):
+    VERIFICATION_GOOGLE_ONE_TAP = "verification_google_one_tap"
+
+
+class VerificationGoogleOneTapVerificationStatus(str, Enum):
     UNVERIFIED = "unverified"
     VERIFIED = "verified"
 
 
-class GoogleOneTapVerificationStrategy(str, Enum):
+class VerificationGoogleOneTapVerificationStrategy(str, Enum):
     GOOGLE_ONE_TAP = "google_one_tap"
 
 
@@ -43,7 +47,7 @@ class ClerkErrorErrorExternalAccountWithVerificationMeta(BaseModel):
     pass
 
 
-class GoogleOneTapErrorClerkErrorTypedDict(TypedDict):
+class VerificationGoogleOneTapErrorClerkErrorTypedDict(TypedDict):
     message: str
     long_message: str
     code: str
@@ -51,7 +55,7 @@ class GoogleOneTapErrorClerkErrorTypedDict(TypedDict):
     clerk_trace_id: NotRequired[str]
 
 
-class GoogleOneTapErrorClerkError(BaseModel):
+class VerificationGoogleOneTapErrorClerkError(BaseModel):
     message: str
 
     long_message: str
@@ -63,37 +67,42 @@ class GoogleOneTapErrorClerkError(BaseModel):
     clerk_trace_id: Optional[str] = None
 
 
-GoogleOneTapVerificationErrorTypedDict = GoogleOneTapErrorClerkErrorTypedDict
+VerificationGoogleOneTapVerificationErrorTypedDict = (
+    VerificationGoogleOneTapErrorClerkErrorTypedDict
+)
 
 
-GoogleOneTapVerificationError = GoogleOneTapErrorClerkError
+VerificationGoogleOneTapVerificationError = VerificationGoogleOneTapErrorClerkError
 
 
 class GoogleOneTapTypedDict(TypedDict):
-    status: GoogleOneTapVerificationStatus
-    strategy: GoogleOneTapVerificationStrategy
+    status: VerificationGoogleOneTapVerificationStatus
+    strategy: VerificationGoogleOneTapVerificationStrategy
     expire_at: Nullable[int]
     attempts: Nullable[int]
+    object: NotRequired[VerificationGoogleOneTapVerificationObject]
     verified_at_client: NotRequired[Nullable[str]]
-    error: NotRequired[Nullable[GoogleOneTapVerificationErrorTypedDict]]
+    error: NotRequired[Nullable[VerificationGoogleOneTapVerificationErrorTypedDict]]
 
 
 class GoogleOneTap(BaseModel):
-    status: GoogleOneTapVerificationStatus
+    status: VerificationGoogleOneTapVerificationStatus
 
-    strategy: GoogleOneTapVerificationStrategy
+    strategy: VerificationGoogleOneTapVerificationStrategy
 
     expire_at: Nullable[int]
 
     attempts: Nullable[int]
 
+    object: Optional[VerificationGoogleOneTapVerificationObject] = None
+
     verified_at_client: OptionalNullable[str] = UNSET
 
-    error: OptionalNullable[GoogleOneTapVerificationError] = UNSET
+    error: OptionalNullable[VerificationGoogleOneTapVerificationError] = UNSET
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["verified_at_client", "error"]
+        optional_fields = ["object", "verified_at_client", "error"]
         nullable_fields = ["expire_at", "attempts", "verified_at_client", "error"]
         null_default_fields = []
 
@@ -122,7 +131,11 @@ class GoogleOneTap(BaseModel):
         return m
 
 
-class OauthVerificationStatus(str, Enum, metaclass=utils.OpenEnumMeta):
+class VerificationOauthVerificationObject(str, Enum):
+    VERIFICATION_OAUTH = "verification_oauth"
+
+
+class VerificationOauthVerificationStatus(str, Enum, metaclass=utils.OpenEnumMeta):
     UNVERIFIED = "unverified"
     VERIFIED = "verified"
     FAILED = "failed"
@@ -138,7 +151,7 @@ class ClerkErrorErrorMeta(BaseModel):
     pass
 
 
-class OauthErrorClerkErrorTypedDict(TypedDict):
+class VerificationOauthErrorClerkErrorTypedDict(TypedDict):
     message: str
     long_message: str
     code: str
@@ -146,7 +159,7 @@ class OauthErrorClerkErrorTypedDict(TypedDict):
     clerk_trace_id: NotRequired[str]
 
 
-class OauthErrorClerkError(BaseModel):
+class VerificationOauthErrorClerkError(BaseModel):
     message: str
 
     long_message: str
@@ -158,17 +171,18 @@ class OauthErrorClerkError(BaseModel):
     clerk_trace_id: Optional[str] = None
 
 
-VerificationErrorTypedDict = OauthErrorClerkErrorTypedDict
+VerificationErrorTypedDict = VerificationOauthErrorClerkErrorTypedDict
 
 
-VerificationError = OauthErrorClerkError
+VerificationError = VerificationOauthErrorClerkError
 
 
 class OauthTypedDict(TypedDict):
-    status: OauthVerificationStatus
+    status: VerificationOauthVerificationStatus
     strategy: str
     expire_at: int
     attempts: Nullable[int]
+    object: NotRequired[VerificationOauthVerificationObject]
     external_verification_redirect_url: NotRequired[str]
     error: NotRequired[Nullable[VerificationErrorTypedDict]]
     verified_at_client: NotRequired[Nullable[str]]
@@ -176,7 +190,7 @@ class OauthTypedDict(TypedDict):
 
 class Oauth(BaseModel):
     status: Annotated[
-        OauthVerificationStatus, PlainValidator(validate_open_enum(False))
+        VerificationOauthVerificationStatus, PlainValidator(validate_open_enum(False))
     ]
 
     strategy: str
@@ -184,6 +198,8 @@ class Oauth(BaseModel):
     expire_at: int
 
     attempts: Nullable[int]
+
+    object: Optional[VerificationOauthVerificationObject] = None
 
     external_verification_redirect_url: Optional[str] = None
 
@@ -194,6 +210,7 @@ class Oauth(BaseModel):
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = [
+            "object",
             "external_verification_redirect_url",
             "error",
             "verified_at_client",
@@ -232,9 +249,13 @@ ExternalAccountWithVerificationVerificationTypedDict = TypeAliasType(
 )
 
 
-ExternalAccountWithVerificationVerification = TypeAliasType(
-    "ExternalAccountWithVerificationVerification", Union[GoogleOneTap, Oauth]
-)
+ExternalAccountWithVerificationVerification = Annotated[
+    Union[
+        Annotated[Oauth, Tag("verification_oauth")],
+        Annotated[GoogleOneTap, Tag("verification_google_one_tap")],
+    ],
+    Discriminator(lambda m: get_discriminator(m, "object", "object")),
+]
 
 
 class ExternalAccountWithVerificationTypedDict(TypedDict):
@@ -263,6 +284,7 @@ class ExternalAccountWithVerificationTypedDict(TypedDict):
     r"""Please use `image_url` instead"""
     image_url: NotRequired[Nullable[str]]
     username: NotRequired[Nullable[str]]
+    phone_number: NotRequired[Nullable[str]]
     label: NotRequired[Nullable[str]]
 
 
@@ -318,6 +340,8 @@ class ExternalAccountWithVerification(BaseModel):
 
     username: OptionalNullable[str] = UNSET
 
+    phone_number: OptionalNullable[str] = UNSET
+
     label: OptionalNullable[str] = UNSET
 
     @property
@@ -330,8 +354,20 @@ class ExternalAccountWithVerification(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["avatar_url", "image_url", "username", "label"]
-        nullable_fields = ["image_url", "username", "label", "verification"]
+        optional_fields = [
+            "avatar_url",
+            "image_url",
+            "username",
+            "phone_number",
+            "label",
+        ]
+        nullable_fields = [
+            "image_url",
+            "username",
+            "phone_number",
+            "label",
+            "verification",
+        ]
         null_default_fields = []
 
         serialized = handler(self)

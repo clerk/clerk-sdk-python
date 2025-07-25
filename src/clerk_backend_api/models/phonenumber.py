@@ -10,9 +10,9 @@ from clerk_backend_api.types import (
     UNSET,
     UNSET_SENTINEL,
 )
-from clerk_backend_api.utils import validate_open_enum
+from clerk_backend_api.utils import get_discriminator, validate_open_enum
 from enum import Enum
-from pydantic import model_serializer
+from pydantic import Discriminator, Tag, model_serializer
 from pydantic.functional_validators import PlainValidator
 from typing import List, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
@@ -24,38 +24,45 @@ class PhoneNumberObject(str, Enum):
     PHONE_NUMBER = "phone_number"
 
 
-class AdminVerificationPhoneNumberStatus(str, Enum):
+class VerificationAdminVerificationPhoneNumberObject(str, Enum):
+    VERIFICATION_ADMIN = "verification_admin"
+
+
+class VerificationAdminVerificationPhoneNumberStatus(str, Enum):
     VERIFIED = "verified"
 
 
-class AdminVerificationStrategy(str, Enum, metaclass=utils.OpenEnumMeta):
+class VerificationAdminVerificationStrategy(str, Enum, metaclass=utils.OpenEnumMeta):
     ADMIN = "admin"
 
 
 class VerificationAdminTypedDict(TypedDict):
-    status: AdminVerificationPhoneNumberStatus
-    strategy: AdminVerificationStrategy
+    status: VerificationAdminVerificationPhoneNumberStatus
+    strategy: VerificationAdminVerificationStrategy
     attempts: Nullable[int]
     expire_at: Nullable[int]
+    object: NotRequired[VerificationAdminVerificationPhoneNumberObject]
     verified_at_client: NotRequired[Nullable[str]]
 
 
 class VerificationAdmin(BaseModel):
-    status: AdminVerificationPhoneNumberStatus
+    status: VerificationAdminVerificationPhoneNumberStatus
 
     strategy: Annotated[
-        AdminVerificationStrategy, PlainValidator(validate_open_enum(False))
+        VerificationAdminVerificationStrategy, PlainValidator(validate_open_enum(False))
     ]
 
     attempts: Nullable[int]
 
     expire_at: Nullable[int]
 
+    object: Optional[VerificationAdminVerificationPhoneNumberObject] = None
+
     verified_at_client: OptionalNullable[str] = UNSET
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["verified_at_client"]
+        optional_fields = ["object", "verified_at_client"]
         nullable_fields = ["attempts", "expire_at", "verified_at_client"]
         null_default_fields = []
 
@@ -84,43 +91,50 @@ class VerificationAdmin(BaseModel):
         return m
 
 
-class OTPVerificationStatus(str, Enum):
+class VerificationOtpVerificationObject(str, Enum):
+    VERIFICATION_OTP = "verification_otp"
+
+
+class VerificationOtpVerificationStatus(str, Enum):
     UNVERIFIED = "unverified"
     VERIFIED = "verified"
     FAILED = "failed"
     EXPIRED = "expired"
 
 
-class OTPVerificationStrategy(str, Enum, metaclass=utils.OpenEnumMeta):
+class VerificationOtpVerificationStrategy(str, Enum, metaclass=utils.OpenEnumMeta):
     PHONE_CODE = "phone_code"
     EMAIL_CODE = "email_code"
     RESET_PASSWORD_EMAIL_CODE = "reset_password_email_code"
 
 
 class VerificationOTPTypedDict(TypedDict):
-    status: OTPVerificationStatus
-    strategy: OTPVerificationStrategy
+    status: VerificationOtpVerificationStatus
+    strategy: VerificationOtpVerificationStrategy
     attempts: Nullable[int]
     expire_at: Nullable[int]
+    object: NotRequired[VerificationOtpVerificationObject]
     verified_at_client: NotRequired[Nullable[str]]
 
 
 class VerificationOTP(BaseModel):
-    status: OTPVerificationStatus
+    status: VerificationOtpVerificationStatus
 
     strategy: Annotated[
-        OTPVerificationStrategy, PlainValidator(validate_open_enum(False))
+        VerificationOtpVerificationStrategy, PlainValidator(validate_open_enum(False))
     ]
 
     attempts: Nullable[int]
 
     expire_at: Nullable[int]
 
+    object: Optional[VerificationOtpVerificationObject] = None
+
     verified_at_client: OptionalNullable[str] = UNSET
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["verified_at_client"]
+        optional_fields = ["object", "verified_at_client"]
         nullable_fields = ["attempts", "expire_at", "verified_at_client"]
         null_default_fields = []
 
@@ -155,9 +169,13 @@ PhoneNumberVerificationTypedDict = TypeAliasType(
 )
 
 
-PhoneNumberVerification = TypeAliasType(
-    "PhoneNumberVerification", Union[VerificationOTP, VerificationAdmin]
-)
+PhoneNumberVerification = Annotated[
+    Union[
+        Annotated[VerificationOTP, Tag("verification_otp")],
+        Annotated[VerificationAdmin, Tag("verification_admin")],
+    ],
+    Discriminator(lambda m: get_discriminator(m, "object", "object")),
+]
 
 
 class PhoneNumberTypedDict(TypedDict):

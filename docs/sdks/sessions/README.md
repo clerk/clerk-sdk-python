@@ -10,7 +10,6 @@
 * [get](#get) - Retrieve a session
 * [refresh](#refresh) - Refresh a session
 * [revoke](#revoke) - Revoke a session
-* [~~verify~~](#verify) - Verify a session :warning: **Deprecated**
 * [create_token](#create_token) - Create a session token
 * [create_token_from_template](#create_token_from_template) - Create a session token from a jwt template
 
@@ -154,7 +153,7 @@ with Clerk(
 ## refresh
 
 Refreshes a session by creating a new session token. A 401 is returned when there
-are validation errors, which signals the SDKs to fallback to the handshake flow.
+are validation errors, which signals the SDKs to fall back to the handshake flow.
 
 ### Example Usage
 
@@ -244,53 +243,6 @@ with Clerk(
 | Error Type         | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
 | models.ClerkErrors | 400, 401, 404      | application/json   |
-| models.SDKError    | 4XX, 5XX           | \*/\*              |
-
-## ~~verify~~
-
-Returns the session if it is authenticated, otherwise returns an error.
-WARNING: This endpoint is deprecated and will be removed in future versions. We strongly recommend switching to networkless verification using short-lived session tokens,
-         which is implemented transparently in all recent SDK versions (e.g. [NodeJS SDK](https://clerk.com/docs/backend-requests/handling/nodejs#clerk-express-require-auth)).
-         For more details on how networkless verification works, refer to our [Session Tokens documentation](https://clerk.com/docs/backend-requests/resources/session-tokens).
-
-> :warning: **DEPRECATED**: This will be removed in a future release, please migrate away from it as soon as possible.
-
-### Example Usage
-
-```python
-from clerk_backend_api import Clerk
-
-
-with Clerk(
-    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as clerk:
-
-    res = clerk.sessions.verify(session_id="sess_w8q4g9s60j28fghv00f3", token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzZXNzaW9uX2lkIjoic2Vzc193OHF4ZzZzNm9qMjhmZ2h2MDBmMyIsImlhdCI6MTU4MjY0OTg2Mn0.J4KP2L6bEZ6YccHFW4E2vKbOLw_mmO0gF_GNRw-wtLM")
-
-    assert res is not None
-
-    # Handle response
-    print(res)
-
-```
-
-### Parameters
-
-| Parameter                                                                                                                                                        | Type                                                                                                                                                             | Required                                                                                                                                                         | Description                                                                                                                                                      | Example                                                                                                                                                          |
-| ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `session_id`                                                                                                                                                     | *str*                                                                                                                                                            | :heavy_check_mark:                                                                                                                                               | The ID of the session                                                                                                                                            | sess_w8q4g9s60j28fghv00f3                                                                                                                                        |
-| `token`                                                                                                                                                          | *Optional[str]*                                                                                                                                                  | :heavy_minus_sign:                                                                                                                                               | The JWT that is sent via the `__session` cookie from your frontend.<br/>Note: this JWT must be associated with the supplied session ID.                          | eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzZXNzaW9uX2lkIjoic2Vzc193OHF4ZzZzNm9qMjhmZ2h2MDBmMyIsImlhdCI6MTU4MjY0OTg2Mn0.J4KP2L6bEZ6YccHFW4E2vKbOLw_mmO0gF_GNRw-wtLM |
-| `retries`                                                                                                                                                        | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                                                 | :heavy_minus_sign:                                                                                                                                               | Configuration to override the default retry behavior of the client.                                                                                              |                                                                                                                                                                  |
-
-### Response
-
-**[models.Session](../../models/session.md)**
-
-### Errors
-
-| Error Type         | Status Code        | Content Type       |
-| ------------------ | ------------------ | ------------------ |
-| models.ClerkErrors | 400, 401, 404, 410 | application/json   |
 | models.SDKError    | 4XX, 5XX           | \*/\*              |
 
 ## create_token

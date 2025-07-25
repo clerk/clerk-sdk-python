@@ -245,7 +245,7 @@ class Invitations(BaseSDK):
         *,
         status: Optional[models.ListInvitationsQueryParamStatus] = None,
         query: Optional[str] = None,
-        order_by: Optional[str] = None,
+        order_by: Optional[str] = "-created_at",
         paginated: Optional[bool] = None,
         limit: Optional[int] = 10,
         offset: Optional[int] = 0,
@@ -260,7 +260,7 @@ class Invitations(BaseSDK):
 
         :param status: Filter invitations based on their status
         :param query: Filter invitations based on their `email_address` or `id`
-        :param order_by: Allows to return organizations in a particular order. At the moment, you can order the returned organizations either by their `name`, `created_at` or `members_count`. In order to specify the direction, you can use the `+/-` symbols prepended in the property to order by. For example, if you want organizations to be returned in descending order according to their `created_at` property, you can use `-created_at`. If you don't use `+` or `-`, then `+` is implied.
+        :param order_by: Allows to return invitations in a particular order. At the moment, you can order the returned invitations either by their `created_at`, `email_address` or `expires_at`. In order to specify the direction, you can use the `+/-` symbols prepended in the property to order by. For example, if you want invitations to be returned in descending order according to their `created_at` property, you can use `-created_at`. If you don't use `+` or `-`, then `+` is implied. Defaults to `-created_at`.
         :param paginated: Whether to paginate the results. If true, the results will be paginated. If false, the results will not be paginated.
         :param limit: Applies a limit to the number of results returned. Can be used for paginating the results together with `offset`.
         :param offset: Skip the first `offset` results when paginating. Needs to be an integer greater or equal to zero. To be used in conjunction with `limit`.
@@ -358,7 +358,7 @@ class Invitations(BaseSDK):
         *,
         status: Optional[models.ListInvitationsQueryParamStatus] = None,
         query: Optional[str] = None,
-        order_by: Optional[str] = None,
+        order_by: Optional[str] = "-created_at",
         paginated: Optional[bool] = None,
         limit: Optional[int] = 10,
         offset: Optional[int] = 0,
@@ -373,7 +373,7 @@ class Invitations(BaseSDK):
 
         :param status: Filter invitations based on their status
         :param query: Filter invitations based on their `email_address` or `id`
-        :param order_by: Allows to return organizations in a particular order. At the moment, you can order the returned organizations either by their `name`, `created_at` or `members_count`. In order to specify the direction, you can use the `+/-` symbols prepended in the property to order by. For example, if you want organizations to be returned in descending order according to their `created_at` property, you can use `-created_at`. If you don't use `+` or `-`, then `+` is implied.
+        :param order_by: Allows to return invitations in a particular order. At the moment, you can order the returned invitations either by their `created_at`, `email_address` or `expires_at`. In order to specify the direction, you can use the `+/-` symbols prepended in the property to order by. For example, if you want invitations to be returned in descending order according to their `created_at` property, you can use `-created_at`. If you don't use `+` or `-`, then `+` is implied. Defaults to `-created_at`.
         :param paginated: Whether to paginate the results. If true, the results will be paginated. If false, the results will not be paginated.
         :param limit: Applies a limit to the number of results returned. Can be used for paginating the results together with `offset`.
         :param offset: Skip the first `offset` results when paginating. Needs to be an integer greater or equal to zero. To be used in conjunction with `limit`.
