@@ -90,21 +90,21 @@ def authenticate_request(request: Requestish, options: AuthenticateRequestOption
     if is_machine_token(session_token):
         verify_token_options = VerifyTokenOptions(secret_key=options.secret_key)
     else:
-        if options.secret_key:
-            verify_token_options = VerifyTokenOptions(
-                audience=options.audience,
-                authorized_parties=options.authorized_parties,
-                secret_key=options.secret_key,
-                clock_skew_in_ms=options.clock_skew_in_ms,
-                jwt_key=None,
-            )
-        elif options.jwt_key:
+        if options.jwt_key:
             verify_token_options = VerifyTokenOptions(
                 audience=options.audience,
                 authorized_parties=options.authorized_parties,
                 secret_key=None,
                 clock_skew_in_ms=options.clock_skew_in_ms,
                 jwt_key=options.jwt_key,
+            )
+        elif options.secret_key:
+            verify_token_options = VerifyTokenOptions(
+                audience=options.audience,
+                authorized_parties=options.authorized_parties,
+                secret_key=options.secret_key,
+                clock_skew_in_ms=options.clock_skew_in_ms,
+                jwt_key=None,
             )
         else:
             return RequestState(status=AuthStatus.SIGNED_OUT, reason=AuthErrorReason.SECRET_KEY_MISSING)
