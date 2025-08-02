@@ -7,6 +7,62 @@ from typing import Dict, List, Optional
 from typing_extensions import NotRequired, TypedDict
 
 
+class UserSettingsTypedDict(TypedDict):
+    r"""User settings for the application."""
+
+
+class UserSettings(BaseModel):
+    r"""User settings for the application."""
+
+
+class ManagementCreateApplicationRequestOrganizationSettingsTypedDict(TypedDict):
+    r"""Organization settings for the application."""
+
+
+class ManagementCreateApplicationRequestOrganizationSettings(BaseModel):
+    r"""Organization settings for the application."""
+
+
+class SessionSettingsTypedDict(TypedDict):
+    r"""Session settings for the application."""
+
+
+class SessionSettings(BaseModel):
+    r"""Session settings for the application."""
+
+
+class NativeSettingsTypedDict(TypedDict):
+    r"""Native settings for the application."""
+
+
+class NativeSettings(BaseModel):
+    r"""Native settings for the application."""
+
+
+class ExperimentalSettingsTypedDict(TypedDict):
+    r"""Experimental settings for the application."""
+
+
+class ExperimentalSettings(BaseModel):
+    r"""Experimental settings for the application."""
+
+
+class FraudSettingsTypedDict(TypedDict):
+    r"""Fraud settings for the application."""
+
+
+class FraudSettings(BaseModel):
+    r"""Fraud settings for the application."""
+
+
+class BillingSettingsTypedDict(TypedDict):
+    r"""Billing settings for the application."""
+
+
+class BillingSettings(BaseModel):
+    r"""Billing settings for the application."""
+
+
 class EnvironmentTypes(str, Enum):
     DEVELOPMENT = "development"
     STAGING = "staging"
@@ -22,6 +78,8 @@ class ManagementCreateApplicationRequestTypedDict(TypedDict):
     r"""The plan ID for the application (e.g., \"free_2022_06\", \"pro_2023_11\")."""
     addon_ids: NotRequired[List[str]]
     r"""List of add-on IDs (e.g., [\"enhanced_auth_2023_11\", \"enhanced_orgs_2023_11\"])."""
+    domain: NotRequired[str]
+    r"""The domain for the application (optional)."""
     paid_externally: NotRequired[bool]
     r"""Whether the application is paid externally."""
     test_mode: NotRequired[bool]
@@ -30,6 +88,22 @@ class ManagementCreateApplicationRequestTypedDict(TypedDict):
     r"""Maximum allowed users for the application."""
     max_allowed_organizations: NotRequired[int]
     r"""Maximum allowed organizations for the application."""
+    user_settings: NotRequired[UserSettingsTypedDict]
+    r"""User settings for the application."""
+    organization_settings: NotRequired[
+        ManagementCreateApplicationRequestOrganizationSettingsTypedDict
+    ]
+    r"""Organization settings for the application."""
+    session_settings: NotRequired[SessionSettingsTypedDict]
+    r"""Session settings for the application."""
+    native_settings: NotRequired[NativeSettingsTypedDict]
+    r"""Native settings for the application."""
+    experimental_settings: NotRequired[ExperimentalSettingsTypedDict]
+    r"""Experimental settings for the application."""
+    fraud_settings: NotRequired[FraudSettingsTypedDict]
+    r"""Fraud settings for the application."""
+    billing_settings: NotRequired[BillingSettingsTypedDict]
+    r"""Billing settings for the application."""
     subscription_metadata: NotRequired[Dict[str, str]]
     r"""Subscription metadata for the application."""
     environment_types: NotRequired[List[EnvironmentTypes]]
@@ -49,6 +123,9 @@ class ManagementCreateApplicationRequest(BaseModel):
     addon_ids: Optional[List[str]] = None
     r"""List of add-on IDs (e.g., [\"enhanced_auth_2023_11\", \"enhanced_orgs_2023_11\"])."""
 
+    domain: Optional[str] = None
+    r"""The domain for the application (optional)."""
+
     paid_externally: Optional[bool] = None
     r"""Whether the application is paid externally."""
 
@@ -60,6 +137,29 @@ class ManagementCreateApplicationRequest(BaseModel):
 
     max_allowed_organizations: Optional[int] = None
     r"""Maximum allowed organizations for the application."""
+
+    user_settings: Optional[UserSettings] = None
+    r"""User settings for the application."""
+
+    organization_settings: Optional[
+        ManagementCreateApplicationRequestOrganizationSettings
+    ] = None
+    r"""Organization settings for the application."""
+
+    session_settings: Optional[SessionSettings] = None
+    r"""Session settings for the application."""
+
+    native_settings: Optional[NativeSettings] = None
+    r"""Native settings for the application."""
+
+    experimental_settings: Optional[ExperimentalSettings] = None
+    r"""Experimental settings for the application."""
+
+    fraud_settings: Optional[FraudSettings] = None
+    r"""Fraud settings for the application."""
+
+    billing_settings: Optional[BillingSettings] = None
+    r"""Billing settings for the application."""
 
     subscription_metadata: Optional[Dict[str, str]] = None
     r"""Subscription metadata for the application."""

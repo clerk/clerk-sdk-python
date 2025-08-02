@@ -2,7 +2,8 @@
 
 from __future__ import annotations
 from clerk_backend_api.types import BaseModel
-from typing_extensions import TypedDict
+from typing import Optional
+from typing_extensions import NotRequired, TypedDict
 
 
 class ManagementApplicationInstanceTypedDict(TypedDict):
@@ -10,10 +11,10 @@ class ManagementApplicationInstanceTypedDict(TypedDict):
     r"""The ID of the instance."""
     environment_type: str
     r"""The environment type of the instance."""
-    secret_key: str
-    r"""The secret key of the instance."""
     publishable_key: str
     r"""The publishable key of the instance."""
+    secret_key: NotRequired[str]
+    r"""The secret key of the instance."""
 
 
 class ManagementApplicationInstance(BaseModel):
@@ -23,8 +24,8 @@ class ManagementApplicationInstance(BaseModel):
     environment_type: str
     r"""The environment type of the instance."""
 
-    secret_key: str
-    r"""The secret key of the instance."""
-
     publishable_key: str
     r"""The publishable key of the instance."""
+
+    secret_key: Optional[str] = None
+    r"""The secret key of the instance."""

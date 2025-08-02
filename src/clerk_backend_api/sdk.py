@@ -29,6 +29,7 @@ if TYPE_CHECKING:
     from clerk_backend_api.betafeatures import BetaFeatures
     from clerk_backend_api.blocklistidentifiers_sdk import BlocklistIdentifiersSDK
     from clerk_backend_api.clients import Clients
+    from clerk_backend_api.commerce import Commerce
     from clerk_backend_api.domains_sdk import DomainsSDK
     from clerk_backend_api.emailaddresses import EmailAddresses
     from clerk_backend_api.emailandsmstemplates import EmailAndSmsTemplates
@@ -112,6 +113,7 @@ class Clerk(BaseSDK):
     waitlist_entries: "WaitlistEntriesSDK"
     experimental_accountless_applications: "ExperimentalAccountlessApplications"
     management: "Management"
+    commerce: "Commerce"
     oauth_access_tokens: "OauthAccessTokens"
     _sub_sdk_map = {
         "miscellaneous": ("clerk_backend_api.miscellaneous", "Miscellaneous"),
@@ -186,6 +188,7 @@ class Clerk(BaseSDK):
             "ExperimentalAccountlessApplications",
         ),
         "management": ("clerk_backend_api.management", "Management"),
+        "commerce": ("clerk_backend_api.commerce", "Commerce"),
         "oauth_access_tokens": (
             "clerk_backend_api.oauthaccesstokens",
             "OauthAccessTokens",

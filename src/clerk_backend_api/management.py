@@ -256,8 +256,8 @@ class Management(BaseSDK):
             models.ManagementCreateOrganizationSecurity,
             models.ManagementCreateOrganizationSecurityTypedDict,
         ],
-        name: str,
         slug: str,
+        name: Optional[str] = None,
         created_by: Optional[str] = None,
         max_allowed_memberships: Optional[int] = None,
         public_metadata: Optional[
@@ -279,8 +279,8 @@ class Management(BaseSDK):
 
 
         :param security:
-        :param name: The name of the organization.
         :param slug: The slug of the organization.
+        :param name: The name of the organization.
         :param created_by: The ID of the user who created the organization.
         :param max_allowed_memberships: The maximum allowed memberships for the organization.
         :param public_metadata: Public metadata for the organization.
@@ -400,8 +400,8 @@ class Management(BaseSDK):
             models.ManagementCreateOrganizationSecurity,
             models.ManagementCreateOrganizationSecurityTypedDict,
         ],
-        name: str,
         slug: str,
+        name: Optional[str] = None,
         created_by: Optional[str] = None,
         max_allowed_memberships: Optional[int] = None,
         public_metadata: Optional[
@@ -423,8 +423,8 @@ class Management(BaseSDK):
 
 
         :param security:
-        :param name: The name of the organization.
         :param slug: The slug of the organization.
+        :param name: The name of the organization.
         :param created_by: The ID of the user who created the organization.
         :param max_allowed_memberships: The maximum allowed memberships for the organization.
         :param public_metadata: Public metadata for the organization.
@@ -548,10 +548,35 @@ class Management(BaseSDK):
         owner_id: str,
         plan_id: str,
         addon_ids: Optional[List[str]] = None,
+        domain: Optional[str] = None,
         paid_externally: Optional[bool] = None,
         test_mode: Optional[bool] = None,
         max_allowed_users: Optional[int] = None,
         max_allowed_organizations: Optional[int] = None,
+        user_settings: Optional[
+            Union[models.UserSettings, models.UserSettingsTypedDict]
+        ] = None,
+        organization_settings: Optional[
+            Union[
+                models.ManagementCreateApplicationRequestOrganizationSettings,
+                models.ManagementCreateApplicationRequestOrganizationSettingsTypedDict,
+            ]
+        ] = None,
+        session_settings: Optional[
+            Union[models.SessionSettings, models.SessionSettingsTypedDict]
+        ] = None,
+        native_settings: Optional[
+            Union[models.NativeSettings, models.NativeSettingsTypedDict]
+        ] = None,
+        experimental_settings: Optional[
+            Union[models.ExperimentalSettings, models.ExperimentalSettingsTypedDict]
+        ] = None,
+        fraud_settings: Optional[
+            Union[models.FraudSettings, models.FraudSettingsTypedDict]
+        ] = None,
+        billing_settings: Optional[
+            Union[models.BillingSettings, models.BillingSettingsTypedDict]
+        ] = None,
         subscription_metadata: Optional[Dict[str, str]] = None,
         environment_types: Optional[List[models.EnvironmentTypes]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -570,10 +595,18 @@ class Management(BaseSDK):
         :param owner_id: The owner ID (organization ID) of the application.
         :param plan_id: The plan ID for the application (e.g., \"free_2022_06\", \"pro_2023_11\").
         :param addon_ids: List of add-on IDs (e.g., [\"enhanced_auth_2023_11\", \"enhanced_orgs_2023_11\"]).
+        :param domain: The domain for the application (optional).
         :param paid_externally: Whether the application is paid externally.
         :param test_mode: Whether the application is in test mode.
         :param max_allowed_users: Maximum allowed users for the application.
         :param max_allowed_organizations: Maximum allowed organizations for the application.
+        :param user_settings: User settings for the application.
+        :param organization_settings: Organization settings for the application.
+        :param session_settings: Session settings for the application.
+        :param native_settings: Native settings for the application.
+        :param experimental_settings: Experimental settings for the application.
+        :param fraud_settings: Fraud settings for the application.
+        :param billing_settings: Billing settings for the application.
         :param subscription_metadata: Subscription metadata for the application.
         :param environment_types: List of environment types to create instances for.
         :param retries: Override the default retry configuration for this method
@@ -596,10 +629,33 @@ class Management(BaseSDK):
             owner_id=owner_id,
             plan_id=plan_id,
             addon_ids=addon_ids,
+            domain=domain,
             paid_externally=paid_externally,
             test_mode=test_mode,
             max_allowed_users=max_allowed_users,
             max_allowed_organizations=max_allowed_organizations,
+            user_settings=utils.get_pydantic_model(
+                user_settings, Optional[models.UserSettings]
+            ),
+            organization_settings=utils.get_pydantic_model(
+                organization_settings,
+                Optional[models.ManagementCreateApplicationRequestOrganizationSettings],
+            ),
+            session_settings=utils.get_pydantic_model(
+                session_settings, Optional[models.SessionSettings]
+            ),
+            native_settings=utils.get_pydantic_model(
+                native_settings, Optional[models.NativeSettings]
+            ),
+            experimental_settings=utils.get_pydantic_model(
+                experimental_settings, Optional[models.ExperimentalSettings]
+            ),
+            fraud_settings=utils.get_pydantic_model(
+                fraud_settings, Optional[models.FraudSettings]
+            ),
+            billing_settings=utils.get_pydantic_model(
+                billing_settings, Optional[models.BillingSettings]
+            ),
             subscription_metadata=subscription_metadata,
             environment_types=environment_types,
         )
@@ -691,10 +747,35 @@ class Management(BaseSDK):
         owner_id: str,
         plan_id: str,
         addon_ids: Optional[List[str]] = None,
+        domain: Optional[str] = None,
         paid_externally: Optional[bool] = None,
         test_mode: Optional[bool] = None,
         max_allowed_users: Optional[int] = None,
         max_allowed_organizations: Optional[int] = None,
+        user_settings: Optional[
+            Union[models.UserSettings, models.UserSettingsTypedDict]
+        ] = None,
+        organization_settings: Optional[
+            Union[
+                models.ManagementCreateApplicationRequestOrganizationSettings,
+                models.ManagementCreateApplicationRequestOrganizationSettingsTypedDict,
+            ]
+        ] = None,
+        session_settings: Optional[
+            Union[models.SessionSettings, models.SessionSettingsTypedDict]
+        ] = None,
+        native_settings: Optional[
+            Union[models.NativeSettings, models.NativeSettingsTypedDict]
+        ] = None,
+        experimental_settings: Optional[
+            Union[models.ExperimentalSettings, models.ExperimentalSettingsTypedDict]
+        ] = None,
+        fraud_settings: Optional[
+            Union[models.FraudSettings, models.FraudSettingsTypedDict]
+        ] = None,
+        billing_settings: Optional[
+            Union[models.BillingSettings, models.BillingSettingsTypedDict]
+        ] = None,
         subscription_metadata: Optional[Dict[str, str]] = None,
         environment_types: Optional[List[models.EnvironmentTypes]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -713,10 +794,18 @@ class Management(BaseSDK):
         :param owner_id: The owner ID (organization ID) of the application.
         :param plan_id: The plan ID for the application (e.g., \"free_2022_06\", \"pro_2023_11\").
         :param addon_ids: List of add-on IDs (e.g., [\"enhanced_auth_2023_11\", \"enhanced_orgs_2023_11\"]).
+        :param domain: The domain for the application (optional).
         :param paid_externally: Whether the application is paid externally.
         :param test_mode: Whether the application is in test mode.
         :param max_allowed_users: Maximum allowed users for the application.
         :param max_allowed_organizations: Maximum allowed organizations for the application.
+        :param user_settings: User settings for the application.
+        :param organization_settings: Organization settings for the application.
+        :param session_settings: Session settings for the application.
+        :param native_settings: Native settings for the application.
+        :param experimental_settings: Experimental settings for the application.
+        :param fraud_settings: Fraud settings for the application.
+        :param billing_settings: Billing settings for the application.
         :param subscription_metadata: Subscription metadata for the application.
         :param environment_types: List of environment types to create instances for.
         :param retries: Override the default retry configuration for this method
@@ -739,10 +828,33 @@ class Management(BaseSDK):
             owner_id=owner_id,
             plan_id=plan_id,
             addon_ids=addon_ids,
+            domain=domain,
             paid_externally=paid_externally,
             test_mode=test_mode,
             max_allowed_users=max_allowed_users,
             max_allowed_organizations=max_allowed_organizations,
+            user_settings=utils.get_pydantic_model(
+                user_settings, Optional[models.UserSettings]
+            ),
+            organization_settings=utils.get_pydantic_model(
+                organization_settings,
+                Optional[models.ManagementCreateApplicationRequestOrganizationSettings],
+            ),
+            session_settings=utils.get_pydantic_model(
+                session_settings, Optional[models.SessionSettings]
+            ),
+            native_settings=utils.get_pydantic_model(
+                native_settings, Optional[models.NativeSettings]
+            ),
+            experimental_settings=utils.get_pydantic_model(
+                experimental_settings, Optional[models.ExperimentalSettings]
+            ),
+            fraud_settings=utils.get_pydantic_model(
+                fraud_settings, Optional[models.FraudSettings]
+            ),
+            billing_settings=utils.get_pydantic_model(
+                billing_settings, Optional[models.BillingSettings]
+            ),
             subscription_metadata=subscription_metadata,
             environment_types=environment_types,
         )
@@ -800,6 +912,1934 @@ class Management(BaseSDK):
             )
         if utils.match_response(
             http_res, ["400", "401", "403", "422"], "application/json"
+        ):
+            response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=response_data)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+
+        content_type = http_res.headers.get("Content-Type")
+        http_res_text = await utils.stream_to_text_async(http_res)
+        raise models.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res_text,
+            http_res,
+        )
+
+    def delete_organization(
+        self,
+        *,
+        security: Union[
+            models.ManagementDeleteOrganizationSecurity,
+            models.ManagementDeleteOrganizationSecurityTypedDict,
+        ],
+        organization_id: str,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> Optional[models.ManagementDeletedObjectResponse]:
+        r"""Delete an organization
+
+        Delete an organization.
+        This endpoint is internal and requires a specific management token for authorization.
+
+
+        :param security:
+        :param organization_id: Organization ID.
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.ManagementDeleteOrganizationRequest(
+            organization_id=organization_id,
+        )
+
+        req = self._build_request(
+            method="DELETE",
+            path="/management/organizations/{organizationID}",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=utils.get_pydantic_model(
+                security, models.ManagementDeleteOrganizationSecurity
+            ),
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["5XX"])
+
+        http_res = self.do_request(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="ManagementDeleteOrganization",
+                oauth2_scopes=None,
+                security_source=security,
+            ),
+            request=req,
+            error_status_codes=["400", "401", "403", "404", "4XX", "5XX"],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return utils.unmarshal_json(
+                http_res.text, Optional[models.ManagementDeletedObjectResponse]
+            )
+        if utils.match_response(
+            http_res, ["400", "401", "403", "404"], "application/json"
+        ):
+            response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=response_data)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+
+        content_type = http_res.headers.get("Content-Type")
+        http_res_text = utils.stream_to_text(http_res)
+        raise models.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res_text,
+            http_res,
+        )
+
+    async def delete_organization_async(
+        self,
+        *,
+        security: Union[
+            models.ManagementDeleteOrganizationSecurity,
+            models.ManagementDeleteOrganizationSecurityTypedDict,
+        ],
+        organization_id: str,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> Optional[models.ManagementDeletedObjectResponse]:
+        r"""Delete an organization
+
+        Delete an organization.
+        This endpoint is internal and requires a specific management token for authorization.
+
+
+        :param security:
+        :param organization_id: Organization ID.
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.ManagementDeleteOrganizationRequest(
+            organization_id=organization_id,
+        )
+
+        req = self._build_request_async(
+            method="DELETE",
+            path="/management/organizations/{organizationID}",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=utils.get_pydantic_model(
+                security, models.ManagementDeleteOrganizationSecurity
+            ),
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["5XX"])
+
+        http_res = await self.do_request_async(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="ManagementDeleteOrganization",
+                oauth2_scopes=None,
+                security_source=security,
+            ),
+            request=req,
+            error_status_codes=["400", "401", "403", "404", "4XX", "5XX"],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return utils.unmarshal_json(
+                http_res.text, Optional[models.ManagementDeletedObjectResponse]
+            )
+        if utils.match_response(
+            http_res, ["400", "401", "403", "404"], "application/json"
+        ):
+            response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=response_data)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+
+        content_type = http_res.headers.get("Content-Type")
+        http_res_text = await utils.stream_to_text_async(http_res)
+        raise models.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res_text,
+            http_res,
+        )
+
+    def get_application(
+        self,
+        *,
+        security: Union[
+            models.ManagementGetApplicationSecurity,
+            models.ManagementGetApplicationSecurityTypedDict,
+        ],
+        application_id: str,
+        owner_id: str,
+        include_secret_keys: Optional[bool] = False,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> Optional[models.ManagementApplicationResponse]:
+        r"""Get an application
+
+        Get application details.
+        This endpoint is internal and requires a specific management token for authorization.
+
+
+        :param security:
+        :param application_id: Application ID.
+        :param owner_id: Owner ID of the application (organization ID).
+        :param include_secret_keys: Whether to include secret keys in the response. If 'true', the response will include the secret keys for each instance.
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.ManagementGetApplicationRequest(
+            application_id=application_id,
+            owner_id=owner_id,
+            include_secret_keys=include_secret_keys,
+        )
+
+        req = self._build_request(
+            method="GET",
+            path="/management/applications/{applicationID}",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=utils.get_pydantic_model(
+                security, models.ManagementGetApplicationSecurity
+            ),
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["5XX"])
+
+        http_res = self.do_request(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="ManagementGetApplication",
+                oauth2_scopes=None,
+                security_source=security,
+            ),
+            request=req,
+            error_status_codes=["400", "401", "403", "404", "4XX", "5XX"],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return utils.unmarshal_json(
+                http_res.text, Optional[models.ManagementApplicationResponse]
+            )
+        if utils.match_response(
+            http_res, ["400", "401", "403", "404"], "application/json"
+        ):
+            response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=response_data)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+
+        content_type = http_res.headers.get("Content-Type")
+        http_res_text = utils.stream_to_text(http_res)
+        raise models.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res_text,
+            http_res,
+        )
+
+    async def get_application_async(
+        self,
+        *,
+        security: Union[
+            models.ManagementGetApplicationSecurity,
+            models.ManagementGetApplicationSecurityTypedDict,
+        ],
+        application_id: str,
+        owner_id: str,
+        include_secret_keys: Optional[bool] = False,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> Optional[models.ManagementApplicationResponse]:
+        r"""Get an application
+
+        Get application details.
+        This endpoint is internal and requires a specific management token for authorization.
+
+
+        :param security:
+        :param application_id: Application ID.
+        :param owner_id: Owner ID of the application (organization ID).
+        :param include_secret_keys: Whether to include secret keys in the response. If 'true', the response will include the secret keys for each instance.
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.ManagementGetApplicationRequest(
+            application_id=application_id,
+            owner_id=owner_id,
+            include_secret_keys=include_secret_keys,
+        )
+
+        req = self._build_request_async(
+            method="GET",
+            path="/management/applications/{applicationID}",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=utils.get_pydantic_model(
+                security, models.ManagementGetApplicationSecurity
+            ),
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["5XX"])
+
+        http_res = await self.do_request_async(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="ManagementGetApplication",
+                oauth2_scopes=None,
+                security_source=security,
+            ),
+            request=req,
+            error_status_codes=["400", "401", "403", "404", "4XX", "5XX"],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return utils.unmarshal_json(
+                http_res.text, Optional[models.ManagementApplicationResponse]
+            )
+        if utils.match_response(
+            http_res, ["400", "401", "403", "404"], "application/json"
+        ):
+            response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=response_data)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+
+        content_type = http_res.headers.get("Content-Type")
+        http_res_text = await utils.stream_to_text_async(http_res)
+        raise models.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res_text,
+            http_res,
+        )
+
+    def update_application(
+        self,
+        *,
+        security: Union[
+            models.ManagementUpdateApplicationSecurity,
+            models.ManagementUpdateApplicationSecurityTypedDict,
+        ],
+        application_id: str,
+        owner_id: str,
+        name: Optional[str] = None,
+        plan_id: Optional[str] = None,
+        addon_ids: Optional[List[str]] = None,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> Optional[models.ManagementApplicationResponse]:
+        r"""Update an application
+
+        Update an application.
+        This endpoint is internal and requires a specific management token for authorization.
+
+
+        :param security:
+        :param application_id: Application ID.
+        :param owner_id: Owner ID of the application (organization ID).
+        :param name: The name of the application.
+        :param plan_id: The plan ID for the application.
+        :param addon_ids: List of add-on IDs for the application.
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.ManagementUpdateApplicationRequest1(
+            application_id=application_id,
+            owner_id=owner_id,
+            management_update_application_request=models.ManagementUpdateApplicationRequest(
+                name=name,
+                plan_id=plan_id,
+                addon_ids=addon_ids,
+            ),
+        )
+
+        req = self._build_request(
+            method="PATCH",
+            path="/management/applications/{applicationID}",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=True,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=utils.get_pydantic_model(
+                security, models.ManagementUpdateApplicationSecurity
+            ),
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request.management_update_application_request,
+                False,
+                False,
+                "json",
+                models.ManagementUpdateApplicationRequest,
+            ),
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["5XX"])
+
+        http_res = self.do_request(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="ManagementUpdateApplication",
+                oauth2_scopes=None,
+                security_source=security,
+            ),
+            request=req,
+            error_status_codes=["400", "401", "403", "404", "422", "4XX", "5XX"],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return utils.unmarshal_json(
+                http_res.text, Optional[models.ManagementApplicationResponse]
+            )
+        if utils.match_response(
+            http_res, ["400", "401", "403", "404", "422"], "application/json"
+        ):
+            response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=response_data)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+
+        content_type = http_res.headers.get("Content-Type")
+        http_res_text = utils.stream_to_text(http_res)
+        raise models.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res_text,
+            http_res,
+        )
+
+    async def update_application_async(
+        self,
+        *,
+        security: Union[
+            models.ManagementUpdateApplicationSecurity,
+            models.ManagementUpdateApplicationSecurityTypedDict,
+        ],
+        application_id: str,
+        owner_id: str,
+        name: Optional[str] = None,
+        plan_id: Optional[str] = None,
+        addon_ids: Optional[List[str]] = None,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> Optional[models.ManagementApplicationResponse]:
+        r"""Update an application
+
+        Update an application.
+        This endpoint is internal and requires a specific management token for authorization.
+
+
+        :param security:
+        :param application_id: Application ID.
+        :param owner_id: Owner ID of the application (organization ID).
+        :param name: The name of the application.
+        :param plan_id: The plan ID for the application.
+        :param addon_ids: List of add-on IDs for the application.
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.ManagementUpdateApplicationRequest1(
+            application_id=application_id,
+            owner_id=owner_id,
+            management_update_application_request=models.ManagementUpdateApplicationRequest(
+                name=name,
+                plan_id=plan_id,
+                addon_ids=addon_ids,
+            ),
+        )
+
+        req = self._build_request_async(
+            method="PATCH",
+            path="/management/applications/{applicationID}",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=True,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=utils.get_pydantic_model(
+                security, models.ManagementUpdateApplicationSecurity
+            ),
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request.management_update_application_request,
+                False,
+                False,
+                "json",
+                models.ManagementUpdateApplicationRequest,
+            ),
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["5XX"])
+
+        http_res = await self.do_request_async(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="ManagementUpdateApplication",
+                oauth2_scopes=None,
+                security_source=security,
+            ),
+            request=req,
+            error_status_codes=["400", "401", "403", "404", "422", "4XX", "5XX"],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return utils.unmarshal_json(
+                http_res.text, Optional[models.ManagementApplicationResponse]
+            )
+        if utils.match_response(
+            http_res, ["400", "401", "403", "404", "422"], "application/json"
+        ):
+            response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=response_data)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+
+        content_type = http_res.headers.get("Content-Type")
+        http_res_text = await utils.stream_to_text_async(http_res)
+        raise models.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res_text,
+            http_res,
+        )
+
+    def delete_application(
+        self,
+        *,
+        security: Union[
+            models.ManagementDeleteApplicationSecurity,
+            models.ManagementDeleteApplicationSecurityTypedDict,
+        ],
+        application_id: str,
+        owner_id: str,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> Optional[models.ManagementDeletedObjectResponse]:
+        r"""Delete an application
+
+        Delete an application.
+        This endpoint is internal and requires a specific management token for authorization.
+
+
+        :param security:
+        :param application_id: Application ID.
+        :param owner_id: Owner ID of the application (organization ID).
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.ManagementDeleteApplicationRequest(
+            application_id=application_id,
+            owner_id=owner_id,
+        )
+
+        req = self._build_request(
+            method="DELETE",
+            path="/management/applications/{applicationID}",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=utils.get_pydantic_model(
+                security, models.ManagementDeleteApplicationSecurity
+            ),
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["5XX"])
+
+        http_res = self.do_request(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="ManagementDeleteApplication",
+                oauth2_scopes=None,
+                security_source=security,
+            ),
+            request=req,
+            error_status_codes=["400", "401", "403", "404", "4XX", "5XX"],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return utils.unmarshal_json(
+                http_res.text, Optional[models.ManagementDeletedObjectResponse]
+            )
+        if utils.match_response(
+            http_res, ["400", "401", "403", "404"], "application/json"
+        ):
+            response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=response_data)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+
+        content_type = http_res.headers.get("Content-Type")
+        http_res_text = utils.stream_to_text(http_res)
+        raise models.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res_text,
+            http_res,
+        )
+
+    async def delete_application_async(
+        self,
+        *,
+        security: Union[
+            models.ManagementDeleteApplicationSecurity,
+            models.ManagementDeleteApplicationSecurityTypedDict,
+        ],
+        application_id: str,
+        owner_id: str,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> Optional[models.ManagementDeletedObjectResponse]:
+        r"""Delete an application
+
+        Delete an application.
+        This endpoint is internal and requires a specific management token for authorization.
+
+
+        :param security:
+        :param application_id: Application ID.
+        :param owner_id: Owner ID of the application (organization ID).
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.ManagementDeleteApplicationRequest(
+            application_id=application_id,
+            owner_id=owner_id,
+        )
+
+        req = self._build_request_async(
+            method="DELETE",
+            path="/management/applications/{applicationID}",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=utils.get_pydantic_model(
+                security, models.ManagementDeleteApplicationSecurity
+            ),
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["5XX"])
+
+        http_res = await self.do_request_async(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="ManagementDeleteApplication",
+                oauth2_scopes=None,
+                security_source=security,
+            ),
+            request=req,
+            error_status_codes=["400", "401", "403", "404", "4XX", "5XX"],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return utils.unmarshal_json(
+                http_res.text, Optional[models.ManagementDeletedObjectResponse]
+            )
+        if utils.match_response(
+            http_res, ["400", "401", "403", "404"], "application/json"
+        ):
+            response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=response_data)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+
+        content_type = http_res.headers.get("Content-Type")
+        http_res_text = await utils.stream_to_text_async(http_res)
+        raise models.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res_text,
+            http_res,
+        )
+
+    def get_application_usage(
+        self,
+        *,
+        security: Union[
+            models.ManagementGetApplicationUsageSecurity,
+            models.ManagementGetApplicationUsageSecurityTypedDict,
+        ],
+        application_id: str,
+        owner_id: str,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> Optional[models.ManagementUsageReportResponse]:
+        r"""Get application usage
+
+        Get usage report for an application.
+        This endpoint is internal and requires a specific management token for authorization.
+
+
+        :param security:
+        :param application_id: Application ID.
+        :param owner_id: Owner ID of the application (organization ID).
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.ManagementGetApplicationUsageRequest(
+            application_id=application_id,
+            owner_id=owner_id,
+        )
+
+        req = self._build_request(
+            method="GET",
+            path="/management/applications/{applicationID}/usage",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=utils.get_pydantic_model(
+                security, models.ManagementGetApplicationUsageSecurity
+            ),
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["5XX"])
+
+        http_res = self.do_request(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="ManagementGetApplicationUsage",
+                oauth2_scopes=None,
+                security_source=security,
+            ),
+            request=req,
+            error_status_codes=["400", "401", "403", "404", "4XX", "5XX"],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return utils.unmarshal_json(
+                http_res.text, Optional[models.ManagementUsageReportResponse]
+            )
+        if utils.match_response(
+            http_res, ["400", "401", "403", "404"], "application/json"
+        ):
+            response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=response_data)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+
+        content_type = http_res.headers.get("Content-Type")
+        http_res_text = utils.stream_to_text(http_res)
+        raise models.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res_text,
+            http_res,
+        )
+
+    async def get_application_usage_async(
+        self,
+        *,
+        security: Union[
+            models.ManagementGetApplicationUsageSecurity,
+            models.ManagementGetApplicationUsageSecurityTypedDict,
+        ],
+        application_id: str,
+        owner_id: str,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> Optional[models.ManagementUsageReportResponse]:
+        r"""Get application usage
+
+        Get usage report for an application.
+        This endpoint is internal and requires a specific management token for authorization.
+
+
+        :param security:
+        :param application_id: Application ID.
+        :param owner_id: Owner ID of the application (organization ID).
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.ManagementGetApplicationUsageRequest(
+            application_id=application_id,
+            owner_id=owner_id,
+        )
+
+        req = self._build_request_async(
+            method="GET",
+            path="/management/applications/{applicationID}/usage",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=utils.get_pydantic_model(
+                security, models.ManagementGetApplicationUsageSecurity
+            ),
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["5XX"])
+
+        http_res = await self.do_request_async(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="ManagementGetApplicationUsage",
+                oauth2_scopes=None,
+                security_source=security,
+            ),
+            request=req,
+            error_status_codes=["400", "401", "403", "404", "4XX", "5XX"],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return utils.unmarshal_json(
+                http_res.text, Optional[models.ManagementUsageReportResponse]
+            )
+        if utils.match_response(
+            http_res, ["400", "401", "403", "404"], "application/json"
+        ):
+            response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=response_data)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+
+        content_type = http_res.headers.get("Content-Type")
+        http_res_text = await utils.stream_to_text_async(http_res)
+        raise models.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res_text,
+            http_res,
+        )
+
+    def update_application_domain(
+        self,
+        *,
+        security: Union[
+            models.ManagementUpdateApplicationDomainSecurity,
+            models.ManagementUpdateApplicationDomainSecurityTypedDict,
+        ],
+        application_id: str,
+        owner_id: str,
+        name: str,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> Optional[models.ManagementDomainResponse]:
+        r"""Update application domain
+
+        Update the domain for an application.
+        This endpoint is internal and requires a specific management token for authorization.
+
+
+        :param security:
+        :param application_id: Application ID.
+        :param owner_id: Owner ID of the application (organization ID).
+        :param name: The domain name.
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.ManagementUpdateApplicationDomainRequest1(
+            application_id=application_id,
+            owner_id=owner_id,
+            management_update_application_domain_request=models.ManagementUpdateApplicationDomainRequest(
+                name=name,
+            ),
+        )
+
+        req = self._build_request(
+            method="PATCH",
+            path="/management/applications/{applicationID}/domain",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=True,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=utils.get_pydantic_model(
+                security, models.ManagementUpdateApplicationDomainSecurity
+            ),
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request.management_update_application_domain_request,
+                False,
+                False,
+                "json",
+                models.ManagementUpdateApplicationDomainRequest,
+            ),
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["5XX"])
+
+        http_res = self.do_request(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="ManagementUpdateApplicationDomain",
+                oauth2_scopes=None,
+                security_source=security,
+            ),
+            request=req,
+            error_status_codes=["400", "401", "403", "404", "422", "4XX", "5XX"],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return utils.unmarshal_json(
+                http_res.text, Optional[models.ManagementDomainResponse]
+            )
+        if utils.match_response(
+            http_res, ["400", "401", "403", "404", "422"], "application/json"
+        ):
+            response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=response_data)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+
+        content_type = http_res.headers.get("Content-Type")
+        http_res_text = utils.stream_to_text(http_res)
+        raise models.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res_text,
+            http_res,
+        )
+
+    async def update_application_domain_async(
+        self,
+        *,
+        security: Union[
+            models.ManagementUpdateApplicationDomainSecurity,
+            models.ManagementUpdateApplicationDomainSecurityTypedDict,
+        ],
+        application_id: str,
+        owner_id: str,
+        name: str,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> Optional[models.ManagementDomainResponse]:
+        r"""Update application domain
+
+        Update the domain for an application.
+        This endpoint is internal and requires a specific management token for authorization.
+
+
+        :param security:
+        :param application_id: Application ID.
+        :param owner_id: Owner ID of the application (organization ID).
+        :param name: The domain name.
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.ManagementUpdateApplicationDomainRequest1(
+            application_id=application_id,
+            owner_id=owner_id,
+            management_update_application_domain_request=models.ManagementUpdateApplicationDomainRequest(
+                name=name,
+            ),
+        )
+
+        req = self._build_request_async(
+            method="PATCH",
+            path="/management/applications/{applicationID}/domain",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=True,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=utils.get_pydantic_model(
+                security, models.ManagementUpdateApplicationDomainSecurity
+            ),
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request.management_update_application_domain_request,
+                False,
+                False,
+                "json",
+                models.ManagementUpdateApplicationDomainRequest,
+            ),
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["5XX"])
+
+        http_res = await self.do_request_async(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="ManagementUpdateApplicationDomain",
+                oauth2_scopes=None,
+                security_source=security,
+            ),
+            request=req,
+            error_status_codes=["400", "401", "403", "404", "422", "4XX", "5XX"],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return utils.unmarshal_json(
+                http_res.text, Optional[models.ManagementDomainResponse]
+            )
+        if utils.match_response(
+            http_res, ["400", "401", "403", "404", "422"], "application/json"
+        ):
+            response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=response_data)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+
+        content_type = http_res.headers.get("Content-Type")
+        http_res_text = await utils.stream_to_text_async(http_res)
+        raise models.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res_text,
+            http_res,
+        )
+
+    def get_application_domain(
+        self,
+        *,
+        security: Union[
+            models.ManagementGetApplicationDomainSecurity,
+            models.ManagementGetApplicationDomainSecurityTypedDict,
+        ],
+        application_id: str,
+        domain_name: str,
+        owner_id: str,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> Optional[models.ManagementDomainResponse]:
+        r"""Get application domain
+
+        Get domain information for an application.
+        This endpoint is internal and requires a specific management token for authorization.
+
+
+        :param security:
+        :param application_id: Application ID.
+        :param domain_name: Domain name.
+        :param owner_id: Owner ID of the application (organization ID).
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.ManagementGetApplicationDomainRequest(
+            application_id=application_id,
+            domain_name=domain_name,
+            owner_id=owner_id,
+        )
+
+        req = self._build_request(
+            method="GET",
+            path="/management/applications/{applicationID}/domains/{domainName}",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=utils.get_pydantic_model(
+                security, models.ManagementGetApplicationDomainSecurity
+            ),
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["5XX"])
+
+        http_res = self.do_request(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="ManagementGetApplicationDomain",
+                oauth2_scopes=None,
+                security_source=security,
+            ),
+            request=req,
+            error_status_codes=["400", "401", "403", "404", "4XX", "5XX"],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return utils.unmarshal_json(
+                http_res.text, Optional[models.ManagementDomainResponse]
+            )
+        if utils.match_response(
+            http_res, ["400", "401", "403", "404"], "application/json"
+        ):
+            response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=response_data)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+
+        content_type = http_res.headers.get("Content-Type")
+        http_res_text = utils.stream_to_text(http_res)
+        raise models.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res_text,
+            http_res,
+        )
+
+    async def get_application_domain_async(
+        self,
+        *,
+        security: Union[
+            models.ManagementGetApplicationDomainSecurity,
+            models.ManagementGetApplicationDomainSecurityTypedDict,
+        ],
+        application_id: str,
+        domain_name: str,
+        owner_id: str,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> Optional[models.ManagementDomainResponse]:
+        r"""Get application domain
+
+        Get domain information for an application.
+        This endpoint is internal and requires a specific management token for authorization.
+
+
+        :param security:
+        :param application_id: Application ID.
+        :param domain_name: Domain name.
+        :param owner_id: Owner ID of the application (organization ID).
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.ManagementGetApplicationDomainRequest(
+            application_id=application_id,
+            domain_name=domain_name,
+            owner_id=owner_id,
+        )
+
+        req = self._build_request_async(
+            method="GET",
+            path="/management/applications/{applicationID}/domains/{domainName}",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=utils.get_pydantic_model(
+                security, models.ManagementGetApplicationDomainSecurity
+            ),
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["5XX"])
+
+        http_res = await self.do_request_async(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="ManagementGetApplicationDomain",
+                oauth2_scopes=None,
+                security_source=security,
+            ),
+            request=req,
+            error_status_codes=["400", "401", "403", "404", "4XX", "5XX"],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return utils.unmarshal_json(
+                http_res.text, Optional[models.ManagementDomainResponse]
+            )
+        if utils.match_response(
+            http_res, ["400", "401", "403", "404"], "application/json"
+        ):
+            response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=response_data)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+
+        content_type = http_res.headers.get("Content-Type")
+        http_res_text = await utils.stream_to_text_async(http_res)
+        raise models.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res_text,
+            http_res,
+        )
+
+    def get_application_domain_status(
+        self,
+        *,
+        security: Union[
+            models.ManagementGetApplicationDomainStatusSecurity,
+            models.ManagementGetApplicationDomainStatusSecurityTypedDict,
+        ],
+        application_id: str,
+        domain_name: str,
+        owner_id: str,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> Optional[models.ManagementDomainStatusResponse]:
+        r"""Get application domain status
+
+        Get the status of a domain for an application.
+        This endpoint is internal and requires a specific management token for authorization.
+
+
+        :param security:
+        :param application_id: Application ID.
+        :param domain_name: Domain name.
+        :param owner_id: Owner ID of the application (organization ID).
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.ManagementGetApplicationDomainStatusRequest(
+            application_id=application_id,
+            domain_name=domain_name,
+            owner_id=owner_id,
+        )
+
+        req = self._build_request(
+            method="GET",
+            path="/management/applications/{applicationID}/domains/{domainName}/status",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=utils.get_pydantic_model(
+                security, models.ManagementGetApplicationDomainStatusSecurity
+            ),
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["5XX"])
+
+        http_res = self.do_request(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="ManagementGetApplicationDomainStatus",
+                oauth2_scopes=None,
+                security_source=security,
+            ),
+            request=req,
+            error_status_codes=["400", "401", "403", "404", "4XX", "5XX"],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return utils.unmarshal_json(
+                http_res.text, Optional[models.ManagementDomainStatusResponse]
+            )
+        if utils.match_response(
+            http_res, ["400", "401", "403", "404"], "application/json"
+        ):
+            response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
+            raise models.ClerkErrors(data=response_data)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+
+        content_type = http_res.headers.get("Content-Type")
+        http_res_text = utils.stream_to_text(http_res)
+        raise models.SDKError(
+            f"Unexpected response received (code: {http_res.status_code}, type: {content_type})",
+            http_res.status_code,
+            http_res_text,
+            http_res,
+        )
+
+    async def get_application_domain_status_async(
+        self,
+        *,
+        security: Union[
+            models.ManagementGetApplicationDomainStatusSecurity,
+            models.ManagementGetApplicationDomainStatusSecurityTypedDict,
+        ],
+        application_id: str,
+        domain_name: str,
+        owner_id: str,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> Optional[models.ManagementDomainStatusResponse]:
+        r"""Get application domain status
+
+        Get the status of a domain for an application.
+        This endpoint is internal and requires a specific management token for authorization.
+
+
+        :param security:
+        :param application_id: Application ID.
+        :param domain_name: Domain name.
+        :param owner_id: Owner ID of the application (organization ID).
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.ManagementGetApplicationDomainStatusRequest(
+            application_id=application_id,
+            domain_name=domain_name,
+            owner_id=owner_id,
+        )
+
+        req = self._build_request_async(
+            method="GET",
+            path="/management/applications/{applicationID}/domains/{domainName}/status",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=utils.get_pydantic_model(
+                security, models.ManagementGetApplicationDomainStatusSecurity
+            ),
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["5XX"])
+
+        http_res = await self.do_request_async(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="ManagementGetApplicationDomainStatus",
+                oauth2_scopes=None,
+                security_source=security,
+            ),
+            request=req,
+            error_status_codes=["400", "401", "403", "404", "4XX", "5XX"],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return utils.unmarshal_json(
+                http_res.text, Optional[models.ManagementDomainStatusResponse]
+            )
+        if utils.match_response(
+            http_res, ["400", "401", "403", "404"], "application/json"
         ):
             response_data = utils.unmarshal_json(http_res.text, models.ClerkErrorsData)
             raise models.ClerkErrors(data=response_data)

@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: bfe29c99-6e67-43fe-b928-64d6a5ed6aa8
 management:
-  docChecksum: 4f8442b64ee1f79e78097b0196c13bf8
+  docChecksum: 3020173e751a85a4bb2aa717587a3cfa
   docVersion: "2025-04-10"
   speakeasyVersion: 1.558.0
   generationVersion: 2.623.2
-  releaseVersion: 3.1.11
-  configChecksum: 19199a5ba250a2cf9eac99312e3a72bb
+  releaseVersion: 3.1.13
+  configChecksum: 5948e77e7453f89a3e0a6105690d0a88
   repoURL: https://github.com/clerk/clerk-sdk-python.git
   installationURL: https://github.com/clerk/clerk-sdk-python.git
   published: true
@@ -59,6 +59,8 @@ generatedFiles:
   - docs/models/attributemapping.md
   - docs/models/awscredential.md
   - docs/models/banuserrequest.md
+  - docs/models/billingcycle.md
+  - docs/models/billingsettings.md
   - docs/models/blocklistidentifier.md
   - docs/models/blocklistidentifieridentifiertype.md
   - docs/models/blocklistidentifierobject.md
@@ -73,8 +75,14 @@ generatedFiles:
   - docs/models/clerkerrorsmeta.md
   - docs/models/client.md
   - docs/models/clientobject.md
+  - docs/models/cnames.md
+  - docs/models/cnamestatus.md
   - docs/models/cnametarget.md
+  - docs/models/cnametargets.md
   - docs/models/codetype.md
+  - docs/models/commercemoneyresponse.md
+  - docs/models/commerceplan.md
+  - docs/models/commerceplanobject.md
   - docs/models/cookies.md
   - docs/models/cookiesobject.md
   - docs/models/createactortokenactor.md
@@ -144,6 +152,8 @@ generatedFiles:
   - docs/models/deleteuserrequest.md
   - docs/models/disablemfarequest.md
   - docs/models/disablemfaresponsebody.md
+  - docs/models/dnsstatus.md
+  - docs/models/dnsstatusstatus.md
   - docs/models/domain.md
   - docs/models/domainobject.md
   - docs/models/domains.md
@@ -156,16 +166,22 @@ generatedFiles:
   - docs/models/errorclerkerror.md
   - docs/models/errormeta.md
   - docs/models/errors.md
+  - docs/models/experimentalsettings.md
   - docs/models/externalaccount.md
   - docs/models/externalaccountwithverification.md
   - docs/models/externalaccountwithverificationobject.md
   - docs/models/externalaccountwithverificationverification.md
+  - docs/models/failurehint.md
+  - docs/models/featureresponse.md
+  - docs/models/featureresponseobject.md
   - docs/models/file.md
   - docs/models/format_.md
+  - docs/models/fraudsettings.md
   - docs/models/fromoauth.md
   - docs/models/getawscredentialrequest.md
   - docs/models/getclientlistrequest.md
   - docs/models/getclientrequest.md
+  - docs/models/getcommerceplanlistrequest.md
   - docs/models/getemailaddressrequest.md
   - docs/models/getjwttemplaterequest.md
   - docs/models/getmachinerequest.md
@@ -243,18 +259,47 @@ generatedFiles:
   - docs/models/machinetokenobject.md
   - docs/models/machinewithoutscopedmachines.md
   - docs/models/machinewithoutscopedmachinesobject.md
+  - docs/models/mail.md
   - docs/models/managementapplicationinstance.md
   - docs/models/managementapplicationresponse.md
   - docs/models/managementapplicationsubscription.md
   - docs/models/managementcreateapplicationrequest.md
+  - docs/models/managementcreateapplicationrequestorganizationsettings.md
   - docs/models/managementcreateapplicationsecurity.md
   - docs/models/managementcreateorganizationrequest.md
   - docs/models/managementcreateorganizationsecurity.md
+  - docs/models/managementdeleteapplicationrequest.md
+  - docs/models/managementdeleteapplicationsecurity.md
+  - docs/models/managementdeletedobjectresponse.md
+  - docs/models/managementdeleteorganizationrequest.md
+  - docs/models/managementdeleteorganizationsecurity.md
+  - docs/models/managementdomainresponse.md
+  - docs/models/managementdomainresponseobject.md
+  - docs/models/managementdomainstatusresponse.md
+  - docs/models/managementdomainstatusresponsesslstatus.md
+  - docs/models/managementdomainstatusresponsestatus.md
+  - docs/models/managementgetapplicationdomainrequest.md
+  - docs/models/managementgetapplicationdomainsecurity.md
+  - docs/models/managementgetapplicationdomainstatusrequest.md
+  - docs/models/managementgetapplicationdomainstatussecurity.md
+  - docs/models/managementgetapplicationrequest.md
+  - docs/models/managementgetapplicationsecurity.md
+  - docs/models/managementgetapplicationusagerequest.md
+  - docs/models/managementgetapplicationusagesecurity.md
+  - docs/models/managementupdateapplicationdomainrequest.md
+  - docs/models/managementupdateapplicationdomainrequest1.md
+  - docs/models/managementupdateapplicationdomainsecurity.md
+  - docs/models/managementupdateapplicationrequest.md
+  - docs/models/managementupdateapplicationrequest1.md
+  - docs/models/managementupdateapplicationsecurity.md
   - docs/models/managementupsertuserrequest.md
   - docs/models/managementupsertusersecurity.md
+  - docs/models/managementusagereportresponse.md
+  - docs/models/managementusagereportresponseobject.md
   - docs/models/mergeorganizationmetadatarequest.md
   - docs/models/mergeorganizationmetadatarequestbody.md
   - docs/models/meta.md
+  - docs/models/nativesettings.md
   - docs/models/nextaction.md
   - docs/models/nonce.md
   - docs/models/oauth.md
@@ -293,6 +338,7 @@ generatedFiles:
   - docs/models/organizationwithlogo.md
   - docs/models/organizationwithlogoobject.md
   - docs/models/otp.md
+  - docs/models/paginatedcommerceplanresponse.md
   - docs/models/passkey.md
   - docs/models/passkeyobject.md
   - docs/models/passkeyverification.md
@@ -305,9 +351,11 @@ generatedFiles:
   - docs/models/previewtemplateresponsebody.md
   - docs/models/privatemetadata.md
   - docs/models/provider.md
+  - docs/models/proxy.md
   - docs/models/proxycheck.md
   - docs/models/proxycheckobject.md
   - docs/models/publicmetadata.md
+  - docs/models/publicorganizationdata.md
   - docs/models/queryparamenrollmentmode.md
   - docs/models/queryparamstatus.md
   - docs/models/redirecturl.md
@@ -346,6 +394,7 @@ generatedFiles:
   - docs/models/sessionactivityresponse.md
   - docs/models/sessionobject.md
   - docs/models/sessionrefresh.md
+  - docs/models/sessionsettings.md
   - docs/models/sessiontask.md
   - docs/models/setuserprofileimagerequest.md
   - docs/models/setuserprofileimagerequestbody.md
@@ -358,6 +407,8 @@ generatedFiles:
   - docs/models/signupstatus.md
   - docs/models/signupverification.md
   - docs/models/signupverifications.md
+  - docs/models/ssl.md
+  - docs/models/sslstatus.md
   - docs/models/status.md
   - docs/models/strategy.md
   - docs/models/svixurl.md
@@ -424,6 +475,7 @@ generatedFiles:
   - docs/models/userobject.md
   - docs/models/userpasskeydeleterequest.md
   - docs/models/usersbanrequestbody.md
+  - docs/models/usersettings.md
   - docs/models/usersgetorganizationinvitationsqueryparamstatus.md
   - docs/models/usersgetorganizationinvitationsrequest.md
   - docs/models/usersgetorganizationmembershipsrequest.md
@@ -511,6 +563,7 @@ generatedFiles:
   - docs/sdks/blocklistidentifierssdk/README.md
   - docs/sdks/clerk/README.md
   - docs/sdks/clients/README.md
+  - docs/sdks/commerce/README.md
   - docs/sdks/domainssdk/README.md
   - docs/sdks/emailaddresses/README.md
   - docs/sdks/emailandsmstemplates/README.md
@@ -560,6 +613,7 @@ generatedFiles:
   - src/clerk_backend_api/betafeatures.py
   - src/clerk_backend_api/blocklistidentifiers_sdk.py
   - src/clerk_backend_api/clients.py
+  - src/clerk_backend_api/commerce.py
   - src/clerk_backend_api/domains_sdk.py
   - src/clerk_backend_api/emailaddresses.py
   - src/clerk_backend_api/emailandsmstemplates.py
@@ -587,7 +641,10 @@ generatedFiles:
   - src/clerk_backend_api/models/clerkerror.py
   - src/clerk_backend_api/models/clerkerrors.py
   - src/clerk_backend_api/models/client.py
+  - src/clerk_backend_api/models/cnamestatus.py
   - src/clerk_backend_api/models/cnametarget.py
+  - src/clerk_backend_api/models/commercemoneyresponse.py
+  - src/clerk_backend_api/models/commerceplan.py
   - src/clerk_backend_api/models/cookies.py
   - src/clerk_backend_api/models/createactortokenop.py
   - src/clerk_backend_api/models/createallowlistidentifierop.py
@@ -638,13 +695,17 @@ generatedFiles:
   - src/clerk_backend_api/models/deleteuserop.py
   - src/clerk_backend_api/models/deleteuserprofileimageop.py
   - src/clerk_backend_api/models/disablemfaop.py
+  - src/clerk_backend_api/models/dnsstatus.py
   - src/clerk_backend_api/models/domain.py
   - src/clerk_backend_api/models/domains.py
   - src/clerk_backend_api/models/emailaddress.py
   - src/clerk_backend_api/models/externalaccountwithverification.py
+  - src/clerk_backend_api/models/failurehint.py
+  - src/clerk_backend_api/models/featureresponse.py
   - src/clerk_backend_api/models/getawscredentialop.py
   - src/clerk_backend_api/models/getclientlistop.py
   - src/clerk_backend_api/models/getclientop.py
+  - src/clerk_backend_api/models/getcommerceplanlistop.py
   - src/clerk_backend_api/models/getemailaddressop.py
   - src/clerk_backend_api/models/getjwttemplateop.py
   - src/clerk_backend_api/models/getmachineop.py
@@ -706,8 +767,22 @@ generatedFiles:
   - src/clerk_backend_api/models/managementcreateapplicationrequest.py
   - src/clerk_backend_api/models/managementcreateorganizationop.py
   - src/clerk_backend_api/models/managementcreateorganizationrequest.py
+  - src/clerk_backend_api/models/managementdeleteapplicationop.py
+  - src/clerk_backend_api/models/managementdeletedobjectresponse.py
+  - src/clerk_backend_api/models/managementdeleteorganizationop.py
+  - src/clerk_backend_api/models/managementdomainresponse.py
+  - src/clerk_backend_api/models/managementdomainstatusresponse.py
+  - src/clerk_backend_api/models/managementgetapplicationdomainop.py
+  - src/clerk_backend_api/models/managementgetapplicationdomainstatusop.py
+  - src/clerk_backend_api/models/managementgetapplicationop.py
+  - src/clerk_backend_api/models/managementgetapplicationusageop.py
+  - src/clerk_backend_api/models/managementupdateapplicationdomainop.py
+  - src/clerk_backend_api/models/managementupdateapplicationdomainrequest.py
+  - src/clerk_backend_api/models/managementupdateapplicationop.py
+  - src/clerk_backend_api/models/managementupdateapplicationrequest.py
   - src/clerk_backend_api/models/managementupsertuserop.py
   - src/clerk_backend_api/models/managementupsertuserrequest.py
+  - src/clerk_backend_api/models/managementusagereportresponse.py
   - src/clerk_backend_api/models/mergeorganizationmetadataop.py
   - src/clerk_backend_api/models/oauthaccesstoken.py
   - src/clerk_backend_api/models/oauthapplication.py
@@ -727,6 +802,7 @@ generatedFiles:
   - src/clerk_backend_api/models/organizations.py
   - src/clerk_backend_api/models/organizationsettings.py
   - src/clerk_backend_api/models/organizationwithlogo.py
+  - src/clerk_backend_api/models/paginatedcommerceplanresponse.py
   - src/clerk_backend_api/models/passkey.py
   - src/clerk_backend_api/models/phonenumber.py
   - src/clerk_backend_api/models/previewtemplateop.py
@@ -755,6 +831,7 @@ generatedFiles:
   - src/clerk_backend_api/models/signup.py
   - src/clerk_backend_api/models/signupverification.py
   - src/clerk_backend_api/models/signupverifications.py
+  - src/clerk_backend_api/models/sslstatus.py
   - src/clerk_backend_api/models/svixurl.py
   - src/clerk_backend_api/models/template.py
   - src/clerk_backend_api/models/testingtoken.py
@@ -1072,7 +1149,7 @@ examples:
           offset: 10
       responses:
         "200":
-          application/json: [{"id": "temp_12345", "object": "template", "instance_id": "inst_67890", "resource_type": "system", "template_type": "email", "name": "Welcome Email", "slug": "welcome_email", "position": 1, "can_revert": false, "can_delete": true, "can_edit_body": true, "can_toggle": true, "subject": "Welcome to our service!", "markup": "<p>Hello, {{ user.name }}</p>", "body": "You are now signed up. Welcome!", "available_variables": ["user.name", "user.email"], "required_variables": ["user.name"], "from_email_name": "Clerk Support", "reply_to_email_name": "support@clerk.com", "delivered_by_clerk": true, "enabled": true, "updated_at": 1610000000, "created_at": 1600000000}, {"id": "temp_12345", "object": "template", "instance_id": "inst_67890", "resource_type": "system", "template_type": "email", "name": "Welcome Email", "slug": "welcome_email", "position": 1, "can_revert": false, "can_delete": true, "can_edit_body": false, "can_toggle": true, "subject": "Welcome to our service!", "markup": "<p>Hello, {{ user.name }}</p>", "body": "You are now signed up. Welcome!", "available_variables": ["user.name", "user.email"], "required_variables": ["user.name"], "from_email_name": "Clerk Support", "reply_to_email_name": "support@clerk.com", "delivered_by_clerk": true, "enabled": true, "updated_at": 1610000000, "created_at": 1600000000}, {"id": "temp_12345", "object": "template", "instance_id": "inst_67890", "resource_type": "system", "template_type": "email", "name": "Welcome Email", "slug": "welcome_email", "position": 1, "can_revert": false, "can_delete": true, "can_edit_body": true, "can_toggle": true, "subject": "Welcome to our service!", "markup": "<p>Hello, {{ user.name }}</p>", "body": "You are now signed up. Welcome!", "available_variables": ["user.name", "user.email"], "required_variables": ["user.name"], "from_email_name": "Clerk Support", "reply_to_email_name": "support@clerk.com", "delivered_by_clerk": true, "enabled": true, "updated_at": 1610000000, "created_at": 1600000000}]
+          application/json: [{"id": "temp_12345", "object": "template", "instance_id": "inst_67890", "resource_type": "system", "template_type": "email", "name": "Welcome Email", "slug": "welcome_email", "position": 1, "can_revert": false, "can_delete": true, "can_edit_body": true, "can_toggle": true, "subject": "Welcome to our service!", "markup": "<p>Hello, {{ user.name }}</p>", "body": "You are now signed up. Welcome!", "available_variables": ["user.name", "user.email"], "required_variables": ["user.name"], "from_email_name": "Clerk Support", "reply_to_email_name": "support@clerk.com", "delivered_by_clerk": true, "enabled": true, "flagged_as_suspicious": true, "updated_at": 1610000000, "created_at": 1600000000}, {"id": "temp_12345", "object": "template", "instance_id": "inst_67890", "resource_type": "system", "template_type": "email", "name": "Welcome Email", "slug": "welcome_email", "position": 1, "can_revert": false, "can_delete": true, "can_edit_body": false, "can_toggle": true, "subject": "Welcome to our service!", "markup": "<p>Hello, {{ user.name }}</p>", "body": "You are now signed up. Welcome!", "available_variables": ["user.name", "user.email"], "required_variables": ["user.name"], "from_email_name": "Clerk Support", "reply_to_email_name": "support@clerk.com", "delivered_by_clerk": true, "enabled": true, "flagged_as_suspicious": false, "updated_at": 1610000000, "created_at": 1600000000}, {"id": "temp_12345", "object": "template", "instance_id": "inst_67890", "resource_type": "system", "template_type": "email", "name": "Welcome Email", "slug": "welcome_email", "position": 1, "can_revert": false, "can_delete": true, "can_edit_body": true, "can_toggle": true, "subject": "Welcome to our service!", "markup": "<p>Hello, {{ user.name }}</p>", "body": "You are now signed up. Welcome!", "available_variables": ["user.name", "user.email"], "required_variables": ["user.name"], "from_email_name": "Clerk Support", "reply_to_email_name": "support@clerk.com", "delivered_by_clerk": true, "enabled": true, "flagged_as_suspicious": true, "updated_at": 1610000000, "created_at": 1600000000}]
         "400":
           application/json: {"errors": [{"message": "Invalid input", "long_message": "The input provided does not meet the requirements.", "code": "400_bad_request", "meta": {}, "clerk_trace_id": "trace_123456789abcd"}], "meta": {}}
     speakeasy-default-get-template-list:
@@ -1085,7 +1162,7 @@ examples:
           offset: 10
       responses:
         "200":
-          application/json: [{"id": "temp_12345", "object": "template", "instance_id": "inst_67890", "resource_type": "system", "template_type": "email", "name": "Welcome Email", "slug": "welcome_email", "position": 1, "can_revert": false, "can_delete": true, "can_edit_body": true, "can_toggle": false, "subject": "Welcome to our service!", "markup": "<p>Hello, {{ user.name }}</p>", "body": "You are now signed up. Welcome!", "available_variables": ["user.name", "user.email"], "required_variables": ["user.name"], "from_email_name": "Clerk Support", "reply_to_email_name": "support@clerk.com", "delivered_by_clerk": true, "enabled": true, "updated_at": 1610000000, "created_at": 1600000000}]
+          application/json: [{"id": "temp_12345", "object": "template", "instance_id": "inst_67890", "resource_type": "system", "template_type": "email", "name": "Welcome Email", "slug": "welcome_email", "position": 1, "can_revert": false, "can_delete": true, "can_edit_body": true, "can_toggle": false, "subject": "Welcome to our service!", "markup": "<p>Hello, {{ user.name }}</p>", "body": "You are now signed up. Welcome!", "available_variables": ["user.name", "user.email"], "required_variables": ["user.name"], "from_email_name": "Clerk Support", "reply_to_email_name": "support@clerk.com", "delivered_by_clerk": true, "enabled": true, "flagged_as_suspicious": true, "updated_at": 1610000000, "created_at": 1600000000}]
         "400":
           application/json: {"errors": [{"message": "Invalid input", "long_message": "The input provided does not meet the requirements.", "code": "400_bad_request", "meta": {}, "clerk_trace_id": "trace_123456789abcd"}], "meta": {}}
   GetTemplate:
@@ -1096,7 +1173,7 @@ examples:
           slug: "welcome-email"
       responses:
         "200":
-          application/json: {"id": "temp_12345", "object": "template", "instance_id": "inst_67890", "resource_type": "system", "template_type": "email", "name": "Welcome Email", "slug": "welcome_email", "position": 1, "can_revert": false, "can_delete": true, "can_edit_body": false, "can_toggle": false, "subject": "Welcome to our service!", "markup": "<p>Hello, {{ user.name }}</p>", "body": "You are now signed up. Welcome!", "available_variables": ["user.name", "user.email"], "required_variables": ["user.name"], "from_email_name": "Clerk Support", "reply_to_email_name": "support@clerk.com", "delivered_by_clerk": true, "enabled": false, "updated_at": 1610000000, "created_at": 1600000000}
+          application/json: {"id": "temp_12345", "object": "template", "instance_id": "inst_67890", "resource_type": "system", "template_type": "email", "name": "Welcome Email", "slug": "welcome_email", "position": 1, "can_revert": false, "can_delete": true, "can_edit_body": false, "can_toggle": false, "subject": "Welcome to our service!", "markup": "<p>Hello, {{ user.name }}</p>", "body": "You are now signed up. Welcome!", "available_variables": ["user.name", "user.email"], "required_variables": ["user.name"], "from_email_name": "Clerk Support", "reply_to_email_name": "support@clerk.com", "delivered_by_clerk": true, "enabled": false, "flagged_as_suspicious": false, "updated_at": 1610000000, "created_at": 1600000000}
         "400":
           application/json: {"errors": [{"message": "Invalid input", "long_message": "The input provided does not meet the requirements.", "code": "400_bad_request", "meta": {}, "clerk_trace_id": "trace_123456789abcd"}], "meta": {}}
   RevertTemplate:
@@ -1107,7 +1184,7 @@ examples:
           slug: "welcome-email"
       responses:
         "200":
-          application/json: {"id": "temp_12345", "object": "template", "instance_id": "inst_67890", "resource_type": "system", "template_type": "email", "name": "Welcome Email", "slug": "welcome_email", "position": 1, "can_revert": false, "can_delete": true, "can_edit_body": true, "can_toggle": true, "subject": "Welcome to our service!", "markup": "<p>Hello, {{ user.name }}</p>", "body": "You are now signed up. Welcome!", "available_variables": ["user.name", "user.email"], "required_variables": ["user.name"], "from_email_name": "Clerk Support", "reply_to_email_name": "support@clerk.com", "delivered_by_clerk": true, "enabled": false, "updated_at": 1610000000, "created_at": 1600000000}
+          application/json: {"id": "temp_12345", "object": "template", "instance_id": "inst_67890", "resource_type": "system", "template_type": "email", "name": "Welcome Email", "slug": "welcome_email", "position": 1, "can_revert": false, "can_delete": true, "can_edit_body": true, "can_toggle": true, "subject": "Welcome to our service!", "markup": "<p>Hello, {{ user.name }}</p>", "body": "You are now signed up. Welcome!", "available_variables": ["user.name", "user.email"], "required_variables": ["user.name"], "from_email_name": "Clerk Support", "reply_to_email_name": "support@clerk.com", "delivered_by_clerk": true, "enabled": false, "flagged_as_suspicious": true, "updated_at": 1610000000, "created_at": 1600000000}
         "400":
           application/json: {"errors": [{"message": "Invalid input", "long_message": "The input provided does not meet the requirements.", "code": "400_bad_request", "meta": {}, "clerk_trace_id": "trace_123456789abcd"}], "meta": {}}
   ToggleTemplateDelivery:
@@ -1120,7 +1197,7 @@ examples:
         application/json: {"delivered_by_clerk": true}
       responses:
         "200":
-          application/json: {"id": "temp_12345", "object": "template", "instance_id": "inst_67890", "resource_type": "system", "template_type": "email", "name": "Welcome Email", "slug": "welcome_email", "position": 1, "can_revert": false, "can_delete": true, "can_edit_body": false, "can_toggle": false, "subject": "Welcome to our service!", "markup": "<p>Hello, {{ user.name }}</p>", "body": "You are now signed up. Welcome!", "available_variables": ["user.name", "user.email"], "required_variables": ["user.name"], "from_email_name": "Clerk Support", "reply_to_email_name": "support@clerk.com", "delivered_by_clerk": true, "enabled": false, "updated_at": 1610000000, "created_at": 1600000000}
+          application/json: {"id": "temp_12345", "object": "template", "instance_id": "inst_67890", "resource_type": "system", "template_type": "email", "name": "Welcome Email", "slug": "welcome_email", "position": 1, "can_revert": false, "can_delete": true, "can_edit_body": false, "can_toggle": false, "subject": "Welcome to our service!", "markup": "<p>Hello, {{ user.name }}</p>", "body": "You are now signed up. Welcome!", "available_variables": ["user.name", "user.email"], "required_variables": ["user.name"], "from_email_name": "Clerk Support", "reply_to_email_name": "support@clerk.com", "delivered_by_clerk": true, "enabled": false, "flagged_as_suspicious": false, "updated_at": 1610000000, "created_at": 1600000000}
         "400":
           application/json: {"errors": [{"message": "Invalid input", "long_message": "The input provided does not meet the requirements.", "code": "400_bad_request", "meta": {}, "clerk_trace_id": "trace_123456789abcd"}], "meta": {}}
   UpsertTemplate:
@@ -1133,7 +1210,7 @@ examples:
         application/json: {"name": "Verification Code", "subject": "Your Verification Code", "markup": "<p>Your code: {{code}}</p>", "body": "Use this code to verify your email: {{code}}", "delivered_by_clerk": true, "from_email_name": "hello", "reply_to_email_name": "support"}
       responses:
         "200":
-          application/json: {"id": "temp_12345", "object": "template", "instance_id": "inst_67890", "resource_type": "system", "template_type": "email", "name": "Welcome Email", "slug": "welcome_email", "position": 1, "can_revert": false, "can_delete": true, "can_edit_body": true, "can_toggle": true, "subject": "Welcome to our service!", "markup": "<p>Hello, {{ user.name }}</p>", "body": "You are now signed up. Welcome!", "available_variables": ["user.name", "user.email"], "required_variables": ["user.name"], "from_email_name": "Clerk Support", "reply_to_email_name": "support@clerk.com", "delivered_by_clerk": true, "enabled": true, "updated_at": 1610000000, "created_at": 1600000000}
+          application/json: {"id": "temp_12345", "object": "template", "instance_id": "inst_67890", "resource_type": "system", "template_type": "email", "name": "Welcome Email", "slug": "welcome_email", "position": 1, "can_revert": false, "can_delete": true, "can_edit_body": true, "can_toggle": true, "subject": "Welcome to our service!", "markup": "<p>Hello, {{ user.name }}</p>", "body": "You are now signed up. Welcome!", "available_variables": ["user.name", "user.email"], "required_variables": ["user.name"], "from_email_name": "Clerk Support", "reply_to_email_name": "support@clerk.com", "delivered_by_clerk": true, "enabled": true, "flagged_as_suspicious": true, "updated_at": 1610000000, "created_at": 1600000000}
         "400":
           application/json: {"errors": [{"message": "Invalid input", "long_message": "The input provided does not meet the requirements.", "code": "400_bad_request", "meta": {}, "clerk_trace_id": "trace_123456789abcd"}], "meta": {}}
   PreviewTemplate:
@@ -2120,7 +2197,7 @@ examples:
         application/json: {"name": "<value>", "enrollment_mode": "<value>", "verified": false}
       responses:
         "200":
-          application/json: {"object": "organization_domain", "id": "<id>", "organization_id": "<id>", "name": "<value>", "enrollment_mode": "automatic_invitation", "affiliation_email_address": "<value>", "verification": {"status": "unverified", "strategy": "<value>", "attempts": 459803, "expire_at": 817071}, "total_pending_invitations": 687770, "total_pending_suggestions": 595975, "created_at": 413574, "updated_at": 503170}
+          application/json: {"object": "organization_domain", "id": "<id>", "organization_id": "<id>", "name": "<value>", "enrollment_mode": "automatic_invitation", "affiliation_email_address": "<value>", "verification": {"status": "unverified", "strategy": "<value>", "attempts": 459803, "expire_at": 817071}, "total_pending_invitations": 687770, "total_pending_suggestions": 595975, "public_organization_data": {"id": "<id>", "name": "<value>", "slug": "<value>", "image_url": "https://monthly-costume.biz", "has_image": true}, "created_at": 413574, "updated_at": 503170}
         "400":
           application/json: {"errors": [{"message": "Invalid input", "long_message": "The input provided does not meet the requirements.", "code": "400_bad_request", "meta": {}, "clerk_trace_id": "trace_123456789abcd"}], "meta": {}}
   ListOrganizationDomains:
@@ -2135,7 +2212,7 @@ examples:
           offset: 10
       responses:
         "200":
-          application/json: {"data": [{"object": "organization_domain", "id": "<id>", "organization_id": "<id>", "name": "<value>", "enrollment_mode": "automatic_invitation", "affiliation_email_address": "<value>", "verification": {"status": "unverified", "strategy": "<value>", "attempts": 853407, "expire_at": 43873}, "total_pending_invitations": 731471, "total_pending_suggestions": 283600, "created_at": 290489, "updated_at": 163254}, {"object": "organization_domain", "id": "<id>", "organization_id": "<id>", "name": "<value>", "enrollment_mode": "automatic_invitation", "affiliation_email_address": "<value>", "verification": {"status": "unverified", "strategy": "<value>", "attempts": 853407, "expire_at": 43873}, "total_pending_invitations": 731471, "total_pending_suggestions": 283600, "created_at": 290489, "updated_at": 163254}], "total_count": 284403}
+          application/json: {"data": [{"object": "organization_domain", "id": "<id>", "organization_id": "<id>", "name": "<value>", "enrollment_mode": "automatic_invitation", "affiliation_email_address": "<value>", "verification": {"status": "unverified", "strategy": "<value>", "attempts": 853407, "expire_at": 43873}, "total_pending_invitations": 731471, "total_pending_suggestions": 283600, "public_organization_data": {"id": "<id>", "name": "<value>", "slug": "<value>", "image_url": "https://heartfelt-swanling.com", "has_image": true}, "created_at": 290489, "updated_at": 163254}, {"object": "organization_domain", "id": "<id>", "organization_id": "<id>", "name": "<value>", "enrollment_mode": "automatic_invitation", "affiliation_email_address": "<value>", "verification": {"status": "unverified", "strategy": "<value>", "attempts": 853407, "expire_at": 43873}, "total_pending_invitations": 731471, "total_pending_suggestions": 283600, "public_organization_data": {"id": "<id>", "name": "<value>", "slug": "<value>", "image_url": "https://heartfelt-swanling.com", "has_image": true}, "created_at": 290489, "updated_at": 163254}], "total_count": 284403}
         "401":
           application/json: {"errors": [{"message": "Invalid input", "long_message": "The input provided does not meet the requirements.", "code": "400_bad_request", "meta": {}, "clerk_trace_id": "trace_123456789abcd"}], "meta": {}}
   UpdateOrganizationDomain:
@@ -2148,7 +2225,7 @@ examples:
         application/json: {"enrollment_mode": "<value>", "verified": true}
       responses:
         "200":
-          application/json: {"object": "organization_domain", "id": "<id>", "organization_id": "<id>", "name": "<value>", "enrollment_mode": "automatic_suggestion", "affiliation_email_address": "<value>", "verification": {"status": "verified", "strategy": "<value>", "attempts": 77212, "expire_at": null}, "total_pending_invitations": 582286, "total_pending_suggestions": 510914, "created_at": 468228, "updated_at": 311621}
+          application/json: {"object": "organization_domain", "id": "<id>", "organization_id": "<id>", "name": "<value>", "enrollment_mode": "automatic_suggestion", "affiliation_email_address": "<value>", "verification": {"status": "verified", "strategy": "<value>", "attempts": 77212, "expire_at": null}, "total_pending_invitations": 582286, "total_pending_suggestions": 510914, "public_organization_data": {"id": "<id>", "name": "<value>", "slug": "<value>", "image_url": "https://hospitable-substitution.net", "has_image": true}, "created_at": 468228, "updated_at": 311621}
         "400":
           application/json: {"errors": [{"message": "Invalid input", "long_message": "The input provided does not meet the requirements.", "code": "400_bad_request", "meta": {}, "clerk_trace_id": "trace_123456789abcd"}], "meta": {}}
   DeleteOrganizationDomain:
@@ -2606,7 +2683,7 @@ examples:
   ManagementCreateApplication:
     speakeasy-default-management-create-application:
       requestBody:
-        application/json: {"name": "<value>", "owner_id": "<id>", "plan_id": "<id>", "addon_ids": ["<value 1>"], "paid_externally": false, "test_mode": true, "max_allowed_users": 623638, "max_allowed_organizations": 122319, "subscription_metadata": {"key": "<value>"}, "environment_types": ["development"]}
+        application/json: {"name": "<value>", "owner_id": "<id>", "plan_id": "<id>", "addon_ids": ["<value 1>"], "domain": "bustling-license.info", "paid_externally": false, "test_mode": true, "max_allowed_users": 623638, "max_allowed_organizations": 122319, "user_settings": {}, "organization_settings": {}, "session_settings": {}, "native_settings": {}, "experimental_settings": {}, "fraud_settings": {}, "billing_settings": {}, "subscription_metadata": {"key": "<value>"}, "environment_types": ["development"]}
       responses:
         "200":
           application/json: {"application_id": "<id>", "subscription": {"id": "<id>", "stripe_subscription_id": "<id>"}, "instances": []}
@@ -2623,5 +2700,120 @@ examples:
           application/json: {"errors": []}
         "404":
           application/json: {"errors": []}
+  ManagementDeleteOrganization:
+    speakeasy-default-management-delete-organization:
+      parameters:
+        path:
+          organizationID: "<id>"
+      responses:
+        "200":
+          application/json: {"deleted": true, "object": "deleted", "id": "<id>"}
+        "400":
+          application/json: {"errors": [{"message": "Invalid input", "long_message": "The input provided does not meet the requirements.", "code": "400_bad_request", "meta": {}, "clerk_trace_id": "trace_123456789abcd"}], "meta": {}}
+  ManagementGetApplication:
+    speakeasy-default-management-get-application:
+      parameters:
+        path:
+          applicationID: "<id>"
+        query:
+          owner_id: "<id>"
+          include_secret_keys: false
+      responses:
+        "200":
+          application/json: {"application_id": "<id>", "subscription": {"id": "<id>", "stripe_subscription_id": "<id>"}, "instances": [{"instance_id": "<id>", "environment_type": "<value>", "secret_key": "<value>", "publishable_key": "<value>"}]}
+        "400":
+          application/json: {"errors": [{"message": "Invalid input", "long_message": "The input provided does not meet the requirements.", "code": "400_bad_request", "meta": {}, "clerk_trace_id": "trace_123456789abcd"}], "meta": {}}
+  ManagementUpdateApplication:
+    speakeasy-default-management-update-application:
+      parameters:
+        path:
+          applicationID: "<id>"
+        query:
+          owner_id: "<id>"
+      requestBody:
+        application/json: {"name": "<value>", "plan_id": "<id>", "addon_ids": ["<value 1>", "<value 2>", "<value 3>"]}
+      responses:
+        "200":
+          application/json: {"application_id": "<id>", "subscription": {"id": "<id>", "stripe_subscription_id": "<id>"}, "instances": [{"instance_id": "<id>", "environment_type": "<value>", "secret_key": "<value>", "publishable_key": "<value>"}]}
+        "400":
+          application/json: {"errors": [{"message": "Invalid input", "long_message": "The input provided does not meet the requirements.", "code": "400_bad_request", "meta": {}, "clerk_trace_id": "trace_123456789abcd"}], "meta": {}}
+  ManagementDeleteApplication:
+    speakeasy-default-management-delete-application:
+      parameters:
+        path:
+          applicationID: "<id>"
+        query:
+          owner_id: "<id>"
+      responses:
+        "200":
+          application/json: {"deleted": false, "object": "deleted", "id": "<id>"}
+        "400":
+          application/json: {"errors": [{"message": "Invalid input", "long_message": "The input provided does not meet the requirements.", "code": "400_bad_request", "meta": {}, "clerk_trace_id": "trace_123456789abcd"}], "meta": {}}
+  ManagementGetApplicationUsage:
+    speakeasy-default-management-get-application-usage:
+      parameters:
+        path:
+          applicationID: "<id>"
+        query:
+          owner_id: "<id>"
+      responses:
+        "200":
+          application/json: {"object": "usage_report", "billing_cycle": {"end": "2025-06-15T18:16:43.184Z", "start": "2023-01-22T16:45:13.936Z"}, "day_usage": {"key": "<value>"}, "cycle_usage": {"key": "<value>"}}
+        "400":
+          application/json: {"errors": [{"message": "Invalid input", "long_message": "The input provided does not meet the requirements.", "code": "400_bad_request", "meta": {}, "clerk_trace_id": "trace_123456789abcd"}], "meta": {}}
+  ManagementUpdateApplicationDomain:
+    speakeasy-default-management-update-application-domain:
+      parameters:
+        path:
+          applicationID: "<id>"
+        query:
+          owner_id: "<id>"
+      requestBody:
+        application/json: {"name": "<value>"}
+      responses:
+        "200":
+          application/json: {"object": "domain", "id": "<id>", "name": "<value>", "is_satellite": false, "frontend_api_url": "https://handsome-premise.info/", "development_origin": "<value>", "accounts_portal_url": "https://unkempt-babushka.name/", "cname_targets": [{"name": "<value>", "value": "<value>", "required": false}]}
+        "400":
+          application/json: {"errors": [{"message": "Invalid input", "long_message": "The input provided does not meet the requirements.", "code": "400_bad_request", "meta": {}, "clerk_trace_id": "trace_123456789abcd"}], "meta": {}}
+  ManagementGetApplicationDomain:
+    speakeasy-default-management-get-application-domain:
+      parameters:
+        path:
+          applicationID: "<id>"
+          domainName: "elderly-disk.name"
+        query:
+          owner_id: "<id>"
+      responses:
+        "200":
+          application/json: {"object": "domain", "id": "<id>", "name": "<value>", "is_satellite": true, "frontend_api_url": "https://ideal-section.name/", "development_origin": "<value>", "accounts_portal_url": "https://tired-sushi.name/", "cname_targets": [{"name": "<value>", "value": "<value>", "required": true}]}
+        "400":
+          application/json: {"errors": [{"message": "Invalid input", "long_message": "The input provided does not meet the requirements.", "code": "400_bad_request", "meta": {}, "clerk_trace_id": "trace_123456789abcd"}], "meta": {}}
+  ManagementGetApplicationDomainStatus:
+    speakeasy-default-management-get-application-domain-status:
+      parameters:
+        path:
+          applicationID: "<id>"
+          domainName: "fatal-arcade.org"
+        query:
+          owner_id: "<id>"
+      responses:
+        "200":
+          application/json: {"dns": {"status": "in_progress", "cnames": {"accounts": {"clerk_subdomain": "<value>", "from": "<value>", "to": "<value>", "verified": false, "required": false, "failure_hints": [{"code": "<value>", "message": "<value>"}]}, "clerk": {"clerk_subdomain": "<value>", "from": "<value>", "to": "<value>", "verified": true, "required": true, "failure_hints": [{"code": "<value>", "message": "<value>"}]}, "clk._domainkey": {"clerk_subdomain": "<value>", "from": "<value>", "to": "<value>", "verified": true, "required": true, "failure_hints": []}, "clk2._domainkey": {"clerk_subdomain": "<value>", "from": "<value>", "to": "<value>", "verified": false, "required": true, "failure_hints": [{"code": "<value>", "message": "<value>"}]}, "clkmail": {"clerk_subdomain": "<value>", "from": "<value>", "to": "<value>", "verified": true, "required": false, "failure_hints": [{"code": "<value>", "message": "<value>"}]}}}, "ssl": {"status": "complete", "required": true, "failure_hints": null}, "ssl_hosts": {"key": {"status": "<value>", "required": false, "failure_hints": [{"code": "<value>", "message": "<value>"}]}}, "mail": {"status": "<value>", "required": false}, "proxy": {"status": "<value>", "required": true}, "status": "incomplete"}
+        "400":
+          application/json: {"errors": [{"message": "Invalid input", "long_message": "The input provided does not meet the requirements.", "code": "400_bad_request", "meta": {}, "clerk_trace_id": "trace_123456789abcd"}], "meta": {}}
+  GetCommercePlanList:
+    speakeasy-default-get-commerce-plan-list:
+      parameters:
+        query:
+          paginated: true
+          limit: 20
+          offset: 10
+      responses:
+        "200":
+          application/json: {"data": [{"object": "commerce_plan", "id": "<id>", "name": "<value>", "fee": {"amount": 916690, "amount_formatted": "<value>", "currency": "Jordanian Dinar", "currency_symbol": "$"}, "annual_monthly_fee": {"amount": 399020, "amount_formatted": "<value>", "currency": "Iranian Rial", "currency_symbol": "€"}, "annual_fee": {"amount": 772979, "amount_formatted": "<value>", "currency": "Jordanian Dinar", "currency_symbol": "Db"}, "amount": 183271, "amount_formatted": "<value>", "annual_monthly_amount": 59561, "annual_monthly_amount_formatted": "<value>", "annual_amount": 204929, "annual_amount_formatted": "<value>", "currency_symbol": "J$", "currency": "Taka", "description": "positively pro singing boohoo since nor", "product_id": "<id>", "is_default": true, "is_recurring": false, "publicly_visible": true, "has_base_fee": true, "payer_type": ["<value 1>", "<value 2>"], "for_payer_type": "<value>", "slug": "<value>", "avatar_url": "https://fantastic-jet.biz/", "period": "<value>", "interval": 154197, "features": [{"object": "feature", "id": "<id>", "name": "<value>", "description": "unless consequently weep ad pleased opposite wherever queasily", "slug": "<value>", "avatar_url": "https://concrete-lender.biz/"}]}], "total_count": 382518}
+        "400":
+          application/json: {"errors": [{"message": "Invalid input", "long_message": "The input provided does not meet the requirements.", "code": "400_bad_request", "meta": {}, "clerk_trace_id": "trace_123456789abcd"}], "meta": {}}
+        "500":
+          application/json: {"errors": [{"message": "Invalid input", "long_message": "The input provided does not meet the requirements.", "code": "400_bad_request", "meta": {}, "clerk_trace_id": "trace_123456789abcd"}], "meta": {}}
 examplesVersion: 1.0.2
 generatedTests: {}

@@ -1,0 +1,10 @@
+# ManagementUpdateApplicationRequest1
+
+
+## Fields
+
+| Field                                                                                        | Type                                                                                         | Required                                                                                     | Description                                                                                  |
+| -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| `application_id`                                                                             | *str*                                                                                        | :heavy_check_mark:                                                                           | Application ID.                                                                              |
+| `owner_id`                                                                                   | *str*                                                                                        | :heavy_check_mark:                                                                           | Owner ID of the application (organization ID).                                               |
+| `management_update_application_request`                                                      | [models.ManagementUpdateApplicationRequest](../models/managementupdateapplicationrequest.md) | :heavy_check_mark:                                                                           | Application data to update.                                                                  |

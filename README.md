@@ -303,6 +303,10 @@ def verify_machine_token(request: httpx.Request):
 * [verify](docs/sdks/clients/README.md#verify) - Verify a client
 * [get](docs/sdks/clients/README.md#get) - Get a client
 
+### [commerce](docs/sdks/commerce/README.md)
+
+* [list_plans](docs/sdks/commerce/README.md#list_plans) - List all commerce plans
+
 ### [domains](docs/sdks/domainssdk/README.md)
 
 * [list](docs/sdks/domainssdk/README.md#list) - List all instance domains
@@ -380,6 +384,14 @@ def verify_machine_token(request: httpx.Request):
 * [upsert_user](docs/sdks/management/README.md#upsert_user) - Upsert a user
 * [create_organization](docs/sdks/management/README.md#create_organization) - Create an organization
 * [create_application](docs/sdks/management/README.md#create_application) - Create an application (instance)
+* [delete_organization](docs/sdks/management/README.md#delete_organization) - Delete an organization
+* [get_application](docs/sdks/management/README.md#get_application) - Get an application
+* [update_application](docs/sdks/management/README.md#update_application) - Update an application
+* [delete_application](docs/sdks/management/README.md#delete_application) - Delete an application
+* [get_application_usage](docs/sdks/management/README.md#get_application_usage) - Get application usage
+* [update_application_domain](docs/sdks/management/README.md#update_application_domain) - Update application domain
+* [get_application_domain](docs/sdks/management/README.md#get_application_domain) - Get application domain
+* [get_application_domain_status](docs/sdks/management/README.md#get_application_domain_status) - Get application domain status
 
 ### [miscellaneous](docs/sdks/miscellaneous/README.md)
 

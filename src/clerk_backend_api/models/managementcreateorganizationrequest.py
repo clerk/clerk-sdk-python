@@ -24,10 +24,10 @@ class PrivateMetadata(BaseModel):
 
 
 class ManagementCreateOrganizationRequestTypedDict(TypedDict):
-    name: str
-    r"""The name of the organization."""
     slug: str
     r"""The slug of the organization."""
+    name: NotRequired[str]
+    r"""The name of the organization."""
     created_by: NotRequired[str]
     r"""The ID of the user who created the organization."""
     max_allowed_memberships: NotRequired[int]
@@ -41,11 +41,11 @@ class ManagementCreateOrganizationRequestTypedDict(TypedDict):
 
 
 class ManagementCreateOrganizationRequest(BaseModel):
-    name: str
-    r"""The name of the organization."""
-
     slug: str
     r"""The slug of the organization."""
+
+    name: Optional[str] = None
+    r"""The name of the organization."""
 
     created_by: Optional[str] = None
     r"""The ID of the user who created the organization."""
