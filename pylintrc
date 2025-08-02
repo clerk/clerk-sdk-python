@@ -191,6 +191,7 @@ good-names=i,
            e,
            id,
            n,
+           to,
            x
 
 # Good variable names regexes, separated by a comma. If names match any regex,

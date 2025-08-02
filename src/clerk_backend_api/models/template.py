@@ -62,6 +62,7 @@ class TemplateTypedDict(TypedDict):
     reply_to_email_name: NotRequired[str]
     delivered_by_clerk: NotRequired[bool]
     enabled: NotRequired[bool]
+    flagged_as_suspicious: NotRequired[bool]
     updated_at: NotRequired[int]
     r"""Unix timestamp of last update.
 
@@ -135,6 +136,8 @@ class Template(BaseModel):
 
     enabled: Optional[bool] = None
 
+    flagged_as_suspicious: Optional[bool] = None
+
     updated_at: Optional[int] = None
     r"""Unix timestamp of last update.
 
@@ -169,6 +172,7 @@ class Template(BaseModel):
             "reply_to_email_name",
             "delivered_by_clerk",
             "enabled",
+            "flagged_as_suspicious",
             "updated_at",
             "created_at",
         ]
