@@ -23,6 +23,7 @@ Most recent organizations will be returned first.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="ListOrganizations" method="get" path="/organizations" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -84,6 +85,7 @@ the next time they create a session, presuming they don't explicitly set a diffe
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="CreateOrganization" method="post" path="/organizations" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -137,6 +139,7 @@ Fetches the organization whose ID or slug matches the provided `id_or_slug` URL 
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="GetOrganization" method="get" path="/organizations/{organization_id}" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -180,6 +183,7 @@ Updates an existing organization
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="UpdateOrganization" method="patch" path="/organizations/{organization_id}" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -234,6 +238,7 @@ This is not reversible.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="DeleteOrganization" method="delete" path="/organizations/{organization_id}" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -278,6 +283,7 @@ You can remove metadata keys at any level by setting their value to `null`.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="MergeOrganizationMetadata" method="patch" path="/organizations/{organization_id}/metadata" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -328,6 +334,7 @@ Only the following file content types are supported: `image/jpeg`, `image/png`, 
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="UploadOrganizationLogo" method="put" path="/organizations/{organization_id}/logo" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -374,6 +381,7 @@ Delete the organization's logo.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="DeleteOrganizationLogo" method="delete" path="/organizations/{organization_id}/logo" -->
 ```python
 from clerk_backend_api import Clerk
 

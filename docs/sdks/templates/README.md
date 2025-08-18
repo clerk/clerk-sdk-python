@@ -15,6 +15,7 @@ Returns a preview of a template for a given template_type, slug and body
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="PreviewTemplate" method="post" path="/templates/{template_type}/{slug}/preview" -->
 ```python
 from clerk_backend_api import Clerk
 

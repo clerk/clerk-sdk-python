@@ -13,6 +13,7 @@ Verify an OAuth Access Token
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="verifyOAuthAccessToken" method="post" path="/oauth_applications/access_tokens/verify" -->
 ```python
 from clerk_backend_api import Clerk
 

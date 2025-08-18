@@ -13,6 +13,7 @@ Retrieve a new testing token.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="CreateTestingToken" method="post" path="/testing_tokens" -->
 ```python
 from clerk_backend_api import Clerk
 

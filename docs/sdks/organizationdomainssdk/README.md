@@ -17,6 +17,7 @@ Creates a new organization domain. By default the domain is verified, but can be
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="CreateOrganizationDomain" method="post" path="/organizations/{organization_id}/domains" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -61,6 +62,7 @@ Get a list of all domains of an organization.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="ListOrganizationDomains" method="get" path="/organizations/{organization_id}/domains" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -106,6 +108,7 @@ Updates the properties of an existing organization domain.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="UpdateOrganizationDomain" method="patch" path="/organizations/{organization_id}/domains/{domain_id}" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -150,6 +153,7 @@ Removes the given domain from the organization.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="DeleteOrganizationDomain" method="delete" path="/organizations/{organization_id}/domains/{domain_id}" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -198,6 +202,7 @@ including its verification status, enrollment mode, and associated counts.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="ListAllOrganizationDomains" method="get" path="/organization_domains" -->
 ```python
 import clerk_backend_api
 from clerk_backend_api import Clerk

@@ -14,6 +14,7 @@ Creates a new accountless application. [EXPERIMENTAL]
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="CreateAccountlessApplication" method="post" path="/accountless_applications" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -54,6 +55,7 @@ Completes an accountless application. [EXPERIMENTAL]
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="CompleteAccountlessApplication" method="post" path="/accountless_applications/complete" -->
 ```python
 from clerk_backend_api import Clerk
 

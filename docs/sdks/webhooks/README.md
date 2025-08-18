@@ -15,6 +15,7 @@ Create a Svix app and associate it with the current instance
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="CreateSvixApp" method="post" path="/webhooks/svix" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -55,6 +56,7 @@ Delete a Svix app and disassociate it from the current instance
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="DeleteSvixApp" method="delete" path="/webhooks/svix" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -88,6 +90,7 @@ Generate a new url for accessing the Svix's management dashboard for that partic
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="GenerateSvixAuthURL" method="post" path="/webhooks/svix_url" -->
 ```python
 from clerk_backend_api import Clerk
 

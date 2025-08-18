@@ -24,6 +24,7 @@ The organization invitations are ordered by descending creation date by default.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="ListInstanceOrganizationInvitations" method="get" path="/organization_invitations" -->
 ```python
 import clerk_backend_api
 from clerk_backend_api import Clerk
@@ -86,6 +87,7 @@ When the organization invitation is accepted, the metadata will be transferred t
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="CreateOrganizationInvitation" method="post" path="/organizations/{organization_id}/invitations" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -143,6 +145,7 @@ Any invitations created as a result of an Organization Domain are not included i
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="ListOrganizationInvitations" method="get" path="/organizations/{organization_id}/invitations" -->
 ```python
 import clerk_backend_api
 from clerk_backend_api import Clerk
@@ -202,6 +205,7 @@ When the organization invitation is accepted, the metadata will be transferred t
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="CreateOrganizationInvitationBulk" method="post" path="/organizations/{organization_id}/invitations/bulk" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -278,6 +282,7 @@ Any invitations created as a result of an Organization Domain are not included i
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="ListPendingOrganizationInvitations" method="get" path="/organizations/{organization_id}/invitations/pending" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -321,6 +326,7 @@ Use this request to get an existing organization invitation by ID.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="GetOrganizationInvitation" method="get" path="/organizations/{organization_id}/invitations/{invitation_id}" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -367,6 +373,7 @@ Only users with "admin" role can revoke invitations.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="RevokeOrganizationInvitation" method="post" path="/organizations/{organization_id}/invitations/{invitation_id}/revoke" -->
 ```python
 from clerk_backend_api import Clerk
 

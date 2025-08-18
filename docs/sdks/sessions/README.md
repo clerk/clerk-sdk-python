@@ -22,6 +22,7 @@ moving forward at least one of `client_id` or `user_id` parameters should be pro
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="GetSessionList" method="get" path="/sessions" -->
 ```python
 import clerk_backend_api
 from clerk_backend_api import Clerk
@@ -72,6 +73,7 @@ we recommend using the [Sign-in Tokens](https://clerk.com/docs/reference/backend
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="createSession" method="post" path="/sessions" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -115,6 +117,7 @@ Retrieve the details of a session
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="GetSession" method="get" path="/sessions/{session_id}" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -157,6 +160,7 @@ are validation errors, which signals the SDKs to fall back to the handshake flow
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="RefreshSession" method="post" path="/sessions/{session_id}/refresh" -->
 ```python
 import clerk_backend_api
 from clerk_backend_api import Clerk
@@ -210,6 +214,7 @@ In multi-session mode, a revoked session will still be returned along with its c
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="RevokeSession" method="post" path="/sessions/{session_id}/revoke" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -251,6 +256,7 @@ Creates a session JSON Web Token (JWT) based on a session.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="CreateSessionToken" method="post" path="/sessions/{session_id}/tokens" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -293,6 +299,7 @@ Creates a JSON Web Token(JWT) based on a session and a JWT Template name defined
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="CreateSessionTokenFromTemplate" method="post" path="/sessions/{session_id}/tokens/{template_name}" -->
 ```python
 from clerk_backend_api import Clerk
 

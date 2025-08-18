@@ -15,6 +15,7 @@ The `actor` parameter needs to include at least a "sub" key whose value is the I
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="CreateActorToken" method="post" path="/actor_tokens" -->
 ```python
 import clerk_backend_api
 from clerk_backend_api import Clerk
@@ -62,6 +63,7 @@ Revokes a pending actor token.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="RevokeActorToken" method="post" path="/actor_tokens/{actor_token_id}/revoke" -->
 ```python
 from clerk_backend_api import Clerk
 

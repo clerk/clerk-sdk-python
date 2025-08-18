@@ -1,6 +1,7 @@
+
 [project]
 name = "clerk-backend-api"
-version = "3.1.11"
+version = "3.2.0"
 description = "Python Client SDK for clerk.dev"
 authors = [{ name = "Clerk" },]
 readme = "README-PYPI.md"
@@ -41,6 +42,8 @@ pythonpath = ["src"]
 
 [tool.mypy]
 disable_error_code = "misc"
+explicit_package_bases = true
+mypy_path = "src"
 
 [[tool.mypy.overrides]]
 module = "typing_inspect"

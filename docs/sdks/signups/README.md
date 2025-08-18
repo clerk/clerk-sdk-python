@@ -14,6 +14,7 @@ Retrieve the details of the sign-up with the given ID
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="GetSignUp" method="get" path="/sign_ups/{id}" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -55,6 +56,7 @@ Update the sign-up with the given ID
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="UpdateSignUp" method="patch" path="/sign_ups/{id}" -->
 ```python
 from clerk_backend_api import Clerk
 

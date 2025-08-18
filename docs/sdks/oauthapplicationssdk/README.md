@@ -21,6 +21,7 @@ Most recent OAuth applications will be returned first.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="ListOAuthApplications" method="get" path="/oauth_applications" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -67,6 +68,7 @@ All URL schemes are allowed such as `http://`, `https://`, `myapp://`, etc...
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="CreateOAuthApplication" method="post" path="/oauth_applications" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -115,6 +117,7 @@ Fetches the OAuth application whose ID matches the provided `id` in the path.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="GetOAuthApplication" method="get" path="/oauth_applications/{oauth_application_id}" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -156,6 +159,7 @@ Updates an existing OAuth application
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="UpdateOAuthApplication" method="patch" path="/oauth_applications/{oauth_application_id}" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -205,6 +209,7 @@ This is not reversible.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="DeleteOAuthApplication" method="delete" path="/oauth_applications/{oauth_application_id}" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -247,6 +252,7 @@ When the client secret is rotated, make sure to update it in authorized OAuth cl
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="RotateOAuthApplicationSecret" method="post" path="/oauth_applications/{oauth_application_id}/rotate_secret" -->
 ```python
 from clerk_backend_api import Clerk
 

@@ -29,6 +29,7 @@ if TYPE_CHECKING:
     from clerk_backend_api.betafeatures import BetaFeatures
     from clerk_backend_api.blocklistidentifiers_sdk import BlocklistIdentifiersSDK
     from clerk_backend_api.clients import Clients
+    from clerk_backend_api.commerce import Commerce
     from clerk_backend_api.domains_sdk import DomainsSDK
     from clerk_backend_api.emailaddresses import EmailAddresses
     from clerk_backend_api.emailandsmstemplates import EmailAndSmsTemplates
@@ -40,9 +41,8 @@ if TYPE_CHECKING:
     from clerk_backend_api.invitations import Invitations
     from clerk_backend_api.jwks_sdk import JwksSDK
     from clerk_backend_api.jwttemplates import JwtTemplates
+    from clerk_backend_api.m2m import M2m
     from clerk_backend_api.machines import Machines
-    from clerk_backend_api.machinetokens import MachineTokens
-    from clerk_backend_api.management import Management
     from clerk_backend_api.miscellaneous import Miscellaneous
     from clerk_backend_api.oauthaccesstokens import OauthAccessTokens
     from clerk_backend_api.oauthapplications_sdk import OauthApplicationsSDK
@@ -97,7 +97,6 @@ class Clerk(BaseSDK):
     instance_settings: "InstanceSettingsSDK"
     webhooks: "Webhooks"
     jwt_templates: "JwtTemplates"
-    machine_tokens: "MachineTokens"
     machines: "Machines"
     organizations: "OrganizationsSDK"
     organization_memberships: "OrganizationMembershipsSDK"
@@ -111,7 +110,8 @@ class Clerk(BaseSDK):
     testing_tokens: "TestingTokens"
     waitlist_entries: "WaitlistEntriesSDK"
     experimental_accountless_applications: "ExperimentalAccountlessApplications"
-    management: "Management"
+    commerce: "Commerce"
+    m2m: "M2m"
     oauth_access_tokens: "OauthAccessTokens"
     _sub_sdk_map = {
         "miscellaneous": ("clerk_backend_api.miscellaneous", "Miscellaneous"),
@@ -153,7 +153,6 @@ class Clerk(BaseSDK):
         ),
         "webhooks": ("clerk_backend_api.webhooks", "Webhooks"),
         "jwt_templates": ("clerk_backend_api.jwttemplates", "JwtTemplates"),
-        "machine_tokens": ("clerk_backend_api.machinetokens", "MachineTokens"),
         "machines": ("clerk_backend_api.machines", "Machines"),
         "organizations": ("clerk_backend_api.organizations_sdk", "OrganizationsSDK"),
         "organization_memberships": (
@@ -185,7 +184,8 @@ class Clerk(BaseSDK):
             "clerk_backend_api.experimentalaccountlessapplications",
             "ExperimentalAccountlessApplications",
         ),
-        "management": ("clerk_backend_api.management", "Management"),
+        "commerce": ("clerk_backend_api.commerce", "Commerce"),
+        "m2m": ("clerk_backend_api.m2m", "M2m"),
         "oauth_access_tokens": (
             "clerk_backend_api.oauthaccesstokens",
             "OauthAccessTokens",

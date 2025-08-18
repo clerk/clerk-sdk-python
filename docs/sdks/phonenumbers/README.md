@@ -16,6 +16,7 @@ Create a new phone number
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="CreatePhoneNumber" method="post" path="/phone_numbers" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -63,6 +64,7 @@ Returns the details of a phone number
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="GetPhoneNumber" method="get" path="/phone_numbers/{phone_number_id}" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -104,6 +106,7 @@ Delete the phone number with the given ID
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="DeletePhoneNumber" method="delete" path="/phone_numbers/{phone_number_id}" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -145,6 +148,7 @@ Updates a phone number
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="UpdatePhoneNumber" method="patch" path="/phone_numbers/{phone_number_id}" -->
 ```python
 from clerk_backend_api import Clerk
 

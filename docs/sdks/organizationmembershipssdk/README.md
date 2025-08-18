@@ -17,6 +17,7 @@ Adds a user as a member to the given organization.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="CreateOrganizationMembership" method="post" path="/organizations/{organization_id}/memberships" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -60,6 +61,7 @@ Retrieves all user memberships for the given organization
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="ListOrganizationMemberships" method="get" path="/organizations/{organization_id}/memberships" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -133,6 +135,7 @@ Updates the properties of an existing organization membership
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="UpdateOrganizationMembership" method="patch" path="/organizations/{organization_id}/memberships/{user_id}" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -176,6 +179,7 @@ Removes the given membership from the organization
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="DeleteOrganizationMembership" method="delete" path="/organizations/{organization_id}/memberships/{user_id}" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -220,6 +224,7 @@ You can remove metadata keys at any level by setting their value to `null`.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="UpdateOrganizationMembershipMetadata" method="patch" path="/organizations/{organization_id}/memberships/{user_id}/metadata" -->
 ```python
 from clerk_backend_api import Clerk
 

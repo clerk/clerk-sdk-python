@@ -20,6 +20,7 @@ a different proxy URL than the one provided. It can also be used to re-validate 
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="VerifyDomainProxy" method="post" path="/proxy_checks" -->
 ```python
 from clerk_backend_api import Clerk
 
