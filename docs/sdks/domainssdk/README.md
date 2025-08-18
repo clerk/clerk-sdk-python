@@ -17,6 +17,7 @@ The response will contain the primary domain for the instance and any satellite 
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="ListDomains" method="get" path="/domains" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -60,6 +61,7 @@ If you're planning to configure the new satellite domain to run behind a proxy, 
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="AddDomain" method="post" path="/domains" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -106,6 +108,7 @@ It is currently not possible to delete the instance's primary domain.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="DeleteDomain" method="delete" path="/domains/{domain_id}" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -154,6 +157,7 @@ update the instance's home origin, affecting the default application paths.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="UpdateDomain" method="patch" path="/domains/{domain_id}" -->
 ```python
 from clerk_backend_api import Clerk
 

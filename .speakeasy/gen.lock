@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: bfe29c99-6e67-43fe-b928-64d6a5ed6aa8
 management:
-  docChecksum: 4f8442b64ee1f79e78097b0196c13bf8
+  docChecksum: 5a5f39c7afdc37aeea3fa559ad548f89
   docVersion: "2025-04-10"
-  speakeasyVersion: 1.558.0
-  generationVersion: 2.623.2
-  releaseVersion: 3.1.11
-  configChecksum: 19199a5ba250a2cf9eac99312e3a72bb
+  speakeasyVersion: 1.605.1
+  generationVersion: 2.684.0
+  releaseVersion: 3.2.0
+  configChecksum: 082ee01153c6a9a5a597b3bbc29676c8
   repoURL: https://github.com/clerk/clerk-sdk-python.git
   installationURL: https://github.com/clerk/clerk-sdk-python.git
   published: true
@@ -15,13 +15,13 @@ features:
     additionalDependencies: 1.0.0
     additionalProperties: 1.0.1
     constsAndDefaults: 1.0.5
-    core: 5.19.2
+    core: 5.19.9
     customCodeRegions: 0.1.1
     defaultEnabledRetries: 0.2.0
     deprecations: 3.0.2
     enumUnions: 0.1.0
     envVarSecurityUsage: 0.3.2
-    examples: 3.0.1
+    examples: 3.0.2
     flatRequests: 1.0.1
     flattening: 3.1.1
     globalSecurity: 3.0.3
@@ -30,7 +30,6 @@ features:
     globalServerURLs: 3.1.1
     groups: 3.0.0
     methodArguments: 1.0.2
-    methodSecurity: 3.0.1
     multipartFileContentType: 1.0.0
     nameOverrides: 3.0.1
     nullables: 1.0.1
@@ -42,7 +41,6 @@ features:
     uploadStreams: 1.0.0
 generatedFiles:
   - .gitattributes
-  - .python-version
   - .vscode/settings.json
   - USAGE.md
   - docs/models/accountlessapplication.md
@@ -75,23 +73,29 @@ generatedFiles:
   - docs/models/clientobject.md
   - docs/models/cnametarget.md
   - docs/models/codetype.md
+  - docs/models/commercemoneyresponse.md
+  - docs/models/commerceplan.md
+  - docs/models/commerceplanobject.md
   - docs/models/cookies.md
   - docs/models/cookiesobject.md
   - docs/models/createactortokenactor.md
   - docs/models/createactortokenrequestbody.md
   - docs/models/createallowlistidentifierrequestbody.md
-  - docs/models/createawscredentialrequestbody.md
   - docs/models/createblocklistidentifierrequestbody.md
   - docs/models/createbulkinvitationstemplateslug.md
   - docs/models/createemailaddressrequestbody.md
   - docs/models/createinvitationrequestbody.md
   - docs/models/createjwttemplateclaims.md
   - docs/models/createjwttemplaterequestbody.md
+  - docs/models/createm2mtokenerrors.md
+  - docs/models/createm2mtokenm2mresponsebody.md
+  - docs/models/createm2mtokenm2mresponseresponsebody.md
+  - docs/models/createm2mtokenobject.md
+  - docs/models/createm2mtokenrequestbody.md
+  - docs/models/createm2mtokenresponsebody.md
   - docs/models/createmachinerequestbody.md
   - docs/models/createmachinescoperequest.md
   - docs/models/createmachinescoperequestbody.md
-  - docs/models/createmachinetokenclaims.md
-  - docs/models/createmachinetokenrequestbody.md
   - docs/models/createoauthapplicationrequestbody.md
   - docs/models/createorganizationdomainrequest.md
   - docs/models/createorganizationdomainrequestbody.md
@@ -151,7 +155,6 @@ generatedFiles:
   - docs/models/emailaddress.md
   - docs/models/emailaddressobject.md
   - docs/models/enrollmentmode.md
-  - docs/models/environmenttypes.md
   - docs/models/error.md
   - docs/models/errorclerkerror.md
   - docs/models/errormeta.md
@@ -160,14 +163,25 @@ generatedFiles:
   - docs/models/externalaccountwithverification.md
   - docs/models/externalaccountwithverificationobject.md
   - docs/models/externalaccountwithverificationverification.md
+  - docs/models/featureresponse.md
+  - docs/models/featureresponseobject.md
   - docs/models/file.md
   - docs/models/format_.md
   - docs/models/fromoauth.md
-  - docs/models/getawscredentialrequest.md
   - docs/models/getclientlistrequest.md
   - docs/models/getclientrequest.md
+  - docs/models/getcommerceplanlistrequest.md
   - docs/models/getemailaddressrequest.md
   - docs/models/getjwttemplaterequest.md
+  - docs/models/getm2mtokenserrors.md
+  - docs/models/getm2mtokensm2merrors.md
+  - docs/models/getm2mtokensm2mresponse404responsebody.md
+  - docs/models/getm2mtokensm2mresponsebody.md
+  - docs/models/getm2mtokensm2mresponseerrors.md
+  - docs/models/getm2mtokensm2mresponseresponsebody.md
+  - docs/models/getm2mtokensobject.md
+  - docs/models/getm2mtokensrequest.md
+  - docs/models/getm2mtokensresponsebody.md
   - docs/models/getmachinerequest.md
   - docs/models/getmachinesecretkeyrequest.md
   - docs/models/getoauthaccesstokenrequest.md
@@ -226,6 +240,7 @@ generatedFiles:
   - docs/models/listwaitlistentriesqueryparamstatus.md
   - docs/models/listwaitlistentriesrequest.md
   - docs/models/lockuserrequest.md
+  - docs/models/m2mtokens.md
   - docs/models/machine.md
   - docs/models/machinecreated.md
   - docs/models/machinecreatedobject.md
@@ -239,19 +254,8 @@ generatedFiles:
   - docs/models/machinescopeobject.md
   - docs/models/machinesecretkey.md
   - docs/models/machinesecretkeyobject.md
-  - docs/models/machinetoken.md
-  - docs/models/machinetokenobject.md
   - docs/models/machinewithoutscopedmachines.md
   - docs/models/machinewithoutscopedmachinesobject.md
-  - docs/models/managementapplicationinstance.md
-  - docs/models/managementapplicationresponse.md
-  - docs/models/managementapplicationsubscription.md
-  - docs/models/managementcreateapplicationrequest.md
-  - docs/models/managementcreateapplicationsecurity.md
-  - docs/models/managementcreateorganizationrequest.md
-  - docs/models/managementcreateorganizationsecurity.md
-  - docs/models/managementupsertuserrequest.md
-  - docs/models/managementupsertusersecurity.md
   - docs/models/mergeorganizationmetadatarequest.md
   - docs/models/mergeorganizationmetadatarequestbody.md
   - docs/models/meta.md
@@ -293,21 +297,22 @@ generatedFiles:
   - docs/models/organizationwithlogo.md
   - docs/models/organizationwithlogoobject.md
   - docs/models/otp.md
+  - docs/models/paginatedcommerceplanresponse.md
   - docs/models/passkey.md
   - docs/models/passkeyobject.md
   - docs/models/passkeyverification.md
   - docs/models/pathparamtemplatetype.md
+  - docs/models/payertype.md
   - docs/models/phonenumber.md
   - docs/models/phonenumberobject.md
   - docs/models/phonenumberverification.md
   - docs/models/previewtemplaterequest.md
   - docs/models/previewtemplaterequestbody.md
   - docs/models/previewtemplateresponsebody.md
-  - docs/models/privatemetadata.md
   - docs/models/provider.md
   - docs/models/proxycheck.md
   - docs/models/proxycheckobject.md
-  - docs/models/publicmetadata.md
+  - docs/models/publicorganizationdata.md
   - docs/models/queryparamenrollmentmode.md
   - docs/models/queryparamstatus.md
   - docs/models/redirecturl.md
@@ -323,6 +328,14 @@ generatedFiles:
   - docs/models/reverttemplaterequest.md
   - docs/models/revokeactortokenrequest.md
   - docs/models/revokeinvitationrequest.md
+  - docs/models/revokem2mtokenerrors.md
+  - docs/models/revokem2mtokenm2merrors.md
+  - docs/models/revokem2mtokenm2mresponsebody.md
+  - docs/models/revokem2mtokenm2mresponseresponsebody.md
+  - docs/models/revokem2mtokenobject.md
+  - docs/models/revokem2mtokenrequest.md
+  - docs/models/revokem2mtokenrequestbody.md
+  - docs/models/revokem2mtokenresponsebody.md
   - docs/models/revokeorganizationinvitationrequest.md
   - docs/models/revokeorganizationinvitationrequestbody.md
   - docs/models/revokesessionrequest.md
@@ -481,7 +494,15 @@ generatedFiles:
   - docs/models/verified.md
   - docs/models/verifyclientrequestbody.md
   - docs/models/verifydomainproxyrequestbody.md
+  - docs/models/verifym2mtokenerrors.md
+  - docs/models/verifym2mtokenm2merrors.md
+  - docs/models/verifym2mtokenm2mresponsebody.md
+  - docs/models/verifym2mtokenm2mresponseresponsebody.md
+  - docs/models/verifym2mtokenobject.md
+  - docs/models/verifym2mtokenrequestbody.md
+  - docs/models/verifym2mtokenresponsebody.md
   - docs/models/verifyoauthaccesstokenerrors.md
+  - docs/models/verifyoauthaccesstokenoauthaccesstokenserrors.md
   - docs/models/verifyoauthaccesstokenoauthaccesstokensresponsebody.md
   - docs/models/verifyoauthaccesstokenoauthaccesstokensresponseresponsebody.md
   - docs/models/verifyoauthaccesstokenobject.md
@@ -511,6 +532,7 @@ generatedFiles:
   - docs/sdks/blocklistidentifierssdk/README.md
   - docs/sdks/clerk/README.md
   - docs/sdks/clients/README.md
+  - docs/sdks/commerce/README.md
   - docs/sdks/domainssdk/README.md
   - docs/sdks/emailaddresses/README.md
   - docs/sdks/emailandsmstemplates/README.md
@@ -520,9 +542,8 @@ generatedFiles:
   - docs/sdks/invitations/README.md
   - docs/sdks/jwkssdk/README.md
   - docs/sdks/jwttemplates/README.md
+  - docs/sdks/m2m/README.md
   - docs/sdks/machines/README.md
-  - docs/sdks/machinetokens/README.md
-  - docs/sdks/management/README.md
   - docs/sdks/miscellaneous/README.md
   - docs/sdks/oauthaccesstokens/README.md
   - docs/sdks/oauthapplicationssdk/README.md
@@ -560,6 +581,7 @@ generatedFiles:
   - src/clerk_backend_api/betafeatures.py
   - src/clerk_backend_api/blocklistidentifiers_sdk.py
   - src/clerk_backend_api/clients.py
+  - src/clerk_backend_api/commerce.py
   - src/clerk_backend_api/domains_sdk.py
   - src/clerk_backend_api/emailaddresses.py
   - src/clerk_backend_api/emailandsmstemplates.py
@@ -570,9 +592,8 @@ generatedFiles:
   - src/clerk_backend_api/invitations.py
   - src/clerk_backend_api/jwks_sdk.py
   - src/clerk_backend_api/jwttemplates.py
+  - src/clerk_backend_api/m2m.py
   - src/clerk_backend_api/machines.py
-  - src/clerk_backend_api/machinetokens.py
-  - src/clerk_backend_api/management.py
   - src/clerk_backend_api/miscellaneous.py
   - src/clerk_backend_api/models/__init__.py
   - src/clerk_backend_api/models/accountlessapplication.py
@@ -584,22 +605,24 @@ generatedFiles:
   - src/clerk_backend_api/models/blocklistidentifier.py
   - src/clerk_backend_api/models/blocklistidentifiers.py
   - src/clerk_backend_api/models/changeproductioninstancedomainop.py
+  - src/clerk_backend_api/models/clerkbaseerror.py
   - src/clerk_backend_api/models/clerkerror.py
   - src/clerk_backend_api/models/clerkerrors.py
   - src/clerk_backend_api/models/client.py
   - src/clerk_backend_api/models/cnametarget.py
+  - src/clerk_backend_api/models/commercemoneyresponse.py
+  - src/clerk_backend_api/models/commerceplan.py
   - src/clerk_backend_api/models/cookies.py
   - src/clerk_backend_api/models/createactortokenop.py
   - src/clerk_backend_api/models/createallowlistidentifierop.py
-  - src/clerk_backend_api/models/createawscredentialop.py
   - src/clerk_backend_api/models/createblocklistidentifierop.py
   - src/clerk_backend_api/models/createbulkinvitationsop.py
   - src/clerk_backend_api/models/createemailaddressop.py
   - src/clerk_backend_api/models/createinvitationop.py
   - src/clerk_backend_api/models/createjwttemplateop.py
+  - src/clerk_backend_api/models/createm2mtokenop.py
   - src/clerk_backend_api/models/createmachineop.py
   - src/clerk_backend_api/models/createmachinescopeop.py
-  - src/clerk_backend_api/models/createmachinetokenop.py
   - src/clerk_backend_api/models/createoauthapplicationop.py
   - src/clerk_backend_api/models/createorganizationdomainop.py
   - src/clerk_backend_api/models/createorganizationinvitationbulkop.py
@@ -642,11 +665,13 @@ generatedFiles:
   - src/clerk_backend_api/models/domains.py
   - src/clerk_backend_api/models/emailaddress.py
   - src/clerk_backend_api/models/externalaccountwithverification.py
-  - src/clerk_backend_api/models/getawscredentialop.py
+  - src/clerk_backend_api/models/featureresponse.py
   - src/clerk_backend_api/models/getclientlistop.py
   - src/clerk_backend_api/models/getclientop.py
+  - src/clerk_backend_api/models/getcommerceplanlistop.py
   - src/clerk_backend_api/models/getemailaddressop.py
   - src/clerk_backend_api/models/getjwttemplateop.py
+  - src/clerk_backend_api/models/getm2mtokensop.py
   - src/clerk_backend_api/models/getmachineop.py
   - src/clerk_backend_api/models/getmachinesecretkeyop.py
   - src/clerk_backend_api/models/getoauthaccesstokenop.py
@@ -697,18 +722,9 @@ generatedFiles:
   - src/clerk_backend_api/models/machine_secretkey.py
   - src/clerk_backend_api/models/machinescope.py
   - src/clerk_backend_api/models/machinescope_deleted.py
-  - src/clerk_backend_api/models/machinetoken.py
   - src/clerk_backend_api/models/machinewithoutscopedmachines.py
-  - src/clerk_backend_api/models/managementapplicationinstance.py
-  - src/clerk_backend_api/models/managementapplicationresponse.py
-  - src/clerk_backend_api/models/managementapplicationsubscription.py
-  - src/clerk_backend_api/models/managementcreateapplicationop.py
-  - src/clerk_backend_api/models/managementcreateapplicationrequest.py
-  - src/clerk_backend_api/models/managementcreateorganizationop.py
-  - src/clerk_backend_api/models/managementcreateorganizationrequest.py
-  - src/clerk_backend_api/models/managementupsertuserop.py
-  - src/clerk_backend_api/models/managementupsertuserrequest.py
   - src/clerk_backend_api/models/mergeorganizationmetadataop.py
+  - src/clerk_backend_api/models/no_response_error.py
   - src/clerk_backend_api/models/oauthaccesstoken.py
   - src/clerk_backend_api/models/oauthapplication.py
   - src/clerk_backend_api/models/oauthapplications.py
@@ -727,15 +743,18 @@ generatedFiles:
   - src/clerk_backend_api/models/organizations.py
   - src/clerk_backend_api/models/organizationsettings.py
   - src/clerk_backend_api/models/organizationwithlogo.py
+  - src/clerk_backend_api/models/paginatedcommerceplanresponse.py
   - src/clerk_backend_api/models/passkey.py
   - src/clerk_backend_api/models/phonenumber.py
   - src/clerk_backend_api/models/previewtemplateop.py
   - src/clerk_backend_api/models/proxycheck.py
   - src/clerk_backend_api/models/redirecturl.py
   - src/clerk_backend_api/models/refreshsessionop.py
+  - src/clerk_backend_api/models/responsevalidationerror.py
   - src/clerk_backend_api/models/reverttemplateop.py
   - src/clerk_backend_api/models/revokeactortokenop.py
   - src/clerk_backend_api/models/revokeinvitationop.py
+  - src/clerk_backend_api/models/revokem2mtokenop.py
   - src/clerk_backend_api/models/revokeorganizationinvitationop.py
   - src/clerk_backend_api/models/revokesessionop.py
   - src/clerk_backend_api/models/revokesignintokenop.py
@@ -794,6 +813,7 @@ generatedFiles:
   - src/clerk_backend_api/models/userweb3walletdeleteop.py
   - src/clerk_backend_api/models/verifyclientop.py
   - src/clerk_backend_api/models/verifydomainproxyop.py
+  - src/clerk_backend_api/models/verifym2mtokenop.py
   - src/clerk_backend_api/models/verifyoauthaccesstokenop.py
   - src/clerk_backend_api/models/verifypasswordop.py
   - src/clerk_backend_api/models/verifytotpop.py
@@ -835,6 +855,7 @@ generatedFiles:
   - src/clerk_backend_api/utils/retries.py
   - src/clerk_backend_api/utils/security.py
   - src/clerk_backend_api/utils/serializers.py
+  - src/clerk_backend_api/utils/unmarshal_json_response.py
   - src/clerk_backend_api/utils/url.py
   - src/clerk_backend_api/utils/values.py
   - src/clerk_backend_api/waitlistentries_sdk.py
@@ -1085,7 +1106,7 @@ examples:
           offset: 10
       responses:
         "200":
-          application/json: [{"id": "temp_12345", "object": "template", "instance_id": "inst_67890", "resource_type": "system", "template_type": "email", "name": "Welcome Email", "slug": "welcome_email", "position": 1, "can_revert": false, "can_delete": true, "can_edit_body": true, "can_toggle": false, "subject": "Welcome to our service!", "markup": "<p>Hello, {{ user.name }}</p>", "body": "You are now signed up. Welcome!", "available_variables": ["user.name", "user.email"], "required_variables": ["user.name"], "from_email_name": "Clerk Support", "reply_to_email_name": "support@clerk.com", "delivered_by_clerk": true, "enabled": true, "updated_at": 1610000000, "created_at": 1600000000}]
+          application/json: [{"id": "temp_12345", "object": "template", "instance_id": "inst_67890", "resource_type": "system", "template_type": "email", "name": "Welcome Email", "slug": "welcome_email", "position": 1, "can_revert": false, "can_delete": true, "can_edit_body": true, "can_toggle": false, "subject": "Welcome to our service!", "markup": "<p>Hello, {{ user.name }}</p>", "body": "You are now signed up. Welcome!", "available_variables": ["user.name", "user.email"], "required_variables": ["user.name"], "from_email_name": "Clerk Support", "reply_to_email_name": "support@clerk.com", "delivered_by_clerk": true, "enabled": true, "flagged_as_suspicious": true, "updated_at": 1610000000, "created_at": 1600000000}]
         "400":
           application/json: {"errors": [{"message": "Invalid input", "long_message": "The input provided does not meet the requirements.", "code": "400_bad_request", "meta": {}, "clerk_trace_id": "trace_123456789abcd"}], "meta": {}}
   GetTemplate:
@@ -1096,7 +1117,7 @@ examples:
           slug: "welcome-email"
       responses:
         "200":
-          application/json: {"id": "temp_12345", "object": "template", "instance_id": "inst_67890", "resource_type": "system", "template_type": "email", "name": "Welcome Email", "slug": "welcome_email", "position": 1, "can_revert": false, "can_delete": true, "can_edit_body": false, "can_toggle": false, "subject": "Welcome to our service!", "markup": "<p>Hello, {{ user.name }}</p>", "body": "You are now signed up. Welcome!", "available_variables": ["user.name", "user.email"], "required_variables": ["user.name"], "from_email_name": "Clerk Support", "reply_to_email_name": "support@clerk.com", "delivered_by_clerk": true, "enabled": false, "updated_at": 1610000000, "created_at": 1600000000}
+          application/json: {"id": "temp_12345", "object": "template", "instance_id": "inst_67890", "resource_type": "system", "template_type": "email", "name": "Welcome Email", "slug": "welcome_email", "position": 1, "can_revert": false, "can_delete": true, "can_edit_body": false, "can_toggle": false, "subject": "Welcome to our service!", "markup": "<p>Hello, {{ user.name }}</p>", "body": "You are now signed up. Welcome!", "available_variables": ["user.name", "user.email"], "required_variables": ["user.name"], "from_email_name": "Clerk Support", "reply_to_email_name": "support@clerk.com", "delivered_by_clerk": true, "enabled": false, "flagged_as_suspicious": false, "updated_at": 1610000000, "created_at": 1600000000}
         "400":
           application/json: {"errors": [{"message": "Invalid input", "long_message": "The input provided does not meet the requirements.", "code": "400_bad_request", "meta": {}, "clerk_trace_id": "trace_123456789abcd"}], "meta": {}}
   RevertTemplate:
@@ -1107,7 +1128,7 @@ examples:
           slug: "welcome-email"
       responses:
         "200":
-          application/json: {"id": "temp_12345", "object": "template", "instance_id": "inst_67890", "resource_type": "system", "template_type": "email", "name": "Welcome Email", "slug": "welcome_email", "position": 1, "can_revert": false, "can_delete": true, "can_edit_body": true, "can_toggle": true, "subject": "Welcome to our service!", "markup": "<p>Hello, {{ user.name }}</p>", "body": "You are now signed up. Welcome!", "available_variables": ["user.name", "user.email"], "required_variables": ["user.name"], "from_email_name": "Clerk Support", "reply_to_email_name": "support@clerk.com", "delivered_by_clerk": true, "enabled": false, "updated_at": 1610000000, "created_at": 1600000000}
+          application/json: {"id": "temp_12345", "object": "template", "instance_id": "inst_67890", "resource_type": "system", "template_type": "email", "name": "Welcome Email", "slug": "welcome_email", "position": 1, "can_revert": false, "can_delete": true, "can_edit_body": true, "can_toggle": true, "subject": "Welcome to our service!", "markup": "<p>Hello, {{ user.name }}</p>", "body": "You are now signed up. Welcome!", "available_variables": ["user.name", "user.email"], "required_variables": ["user.name"], "from_email_name": "Clerk Support", "reply_to_email_name": "support@clerk.com", "delivered_by_clerk": true, "enabled": false, "flagged_as_suspicious": true, "updated_at": 1610000000, "created_at": 1600000000}
         "400":
           application/json: {"errors": [{"message": "Invalid input", "long_message": "The input provided does not meet the requirements.", "code": "400_bad_request", "meta": {}, "clerk_trace_id": "trace_123456789abcd"}], "meta": {}}
   ToggleTemplateDelivery:
@@ -1120,7 +1141,7 @@ examples:
         application/json: {"delivered_by_clerk": true}
       responses:
         "200":
-          application/json: {"id": "temp_12345", "object": "template", "instance_id": "inst_67890", "resource_type": "system", "template_type": "email", "name": "Welcome Email", "slug": "welcome_email", "position": 1, "can_revert": false, "can_delete": true, "can_edit_body": false, "can_toggle": false, "subject": "Welcome to our service!", "markup": "<p>Hello, {{ user.name }}</p>", "body": "You are now signed up. Welcome!", "available_variables": ["user.name", "user.email"], "required_variables": ["user.name"], "from_email_name": "Clerk Support", "reply_to_email_name": "support@clerk.com", "delivered_by_clerk": true, "enabled": false, "updated_at": 1610000000, "created_at": 1600000000}
+          application/json: {"id": "temp_12345", "object": "template", "instance_id": "inst_67890", "resource_type": "system", "template_type": "email", "name": "Welcome Email", "slug": "welcome_email", "position": 1, "can_revert": false, "can_delete": true, "can_edit_body": false, "can_toggle": false, "subject": "Welcome to our service!", "markup": "<p>Hello, {{ user.name }}</p>", "body": "You are now signed up. Welcome!", "available_variables": ["user.name", "user.email"], "required_variables": ["user.name"], "from_email_name": "Clerk Support", "reply_to_email_name": "support@clerk.com", "delivered_by_clerk": true, "enabled": false, "flagged_as_suspicious": false, "updated_at": 1610000000, "created_at": 1600000000}
         "400":
           application/json: {"errors": [{"message": "Invalid input", "long_message": "The input provided does not meet the requirements.", "code": "400_bad_request", "meta": {}, "clerk_trace_id": "trace_123456789abcd"}], "meta": {}}
   UpsertTemplate:
@@ -1133,7 +1154,7 @@ examples:
         application/json: {"name": "Verification Code", "subject": "Your Verification Code", "markup": "<p>Your code: {{code}}</p>", "body": "Use this code to verify your email: {{code}}", "delivered_by_clerk": true, "from_email_name": "hello", "reply_to_email_name": "support"}
       responses:
         "200":
-          application/json: {"id": "temp_12345", "object": "template", "instance_id": "inst_67890", "resource_type": "system", "template_type": "email", "name": "Welcome Email", "slug": "welcome_email", "position": 1, "can_revert": false, "can_delete": true, "can_edit_body": true, "can_toggle": true, "subject": "Welcome to our service!", "markup": "<p>Hello, {{ user.name }}</p>", "body": "You are now signed up. Welcome!", "available_variables": ["user.name", "user.email"], "required_variables": ["user.name"], "from_email_name": "Clerk Support", "reply_to_email_name": "support@clerk.com", "delivered_by_clerk": true, "enabled": true, "updated_at": 1610000000, "created_at": 1600000000}
+          application/json: {"id": "temp_12345", "object": "template", "instance_id": "inst_67890", "resource_type": "system", "template_type": "email", "name": "Welcome Email", "slug": "welcome_email", "position": 1, "can_revert": false, "can_delete": true, "can_edit_body": true, "can_toggle": true, "subject": "Welcome to our service!", "markup": "<p>Hello, {{ user.name }}</p>", "body": "You are now signed up. Welcome!", "available_variables": ["user.name", "user.email"], "required_variables": ["user.name"], "from_email_name": "Clerk Support", "reply_to_email_name": "support@clerk.com", "delivered_by_clerk": true, "enabled": true, "flagged_as_suspicious": true, "updated_at": 1610000000, "created_at": 1600000000}
         "400":
           application/json: {"errors": [{"message": "Invalid input", "long_message": "The input provided does not meet the requirements.", "code": "400_bad_request", "meta": {}, "clerk_trace_id": "trace_123456789abcd"}], "meta": {}}
   PreviewTemplate:
@@ -1818,10 +1839,10 @@ examples:
   UpdateInstanceRestrictions:
     speakeasy-default-update-instance-restrictions:
       requestBody:
-        application/json: {"allowlist": false, "blocklist": true, "block_email_subaddresses": true, "block_disposable_email_domains": true}
+        application/json: {"allowlist": false, "blocklist": true, "allowlist_blocklist_disabled_on_sign_in": true, "block_email_subaddresses": true, "block_disposable_email_domains": true}
       responses:
         "200":
-          application/json: {"object": "instance_restrictions", "allowlist": false, "blocklist": true, "block_email_subaddresses": true, "block_disposable_email_domains": false}
+          application/json: {"object": "instance_restrictions", "allowlist": false, "blocklist": true, "allowlist_blocklist_disabled_on_sign_in": false, "block_email_subaddresses": true, "block_disposable_email_domains": false}
         "402":
           application/json: {"errors": [{"message": "Invalid input", "long_message": "The input provided does not meet the requirements.", "code": "400_bad_request", "meta": {}, "clerk_trace_id": "trace_123456789abcd"}], "meta": {}}
   ChangeProductionInstanceDomain:
@@ -1837,7 +1858,7 @@ examples:
         application/json: {"enabled": true, "max_allowed_memberships": 10, "admin_delete_enabled": false, "domains_enabled": true, "domains_enrollment_modes": ["automatic_invitation", "automatic_suggestion"], "creator_role_id": "creator_role", "domains_default_role_id": "member_role"}
       responses:
         "200":
-          application/json: {"object": "organization_settings", "enabled": true, "max_allowed_memberships": 5, "max_allowed_roles": 3, "max_allowed_permissions": 15, "creator_role": "admin", "admin_delete_enabled": true, "domains_enabled": true, "domains_enrollment_modes": ["automatic_invitation", "automatic_suggestion"], "domains_default_role": "member"}
+          application/json: {"object": "organization_settings", "enabled": true, "max_allowed_memberships": 5, "max_allowed_roles": 3, "creator_role": "admin", "admin_delete_enabled": true, "domains_enabled": true, "domains_enrollment_modes": ["automatic_invitation", "automatic_suggestion"], "domains_default_role": "member"}
         "400":
           application/json: {"errors": [{"message": "Invalid input", "long_message": "The input provided does not meet the requirements.", "code": "400_bad_request", "meta": {}, "clerk_trace_id": "trace_123456789abcd"}], "meta": {}}
   CreateSvixApp:
@@ -2120,7 +2141,7 @@ examples:
         application/json: {"name": "<value>", "enrollment_mode": "<value>", "verified": false}
       responses:
         "200":
-          application/json: {"object": "organization_domain", "id": "<id>", "organization_id": "<id>", "name": "<value>", "enrollment_mode": "automatic_invitation", "affiliation_email_address": "<value>", "verification": {"status": "unverified", "strategy": "<value>", "attempts": 459803, "expire_at": 817071}, "total_pending_invitations": 687770, "total_pending_suggestions": 595975, "created_at": 413574, "updated_at": 503170}
+          application/json: {"object": "organization_domain", "id": "<id>", "organization_id": "<id>", "name": "<value>", "enrollment_mode": "automatic_invitation", "affiliation_email_address": "<value>", "verification": {"status": "unverified", "strategy": "<value>", "attempts": 459803, "expire_at": 817071}, "total_pending_invitations": 687770, "total_pending_suggestions": 595975, "public_organization_data": {"id": "<id>", "name": "<value>", "slug": "<value>", "image_url": "https://monthly-costume.biz", "has_image": true}, "created_at": 413574, "updated_at": 503170}
         "400":
           application/json: {"errors": [{"message": "Invalid input", "long_message": "The input provided does not meet the requirements.", "code": "400_bad_request", "meta": {}, "clerk_trace_id": "trace_123456789abcd"}], "meta": {}}
   ListOrganizationDomains:
@@ -2135,7 +2156,7 @@ examples:
           offset: 10
       responses:
         "200":
-          application/json: {"data": [{"object": "organization_domain", "id": "<id>", "organization_id": "<id>", "name": "<value>", "enrollment_mode": "automatic_invitation", "affiliation_email_address": "<value>", "verification": {"status": "unverified", "strategy": "<value>", "attempts": 853407, "expire_at": 43873}, "total_pending_invitations": 731471, "total_pending_suggestions": 283600, "created_at": 290489, "updated_at": 163254}, {"object": "organization_domain", "id": "<id>", "organization_id": "<id>", "name": "<value>", "enrollment_mode": "automatic_invitation", "affiliation_email_address": "<value>", "verification": {"status": "unverified", "strategy": "<value>", "attempts": 853407, "expire_at": 43873}, "total_pending_invitations": 731471, "total_pending_suggestions": 283600, "created_at": 290489, "updated_at": 163254}], "total_count": 284403}
+          application/json: {"data": [{"object": "organization_domain", "id": "<id>", "organization_id": "<id>", "name": "<value>", "enrollment_mode": "automatic_invitation", "affiliation_email_address": "<value>", "verification": {"status": "unverified", "strategy": "<value>", "attempts": 853407, "expire_at": 43873}, "total_pending_invitations": 731471, "total_pending_suggestions": 283600, "public_organization_data": {"id": "<id>", "name": "<value>", "slug": "<value>", "image_url": "https://heartfelt-swanling.com", "has_image": true}, "created_at": 290489, "updated_at": 163254}, {"object": "organization_domain", "id": "<id>", "organization_id": "<id>", "name": "<value>", "enrollment_mode": "automatic_invitation", "affiliation_email_address": "<value>", "verification": {"status": "unverified", "strategy": "<value>", "attempts": 853407, "expire_at": 43873}, "total_pending_invitations": 731471, "total_pending_suggestions": 283600, "public_organization_data": {"id": "<id>", "name": "<value>", "slug": "<value>", "image_url": "https://heartfelt-swanling.com", "has_image": true}, "created_at": 290489, "updated_at": 163254}], "total_count": 284403}
         "401":
           application/json: {"errors": [{"message": "Invalid input", "long_message": "The input provided does not meet the requirements.", "code": "400_bad_request", "meta": {}, "clerk_trace_id": "trace_123456789abcd"}], "meta": {}}
   UpdateOrganizationDomain:
@@ -2148,7 +2169,7 @@ examples:
         application/json: {"enrollment_mode": "<value>", "verified": true}
       responses:
         "200":
-          application/json: {"object": "organization_domain", "id": "<id>", "organization_id": "<id>", "name": "<value>", "enrollment_mode": "automatic_suggestion", "affiliation_email_address": "<value>", "verification": {"status": "verified", "strategy": "<value>", "attempts": 77212, "expire_at": null}, "total_pending_invitations": 582286, "total_pending_suggestions": 510914, "created_at": 468228, "updated_at": 311621}
+          application/json: {"object": "organization_domain", "id": "<id>", "organization_id": "<id>", "name": "<value>", "enrollment_mode": "automatic_suggestion", "affiliation_email_address": "<value>", "verification": {"status": "verified", "strategy": "<value>", "attempts": 77212, "expire_at": null}, "total_pending_invitations": 582286, "total_pending_suggestions": 510914, "public_organization_data": {"id": "<id>", "name": "<value>", "slug": "<value>", "image_url": "https://hospitable-substitution.net", "has_image": true}, "created_at": 468228, "updated_at": 311621}
         "400":
           application/json: {"errors": [{"message": "Invalid input", "long_message": "The input provided does not meet the requirements.", "code": "400_bad_request", "meta": {}, "clerk_trace_id": "trace_123456789abcd"}], "meta": {}}
   DeleteOrganizationDomain:
@@ -2623,5 +2644,75 @@ examples:
           application/json: {"errors": []}
         "404":
           application/json: {"errors": []}
+  GetCommercePlanList:
+    speakeasy-default-get-commerce-plan-list:
+      parameters:
+        query:
+          paginated: true
+          limit: 20
+          offset: 10
+          payer_type: "org"
+      responses:
+        "200":
+          application/json: {"data": [{"object": "commerce_plan", "id": "<id>", "name": "<value>", "fee": {"amount": 420774, "amount_formatted": "<value>", "currency": "Surinam Dollar", "currency_symbol": "﷼"}, "annual_monthly_fee": {"amount": 401591, "amount_formatted": "<value>", "currency": "Euro", "currency_symbol": "Db"}, "annual_fee": {"amount": 183271, "amount_formatted": "<value>", "currency": "Azerbaijanian Manat", "currency_symbol": "₱"}, "amount": 409300, "amount_formatted": "<value>", "annual_monthly_amount": 81384, "annual_monthly_amount_formatted": "<value>", "annual_amount": 410286, "annual_amount_formatted": "<value>", "currency_symbol": "₨", "currency": "New Leu", "description": "off finally meanwhile tame", "product_id": "<id>", "is_default": false, "is_recurring": false, "publicly_visible": false, "has_base_fee": true, "payer_type": ["<value 1>", "<value 2>", "<value 3>"], "for_payer_type": "<value>", "slug": "<value>", "avatar_url": "https://enchanted-impostor.com", "period": "<value>", "interval": 846111, "features": []}], "total_count": 381334}
+        "400":
+          application/json: {"errors": [{"message": "Invalid input", "long_message": "The input provided does not meet the requirements.", "code": "400_bad_request", "meta": {}, "clerk_trace_id": "trace_123456789abcd"}], "meta": {}}
+        "500":
+          application/json: {"errors": [{"message": "Invalid input", "long_message": "The input provided does not meet the requirements.", "code": "400_bad_request", "meta": {}, "clerk_trace_id": "trace_123456789abcd"}], "meta": {}}
+  createM2MToken:
+    speakeasy-default-create-m2-M-token:
+      requestBody:
+        application/json: {"seconds_until_expiration": 9240.85, "claims": "<value>"}
+      responses:
+        "201":
+          application/json: {"object": "machine_to_machine_token", "id": "mt_f7f0ba8c3b4843ce7d85fcdd5e71853e", "subject": "mch_2xhFjEI5X2qWRvtV13BzSj8H6Dk", "claims": {"important_metadata": "Some useful data"}, "scopes": ["mch_2xhFjEI5X2qWRvtV13BzSj8H6Dk", "mch_2yGkLpQ7Y3rXSwtU24CzTk9I7Em"], "token": "mt_XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX", "revoked": false, "revocation_reason": "Revoked by user", "expired": false, "expiration": 1716883200, "last_used_at": 1716883200, "created_at": 1716883200, "updated_at": 1716883200}
+        "400":
+          application/json: {"errors": [{"message": "Bad Request", "long_message": "Invalid 'url_parameter.example': Failed regex check", "code": "bad_request"}]}
+        "409":
+          application/json: {"errors": []}
+  getM2MTokens:
+    speakeasy-default-get-m2-M-tokens:
+      parameters:
+        query:
+          subject: "<value>"
+          revoked: false
+          expired: false
+          limit: 10
+          offset: 0
+      responses:
+        "200":
+          application/json: {"m2m_tokens": [{"object": "machine_to_machine_token", "id": "mt_f7f0ba8c3b4843ce7d85fcdd5e71853e", "subject": "mch_2xhFjEI5X2qWRvtV13BzSj8H6Dk", "claims": {"important_metadata": "Some useful data"}, "scopes": ["mch_2xhFjEI5X2qWRvtV13BzSj8H6Dk", "mch_2yGkLpQ7Y3rXSwtU24CzTk9I7Em"], "revoked": false, "revocation_reason": "Revoked by user", "expired": false, "expiration": 1716883200, "last_used_at": 1716883200, "created_at": 1716883200, "updated_at": 1716883200}], "total_count": 1715.8}
+        "400":
+          application/json: {"errors": []}
+        "403":
+          application/json: {"errors": [{"message": "some details about the error", "long_message": "some details about the error", "code": "some_error_code"}]}
+        "404":
+          application/json: {"errors": [{"message": "some details about the error", "long_message": "some details about the error", "code": "some_error_code"}]}
+  revokeM2MToken:
+    speakeasy-default-revoke-m2-M-token:
+      parameters:
+        path:
+          m2m_token_id: "<id>"
+      requestBody:
+        application/json: {"revocation_reason": "<value>"}
+      responses:
+        "200":
+          application/json: {"object": "machine_to_machine_token", "id": "mt_f7f0ba8c3b4843ce7d85fcdd5e71853e", "subject": "mch_2xhFjEI5X2qWRvtV13BzSj8H6Dk", "claims": {"important_metadata": "Some useful data"}, "scopes": ["mch_2xhFjEI5X2qWRvtV13BzSj8H6Dk", "mch_2yGkLpQ7Y3rXSwtU24CzTk9I7Em"], "revoked": false, "revocation_reason": "Revoked by user", "expired": false, "expiration": 1716883200, "last_used_at": 1716883200, "created_at": 1716883200, "updated_at": 1716883200}
+        "400":
+          application/json: {"errors": []}
+        "404":
+          application/json: {"errors": []}
+  verifyM2MToken:
+    speakeasy-default-verify-m2-M-token:
+      requestBody:
+        application/json: {"token": "<value>"}
+      responses:
+        "200":
+          application/json: {"object": "machine_to_machine_token", "id": "mt_f7f0ba8c3b4843ce7d85fcdd5e71853e", "subject": "mch_2xhFjEI5X2qWRvtV13BzSj8H6Dk", "claims": {"important_metadata": "Some useful data"}, "scopes": ["mch_2xhFjEI5X2qWRvtV13BzSj8H6Dk", "mch_2yGkLpQ7Y3rXSwtU24CzTk9I7Em"], "revoked": false, "revocation_reason": "Revoked by user", "expired": false, "expiration": 1716883200, "last_used_at": 1716883200, "created_at": 1716883200, "updated_at": 1716883200}
+        "400":
+          application/json: {"errors": []}
+        "404":
+          application/json: {"errors": [{"message": "some details about the error", "long_message": "some details about the error", "code": "some_error_code"}]}
 examplesVersion: 1.0.2
 generatedTests: {}
+releaseNotes: "## SDK Changes Detected:\n* `clerk.commerce.list_plans()`: **Added**\n* `clerk.m2m.create_token()`: **Added**\n* `clerk.m2m.list_tokens()`: **Added**\n* `clerk.m2m.revoke_token()`: **Added**\n* `clerk.m2m.verify_token()`: **Added**\n* `clerk.aws_credentials.list()`: **Deleted** **Breaking** :warning:\n* `clerk.aws_credentials.create()`: **Deleted** **Breaking** :warning:\n* `clerk.aws_credentials.get()`: **Deleted** **Breaking** :warning:\n* `clerk.machine_tokens.create()`: **Deleted** **Breaking** :warning:\n* `clerk.management.upsert_user()`: **Deleted** **Breaking** :warning:\n* `clerk.management.create_organization()`: **Deleted** **Breaking** :warning:\n* `clerk.management.create_application()`: **Deleted** **Breaking** :warning:\n* `clerk.email_sms_templates.list()`:  `response.[].flagged_as_suspicious` **Added**\n* `clerk.email_sms_templates.get()`:  `response.flagged_as_suspicious` **Added**\n* `clerk.email_sms_templates.revert()`:  `response.flagged_as_suspicious` **Added**\n* `clerk.email_sms_templates.toggle_template_delivery()`:  `response.flagged_as_suspicious` **Added**\n* `clerk.email_and_sms_templates.upsert()`:  `response.flagged_as_suspicious` **Added**\n* `clerk.instance_settings.update_restrictions()`: \n  *  `request.allowlist_blocklist_disabled_on_sign_in` **Added**\n  *  `response.allowlist_blocklist_disabled_on_sign_in` **Added**\n* `clerk.instance_settings.update_organization_settings()`:  `response.max_allowed_permissions` **Changed**\n* `clerk.organization_domains.create()`:  `response.public_organization_data` **Added**\n* `clerk.organization_domains.list()`:  `response.data.[].public_organization_data` **Added**\n* `clerk.organization_domains.update()`:  `response.public_organization_data` **Added**\n* `clerk.organization_domains.list_all()`:  `response.data.[].public_organization_data` **Added**\n"

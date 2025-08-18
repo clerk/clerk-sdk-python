@@ -40,6 +40,7 @@ The users are returned sorted by creation date, with the newest users appearing 
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="GetUserList" method="get" path="/users" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -122,6 +123,7 @@ The following rate limit rules apply to this endpoint: 1000 requests per 10 seco
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="CreateUser" method="post" path="/users" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -202,6 +204,7 @@ Returns a total count of all users that match the given filtering criteria.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="GetUsersCount" method="get" path="/users/count" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -274,6 +277,7 @@ Retrieve the details of a user
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="GetUser" method="get" path="/users/{user_id}" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -326,6 +330,7 @@ You can also choose to sign the user out of all their active sessions on any dev
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="UpdateUser" method="patch" path="/users/{user_id}" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -401,6 +406,7 @@ Delete the specified user
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="DeleteUser" method="delete" path="/users/{user_id}" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -442,6 +448,7 @@ Marks the given user as banned, which means that all their sessions are revoked 
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="BanUser" method="post" path="/users/{user_id}/ban" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -483,6 +490,7 @@ Removes the ban mark from the given user.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="UnbanUser" method="post" path="/users/{user_id}/unban" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -524,6 +532,7 @@ Marks multiple users as banned, which means that all their sessions are revoked 
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="UsersBan" method="post" path="/users/ban" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -569,6 +578,7 @@ Removes the ban mark from multiple users.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="UsersUnban" method="post" path="/users/unban" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -615,6 +625,7 @@ Lock duration can be configured in the instance's restrictions settings.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="LockUser" method="post" path="/users/{user_id}/lock" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -656,6 +667,7 @@ Removes the lock from the given user.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="UnlockUser" method="post" path="/users/{user_id}/unlock" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -697,6 +709,7 @@ Update a user's profile image
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="SetUserProfileImage" method="post" path="/users/{user_id}/profile_image" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -742,6 +755,7 @@ Delete a user's profile image
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="DeleteUserProfileImage" method="delete" path="/users/{user_id}/profile_image" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -790,6 +804,7 @@ You can remove metadata keys at any level by setting their value to `null`.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="UpdateUserMetadata" method="patch" path="/users/{user_id}/metadata" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -843,6 +858,7 @@ For OAuth 2.0, if the access token has expired and we have a corresponding refre
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="GetOAuthAccessToken" method="get" path="/users/{user_id}/oauth_access_tokens/{provider}" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -888,6 +904,7 @@ Retrieve a paginated list of the user's organization memberships
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="UsersGetOrganizationMemberships" method="get" path="/users/{user_id}/organization_memberships" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -931,6 +948,7 @@ Retrieve a paginated list of the user's organization invitations
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="UsersGetOrganizationInvitations" method="get" path="/users/{user_id}/organization_invitations" -->
 ```python
 import clerk_backend_api
 from clerk_backend_api import Clerk
@@ -977,6 +995,7 @@ Useful for custom auth flows and re-verification.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="VerifyPassword" method="post" path="/users/{user_id}/verify_password" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -1022,6 +1041,7 @@ Useful for custom auth flows and re-verification.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="VerifyTOTP" method="post" path="/users/{user_id}/verify_totp" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -1064,6 +1084,7 @@ Disable all of a user's MFA methods (e.g. OTP sent via SMS, TOTP on their authen
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="DisableMFA" method="delete" path="/users/{user_id}/mfa" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -1106,6 +1127,7 @@ Disable all of a user's backup codes.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="DeleteBackupCode" method="delete" path="/users/{user_id}/backup_code" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -1148,6 +1170,7 @@ Delete the passkey identification for a given user and notify them through email
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="UserPasskeyDelete" method="delete" path="/users/{user_id}/passkeys/{passkey_identification_id}" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -1191,6 +1214,7 @@ Delete the web3 wallet identification for a given user.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="UserWeb3WalletDelete" method="delete" path="/users/{user_id}/web3_wallets/{web3_wallet_identification_id}" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -1234,6 +1258,7 @@ Deletes all of the user's TOTPs.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="DeleteTOTP" method="delete" path="/users/{user_id}/totp" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -1276,6 +1301,7 @@ Delete an external account by ID.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="DeleteExternalAccount" method="delete" path="/users/{user_id}/external_accounts/{external_account_id}" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -1319,6 +1345,7 @@ Retrieves all organization user memberships for the given instance.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="InstanceGetOrganizationMemberships" method="get" path="/organization_memberships" -->
 ```python
 from clerk_backend_api import Clerk
 

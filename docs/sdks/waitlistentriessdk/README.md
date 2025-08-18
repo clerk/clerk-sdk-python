@@ -16,6 +16,7 @@ Supports filtering by email address or status and pagination with limit and offs
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="ListWaitlistEntries" method="get" path="/waitlist_entries" -->
 ```python
 import clerk_backend_api
 from clerk_backend_api import Clerk
@@ -62,6 +63,7 @@ If the email address is already on the waitlist, no new entry will be created an
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="CreateWaitlistEntry" method="post" path="/waitlist_entries" -->
 ```python
 from clerk_backend_api import Clerk
 

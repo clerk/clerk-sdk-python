@@ -17,6 +17,7 @@ Fetches the current instance
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="GetInstance" method="get" path="/instance" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -56,6 +57,7 @@ Updates the settings of an instance
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="UpdateInstance" method="patch" path="/instance" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -103,6 +105,7 @@ Updates the restriction settings of an instance
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="UpdateInstanceRestrictions" method="patch" path="/instance/restrictions" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -114,6 +117,7 @@ with Clerk(
     res = clerk.instance_settings.update_restrictions(request={
         "allowlist": False,
         "blocklist": True,
+        "allowlist_blocklist_disabled_on_sign_in": True,
         "block_email_subaddresses": True,
         "block_disposable_email_domains": True,
     })
@@ -153,6 +157,7 @@ WARNING: Changing your domain will invalidate all current user sessions (i.e. us
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="ChangeProductionInstanceDomain" method="post" path="/instance/change_domain" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -190,6 +195,7 @@ Updates the organization settings of the instance
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="UpdateInstanceOrganizationSettings" method="patch" path="/instance/organization_settings" -->
 ```python
 from clerk_backend_api import Clerk
 

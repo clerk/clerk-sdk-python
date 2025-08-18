@@ -16,6 +16,7 @@ Lists all whitelisted redirect_urls for the instance
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="ListRedirectURLs" method="get" path="/redirect_urls" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -58,6 +59,7 @@ Create a redirect URL
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="CreateRedirectURL" method="post" path="/redirect_urls" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -101,6 +103,7 @@ Retrieve the details of the redirect URL with the given ID
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="GetRedirectURL" method="get" path="/redirect_urls/{id}" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -142,6 +145,7 @@ Remove the selected redirect URL from the whitelist of the instance
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="DeleteRedirectURL" method="delete" path="/redirect_urls/{id}" -->
 ```python
 from clerk_backend_api import Clerk
 

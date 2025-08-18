@@ -16,8 +16,12 @@ generation:
   auth:
     oAuth2ClientCredentialsEnabled: true
     oAuth2PasswordEnabled: false
+  tests:
+    generateTests: true
+    generateNewTests: false
+    skipResponseBodyAssertions: false
 python:
-  version: 3.1.11
+  version: 3.2.0
   additionalDependencies:
     dev:
       pytest: ^8.3.3
@@ -27,7 +31,7 @@ python:
   author: Clerk
   authors:
     - Clerk
-  baseErrorName: ClerkError
+  baseErrorName: ClerkBaseError
   clientServerStatusCodesAsErrors: true
   defaultErrorName: SDKError
   description: Python Client SDK for clerk.dev
@@ -51,6 +55,7 @@ python:
   methodArguments: infer-optional-args
   moduleName: ""
   outputModelSuffix: output
+  packageManager: poetry
   packageName: clerk-backend-api
   pytestFilterWarnings: []
   pytestTimeout: 0

@@ -13,6 +13,7 @@ Retrieve the JSON Web Key Set of the instance
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="GetJWKS" method="get" path="/jwks" -->
 ```python
 from clerk_backend_api import Clerk
 

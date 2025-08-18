@@ -22,6 +22,7 @@ returned first)
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="ListMachines" method="get" path="/machines" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -65,6 +66,7 @@ Creates a new machine.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="CreateMachine" method="post" path="/machines" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -113,6 +115,7 @@ Returns the details of a machine.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="GetMachine" method="get" path="/machines/{machine_id}" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -155,6 +158,7 @@ Only the provided fields will be updated.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="UpdateMachine" method="patch" path="/machines/{machine_id}" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -198,6 +202,7 @@ Deletes a machine.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="DeleteMachine" method="delete" path="/machines/{machine_id}" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -239,6 +244,7 @@ Returns the secret key for a machine.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="GetMachineSecretKey" method="get" path="/machines/{machine_id}/secret_key" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -281,6 +287,7 @@ Maximum of 25 scopes per machine.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="CreateMachineScope" method="post" path="/machines/{machine_id}/scopes" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -323,6 +330,7 @@ Deletes a machine scope, removing access from one machine to another.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="DeleteMachineScope" method="delete" path="/machines/{machine_id}/scopes/{other_machine_id}" -->
 ```python
 from clerk_backend_api import Clerk
 

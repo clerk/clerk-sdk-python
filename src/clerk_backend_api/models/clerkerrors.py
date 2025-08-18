@@ -2,8 +2,9 @@
 
 from __future__ import annotations
 from .clerkerror import ClerkError
-from clerk_backend_api import utils
+from clerk_backend_api.models import ClerkBaseError
 from clerk_backend_api.types import BaseModel
+import httpx
 from typing import List, Optional
 from typing_extensions import TypedDict
 
@@ -22,13 +23,17 @@ class ClerkErrorsData(BaseModel):
     meta: Optional[ClerkErrorsMeta] = None
 
 
-class ClerkErrors(Exception):
+class ClerkErrors(ClerkBaseError):
     r"""Request was not successful"""
 
     data: ClerkErrorsData
 
-    def __init__(self, data: ClerkErrorsData):
+    def __init__(
+        self,
+        data: ClerkErrorsData,
+        raw_response: httpx.Response,
+        body: Optional[str] = None,
+    ):
+        message = body or raw_response.text
+        super().__init__(message, raw_response, body)
         self.data = data
-
-    def __str__(self) -> str:
-        return utils.marshal_json(self.data, ClerkErrorsData)

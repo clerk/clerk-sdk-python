@@ -19,6 +19,7 @@ Warning: the endpoint is being deprecated and will be removed in future versions
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="GetClientList" method="get" path="/clients" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -62,6 +63,7 @@ Verifies the client in the provided token
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="VerifyClient" method="post" path="/clients/verify" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -105,6 +107,7 @@ Returns the details of a client.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="GetClient" method="get" path="/clients/{client_id}" -->
 ```python
 from clerk_backend_api import Clerk
 

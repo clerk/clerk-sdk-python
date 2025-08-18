@@ -16,6 +16,7 @@ Create a new email address
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="CreateEmailAddress" method="post" path="/email_addresses" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -62,6 +63,7 @@ Returns the details of an email address.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="GetEmailAddress" method="get" path="/email_addresses/{email_address_id}" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -103,6 +105,7 @@ Delete the email address with the given ID
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="DeleteEmailAddress" method="delete" path="/email_addresses/{email_address_id}" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -144,6 +147,7 @@ Updates an email address.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="UpdateEmailAddress" method="patch" path="/email_addresses/{email_address_id}" -->
 ```python
 from clerk_backend_api import Clerk
 

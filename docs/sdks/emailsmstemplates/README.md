@@ -19,6 +19,7 @@ The templates are returned sorted by position.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="GetTemplateList" method="get" path="/templates/{template_type}" -->
 ```python
 import clerk_backend_api
 from clerk_backend_api import Clerk
@@ -66,6 +67,7 @@ Returns the details of a template
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="GetTemplate" method="get" path="/templates/{template_type}/{slug}" -->
 ```python
 import clerk_backend_api
 from clerk_backend_api import Clerk
@@ -111,6 +113,7 @@ Reverts an updated template to its default state
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="RevertTemplate" method="post" path="/templates/{template_type}/{slug}/revert" -->
 ```python
 import clerk_backend_api
 from clerk_backend_api import Clerk
@@ -158,6 +161,7 @@ The app developer will need to listen to the `email.created` or `sms.created` we
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="ToggleTemplateDelivery" method="post" path="/templates/{template_type}/{slug}/toggle_delivery" -->
 ```python
 import clerk_backend_api
 from clerk_backend_api import Clerk

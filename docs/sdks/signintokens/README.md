@@ -16,6 +16,7 @@ You can optionally supply a different duration in seconds using the `expires_in_
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="CreateSignInToken" method="post" path="/sign_in_tokens" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -59,6 +60,7 @@ Revokes a pending sign-in token
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="RevokeSignInToken" method="post" path="/sign_in_tokens/{sign_in_token_id}/revoke" -->
 ```python
 from clerk_backend_api import Clerk
 

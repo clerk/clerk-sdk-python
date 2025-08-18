@@ -18,6 +18,7 @@ Also, trying to create an invitation for an email address that already exists in
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="CreateInvitation" method="post" path="/invitations" -->
 ```python
 import clerk_backend_api
 from clerk_backend_api import Clerk
@@ -68,6 +69,7 @@ Returns all non-revoked invitations for your application, sorted by creation dat
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="ListInvitations" method="get" path="/invitations" -->
 ```python
 import clerk_backend_api
 from clerk_backend_api import Clerk
@@ -117,6 +119,7 @@ note that there must be no existing user for any of the email addresses you prov
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="CreateBulkInvitations" method="post" path="/invitations/bulk" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -178,6 +181,7 @@ Only active (i.e. non-revoked) invitations can be revoked.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="RevokeInvitation" method="post" path="/invitations/{invitation_id}/revoke" -->
 ```python
 from clerk_backend_api import Clerk
 

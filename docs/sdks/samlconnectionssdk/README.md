@@ -19,6 +19,7 @@ The SAML Connections are ordered by descending creation date and the most recent
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="ListSAMLConnections" method="get" path="/saml_connections" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -66,6 +67,7 @@ Create a new SAML Connection.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="CreateSAMLConnection" method="post" path="/saml_connections" -->
 ```python
 import clerk_backend_api
 from clerk_backend_api import Clerk
@@ -129,6 +131,7 @@ Fetches the SAML Connection whose ID matches the provided `saml_connection_id` i
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="GetSAMLConnection" method="get" path="/saml_connections/{saml_connection_id}" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -170,6 +173,7 @@ Updates the SAML Connection whose ID matches the provided `id` in the path.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="UpdateSAMLConnection" method="patch" path="/saml_connections/{saml_connection_id}" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -235,6 +239,7 @@ Deletes the SAML Connection whose ID matches the provided `id` in the path.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="DeleteSAMLConnection" method="delete" path="/saml_connections/{saml_connection_id}" -->
 ```python
 from clerk_backend_api import Clerk
 

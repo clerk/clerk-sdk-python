@@ -14,6 +14,7 @@ It is used by Clerk SDKs when the user's authentication state cannot be immediat
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="GetPublicInterstitial" method="get" path="/public/interstitial" -->
 ```python
 from clerk_backend_api import Clerk
 

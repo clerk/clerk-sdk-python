@@ -19,6 +19,7 @@ class InstanceRestrictionsTypedDict(TypedDict):
     r"""String representing the object's type. Objects of the same type share the same value."""
     allowlist: bool
     blocklist: bool
+    allowlist_blocklist_disabled_on_sign_in: bool
     block_email_subaddresses: bool
     block_disposable_email_domains: bool
 
@@ -32,6 +33,8 @@ class InstanceRestrictions(BaseModel):
     allowlist: bool
 
     blocklist: bool
+
+    allowlist_blocklist_disabled_on_sign_in: bool
 
     block_email_subaddresses: bool
 

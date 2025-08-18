@@ -15,6 +15,7 @@ Updates the existing template of the given type and slug
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="UpsertTemplate" method="put" path="/templates/{template_type}/{slug}" -->
 ```python
 import clerk_backend_api
 from clerk_backend_api import Clerk

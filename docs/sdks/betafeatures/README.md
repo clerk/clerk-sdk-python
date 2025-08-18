@@ -14,6 +14,7 @@ Updates the settings of an instance
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="UpdateInstanceAuthConfig" method="patch" path="/beta_features/instance_settings" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -66,6 +67,7 @@ WARNING: Changing your domain will invalidate all current user sessions (i.e. us
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="UpdateProductionInstanceDomain" method="put" path="/beta_features/domain" -->
 ```python
 from clerk_backend_api import Clerk
 

@@ -15,6 +15,7 @@ from typing_extensions import NotRequired, TypedDict
 class UpdateInstanceRestrictionsRequestBodyTypedDict(TypedDict):
     allowlist: NotRequired[Nullable[bool]]
     blocklist: NotRequired[Nullable[bool]]
+    allowlist_blocklist_disabled_on_sign_in: NotRequired[Nullable[bool]]
     block_email_subaddresses: NotRequired[Nullable[bool]]
     block_disposable_email_domains: NotRequired[Nullable[bool]]
 
@@ -23,6 +24,8 @@ class UpdateInstanceRestrictionsRequestBody(BaseModel):
     allowlist: OptionalNullable[bool] = UNSET
 
     blocklist: OptionalNullable[bool] = UNSET
+
+    allowlist_blocklist_disabled_on_sign_in: OptionalNullable[bool] = UNSET
 
     block_email_subaddresses: OptionalNullable[bool] = UNSET
 
@@ -33,12 +36,14 @@ class UpdateInstanceRestrictionsRequestBody(BaseModel):
         optional_fields = [
             "allowlist",
             "blocklist",
+            "allowlist_blocklist_disabled_on_sign_in",
             "block_email_subaddresses",
             "block_disposable_email_domains",
         ]
         nullable_fields = [
             "allowlist",
             "blocklist",
+            "allowlist_blocklist_disabled_on_sign_in",
             "block_email_subaddresses",
             "block_disposable_email_domains",
         ]

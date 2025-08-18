@@ -59,7 +59,15 @@ More information about the API can be found at https://clerk.com/docs
 >
 > Once a Python version reaches its [official end of life date](https://devguide.python.org/versions/), a 3-month grace period is provided for users to upgrade. Following this grace period, the minimum python version supported in the SDK will be updated.
 
-The SDK can be installed with either *pip* or *poetry* package managers.
+The SDK can be installed with *uv*, *pip*, or *poetry* package managers.
+
+### uv
+
+*uv* is a fast Python package installer and resolver, designed as a drop-in replacement for pip and pip-tools. It's recommended for its speed and modern Python tooling capabilities.
+
+```bash
+uv add clerk-backend-api
+```
 
 ### PIP
 
@@ -143,7 +151,7 @@ with Clerk(
 
 </br>
 
-The same SDK client can also be used to make asychronous requests by importing asyncio.
+The same SDK client can also be used to make asynchronous requests by importing asyncio.
 ```python
 # Asynchronous Example
 import asyncio
@@ -189,27 +197,6 @@ with Clerk(
     clerk.miscellaneous.get_public_interstitial(frontend_api_query_parameter1="pub_1a2b3c4d", publishable_key="<value>", proxy_url="https://fine-tarragon.info", domain="great-director.net", sign_in_url="https://likable-freckle.net/", use_domain_for_script=False)
 
     # Use the SDK ...
-
-```
-
-### Per-Operation Security Schemes
-
-Some operations in this SDK require the security scheme to be specified at the request level. For example:
-```python
-import clerk_backend_api
-from clerk_backend_api import Clerk
-
-
-with Clerk() as clerk:
-
-    res = clerk.management.upsert_user(security=clerk_backend_api.ManagementUpsertUserSecurity(
-        management_token="<YOUR_BEARER_TOKEN_HERE>",
-    ), email_address="Roger_OReilly-Dibbert10@hotmail.com", first_name="Diana", last_name="Schmidt-Kutch")
-
-    assert res is not None
-
-    # Handle response
-    print(res)
 
 ```
 <!-- End Authentication [security] -->
@@ -279,9 +266,6 @@ def verify_machine_token(request: httpx.Request):
 
 ### [aws_credentials](docs/sdks/awscredentials/README.md)
 
-* [list](docs/sdks/awscredentials/README.md#list) - List all AWS Credentials
-* [create](docs/sdks/awscredentials/README.md#create) - Create an AWS Credential
-* [get](docs/sdks/awscredentials/README.md#get) - Retrieve an AWS Credential
 * [delete](docs/sdks/awscredentials/README.md#delete) - Delete an AWS Credential
 * [update](docs/sdks/awscredentials/README.md#update) - Update an AWS Credential
 
@@ -302,6 +286,10 @@ def verify_machine_token(request: httpx.Request):
 * [~~list~~](docs/sdks/clients/README.md#list) - List all clients :warning: **Deprecated**
 * [verify](docs/sdks/clients/README.md#verify) - Verify a client
 * [get](docs/sdks/clients/README.md#get) - Get a client
+
+### [commerce](docs/sdks/commerce/README.md)
+
+* [list_plans](docs/sdks/commerce/README.md#list_plans) - List all commerce plans
 
 ### [domains](docs/sdks/domainssdk/README.md)
 
@@ -360,9 +348,12 @@ def verify_machine_token(request: httpx.Request):
 * [update](docs/sdks/jwttemplates/README.md#update) - Update a JWT template
 * [delete](docs/sdks/jwttemplates/README.md#delete) - Delete a Template
 
-### [machine_tokens](docs/sdks/machinetokens/README.md)
+### [m2m](docs/sdks/m2m/README.md)
 
-* [create](docs/sdks/machinetokens/README.md#create) - Create a machine token
+* [create_token](docs/sdks/m2m/README.md#create_token) - Create a M2M Token
+* [list_tokens](docs/sdks/m2m/README.md#list_tokens) - Get M2M Tokens
+* [revoke_token](docs/sdks/m2m/README.md#revoke_token) - Revoke a M2M Token
+* [verify_token](docs/sdks/m2m/README.md#verify_token) - Verify a M2M Token
 
 ### [machines](docs/sdks/machines/README.md)
 
@@ -374,12 +365,6 @@ def verify_machine_token(request: httpx.Request):
 * [get_secret_key](docs/sdks/machines/README.md#get_secret_key) - Retrieve a machine secret key
 * [create_scope](docs/sdks/machines/README.md#create_scope) - Create a machine scope
 * [delete_scope](docs/sdks/machines/README.md#delete_scope) - Delete a machine scope
-
-### [management](docs/sdks/management/README.md)
-
-* [upsert_user](docs/sdks/management/README.md#upsert_user) - Upsert a user
-* [create_organization](docs/sdks/management/README.md#create_organization) - Create an organization
-* [create_application](docs/sdks/management/README.md#create_application) - Create an application (instance)
 
 ### [miscellaneous](docs/sdks/miscellaneous/README.md)
 
@@ -604,27 +589,20 @@ with Clerk(
 <!-- Start Error Handling [errors] -->
 ## Error Handling
 
-Handling errors in this SDK should largely match your expectations. All operations return a response object or raise an exception.
+[`ClerkBaseError`](./src/clerk_backend_api/models/clerkbaseerror.py) is the base class for all HTTP error responses. It has the following properties:
 
-By default, an API error will raise a models.SDKError exception, which has the following properties:
-
-| Property        | Type             | Description           |
-|-----------------|------------------|-----------------------|
-| `.status_code`  | *int*            | The HTTP status code  |
-| `.message`      | *str*            | The error message     |
-| `.raw_response` | *httpx.Response* | The raw HTTP response |
-| `.body`         | *str*            | The response content  |
-
-When custom error responses are specified for an operation, the SDK may also raise their associated exceptions. You can refer to respective *Errors* tables in SDK docs for more details on possible exception types for each operation. For example, the `create_async` method may raise the following exceptions:
-
-| Error Type         | Status Code             | Content Type     |
-| ------------------ | ----------------------- | ---------------- |
-| models.ClerkErrors | 400, 401, 403, 404, 422 | application/json |
-| models.SDKError    | 4XX, 5XX                | \*/\*            |
+| Property           | Type             | Description                                                                             |
+| ------------------ | ---------------- | --------------------------------------------------------------------------------------- |
+| `err.message`      | `str`            | Error message                                                                           |
+| `err.status_code`  | `int`            | HTTP response status code eg `404`                                                      |
+| `err.headers`      | `httpx.Headers`  | HTTP response headers                                                                   |
+| `err.body`         | `str`            | HTTP body. Can be empty string if no body is returned.                                  |
+| `err.raw_response` | `httpx.Response` | Raw HTTP response                                                                       |
+| `err.data`         |                  | Optional. Some errors may contain structured data. [See Error Classes](#error-classes). |
 
 ### Example
-
 ```python
+import clerk_backend_api
 from clerk_backend_api import Clerk, models
 
 
@@ -634,24 +612,60 @@ with Clerk(
     res = None
     try:
 
-        res = clerk.aws_credentials.create(request={
-            "access_key_id": "<id>",
-            "secret_access_key": "<value>",
-            "user_pool_ids": [],
-        })
+        res = clerk.aws_credentials.delete(id="<id>")
 
         assert res is not None
 
         # Handle response
         print(res)
 
-    except models.ClerkErrors as e:
-        # handle e.data: models.ClerkErrorsData
-        raise(e)
-    except models.SDKError as e:
-        # handle exception
-        raise(e)
+
+    except models.ClerkBaseError as e:
+        # The base class for HTTP error responses
+        print(e.message)
+        print(e.status_code)
+        print(e.body)
+        print(e.headers)
+        print(e.raw_response)
+
+        # Depending on the method different errors may be thrown
+        if isinstance(e, models.ClerkErrors):
+            print(e.data.errors)  # List[clerk_backend_api.ClerkError]
+            print(e.data.meta)  # Optional[clerk_backend_api.ClerkErrorsMeta]
 ```
+
+### Error Classes
+**Primary errors:**
+* [`ClerkBaseError`](./src/clerk_backend_api/models/clerkbaseerror.py): The base class for HTTP error responses.
+  * [`ClerkErrors`](./src/clerk_backend_api/models/clerkerrors.py): Request was not successful. *
+
+<details><summary>Less common errors (16)</summary>
+
+<br />
+
+**Network errors:**
+* [`httpx.RequestError`](https://www.python-httpx.org/exceptions/#httpx.RequestError): Base class for request errors.
+    * [`httpx.ConnectError`](https://www.python-httpx.org/exceptions/#httpx.ConnectError): HTTP client was unable to make a request to a server.
+    * [`httpx.TimeoutException`](https://www.python-httpx.org/exceptions/#httpx.TimeoutException): HTTP request timed out.
+
+
+**Inherit from [`ClerkBaseError`](./src/clerk_backend_api/models/clerkbaseerror.py)**:
+* [`CreateM2MTokenM2mResponseBody`](./src/clerk_backend_api/models/createm2mtokenm2mresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 150 methods.*
+* [`GetM2MTokensM2mResponseBody`](./src/clerk_backend_api/models/getm2mtokensm2mresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 150 methods.*
+* [`RevokeM2MTokenM2mResponseBody`](./src/clerk_backend_api/models/revokem2mtokenm2mresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 150 methods.*
+* [`VerifyM2MTokenM2mResponseBody`](./src/clerk_backend_api/models/verifym2mtokenm2mresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 150 methods.*
+* [`VerifyOAuthAccessTokenOauthAccessTokensResponseBody`](./src/clerk_backend_api/models/verifyoauthaccesstokenoauthaccesstokensresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 150 methods.*
+* [`GetM2MTokensM2mResponseResponseBody`](./src/clerk_backend_api/models/getm2mtokensm2mresponseresponsebody.py): 403 Forbidden. Status code `403`. Applicable to 1 of 150 methods.*
+* [`GetM2MTokensM2mResponse404ResponseBody`](./src/clerk_backend_api/models/getm2mtokensm2mresponse404responsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 150 methods.*
+* [`RevokeM2MTokenM2mResponseResponseBody`](./src/clerk_backend_api/models/revokem2mtokenm2mresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 150 methods.*
+* [`VerifyM2MTokenM2mResponseResponseBody`](./src/clerk_backend_api/models/verifym2mtokenm2mresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 150 methods.*
+* [`VerifyOAuthAccessTokenOauthAccessTokensResponseResponseBody`](./src/clerk_backend_api/models/verifyoauthaccesstokenoauthaccesstokensresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 150 methods.*
+* [`CreateM2MTokenM2mResponseResponseBody`](./src/clerk_backend_api/models/createm2mtokenm2mresponseresponsebody.py): 409 Conflict. Status code `409`. Applicable to 1 of 150 methods.*
+* [`ResponseValidationError`](./src/clerk_backend_api/models/responsevalidationerror.py): Type mismatch between the response data and the expected Pydantic model. Provides access to the Pydantic validation error via the `cause` attribute.
+
+</details>
+
+\* Check [the method documentation](#available-resources-and-operations) to see if the error is applicable.
 <!-- End Error Handling [errors] -->
 
 <!-- Start Server Selection [server] -->

@@ -17,6 +17,7 @@ List all templates
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="ListJWTTemplates" method="get" path="/jwt_templates" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -59,6 +60,7 @@ Create a new JWT template
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="CreateJWTTemplate" method="post" path="/jwt_templates" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -108,6 +110,7 @@ Retrieve the details of a given JWT template
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="GetJWTTemplate" method="get" path="/jwt_templates/{template_id}" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -149,6 +152,7 @@ Updates an existing JWT template
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="UpdateJWTTemplate" method="patch" path="/jwt_templates/{template_id}" -->
 ```python
 from clerk_backend_api import Clerk
 
@@ -197,6 +201,7 @@ Delete a Template
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="DeleteJWTTemplate" method="delete" path="/jwt_templates/{template_id}" -->
 ```python
 from clerk_backend_api import Clerk
 
