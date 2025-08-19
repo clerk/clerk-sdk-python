@@ -39,11 +39,13 @@ class VerificationGoogleOneTapVerificationStrategy(str, Enum):
     GOOGLE_ONE_TAP = "google_one_tap"
 
 
-class ClerkErrorErrorExternalAccountWithVerificationMetaTypedDict(TypedDict):
+class ClerkErrorErrorExternalAccountWithVerificationVerificationMetaTypedDict(
+    TypedDict
+):
     pass
 
 
-class ClerkErrorErrorExternalAccountWithVerificationMeta(BaseModel):
+class ClerkErrorErrorExternalAccountWithVerificationVerificationMeta(BaseModel):
     pass
 
 
@@ -51,7 +53,9 @@ class VerificationGoogleOneTapErrorClerkErrorTypedDict(TypedDict):
     message: str
     long_message: str
     code: str
-    meta: NotRequired[ClerkErrorErrorExternalAccountWithVerificationMetaTypedDict]
+    meta: NotRequired[
+        ClerkErrorErrorExternalAccountWithVerificationVerificationMetaTypedDict
+    ]
     clerk_trace_id: NotRequired[str]
 
 
@@ -62,7 +66,9 @@ class VerificationGoogleOneTapErrorClerkError(BaseModel):
 
     code: str
 
-    meta: Optional[ClerkErrorErrorExternalAccountWithVerificationMeta] = None
+    meta: Optional[ClerkErrorErrorExternalAccountWithVerificationVerificationMeta] = (
+        None
+    )
 
     clerk_trace_id: Optional[str] = None
 
@@ -143,11 +149,11 @@ class VerificationOauthVerificationStatus(str, Enum, metaclass=utils.OpenEnumMet
     TRANSFERABLE = "transferable"
 
 
-class ClerkErrorErrorMetaTypedDict(TypedDict):
+class ClerkErrorErrorExternalAccountWithVerificationMetaTypedDict(TypedDict):
     pass
 
 
-class ClerkErrorErrorMeta(BaseModel):
+class ClerkErrorErrorExternalAccountWithVerificationMeta(BaseModel):
     pass
 
 
@@ -155,7 +161,7 @@ class VerificationOauthErrorClerkErrorTypedDict(TypedDict):
     message: str
     long_message: str
     code: str
-    meta: NotRequired[ClerkErrorErrorMetaTypedDict]
+    meta: NotRequired[ClerkErrorErrorExternalAccountWithVerificationMetaTypedDict]
     clerk_trace_id: NotRequired[str]
 
 
@@ -166,15 +172,15 @@ class VerificationOauthErrorClerkError(BaseModel):
 
     code: str
 
-    meta: Optional[ClerkErrorErrorMeta] = None
+    meta: Optional[ClerkErrorErrorExternalAccountWithVerificationMeta] = None
 
     clerk_trace_id: Optional[str] = None
 
 
-VerificationErrorTypedDict = VerificationOauthErrorClerkErrorTypedDict
+VerificationOauthVerificationErrorTypedDict = VerificationOauthErrorClerkErrorTypedDict
 
 
-VerificationError = VerificationOauthErrorClerkError
+VerificationOauthVerificationError = VerificationOauthErrorClerkError
 
 
 class OauthTypedDict(TypedDict):
@@ -184,7 +190,7 @@ class OauthTypedDict(TypedDict):
     attempts: Nullable[int]
     object: NotRequired[VerificationOauthVerificationObject]
     external_verification_redirect_url: NotRequired[str]
-    error: NotRequired[Nullable[VerificationErrorTypedDict]]
+    error: NotRequired[Nullable[VerificationOauthVerificationErrorTypedDict]]
     verified_at_client: NotRequired[Nullable[str]]
 
 
@@ -203,7 +209,7 @@ class Oauth(BaseModel):
 
     external_verification_redirect_url: Optional[str] = None
 
-    error: OptionalNullable[VerificationError] = UNSET
+    error: OptionalNullable[VerificationOauthVerificationError] = UNSET
 
     verified_at_client: OptionalNullable[str] = UNSET
 

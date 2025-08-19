@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: bfe29c99-6e67-43fe-b928-64d6a5ed6aa8
 management:
-  docChecksum: 5a5f39c7afdc37aeea3fa559ad548f89
+  docChecksum: e5d8200d045bc9bf8fc8cb5c2bb4b89a
   docVersion: "2025-04-10"
-  speakeasyVersion: 1.605.1
-  generationVersion: 2.684.0
-  releaseVersion: 3.2.0
-  configChecksum: 082ee01153c6a9a5a597b3bbc29676c8
+  speakeasyVersion: 1.606.0
+  generationVersion: 2.686.7
+  releaseVersion: 3.2.1
+  configChecksum: 9503895f2d5820fa42b417a9fe97bab2
   repoURL: https://github.com/clerk/clerk-sdk-python.git
   installationURL: https://github.com/clerk/clerk-sdk-python.git
   published: true
@@ -54,6 +54,7 @@ generatedFiles:
   - docs/models/admin.md
   - docs/models/allowlistidentifier.md
   - docs/models/allowlistidentifierobject.md
+  - docs/models/amount.md
   - docs/models/attributemapping.md
   - docs/models/awscredential.md
   - docs/models/banuserrequest.md
@@ -65,6 +66,7 @@ generatedFiles:
   - docs/models/claims.md
   - docs/models/clerkerror.md
   - docs/models/clerkerrorerrorexternalaccountwithverificationmeta.md
+  - docs/models/clerkerrorerrorexternalaccountwithverificationverificationmeta.md
   - docs/models/clerkerrorerrormeta.md
   - docs/models/clerkerrorerrorsamlaccountmeta.md
   - docs/models/clerkerrors.md
@@ -76,6 +78,16 @@ generatedFiles:
   - docs/models/commercemoneyresponse.md
   - docs/models/commerceplan.md
   - docs/models/commerceplanobject.md
+  - docs/models/commercesubscriptionitem.md
+  - docs/models/commercesubscriptionitemamount.md
+  - docs/models/commercesubscriptionitemnextinvoiceamount.md
+  - docs/models/commercesubscriptionitemnextpaymentamount.md
+  - docs/models/commercesubscriptionitemobject.md
+  - docs/models/commercesubscriptionitempayerobject.md
+  - docs/models/commercesubscriptionitempaymentsourceobject.md
+  - docs/models/commercesubscriptionitempaymentsourcestatus.md
+  - docs/models/commercesubscriptionitemplanobject.md
+  - docs/models/commercesubscriptionitemstatus.md
   - docs/models/cookies.md
   - docs/models/cookiesobject.md
   - docs/models/createactortokenactor.md
@@ -122,6 +134,7 @@ generatedFiles:
   - docs/models/createsignintokenrequestbody.md
   - docs/models/createuserrequestbody.md
   - docs/models/createwaitlistentryrequestbody.md
+  - docs/models/credit.md
   - docs/models/deleteallowlistidentifierrequest.md
   - docs/models/deleteawscredentialrequest.md
   - docs/models/deletebackupcoderequest.md
@@ -154,6 +167,7 @@ generatedFiles:
   - docs/models/domainsenrollmentmodes.md
   - docs/models/emailaddress.md
   - docs/models/emailaddressobject.md
+  - docs/models/emaillink.md
   - docs/models/enrollmentmode.md
   - docs/models/error.md
   - docs/models/errorclerkerror.md
@@ -171,6 +185,8 @@ generatedFiles:
   - docs/models/getclientlistrequest.md
   - docs/models/getclientrequest.md
   - docs/models/getcommerceplanlistrequest.md
+  - docs/models/getcommercesubscriptionitemlistqueryparamstatus.md
+  - docs/models/getcommercesubscriptionitemlistrequest.md
   - docs/models/getemailaddressrequest.md
   - docs/models/getjwttemplaterequest.md
   - docs/models/getm2mtokenserrors.md
@@ -220,6 +236,7 @@ generatedFiles:
   - docs/models/jwttemplate.md
   - docs/models/jwttemplateobject.md
   - docs/models/keys.md
+  - docs/models/lifetimepaid.md
   - docs/models/listallorganizationdomainsrequest.md
   - docs/models/listallowlistidentifiersrequest.md
   - docs/models/listinstanceorganizationinvitationsqueryparamstatus.md
@@ -260,6 +277,8 @@ generatedFiles:
   - docs/models/mergeorganizationmetadatarequestbody.md
   - docs/models/meta.md
   - docs/models/nextaction.md
+  - docs/models/nextinvoice.md
+  - docs/models/nextpayment.md
   - docs/models/nonce.md
   - docs/models/oauth.md
   - docs/models/oauthaccesstoken.md
@@ -298,14 +317,20 @@ generatedFiles:
   - docs/models/organizationwithlogoobject.md
   - docs/models/otp.md
   - docs/models/paginatedcommerceplanresponse.md
+  - docs/models/paginatedcommercesubscriptionitemresponse.md
   - docs/models/passkey.md
   - docs/models/passkeyobject.md
   - docs/models/passkeyverification.md
   - docs/models/pathparamtemplatetype.md
+  - docs/models/payer.md
   - docs/models/payertype.md
+  - docs/models/paymentmethod.md
+  - docs/models/paymentsource.md
   - docs/models/phonenumber.md
   - docs/models/phonenumberobject.md
   - docs/models/phonenumberverification.md
+  - docs/models/plan.md
+  - docs/models/planperiod.md
   - docs/models/previewtemplaterequest.md
   - docs/models/previewtemplaterequestbody.md
   - docs/models/previewtemplateresponsebody.md
@@ -314,6 +339,7 @@ generatedFiles:
   - docs/models/proxycheckobject.md
   - docs/models/publicorganizationdata.md
   - docs/models/queryparamenrollmentmode.md
+  - docs/models/queryparampayertype.md
   - docs/models/queryparamstatus.md
   - docs/models/redirecturl.md
   - docs/models/redirecturlobject.md
@@ -454,6 +480,9 @@ generatedFiles:
   - docs/models/verificationadminverificationweb3walletobject.md
   - docs/models/verificationadminverificationweb3walletstatus.md
   - docs/models/verificationadminverificationweb3walletstrategy.md
+  - docs/models/verificationemaillinkverificationobject.md
+  - docs/models/verificationemaillinkverificationstatus.md
+  - docs/models/verificationemaillinkverificationstrategy.md
   - docs/models/verificationerror.md
   - docs/models/verificationfromoauthverificationobject.md
   - docs/models/verificationfromoauthverificationstatus.md
@@ -463,6 +492,7 @@ generatedFiles:
   - docs/models/verificationgoogleonetapverificationstatus.md
   - docs/models/verificationgoogleonetapverificationstrategy.md
   - docs/models/verificationoautherrorclerkerror.md
+  - docs/models/verificationoauthverificationerror.md
   - docs/models/verificationoauthverificationobject.md
   - docs/models/verificationoauthverificationstatus.md
   - docs/models/verificationobject.md
@@ -474,9 +504,14 @@ generatedFiles:
   - docs/models/verificationpasskeyverificationobject.md
   - docs/models/verificationpasskeyverificationstatus.md
   - docs/models/verificationpasskeyverificationstrategy.md
+  - docs/models/verificationsaml.md
   - docs/models/verificationsamlerrorclerkerror.md
+  - docs/models/verificationsamlerrorsamlaccountclerkerror.md
   - docs/models/verificationsamlverificationerror.md
   - docs/models/verificationsamlverificationobject.md
+  - docs/models/verificationsamlverificationsamlaccountobject.md
+  - docs/models/verificationsamlverificationsamlaccountstatus.md
+  - docs/models/verificationsamlverificationsamlaccountstrategy.md
   - docs/models/verificationsamlverificationstatus.md
   - docs/models/verificationsamlverificationstrategy.md
   - docs/models/verificationstatus.md
@@ -612,6 +647,7 @@ generatedFiles:
   - src/clerk_backend_api/models/cnametarget.py
   - src/clerk_backend_api/models/commercemoneyresponse.py
   - src/clerk_backend_api/models/commerceplan.py
+  - src/clerk_backend_api/models/commercesubscriptionitem.py
   - src/clerk_backend_api/models/cookies.py
   - src/clerk_backend_api/models/createactortokenop.py
   - src/clerk_backend_api/models/createallowlistidentifierop.py
@@ -669,6 +705,7 @@ generatedFiles:
   - src/clerk_backend_api/models/getclientlistop.py
   - src/clerk_backend_api/models/getclientop.py
   - src/clerk_backend_api/models/getcommerceplanlistop.py
+  - src/clerk_backend_api/models/getcommercesubscriptionitemlistop.py
   - src/clerk_backend_api/models/getemailaddressop.py
   - src/clerk_backend_api/models/getjwttemplateop.py
   - src/clerk_backend_api/models/getm2mtokensop.py
@@ -744,6 +781,7 @@ generatedFiles:
   - src/clerk_backend_api/models/organizationsettings.py
   - src/clerk_backend_api/models/organizationwithlogo.py
   - src/clerk_backend_api/models/paginatedcommerceplanresponse.py
+  - src/clerk_backend_api/models/paginatedcommercesubscriptionitemresponse.py
   - src/clerk_backend_api/models/passkey.py
   - src/clerk_backend_api/models/phonenumber.py
   - src/clerk_backend_api/models/previewtemplateop.py
@@ -2654,7 +2692,7 @@ examples:
           payer_type: "org"
       responses:
         "200":
-          application/json: {"data": [{"object": "commerce_plan", "id": "<id>", "name": "<value>", "fee": {"amount": 420774, "amount_formatted": "<value>", "currency": "Surinam Dollar", "currency_symbol": "﷼"}, "annual_monthly_fee": {"amount": 401591, "amount_formatted": "<value>", "currency": "Euro", "currency_symbol": "Db"}, "annual_fee": {"amount": 183271, "amount_formatted": "<value>", "currency": "Azerbaijanian Manat", "currency_symbol": "₱"}, "amount": 409300, "amount_formatted": "<value>", "annual_monthly_amount": 81384, "annual_monthly_amount_formatted": "<value>", "annual_amount": 410286, "annual_amount_formatted": "<value>", "currency_symbol": "₨", "currency": "New Leu", "description": "off finally meanwhile tame", "product_id": "<id>", "is_default": false, "is_recurring": false, "publicly_visible": false, "has_base_fee": true, "payer_type": ["<value 1>", "<value 2>", "<value 3>"], "for_payer_type": "<value>", "slug": "<value>", "avatar_url": "https://enchanted-impostor.com", "period": "<value>", "interval": 846111, "features": []}], "total_count": 381334}
+          application/json: {"data": [{"object": "commerce_plan", "id": "<id>", "name": "<value>", "fee": {"amount": 420774, "amount_formatted": "<value>", "currency": "Surinam Dollar", "currency_symbol": "﷼"}, "annual_monthly_fee": {"amount": 401591, "amount_formatted": "<value>", "currency": "Euro", "currency_symbol": "Db"}, "annual_fee": {"amount": 183271, "amount_formatted": "<value>", "currency": "Azerbaijanian Manat", "currency_symbol": "₱"}, "amount": 409300, "amount_formatted": "<value>", "annual_monthly_amount": 81384, "annual_monthly_amount_formatted": "<value>", "annual_amount": 410286, "annual_amount_formatted": "<value>", "currency_symbol": "₨", "currency": "New Leu", "description": "off finally meanwhile tame", "product_id": "<id>", "is_default": false, "is_recurring": false, "publicly_visible": false, "has_base_fee": true, "payer_type": ["<value 1>", "<value 2>", "<value 3>"], "for_payer_type": "<value>", "slug": "<value>", "avatar_url": "https://enchanted-impostor.com", "period": "<value>", "interval": 846111, "features": [], "free_trial_enabled": true, "free_trial_days": 916690}], "total_count": 381334}
         "400":
           application/json: {"errors": [{"message": "Invalid input", "long_message": "The input provided does not meet the requirements.", "code": "400_bad_request", "meta": {}, "clerk_trace_id": "trace_123456789abcd"}], "meta": {}}
         "500":
@@ -2713,6 +2751,44 @@ examples:
           application/json: {"errors": []}
         "404":
           application/json: {"errors": [{"message": "some details about the error", "long_message": "some details about the error", "code": "some_error_code"}]}
+  GetCommerceSubscriptionItemList:
+    speakeasy-default-get-commerce-subscription-item-list:
+      parameters:
+        query:
+          paginated: false
+          limit: 20
+          offset: 10
+          status: "free_trial"
+          payer_type: "org"
+          plan_id: "<id>"
+          include_free: false
+          query: "<value>"
+      responses:
+        "200":
+          application/json: {"data": [{"object": "commerce_subscription_item", "id": "<id>", "instance_id": "<id>", "status": "upcoming", "credit": {"amount": {"amount": 115692, "amount_formatted": "<value>", "currency": "Denar", "currency_symbol": "K"}, "cycle_remaining_percent": 5890.09}, "plan_id": "<id>", "plan": {"object": "commerce_plan", "id": "<id>", "name": "<value>", "fee": {"amount": 349721, "amount_formatted": "<value>", "currency": "Iceland Krona", "currency_symbol": "₪"}, "annual_monthly_fee": {"amount": 500878, "amount_formatted": "<value>", "currency": "Pakistan Rupee", "currency_symbol": "$"}, "annual_fee": {"amount": 13059, "amount_formatted": "<value>", "currency": "Uzbekistan Sum", "currency_symbol": "$"}, "amount": 551667, "amount_formatted": "<value>", "annual_monthly_amount": 790012, "annual_monthly_amount_formatted": "<value>", "annual_amount": 676339, "annual_amount_formatted": "<value>", "currency_symbol": "£", "currency": "Tugrik", "description": "tennis husband meanwhile duh uh-huh chap provided stained wry uncomfortable", "product_id": "<id>", "is_default": false, "is_recurring": true, "publicly_visible": true, "has_base_fee": true, "payer_type": ["<value 1>", "<value 2>"], "for_payer_type": "<value>", "slug": "<value>", "avatar_url": "https://monthly-lace.org", "period": "<value>", "interval": 97072, "features": [], "free_trial_enabled": true, "free_trial_days": 520556}, "plan_period": "month", "payment_source_id": "<id>", "payment_source": {"object": "commerce_source", "id": "<id>", "payer_id": "<id>", "payment_method": "apple_pay", "is_default": false, "gateway": "<value>", "gateway_external_id": "<id>", "gateway_external_account_id": "<id>", "last4": "<value>", "status": "active", "wallet_type": "<value>", "card_type": "<value>", "expiry_year": 274365, "expiry_month": 871157, "created_at": 956516, "updated_at": 70418, "is_removable": false}, "lifetime_paid": {"amount": 42923, "amount_formatted": "<value>", "currency": "Swiss Franc", "currency_symbol": "лв"}, "amount": {"amount": 176943, "amount_formatted": "<value>", "currency": "Rand", "currency_symbol": "ƒ"}, "next_invoice": {"amount": {"amount": 353605, "amount_formatted": "<value>", "currency": "Boliviano boliviano", "currency_symbol": "ƒ"}, "date": null}, "next_payment": null, "payer_id": "<id>", "payer": {"object": "commerce_payer", "id": "<id>", "instance_id": "<id>", "user_id": "<id>", "first_name": "Mathew", "last_name": "McLaughlin", "email": "Zetta_Wilderman39@gmail.com", "organization_id": "<id>", "organization_name": "<value>", "image_url": "https://queasy-charlatan.net/", "created_at": 905937, "updated_at": 777337}, "is_free_trial": false, "period_start": 543438, "period_end": 271235, "proration_date": "<value>", "canceled_at": 232920, "past_due_at": null, "ended_at": 743580, "created_at": 762052, "updated_at": 856930}], "total_count": 699308}
+        "400":
+          application/json: {"errors": [{"message": "Invalid input", "long_message": "The input provided does not meet the requirements.", "code": "400_bad_request", "meta": {}, "clerk_trace_id": "trace_123456789abcd"}], "meta": {}}
+        "500":
+          application/json: {"errors": [{"message": "Invalid input", "long_message": "The input provided does not meet the requirements.", "code": "400_bad_request", "meta": {}, "clerk_trace_id": "trace_123456789abcd"}], "meta": {}}
 examplesVersion: 1.0.2
 generatedTests: {}
-releaseNotes: "## SDK Changes Detected:\n* `clerk.commerce.list_plans()`: **Added**\n* `clerk.m2m.create_token()`: **Added**\n* `clerk.m2m.list_tokens()`: **Added**\n* `clerk.m2m.revoke_token()`: **Added**\n* `clerk.m2m.verify_token()`: **Added**\n* `clerk.aws_credentials.list()`: **Deleted** **Breaking** :warning:\n* `clerk.aws_credentials.create()`: **Deleted** **Breaking** :warning:\n* `clerk.aws_credentials.get()`: **Deleted** **Breaking** :warning:\n* `clerk.machine_tokens.create()`: **Deleted** **Breaking** :warning:\n* `clerk.management.upsert_user()`: **Deleted** **Breaking** :warning:\n* `clerk.management.create_organization()`: **Deleted** **Breaking** :warning:\n* `clerk.management.create_application()`: **Deleted** **Breaking** :warning:\n* `clerk.email_sms_templates.list()`:  `response.[].flagged_as_suspicious` **Added**\n* `clerk.email_sms_templates.get()`:  `response.flagged_as_suspicious` **Added**\n* `clerk.email_sms_templates.revert()`:  `response.flagged_as_suspicious` **Added**\n* `clerk.email_sms_templates.toggle_template_delivery()`:  `response.flagged_as_suspicious` **Added**\n* `clerk.email_and_sms_templates.upsert()`:  `response.flagged_as_suspicious` **Added**\n* `clerk.instance_settings.update_restrictions()`: \n  *  `request.allowlist_blocklist_disabled_on_sign_in` **Added**\n  *  `response.allowlist_blocklist_disabled_on_sign_in` **Added**\n* `clerk.instance_settings.update_organization_settings()`:  `response.max_allowed_permissions` **Changed**\n* `clerk.organization_domains.create()`:  `response.public_organization_data` **Added**\n* `clerk.organization_domains.list()`:  `response.data.[].public_organization_data` **Added**\n* `clerk.organization_domains.update()`:  `response.public_organization_data` **Added**\n* `clerk.organization_domains.list_all()`:  `response.data.[].public_organization_data` **Added**\n"
+releaseNotes: |
+  ## SDK Changes Detected:
+  * `clerk.commerce.list_subscription_items()`: **Added**
+  * `clerk.email_addresses.create()`:  `response.verification` **Changed**
+  * `clerk.email_addresses.get()`:  `response.verification` **Changed**
+  * `clerk.email_addresses.update()`:  `response.verification` **Changed**
+  * `clerk.users.list()`:  `response.[].email_addresses.[].verification` **Changed**
+  * `clerk.users.create()`:  `response.email_addresses.[].verification` **Changed**
+  * `clerk.users.get()`:  `response.email_addresses.[].verification` **Changed**
+  * `clerk.users.update()`:  `response.email_addresses.[].verification` **Changed**
+  * `clerk.users.ban()`:  `response.email_addresses.[].verification` **Changed**
+  * `clerk.users.unban()`:  `response.email_addresses.[].verification` **Changed**
+  * `clerk.users.bulk_ban()`:  `response.[].email_addresses.[].verification` **Changed**
+  * `clerk.users.bulk_unban()`:  `response.[].email_addresses.[].verification` **Changed**
+  * `clerk.users.lock()`:  `response.email_addresses.[].verification` **Changed**
+  * `clerk.users.unlock()`:  `response.email_addresses.[].verification` **Changed**
+  * `clerk.users.set_profile_image()`:  `response.email_addresses.[].verification` **Changed**
+  * `clerk.users.delete_profile_image()`:  `response.email_addresses.[].verification` **Changed**
+  * `clerk.users.update_metadata()`:  `response.email_addresses.[].verification` **Changed**
+  * `clerk.commerce.list_plans()`:  `response.data.[]` **Changed**

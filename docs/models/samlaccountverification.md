@@ -3,10 +3,10 @@
 
 ## Supported Types
 
-### `models.Saml`
+### `models.VerificationSAML`
 
 ```python
-value: models.Saml = /* values here */
+value: models.VerificationSAML = /* values here */
 ```
 
 ### `models.VerificationTicket`

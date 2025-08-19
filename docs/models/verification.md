@@ -27,3 +27,15 @@ value: models.FromOAuth = /* values here */
 value: models.Ticket = /* values here */
 ```
 
+### `models.Saml`
+
+```python
+value: models.Saml = /* values here */
+```
+
+### `models.EmailLink`
+
+```python
+value: models.EmailLink = /* values here */
+```
+

@@ -259,7 +259,7 @@ class OrganizationsSDK(BaseSDK):
         Organizations support private and public metadata.
         Private metadata can only be accessed from the Backend API.
         Public metadata can be accessed from the Backend API, and are read-only from the Frontend API.
-        The `created_by` user will see this as their [active organization] (https://clerk.com/docs/organizations/overview#active-organization)
+        The `created_by` user will see this as their [active organization](https://clerk.com/docs/organizations/overview#active-organization)
         the next time they create a session, presuming they don't explicitly set a different organization as active before then.
 
         :param request: The request object to send.
@@ -371,7 +371,7 @@ class OrganizationsSDK(BaseSDK):
         Organizations support private and public metadata.
         Private metadata can only be accessed from the Backend API.
         Public metadata can be accessed from the Backend API, and are read-only from the Frontend API.
-        The `created_by` user will see this as their [active organization] (https://clerk.com/docs/organizations/overview#active-organization)
+        The `created_by` user will see this as their [active organization](https://clerk.com/docs/organizations/overview#active-organization)
         the next time they create a session, presuming they don't explicitly set a different organization as active before then.
 
         :param request: The request object to send.
