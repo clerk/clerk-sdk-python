@@ -3,9 +3,9 @@
 
 ## Supported Types
 
-### `models.VerificationOauthErrorClerkError`
+### `models.VerificationSamlErrorClerkError`
 
 ```python
-value: models.VerificationOauthErrorClerkError = /* values here */
+value: models.VerificationSamlErrorClerkError = /* values here */
 ```
 

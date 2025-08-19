@@ -96,11 +96,11 @@ class VerificationTicket(BaseModel):
         return m
 
 
-class VerificationSamlVerificationObject(str, Enum):
+class VerificationSAMLVerificationSAMLAccountObject(str, Enum):
     VERIFICATION_SAML = "verification_saml"
 
 
-class VerificationSamlVerificationStatus(str, Enum):
+class VerificationSAMLVerificationSAMLAccountStatus(str, Enum):
     UNVERIFIED = "unverified"
     VERIFIED = "verified"
     FAILED = "failed"
@@ -108,7 +108,7 @@ class VerificationSamlVerificationStatus(str, Enum):
     TRANSFERABLE = "transferable"
 
 
-class VerificationSamlVerificationStrategy(str, Enum):
+class VerificationSAMLVerificationSAMLAccountStrategy(str, Enum):
     SAML = "saml"
 
 
@@ -120,7 +120,7 @@ class ClerkErrorErrorSAMLAccountMeta(BaseModel):
     pass
 
 
-class VerificationSamlErrorClerkErrorTypedDict(TypedDict):
+class VerificationSAMLErrorSAMLAccountClerkErrorTypedDict(TypedDict):
     message: str
     long_message: str
     code: str
@@ -128,7 +128,7 @@ class VerificationSamlErrorClerkErrorTypedDict(TypedDict):
     clerk_trace_id: NotRequired[str]
 
 
-class VerificationSamlErrorClerkError(BaseModel):
+class VerificationSAMLErrorSAMLAccountClerkError(BaseModel):
     message: str
 
     long_message: str
@@ -140,27 +140,29 @@ class VerificationSamlErrorClerkError(BaseModel):
     clerk_trace_id: Optional[str] = None
 
 
-VerificationSamlVerificationErrorTypedDict = VerificationSamlErrorClerkErrorTypedDict
+VerificationSamlVerificationErrorTypedDict = (
+    VerificationSAMLErrorSAMLAccountClerkErrorTypedDict
+)
 
 
-VerificationSamlVerificationError = VerificationSamlErrorClerkError
+VerificationSamlVerificationError = VerificationSAMLErrorSAMLAccountClerkError
 
 
-class SamlTypedDict(TypedDict):
-    status: VerificationSamlVerificationStatus
-    strategy: VerificationSamlVerificationStrategy
+class VerificationSAMLTypedDict(TypedDict):
+    status: VerificationSAMLVerificationSAMLAccountStatus
+    strategy: VerificationSAMLVerificationSAMLAccountStrategy
     external_verification_redirect_url: Nullable[str]
     expire_at: int
     attempts: Nullable[int]
-    object: NotRequired[VerificationSamlVerificationObject]
+    object: NotRequired[VerificationSAMLVerificationSAMLAccountObject]
     error: NotRequired[Nullable[VerificationSamlVerificationErrorTypedDict]]
     verified_at_client: NotRequired[Nullable[str]]
 
 
-class Saml(BaseModel):
-    status: VerificationSamlVerificationStatus
+class VerificationSAML(BaseModel):
+    status: VerificationSAMLVerificationSAMLAccountStatus
 
-    strategy: VerificationSamlVerificationStrategy
+    strategy: VerificationSAMLVerificationSAMLAccountStrategy
 
     external_verification_redirect_url: Nullable[str]
 
@@ -168,7 +170,7 @@ class Saml(BaseModel):
 
     attempts: Nullable[int]
 
-    object: Optional[VerificationSamlVerificationObject] = None
+    object: Optional[VerificationSAMLVerificationSAMLAccountObject] = None
 
     error: OptionalNullable[VerificationSamlVerificationError] = UNSET
 
@@ -212,13 +214,13 @@ class Saml(BaseModel):
 
 SAMLAccountVerificationTypedDict = TypeAliasType(
     "SAMLAccountVerificationTypedDict",
-    Union[VerificationTicketTypedDict, SamlTypedDict],
+    Union[VerificationTicketTypedDict, VerificationSAMLTypedDict],
 )
 
 
 SAMLAccountVerification = Annotated[
     Union[
-        Annotated[Saml, Tag("verification_saml")],
+        Annotated[VerificationSAML, Tag("verification_saml")],
         Annotated[VerificationTicket, Tag("verification_ticket")],
     ],
     Discriminator(lambda m: get_discriminator(m, "object", "object")),

@@ -24,6 +24,188 @@ class EmailAddressObject(str, Enum, metaclass=utils.OpenEnumMeta):
     EMAIL_ADDRESS = "email_address"
 
 
+class VerificationEmailLinkVerificationObject(str, Enum):
+    VERIFICATION_EMAIL_LINK = "verification_email_link"
+
+
+class VerificationEmailLinkVerificationStatus(str, Enum):
+    UNVERIFIED = "unverified"
+    VERIFIED = "verified"
+    FAILED = "failed"
+    EXPIRED = "expired"
+
+
+class VerificationEmailLinkVerificationStrategy(str, Enum):
+    EMAIL_LINK = "email_link"
+
+
+class EmailLinkTypedDict(TypedDict):
+    status: VerificationEmailLinkVerificationStatus
+    strategy: VerificationEmailLinkVerificationStrategy
+    attempts: Nullable[int]
+    expire_at: Nullable[int]
+    object: NotRequired[VerificationEmailLinkVerificationObject]
+    verified_at_client: NotRequired[Nullable[str]]
+
+
+class EmailLink(BaseModel):
+    status: VerificationEmailLinkVerificationStatus
+
+    strategy: VerificationEmailLinkVerificationStrategy
+
+    attempts: Nullable[int]
+
+    expire_at: Nullable[int]
+
+    object: Optional[VerificationEmailLinkVerificationObject] = None
+
+    verified_at_client: OptionalNullable[str] = UNSET
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = ["object", "verified_at_client"]
+        nullable_fields = ["attempts", "expire_at", "verified_at_client"]
+        null_default_fields = []
+
+        serialized = handler(self)
+
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k)
+            serialized.pop(k, None)
+
+            optional_nullable = k in optional_fields and k in nullable_fields
+            is_set = (
+                self.__pydantic_fields_set__.intersection({n})
+                or k in null_default_fields
+            )  # pylint: disable=no-member
+
+            if val is not None and val != UNSET_SENTINEL:
+                m[k] = val
+            elif val != UNSET_SENTINEL and (
+                not k in optional_fields or (optional_nullable and is_set)
+            ):
+                m[k] = val
+
+        return m
+
+
+class VerificationSamlVerificationObject(str, Enum):
+    VERIFICATION_SAML = "verification_saml"
+
+
+class VerificationSamlVerificationStatus(str, Enum):
+    UNVERIFIED = "unverified"
+    VERIFIED = "verified"
+    FAILED = "failed"
+    EXPIRED = "expired"
+    TRANSFERABLE = "transferable"
+
+
+class VerificationSamlVerificationStrategy(str, Enum):
+    SAML = "saml"
+
+
+class ClerkErrorErrorMetaTypedDict(TypedDict):
+    pass
+
+
+class ClerkErrorErrorMeta(BaseModel):
+    pass
+
+
+class VerificationSamlErrorClerkErrorTypedDict(TypedDict):
+    message: str
+    long_message: str
+    code: str
+    meta: NotRequired[ClerkErrorErrorMetaTypedDict]
+    clerk_trace_id: NotRequired[str]
+
+
+class VerificationSamlErrorClerkError(BaseModel):
+    message: str
+
+    long_message: str
+
+    code: str
+
+    meta: Optional[ClerkErrorErrorMeta] = None
+
+    clerk_trace_id: Optional[str] = None
+
+
+VerificationErrorTypedDict = VerificationSamlErrorClerkErrorTypedDict
+
+
+VerificationError = VerificationSamlErrorClerkError
+
+
+class SamlTypedDict(TypedDict):
+    status: VerificationSamlVerificationStatus
+    strategy: VerificationSamlVerificationStrategy
+    external_verification_redirect_url: Nullable[str]
+    expire_at: int
+    attempts: Nullable[int]
+    object: NotRequired[VerificationSamlVerificationObject]
+    error: NotRequired[Nullable[VerificationErrorTypedDict]]
+    verified_at_client: NotRequired[Nullable[str]]
+
+
+class Saml(BaseModel):
+    status: VerificationSamlVerificationStatus
+
+    strategy: VerificationSamlVerificationStrategy
+
+    external_verification_redirect_url: Nullable[str]
+
+    expire_at: int
+
+    attempts: Nullable[int]
+
+    object: Optional[VerificationSamlVerificationObject] = None
+
+    error: OptionalNullable[VerificationError] = UNSET
+
+    verified_at_client: OptionalNullable[str] = UNSET
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = ["object", "error", "verified_at_client"]
+        nullable_fields = [
+            "external_verification_redirect_url",
+            "error",
+            "attempts",
+            "verified_at_client",
+        ]
+        null_default_fields = []
+
+        serialized = handler(self)
+
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k)
+            serialized.pop(k, None)
+
+            optional_nullable = k in optional_fields and k in nullable_fields
+            is_set = (
+                self.__pydantic_fields_set__.intersection({n})
+                or k in null_default_fields
+            )  # pylint: disable=no-member
+
+            if val is not None and val != UNSET_SENTINEL:
+                m[k] = val
+            elif val != UNSET_SENTINEL and (
+                not k in optional_fields or (optional_nullable and is_set)
+            ):
+                m[k] = val
+
+        return m
+
+
 class VerificationTicketVerificationObject(str, Enum):
     VERIFICATION_TICKET = "verification_ticket"
 
@@ -330,7 +512,14 @@ class Otp(BaseModel):
 
 VerificationTypedDict = TypeAliasType(
     "VerificationTypedDict",
-    Union[OtpTypedDict, AdminTypedDict, TicketTypedDict, FromOAuthTypedDict],
+    Union[
+        OtpTypedDict,
+        AdminTypedDict,
+        TicketTypedDict,
+        EmailLinkTypedDict,
+        FromOAuthTypedDict,
+        SamlTypedDict,
+    ],
 )
 
 
@@ -340,6 +529,8 @@ Verification = Annotated[
         Annotated[Admin, Tag("verification_admin")],
         Annotated[FromOAuth, Tag("verification_from_oauth")],
         Annotated[Ticket, Tag("verification_ticket")],
+        Annotated[Saml, Tag("verification_saml")],
+        Annotated[EmailLink, Tag("verification_email_link")],
     ],
     Discriminator(lambda m: get_discriminator(m, "object", "object")),
 ]

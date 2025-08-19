@@ -290,6 +290,7 @@ def verify_machine_token(request: httpx.Request):
 ### [commerce](docs/sdks/commerce/README.md)
 
 * [list_plans](docs/sdks/commerce/README.md#list_plans) - List all commerce plans
+* [list_subscription_items](docs/sdks/commerce/README.md#list_subscription_items) - List all subscription items
 
 ### [domains](docs/sdks/domainssdk/README.md)
 
@@ -650,17 +651,17 @@ with Clerk(
 
 
 **Inherit from [`ClerkBaseError`](./src/clerk_backend_api/models/clerkbaseerror.py)**:
-* [`CreateM2MTokenM2mResponseBody`](./src/clerk_backend_api/models/createm2mtokenm2mresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 150 methods.*
-* [`GetM2MTokensM2mResponseBody`](./src/clerk_backend_api/models/getm2mtokensm2mresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 150 methods.*
-* [`RevokeM2MTokenM2mResponseBody`](./src/clerk_backend_api/models/revokem2mtokenm2mresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 150 methods.*
-* [`VerifyM2MTokenM2mResponseBody`](./src/clerk_backend_api/models/verifym2mtokenm2mresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 150 methods.*
-* [`VerifyOAuthAccessTokenOauthAccessTokensResponseBody`](./src/clerk_backend_api/models/verifyoauthaccesstokenoauthaccesstokensresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 150 methods.*
-* [`GetM2MTokensM2mResponseResponseBody`](./src/clerk_backend_api/models/getm2mtokensm2mresponseresponsebody.py): 403 Forbidden. Status code `403`. Applicable to 1 of 150 methods.*
-* [`GetM2MTokensM2mResponse404ResponseBody`](./src/clerk_backend_api/models/getm2mtokensm2mresponse404responsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 150 methods.*
-* [`RevokeM2MTokenM2mResponseResponseBody`](./src/clerk_backend_api/models/revokem2mtokenm2mresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 150 methods.*
-* [`VerifyM2MTokenM2mResponseResponseBody`](./src/clerk_backend_api/models/verifym2mtokenm2mresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 150 methods.*
-* [`VerifyOAuthAccessTokenOauthAccessTokensResponseResponseBody`](./src/clerk_backend_api/models/verifyoauthaccesstokenoauthaccesstokensresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 150 methods.*
-* [`CreateM2MTokenM2mResponseResponseBody`](./src/clerk_backend_api/models/createm2mtokenm2mresponseresponsebody.py): 409 Conflict. Status code `409`. Applicable to 1 of 150 methods.*
+* [`CreateM2MTokenM2mResponseBody`](./src/clerk_backend_api/models/createm2mtokenm2mresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 151 methods.*
+* [`GetM2MTokensM2mResponseBody`](./src/clerk_backend_api/models/getm2mtokensm2mresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 151 methods.*
+* [`RevokeM2MTokenM2mResponseBody`](./src/clerk_backend_api/models/revokem2mtokenm2mresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 151 methods.*
+* [`VerifyM2MTokenM2mResponseBody`](./src/clerk_backend_api/models/verifym2mtokenm2mresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 151 methods.*
+* [`VerifyOAuthAccessTokenOauthAccessTokensResponseBody`](./src/clerk_backend_api/models/verifyoauthaccesstokenoauthaccesstokensresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 151 methods.*
+* [`GetM2MTokensM2mResponseResponseBody`](./src/clerk_backend_api/models/getm2mtokensm2mresponseresponsebody.py): 403 Forbidden. Status code `403`. Applicable to 1 of 151 methods.*
+* [`GetM2MTokensM2mResponse404ResponseBody`](./src/clerk_backend_api/models/getm2mtokensm2mresponse404responsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 151 methods.*
+* [`RevokeM2MTokenM2mResponseResponseBody`](./src/clerk_backend_api/models/revokem2mtokenm2mresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 151 methods.*
+* [`VerifyM2MTokenM2mResponseResponseBody`](./src/clerk_backend_api/models/verifym2mtokenm2mresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 151 methods.*
+* [`VerifyOAuthAccessTokenOauthAccessTokensResponseResponseBody`](./src/clerk_backend_api/models/verifyoauthaccesstokenoauthaccesstokensresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 151 methods.*
+* [`CreateM2MTokenM2mResponseResponseBody`](./src/clerk_backend_api/models/createm2mtokenm2mresponseresponsebody.py): 409 Conflict. Status code `409`. Applicable to 1 of 151 methods.*
 * [`ResponseValidationError`](./src/clerk_backend_api/models/responsevalidationerror.py): Type mismatch between the response data and the expected Pydantic model. Provides access to the Pydantic validation error via the `cause` attribute.
 
 </details>
