@@ -16,6 +16,7 @@ __jwkcache = Cache()
 
 verification_apis = {
     TokenType.MACHINE_TOKEN : '/m2m_tokens/verify',
+    TokenType.MACHINE_TOKEN_V2 : '/m2m_tokens/verify',
     TokenType.OAUTH_TOKEN : '/oauth_applications/access_tokens/verify',
     TokenType.API_KEY : '/api_keys/verify',
 }
@@ -24,7 +25,7 @@ def verify_token(token: str, options: VerifyTokenOptions) -> Dict[str, Any]:
     token_type = get_token_type(token)
     if token_type == TokenType.SESSION_TOKEN:
         return _verify_session_token(token, options)
-    if token_type in (TokenType.MACHINE_TOKEN, TokenType.OAUTH_TOKEN, TokenType.API_KEY):
+    if token_type in (TokenType.MACHINE_TOKEN, TokenType.OAUTH_TOKEN, TokenType.API_KEY, TokenType.MACHINE_TOKEN_V2):
         return _verify_machine_token(token, options, token_type)
     raise TokenVerificationError(TokenVerificationErrorReason.INVALID_TOKEN_TYPE)
 
@@ -90,7 +91,7 @@ def _verify_machine_token(token: str, verify_token_options: VerifyTokenOptions, 
             endpoint,
             json=payload,
             headers={
-                'Authorization': f'Bearer {verify_token_options.secret_key}',
+                'Authorization': f'Bearer {verify_token_options.secret_key}' if verify_token_options.secret_key else f'Bearer {verify_token_options.machine_secret_key}',
                 'Content-Type': 'application/json'
             }
         )

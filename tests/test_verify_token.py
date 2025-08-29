@@ -128,6 +128,20 @@ class TestVerifyToken:
             authorized_parties=None
         )
 
+    @pytest.fixture
+    def options_mt(self):
+        return VerifyTokenOptions(
+            secret_key=None,
+            machine_secret_key="some_machine_secret",
+            audience="test_audience",
+            jwt_key=None,
+            api_url="https://api.clerk.dev",
+            api_version="v1",
+            clock_skew_in_ms=0,
+            authorized_parties=None
+        )
+
+
     @patch("clerk_backend_api.security.verifytoken.jwt.decode")
     @patch("clerk_backend_api.security.verifytoken._get_remote_jwt_key")
     def test_verify_session_token_success(self, mock_get_remote_jwt_key, mock_jwt_decode, options):
@@ -164,6 +178,24 @@ class TestVerifyToken:
 
         assert result == {"subject": "machine_123"}
         mock_post.assert_called_once()
+
+    def test_verify_machine_token_v2_success(self, options_mt):
+        token = "mt_exampletoken"
+        response_data = {"subject": "machine_v2_123"}
+
+        with patch("httpx.Client.post") as mock_post:
+            mock_response = MagicMock()
+            mock_response.status_code = 200
+            mock_response.json.return_value = response_data
+            mock_post.return_value = mock_response
+
+            result = verify_token(token, options_mt)
+
+            assert result == response_data
+            mock_post.assert_called_once()
+            # verify auth header has machine secret key
+            headers = mock_post.call_args[1]['headers']
+            assert headers['Authorization'] == f'Bearer {options_mt.machine_secret_key}'
 
     @patch("httpx.Client.post")
     def test_verify_oauth_token_success(self, mock_post, options):

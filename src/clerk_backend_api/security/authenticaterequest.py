@@ -88,7 +88,7 @@ def authenticate_request(request: Requestish, options: AuthenticateRequestOption
         )
 
     if is_machine_token(session_token):
-        verify_token_options = VerifyTokenOptions(secret_key=options.secret_key)
+        verify_token_options = VerifyTokenOptions(secret_key=options.secret_key) if options.secret_key else VerifyTokenOptions(machine_secret_key=options.machine_secret_key)
     else:
         if options.jwt_key:
             verify_token_options = VerifyTokenOptions(
@@ -106,6 +106,7 @@ def authenticate_request(request: Requestish, options: AuthenticateRequestOption
                 clock_skew_in_ms=options.clock_skew_in_ms,
                 jwt_key=None,
             )
+
         else:
             return RequestState(status=AuthStatus.SIGNED_OUT, reason=AuthErrorReason.SECRET_KEY_MISSING)
 
