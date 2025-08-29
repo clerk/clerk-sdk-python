@@ -1,0 +1,9 @@
+# InviteWaitlistEntryRequest
+
+
+## Fields
+
+| Field                                                                                          | Type                                                                                           | Required                                                                                       | Description                                                                                    |
+| ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| `waitlist_entry_id`                                                                            | *str*                                                                                          | :heavy_check_mark:                                                                             | The ID of the waitlist entry to invite                                                         |
+| `request_body`                                                                                 | [Optional[models.InviteWaitlistEntryRequestBody]](../models/invitewaitlistentryrequestbody.md) | :heavy_minus_sign:                                                                             | N/A                                                                                            |

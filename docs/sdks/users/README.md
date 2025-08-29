@@ -20,6 +20,7 @@
 * [set_profile_image](#set_profile_image) - Set user profile image
 * [delete_profile_image](#delete_profile_image) - Delete user profile image
 * [update_metadata](#update_metadata) - Merge and update a user's metadata
+* [get_billing_subscription](#get_billing_subscription) - Retrieve a user's billing subscription
 * [get_o_auth_access_token](#get_o_auth_access_token) - Retrieve the OAuth access token of a user
 * [get_organization_memberships](#get_organization_memberships) - Retrieve all memberships for a user
 * [get_organization_invitations](#get_organization_invitations) - Retrieve all invitations for a user
@@ -850,6 +851,51 @@ with Clerk(
 | ------------------ | ------------------ | ------------------ |
 | models.ClerkErrors | 400, 401, 404, 422 | application/json   |
 | models.SDKError    | 4XX, 5XX           | \*/\*              |
+
+## get_billing_subscription
+
+Retrieves the billing subscription for the specified user.
+This includes subscription details, active plans, billing information, and payment status.
+The subscription contains subscription items which represent the individual plans the user is subscribed to.
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="GetUserBillingSubscription" method="get" path="/users/{user_id}/billing/subscription" -->
+```python
+from clerk_backend_api import Clerk
+
+
+with Clerk(
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+) as clerk:
+
+    res = clerk.users.get_billing_subscription(user_id="<id>")
+
+    assert res is not None
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `user_id`                                                           | *str*                                                               | :heavy_check_mark:                                                  | The ID of the user whose subscription to retrieve                   |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+
+### Response
+
+**[models.CommerceSubscription](../../models/commercesubscription.md)**
+
+### Errors
+
+| Error Type              | Status Code             | Content Type            |
+| ----------------------- | ----------------------- | ----------------------- |
+| models.ClerkErrors      | 400, 401, 403, 404, 422 | application/json        |
+| models.ClerkErrors      | 500                     | application/json        |
+| models.SDKError         | 4XX, 5XX                | \*/\*                   |
 
 ## get_o_auth_access_token
 

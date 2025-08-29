@@ -15,6 +15,7 @@ class Machines(BaseSDK):
         limit: Optional[int] = 10,
         offset: Optional[int] = 0,
         query: Optional[str] = None,
+        order_by: Optional[str] = "-created_at",
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -29,6 +30,7 @@ class Machines(BaseSDK):
         :param limit: Applies a limit to the number of results returned. Can be used for paginating the results together with `offset`.
         :param offset: Skip the first `offset` results when paginating. Needs to be an integer greater or equal to zero. To be used in conjunction with `limit`.
         :param query: Returns machines with ID or name that match the given query. Uses exact match for machine ID and partial match for name.
+        :param order_by: Allows to return machines in a particular order. You can order the returned machines by their `name` or `created_at`. To specify the direction, use the `+` or `-` symbols prepended to the property to order by. For example, to return machines in descending order by `created_at`, use `-created_at`. If you don't use `+` or `-`, then `+` is implied. Defaults to `-created_at`.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -48,6 +50,7 @@ class Machines(BaseSDK):
             limit=limit,
             offset=offset,
             query=query,
+            order_by=order_by,
         )
 
         req = self._build_request(
@@ -114,6 +117,7 @@ class Machines(BaseSDK):
         limit: Optional[int] = 10,
         offset: Optional[int] = 0,
         query: Optional[str] = None,
+        order_by: Optional[str] = "-created_at",
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -128,6 +132,7 @@ class Machines(BaseSDK):
         :param limit: Applies a limit to the number of results returned. Can be used for paginating the results together with `offset`.
         :param offset: Skip the first `offset` results when paginating. Needs to be an integer greater or equal to zero. To be used in conjunction with `limit`.
         :param query: Returns machines with ID or name that match the given query. Uses exact match for machine ID and partial match for name.
+        :param order_by: Allows to return machines in a particular order. You can order the returned machines by their `name` or `created_at`. To specify the direction, use the `+` or `-` symbols prepended to the property to order by. For example, to return machines in descending order by `created_at`, use `-created_at`. If you don't use `+` or `-`, then `+` is implied. Defaults to `-created_at`.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -147,6 +152,7 @@ class Machines(BaseSDK):
             limit=limit,
             offset=offset,
             query=query,
+            order_by=order_by,
         )
 
         req = self._build_request_async(

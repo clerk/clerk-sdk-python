@@ -13,6 +13,7 @@
 * [merge_metadata](#merge_metadata) - Merge and update metadata for an organization
 * [upload_logo](#upload_logo) - Upload a logo for the organization
 * [delete_logo](#delete_logo) - Delete the organization's logo.
+* [get_billing_subscription](#get_billing_subscription) - Retrieve an organization's billing subscription
 
 ## list
 
@@ -416,3 +417,48 @@ with Clerk(
 | ------------------ | ------------------ | ------------------ |
 | models.ClerkErrors | 404                | application/json   |
 | models.SDKError    | 4XX, 5XX           | \*/\*              |
+
+## get_billing_subscription
+
+Retrieves the billing subscription for the specified organization.
+This includes subscription details, active plans, billing information, and payment status.
+The subscription contains subscription items which represent the individual plans the organization is subscribed to.
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="GetOrganizationBillingSubscription" method="get" path="/organizations/{organization_id}/billing/subscription" -->
+```python
+from clerk_backend_api import Clerk
+
+
+with Clerk(
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+) as clerk:
+
+    res = clerk.organizations.get_billing_subscription(organization_id="<id>")
+
+    assert res is not None
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `organization_id`                                                   | *str*                                                               | :heavy_check_mark:                                                  | The ID of the organization whose subscription to retrieve           |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+
+### Response
+
+**[models.CommerceSubscription](../../models/commercesubscription.md)**
+
+### Errors
+
+| Error Type              | Status Code             | Content Type            |
+| ----------------------- | ----------------------- | ----------------------- |
+| models.ClerkErrors      | 400, 401, 403, 404, 422 | application/json        |
+| models.ClerkErrors      | 500                     | application/json        |
+| models.SDKError         | 4XX, 5XX                | \*/\*                   |

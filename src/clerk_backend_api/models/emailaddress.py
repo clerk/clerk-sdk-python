@@ -145,11 +145,11 @@ VerificationError = VerificationSamlErrorClerkError
 class SamlTypedDict(TypedDict):
     status: VerificationSamlVerificationStatus
     strategy: VerificationSamlVerificationStrategy
-    external_verification_redirect_url: Nullable[str]
-    expire_at: int
     attempts: Nullable[int]
     object: NotRequired[VerificationSamlVerificationObject]
+    external_verification_redirect_url: NotRequired[Nullable[str]]
     error: NotRequired[Nullable[VerificationErrorTypedDict]]
+    expire_at: NotRequired[Nullable[int]]
     verified_at_client: NotRequired[Nullable[str]]
 
 
@@ -158,24 +158,31 @@ class Saml(BaseModel):
 
     strategy: VerificationSamlVerificationStrategy
 
-    external_verification_redirect_url: Nullable[str]
-
-    expire_at: int
-
     attempts: Nullable[int]
 
     object: Optional[VerificationSamlVerificationObject] = None
 
+    external_verification_redirect_url: OptionalNullable[str] = UNSET
+
     error: OptionalNullable[VerificationError] = UNSET
+
+    expire_at: OptionalNullable[int] = UNSET
 
     verified_at_client: OptionalNullable[str] = UNSET
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["object", "error", "verified_at_client"]
+        optional_fields = [
+            "object",
+            "external_verification_redirect_url",
+            "error",
+            "expire_at",
+            "verified_at_client",
+        ]
         nullable_fields = [
             "external_verification_redirect_url",
             "error",
+            "expire_at",
             "attempts",
             "verified_at_client",
         ]

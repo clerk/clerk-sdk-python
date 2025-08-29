@@ -19,6 +19,14 @@ class ListMachinesRequestTypedDict(TypedDict):
     """
     query: NotRequired[str]
     r"""Returns machines with ID or name that match the given query. Uses exact match for machine ID and partial match for name."""
+    order_by: NotRequired[str]
+    r"""Allows to return machines in a particular order.
+    You can order the returned machines by their `name` or `created_at`.
+    To specify the direction, use the `+` or `-` symbols prepended to the property to order by.
+    For example, to return machines in descending order by `created_at`, use `-created_at`.
+    If you don't use `+` or `-`, then `+` is implied.
+    Defaults to `-created_at`.
+    """
 
 
 class ListMachinesRequest(BaseModel):
@@ -44,3 +52,15 @@ class ListMachinesRequest(BaseModel):
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = None
     r"""Returns machines with ID or name that match the given query. Uses exact match for machine ID and partial match for name."""
+
+    order_by: Annotated[
+        Optional[str],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = "-created_at"
+    r"""Allows to return machines in a particular order.
+    You can order the returned machines by their `name` or `created_at`.
+    To specify the direction, use the `+` or `-` symbols prepended to the property to order by.
+    For example, to return machines in descending order by `created_at`, use `-created_at`.
+    If you don't use `+` or `-`, then `+` is implied.
+    Defaults to `-created_at`.
+    """
