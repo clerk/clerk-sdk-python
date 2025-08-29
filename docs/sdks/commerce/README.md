@@ -7,6 +7,7 @@
 
 * [list_plans](#list_plans) - List all commerce plans
 * [list_subscription_items](#list_subscription_items) - List all subscription items
+* [cancel_subscription_item](#cancel_subscription_item) - Cancel a subscription item
 
 ## list_plans
 
@@ -93,7 +94,7 @@ with Clerk(
 | `payer_type`                                                                                                                              | [Optional[models.QueryParamPayerType]](../../models/queryparampayertype.md)                                                               | :heavy_minus_sign:                                                                                                                        | Filter subscription items by payer type                                                                                                   |                                                                                                                                           |
 | `plan_id`                                                                                                                                 | *Optional[str]*                                                                                                                           | :heavy_minus_sign:                                                                                                                        | Filter subscription items by plan ID                                                                                                      |                                                                                                                                           |
 | `include_free`                                                                                                                            | *Optional[bool]*                                                                                                                          | :heavy_minus_sign:                                                                                                                        | Whether to include free plan subscription items                                                                                           |                                                                                                                                           |
-| `query`                                                                                                                                   | *Optional[str]*                                                                                                                           | :heavy_minus_sign:                                                                                                                        | Search query to filter subscription items                                                                                                 |                                                                                                                                           |
+| `query`                                                                                                                                   | *Optional[str]*                                                                                                                           | :heavy_minus_sign:                                                                                                                        | Search query to filter subscription items by email, user first name, user last name, or organization name.<br/>Supports partial matching. |                                                                                                                                           |
 | `retries`                                                                                                                                 | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                          | :heavy_minus_sign:                                                                                                                        | Configuration to override the default retry behavior of the client.                                                                       |                                                                                                                                           |
 
 ### Response
@@ -107,3 +108,47 @@ with Clerk(
 | models.ClerkErrors | 400, 401, 422      | application/json   |
 | models.ClerkErrors | 500                | application/json   |
 | models.SDKError    | 4XX, 5XX           | \*/\*              |
+
+## cancel_subscription_item
+
+Cancel a specific subscription item. The subscription item can be canceled immediately or at the end of the current billing period.
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="CancelCommerceSubscriptionItem" method="delete" path="/commerce/subscription_items/{subscription_item_id}" -->
+```python
+from clerk_backend_api import Clerk
+
+
+with Clerk(
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+) as clerk:
+
+    res = clerk.commerce.cancel_subscription_item(subscription_item_id="<id>", end_now=False)
+
+    assert res is not None
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                                                                          | Type                                                                                                               | Required                                                                                                           | Description                                                                                                        |
+| ------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ |
+| `subscription_item_id`                                                                                             | *str*                                                                                                              | :heavy_check_mark:                                                                                                 | The ID of the subscription item to cancel                                                                          |
+| `end_now`                                                                                                          | *Optional[bool]*                                                                                                   | :heavy_minus_sign:                                                                                                 | Whether to cancel the subscription immediately (true) or at the end of the current billing period (false, default) |
+| `retries`                                                                                                          | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                   | :heavy_minus_sign:                                                                                                 | Configuration to override the default retry behavior of the client.                                                |
+
+### Response
+
+**[models.CommerceSubscriptionItem](../../models/commercesubscriptionitem.md)**
+
+### Errors
+
+| Error Type              | Status Code             | Content Type            |
+| ----------------------- | ----------------------- | ----------------------- |
+| models.ClerkErrors      | 400, 401, 403, 404, 422 | application/json        |
+| models.ClerkErrors      | 500                     | application/json        |
+| models.SDKError         | 4XX, 5XX                | \*/\*                   |

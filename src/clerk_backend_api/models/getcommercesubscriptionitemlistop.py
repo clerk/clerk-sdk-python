@@ -49,7 +49,9 @@ class GetCommerceSubscriptionItemListRequestTypedDict(TypedDict):
     include_free: NotRequired[bool]
     r"""Whether to include free plan subscription items"""
     query: NotRequired[str]
-    r"""Search query to filter subscription items"""
+    r"""Search query to filter subscription items by email, user first name, user last name, or organization name.
+    Supports partial matching.
+    """
 
 
 class GetCommerceSubscriptionItemListRequest(BaseModel):
@@ -107,4 +109,6 @@ class GetCommerceSubscriptionItemListRequest(BaseModel):
         Optional[str],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = None
-    r"""Search query to filter subscription items"""
+    r"""Search query to filter subscription items by email, user first name, user last name, or organization name.
+    Supports partial matching.
+    """

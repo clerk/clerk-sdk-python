@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: bfe29c99-6e67-43fe-b928-64d6a5ed6aa8
 management:
-  docChecksum: e5d8200d045bc9bf8fc8cb5c2bb4b89a
+  docChecksum: fb5aa17a06492ebfe73a8a807ea13926
   docVersion: "2025-04-10"
-  speakeasyVersion: 1.606.0
-  generationVersion: 2.686.7
-  releaseVersion: 3.2.1
-  configChecksum: 9503895f2d5820fa42b417a9fe97bab2
+  speakeasyVersion: 1.606.9
+  generationVersion: 2.687.13
+  releaseVersion: 3.3.0
+  configChecksum: 6ab9bbbae52878020f14d58254487f45
   repoURL: https://github.com/clerk/clerk-sdk-python.git
   installationURL: https://github.com/clerk/clerk-sdk-python.git
   published: true
@@ -15,7 +15,7 @@ features:
     additionalDependencies: 1.0.0
     additionalProperties: 1.0.1
     constsAndDefaults: 1.0.5
-    core: 5.19.9
+    core: 5.20.1
     customCodeRegions: 0.1.1
     defaultEnabledRetries: 0.2.0
     deprecations: 3.0.2
@@ -62,6 +62,7 @@ generatedFiles:
   - docs/models/blocklistidentifieridentifiertype.md
   - docs/models/blocklistidentifierobject.md
   - docs/models/blocklistidentifiers.md
+  - docs/models/cancelcommercesubscriptionitemrequest.md
   - docs/models/changeproductioninstancedomainrequestbody.md
   - docs/models/claims.md
   - docs/models/clerkerror.md
@@ -78,6 +79,7 @@ generatedFiles:
   - docs/models/commercemoneyresponse.md
   - docs/models/commerceplan.md
   - docs/models/commerceplanobject.md
+  - docs/models/commercesubscription.md
   - docs/models/commercesubscriptionitem.md
   - docs/models/commercesubscriptionitemamount.md
   - docs/models/commercesubscriptionitemnextinvoiceamount.md
@@ -88,6 +90,9 @@ generatedFiles:
   - docs/models/commercesubscriptionitempaymentsourcestatus.md
   - docs/models/commercesubscriptionitemplanobject.md
   - docs/models/commercesubscriptionitemstatus.md
+  - docs/models/commercesubscriptionnextpayment.md
+  - docs/models/commercesubscriptionobject.md
+  - docs/models/commercesubscriptionstatus.md
   - docs/models/cookies.md
   - docs/models/cookiesobject.md
   - docs/models/createactortokenactor.md
@@ -202,6 +207,7 @@ generatedFiles:
   - docs/models/getmachinesecretkeyrequest.md
   - docs/models/getoauthaccesstokenrequest.md
   - docs/models/getoauthapplicationrequest.md
+  - docs/models/getorganizationbillingsubscriptionrequest.md
   - docs/models/getorganizationinvitationrequest.md
   - docs/models/getorganizationrequest.md
   - docs/models/getphonenumberrequest.md
@@ -213,6 +219,7 @@ generatedFiles:
   - docs/models/getsignuprequest.md
   - docs/models/gettemplatelistrequest.md
   - docs/models/gettemplaterequest.md
+  - docs/models/getuserbillingsubscriptionrequest.md
   - docs/models/getuserlistrequest.md
   - docs/models/getuserrequest.md
   - docs/models/getuserscountrequest.md
@@ -232,6 +239,8 @@ generatedFiles:
   - docs/models/invitationrevokedobject.md
   - docs/models/invitationrevokedstatus.md
   - docs/models/invitationstatus.md
+  - docs/models/invitewaitlistentryrequest.md
+  - docs/models/invitewaitlistentryrequestbody.md
   - docs/models/jwks.md
   - docs/models/jwttemplate.md
   - docs/models/jwttemplateobject.md
@@ -345,6 +354,7 @@ generatedFiles:
   - docs/models/redirecturlobject.md
   - docs/models/refreshsessionrequest.md
   - docs/models/refreshsessionrequestbody.md
+  - docs/models/rejectwaitlistentryrequest.md
   - docs/models/requestbody.md
   - docs/models/requestbody1.md
   - docs/models/requestbody2.md
@@ -639,6 +649,7 @@ generatedFiles:
   - src/clerk_backend_api/models/banuserop.py
   - src/clerk_backend_api/models/blocklistidentifier.py
   - src/clerk_backend_api/models/blocklistidentifiers.py
+  - src/clerk_backend_api/models/cancelcommercesubscriptionitemop.py
   - src/clerk_backend_api/models/changeproductioninstancedomainop.py
   - src/clerk_backend_api/models/clerkbaseerror.py
   - src/clerk_backend_api/models/clerkerror.py
@@ -647,7 +658,9 @@ generatedFiles:
   - src/clerk_backend_api/models/cnametarget.py
   - src/clerk_backend_api/models/commercemoneyresponse.py
   - src/clerk_backend_api/models/commerceplan.py
+  - src/clerk_backend_api/models/commercesubscription.py
   - src/clerk_backend_api/models/commercesubscriptionitem.py
+  - src/clerk_backend_api/models/commercesubscriptionnextpayment.py
   - src/clerk_backend_api/models/cookies.py
   - src/clerk_backend_api/models/createactortokenop.py
   - src/clerk_backend_api/models/createallowlistidentifierop.py
@@ -713,6 +726,7 @@ generatedFiles:
   - src/clerk_backend_api/models/getmachinesecretkeyop.py
   - src/clerk_backend_api/models/getoauthaccesstokenop.py
   - src/clerk_backend_api/models/getoauthapplicationop.py
+  - src/clerk_backend_api/models/getorganizationbillingsubscriptionop.py
   - src/clerk_backend_api/models/getorganizationinvitationop.py
   - src/clerk_backend_api/models/getorganizationop.py
   - src/clerk_backend_api/models/getphonenumberop.py
@@ -724,6 +738,7 @@ generatedFiles:
   - src/clerk_backend_api/models/getsignupop.py
   - src/clerk_backend_api/models/gettemplatelistop.py
   - src/clerk_backend_api/models/gettemplateop.py
+  - src/clerk_backend_api/models/getuserbillingsubscriptionop.py
   - src/clerk_backend_api/models/getuserlistop.py
   - src/clerk_backend_api/models/getuserop.py
   - src/clerk_backend_api/models/getuserscountop.py
@@ -734,6 +749,7 @@ generatedFiles:
   - src/clerk_backend_api/models/instancesettings.py
   - src/clerk_backend_api/models/invitation.py
   - src/clerk_backend_api/models/invitation_revoked.py
+  - src/clerk_backend_api/models/invitewaitlistentryop.py
   - src/clerk_backend_api/models/jwks.py
   - src/clerk_backend_api/models/jwttemplate.py
   - src/clerk_backend_api/models/listallorganizationdomainsop.py
@@ -788,6 +804,7 @@ generatedFiles:
   - src/clerk_backend_api/models/proxycheck.py
   - src/clerk_backend_api/models/redirecturl.py
   - src/clerk_backend_api/models/refreshsessionop.py
+  - src/clerk_backend_api/models/rejectwaitlistentryop.py
   - src/clerk_backend_api/models/responsevalidationerror.py
   - src/clerk_backend_api/models/reverttemplateop.py
   - src/clerk_backend_api/models/revokeactortokenop.py
@@ -2549,6 +2566,7 @@ examples:
           limit: 20
           offset: 10
           query: "<value>"
+          order_by: "-created_at"
       responses:
         "200":
           application/json: {"data": [{"object": "machine", "id": "<id>", "name": "<value>", "instance_id": "<id>", "created_at": 249864, "updated_at": 973340, "default_token_ttl": 3600, "scoped_machines": [{"object": "machine", "id": "<id>", "name": "<value>", "instance_id": "<id>", "created_at": 925110, "updated_at": 858677, "default_token_ttl": 3600}]}], "total_count": 970564}
@@ -2770,25 +2788,89 @@ examples:
           application/json: {"errors": [{"message": "Invalid input", "long_message": "The input provided does not meet the requirements.", "code": "400_bad_request", "meta": {}, "clerk_trace_id": "trace_123456789abcd"}], "meta": {}}
         "500":
           application/json: {"errors": [{"message": "Invalid input", "long_message": "The input provided does not meet the requirements.", "code": "400_bad_request", "meta": {}, "clerk_trace_id": "trace_123456789abcd"}], "meta": {}}
+  GetUserBillingSubscription:
+    speakeasy-default-get-user-billing-subscription:
+      parameters:
+        path:
+          user_id: "<id>"
+      responses:
+        "200":
+          application/json: {"object": "commerce_subscription", "id": "<id>", "instance_id": "<id>", "status": "past_due", "payer_id": "<id>", "created_at": 81691, "updated_at": 772691, "active_at": 439978, "past_due_at": 297026, "subscription_items": [], "next_payment": {"time": 892479, "date": 833905, "amount": {"amount": 127570, "amount_formatted": "<value>", "currency": "Tanzanian Shilling", "currency_symbol": "Q"}}, "eligible_for_free_trial": false}
+        "400":
+          application/json: {"errors": [{"message": "Invalid input", "long_message": "The input provided does not meet the requirements.", "code": "400_bad_request", "meta": {}, "clerk_trace_id": "trace_123456789abcd"}], "meta": {}}
+        "500":
+          application/json: {"errors": [{"message": "Invalid input", "long_message": "The input provided does not meet the requirements.", "code": "400_bad_request", "meta": {}, "clerk_trace_id": "trace_123456789abcd"}], "meta": {}}
+  GetOrganizationBillingSubscription:
+    speakeasy-default-get-organization-billing-subscription:
+      parameters:
+        path:
+          organization_id: "<id>"
+      responses:
+        "200":
+          application/json: {"object": "commerce_subscription", "id": "<id>", "instance_id": "<id>", "status": "abandoned", "payer_id": "<id>", "created_at": 867059, "updated_at": 35040, "active_at": 916886, "past_due_at": 317090, "subscription_items": [{"object": "commerce_subscription_item", "id": "<id>", "instance_id": "<id>", "status": "past_due", "credit": {"amount": {"amount": 24678, "amount_formatted": "<value>", "currency": "Balboa", "currency_symbol": "ман"}, "cycle_remaining_percent": 8943.6}, "plan_id": "<id>", "plan": {"object": "commerce_plan", "id": "<id>", "name": "<value>", "fee": {"amount": 628116, "amount_formatted": "<value>", "currency": "Djibouti Franc", "currency_symbol": "лв"}, "annual_monthly_fee": {"amount": 152879, "amount_formatted": "<value>", "currency": "Bhutanese Ngultrum", "currency_symbol": "₫"}, "annual_fee": {"amount": 475807, "amount_formatted": "<value>", "currency": "Kip", "currency_symbol": "BZ$"}, "amount": 209939, "amount_formatted": "<value>", "annual_monthly_amount": 912236, "annual_monthly_amount_formatted": "<value>", "annual_amount": 786037, "annual_amount_formatted": "<value>", "currency_symbol": "Rp", "currency": "Denar", "description": "whoever geez whoever sparse tabletop versus", "product_id": "<id>", "is_default": false, "is_recurring": false, "publicly_visible": true, "has_base_fee": true, "payer_type": ["<value 1>", "<value 2>"], "for_payer_type": "<value>", "slug": "<value>", "avatar_url": "https://sour-trick.com", "period": "<value>", "interval": 799715, "features": [], "free_trial_enabled": false, "free_trial_days": 780011}, "plan_period": "annual", "payment_source_id": "<id>", "payment_source": null, "lifetime_paid": {"amount": 770015, "amount_formatted": "<value>", "currency": "Mauritius Rupee", "currency_symbol": "ƒ"}, "amount": {"amount": 784725, "amount_formatted": "<value>", "currency": "Moroccan Dirham", "currency_symbol": "лв"}, "next_invoice": {"amount": {"amount": 539732, "amount_formatted": "<value>", "currency": "Iceland Krona", "currency_symbol": "៛"}, "date": 654766}, "next_payment": {"amount": null, "date": 312699}, "payer_id": "<id>", "payer": {"object": "commerce_payer", "id": "<id>", "instance_id": "<id>", "user_id": "<id>", "first_name": "Tabitha", "last_name": "Welch", "email": "Maxie.Cremin95@yahoo.com", "organization_id": "<id>", "organization_name": "<value>", "image_url": "https://shameful-newsstand.name/", "created_at": 787220, "updated_at": 724781}, "is_free_trial": true, "period_start": 856116, "period_end": 857283, "proration_date": "<value>", "canceled_at": 151137, "past_due_at": 503945, "ended_at": 94519, "created_at": 484361, "updated_at": 191350}], "next_payment": {"time": 494053, "date": 223172, "amount": {"amount": 254347, "amount_formatted": "<value>", "currency": "Bermudian Dollar (customarily known as Bermuda Dollar)", "currency_symbol": "Bs"}}, "eligible_for_free_trial": false}
+        "400":
+          application/json: {"errors": [{"message": "Invalid input", "long_message": "The input provided does not meet the requirements.", "code": "400_bad_request", "meta": {}, "clerk_trace_id": "trace_123456789abcd"}], "meta": {}}
+        "500":
+          application/json: {"errors": [{"message": "Invalid input", "long_message": "The input provided does not meet the requirements.", "code": "400_bad_request", "meta": {}, "clerk_trace_id": "trace_123456789abcd"}], "meta": {}}
+  InviteWaitlistEntry:
+    speakeasy-default-invite-waitlist-entry:
+      parameters:
+        path:
+          waitlist_entry_id: "<id>"
+      requestBody:
+        application/json: {"ignore_existing": false}
+      responses:
+        "200":
+          application/json: {"object": "waitlist_entry", "id": "<id>", "email_address": "Turner.Lemke@yahoo.com", "status": "pending", "is_locked": false, "created_at": 856528, "updated_at": 864092, "invitation": {"object": "invitation", "id": "inv_f02930r3", "email_address": "invitee@example.com", "public_metadata": {}, "revoked": false, "status": "pending", "url": "https://example.com/invitations/accept?code=abcd1234", "expires_at": 869410, "created_at": 1622549600, "updated_at": 1622553200}}
+        "400":
+          application/json: {"errors": [{"message": "Invalid input", "long_message": "The input provided does not meet the requirements.", "code": "400_bad_request", "meta": {}, "clerk_trace_id": "trace_123456789abcd"}], "meta": {}}
+  RejectWaitlistEntry:
+    speakeasy-default-reject-waitlist-entry:
+      parameters:
+        path:
+          waitlist_entry_id: "<id>"
+      responses:
+        "200":
+          application/json: {"object": "waitlist_entry", "id": "<id>", "email_address": "Keon9@gmail.com", "status": "pending", "is_locked": true, "created_at": 410926, "updated_at": 297924, "invitation": {"object": "invitation", "id": "inv_f02930r3", "email_address": "invitee@example.com", "public_metadata": {}, "revoked": false, "status": "pending", "url": "https://example.com/invitations/accept?code=abcd1234", "expires_at": null, "created_at": 1622549600, "updated_at": 1622553200}}
+        "400":
+          application/json: {"errors": [{"message": "Invalid input", "long_message": "The input provided does not meet the requirements.", "code": "400_bad_request", "meta": {}, "clerk_trace_id": "trace_123456789abcd"}], "meta": {}}
+  CancelCommerceSubscriptionItem:
+    speakeasy-default-cancel-commerce-subscription-item:
+      parameters:
+        path:
+          subscription_item_id: "<id>"
+        query:
+          end_now: false
+      responses:
+        "200":
+          application/json: {"object": "commerce_subscription_item", "id": "<id>", "instance_id": "<id>", "status": "abandoned", "credit": {"amount": {"amount": 595314, "amount_formatted": "<value>", "currency": "Balboa", "currency_symbol": "C$"}, "cycle_remaining_percent": 4623.13}, "plan_id": "<id>", "plan": null, "plan_period": "annual", "payment_source_id": "<id>", "payment_source": {"object": "commerce_source", "id": "<id>", "payer_id": "<id>", "payment_method": "apple_pay", "is_default": false, "gateway": "<value>", "gateway_external_id": "<id>", "gateway_external_account_id": "<id>", "last4": "<value>", "status": "disconnected", "wallet_type": "<value>", "card_type": "<value>", "expiry_year": 950248, "expiry_month": 99889, "created_at": 883951, "updated_at": 182160, "is_removable": false}, "lifetime_paid": {"amount": 333252, "amount_formatted": "<value>", "currency": "New Israeli Sheqel", "currency_symbol": "₨"}, "amount": {"amount": 463342, "amount_formatted": "<value>", "currency": "Costa Rican Colon", "currency_symbol": "ƒ"}, "next_invoice": {"amount": {"amount": 163690, "amount_formatted": "<value>", "currency": "US Dollar", "currency_symbol": "лв"}, "date": 486837}, "next_payment": {"amount": {"amount": 967195, "amount_formatted": "<value>", "currency": "Lilangeni", "currency_symbol": "kr"}, "date": 191144}, "payer_id": "<id>", "payer": null, "is_free_trial": true, "period_start": 307393, "period_end": 617624, "proration_date": "<value>", "canceled_at": 479144, "past_due_at": 889815, "ended_at": 879881, "created_at": 858429, "updated_at": 224059}
+        "400":
+          application/json: {"errors": [{"message": "Invalid input", "long_message": "The input provided does not meet the requirements.", "code": "400_bad_request", "meta": {}, "clerk_trace_id": "trace_123456789abcd"}], "meta": {}}
+        "500":
+          application/json: {"errors": [{"message": "Invalid input", "long_message": "The input provided does not meet the requirements.", "code": "400_bad_request", "meta": {}, "clerk_trace_id": "trace_123456789abcd"}], "meta": {}}
 examplesVersion: 1.0.2
 generatedTests: {}
 releaseNotes: |
   ## SDK Changes Detected:
-  * `clerk.commerce.list_subscription_items()`: **Added**
-  * `clerk.email_addresses.create()`:  `response.verification` **Changed**
-  * `clerk.email_addresses.get()`:  `response.verification` **Changed**
-  * `clerk.email_addresses.update()`:  `response.verification` **Changed**
-  * `clerk.users.list()`:  `response.[].email_addresses.[].verification` **Changed**
-  * `clerk.users.create()`:  `response.email_addresses.[].verification` **Changed**
-  * `clerk.users.get()`:  `response.email_addresses.[].verification` **Changed**
-  * `clerk.users.update()`:  `response.email_addresses.[].verification` **Changed**
-  * `clerk.users.ban()`:  `response.email_addresses.[].verification` **Changed**
-  * `clerk.users.unban()`:  `response.email_addresses.[].verification` **Changed**
-  * `clerk.users.bulk_ban()`:  `response.[].email_addresses.[].verification` **Changed**
-  * `clerk.users.bulk_unban()`:  `response.[].email_addresses.[].verification` **Changed**
-  * `clerk.users.lock()`:  `response.email_addresses.[].verification` **Changed**
-  * `clerk.users.unlock()`:  `response.email_addresses.[].verification` **Changed**
-  * `clerk.users.set_profile_image()`:  `response.email_addresses.[].verification` **Changed**
-  * `clerk.users.delete_profile_image()`:  `response.email_addresses.[].verification` **Changed**
-  * `clerk.users.update_metadata()`:  `response.email_addresses.[].verification` **Changed**
-  * `clerk.commerce.list_plans()`:  `response.data.[]` **Changed**
+  * `clerk.users.get()`:  `response` **Changed** **Breaking** :warning:
+  * `clerk.users.update()`:  `response` **Changed** **Breaking** :warning:
+  * `clerk.users.update_metadata()`:  `response` **Changed** **Breaking** :warning:
+  * `clerk.users.delete_profile_image()`:  `response` **Changed** **Breaking** :warning:
+  * `clerk.users.set_profile_image()`:  `response` **Changed** **Breaking** :warning:
+  * `clerk.email_addresses.create()`:  `response.verification.[verification_saml]` **Changed** **Breaking** :warning:
+  * `clerk.email_addresses.get()`:  `response.verification.[verification_saml]` **Changed** **Breaking** :warning:
+  * `clerk.email_addresses.update()`:  `response.verification.[verification_saml]` **Changed** **Breaking** :warning:
+  * `clerk.users.list()`:  `response.[]` **Changed** **Breaking** :warning:
+  * `clerk.users.ban()`:  `response` **Changed** **Breaking** :warning:
+  * `clerk.users.unlock()`:  `response` **Changed** **Breaking** :warning:
+  * `clerk.users.lock()`:  `response` **Changed** **Breaking** :warning:
+  * `clerk.users.create()`:  `response` **Changed** **Breaking** :warning:
+  * `clerk.users.unban()`:  `response` **Changed** **Breaking** :warning:
+  * `clerk.users.bulk_ban()`:  `response.[]` **Changed** **Breaking** :warning:
+  * `clerk.users.bulk_unban()`:  `response.[]` **Changed** **Breaking** :warning:
+  * `clerk.users.get_billing_subscription()`: **Added**
+  * `clerk.organizations.get_billing_subscription()`: **Added**
+  * `clerk.commerce.cancel_subscription_item()`: **Added**
+  * `clerk.waitlist_entries.reject()`: **Added**
+  * `clerk.waitlist_entries.invite()`: **Added**
+  * `clerk.machines.list()`:  `request.order_by` **Added**
