@@ -80,12 +80,14 @@ class TokenType(Enum):
     SESSION_TOKEN = 'session_token'
     API_KEY = 'api_key'
     MACHINE_TOKEN = 'machine_token'
+    MACHINE_TOKEN_V2 = 'm2m_token'
     OAUTH_TOKEN = 'oauth_token'
 
 class TokenPrefix(Enum):
     API_KEY_PREFIX = 'ak_'
     OAUTH_TOKEN_PREFIX = 'oat_'
     MACHINE_TOKEN_PREFIX = 'm2m_'
+    MACHINE_TOKEN_PREFIX_V2 = 'mt_'
 
 
 class TokenVerificationError(Exception):
@@ -117,6 +119,7 @@ class VerifyTokenOptions:
     clock_skew_in_ms: int = 5000
     jwt_key: Optional[str] = None
     secret_key: Optional[str] = None
+    machine_secret_key: Optional[str] = None
     api_url: str = 'https://api.clerk.com'
     api_version: str = 'v1'
 
@@ -282,7 +285,7 @@ class RequestState:
                                                 name=self.payload.get('name'),
                                                 scopes=self.payload.get('scopes'),
                                                 claims=self.payload.get('claims'))
-            if token_type == TokenType.MACHINE_TOKEN:
+            if token_type == TokenType.MACHINE_TOKEN or token_type == TokenType.MACHINE_TOKEN_V2:
                 return M2MMachineAuthObject(id=self.payload.get('id'),
                                      machine_id=self.payload.get('subject'),
                                      client_id=self.payload.get('client_id'),
@@ -311,6 +314,7 @@ class AuthenticateRequestOptions:
     """
 
     secret_key: Optional[str] = None
+    machine_secret_key: Optional[str] = None
     jwt_key: Optional[str] = None
     audience: Union[str, List[str], None] = None
     authorized_parties: Optional[List[str]] = None

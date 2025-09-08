@@ -416,5 +416,93 @@ def test_m2m_machine_auth_token(mock_verify_token):
         "mch_2yGkLpQ7Y3rXSwtU24CzTk9I7Em"
     ]
 
+@patch("clerk_backend_api.security.authenticaterequest.verify_token", autospec=True)
+def test_m2m_machine_auth_token_with_secret_key(mock_verify_token):
+    mock_verify_token.return_value = {
+        "object": "machine_to_machine_token",
+        "id": "mt_2xhFjEI5X2qWRvtV13BzSj8H6Dk",
+        "subject": "mch_2xhFjEI5X2qWRvtV13BzSj8H6Dk",
+        "claims": {
+            "important_metadata": "Some useful data"
+        },
+        "scopes": [
+            "mch_2xhFjEI5X2qWRvtV13BzSj8H6Dk",
+            "mch_2yGkLpQ7Y3rXSwtU24CzTk9I7Em"
+        ],
+        "name": "MY_M2M_TOKEN",
+        "revoked": False,
+        "revocation_reason": "Revoked by user",
+        "expired": False,
+        "expiration": 1716883200,
+        "created_by": "user_2xhFjEI5X2qWRvtV13BzSj8H6Dk",
+        "created_at": 1716883200,
+        "updated_at": 1716883200
+    }
+
+    request = MockRequest(headers=make_headers(auth_token="mt_0ef5a7a33d87ed87ee7954c845d80450"))
+    opts = AuthenticateRequestOptions(
+        secret_key="some-secret-key",
+        jwt_key=None,
+        audience="test-audience",
+        authorized_parties=["https://example.com"],
+        clock_skew_in_ms=5000,
+        accepts_token=["m2m_token"])
+    state = authenticate_request(request, opts)
+    assert state.is_authenticated
+    assert state.token == "mt_0ef5a7a33d87ed87ee7954c845d80450"
+    m2m_machine_auth_object = state.to_auth()
+    assert m2m_machine_auth_object is not None
+    assert m2m_machine_auth_object.token_type.value == "machine_token"
+    assert m2m_machine_auth_object.id == "mt_2xhFjEI5X2qWRvtV13BzSj8H6Dk"
+    assert m2m_machine_auth_object.machine_id == "mch_2xhFjEI5X2qWRvtV13BzSj8H6Dk"
+    assert m2m_machine_auth_object.client_id == None
+    assert m2m_machine_auth_object.name == "MY_M2M_TOKEN"
+    assert m2m_machine_auth_object.claims == {"important_metadata": "Some useful data"}
+    assert m2m_machine_auth_object.scopes == [
+        "mch_2xhFjEI5X2qWRvtV13BzSj8H6Dk",
+        "mch_2yGkLpQ7Y3rXSwtU24CzTk9I7Em"
+    ]
+
+@patch("clerk_backend_api.security.authenticaterequest.verify_token", autospec=True)
+def test_m2m_token_with_machine_secret_key(mock_verify_token):
+    mock_verify_token.return_value = {
+        "object": "machine_to_machine_token",
+        "id": "mt_2xhFjEI5X2qWRvtV13BzSj8H6Dk",
+        "subject": "mch_2xhFjEI5X2qWRvtV13BzSj8H6Dk",
+        "claims": {
+            "important_metadata": "Some useful data"
+        },
+        "scopes": [
+            "mch_2xhFjEI5X2qWRvtV13BzSj8H6Dk",
+            "mch_2yGkLpQ7Y3rXSwtU24CzTk9I7Em"
+        ],
+        "name": "MY_M2M_TOKEN",
+        "revoked": False,
+        "revocation_reason": "Revoked by user",
+        "expired": False,
+        "expiration": 1716883200,
+        "created_by": "user_2xhFjEI5X2qWRvtV13BzSj8H6Dk",
+        "created_at": 1716883200,
+        "updated_at": 1716883200
+    }
+
+    request = MockRequest(headers=make_headers(auth_token="mt_0ef5a7a33d87ed87ee7954c845d80450"))
+    opts = AuthenticateRequestOptions(
+        secret_key=None,
+        machine_secret_key="some-machine-secret-key",
+        jwt_key=None,
+        audience="test-audience",
+        authorized_parties=["https://example.com"],
+        clock_skew_in_ms=5000,
+        accepts_token=["m2m_token"])
+    state = authenticate_request(request, opts)
+    assert state.is_authenticated
+    assert state.token == "mt_0ef5a7a33d87ed87ee7954c845d80450"
+    m2m_machine_auth_object = state.to_auth()
+    assert m2m_machine_auth_object is not None
+    assert m2m_machine_auth_object.token_type.value == "machine_token"
+    assert m2m_machine_auth_object.id == "mt_2xhFjEI5X2qWRvtV13BzSj8H6Dk"
+    assert m2m_machine_auth_object.machine_id == "mch_2xhFjEI5X2qWRvtV13BzSj8H6Dk"
+
 
 
