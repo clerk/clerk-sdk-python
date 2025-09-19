@@ -7,6 +7,7 @@
 
 * [list](#list) - List all waitlist entries
 * [create](#create) - Create a waitlist entry
+* [delete](#delete) - Delete a pending waitlist entry
 * [invite](#invite) - Invite a waitlist entry
 * [reject](#reject) - Reject a waitlist entry
 
@@ -101,6 +102,48 @@ with Clerk(
 | Error Type         | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
 | models.ClerkErrors | 400, 422           | application/json   |
+| models.SDKError    | 4XX, 5XX           | \*/\*              |
+
+## delete
+
+Delete a pending waitlist entry.
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="DeleteWaitlistEntry" method="delete" path="/waitlist_entries/{waitlist_entry_id}" -->
+```python
+from clerk_backend_api import Clerk
+
+
+with Clerk(
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+) as clerk:
+
+    res = clerk.waitlist_entries.delete(waitlist_entry_id="<id>")
+
+    assert res is not None
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `waitlist_entry_id`                                                 | *str*                                                               | :heavy_check_mark:                                                  | The ID of the waitlist entry to delete                              |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+
+### Response
+
+**[models.DeletedObject](../../models/deletedobject.md)**
+
+### Errors
+
+| Error Type         | Status Code        | Content Type       |
+| ------------------ | ------------------ | ------------------ |
+| models.ClerkErrors | 400, 404, 409, 422 | application/json   |
 | models.SDKError    | 4XX, 5XX           | \*/\*              |
 
 ## invite

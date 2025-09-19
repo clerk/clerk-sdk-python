@@ -9,6 +9,7 @@ from clerk_backend_api.types import (
     UNSET,
     UNSET_SENTINEL,
 )
+from dataclasses import dataclass, field
 from enum import Enum
 import httpx
 from pydantic import model_serializer
@@ -75,10 +76,11 @@ class CreateM2MTokenM2mResponseResponseBodyData(BaseModel):
     errors: List[CreateM2MTokenErrors]
 
 
+@dataclass(frozen=True)
 class CreateM2MTokenM2mResponseResponseBody(ClerkBaseError):
     r"""409 Conflict"""
 
-    data: CreateM2MTokenM2mResponseResponseBodyData
+    data: CreateM2MTokenM2mResponseResponseBodyData = field(hash=False)
 
     def __init__(
         self,
@@ -88,7 +90,7 @@ class CreateM2MTokenM2mResponseResponseBody(ClerkBaseError):
     ):
         message = body or raw_response.text
         super().__init__(message, raw_response, body)
-        self.data = data
+        object.__setattr__(self, "data", data)
 
 
 class ErrorsTypedDict(TypedDict):
@@ -109,10 +111,11 @@ class CreateM2MTokenM2mResponseBodyData(BaseModel):
     errors: List[Errors]
 
 
+@dataclass(frozen=True)
 class CreateM2MTokenM2mResponseBody(ClerkBaseError):
     r"""400 Bad Request"""
 
-    data: CreateM2MTokenM2mResponseBodyData
+    data: CreateM2MTokenM2mResponseBodyData = field(hash=False)
 
     def __init__(
         self,
@@ -122,7 +125,7 @@ class CreateM2MTokenM2mResponseBody(ClerkBaseError):
     ):
         message = body or raw_response.text
         super().__init__(message, raw_response, body)
-        self.data = data
+        object.__setattr__(self, "data", data)
 
 
 class CreateM2MTokenObject(str, Enum):

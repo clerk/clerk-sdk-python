@@ -11,6 +11,7 @@
 * [update](#update) - Update a machine
 * [delete](#delete) - Delete a machine
 * [get_secret_key](#get_secret_key) - Retrieve a machine secret key
+* [rotate_secret_key](#rotate_secret_key) - Rotate a machine's secret key
 * [create_scope](#create_scope) - Create a machine scope
 * [delete_scope](#delete_scope) - Delete a machine scope
 
@@ -280,6 +281,51 @@ with Clerk(
 | ------------------ | ------------------ | ------------------ |
 | models.ClerkErrors | 400, 401, 403, 404 | application/json   |
 | models.SDKError    | 4XX, 5XX           | \*/\*              |
+
+## rotate_secret_key
+
+Rotates the machine's secret key.
+When the secret key is rotated, make sure to update it in your machine/application.
+The previous secret key will remain valid for the duration specified by the previous_token_ttl parameter.
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="RotateMachineSecretKey" method="post" path="/machines/{machine_id}/secret_key/rotate" -->
+```python
+from clerk_backend_api import Clerk
+
+
+with Clerk(
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+) as clerk:
+
+    res = clerk.machines.rotate_secret_key(machine_id="<id>", previous_token_ttl=632625)
+
+    assert res is not None
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                                                                                                                                                                                                                                  | Type                                                                                                                                                                                                                                                                       | Required                                                                                                                                                                                                                                                                   | Description                                                                                                                                                                                                                                                                |
+| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `machine_id`                                                                                                                                                                                                                                                               | *str*                                                                                                                                                                                                                                                                      | :heavy_check_mark:                                                                                                                                                                                                                                                         | The ID of the machine to rotate the secret key for                                                                                                                                                                                                                         |
+| `previous_token_ttl`                                                                                                                                                                                                                                                       | *int*                                                                                                                                                                                                                                                                      | :heavy_check_mark:                                                                                                                                                                                                                                                         | The time in seconds that the previous secret key will remain valid after rotation.<br/>This ensures a graceful transition period for updating applications with the new secret key.<br/>Set to 0 to immediately expire the previous key. Maximum value is 8 hours (28800 seconds). |
+| `retries`                                                                                                                                                                                                                                                                  | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                                                                                                                                                           | :heavy_minus_sign:                                                                                                                                                                                                                                                         | Configuration to override the default retry behavior of the client.                                                                                                                                                                                                        |
+
+### Response
+
+**[models.MachineSecretKey](../../models/machinesecretkey.md)**
+
+### Errors
+
+| Error Type              | Status Code             | Content Type            |
+| ----------------------- | ----------------------- | ----------------------- |
+| models.ClerkErrors      | 400, 401, 403, 404, 422 | application/json        |
+| models.SDKError         | 4XX, 5XX                | \*/\*                   |
 
 ## create_scope
 

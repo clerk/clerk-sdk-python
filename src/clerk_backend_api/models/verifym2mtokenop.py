@@ -9,6 +9,7 @@ from clerk_backend_api.types import (
     UNSET,
     UNSET_SENTINEL,
 )
+from dataclasses import dataclass, field
 from enum import Enum
 import httpx
 from pydantic import model_serializer
@@ -42,10 +43,11 @@ class VerifyM2MTokenM2mResponseResponseBodyData(BaseModel):
     errors: List[VerifyM2MTokenM2mErrors]
 
 
+@dataclass(frozen=True)
 class VerifyM2MTokenM2mResponseResponseBody(ClerkBaseError):
     r"""404 Not Found"""
 
-    data: VerifyM2MTokenM2mResponseResponseBodyData
+    data: VerifyM2MTokenM2mResponseResponseBodyData = field(hash=False)
 
     def __init__(
         self,
@@ -55,7 +57,7 @@ class VerifyM2MTokenM2mResponseResponseBody(ClerkBaseError):
     ):
         message = body or raw_response.text
         super().__init__(message, raw_response, body)
-        self.data = data
+        object.__setattr__(self, "data", data)
 
 
 class VerifyM2MTokenErrorsTypedDict(TypedDict):
@@ -76,10 +78,11 @@ class VerifyM2MTokenM2mResponseBodyData(BaseModel):
     errors: List[VerifyM2MTokenErrors]
 
 
+@dataclass(frozen=True)
 class VerifyM2MTokenM2mResponseBody(ClerkBaseError):
     r"""400 Bad Request"""
 
-    data: VerifyM2MTokenM2mResponseBodyData
+    data: VerifyM2MTokenM2mResponseBodyData = field(hash=False)
 
     def __init__(
         self,
@@ -89,7 +92,7 @@ class VerifyM2MTokenM2mResponseBody(ClerkBaseError):
     ):
         message = body or raw_response.text
         super().__init__(message, raw_response, body)
-        self.data = data
+        object.__setattr__(self, "data", data)
 
 
 class VerifyM2MTokenObject(str, Enum):

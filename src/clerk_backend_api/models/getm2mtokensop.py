@@ -10,6 +10,7 @@ from clerk_backend_api.types import (
     UNSET_SENTINEL,
 )
 from clerk_backend_api.utils import FieldMetadata, QueryParamMetadata
+from dataclasses import dataclass, field
 from enum import Enum
 import httpx
 from pydantic import model_serializer
@@ -99,10 +100,11 @@ class GetM2MTokensM2mResponse404ResponseBodyData(BaseModel):
     errors: List[GetM2MTokensM2mResponseErrors]
 
 
+@dataclass(frozen=True)
 class GetM2MTokensM2mResponse404ResponseBody(ClerkBaseError):
     r"""404 Not Found"""
 
-    data: GetM2MTokensM2mResponse404ResponseBodyData
+    data: GetM2MTokensM2mResponse404ResponseBodyData = field(hash=False)
 
     def __init__(
         self,
@@ -112,7 +114,7 @@ class GetM2MTokensM2mResponse404ResponseBody(ClerkBaseError):
     ):
         message = body or raw_response.text
         super().__init__(message, raw_response, body)
-        self.data = data
+        object.__setattr__(self, "data", data)
 
 
 class GetM2MTokensM2mErrorsTypedDict(TypedDict):
@@ -133,10 +135,11 @@ class GetM2MTokensM2mResponseResponseBodyData(BaseModel):
     errors: List[GetM2MTokensM2mErrors]
 
 
+@dataclass(frozen=True)
 class GetM2MTokensM2mResponseResponseBody(ClerkBaseError):
     r"""403 Forbidden"""
 
-    data: GetM2MTokensM2mResponseResponseBodyData
+    data: GetM2MTokensM2mResponseResponseBodyData = field(hash=False)
 
     def __init__(
         self,
@@ -146,7 +149,7 @@ class GetM2MTokensM2mResponseResponseBody(ClerkBaseError):
     ):
         message = body or raw_response.text
         super().__init__(message, raw_response, body)
-        self.data = data
+        object.__setattr__(self, "data", data)
 
 
 class GetM2MTokensErrorsTypedDict(TypedDict):
@@ -167,10 +170,11 @@ class GetM2MTokensM2mResponseBodyData(BaseModel):
     errors: List[GetM2MTokensErrors]
 
 
+@dataclass(frozen=True)
 class GetM2MTokensM2mResponseBody(ClerkBaseError):
     r"""400 Bad Request"""
 
-    data: GetM2MTokensM2mResponseBodyData
+    data: GetM2MTokensM2mResponseBodyData = field(hash=False)
 
     def __init__(
         self,
@@ -180,7 +184,7 @@ class GetM2MTokensM2mResponseBody(ClerkBaseError):
     ):
         message = body or raw_response.text
         super().__init__(message, raw_response, body)
-        self.data = data
+        object.__setattr__(self, "data", data)
 
 
 class GetM2MTokensObject(str, Enum):
