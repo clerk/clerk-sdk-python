@@ -3,6 +3,7 @@
 from __future__ import annotations
 from clerk_backend_api.models import ClerkBaseError
 from clerk_backend_api.types import BaseModel, Nullable, UNSET_SENTINEL
+from dataclasses import dataclass, field
 from enum import Enum
 import httpx
 import pydantic
@@ -49,10 +50,13 @@ class VerifyOAuthAccessTokenOauthAccessTokensResponseResponseBodyData(BaseModel)
     errors: List[VerifyOAuthAccessTokenOauthAccessTokensErrors]
 
 
+@dataclass(frozen=True)
 class VerifyOAuthAccessTokenOauthAccessTokensResponseResponseBody(ClerkBaseError):
     r"""404 Not Found"""
 
-    data: VerifyOAuthAccessTokenOauthAccessTokensResponseResponseBodyData
+    data: VerifyOAuthAccessTokenOauthAccessTokensResponseResponseBodyData = field(
+        hash=False
+    )
 
     def __init__(
         self,
@@ -62,7 +66,7 @@ class VerifyOAuthAccessTokenOauthAccessTokensResponseResponseBody(ClerkBaseError
     ):
         message = body or raw_response.text
         super().__init__(message, raw_response, body)
-        self.data = data
+        object.__setattr__(self, "data", data)
 
 
 class VerifyOAuthAccessTokenErrorsTypedDict(TypedDict):
@@ -83,10 +87,11 @@ class VerifyOAuthAccessTokenOauthAccessTokensResponseBodyData(BaseModel):
     errors: List[VerifyOAuthAccessTokenErrors]
 
 
+@dataclass(frozen=True)
 class VerifyOAuthAccessTokenOauthAccessTokensResponseBody(ClerkBaseError):
     r"""400 Bad Request"""
 
-    data: VerifyOAuthAccessTokenOauthAccessTokensResponseBodyData
+    data: VerifyOAuthAccessTokenOauthAccessTokensResponseBodyData = field(hash=False)
 
     def __init__(
         self,
@@ -96,7 +101,7 @@ class VerifyOAuthAccessTokenOauthAccessTokensResponseBody(ClerkBaseError):
     ):
         message = body or raw_response.text
         super().__init__(message, raw_response, body)
-        self.data = data
+        object.__setattr__(self, "data", data)
 
 
 class VerifyOAuthAccessTokenObject(str, Enum):

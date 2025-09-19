@@ -330,6 +330,10 @@ if TYPE_CHECKING:
         DeleteUserProfileImageRequest,
         DeleteUserProfileImageRequestTypedDict,
     )
+    from .deletewaitlistentryop import (
+        DeleteWaitlistEntryRequest,
+        DeleteWaitlistEntryRequestTypedDict,
+    )
     from .disablemfaop import (
         DisableMFARequest,
         DisableMFARequestTypedDict,
@@ -385,6 +389,14 @@ if TYPE_CHECKING:
         VerificationTicketVerificationStatus,
         VerificationTicketVerificationStrategy,
         VerificationTypedDict,
+    )
+    from .extendcommercesubscriptionitemfreetrialop import (
+        ExtendCommerceSubscriptionItemFreeTrialRequest,
+        ExtendCommerceSubscriptionItemFreeTrialRequestTypedDict,
+    )
+    from .extendfreetrialrequest import (
+        ExtendFreeTrialRequest,
+        ExtendFreeTrialRequestTypedDict,
     )
     from .externalaccountwithverification import (
         ClerkErrorErrorExternalAccountWithVerificationMeta,
@@ -837,6 +849,12 @@ if TYPE_CHECKING:
     from .revokesignintokenop import (
         RevokeSignInTokenRequest,
         RevokeSignInTokenRequestTypedDict,
+    )
+    from .rotatemachinesecretkeyop import (
+        RotateMachineSecretKeyRequest,
+        RotateMachineSecretKeyRequestBody,
+        RotateMachineSecretKeyRequestBodyTypedDict,
+        RotateMachineSecretKeyRequestTypedDict,
     )
     from .rotateoauthapplicationsecretop import (
         RotateOAuthApplicationSecretRequest,
@@ -1404,6 +1422,8 @@ __all__ = [
     "DeleteUserProfileImageRequestTypedDict",
     "DeleteUserRequest",
     "DeleteUserRequestTypedDict",
+    "DeleteWaitlistEntryRequest",
+    "DeleteWaitlistEntryRequestTypedDict",
     "DeletedObject",
     "DeletedObjectTypedDict",
     "DisableMFARequest",
@@ -1430,6 +1450,10 @@ __all__ = [
     "ErrorTypedDict",
     "Errors",
     "ErrorsTypedDict",
+    "ExtendCommerceSubscriptionItemFreeTrialRequest",
+    "ExtendCommerceSubscriptionItemFreeTrialRequestTypedDict",
+    "ExtendFreeTrialRequest",
+    "ExtendFreeTrialRequestTypedDict",
     "ExternalAccount",
     "ExternalAccountTypedDict",
     "ExternalAccountWithVerification",
@@ -1773,6 +1797,10 @@ __all__ = [
     "RevokeSessionRequestTypedDict",
     "RevokeSignInTokenRequest",
     "RevokeSignInTokenRequestTypedDict",
+    "RotateMachineSecretKeyRequest",
+    "RotateMachineSecretKeyRequestBody",
+    "RotateMachineSecretKeyRequestBodyTypedDict",
+    "RotateMachineSecretKeyRequestTypedDict",
     "RotateOAuthApplicationSecretRequest",
     "RotateOAuthApplicationSecretRequestTypedDict",
     "SAMLAccount",
@@ -2327,6 +2355,8 @@ _dynamic_imports: dict[str, str] = {
     "DeleteUserRequestTypedDict": ".deleteuserop",
     "DeleteUserProfileImageRequest": ".deleteuserprofileimageop",
     "DeleteUserProfileImageRequestTypedDict": ".deleteuserprofileimageop",
+    "DeleteWaitlistEntryRequest": ".deletewaitlistentryop",
+    "DeleteWaitlistEntryRequestTypedDict": ".deletewaitlistentryop",
     "DisableMFARequest": ".disablemfaop",
     "DisableMFARequestTypedDict": ".disablemfaop",
     "DisableMFAResponseBody": ".disablemfaop",
@@ -2382,6 +2412,10 @@ _dynamic_imports: dict[str, str] = {
     "VerificationTicketVerificationStatus": ".emailaddress",
     "VerificationTicketVerificationStrategy": ".emailaddress",
     "VerificationTypedDict": ".emailaddress",
+    "ExtendCommerceSubscriptionItemFreeTrialRequest": ".extendcommercesubscriptionitemfreetrialop",
+    "ExtendCommerceSubscriptionItemFreeTrialRequestTypedDict": ".extendcommercesubscriptionitemfreetrialop",
+    "ExtendFreeTrialRequest": ".extendfreetrialrequest",
+    "ExtendFreeTrialRequestTypedDict": ".extendfreetrialrequest",
     "ClerkErrorErrorExternalAccountWithVerificationMeta": ".externalaccountwithverification",
     "ClerkErrorErrorExternalAccountWithVerificationMetaTypedDict": ".externalaccountwithverification",
     "ClerkErrorErrorExternalAccountWithVerificationVerificationMeta": ".externalaccountwithverification",
@@ -2724,6 +2758,10 @@ _dynamic_imports: dict[str, str] = {
     "RevokeSessionRequestTypedDict": ".revokesessionop",
     "RevokeSignInTokenRequest": ".revokesignintokenop",
     "RevokeSignInTokenRequestTypedDict": ".revokesignintokenop",
+    "RotateMachineSecretKeyRequest": ".rotatemachinesecretkeyop",
+    "RotateMachineSecretKeyRequestBody": ".rotatemachinesecretkeyop",
+    "RotateMachineSecretKeyRequestBodyTypedDict": ".rotatemachinesecretkeyop",
+    "RotateMachineSecretKeyRequestTypedDict": ".rotatemachinesecretkeyop",
     "RotateOAuthApplicationSecretRequest": ".rotateoauthapplicationsecretop",
     "RotateOAuthApplicationSecretRequestTypedDict": ".rotateoauthapplicationsecretop",
     "ClerkErrorErrorSAMLAccountMeta": ".samlaccount",

@@ -10,6 +10,7 @@ from clerk_backend_api.types import (
     UNSET_SENTINEL,
 )
 from clerk_backend_api.utils import FieldMetadata, PathParamMetadata, RequestMetadata
+from dataclasses import dataclass, field
 from enum import Enum
 import httpx
 from pydantic import model_serializer
@@ -89,10 +90,11 @@ class RevokeM2MTokenM2mResponseResponseBodyData(BaseModel):
     errors: List[RevokeM2MTokenM2mErrors]
 
 
+@dataclass(frozen=True)
 class RevokeM2MTokenM2mResponseResponseBody(ClerkBaseError):
     r"""404 Not Found"""
 
-    data: RevokeM2MTokenM2mResponseResponseBodyData
+    data: RevokeM2MTokenM2mResponseResponseBodyData = field(hash=False)
 
     def __init__(
         self,
@@ -102,7 +104,7 @@ class RevokeM2MTokenM2mResponseResponseBody(ClerkBaseError):
     ):
         message = body or raw_response.text
         super().__init__(message, raw_response, body)
-        self.data = data
+        object.__setattr__(self, "data", data)
 
 
 class RevokeM2MTokenErrorsTypedDict(TypedDict):
@@ -123,10 +125,11 @@ class RevokeM2MTokenM2mResponseBodyData(BaseModel):
     errors: List[RevokeM2MTokenErrors]
 
 
+@dataclass(frozen=True)
 class RevokeM2MTokenM2mResponseBody(ClerkBaseError):
     r"""400 Bad Request"""
 
-    data: RevokeM2MTokenM2mResponseBodyData
+    data: RevokeM2MTokenM2mResponseBodyData = field(hash=False)
 
     def __init__(
         self,
@@ -136,7 +139,7 @@ class RevokeM2MTokenM2mResponseBody(ClerkBaseError):
     ):
         message = body or raw_response.text
         super().__init__(message, raw_response, body)
-        self.data = data
+        object.__setattr__(self, "data", data)
 
 
 class RevokeM2MTokenObject(str, Enum):

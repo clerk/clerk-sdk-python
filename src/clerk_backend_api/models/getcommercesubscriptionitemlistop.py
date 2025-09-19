@@ -52,6 +52,10 @@ class GetCommerceSubscriptionItemListRequestTypedDict(TypedDict):
     r"""Search query to filter subscription items by email, user first name, user last name, or organization name.
     Supports partial matching.
     """
+    user_id: NotRequired[str]
+    r"""Filter subscription items by user ID"""
+    organization_id: NotRequired[str]
+    r"""Filter subscription items by organization ID"""
 
 
 class GetCommerceSubscriptionItemListRequest(BaseModel):
@@ -112,3 +116,15 @@ class GetCommerceSubscriptionItemListRequest(BaseModel):
     r"""Search query to filter subscription items by email, user first name, user last name, or organization name.
     Supports partial matching.
     """
+
+    user_id: Annotated[
+        Optional[str],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Filter subscription items by user ID"""
+
+    organization_id: Annotated[
+        Optional[str],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Filter subscription items by organization ID"""

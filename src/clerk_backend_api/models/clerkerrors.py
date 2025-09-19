@@ -4,6 +4,7 @@ from __future__ import annotations
 from .clerkerror import ClerkError
 from clerk_backend_api.models import ClerkBaseError
 from clerk_backend_api.types import BaseModel
+from dataclasses import dataclass, field
 import httpx
 from typing import List, Optional
 from typing_extensions import TypedDict
@@ -23,10 +24,11 @@ class ClerkErrorsData(BaseModel):
     meta: Optional[ClerkErrorsMeta] = None
 
 
+@dataclass(frozen=True)
 class ClerkErrors(ClerkBaseError):
     r"""Request was not successful"""
 
-    data: ClerkErrorsData
+    data: ClerkErrorsData = field(hash=False)
 
     def __init__(
         self,
@@ -36,4 +38,4 @@ class ClerkErrors(ClerkBaseError):
     ):
         message = body or raw_response.text
         super().__init__(message, raw_response, body)
-        self.data = data
+        object.__setattr__(self, "data", data)
