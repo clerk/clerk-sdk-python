@@ -285,7 +285,7 @@ class RequestState:
                                                 name=self.payload.get('name'),
                                                 scopes=self.payload.get('scopes'),
                                                 claims=self.payload.get('claims'))
-            if token_type == TokenType.MACHINE_TOKEN or token_type == TokenType.MACHINE_TOKEN_V2:
+            if token_type in {TokenType.MACHINE_TOKEN, TokenType.MACHINE_TOKEN_V2}:
                 return M2MMachineAuthObject(id=self.payload.get('id'),
                                      machine_id=self.payload.get('subject'),
                                      client_id=self.payload.get('client_id'),
