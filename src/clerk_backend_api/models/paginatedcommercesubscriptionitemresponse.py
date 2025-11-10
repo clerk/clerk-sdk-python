@@ -14,16 +14,16 @@ class PaginatedCommerceSubscriptionItemResponseTypedDict(TypedDict):
     r"""A list of commerce subscription items."""
 
     data: List[CommerceSubscriptionItemTypedDict]
-    r"""Array of commerce subscription items."""
+    r"""Array of subscription items."""
     total_count: int
-    r"""Total number of commerce subscription items."""
+    r"""Total number of subscription items."""
 
 
 class PaginatedCommerceSubscriptionItemResponse(BaseModel):
     r"""A list of commerce subscription items."""
 
     data: List[CommerceSubscriptionItem]
-    r"""Array of commerce subscription items."""
+    r"""Array of subscription items."""
 
     total_count: int
-    r"""Total number of commerce subscription items."""
+    r"""Total number of subscription items."""

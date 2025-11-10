@@ -209,6 +209,7 @@ with Clerk(
         "max_allowed_memberships": 10,
         "admin_delete_enabled": False,
         "domains_enabled": True,
+        "slug_disabled": True,
         "domains_enrollment_modes": [
             "automatic_invitation",
             "automatic_suggestion",

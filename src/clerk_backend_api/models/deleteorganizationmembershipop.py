@@ -8,18 +8,18 @@ from typing_extensions import Annotated, TypedDict
 
 class DeleteOrganizationMembershipRequestTypedDict(TypedDict):
     organization_id: str
-    r"""The ID of the organization to which the membership belongs"""
+    r"""The ID of the organization to which this membership belongs"""
     user_id: str
-    r"""The ID of the user that this membership belongs to"""
+    r"""The ID of the user to which this membership belongs"""
 
 
 class DeleteOrganizationMembershipRequest(BaseModel):
     organization_id: Annotated[
         str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))
     ]
-    r"""The ID of the organization to which the membership belongs"""
+    r"""The ID of the organization to which this membership belongs"""
 
     user_id: Annotated[
         str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))
     ]
-    r"""The ID of the user that this membership belongs to"""
+    r"""The ID of the user to which this membership belongs"""

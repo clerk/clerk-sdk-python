@@ -1,6 +1,6 @@
 # AttributeMapping
 
-Define the atrtibute name mapping between Identity Provider and Clerk's user properties
+Define the attribute name mapping between Identity Provider and Clerk's user properties
 
 
 ## Fields

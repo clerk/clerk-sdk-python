@@ -9,13 +9,7 @@ from .commercesubscriptionnextpayment import (
     CommerceSubscriptionNextPayment,
     CommerceSubscriptionNextPaymentTypedDict,
 )
-from clerk_backend_api.types import (
-    BaseModel,
-    Nullable,
-    OptionalNullable,
-    UNSET,
-    UNSET_SENTINEL,
-)
+from clerk_backend_api.types import BaseModel, Nullable, UNSET_SENTINEL
 from enum import Enum
 from pydantic import model_serializer
 from typing import List, Optional
@@ -56,14 +50,14 @@ class CommerceSubscriptionTypedDict(TypedDict):
     r"""Unix timestamp (milliseconds) of creation."""
     updated_at: int
     r"""Unix timestamp (milliseconds) of last update."""
+    active_at: Nullable[int]
+    r"""Unix timestamp (milliseconds) when the subscription became active."""
+    past_due_at: Nullable[int]
+    r"""Unix timestamp (milliseconds) when the subscription became past due."""
     subscription_items: List[CommerceSubscriptionItemTypedDict]
     r"""Array of subscription items in this subscription."""
-    active_at: NotRequired[Nullable[int]]
-    r"""Unix timestamp (milliseconds) when the subscription became active."""
-    past_due_at: NotRequired[Nullable[int]]
-    r"""Unix timestamp (milliseconds) when the subscription became past due."""
     next_payment: NotRequired[CommerceSubscriptionNextPaymentTypedDict]
-    eligible_for_free_trial: NotRequired[Nullable[bool]]
+    eligible_for_free_trial: NotRequired[bool]
     r"""Whether the payer is eligible for a free trial."""
 
 
@@ -91,29 +85,24 @@ class CommerceSubscription(BaseModel):
     updated_at: int
     r"""Unix timestamp (milliseconds) of last update."""
 
+    active_at: Nullable[int]
+    r"""Unix timestamp (milliseconds) when the subscription became active."""
+
+    past_due_at: Nullable[int]
+    r"""Unix timestamp (milliseconds) when the subscription became past due."""
+
     subscription_items: List[CommerceSubscriptionItem]
     r"""Array of subscription items in this subscription."""
 
-    active_at: OptionalNullable[int] = UNSET
-    r"""Unix timestamp (milliseconds) when the subscription became active."""
-
-    past_due_at: OptionalNullable[int] = UNSET
-    r"""Unix timestamp (milliseconds) when the subscription became past due."""
-
     next_payment: Optional[CommerceSubscriptionNextPayment] = None
 
-    eligible_for_free_trial: OptionalNullable[bool] = UNSET
+    eligible_for_free_trial: Optional[bool] = None
     r"""Whether the payer is eligible for a free trial."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = [
-            "active_at",
-            "past_due_at",
-            "next_payment",
-            "eligible_for_free_trial",
-        ]
-        nullable_fields = ["active_at", "past_due_at", "eligible_for_free_trial"]
+        optional_fields = ["next_payment", "eligible_for_free_trial"]
+        nullable_fields = ["active_at", "past_due_at"]
         null_default_fields = []
 
         serialized = handler(self)

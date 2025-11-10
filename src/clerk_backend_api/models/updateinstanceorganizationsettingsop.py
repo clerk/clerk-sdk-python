@@ -18,6 +18,7 @@ class UpdateInstanceOrganizationSettingsRequestBodyTypedDict(TypedDict):
     max_allowed_memberships: NotRequired[Nullable[int]]
     admin_delete_enabled: NotRequired[Nullable[bool]]
     domains_enabled: NotRequired[Nullable[bool]]
+    slug_disabled: NotRequired[Nullable[bool]]
     domains_enrollment_modes: NotRequired[List[str]]
     r"""Specify which enrollment modes to enable for your Organization Domains.
     Supported modes are 'automatic_invitation' & 'automatic_suggestion'.
@@ -37,6 +38,8 @@ class UpdateInstanceOrganizationSettingsRequestBody(BaseModel):
 
     domains_enabled: OptionalNullable[bool] = UNSET
 
+    slug_disabled: OptionalNullable[bool] = UNSET
+
     domains_enrollment_modes: Optional[List[str]] = None
     r"""Specify which enrollment modes to enable for your Organization Domains.
     Supported modes are 'automatic_invitation' & 'automatic_suggestion'.
@@ -55,6 +58,7 @@ class UpdateInstanceOrganizationSettingsRequestBody(BaseModel):
             "max_allowed_memberships",
             "admin_delete_enabled",
             "domains_enabled",
+            "slug_disabled",
             "domains_enrollment_modes",
             "creator_role_id",
             "domains_default_role_id",
@@ -64,6 +68,7 @@ class UpdateInstanceOrganizationSettingsRequestBody(BaseModel):
             "max_allowed_memberships",
             "admin_delete_enabled",
             "domains_enabled",
+            "slug_disabled",
             "creator_role_id",
             "domains_default_role_id",
         ]

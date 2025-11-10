@@ -17,12 +17,12 @@ from typing_extensions import Annotated, NotRequired, TypedDict
 
 class CreateSessionTokenFromTemplateRequestBodyTypedDict(TypedDict):
     expires_in_seconds: NotRequired[Nullable[int]]
-    r"""Use this parameter to override the JWT token lifetime."""
+    r"""Use this parameter to override the JWT lifetime."""
 
 
 class CreateSessionTokenFromTemplateRequestBody(BaseModel):
     expires_in_seconds: OptionalNullable[int] = UNSET
-    r"""Use this parameter to override the JWT token lifetime."""
+    r"""Use this parameter to override the JWT lifetime."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
@@ -59,7 +59,7 @@ class CreateSessionTokenFromTemplateRequestTypedDict(TypedDict):
     session_id: str
     r"""The ID of the session"""
     template_name: str
-    r"""The name of the JWT Template defined in your instance (e.g. `custom_hasura`)."""
+    r"""The name of the JWT template defined in your instance (e.g. `custom_hasura`)."""
     request_body: NotRequired[CreateSessionTokenFromTemplateRequestBodyTypedDict]
 
 
@@ -72,7 +72,7 @@ class CreateSessionTokenFromTemplateRequest(BaseModel):
     template_name: Annotated[
         str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))
     ]
-    r"""The name of the JWT Template defined in your instance (e.g. `custom_hasura`)."""
+    r"""The name of the JWT template defined in your instance (e.g. `custom_hasura`)."""
 
     request_body: Annotated[
         Optional[CreateSessionTokenFromTemplateRequestBody],

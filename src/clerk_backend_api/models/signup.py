@@ -2,7 +2,13 @@
 
 from __future__ import annotations
 from .signupverifications import SignUpVerifications, SignUpVerificationsTypedDict
-from clerk_backend_api.types import BaseModel, Nullable, UNSET_SENTINEL
+from clerk_backend_api.types import (
+    BaseModel,
+    Nullable,
+    OptionalNullable,
+    UNSET,
+    UNSET_SENTINEL,
+)
 from enum import Enum
 import pydantic
 from pydantic import model_serializer
@@ -66,6 +72,8 @@ class SignUpTypedDict(TypedDict):
     """
     unsafe_metadata: NotRequired[Dict[str, Any]]
     public_metadata: NotRequired[Dict[str, Any]]
+    locale: NotRequired[Nullable[str]]
+    r"""The user locale preference for the sign-up specified as a BCP-47 language tag."""
     external_account: NotRequired[SignUpExternalAccountTypedDict]
 
 
@@ -124,6 +132,9 @@ class SignUp(BaseModel):
 
     public_metadata: Optional[Dict[str, Any]] = None
 
+    locale: OptionalNullable[str] = UNSET
+    r"""The user locale preference for the sign-up specified as a BCP-47 language tag."""
+
     external_account: Annotated[
         Optional[SignUpExternalAccount],
         pydantic.Field(
@@ -133,7 +144,12 @@ class SignUp(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["unsafe_metadata", "public_metadata", "external_account"]
+        optional_fields = [
+            "unsafe_metadata",
+            "public_metadata",
+            "locale",
+            "external_account",
+        ]
         nullable_fields = [
             "username",
             "email_address",
@@ -145,6 +161,7 @@ class SignUp(BaseModel):
             "created_session_id",
             "created_user_id",
             "legal_accepted_at",
+            "locale",
         ]
         null_default_fields = []
 

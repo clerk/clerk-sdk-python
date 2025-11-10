@@ -24,7 +24,7 @@ class ClerkErrorsData(BaseModel):
     meta: Optional[ClerkErrorsMeta] = None
 
 
-@dataclass(frozen=True)
+@dataclass(unsafe_hash=True)
 class ClerkErrors(ClerkBaseError):
     r"""Request was not successful"""
 

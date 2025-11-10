@@ -78,7 +78,7 @@ class Users(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="GetUserList",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -170,7 +170,7 @@ class Users(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="GetUserList",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -199,6 +199,7 @@ class Users(BaseSDK):
         external_id: OptionalNullable[str] = UNSET,
         first_name: OptionalNullable[str] = UNSET,
         last_name: OptionalNullable[str] = UNSET,
+        locale: OptionalNullable[str] = UNSET,
         email_address: Optional[List[str]] = None,
         phone_number: Optional[List[str]] = None,
         web3_wallet: Optional[List[str]] = None,
@@ -234,28 +235,61 @@ class Users(BaseSDK):
 
         The following rate limit rules apply to this endpoint: 1000 requests per 10 seconds for production instances and 100 requests per 10 seconds for development instances
 
-        :param external_id: The ID of the user as used in your external systems or your previous authentication solution. Must be unique across your instance.
+        :param external_id: The ID of the user as used in your external systems or your previous authentication solution.
+            Must be unique across your instance.
         :param first_name: The first name to assign to the user
         :param last_name: The last name to assign to the user
-        :param email_address: Email addresses to add to the user. Must be unique across your instance. The first email address will be set as the user's primary email address.
-        :param phone_number: Phone numbers to add to the user. Must be unique across your instance. The first phone number will be set as the user's primary phone number.
-        :param web3_wallet: Web3 wallets to add to the user. Must be unique across your instance. The first wallet will be set as the user's primary wallet.
-        :param username: The username to give to the user. It must be unique across your instance.
-        :param password: The plaintext password to give the user. Must be at least 8 characters long, and cannot be in any list of hacked passwords.
-        :param password_digest: In case you already have the password digests and not the passwords, you can use them for the newly created user via this property. The digests should be generated with one of the supported algorithms. The hashing algorithm can be specified using the `password_hasher` property.
-        :param password_hasher: The hashing algorithm that was used to generate the password digest.  The algorithms we support at the moment are [`bcrypt`](https://en.wikipedia.org/wiki/Bcrypt), [`bcrypt_sha256_django`](https://docs.djangoproject.com/en/4.0/topics/auth/passwords/), [`md5`](https://en.wikipedia.org/wiki/MD5), `pbkdf2_sha1`, `pbkdf2_sha256`, [`pbkdf2_sha256_django`](https://docs.djangoproject.com/en/4.0/topics/auth/passwords/), [`phpass`](https://www.openwall.com/phpass/), `md5_phpass`, [`scrypt_firebase`](https://firebaseopensource.com/projects/firebase/scrypt/), [`scrypt_werkzeug`](https://werkzeug.palletsprojects.com/en/3.0.x/utils/#werkzeug.security.generate_password_hash), [`sha256`](https://en.wikipedia.org/wiki/SHA-2), [`ldap_ssha`](https://www.openldap.org/faq/data/cache/347.html) and the [`argon2`](https://argon2.online/) variants: `argon2i` and `argon2id`.  Each of the supported hashers expects the incoming digest to be in a particular format. See the [Clerk docs](https://clerk.com/docs/references/backend/user/create-user) for more information.
-        :param skip_password_checks: When set to `true` all password checks are skipped. It is recommended to use this method only when migrating plaintext passwords to Clerk. Upon migration the user base should be prompted to pick stronger password.
-        :param skip_password_requirement: When set to `true`, `password` is not required anymore when creating the user and can be omitted. This is useful when you are trying to create a user that doesn't have a password, in an instance that is using passwords. Please note that you cannot use this flag if password is the only way for a user to sign into your instance.
-        :param totp_secret: In case TOTP is configured on the instance, you can provide the secret to enable it on the newly created user without the need to reset it. Please note that currently the supported options are: * Period: 30 seconds * Code length: 6 digits * Algorithm: SHA1
-        :param backup_codes: If Backup Codes are configured on the instance, you can provide them to enable it on the newly created user without the need to reset them. You must provide the backup codes in plain format or the corresponding bcrypt digest.
+        :param locale: The locale to assign to the user (e.g., \"en-US\", \"fr-FR\")
+        :param email_address: Email addresses to add to the user.
+            Must be unique across your instance.
+            The first email address will be set as the user's primary email address.
+        :param phone_number: Phone numbers to add to the user.
+            Must be unique across your instance.
+            The first phone number will be set as the user's primary phone number.
+        :param web3_wallet: Web3 wallets to add to the user.
+            Must be unique across your instance.
+            The first wallet will be set as the user's primary wallet.
+        :param username: The username to give to the user.
+            It must be unique across your instance.
+        :param password: The plaintext password to give the user.
+            Must be at least 8 characters long, and cannot be in any list of hacked passwords.
+        :param password_digest: In case you already have the password digests and not the passwords, you can use them for the newly created user via this property.
+            The digests should be generated with one of the supported algorithms.
+            The hashing algorithm can be specified using the `password_hasher` property.
+        :param password_hasher: The hashing algorithm that was used to generate the password digest.
+
+            The algorithms we support at the moment are [`bcrypt`](https://en.wikipedia.org/wiki/Bcrypt), [`bcrypt_sha256_django`](https://docs.djangoproject.com/en/4.0/topics/auth/passwords/), [`md5`](https://en.wikipedia.org/wiki/MD5), `pbkdf2_sha1`, `pbkdf2_sha256`, [`pbkdf2_sha256_django`](https://docs.djangoproject.com/en/4.0/topics/auth/passwords/),
+            [`phpass`](https://www.openwall.com/phpass/), `md5_phpass`, [`scrypt_firebase`](https://firebaseopensource.com/projects/firebase/scrypt/),
+            [`scrypt_werkzeug`](https://werkzeug.palletsprojects.com/en/3.0.x/utils/#werkzeug.security.generate_password_hash), [`sha256`](https://en.wikipedia.org/wiki/SHA-2),
+            [`ldap_ssha`](https://www.openldap.org/faq/data/cache/347.html) and the [`argon2`](https://argon2.online/) variants: `argon2i` and `argon2id`.
+
+            Each of the supported hashers expects the incoming digest to be in a particular format. See the [Clerk docs](https://clerk.com/docs/references/backend/user/create-user) for more information.
+        :param skip_password_checks: When set to `true` all password checks are skipped.
+            It is recommended to use this method only when migrating plaintext passwords to Clerk.
+            Upon migration the user base should be prompted to pick stronger password.
+        :param skip_password_requirement: When set to `true`, `password` is not required anymore when creating the user and can be omitted.
+            This is useful when you are trying to create a user that doesn't have a password, in an instance that is using passwords.
+            Please note that you cannot use this flag if password is the only way for a user to sign into your instance.
+        :param totp_secret: In case TOTP is configured on the instance, you can provide the secret to enable it on the newly created user without the need to reset it.
+            Please note that currently the supported options are:
+            * Period: 30 seconds
+            * Code length: 6 digits
+            * Algorithm: SHA1
+        :param backup_codes: If Backup Codes are configured on the instance, you can provide them to enable it on the newly created user without the need to reset them.
+            You must provide the backup codes in plain format or the corresponding bcrypt digest.
         :param public_metadata: Metadata saved on the user, that is visible to both your Frontend and Backend APIs
         :param private_metadata: Metadata saved on the user, that is only visible to your Backend API
-        :param unsafe_metadata: Metadata saved on the user, that can be updated from both the Frontend and Backend APIs. Note: Since this data can be modified from the frontend, it is not guaranteed to be safe.
+        :param unsafe_metadata: Metadata saved on the user, that can be updated from both the Frontend and Backend APIs.
+            Note: Since this data can be modified from the frontend, it is not guaranteed to be safe.
         :param delete_self_enabled: If enabled, user can delete themselves via FAPI.
+
         :param legal_accepted_at: A custom timestamp denoting _when_ the user accepted legal requirements, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`).
-        :param skip_legal_checks: When set to `true` all legal checks are skipped. It is not recommended to skip legal checks unless you are migrating a user to Clerk.
+        :param skip_legal_checks: When set to `true` all legal checks are skipped.
+            It is not recommended to skip legal checks unless you are migrating a user to Clerk.
         :param create_organization_enabled: If enabled, user can create organizations via FAPI.
+
         :param create_organizations_limit: The maximum number of organizations the user can create. 0 means unlimited.
+
         :param created_at: A custom date/time denoting _when_ the user signed up to the application, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`).
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -276,6 +310,7 @@ class Users(BaseSDK):
             external_id=external_id,
             first_name=first_name,
             last_name=last_name,
+            locale=locale,
             email_address=email_address,
             phone_number=phone_number,
             web3_wallet=web3_wallet,
@@ -334,7 +369,7 @@ class Users(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="CreateUser",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -365,6 +400,7 @@ class Users(BaseSDK):
         external_id: OptionalNullable[str] = UNSET,
         first_name: OptionalNullable[str] = UNSET,
         last_name: OptionalNullable[str] = UNSET,
+        locale: OptionalNullable[str] = UNSET,
         email_address: Optional[List[str]] = None,
         phone_number: Optional[List[str]] = None,
         web3_wallet: Optional[List[str]] = None,
@@ -400,28 +436,61 @@ class Users(BaseSDK):
 
         The following rate limit rules apply to this endpoint: 1000 requests per 10 seconds for production instances and 100 requests per 10 seconds for development instances
 
-        :param external_id: The ID of the user as used in your external systems or your previous authentication solution. Must be unique across your instance.
+        :param external_id: The ID of the user as used in your external systems or your previous authentication solution.
+            Must be unique across your instance.
         :param first_name: The first name to assign to the user
         :param last_name: The last name to assign to the user
-        :param email_address: Email addresses to add to the user. Must be unique across your instance. The first email address will be set as the user's primary email address.
-        :param phone_number: Phone numbers to add to the user. Must be unique across your instance. The first phone number will be set as the user's primary phone number.
-        :param web3_wallet: Web3 wallets to add to the user. Must be unique across your instance. The first wallet will be set as the user's primary wallet.
-        :param username: The username to give to the user. It must be unique across your instance.
-        :param password: The plaintext password to give the user. Must be at least 8 characters long, and cannot be in any list of hacked passwords.
-        :param password_digest: In case you already have the password digests and not the passwords, you can use them for the newly created user via this property. The digests should be generated with one of the supported algorithms. The hashing algorithm can be specified using the `password_hasher` property.
-        :param password_hasher: The hashing algorithm that was used to generate the password digest.  The algorithms we support at the moment are [`bcrypt`](https://en.wikipedia.org/wiki/Bcrypt), [`bcrypt_sha256_django`](https://docs.djangoproject.com/en/4.0/topics/auth/passwords/), [`md5`](https://en.wikipedia.org/wiki/MD5), `pbkdf2_sha1`, `pbkdf2_sha256`, [`pbkdf2_sha256_django`](https://docs.djangoproject.com/en/4.0/topics/auth/passwords/), [`phpass`](https://www.openwall.com/phpass/), `md5_phpass`, [`scrypt_firebase`](https://firebaseopensource.com/projects/firebase/scrypt/), [`scrypt_werkzeug`](https://werkzeug.palletsprojects.com/en/3.0.x/utils/#werkzeug.security.generate_password_hash), [`sha256`](https://en.wikipedia.org/wiki/SHA-2), [`ldap_ssha`](https://www.openldap.org/faq/data/cache/347.html) and the [`argon2`](https://argon2.online/) variants: `argon2i` and `argon2id`.  Each of the supported hashers expects the incoming digest to be in a particular format. See the [Clerk docs](https://clerk.com/docs/references/backend/user/create-user) for more information.
-        :param skip_password_checks: When set to `true` all password checks are skipped. It is recommended to use this method only when migrating plaintext passwords to Clerk. Upon migration the user base should be prompted to pick stronger password.
-        :param skip_password_requirement: When set to `true`, `password` is not required anymore when creating the user and can be omitted. This is useful when you are trying to create a user that doesn't have a password, in an instance that is using passwords. Please note that you cannot use this flag if password is the only way for a user to sign into your instance.
-        :param totp_secret: In case TOTP is configured on the instance, you can provide the secret to enable it on the newly created user without the need to reset it. Please note that currently the supported options are: * Period: 30 seconds * Code length: 6 digits * Algorithm: SHA1
-        :param backup_codes: If Backup Codes are configured on the instance, you can provide them to enable it on the newly created user without the need to reset them. You must provide the backup codes in plain format or the corresponding bcrypt digest.
+        :param locale: The locale to assign to the user (e.g., \"en-US\", \"fr-FR\")
+        :param email_address: Email addresses to add to the user.
+            Must be unique across your instance.
+            The first email address will be set as the user's primary email address.
+        :param phone_number: Phone numbers to add to the user.
+            Must be unique across your instance.
+            The first phone number will be set as the user's primary phone number.
+        :param web3_wallet: Web3 wallets to add to the user.
+            Must be unique across your instance.
+            The first wallet will be set as the user's primary wallet.
+        :param username: The username to give to the user.
+            It must be unique across your instance.
+        :param password: The plaintext password to give the user.
+            Must be at least 8 characters long, and cannot be in any list of hacked passwords.
+        :param password_digest: In case you already have the password digests and not the passwords, you can use them for the newly created user via this property.
+            The digests should be generated with one of the supported algorithms.
+            The hashing algorithm can be specified using the `password_hasher` property.
+        :param password_hasher: The hashing algorithm that was used to generate the password digest.
+
+            The algorithms we support at the moment are [`bcrypt`](https://en.wikipedia.org/wiki/Bcrypt), [`bcrypt_sha256_django`](https://docs.djangoproject.com/en/4.0/topics/auth/passwords/), [`md5`](https://en.wikipedia.org/wiki/MD5), `pbkdf2_sha1`, `pbkdf2_sha256`, [`pbkdf2_sha256_django`](https://docs.djangoproject.com/en/4.0/topics/auth/passwords/),
+            [`phpass`](https://www.openwall.com/phpass/), `md5_phpass`, [`scrypt_firebase`](https://firebaseopensource.com/projects/firebase/scrypt/),
+            [`scrypt_werkzeug`](https://werkzeug.palletsprojects.com/en/3.0.x/utils/#werkzeug.security.generate_password_hash), [`sha256`](https://en.wikipedia.org/wiki/SHA-2),
+            [`ldap_ssha`](https://www.openldap.org/faq/data/cache/347.html) and the [`argon2`](https://argon2.online/) variants: `argon2i` and `argon2id`.
+
+            Each of the supported hashers expects the incoming digest to be in a particular format. See the [Clerk docs](https://clerk.com/docs/references/backend/user/create-user) for more information.
+        :param skip_password_checks: When set to `true` all password checks are skipped.
+            It is recommended to use this method only when migrating plaintext passwords to Clerk.
+            Upon migration the user base should be prompted to pick stronger password.
+        :param skip_password_requirement: When set to `true`, `password` is not required anymore when creating the user and can be omitted.
+            This is useful when you are trying to create a user that doesn't have a password, in an instance that is using passwords.
+            Please note that you cannot use this flag if password is the only way for a user to sign into your instance.
+        :param totp_secret: In case TOTP is configured on the instance, you can provide the secret to enable it on the newly created user without the need to reset it.
+            Please note that currently the supported options are:
+            * Period: 30 seconds
+            * Code length: 6 digits
+            * Algorithm: SHA1
+        :param backup_codes: If Backup Codes are configured on the instance, you can provide them to enable it on the newly created user without the need to reset them.
+            You must provide the backup codes in plain format or the corresponding bcrypt digest.
         :param public_metadata: Metadata saved on the user, that is visible to both your Frontend and Backend APIs
         :param private_metadata: Metadata saved on the user, that is only visible to your Backend API
-        :param unsafe_metadata: Metadata saved on the user, that can be updated from both the Frontend and Backend APIs. Note: Since this data can be modified from the frontend, it is not guaranteed to be safe.
+        :param unsafe_metadata: Metadata saved on the user, that can be updated from both the Frontend and Backend APIs.
+            Note: Since this data can be modified from the frontend, it is not guaranteed to be safe.
         :param delete_self_enabled: If enabled, user can delete themselves via FAPI.
+
         :param legal_accepted_at: A custom timestamp denoting _when_ the user accepted legal requirements, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`).
-        :param skip_legal_checks: When set to `true` all legal checks are skipped. It is not recommended to skip legal checks unless you are migrating a user to Clerk.
+        :param skip_legal_checks: When set to `true` all legal checks are skipped.
+            It is not recommended to skip legal checks unless you are migrating a user to Clerk.
         :param create_organization_enabled: If enabled, user can create organizations via FAPI.
+
         :param create_organizations_limit: The maximum number of organizations the user can create. 0 means unlimited.
+
         :param created_at: A custom date/time denoting _when_ the user signed up to the application, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`).
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -442,6 +511,7 @@ class Users(BaseSDK):
             external_id=external_id,
             first_name=first_name,
             last_name=last_name,
+            locale=locale,
             email_address=email_address,
             phone_number=phone_number,
             web3_wallet=web3_wallet,
@@ -500,7 +570,7 @@ class Users(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="CreateUser",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -555,24 +625,52 @@ class Users(BaseSDK):
 
         Returns a total count of all users that match the given filtering criteria.
 
-        :param email_address: Counts users with the specified email addresses. Accepts up to 100 email addresses. Any email addresses not found are ignored.
-        :param phone_number: Counts users with the specified phone numbers. Accepts up to 100 phone numbers. Any phone numbers not found are ignored.
-        :param external_id: Counts users with the specified external ids. Accepts up to 100 external ids. Any external ids not found are ignored.
-        :param username: Counts users with the specified usernames. Accepts up to 100 usernames. Any usernames not found are ignored.
-        :param web3_wallet: Counts users with the specified web3 wallet addresses. Accepts up to 100 web3 wallet addresses. Any web3 wallet addressed not found are ignored.
-        :param user_id: Counts users with the user ids specified. Accepts up to 100 user ids. Any user ids not found are ignored.
-        :param organization_id: Returns users that have memberships to the given organizations. For each organization id, the `+` and `-` can be prepended to the id, which denote whether the respective organization should be included or excluded from the result set. Accepts up to 100 organization ids.
-        :param query: Counts users that match the given query. For possible matches, we check the email addresses, phone numbers, usernames, web3 wallets, user ids, first and last names. The query value doesn't need to match the exact value you are looking for, it is capable of partial matches as well.
-        :param email_address_query: Counts users with emails that match the given query, via case-insensitive partial match. For example, `email_address_query=ello` will match a user with the email `HELLO@example.com`, and will be included in the resulting count.
-        :param phone_number_query: Counts users with phone numbers that match the given query, via case-insensitive partial match. For example, `phone_number_query=555` will match a user with the phone number `+1555xxxxxxx`, and will be included in the resulting count.
-        :param username_query: Counts users with usernames that match the given query, via case-insensitive partial match. For example, `username_query=CoolUser` will match a user with the username `SomeCoolUser`, and will be included in the resulting count.
+        :param email_address: Counts users with the specified email addresses.
+            Accepts up to 100 email addresses.
+            Any email addresses not found are ignored.
+        :param phone_number: Counts users with the specified phone numbers.
+            Accepts up to 100 phone numbers.
+            Any phone numbers not found are ignored.
+        :param external_id: Counts users with the specified external IDs.
+            Accepts up to 100 external IDs.
+            Any external IDs not found are ignored.
+        :param username: Counts users with the specified usernames.
+            Accepts up to 100 usernames.
+            Any usernames not found are ignored.
+        :param web3_wallet: Counts users with the specified web3 wallet addresses.
+            Accepts up to 100 web3 wallet addresses.
+            Any web3 wallet addresses not found are ignored.
+        :param user_id: Counts users with the user IDs specified.
+            Accepts up to 100 user IDs.
+            Any user IDs not found are ignored.
+        :param organization_id: Returns users that have memberships to the given organizations. For each organization ID, the `+` and `-`
+            can be prepended to the ID, which denote whether the respective organization should be included or
+            excluded from the result set. Accepts up to 100 organization IDs.
+        :param query: Counts users that match the given query.
+            For possible matches, we check the email addresses, phone numbers, usernames, web3 wallets, user IDs, first and last names.
+            The query value doesn't need to match the exact value you are looking for, it is capable of partial matches as well.
+        :param email_address_query: Counts users with emails that match the given query, via case-insensitive partial match.
+            For example, `email_address_query=ello` will match a user with the email `HELLO@example.com`,
+            and will be included in the resulting count.
+        :param phone_number_query: Counts users with phone numbers that match the given query, via case-insensitive partial match.
+            For example, `phone_number_query=555` will match a user with the phone number `+1555xxxxxxx`,
+            and will be included in the resulting count.
+        :param username_query: Counts users with usernames that match the given query, via case-insensitive partial match.
+            For example, `username_query=CoolUser` will match a user with the username `SomeCoolUser`,
+            and will be included in the resulting count.
         :param name_query: Returns users with names that match the given query, via case-insensitive partial match.
         :param banned: Counts users which are either banned (`banned=true`) or not banned (`banned=false`).
-        :param last_active_at_before: Returns users whose last session activity was before the given date (with millisecond precision). Example: use 1700690400000 to retrieve users whose last session activity was before 2023-11-23.
-        :param last_active_at_after: Returns users whose last session activity was after the given date (with millisecond precision). Example: use 1700690400000 to retrieve users whose last session activity was after 2023-11-23.
-        :param last_active_at_since: Returns users that had session activity since the given date. Example: use 1700690400000 to retrieve users that had session activity from 2023-11-23 until the current day. Deprecated in favor of `last_active_at_after`.
-        :param created_at_before: Returns users who have been created before the given date (with millisecond precision). Example: use 1730160000000 to retrieve users who have been created before 2024-10-29.
-        :param created_at_after: Returns users who have been created after the given date (with millisecond precision). Example: use 1730160000000 to retrieve users who have been created after 2024-10-29.
+        :param last_active_at_before: Returns users whose last session activity was before the given date (with millisecond precision).
+            Example: use 1700690400000 to retrieve users whose last session activity was before 2023-11-23.
+        :param last_active_at_after: Returns users whose last session activity was after the given date (with millisecond precision).
+            Example: use 1700690400000 to retrieve users whose last session activity was after 2023-11-23.
+        :param last_active_at_since: Returns users that had session activity since the given date.
+            Example: use 1700690400000 to retrieve users that had session activity from 2023-11-23 until the current day.
+            Deprecated in favor of `last_active_at_after`.
+        :param created_at_before: Returns users who have been created before the given date (with millisecond precision).
+            Example: use 1730160000000 to retrieve users who have been created before 2024-10-29.
+        :param created_at_after: Returns users who have been created after the given date (with millisecond precision).
+            Example: use 1730160000000 to retrieve users who have been created after 2024-10-29.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -642,7 +740,7 @@ class Users(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="GetUsersCount",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -695,24 +793,52 @@ class Users(BaseSDK):
 
         Returns a total count of all users that match the given filtering criteria.
 
-        :param email_address: Counts users with the specified email addresses. Accepts up to 100 email addresses. Any email addresses not found are ignored.
-        :param phone_number: Counts users with the specified phone numbers. Accepts up to 100 phone numbers. Any phone numbers not found are ignored.
-        :param external_id: Counts users with the specified external ids. Accepts up to 100 external ids. Any external ids not found are ignored.
-        :param username: Counts users with the specified usernames. Accepts up to 100 usernames. Any usernames not found are ignored.
-        :param web3_wallet: Counts users with the specified web3 wallet addresses. Accepts up to 100 web3 wallet addresses. Any web3 wallet addressed not found are ignored.
-        :param user_id: Counts users with the user ids specified. Accepts up to 100 user ids. Any user ids not found are ignored.
-        :param organization_id: Returns users that have memberships to the given organizations. For each organization id, the `+` and `-` can be prepended to the id, which denote whether the respective organization should be included or excluded from the result set. Accepts up to 100 organization ids.
-        :param query: Counts users that match the given query. For possible matches, we check the email addresses, phone numbers, usernames, web3 wallets, user ids, first and last names. The query value doesn't need to match the exact value you are looking for, it is capable of partial matches as well.
-        :param email_address_query: Counts users with emails that match the given query, via case-insensitive partial match. For example, `email_address_query=ello` will match a user with the email `HELLO@example.com`, and will be included in the resulting count.
-        :param phone_number_query: Counts users with phone numbers that match the given query, via case-insensitive partial match. For example, `phone_number_query=555` will match a user with the phone number `+1555xxxxxxx`, and will be included in the resulting count.
-        :param username_query: Counts users with usernames that match the given query, via case-insensitive partial match. For example, `username_query=CoolUser` will match a user with the username `SomeCoolUser`, and will be included in the resulting count.
+        :param email_address: Counts users with the specified email addresses.
+            Accepts up to 100 email addresses.
+            Any email addresses not found are ignored.
+        :param phone_number: Counts users with the specified phone numbers.
+            Accepts up to 100 phone numbers.
+            Any phone numbers not found are ignored.
+        :param external_id: Counts users with the specified external IDs.
+            Accepts up to 100 external IDs.
+            Any external IDs not found are ignored.
+        :param username: Counts users with the specified usernames.
+            Accepts up to 100 usernames.
+            Any usernames not found are ignored.
+        :param web3_wallet: Counts users with the specified web3 wallet addresses.
+            Accepts up to 100 web3 wallet addresses.
+            Any web3 wallet addresses not found are ignored.
+        :param user_id: Counts users with the user IDs specified.
+            Accepts up to 100 user IDs.
+            Any user IDs not found are ignored.
+        :param organization_id: Returns users that have memberships to the given organizations. For each organization ID, the `+` and `-`
+            can be prepended to the ID, which denote whether the respective organization should be included or
+            excluded from the result set. Accepts up to 100 organization IDs.
+        :param query: Counts users that match the given query.
+            For possible matches, we check the email addresses, phone numbers, usernames, web3 wallets, user IDs, first and last names.
+            The query value doesn't need to match the exact value you are looking for, it is capable of partial matches as well.
+        :param email_address_query: Counts users with emails that match the given query, via case-insensitive partial match.
+            For example, `email_address_query=ello` will match a user with the email `HELLO@example.com`,
+            and will be included in the resulting count.
+        :param phone_number_query: Counts users with phone numbers that match the given query, via case-insensitive partial match.
+            For example, `phone_number_query=555` will match a user with the phone number `+1555xxxxxxx`,
+            and will be included in the resulting count.
+        :param username_query: Counts users with usernames that match the given query, via case-insensitive partial match.
+            For example, `username_query=CoolUser` will match a user with the username `SomeCoolUser`,
+            and will be included in the resulting count.
         :param name_query: Returns users with names that match the given query, via case-insensitive partial match.
         :param banned: Counts users which are either banned (`banned=true`) or not banned (`banned=false`).
-        :param last_active_at_before: Returns users whose last session activity was before the given date (with millisecond precision). Example: use 1700690400000 to retrieve users whose last session activity was before 2023-11-23.
-        :param last_active_at_after: Returns users whose last session activity was after the given date (with millisecond precision). Example: use 1700690400000 to retrieve users whose last session activity was after 2023-11-23.
-        :param last_active_at_since: Returns users that had session activity since the given date. Example: use 1700690400000 to retrieve users that had session activity from 2023-11-23 until the current day. Deprecated in favor of `last_active_at_after`.
-        :param created_at_before: Returns users who have been created before the given date (with millisecond precision). Example: use 1730160000000 to retrieve users who have been created before 2024-10-29.
-        :param created_at_after: Returns users who have been created after the given date (with millisecond precision). Example: use 1730160000000 to retrieve users who have been created after 2024-10-29.
+        :param last_active_at_before: Returns users whose last session activity was before the given date (with millisecond precision).
+            Example: use 1700690400000 to retrieve users whose last session activity was before 2023-11-23.
+        :param last_active_at_after: Returns users whose last session activity was after the given date (with millisecond precision).
+            Example: use 1700690400000 to retrieve users whose last session activity was after 2023-11-23.
+        :param last_active_at_since: Returns users that had session activity since the given date.
+            Example: use 1700690400000 to retrieve users that had session activity from 2023-11-23 until the current day.
+            Deprecated in favor of `last_active_at_after`.
+        :param created_at_before: Returns users who have been created before the given date (with millisecond precision).
+            Example: use 1730160000000 to retrieve users who have been created before 2024-10-29.
+        :param created_at_after: Returns users who have been created after the given date (with millisecond precision).
+            Example: use 1730160000000 to retrieve users who have been created after 2024-10-29.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -782,7 +908,7 @@ class Users(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="GetUsersCount",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -871,7 +997,7 @@ class Users(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="GetUser",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -960,7 +1086,7 @@ class Users(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="GetUser",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -990,6 +1116,7 @@ class Users(BaseSDK):
         external_id: OptionalNullable[str] = UNSET,
         first_name: OptionalNullable[str] = UNSET,
         last_name: OptionalNullable[str] = UNSET,
+        locale: OptionalNullable[str] = UNSET,
         primary_email_address_id: OptionalNullable[str] = UNSET,
         notify_primary_email_address_changed: OptionalNullable[bool] = False,
         primary_phone_number_id: OptionalNullable[str] = UNSET,
@@ -1033,29 +1160,53 @@ class Users(BaseSDK):
         You can also choose to sign the user out of all their active sessions on any device once the password is updated. Just set `sign_out_of_other_sessions` to `true`.
 
         :param user_id: The ID of the user to update
-        :param external_id: The ID of the user as used in your external systems or your previous authentication solution. Must be unique across your instance.
+        :param external_id: The ID of the user as used in your external systems or your previous authentication solution.
+            Must be unique across your instance.
         :param first_name: The first name to assign to the user
         :param last_name: The last name to assign to the user
-        :param primary_email_address_id: The ID of the email address to set as primary. It must be verified, and present on the current user.
-        :param notify_primary_email_address_changed: If set to `true`, the user will be notified that their primary email address has changed. By default, no notification is sent.
-        :param primary_phone_number_id: The ID of the phone number to set as primary. It must be verified, and present on the current user.
-        :param primary_web3_wallet_id: The ID of the web3 wallets to set as primary. It must be verified, and present on the current user.
-        :param username: The username to give to the user. It must be unique across your instance.
+        :param locale: The locale to assign to the user (e.g., \"en-US\", \"fr-FR\")
+        :param primary_email_address_id: The ID of the email address to set as primary.
+            It must be verified, and present on the current user.
+        :param notify_primary_email_address_changed: If set to `true`, the user will be notified that their primary email address has changed.
+            By default, no notification is sent.
+        :param primary_phone_number_id: The ID of the phone number to set as primary.
+            It must be verified, and present on the current user.
+        :param primary_web3_wallet_id: The ID of the web3 wallets to set as primary.
+            It must be verified, and present on the current user.
+        :param username: The username to give to the user.
+            It must be unique across your instance.
         :param profile_image_id: The ID of the image to set as the user's profile image
-        :param password: The plaintext password to give the user. Must be at least 8 characters long, and cannot be in any list of hacked passwords.
-        :param password_digest: In case you already have the password digests and not the passwords, you can use them for the newly created user via this property. The digests should be generated with one of the supported algorithms. The hashing algorithm can be specified using the `password_hasher` property.
-        :param password_hasher: The hashing algorithm that was used to generate the password digest.  The algorithms we support at the moment are [`bcrypt`](https://en.wikipedia.org/wiki/Bcrypt), [`bcrypt_sha256_django`](https://docs.djangoproject.com/en/4.0/topics/auth/passwords/), [`md5`](https://en.wikipedia.org/wiki/MD5), `pbkdf2_sha1`, `pbkdf2_sha256`, [`pbkdf2_sha256_django`](https://docs.djangoproject.com/en/4.0/topics/auth/passwords/), [`phpass`](https://www.openwall.com/phpass/), `md5_phpass`, [`scrypt_firebase`](https://firebaseopensource.com/projects/firebase/scrypt/), [`scrypt_werkzeug`](https://werkzeug.palletsprojects.com/en/3.0.x/utils/#werkzeug.security.generate_password_hash), [`sha256`](https://en.wikipedia.org/wiki/SHA-2), [`ldap_ssha`](https://www.openldap.org/faq/data/cache/347.html) and the [`argon2`](https://argon2.online/) variants: `argon2i` and `argon2id`.  Each of the supported hashers expects the incoming digest to be in a particular format. See the [Clerk docs](https://clerk.com/docs/references/backend/user/create-user) for more information.
+        :param password: The plaintext password to give the user.
+            Must be at least 8 characters long, and cannot be in any list of hacked passwords.
+        :param password_digest: In case you already have the password digests and not the passwords, you can use them for the newly created user via this property.
+            The digests should be generated with one of the supported algorithms.
+            The hashing algorithm can be specified using the `password_hasher` property.
+        :param password_hasher: The hashing algorithm that was used to generate the password digest.
+
+            The algorithms we support at the moment are [`bcrypt`](https://en.wikipedia.org/wiki/Bcrypt), [`bcrypt_sha256_django`](https://docs.djangoproject.com/en/4.0/topics/auth/passwords/), [`md5`](https://en.wikipedia.org/wiki/MD5), `pbkdf2_sha1`, `pbkdf2_sha256`, [`pbkdf2_sha256_django`](https://docs.djangoproject.com/en/4.0/topics/auth/passwords/),
+            [`phpass`](https://www.openwall.com/phpass/), `md5_phpass`, [`scrypt_firebase`](https://firebaseopensource.com/projects/firebase/scrypt/),
+            [`scrypt_werkzeug`](https://werkzeug.palletsprojects.com/en/3.0.x/utils/#werkzeug.security.generate_password_hash), [`sha256`](https://en.wikipedia.org/wiki/SHA-2),
+            [`ldap_ssha`](https://www.openldap.org/faq/data/cache/347.html) and the [`argon2`](https://argon2.online/) variants: `argon2i` and `argon2id`.
+
+            Each of the supported hashers expects the incoming digest to be in a particular format. See the [Clerk docs](https://clerk.com/docs/references/backend/user/create-user) for more information.
         :param skip_password_checks: Set it to `true` if you're updating the user's password and want to skip any password policy settings check. This parameter can only be used when providing a `password`.
         :param sign_out_of_other_sessions: Set to `true` to sign out the user from all their active sessions once their password is updated. This parameter can only be used when providing a `password`.
-        :param totp_secret: In case TOTP is configured on the instance, you can provide the secret to enable it on the specific user without the need to reset it. Please note that currently the supported options are: * Period: 30 seconds * Code length: 6 digits * Algorithm: SHA1
-        :param backup_codes: If Backup Codes are configured on the instance, you can provide them to enable it on the specific user without the need to reset them. You must provide the backup codes in plain format or the corresponding bcrypt digest.
+        :param totp_secret: In case TOTP is configured on the instance, you can provide the secret to enable it on the specific user without the need to reset it.
+            Please note that currently the supported options are:
+            * Period: 30 seconds
+            * Code length: 6 digits
+            * Algorithm: SHA1
+        :param backup_codes: If Backup Codes are configured on the instance, you can provide them to enable it on the specific user without the need to reset them.
+            You must provide the backup codes in plain format or the corresponding bcrypt digest.
         :param public_metadata: Metadata saved on the user, that is visible to both your Frontend and Backend APIs
         :param private_metadata: Metadata saved on the user, that is only visible to your Backend API
-        :param unsafe_metadata: Metadata saved on the user, that can be updated from both the Frontend and Backend APIs. Note: Since this data can be modified from the frontend, it is not guaranteed to be safe.
+        :param unsafe_metadata: Metadata saved on the user, that can be updated from both the Frontend and Backend APIs.
+            Note: Since this data can be modified from the frontend, it is not guaranteed to be safe.
         :param delete_self_enabled: If true, the user can delete themselves with the Frontend API.
         :param create_organization_enabled: If true, the user can create organizations with the Frontend API.
-        :param legal_accepted_at: A custom timestamps denoting _when_ the user accepted legal requirements, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`).
-        :param skip_legal_checks: When set to `true` all legal checks are skipped. It is not recommended to skip legal checks unless you are migrating a user to Clerk.
+        :param legal_accepted_at: A custom timestamp denoting _when_ the user accepted legal requirements, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`).
+        :param skip_legal_checks: When set to `true` all legal checks are skipped.
+            It is not recommended to skip legal checks unless you are migrating a user to Clerk.
         :param create_organizations_limit: The maximum number of organizations the user can create. 0 means unlimited.
         :param created_at: A custom date/time denoting _when_ the user signed up to the application, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`).
         :param retries: Override the default retry configuration for this method
@@ -1079,6 +1230,7 @@ class Users(BaseSDK):
                 external_id=external_id,
                 first_name=first_name,
                 last_name=last_name,
+                locale=locale,
                 primary_email_address_id=primary_email_address_id,
                 notify_primary_email_address_changed=notify_primary_email_address_changed,
                 primary_phone_number_id=primary_phone_number_id,
@@ -1140,7 +1292,7 @@ class Users(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="UpdateUser",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -1172,6 +1324,7 @@ class Users(BaseSDK):
         external_id: OptionalNullable[str] = UNSET,
         first_name: OptionalNullable[str] = UNSET,
         last_name: OptionalNullable[str] = UNSET,
+        locale: OptionalNullable[str] = UNSET,
         primary_email_address_id: OptionalNullable[str] = UNSET,
         notify_primary_email_address_changed: OptionalNullable[bool] = False,
         primary_phone_number_id: OptionalNullable[str] = UNSET,
@@ -1215,29 +1368,53 @@ class Users(BaseSDK):
         You can also choose to sign the user out of all their active sessions on any device once the password is updated. Just set `sign_out_of_other_sessions` to `true`.
 
         :param user_id: The ID of the user to update
-        :param external_id: The ID of the user as used in your external systems or your previous authentication solution. Must be unique across your instance.
+        :param external_id: The ID of the user as used in your external systems or your previous authentication solution.
+            Must be unique across your instance.
         :param first_name: The first name to assign to the user
         :param last_name: The last name to assign to the user
-        :param primary_email_address_id: The ID of the email address to set as primary. It must be verified, and present on the current user.
-        :param notify_primary_email_address_changed: If set to `true`, the user will be notified that their primary email address has changed. By default, no notification is sent.
-        :param primary_phone_number_id: The ID of the phone number to set as primary. It must be verified, and present on the current user.
-        :param primary_web3_wallet_id: The ID of the web3 wallets to set as primary. It must be verified, and present on the current user.
-        :param username: The username to give to the user. It must be unique across your instance.
+        :param locale: The locale to assign to the user (e.g., \"en-US\", \"fr-FR\")
+        :param primary_email_address_id: The ID of the email address to set as primary.
+            It must be verified, and present on the current user.
+        :param notify_primary_email_address_changed: If set to `true`, the user will be notified that their primary email address has changed.
+            By default, no notification is sent.
+        :param primary_phone_number_id: The ID of the phone number to set as primary.
+            It must be verified, and present on the current user.
+        :param primary_web3_wallet_id: The ID of the web3 wallets to set as primary.
+            It must be verified, and present on the current user.
+        :param username: The username to give to the user.
+            It must be unique across your instance.
         :param profile_image_id: The ID of the image to set as the user's profile image
-        :param password: The plaintext password to give the user. Must be at least 8 characters long, and cannot be in any list of hacked passwords.
-        :param password_digest: In case you already have the password digests and not the passwords, you can use them for the newly created user via this property. The digests should be generated with one of the supported algorithms. The hashing algorithm can be specified using the `password_hasher` property.
-        :param password_hasher: The hashing algorithm that was used to generate the password digest.  The algorithms we support at the moment are [`bcrypt`](https://en.wikipedia.org/wiki/Bcrypt), [`bcrypt_sha256_django`](https://docs.djangoproject.com/en/4.0/topics/auth/passwords/), [`md5`](https://en.wikipedia.org/wiki/MD5), `pbkdf2_sha1`, `pbkdf2_sha256`, [`pbkdf2_sha256_django`](https://docs.djangoproject.com/en/4.0/topics/auth/passwords/), [`phpass`](https://www.openwall.com/phpass/), `md5_phpass`, [`scrypt_firebase`](https://firebaseopensource.com/projects/firebase/scrypt/), [`scrypt_werkzeug`](https://werkzeug.palletsprojects.com/en/3.0.x/utils/#werkzeug.security.generate_password_hash), [`sha256`](https://en.wikipedia.org/wiki/SHA-2), [`ldap_ssha`](https://www.openldap.org/faq/data/cache/347.html) and the [`argon2`](https://argon2.online/) variants: `argon2i` and `argon2id`.  Each of the supported hashers expects the incoming digest to be in a particular format. See the [Clerk docs](https://clerk.com/docs/references/backend/user/create-user) for more information.
+        :param password: The plaintext password to give the user.
+            Must be at least 8 characters long, and cannot be in any list of hacked passwords.
+        :param password_digest: In case you already have the password digests and not the passwords, you can use them for the newly created user via this property.
+            The digests should be generated with one of the supported algorithms.
+            The hashing algorithm can be specified using the `password_hasher` property.
+        :param password_hasher: The hashing algorithm that was used to generate the password digest.
+
+            The algorithms we support at the moment are [`bcrypt`](https://en.wikipedia.org/wiki/Bcrypt), [`bcrypt_sha256_django`](https://docs.djangoproject.com/en/4.0/topics/auth/passwords/), [`md5`](https://en.wikipedia.org/wiki/MD5), `pbkdf2_sha1`, `pbkdf2_sha256`, [`pbkdf2_sha256_django`](https://docs.djangoproject.com/en/4.0/topics/auth/passwords/),
+            [`phpass`](https://www.openwall.com/phpass/), `md5_phpass`, [`scrypt_firebase`](https://firebaseopensource.com/projects/firebase/scrypt/),
+            [`scrypt_werkzeug`](https://werkzeug.palletsprojects.com/en/3.0.x/utils/#werkzeug.security.generate_password_hash), [`sha256`](https://en.wikipedia.org/wiki/SHA-2),
+            [`ldap_ssha`](https://www.openldap.org/faq/data/cache/347.html) and the [`argon2`](https://argon2.online/) variants: `argon2i` and `argon2id`.
+
+            Each of the supported hashers expects the incoming digest to be in a particular format. See the [Clerk docs](https://clerk.com/docs/references/backend/user/create-user) for more information.
         :param skip_password_checks: Set it to `true` if you're updating the user's password and want to skip any password policy settings check. This parameter can only be used when providing a `password`.
         :param sign_out_of_other_sessions: Set to `true` to sign out the user from all their active sessions once their password is updated. This parameter can only be used when providing a `password`.
-        :param totp_secret: In case TOTP is configured on the instance, you can provide the secret to enable it on the specific user without the need to reset it. Please note that currently the supported options are: * Period: 30 seconds * Code length: 6 digits * Algorithm: SHA1
-        :param backup_codes: If Backup Codes are configured on the instance, you can provide them to enable it on the specific user without the need to reset them. You must provide the backup codes in plain format or the corresponding bcrypt digest.
+        :param totp_secret: In case TOTP is configured on the instance, you can provide the secret to enable it on the specific user without the need to reset it.
+            Please note that currently the supported options are:
+            * Period: 30 seconds
+            * Code length: 6 digits
+            * Algorithm: SHA1
+        :param backup_codes: If Backup Codes are configured on the instance, you can provide them to enable it on the specific user without the need to reset them.
+            You must provide the backup codes in plain format or the corresponding bcrypt digest.
         :param public_metadata: Metadata saved on the user, that is visible to both your Frontend and Backend APIs
         :param private_metadata: Metadata saved on the user, that is only visible to your Backend API
-        :param unsafe_metadata: Metadata saved on the user, that can be updated from both the Frontend and Backend APIs. Note: Since this data can be modified from the frontend, it is not guaranteed to be safe.
+        :param unsafe_metadata: Metadata saved on the user, that can be updated from both the Frontend and Backend APIs.
+            Note: Since this data can be modified from the frontend, it is not guaranteed to be safe.
         :param delete_self_enabled: If true, the user can delete themselves with the Frontend API.
         :param create_organization_enabled: If true, the user can create organizations with the Frontend API.
-        :param legal_accepted_at: A custom timestamps denoting _when_ the user accepted legal requirements, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`).
-        :param skip_legal_checks: When set to `true` all legal checks are skipped. It is not recommended to skip legal checks unless you are migrating a user to Clerk.
+        :param legal_accepted_at: A custom timestamp denoting _when_ the user accepted legal requirements, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`).
+        :param skip_legal_checks: When set to `true` all legal checks are skipped.
+            It is not recommended to skip legal checks unless you are migrating a user to Clerk.
         :param create_organizations_limit: The maximum number of organizations the user can create. 0 means unlimited.
         :param created_at: A custom date/time denoting _when_ the user signed up to the application, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`).
         :param retries: Override the default retry configuration for this method
@@ -1261,6 +1438,7 @@ class Users(BaseSDK):
                 external_id=external_id,
                 first_name=first_name,
                 last_name=last_name,
+                locale=locale,
                 primary_email_address_id=primary_email_address_id,
                 notify_primary_email_address_changed=notify_primary_email_address_changed,
                 primary_phone_number_id=primary_phone_number_id,
@@ -1322,7 +1500,7 @@ class Users(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="UpdateUser",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -1413,7 +1591,7 @@ class Users(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="DeleteUser",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -1502,7 +1680,7 @@ class Users(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="DeleteUser",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -1591,7 +1769,7 @@ class Users(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="BanUser",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -1680,7 +1858,7 @@ class Users(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="BanUser",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -1769,7 +1947,7 @@ class Users(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="UnbanUser",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -1858,7 +2036,7 @@ class Users(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="UnbanUser",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -1950,7 +2128,7 @@ class Users(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="UsersBan",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -2042,7 +2220,7 @@ class Users(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="UsersBan",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -2134,7 +2312,7 @@ class Users(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="UsersUnban",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -2226,7 +2404,7 @@ class Users(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="UsersUnban",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -2316,7 +2494,7 @@ class Users(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="LockUser",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -2406,7 +2584,7 @@ class Users(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="LockUser",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -2495,7 +2673,7 @@ class Users(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="UnlockUser",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -2584,7 +2762,7 @@ class Users(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="UnlockUser",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -2685,7 +2863,7 @@ class Users(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="SetUserProfileImage",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -2786,7 +2964,7 @@ class Users(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="SetUserProfileImage",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -2875,7 +3053,7 @@ class Users(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="DeleteUserProfileImage",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -2964,7 +3142,7 @@ class Users(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="DeleteUserProfileImage",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -3011,9 +3189,14 @@ class Users(BaseSDK):
         You can remove metadata keys at any level by setting their value to `null`.
 
         :param user_id: The ID of the user whose metadata will be updated and merged
-        :param public_metadata: Metadata saved on the user, that is visible to both your frontend and backend. The new object will be merged with the existing value.
-        :param private_metadata: Metadata saved on the user that is only visible to your backend. The new object will be merged with the existing value.
-        :param unsafe_metadata: Metadata saved on the user, that can be updated from both the Frontend and Backend APIs. The new object will be merged with the existing value.  Note: Since this data can be modified from the frontend, it is not guaranteed to be safe.
+        :param public_metadata: Metadata saved on the user, that is visible to both your frontend and backend.
+            The new object will be merged with the existing value.
+        :param private_metadata: Metadata saved on the user that is only visible to your backend.
+            The new object will be merged with the existing value.
+        :param unsafe_metadata: Metadata saved on the user, that can be updated from both the Frontend and Backend APIs.
+            The new object will be merged with the existing value.
+
+            Note: Since this data can be modified from the frontend, it is not guaranteed to be safe.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -3078,7 +3261,7 @@ class Users(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="UpdateUserMetadata",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -3127,9 +3310,14 @@ class Users(BaseSDK):
         You can remove metadata keys at any level by setting their value to `null`.
 
         :param user_id: The ID of the user whose metadata will be updated and merged
-        :param public_metadata: Metadata saved on the user, that is visible to both your frontend and backend. The new object will be merged with the existing value.
-        :param private_metadata: Metadata saved on the user that is only visible to your backend. The new object will be merged with the existing value.
-        :param unsafe_metadata: Metadata saved on the user, that can be updated from both the Frontend and Backend APIs. The new object will be merged with the existing value.  Note: Since this data can be modified from the frontend, it is not guaranteed to be safe.
+        :param public_metadata: Metadata saved on the user, that is visible to both your frontend and backend.
+            The new object will be merged with the existing value.
+        :param private_metadata: Metadata saved on the user that is only visible to your backend.
+            The new object will be merged with the existing value.
+        :param unsafe_metadata: Metadata saved on the user, that can be updated from both the Frontend and Backend APIs.
+            The new object will be merged with the existing value.
+
+            Note: Since this data can be modified from the frontend, it is not guaranteed to be safe.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -3194,7 +3382,7 @@ class Users(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="UpdateUserMetadata",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -3287,7 +3475,7 @@ class Users(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="GetUserBillingSubscription",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -3385,7 +3573,7 @@ class Users(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="GetUserBillingSubscription",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -3435,9 +3623,14 @@ class Users(BaseSDK):
 
         :param user_id: The ID of the user for which to retrieve the OAuth access token
         :param provider: The ID of the OAuth provider (e.g. `oauth_google`)
-        :param paginated: Whether to paginate the results. If true, the results will be paginated. If false, the results will not be paginated.
-        :param limit: Applies a limit to the number of results returned. Can be used for paginating the results together with `offset`.
-        :param offset: Skip the first `offset` results when paginating. Needs to be an integer greater or equal to zero. To be used in conjunction with `limit`.
+        :param paginated: Whether to paginate the results.
+            If true, the results will be paginated.
+            If false, the results will not be paginated.
+        :param limit: Applies a limit to the number of results returned.
+            Can be used for paginating the results together with `offset`.
+        :param offset: Skip the first `offset` results when paginating.
+            Needs to be an integer greater or equal to zero.
+            To be used in conjunction with `limit`.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -3494,7 +3687,7 @@ class Users(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="GetOAuthAccessToken",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -3539,9 +3732,14 @@ class Users(BaseSDK):
 
         :param user_id: The ID of the user for which to retrieve the OAuth access token
         :param provider: The ID of the OAuth provider (e.g. `oauth_google`)
-        :param paginated: Whether to paginate the results. If true, the results will be paginated. If false, the results will not be paginated.
-        :param limit: Applies a limit to the number of results returned. Can be used for paginating the results together with `offset`.
-        :param offset: Skip the first `offset` results when paginating. Needs to be an integer greater or equal to zero. To be used in conjunction with `limit`.
+        :param paginated: Whether to paginate the results.
+            If true, the results will be paginated.
+            If false, the results will not be paginated.
+        :param limit: Applies a limit to the number of results returned.
+            Can be used for paginating the results together with `offset`.
+        :param offset: Skip the first `offset` results when paginating.
+            Needs to be an integer greater or equal to zero.
+            To be used in conjunction with `limit`.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -3598,7 +3796,7 @@ class Users(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="GetOAuthAccessToken",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -3639,8 +3837,11 @@ class Users(BaseSDK):
         Retrieve a paginated list of the user's organization memberships
 
         :param user_id: The ID of the user whose organization memberships we want to retrieve
-        :param limit: Applies a limit to the number of results returned. Can be used for paginating the results together with `offset`.
-        :param offset: Skip the first `offset` results when paginating. Needs to be an integer greater or equal to zero. To be used in conjunction with `limit`.
+        :param limit: Applies a limit to the number of results returned.
+            Can be used for paginating the results together with `offset`.
+        :param offset: Skip the first `offset` results when paginating.
+            Needs to be an integer greater or equal to zero.
+            To be used in conjunction with `limit`.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -3695,7 +3896,7 @@ class Users(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="UsersGetOrganizationMemberships",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -3736,8 +3937,11 @@ class Users(BaseSDK):
         Retrieve a paginated list of the user's organization memberships
 
         :param user_id: The ID of the user whose organization memberships we want to retrieve
-        :param limit: Applies a limit to the number of results returned. Can be used for paginating the results together with `offset`.
-        :param offset: Skip the first `offset` results when paginating. Needs to be an integer greater or equal to zero. To be used in conjunction with `limit`.
+        :param limit: Applies a limit to the number of results returned.
+            Can be used for paginating the results together with `offset`.
+        :param offset: Skip the first `offset` results when paginating.
+            Needs to be an integer greater or equal to zero.
+            To be used in conjunction with `limit`.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -3792,7 +3996,7 @@ class Users(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="UsersGetOrganizationMemberships",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -3834,8 +4038,11 @@ class Users(BaseSDK):
         Retrieve a paginated list of the user's organization invitations
 
         :param user_id: The ID of the user whose organization invitations we want to retrieve
-        :param limit: Applies a limit to the number of results returned. Can be used for paginating the results together with `offset`.
-        :param offset: Skip the first `offset` results when paginating. Needs to be an integer greater or equal to zero. To be used in conjunction with `limit`.
+        :param limit: Applies a limit to the number of results returned.
+            Can be used for paginating the results together with `offset`.
+        :param offset: Skip the first `offset` results when paginating.
+            Needs to be an integer greater or equal to zero.
+            To be used in conjunction with `limit`.
         :param status: Filter organization invitations based on their status
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -3892,7 +4099,7 @@ class Users(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="UsersGetOrganizationInvitations",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -3935,8 +4142,11 @@ class Users(BaseSDK):
         Retrieve a paginated list of the user's organization invitations
 
         :param user_id: The ID of the user whose organization invitations we want to retrieve
-        :param limit: Applies a limit to the number of results returned. Can be used for paginating the results together with `offset`.
-        :param offset: Skip the first `offset` results when paginating. Needs to be an integer greater or equal to zero. To be used in conjunction with `limit`.
+        :param limit: Applies a limit to the number of results returned.
+            Can be used for paginating the results together with `offset`.
+        :param offset: Skip the first `offset` results when paginating.
+            Needs to be an integer greater or equal to zero.
+            To be used in conjunction with `limit`.
         :param status: Filter organization invitations based on their status
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -3993,7 +4203,7 @@ class Users(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="UsersGetOrganizationInvitations",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -4098,7 +4308,7 @@ class Users(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="VerifyPassword",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -4202,7 +4412,7 @@ class Users(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="VerifyPassword",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -4308,7 +4518,7 @@ class Users(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="VerifyTOTP",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -4414,7 +4624,7 @@ class Users(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="VerifyTOTP",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -4505,7 +4715,7 @@ class Users(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="DisableMFA",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -4599,7 +4809,7 @@ class Users(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="DisableMFA",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -4693,7 +4903,7 @@ class Users(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="DeleteBackupCode",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -4787,7 +4997,7 @@ class Users(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="DeleteBackupCode",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -4884,7 +5094,7 @@ class Users(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="UserPasskeyDelete",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -4979,7 +5189,7 @@ class Users(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="UserPasskeyDelete",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -5074,7 +5284,7 @@ class Users(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="UserWeb3WalletDelete",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -5169,7 +5379,7 @@ class Users(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="UserWeb3WalletDelete",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -5261,7 +5471,7 @@ class Users(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="DeleteTOTP",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -5355,7 +5565,7 @@ class Users(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="DeleteTOTP",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -5452,7 +5662,7 @@ class Users(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="DeleteExternalAccount",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -5547,7 +5757,7 @@ class Users(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="DeleteExternalAccount",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -5588,9 +5798,14 @@ class Users(BaseSDK):
 
         Retrieves all organization user memberships for the given instance.
 
-        :param order_by: Sorts organizations memberships by phone_number, email_address, created_at, first_name, last_name or username. By prepending one of those values with + or -, we can choose to sort in ascending (ASC) or descending (DESC) order.
-        :param limit: Applies a limit to the number of results returned. Can be used for paginating the results together with `offset`.
-        :param offset: Skip the first `offset` results when paginating. Needs to be an integer greater or equal to zero. To be used in conjunction with `limit`.
+        :param order_by: Sorts organizations memberships by phone_number, email_address, created_at, first_name, last_name or username.
+            By prepending one of those values with + or -,
+            we can choose to sort in ascending (ASC) or descending (DESC) order.
+        :param limit: Applies a limit to the number of results returned.
+            Can be used for paginating the results together with `offset`.
+        :param offset: Skip the first `offset` results when paginating.
+            Needs to be an integer greater or equal to zero.
+            To be used in conjunction with `limit`.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -5645,7 +5860,7 @@ class Users(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="InstanceGetOrganizationMemberships",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -5688,9 +5903,14 @@ class Users(BaseSDK):
 
         Retrieves all organization user memberships for the given instance.
 
-        :param order_by: Sorts organizations memberships by phone_number, email_address, created_at, first_name, last_name or username. By prepending one of those values with + or -, we can choose to sort in ascending (ASC) or descending (DESC) order.
-        :param limit: Applies a limit to the number of results returned. Can be used for paginating the results together with `offset`.
-        :param offset: Skip the first `offset` results when paginating. Needs to be an integer greater or equal to zero. To be used in conjunction with `limit`.
+        :param order_by: Sorts organizations memberships by phone_number, email_address, created_at, first_name, last_name or username.
+            By prepending one of those values with + or -,
+            we can choose to sort in ascending (ASC) or descending (DESC) order.
+        :param limit: Applies a limit to the number of results returned.
+            Can be used for paginating the results together with `offset`.
+        :param offset: Skip the first `offset` results when paginating.
+            Needs to be an integer greater or equal to zero.
+            To be used in conjunction with `limit`.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -5745,7 +5965,7 @@ class Users(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="InstanceGetOrganizationMemberships",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,

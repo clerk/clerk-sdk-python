@@ -19,7 +19,6 @@ class ClerkErrorTypedDict(TypedDict):
     long_message: str
     code: str
     meta: NotRequired[MetaTypedDict]
-    clerk_trace_id: NotRequired[str]
 
 
 class ClerkError(BaseModel):
@@ -30,5 +29,3 @@ class ClerkError(BaseModel):
     code: str
 
     meta: Optional[Meta] = None
-
-    clerk_trace_id: Optional[str] = None

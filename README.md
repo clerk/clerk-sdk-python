@@ -152,6 +152,7 @@ with Clerk(
 </br>
 
 The same SDK client can also be used to make asynchronous requests by importing asyncio.
+
 ```python
 # Asynchronous Example
 import asyncio
@@ -264,22 +265,23 @@ def verify_machine_token(request: httpx.Request):
 * [create](docs/sdks/allowlistidentifiers/README.md#create) - Add identifier to the allow-list
 * [delete](docs/sdks/allowlistidentifiers/README.md#delete) - Delete identifier from allow-list
 
-### [aws_credentials](docs/sdks/awscredentials/README.md)
-
-* [delete](docs/sdks/awscredentials/README.md#delete) - Delete an AWS Credential
-* [update](docs/sdks/awscredentials/README.md#update) - Update an AWS Credential
-
 ### [beta_features](docs/sdks/betafeatures/README.md)
 
 * [update_instance_settings](docs/sdks/betafeatures/README.md#update_instance_settings) - Update instance settings
 * [~~update_production_instance_domain~~](docs/sdks/betafeatures/README.md#update_production_instance_domain) - Update production instance domain :warning: **Deprecated**
+
+### [billing](docs/sdks/billing/README.md)
+
+* [extend_subscription_item_free_trial](docs/sdks/billing/README.md#extend_subscription_item_free_trial) - Extend free trial for a subscription item
+* [list_statements](docs/sdks/billing/README.md#list_statements) - List all billing statements
+* [get_statement](docs/sdks/billing/README.md#get_statement) - Retrieve a billing statement
+* [get_statement_payment_attempts](docs/sdks/billing/README.md#get_statement_payment_attempts) - List payment attempts for a billing statement
 
 ### [blocklist_identifiers](docs/sdks/blocklistidentifierssdk/README.md)
 
 * [list](docs/sdks/blocklistidentifierssdk/README.md#list) - List all identifiers on the block-list
 * [create](docs/sdks/blocklistidentifierssdk/README.md#create) - Add identifier to the block-list
 * [delete](docs/sdks/blocklistidentifierssdk/README.md#delete) - Delete identifier from block-list
-
 
 ### [clients](docs/sdks/clients/README.md)
 
@@ -292,7 +294,6 @@ def verify_machine_token(request: httpx.Request):
 * [list_plans](docs/sdks/commerce/README.md#list_plans) - List all commerce plans
 * [list_subscription_items](docs/sdks/commerce/README.md#list_subscription_items) - List all subscription items
 * [cancel_subscription_item](docs/sdks/commerce/README.md#cancel_subscription_item) - Cancel a subscription item
-* [extend_subscription_item_free_trial](docs/sdks/commerce/README.md#extend_subscription_item_free_trial) - Extend free trial for a subscription item
 
 ### [domains](docs/sdks/domainssdk/README.md)
 
@@ -318,11 +319,6 @@ def verify_machine_token(request: httpx.Request):
 * [~~get~~](docs/sdks/emailsmstemplates/README.md#get) - Retrieve a template :warning: **Deprecated**
 * [~~revert~~](docs/sdks/emailsmstemplates/README.md#revert) - Revert a template :warning: **Deprecated**
 * [~~toggle_template_delivery~~](docs/sdks/emailsmstemplates/README.md#toggle_template_delivery) - Toggle the delivery by Clerk for a template of a given type and slug :warning: **Deprecated**
-
-### [experimental_accountless_applications](docs/sdks/experimentalaccountlessapplications/README.md)
-
-* [create](docs/sdks/experimentalaccountlessapplications/README.md#create) - Create an accountless application [EXPERIMENTAL]
-* [complete](docs/sdks/experimentalaccountlessapplications/README.md#complete) - Complete an accountless application [EXPERIMENTAL]
 
 ### [instance_settings](docs/sdks/instancesettingssdk/README.md)
 
@@ -459,7 +455,7 @@ def verify_machine_token(request: httpx.Request):
 * [refresh](docs/sdks/sessions/README.md#refresh) - Refresh a session
 * [revoke](docs/sdks/sessions/README.md#revoke) - Revoke a session
 * [create_token](docs/sdks/sessions/README.md#create_token) - Create a session token
-* [create_token_from_template](docs/sdks/sessions/README.md#create_token_from_template) - Create a session token from a jwt template
+* [create_token_from_template](docs/sdks/sessions/README.md#create_token_from_template) - Create a session token from a JWT template
 
 ### [sign_in_tokens](docs/sdks/signintokens/README.md)
 
@@ -621,7 +617,9 @@ with Clerk(
     res = None
     try:
 
-        res = clerk.aws_credentials.delete(id="<id>")
+        res = clerk.clients.verify(request={
+            "token": "jwt_token_example",
+        })
 
         assert res is not None
 
@@ -659,17 +657,17 @@ with Clerk(
 
 
 **Inherit from [`ClerkBaseError`](./src/clerk_backend_api/models/clerkbaseerror.py)**:
-* [`CreateM2MTokenM2mResponseBody`](./src/clerk_backend_api/models/createm2mtokenm2mresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 159 methods.*
-* [`GetM2MTokensM2mResponseBody`](./src/clerk_backend_api/models/getm2mtokensm2mresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 159 methods.*
-* [`RevokeM2MTokenM2mResponseBody`](./src/clerk_backend_api/models/revokem2mtokenm2mresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 159 methods.*
-* [`VerifyM2MTokenM2mResponseBody`](./src/clerk_backend_api/models/verifym2mtokenm2mresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 159 methods.*
-* [`VerifyOAuthAccessTokenOauthAccessTokensResponseBody`](./src/clerk_backend_api/models/verifyoauthaccesstokenoauthaccesstokensresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 159 methods.*
-* [`GetM2MTokensM2mResponseResponseBody`](./src/clerk_backend_api/models/getm2mtokensm2mresponseresponsebody.py): 403 Forbidden. Status code `403`. Applicable to 1 of 159 methods.*
-* [`GetM2MTokensM2mResponse404ResponseBody`](./src/clerk_backend_api/models/getm2mtokensm2mresponse404responsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 159 methods.*
-* [`RevokeM2MTokenM2mResponseResponseBody`](./src/clerk_backend_api/models/revokem2mtokenm2mresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 159 methods.*
-* [`VerifyM2MTokenM2mResponseResponseBody`](./src/clerk_backend_api/models/verifym2mtokenm2mresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 159 methods.*
-* [`VerifyOAuthAccessTokenOauthAccessTokensResponseResponseBody`](./src/clerk_backend_api/models/verifyoauthaccesstokenoauthaccesstokensresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 159 methods.*
-* [`CreateM2MTokenM2mResponseResponseBody`](./src/clerk_backend_api/models/createm2mtokenm2mresponseresponsebody.py): 409 Conflict. Status code `409`. Applicable to 1 of 159 methods.*
+* [`CreateM2MTokenM2mResponseBody`](./src/clerk_backend_api/models/createm2mtokenm2mresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 158 methods.*
+* [`GetM2MTokensM2mResponseBody`](./src/clerk_backend_api/models/getm2mtokensm2mresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 158 methods.*
+* [`RevokeM2MTokenM2mResponseBody`](./src/clerk_backend_api/models/revokem2mtokenm2mresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 158 methods.*
+* [`VerifyM2MTokenM2mResponseBody`](./src/clerk_backend_api/models/verifym2mtokenm2mresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 158 methods.*
+* [`VerifyOAuthAccessTokenOauthAccessTokensResponseBody`](./src/clerk_backend_api/models/verifyoauthaccesstokenoauthaccesstokensresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 158 methods.*
+* [`GetM2MTokensM2mResponseResponseBody`](./src/clerk_backend_api/models/getm2mtokensm2mresponseresponsebody.py): 403 Forbidden. Status code `403`. Applicable to 1 of 158 methods.*
+* [`GetM2MTokensM2mResponse404ResponseBody`](./src/clerk_backend_api/models/getm2mtokensm2mresponse404responsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 158 methods.*
+* [`RevokeM2MTokenM2mResponseResponseBody`](./src/clerk_backend_api/models/revokem2mtokenm2mresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 158 methods.*
+* [`VerifyM2MTokenM2mResponseResponseBody`](./src/clerk_backend_api/models/verifym2mtokenm2mresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 158 methods.*
+* [`VerifyOAuthAccessTokenOauthAccessTokensResponseResponseBody`](./src/clerk_backend_api/models/verifyoauthaccesstokenoauthaccesstokensresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 158 methods.*
+* [`CreateM2MTokenM2mResponseResponseBody`](./src/clerk_backend_api/models/createm2mtokenm2mresponseresponsebody.py): 409 Conflict. Status code `409`. Applicable to 1 of 158 methods.*
 * [`ResponseValidationError`](./src/clerk_backend_api/models/responsevalidationerror.py): Type mismatch between the response data and the expected Pydantic model. Provides access to the Pydantic validation error via the `cause` attribute.
 
 </details>

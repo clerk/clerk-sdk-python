@@ -31,7 +31,7 @@ class RefreshSessionRequestBodyTypedDict(TypedDict):
     Note: this JWT must be associated with the supplied session ID.
     """
     refresh_token: str
-    r"""The JWT that is sent via the `__session` cookie from your frontend."""
+    r"""The refresh token from the `__refresh` cookie set via FAPI's handshake flow."""
     request_origin: str
     r"""The origin of the request."""
     request_headers: NotRequired[Nullable[Dict[str, Any]]]
@@ -51,7 +51,7 @@ class RefreshSessionRequestBody(BaseModel):
     """
 
     refresh_token: str
-    r"""The JWT that is sent via the `__session` cookie from your frontend."""
+    r"""The refresh token from the `__refresh` cookie set via FAPI's handshake flow."""
 
     request_origin: str
     r"""The origin of the request."""

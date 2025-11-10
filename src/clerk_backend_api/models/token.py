@@ -18,7 +18,7 @@ class TokenTypedDict(TypedDict):
 
     """
     jwt: str
-    r"""String representing the encoded jwt value.
+    r"""String representing the encoded JSON Web Token (JWT) value.
 
     """
 
@@ -30,6 +30,6 @@ class Token(BaseModel):
     """
 
     jwt: str
-    r"""String representing the encoded jwt value.
+    r"""String representing the encoded JSON Web Token (JWT) value.
 
     """

@@ -26,8 +26,8 @@ from .security import (
 if TYPE_CHECKING:
     from clerk_backend_api.actortokens import ActorTokens
     from clerk_backend_api.allowlistidentifiers import AllowlistIdentifiers
-    from clerk_backend_api.awscredentials import AwsCredentials
     from clerk_backend_api.betafeatures import BetaFeatures
+    from clerk_backend_api.billing import Billing
     from clerk_backend_api.blocklistidentifiers_sdk import BlocklistIdentifiersSDK
     from clerk_backend_api.clients import Clients
     from clerk_backend_api.commerce import Commerce
@@ -35,9 +35,6 @@ if TYPE_CHECKING:
     from clerk_backend_api.emailaddresses import EmailAddresses
     from clerk_backend_api.emailandsmstemplates import EmailAndSmsTemplates
     from clerk_backend_api.emailsmstemplates import EmailSMSTemplates
-    from clerk_backend_api.experimentalaccountlessapplications import (
-        ExperimentalAccountlessApplications,
-    )
     from clerk_backend_api.instancesettings_sdk import InstanceSettingsSDK
     from clerk_backend_api.invitations import Invitations
     from clerk_backend_api.jwks_sdk import JwksSDK
@@ -79,7 +76,6 @@ class Clerk(BaseSDK):
 
     miscellaneous: "Miscellaneous"
     jwks: "JwksSDK"
-    aws_credentials: "AwsCredentials"
     clients: "Clients"
     email_addresses: "EmailAddresses"
     phone_numbers: "PhoneNumbers"
@@ -110,14 +106,13 @@ class Clerk(BaseSDK):
     saml_connections: "SamlConnectionsSDK"
     testing_tokens: "TestingTokens"
     waitlist_entries: "WaitlistEntriesSDK"
-    experimental_accountless_applications: "ExperimentalAccountlessApplications"
     commerce: "Commerce"
+    billing: "Billing"
     m2m: "M2m"
     oauth_access_tokens: "OauthAccessTokens"
     _sub_sdk_map = {
         "miscellaneous": ("clerk_backend_api.miscellaneous", "Miscellaneous"),
         "jwks": ("clerk_backend_api.jwks_sdk", "JwksSDK"),
-        "aws_credentials": ("clerk_backend_api.awscredentials", "AwsCredentials"),
         "clients": ("clerk_backend_api.clients", "Clients"),
         "email_addresses": ("clerk_backend_api.emailaddresses", "EmailAddresses"),
         "phone_numbers": ("clerk_backend_api.phonenumbers", "PhoneNumbers"),
@@ -181,11 +176,8 @@ class Clerk(BaseSDK):
             "clerk_backend_api.waitlistentries_sdk",
             "WaitlistEntriesSDK",
         ),
-        "experimental_accountless_applications": (
-            "clerk_backend_api.experimentalaccountlessapplications",
-            "ExperimentalAccountlessApplications",
-        ),
         "commerce": ("clerk_backend_api.commerce", "Commerce"),
+        "billing": ("clerk_backend_api.billing", "Billing"),
         "m2m": ("clerk_backend_api.m2m", "M2m"),
         "oauth_access_tokens": (
             "clerk_backend_api.oauthaccesstokens",
@@ -218,7 +210,7 @@ class Clerk(BaseSDK):
         """
         client_supplied = True
         if client is None:
-            client = httpx.Client()
+            client = httpx.Client(follow_redirects=True)
             client_supplied = False
 
         assert issubclass(
@@ -227,7 +219,7 @@ class Clerk(BaseSDK):
 
         async_client_supplied = True
         if async_client is None:
-            async_client = httpx.AsyncClient()
+            async_client = httpx.AsyncClient(follow_redirects=True)
             async_client_supplied = False
 
         if debug_logger is None:

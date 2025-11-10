@@ -7,7 +7,7 @@ from dataclasses import dataclass
 from clerk_backend_api.models import ClerkBaseError
 
 
-@dataclass(frozen=True)
+@dataclass(unsafe_hash=True)
 class ResponseValidationError(ClerkBaseError):
     """Error raised when there is a type mismatch between the response data and the expected Pydantic model."""
 

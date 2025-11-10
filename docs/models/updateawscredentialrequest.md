@@ -1,9 +1,0 @@
-# UpdateAWSCredentialRequest
-
-
-## Fields
-
-| Field                                                                                          | Type                                                                                           | Required                                                                                       | Description                                                                                    |
-| ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
-| `id`                                                                                           | *str*                                                                                          | :heavy_check_mark:                                                                             | The ID of the AWS Credential to update                                                         |
-| `request_body`                                                                                 | [Optional[models.UpdateAWSCredentialRequestBody]](../models/updateawscredentialrequestbody.md) | :heavy_minus_sign:                                                                             | N/A                                                                                            |

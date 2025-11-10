@@ -90,7 +90,7 @@ class OrganizationMembershipsSDK(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="CreateOrganizationMembership",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -198,7 +198,7 @@ class OrganizationMembershipsSDK(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="CreateOrganizationMembership",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -257,24 +257,43 @@ class OrganizationMembershipsSDK(BaseSDK):
         Retrieves all user memberships for the given organization
 
         :param organization_id: The organization ID.
-        :param order_by: Sorts organizations memberships by phone_number, email_address, created_at, first_name, last_name or username. By prepending one of those values with + or -, we can choose to sort in ascending (ASC) or descending (DESC) order.\"
-        :param user_id: Returns users with the user ids specified. For each user id, the `+` and `-` can be prepended to the id, which denote whether the respective user id should be included or excluded from the result set. Accepts up to 100 user ids. Any user ids not found are ignored.
+        :param order_by: Sorts organizations memberships by phone_number, email_address, created_at, first_name, last_name or username.
+            By prepending one of those values with + or -, we can choose to sort in ascending (ASC) or descending (DESC) order.\"
+        :param user_id: Returns users with the user IDs specified. For each user ID, the `+` and `-` can be
+            prepended to the ID, which denote whether the respective user ID should be included or
+            excluded from the result set. Accepts up to 100 user IDs. Any user IDs not found are ignored.
         :param email_address: Returns users with the specified email addresses. Accepts up to 100 email addresses. Any email addresses not found are ignored.
         :param phone_number: Returns users with the specified phone numbers. Accepts up to 100 phone numbers. Any phone numbers not found are ignored.
-        :param username: Returns users with the specified usernames. Accepts up to 100 usernames. Any usernames not found are ignored.
-        :param web3_wallet: Returns users with the specified web3 wallet addresses. Accepts up to 100 web3 wallet addresses. Any web3 wallet addressed not found are ignored.
+        :param username: Returns users with the specified usernames.
+            Accepts up to 100 usernames.
+            Any usernames not found are ignored.
+        :param web3_wallet: Returns users with the specified web3 wallet addresses.
+            Accepts up to 100 web3 wallet addresses.
+            Any web3 wallet addresses not found are ignored.
         :param role: Returns users with the specified roles. Accepts up to 100 roles. Any roles not found are ignored.
-        :param query: Returns users that match the given query. For possible matches, we check the email addresses, phone numbers, usernames, web3 wallets, user ids, first and last names. The query value doesn't need to match the exact value you are looking for, it is capable of partial matches as well.
-        :param email_address_query: Returns users with emails that match the given query, via case-insensitive partial match. For example, `email_address_query=ello` will match a user with the email `HELLO@example.com`.
-        :param phone_number_query: Returns users with phone numbers that match the given query, via case-insensitive partial match. For example, `phone_number_query=555` will match a user with the phone number `+1555xxxxxxx`.
-        :param username_query: Returns users with usernames that match the given query, via case-insensitive partial match. For example, `username_query=CoolUser` will match a user with the username `SomeCoolUser`.
+        :param query: Returns users that match the given query.
+            For possible matches, we check the email addresses, phone numbers, usernames, web3 wallets, user IDs, first and last names.
+            The query value doesn't need to match the exact value you are looking for, it is capable of partial matches as well.
+        :param email_address_query: Returns users with emails that match the given query, via case-insensitive partial match.
+            For example, `email_address_query=ello` will match a user with the email `HELLO@example.com`.
+        :param phone_number_query: Returns users with phone numbers that match the given query, via case-insensitive partial match.
+            For example, `phone_number_query=555` will match a user with the phone number `+1555xxxxxxx`.
+        :param username_query: Returns users with usernames that match the given query, via case-insensitive partial match.
+            For example, `username_query=CoolUser` will match a user with the username `SomeCoolUser`.
         :param name_query: Returns users with names that match the given query, via case-insensitive partial match.
-        :param last_active_at_before: Returns users whose last session activity was before the given date (with millisecond precision). Example: use 1700690400000 to retrieve users whose last session activity was before 2023-11-23.
-        :param last_active_at_after: Returns users whose last session activity was after the given date (with millisecond precision). Example: use 1700690400000 to retrieve users whose last session activity was after 2023-11-23.
-        :param created_at_before: Returns users who have been created before the given date (with millisecond precision). Example: use 1730160000000 to retrieve users who have been created before 2024-10-29.
-        :param created_at_after: Returns users who have been created after the given date (with millisecond precision). Example: use 1730160000000 to retrieve users who have been created after 2024-10-29.
-        :param limit: Applies a limit to the number of results returned. Can be used for paginating the results together with `offset`.
-        :param offset: Skip the first `offset` results when paginating. Needs to be an integer greater or equal to zero. To be used in conjunction with `limit`.
+        :param last_active_at_before: Returns users whose last session activity was before the given date (with millisecond precision).
+            Example: use 1700690400000 to retrieve users whose last session activity was before 2023-11-23.
+        :param last_active_at_after: Returns users whose last session activity was after the given date (with millisecond precision).
+            Example: use 1700690400000 to retrieve users whose last session activity was after 2023-11-23.
+        :param created_at_before: Returns users who have been created before the given date (with millisecond precision).
+            Example: use 1730160000000 to retrieve users who have been created before 2024-10-29.
+        :param created_at_after: Returns users who have been created after the given date (with millisecond precision).
+            Example: use 1730160000000 to retrieve users who have been created after 2024-10-29.
+        :param limit: Applies a limit to the number of results returned.
+            Can be used for paginating the results together with `offset`.
+        :param offset: Skip the first `offset` results when paginating.
+            Needs to be an integer greater or equal to zero.
+            To be used in conjunction with `limit`.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -345,7 +364,7 @@ class OrganizationMembershipsSDK(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="ListOrganizationMemberships",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -402,24 +421,43 @@ class OrganizationMembershipsSDK(BaseSDK):
         Retrieves all user memberships for the given organization
 
         :param organization_id: The organization ID.
-        :param order_by: Sorts organizations memberships by phone_number, email_address, created_at, first_name, last_name or username. By prepending one of those values with + or -, we can choose to sort in ascending (ASC) or descending (DESC) order.\"
-        :param user_id: Returns users with the user ids specified. For each user id, the `+` and `-` can be prepended to the id, which denote whether the respective user id should be included or excluded from the result set. Accepts up to 100 user ids. Any user ids not found are ignored.
+        :param order_by: Sorts organizations memberships by phone_number, email_address, created_at, first_name, last_name or username.
+            By prepending one of those values with + or -, we can choose to sort in ascending (ASC) or descending (DESC) order.\"
+        :param user_id: Returns users with the user IDs specified. For each user ID, the `+` and `-` can be
+            prepended to the ID, which denote whether the respective user ID should be included or
+            excluded from the result set. Accepts up to 100 user IDs. Any user IDs not found are ignored.
         :param email_address: Returns users with the specified email addresses. Accepts up to 100 email addresses. Any email addresses not found are ignored.
         :param phone_number: Returns users with the specified phone numbers. Accepts up to 100 phone numbers. Any phone numbers not found are ignored.
-        :param username: Returns users with the specified usernames. Accepts up to 100 usernames. Any usernames not found are ignored.
-        :param web3_wallet: Returns users with the specified web3 wallet addresses. Accepts up to 100 web3 wallet addresses. Any web3 wallet addressed not found are ignored.
+        :param username: Returns users with the specified usernames.
+            Accepts up to 100 usernames.
+            Any usernames not found are ignored.
+        :param web3_wallet: Returns users with the specified web3 wallet addresses.
+            Accepts up to 100 web3 wallet addresses.
+            Any web3 wallet addresses not found are ignored.
         :param role: Returns users with the specified roles. Accepts up to 100 roles. Any roles not found are ignored.
-        :param query: Returns users that match the given query. For possible matches, we check the email addresses, phone numbers, usernames, web3 wallets, user ids, first and last names. The query value doesn't need to match the exact value you are looking for, it is capable of partial matches as well.
-        :param email_address_query: Returns users with emails that match the given query, via case-insensitive partial match. For example, `email_address_query=ello` will match a user with the email `HELLO@example.com`.
-        :param phone_number_query: Returns users with phone numbers that match the given query, via case-insensitive partial match. For example, `phone_number_query=555` will match a user with the phone number `+1555xxxxxxx`.
-        :param username_query: Returns users with usernames that match the given query, via case-insensitive partial match. For example, `username_query=CoolUser` will match a user with the username `SomeCoolUser`.
+        :param query: Returns users that match the given query.
+            For possible matches, we check the email addresses, phone numbers, usernames, web3 wallets, user IDs, first and last names.
+            The query value doesn't need to match the exact value you are looking for, it is capable of partial matches as well.
+        :param email_address_query: Returns users with emails that match the given query, via case-insensitive partial match.
+            For example, `email_address_query=ello` will match a user with the email `HELLO@example.com`.
+        :param phone_number_query: Returns users with phone numbers that match the given query, via case-insensitive partial match.
+            For example, `phone_number_query=555` will match a user with the phone number `+1555xxxxxxx`.
+        :param username_query: Returns users with usernames that match the given query, via case-insensitive partial match.
+            For example, `username_query=CoolUser` will match a user with the username `SomeCoolUser`.
         :param name_query: Returns users with names that match the given query, via case-insensitive partial match.
-        :param last_active_at_before: Returns users whose last session activity was before the given date (with millisecond precision). Example: use 1700690400000 to retrieve users whose last session activity was before 2023-11-23.
-        :param last_active_at_after: Returns users whose last session activity was after the given date (with millisecond precision). Example: use 1700690400000 to retrieve users whose last session activity was after 2023-11-23.
-        :param created_at_before: Returns users who have been created before the given date (with millisecond precision). Example: use 1730160000000 to retrieve users who have been created before 2024-10-29.
-        :param created_at_after: Returns users who have been created after the given date (with millisecond precision). Example: use 1730160000000 to retrieve users who have been created after 2024-10-29.
-        :param limit: Applies a limit to the number of results returned. Can be used for paginating the results together with `offset`.
-        :param offset: Skip the first `offset` results when paginating. Needs to be an integer greater or equal to zero. To be used in conjunction with `limit`.
+        :param last_active_at_before: Returns users whose last session activity was before the given date (with millisecond precision).
+            Example: use 1700690400000 to retrieve users whose last session activity was before 2023-11-23.
+        :param last_active_at_after: Returns users whose last session activity was after the given date (with millisecond precision).
+            Example: use 1700690400000 to retrieve users whose last session activity was after 2023-11-23.
+        :param created_at_before: Returns users who have been created before the given date (with millisecond precision).
+            Example: use 1730160000000 to retrieve users who have been created before 2024-10-29.
+        :param created_at_after: Returns users who have been created after the given date (with millisecond precision).
+            Example: use 1730160000000 to retrieve users who have been created after 2024-10-29.
+        :param limit: Applies a limit to the number of results returned.
+            Can be used for paginating the results together with `offset`.
+        :param offset: Skip the first `offset` results when paginating.
+            Needs to be an integer greater or equal to zero.
+            To be used in conjunction with `limit`.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -490,7 +528,7 @@ class OrganizationMembershipsSDK(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="ListOrganizationMemberships",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -530,8 +568,8 @@ class OrganizationMembershipsSDK(BaseSDK):
 
         Updates the properties of an existing organization membership
 
-        :param organization_id: The ID of the organization to which the membership belongs
-        :param user_id: The ID of the user that this membership belongs to
+        :param organization_id: The ID of the organization to which this membership belongs
+        :param user_id: The ID of the user to which this membership belongs
         :param role: The new role of the given membership.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -596,7 +634,7 @@ class OrganizationMembershipsSDK(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="UpdateOrganizationMembership",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -636,8 +674,8 @@ class OrganizationMembershipsSDK(BaseSDK):
 
         Updates the properties of an existing organization membership
 
-        :param organization_id: The ID of the organization to which the membership belongs
-        :param user_id: The ID of the user that this membership belongs to
+        :param organization_id: The ID of the organization to which this membership belongs
+        :param user_id: The ID of the user to which this membership belongs
         :param role: The new role of the given membership.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -702,7 +740,7 @@ class OrganizationMembershipsSDK(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="UpdateOrganizationMembership",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -741,8 +779,8 @@ class OrganizationMembershipsSDK(BaseSDK):
 
         Removes the given membership from the organization
 
-        :param organization_id: The ID of the organization to which the membership belongs
-        :param user_id: The ID of the user that this membership belongs to
+        :param organization_id: The ID of the organization to which this membership belongs
+        :param user_id: The ID of the user to which this membership belongs
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -796,7 +834,7 @@ class OrganizationMembershipsSDK(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="DeleteOrganizationMembership",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -835,8 +873,8 @@ class OrganizationMembershipsSDK(BaseSDK):
 
         Removes the given membership from the organization
 
-        :param organization_id: The ID of the organization to which the membership belongs
-        :param user_id: The ID of the user that this membership belongs to
+        :param organization_id: The ID of the organization to which this membership belongs
+        :param user_id: The ID of the user to which this membership belongs
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -890,7 +928,7 @@ class OrganizationMembershipsSDK(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="DeleteOrganizationMembership",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -933,10 +971,12 @@ class OrganizationMembershipsSDK(BaseSDK):
         Metadata values will be updated via a deep merge. Deep means that any nested JSON objects will be merged as well.
         You can remove metadata keys at any level by setting their value to `null`.
 
-        :param organization_id: The ID of the organization to which the membership belongs
-        :param user_id: The ID of the user that this membership belongs to
-        :param public_metadata: Metadata saved on the organization membership, that is visible to both your frontend and backend. The new object will be merged with the existing value.
-        :param private_metadata: Metadata saved on the organization membership that is only visible to your backend. The new object will be merged with the existing value.
+        :param organization_id: The ID of the organization to which this membership belongs
+        :param user_id: The ID of the user to which this membership belongs
+        :param public_metadata: Metadata saved on the organization membership, that is visible to both your frontend and backend.
+            The new object will be merged with the existing value.
+        :param private_metadata: Metadata saved on the organization membership that is only visible to your backend.
+            The new object will be merged with the existing value.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1001,7 +1041,7 @@ class OrganizationMembershipsSDK(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="UpdateOrganizationMembershipMetadata",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -1044,10 +1084,12 @@ class OrganizationMembershipsSDK(BaseSDK):
         Metadata values will be updated via a deep merge. Deep means that any nested JSON objects will be merged as well.
         You can remove metadata keys at any level by setting their value to `null`.
 
-        :param organization_id: The ID of the organization to which the membership belongs
-        :param user_id: The ID of the user that this membership belongs to
-        :param public_metadata: Metadata saved on the organization membership, that is visible to both your frontend and backend. The new object will be merged with the existing value.
-        :param private_metadata: Metadata saved on the organization membership that is only visible to your backend. The new object will be merged with the existing value.
+        :param organization_id: The ID of the organization to which this membership belongs
+        :param user_id: The ID of the user to which this membership belongs
+        :param public_metadata: Metadata saved on the organization membership, that is visible to both your frontend and backend.
+            The new object will be merged with the existing value.
+        :param private_metadata: Metadata saved on the organization membership that is only visible to your backend.
+            The new object will be merged with the existing value.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1112,7 +1154,7 @@ class OrganizationMembershipsSDK(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="UpdateOrganizationMembershipMetadata",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,

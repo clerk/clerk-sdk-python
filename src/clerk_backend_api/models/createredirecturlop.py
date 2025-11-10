@@ -7,9 +7,9 @@ from typing_extensions import TypedDict
 
 class CreateRedirectURLRequestBodyTypedDict(TypedDict):
     url: str
-    r"""The full url value prefixed with `https://` or a custom scheme e.g. `\"https://my-app.com/oauth-callback\"` or `\"my-app://oauth-callback\"`"""
+    r"""The full URL value prefixed with `https://` or a custom scheme e.g. `\"https://my-app.com/oauth-callback\"` or `\"my-app://oauth-callback\"`"""
 
 
 class CreateRedirectURLRequestBody(BaseModel):
     url: str
-    r"""The full url value prefixed with `https://` or a custom scheme e.g. `\"https://my-app.com/oauth-callback\"` or `\"my-app://oauth-callback\"`"""
+    r"""The full URL value prefixed with `https://` or a custom scheme e.g. `\"https://my-app.com/oauth-callback\"` or `\"my-app://oauth-callback\"`"""

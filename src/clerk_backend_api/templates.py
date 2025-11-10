@@ -33,10 +33,15 @@ class Templates(BaseSDK):
 
         :param template_type: The type of template to preview
         :param slug: The slug of the template to preview
-        :param subject: The email subject. Applicable only to email templates.
+        :param subject: The email subject.
+            Applicable only to email templates.
         :param body: The template body before variable interpolation
-        :param from_email_name: The local part of the From email address that will be used for emails. For example, in the address 'hello@example.com', the local part is 'hello'. Applicable only to email templates.
-        :param reply_to_email_name: The local part of the Reply To email address that will be used for emails. For example, in the address 'hello@example.com', the local part is 'hello'. Applicable only to email templates.
+        :param from_email_name: The local part of the From email address that will be used for emails.
+            For example, in the address 'hello@example.com', the local part is 'hello'.
+            Applicable only to email templates.
+        :param reply_to_email_name: The local part of the Reply To email address that will be used for emails.
+            For example, in the address 'hello@example.com', the local part is 'hello'.
+            Applicable only to email templates.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -103,7 +108,7 @@ class Templates(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="PreviewTemplate",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -153,10 +158,15 @@ class Templates(BaseSDK):
 
         :param template_type: The type of template to preview
         :param slug: The slug of the template to preview
-        :param subject: The email subject. Applicable only to email templates.
+        :param subject: The email subject.
+            Applicable only to email templates.
         :param body: The template body before variable interpolation
-        :param from_email_name: The local part of the From email address that will be used for emails. For example, in the address 'hello@example.com', the local part is 'hello'. Applicable only to email templates.
-        :param reply_to_email_name: The local part of the Reply To email address that will be used for emails. For example, in the address 'hello@example.com', the local part is 'hello'. Applicable only to email templates.
+        :param from_email_name: The local part of the From email address that will be used for emails.
+            For example, in the address 'hello@example.com', the local part is 'hello'.
+            Applicable only to email templates.
+        :param reply_to_email_name: The local part of the Reply To email address that will be used for emails.
+            For example, in the address 'hello@example.com', the local part is 'hello'.
+            Applicable only to email templates.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -223,7 +233,7 @@ class Templates(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="PreviewTemplate",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,

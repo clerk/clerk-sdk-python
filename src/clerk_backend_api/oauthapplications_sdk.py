@@ -28,9 +28,17 @@ class OauthApplicationsSDK(BaseSDK):
         The OAuth applications are ordered by descending creation date.
         Most recent OAuth applications will be returned first.
 
-        :param limit: Applies a limit to the number of results returned. Can be used for paginating the results together with `offset`.
-        :param offset: Skip the first `offset` results when paginating. Needs to be an integer greater or equal to zero. To be used in conjunction with `limit`.
-        :param order_by: Allows to return OAuth applications in a particular order. At the moment, you can order the returned OAuth applications by their `created_at` and `name`. In order to specify the direction, you can use the `+/-` symbols prepended in the property to order by. For example, if you want OAuth applications to be returned in descending order according to their `created_at` property, you can use `-created_at`. If you don't use `+` or `-`, then `+` is implied. We only support one `order_by` parameter, and if multiple `order_by` parameters are provided, we will only keep the first one. For example, if you pass `order_by=name&order_by=created_at`, we will consider only the first `order_by` parameter, which is `name`. The `created_at` parameter will be ignored in this case.
+        :param limit: Applies a limit to the number of results returned.
+            Can be used for paginating the results together with `offset`.
+        :param offset: Skip the first `offset` results when paginating.
+            Needs to be an integer greater or equal to zero.
+            To be used in conjunction with `limit`.
+        :param order_by: Allows to return OAuth applications in a particular order.
+            At the moment, you can order the returned OAuth applications by their `created_at` and `name`.
+            In order to specify the direction, you can use the `+/-` symbols prepended in the property to order by.
+            For example, if you want OAuth applications to be returned in descending order according to their `created_at` property, you can use `-created_at`.
+            If you don't use `+` or `-`, then `+` is implied. We only support one `order_by` parameter, and if multiple `order_by` parameters are provided, we will only keep the first one. For example,
+            if you pass `order_by=name&order_by=created_at`, we will consider only the first `order_by` parameter, which is `name`. The `created_at` parameter will be ignored in this case.
         :param name_query: Returns OAuth applications with names that match the given query, via case-insensitive partial match.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -87,7 +95,7 @@ class OauthApplicationsSDK(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="ListOAuthApplications",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -129,9 +137,17 @@ class OauthApplicationsSDK(BaseSDK):
         The OAuth applications are ordered by descending creation date.
         Most recent OAuth applications will be returned first.
 
-        :param limit: Applies a limit to the number of results returned. Can be used for paginating the results together with `offset`.
-        :param offset: Skip the first `offset` results when paginating. Needs to be an integer greater or equal to zero. To be used in conjunction with `limit`.
-        :param order_by: Allows to return OAuth applications in a particular order. At the moment, you can order the returned OAuth applications by their `created_at` and `name`. In order to specify the direction, you can use the `+/-` symbols prepended in the property to order by. For example, if you want OAuth applications to be returned in descending order according to their `created_at` property, you can use `-created_at`. If you don't use `+` or `-`, then `+` is implied. We only support one `order_by` parameter, and if multiple `order_by` parameters are provided, we will only keep the first one. For example, if you pass `order_by=name&order_by=created_at`, we will consider only the first `order_by` parameter, which is `name`. The `created_at` parameter will be ignored in this case.
+        :param limit: Applies a limit to the number of results returned.
+            Can be used for paginating the results together with `offset`.
+        :param offset: Skip the first `offset` results when paginating.
+            Needs to be an integer greater or equal to zero.
+            To be used in conjunction with `limit`.
+        :param order_by: Allows to return OAuth applications in a particular order.
+            At the moment, you can order the returned OAuth applications by their `created_at` and `name`.
+            In order to specify the direction, you can use the `+/-` symbols prepended in the property to order by.
+            For example, if you want OAuth applications to be returned in descending order according to their `created_at` property, you can use `-created_at`.
+            If you don't use `+` or `-`, then `+` is implied. We only support one `order_by` parameter, and if multiple `order_by` parameters are provided, we will only keep the first one. For example,
+            if you pass `order_by=name&order_by=created_at`, we will consider only the first `order_by` parameter, which is `name`. The `created_at` parameter will be ignored in this case.
         :param name_query: Returns OAuth applications with names that match the given query, via case-insensitive partial match.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -188,7 +204,7 @@ class OauthApplicationsSDK(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="ListOAuthApplications",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -228,7 +244,7 @@ class OauthApplicationsSDK(BaseSDK):
         r"""Create an OAuth application
 
         Creates a new OAuth application with the given name and callback URL for an instance.
-        The callback URL must be a valid url.
+        The callback URL must be a valid URL.
         All URL schemes are allowed such as `http://`, `https://`, `myapp://`, etc...
 
         :param request: The request object to send.
@@ -293,7 +309,7 @@ class OauthApplicationsSDK(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="CreateOAuthApplication",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -335,7 +351,7 @@ class OauthApplicationsSDK(BaseSDK):
         r"""Create an OAuth application
 
         Creates a new OAuth application with the given name and callback URL for an instance.
-        The callback URL must be a valid url.
+        The callback URL must be a valid URL.
         All URL schemes are allowed such as `http://`, `https://`, `myapp://`, etc...
 
         :param request: The request object to send.
@@ -400,7 +416,7 @@ class OauthApplicationsSDK(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="CreateOAuthApplication",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -491,7 +507,7 @@ class OauthApplicationsSDK(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="GetOAuthApplication",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -580,7 +596,7 @@ class OauthApplicationsSDK(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="GetOAuthApplication",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -624,7 +640,8 @@ class OauthApplicationsSDK(BaseSDK):
         Updates an existing OAuth application
 
         :param oauth_application_id: The ID of the OAuth application to update
-        :param name: The new name of the OAuth application. Max length: 256
+        :param name: The new name of the OAuth application.
+            Max length: 256
         :param redirect_uris: An array of redirect URIs of the new OAuth application
         :param callback_url: The new callback URL of the OAuth application
         :param scopes: Define the allowed scopes for the new OAuth applications that dictate the user payload of the OAuth user info endpoint. Available scopes are `profile`, `email`, `public_metadata`, `private_metadata`. Provide the requested scopes as a string, separated by spaces.
@@ -699,7 +716,7 @@ class OauthApplicationsSDK(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="UpdateOAuthApplication",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -745,7 +762,8 @@ class OauthApplicationsSDK(BaseSDK):
         Updates an existing OAuth application
 
         :param oauth_application_id: The ID of the OAuth application to update
-        :param name: The new name of the OAuth application. Max length: 256
+        :param name: The new name of the OAuth application.
+            Max length: 256
         :param redirect_uris: An array of redirect URIs of the new OAuth application
         :param callback_url: The new callback URL of the OAuth application
         :param scopes: Define the allowed scopes for the new OAuth applications that dictate the user payload of the OAuth user info endpoint. Available scopes are `profile`, `email`, `public_metadata`, `private_metadata`. Provide the requested scopes as a string, separated by spaces.
@@ -820,7 +838,7 @@ class OauthApplicationsSDK(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="UpdateOAuthApplication",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -912,7 +930,7 @@ class OauthApplicationsSDK(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="DeleteOAuthApplication",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -1002,7 +1020,7 @@ class OauthApplicationsSDK(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="DeleteOAuthApplication",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -1092,7 +1110,7 @@ class OauthApplicationsSDK(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="RotateOAuthApplicationSecret",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -1184,7 +1202,7 @@ class OauthApplicationsSDK(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="RotateOAuthApplicationSecret",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,

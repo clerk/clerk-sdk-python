@@ -27,11 +27,11 @@ class ListSAMLConnectionsRequestTypedDict(TypedDict):
     organization_id: NotRequired[List[str]]
     r"""Returns SAML connections that have an associated organization ID to the
     given organizations.
-    For each organization id, the `+` and `-` can be
-    prepended to the id, which denote whether the
+    For each organization ID, the `+` and `-` can be
+    prepended to the ID, which denote whether the
     respective organization should be included or
     excluded from the result set.
-    Accepts up to 100 organization ids.
+    Accepts up to 100 organization IDs.
     """
 
 
@@ -74,9 +74,9 @@ class ListSAMLConnectionsRequest(BaseModel):
     ] = None
     r"""Returns SAML connections that have an associated organization ID to the
     given organizations.
-    For each organization id, the `+` and `-` can be
-    prepended to the id, which denote whether the
+    For each organization ID, the `+` and `-` can be
+    prepended to the ID, which denote whether the
     respective organization should be included or
     excluded from the result set.
-    Accepts up to 100 organization ids.
+    Accepts up to 100 organization IDs.
     """

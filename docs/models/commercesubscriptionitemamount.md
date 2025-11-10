@@ -1,6 +1,6 @@
 # CommerceSubscriptionItemAmount
 
-Credit amount.
+Amount for the next payment.
 
 
 ## Fields

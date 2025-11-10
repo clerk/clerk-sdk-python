@@ -8,17 +8,12 @@ from typing_extensions import Annotated, TypedDict
 
 
 class CommerceSubscriptionNextPaymentTypedDict(TypedDict):
-    time: int
-    r"""Unix timestamp (milliseconds) of the next payment."""
     date_: int
     r"""Unix timestamp (milliseconds) of the next payment date."""
     amount: CommerceMoneyResponseTypedDict
 
 
 class CommerceSubscriptionNextPayment(BaseModel):
-    time: int
-    r"""Unix timestamp (milliseconds) of the next payment."""
-
     date_: Annotated[int, pydantic.Field(alias="date")]
     r"""Unix timestamp (milliseconds) of the next payment date."""
 

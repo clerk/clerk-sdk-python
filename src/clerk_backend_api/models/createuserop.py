@@ -22,6 +22,8 @@ class CreateUserRequestBodyTypedDict(TypedDict):
     r"""The first name to assign to the user"""
     last_name: NotRequired[Nullable[str]]
     r"""The last name to assign to the user"""
+    locale: NotRequired[Nullable[str]]
+    r"""The locale to assign to the user (e.g., \"en-US\", \"fr-FR\")"""
     email_address: NotRequired[List[str]]
     r"""Email addresses to add to the user.
     Must be unique across your instance.
@@ -122,6 +124,9 @@ class CreateUserRequestBody(BaseModel):
 
     last_name: OptionalNullable[str] = UNSET
     r"""The last name to assign to the user"""
+
+    locale: OptionalNullable[str] = UNSET
+    r"""The locale to assign to the user (e.g., \"en-US\", \"fr-FR\")"""
 
     email_address: Optional[List[str]] = None
     r"""Email addresses to add to the user.
@@ -236,6 +241,7 @@ class CreateUserRequestBody(BaseModel):
             "external_id",
             "first_name",
             "last_name",
+            "locale",
             "email_address",
             "phone_number",
             "web3_wallet",
@@ -261,6 +267,7 @@ class CreateUserRequestBody(BaseModel):
             "external_id",
             "first_name",
             "last_name",
+            "locale",
             "username",
             "password",
             "password_digest",

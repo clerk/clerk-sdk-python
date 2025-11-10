@@ -20,9 +20,9 @@ class GetUsersCountRequestTypedDict(TypedDict):
     Any phone numbers not found are ignored.
     """
     external_id: NotRequired[List[str]]
-    r"""Counts users with the specified external ids.
-    Accepts up to 100 external ids.
-    Any external ids not found are ignored.
+    r"""Counts users with the specified external IDs.
+    Accepts up to 100 external IDs.
+    Any external IDs not found are ignored.
     """
     username: NotRequired[List[str]]
     r"""Counts users with the specified usernames.
@@ -32,21 +32,21 @@ class GetUsersCountRequestTypedDict(TypedDict):
     web3_wallet: NotRequired[List[str]]
     r"""Counts users with the specified web3 wallet addresses.
     Accepts up to 100 web3 wallet addresses.
-    Any web3 wallet addressed not found are ignored.
+    Any web3 wallet addresses not found are ignored.
     """
     user_id: NotRequired[List[str]]
-    r"""Counts users with the user ids specified.
-    Accepts up to 100 user ids.
-    Any user ids not found are ignored.
+    r"""Counts users with the user IDs specified.
+    Accepts up to 100 user IDs.
+    Any user IDs not found are ignored.
     """
     organization_id: NotRequired[List[str]]
-    r"""Returns users that have memberships to the given organizations. For each organization id, the `+` and `-`
-    can be prepended to the id, which denote whether the respective organization should be included or
-    excluded from the result set. Accepts up to 100 organization ids.
+    r"""Returns users that have memberships to the given organizations. For each organization ID, the `+` and `-`
+    can be prepended to the ID, which denote whether the respective organization should be included or
+    excluded from the result set. Accepts up to 100 organization IDs.
     """
     query: NotRequired[str]
     r"""Counts users that match the given query.
-    For possible matches, we check the email addresses, phone numbers, usernames, web3 wallets, user ids, first and last names.
+    For possible matches, we check the email addresses, phone numbers, usernames, web3 wallets, user IDs, first and last names.
     The query value doesn't need to match the exact value you are looking for, it is capable of partial matches as well.
     """
     email_address_query: NotRequired[str]
@@ -114,9 +114,9 @@ class GetUsersCountRequest(BaseModel):
         Optional[List[str]],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = None
-    r"""Counts users with the specified external ids.
-    Accepts up to 100 external ids.
-    Any external ids not found are ignored.
+    r"""Counts users with the specified external IDs.
+    Accepts up to 100 external IDs.
+    Any external IDs not found are ignored.
     """
 
     username: Annotated[
@@ -134,25 +134,25 @@ class GetUsersCountRequest(BaseModel):
     ] = None
     r"""Counts users with the specified web3 wallet addresses.
     Accepts up to 100 web3 wallet addresses.
-    Any web3 wallet addressed not found are ignored.
+    Any web3 wallet addresses not found are ignored.
     """
 
     user_id: Annotated[
         Optional[List[str]],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = None
-    r"""Counts users with the user ids specified.
-    Accepts up to 100 user ids.
-    Any user ids not found are ignored.
+    r"""Counts users with the user IDs specified.
+    Accepts up to 100 user IDs.
+    Any user IDs not found are ignored.
     """
 
     organization_id: Annotated[
         Optional[List[str]],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = None
-    r"""Returns users that have memberships to the given organizations. For each organization id, the `+` and `-`
-    can be prepended to the id, which denote whether the respective organization should be included or
-    excluded from the result set. Accepts up to 100 organization ids.
+    r"""Returns users that have memberships to the given organizations. For each organization ID, the `+` and `-`
+    can be prepended to the ID, which denote whether the respective organization should be included or
+    excluded from the result set. Accepts up to 100 organization IDs.
     """
 
     query: Annotated[
@@ -160,7 +160,7 @@ class GetUsersCountRequest(BaseModel):
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = None
     r"""Counts users that match the given query.
-    For possible matches, we check the email addresses, phone numbers, usernames, web3 wallets, user ids, first and last names.
+    For possible matches, we check the email addresses, phone numbers, usernames, web3 wallets, user IDs, first and last names.
     The query value doesn't need to match the exact value you are looking for, it is capable of partial matches as well.
     """
 

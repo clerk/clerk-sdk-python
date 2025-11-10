@@ -90,7 +90,7 @@ class RevokeM2MTokenM2mResponseResponseBodyData(BaseModel):
     errors: List[RevokeM2MTokenM2mErrors]
 
 
-@dataclass(frozen=True)
+@dataclass(unsafe_hash=True)
 class RevokeM2MTokenM2mResponseResponseBody(ClerkBaseError):
     r"""404 Not Found"""
 
@@ -125,7 +125,7 @@ class RevokeM2MTokenM2mResponseBodyData(BaseModel):
     errors: List[RevokeM2MTokenErrors]
 
 
-@dataclass(frozen=True)
+@dataclass(unsafe_hash=True)
 class RevokeM2MTokenM2mResponseBody(ClerkBaseError):
     r"""400 Bad Request"""
 

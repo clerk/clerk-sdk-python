@@ -29,7 +29,7 @@ class TemplateTypedDict(TypedDict):
 
     """
     instance_id: NotRequired[Nullable[str]]
-    r"""The id of the instance to which this template belongs"""
+    r"""The ID of the instance to which the template belongs"""
     resource_type: NotRequired[str]
     r"""whether this is a system (default) or user overridden) template"""
     template_type: NotRequired[str]
@@ -84,7 +84,7 @@ class Template(BaseModel):
     """
 
     instance_id: OptionalNullable[str] = UNSET
-    r"""The id of the instance to which this template belongs"""
+    r"""The ID of the instance to which the template belongs"""
 
     resource_type: Optional[str] = None
     r"""whether this is a system (default) or user overridden) template"""
