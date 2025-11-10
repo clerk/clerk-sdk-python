@@ -5,7 +5,7 @@ from typing import Optional
 from dataclasses import dataclass, field
 
 
-@dataclass(frozen=True)
+@dataclass(unsafe_hash=True)
 class ClerkBaseError(Exception):
     """The base class for all HTTP error responses."""
 

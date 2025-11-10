@@ -93,7 +93,7 @@ class OrganizationDomainsSDK(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="CreateOrganizationDomain",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -204,7 +204,7 @@ class OrganizationDomainsSDK(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="CreateOrganizationDomain",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -251,8 +251,11 @@ class OrganizationDomainsSDK(BaseSDK):
         :param organization_id: The organization ID.
         :param verified: Filter domains by their verification status. `true` or `false`
         :param enrollment_mode: Filter domains by their enrollment mode
-        :param limit: Applies a limit to the number of results returned. Can be used for paginating the results together with `offset`.
-        :param offset: Skip the first `offset` results when paginating. Needs to be an integer greater or equal to zero. To be used in conjunction with `limit`.
+        :param limit: Applies a limit to the number of results returned.
+            Can be used for paginating the results together with `offset`.
+        :param offset: Skip the first `offset` results when paginating.
+            Needs to be an integer greater or equal to zero.
+            To be used in conjunction with `limit`.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -309,7 +312,7 @@ class OrganizationDomainsSDK(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="ListOrganizationDomains",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -354,8 +357,11 @@ class OrganizationDomainsSDK(BaseSDK):
         :param organization_id: The organization ID.
         :param verified: Filter domains by their verification status. `true` or `false`
         :param enrollment_mode: Filter domains by their enrollment mode
-        :param limit: Applies a limit to the number of results returned. Can be used for paginating the results together with `offset`.
-        :param offset: Skip the first `offset` results when paginating. Needs to be an integer greater or equal to zero. To be used in conjunction with `limit`.
+        :param limit: Applies a limit to the number of results returned.
+            Can be used for paginating the results together with `offset`.
+        :param offset: Skip the first `offset` results when paginating.
+            Needs to be an integer greater or equal to zero.
+            To be used in conjunction with `limit`.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -412,7 +418,7 @@ class OrganizationDomainsSDK(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="ListOrganizationDomains",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -453,7 +459,7 @@ class OrganizationDomainsSDK(BaseSDK):
 
         Updates the properties of an existing organization domain.
 
-        :param organization_id: The ID of the organization the domain belongs to
+        :param organization_id: The ID of the organization to which the domain belongs
         :param domain_id: The ID of the domain
         :param enrollment_mode: The enrollment_mode for the new domain. This can be `automatic_invitation`, `automatic_suggestion` or `manual_invitation`
         :param verified: The status of the domain's verification
@@ -521,7 +527,7 @@ class OrganizationDomainsSDK(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="UpdateOrganizationDomain",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -562,7 +568,7 @@ class OrganizationDomainsSDK(BaseSDK):
 
         Updates the properties of an existing organization domain.
 
-        :param organization_id: The ID of the organization the domain belongs to
+        :param organization_id: The ID of the organization to which the domain belongs
         :param domain_id: The ID of the domain
         :param enrollment_mode: The enrollment_mode for the new domain. This can be `automatic_invitation`, `automatic_suggestion` or `manual_invitation`
         :param verified: The status of the domain's verification
@@ -630,7 +636,7 @@ class OrganizationDomainsSDK(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="UpdateOrganizationDomain",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -669,7 +675,7 @@ class OrganizationDomainsSDK(BaseSDK):
 
         Removes the given domain from the organization.
 
-        :param organization_id: The ID of the organization the domain belongs to
+        :param organization_id: The ID of the organization to which the domain belongs
         :param domain_id: The ID of the domain
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -724,7 +730,7 @@ class OrganizationDomainsSDK(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="DeleteOrganizationDomain",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -761,7 +767,7 @@ class OrganizationDomainsSDK(BaseSDK):
 
         Removes the given domain from the organization.
 
-        :param organization_id: The ID of the organization the domain belongs to
+        :param organization_id: The ID of the organization to which the domain belongs
         :param domain_id: The ID of the domain
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -816,7 +822,7 @@ class OrganizationDomainsSDK(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="DeleteOrganizationDomain",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -867,10 +873,24 @@ class OrganizationDomainsSDK(BaseSDK):
         :param organization_id: The ID of the organization to filter domains by
         :param verified: Filter by verification status
         :param enrollment_mode: Filter by enrollment mode
-        :param query: Search domains by name or organization ID. If the query starts with \"org_\", it will search by exact organization ID match. Otherwise, it performs a case-insensitive partial match on the domain name.  Note: An empty string or whitespace-only value is not allowed and will result in a validation error.
-        :param order_by: Allows to return organization domains in a particular order. At the moment, you can order the returned domains by their `name` or `created_at`. In order to specify the direction, you can use the `+/-` symbols prepended to the property to order by. For example, if you want domains to be returned in descending order according to their `created_at` property, you can use `-created_at`. If you don't use `+` or `-`, then `+` is implied. Defaults to `-created_at`.
-        :param offset: Skip the first `offset` results when paginating. Needs to be an integer greater or equal to zero. To be used in conjunction with `limit`.
-        :param limit: Applies a limit to the number of results returned. Can be used for paginating the results together with `offset`.
+        :param query: Search domains by name or organization ID.
+            If the query starts with \"org_\", it will search by exact organization ID match.
+            Otherwise, it performs a case-insensitive partial match on the domain name.
+
+            Note: An empty string or whitespace-only value is not allowed and will result in a validation error.
+
+        :param order_by: Allows to return organization domains in a particular order.
+            At the moment, you can order the returned domains by their `name` or `created_at`.
+            In order to specify the direction, you can use the `+/-` symbols prepended to the property to order by.
+            For example, if you want domains to be returned in descending order according to their `created_at` property, you can use `-created_at`.
+            If you don't use `+` or `-`, then `+` is implied.
+            Defaults to `-created_at`.
+
+        :param offset: Skip the first `offset` results when paginating.
+            Needs to be an integer greater or equal to zero.
+            To be used in conjunction with `limit`.
+        :param limit: Applies a limit to the number of results returned.
+            Can be used for paginating the results together with `offset`.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -929,7 +949,7 @@ class OrganizationDomainsSDK(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="ListAllOrganizationDomains",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -982,10 +1002,24 @@ class OrganizationDomainsSDK(BaseSDK):
         :param organization_id: The ID of the organization to filter domains by
         :param verified: Filter by verification status
         :param enrollment_mode: Filter by enrollment mode
-        :param query: Search domains by name or organization ID. If the query starts with \"org_\", it will search by exact organization ID match. Otherwise, it performs a case-insensitive partial match on the domain name.  Note: An empty string or whitespace-only value is not allowed and will result in a validation error.
-        :param order_by: Allows to return organization domains in a particular order. At the moment, you can order the returned domains by their `name` or `created_at`. In order to specify the direction, you can use the `+/-` symbols prepended to the property to order by. For example, if you want domains to be returned in descending order according to their `created_at` property, you can use `-created_at`. If you don't use `+` or `-`, then `+` is implied. Defaults to `-created_at`.
-        :param offset: Skip the first `offset` results when paginating. Needs to be an integer greater or equal to zero. To be used in conjunction with `limit`.
-        :param limit: Applies a limit to the number of results returned. Can be used for paginating the results together with `offset`.
+        :param query: Search domains by name or organization ID.
+            If the query starts with \"org_\", it will search by exact organization ID match.
+            Otherwise, it performs a case-insensitive partial match on the domain name.
+
+            Note: An empty string or whitespace-only value is not allowed and will result in a validation error.
+
+        :param order_by: Allows to return organization domains in a particular order.
+            At the moment, you can order the returned domains by their `name` or `created_at`.
+            In order to specify the direction, you can use the `+/-` symbols prepended to the property to order by.
+            For example, if you want domains to be returned in descending order according to their `created_at` property, you can use `-created_at`.
+            If you don't use `+` or `-`, then `+` is implied.
+            Defaults to `-created_at`.
+
+        :param offset: Skip the first `offset` results when paginating.
+            Needs to be an integer greater or equal to zero.
+            To be used in conjunction with `limit`.
+        :param limit: Applies a limit to the number of results returned.
+            Can be used for paginating the results together with `offset`.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1044,7 +1078,7 @@ class OrganizationDomainsSDK(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="ListAllOrganizationDomains",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,

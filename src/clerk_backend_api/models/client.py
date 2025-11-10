@@ -9,7 +9,7 @@ from typing import List
 from typing_extensions import TypedDict
 
 
-class ClientObject(str, Enum):
+class Object(str, Enum):
     r"""String representing the object's type. Objects of the same type share the same value."""
 
     CLIENT = "client"
@@ -18,7 +18,7 @@ class ClientObject(str, Enum):
 class ClientTypedDict(TypedDict):
     r"""Success"""
 
-    object: ClientObject
+    object: Object
     r"""String representing the object's type. Objects of the same type share the same value.
 
     """
@@ -34,6 +34,10 @@ class ClientTypedDict(TypedDict):
     r"""Last active session_id.
 
     """
+    last_authentication_strategy: Nullable[str]
+    r"""The authentication strategy that was last used to authenticate the user on this client.
+
+    """
     updated_at: int
     r"""Unix timestamp of last update.
 
@@ -47,7 +51,7 @@ class ClientTypedDict(TypedDict):
 class Client(BaseModel):
     r"""Success"""
 
-    object: ClientObject
+    object: Object
     r"""String representing the object's type. Objects of the same type share the same value.
 
     """
@@ -70,6 +74,11 @@ class Client(BaseModel):
 
     """
 
+    last_authentication_strategy: Nullable[str]
+    r"""The authentication strategy that was last used to authenticate the user on this client.
+
+    """
+
     updated_at: int
     r"""Unix timestamp of last update.
 
@@ -83,7 +92,12 @@ class Client(BaseModel):
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = []
-        nullable_fields = ["sign_in_id", "sign_up_id", "last_active_session_id"]
+        nullable_fields = [
+            "sign_in_id",
+            "sign_up_id",
+            "last_active_session_id",
+            "last_authentication_strategy",
+        ]
         null_default_fields = []
 
         serialized = handler(self)

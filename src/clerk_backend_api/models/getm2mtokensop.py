@@ -100,7 +100,7 @@ class GetM2MTokensM2mResponse404ResponseBodyData(BaseModel):
     errors: List[GetM2MTokensM2mResponseErrors]
 
 
-@dataclass(frozen=True)
+@dataclass(unsafe_hash=True)
 class GetM2MTokensM2mResponse404ResponseBody(ClerkBaseError):
     r"""404 Not Found"""
 
@@ -135,7 +135,7 @@ class GetM2MTokensM2mResponseResponseBodyData(BaseModel):
     errors: List[GetM2MTokensM2mErrors]
 
 
-@dataclass(frozen=True)
+@dataclass(unsafe_hash=True)
 class GetM2MTokensM2mResponseResponseBody(ClerkBaseError):
     r"""403 Forbidden"""
 
@@ -170,7 +170,7 @@ class GetM2MTokensM2mResponseBodyData(BaseModel):
     errors: List[GetM2MTokensErrors]
 
 
-@dataclass(frozen=True)
+@dataclass(unsafe_hash=True)
 class GetM2MTokensM2mResponseBody(ClerkBaseError):
     r"""400 Bad Request"""
 

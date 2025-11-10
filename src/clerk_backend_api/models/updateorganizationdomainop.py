@@ -60,7 +60,7 @@ class UpdateOrganizationDomainRequestBody(BaseModel):
 
 class UpdateOrganizationDomainRequestTypedDict(TypedDict):
     organization_id: str
-    r"""The ID of the organization the domain belongs to"""
+    r"""The ID of the organization to which the domain belongs"""
     domain_id: str
     r"""The ID of the domain"""
     request_body: UpdateOrganizationDomainRequestBodyTypedDict
@@ -70,7 +70,7 @@ class UpdateOrganizationDomainRequest(BaseModel):
     organization_id: Annotated[
         str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))
     ]
-    r"""The ID of the organization the domain belongs to"""
+    r"""The ID of the organization to which the domain belongs"""
 
     domain_id: Annotated[
         str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))

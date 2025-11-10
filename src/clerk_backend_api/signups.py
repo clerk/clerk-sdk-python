@@ -75,7 +75,7 @@ class SignUps(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="GetSignUp",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -164,7 +164,7 @@ class SignUps(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="GetSignUp",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -203,7 +203,8 @@ class SignUps(BaseSDK):
         Update the sign-up with the given ID
 
         :param id: The ID of the sign-up to update
-        :param external_id: The ID of the guest attempting to sign up as used in your external systems or your previous authentication solution. This will be copied to the resulting user when the sign-up is completed.
+        :param external_id: The ID of the guest attempting to sign up as used in your external systems or your previous authentication solution.
+            This will be copied to the resulting user when the sign-up is completed.
         :param custom_action: If true, the sign-up will be marked as a custom action.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -268,7 +269,7 @@ class SignUps(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="UpdateSignUp",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -307,7 +308,8 @@ class SignUps(BaseSDK):
         Update the sign-up with the given ID
 
         :param id: The ID of the sign-up to update
-        :param external_id: The ID of the guest attempting to sign up as used in your external systems or your previous authentication solution. This will be copied to the resulting user when the sign-up is completed.
+        :param external_id: The ID of the guest attempting to sign up as used in your external systems or your previous authentication solution.
+            This will be copied to the resulting user when the sign-up is completed.
         :param custom_action: If true, the sign-up will be marked as a custom action.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -372,7 +374,7 @@ class SignUps(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="UpdateSignUp",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,

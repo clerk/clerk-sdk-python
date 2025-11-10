@@ -11,16 +11,16 @@ class PaginatedCommercePlanResponseTypedDict(TypedDict):
     r"""A list of commerce plans."""
 
     data: List[CommercePlanTypedDict]
-    r"""Array of commerce plans."""
+    r"""Array of plans."""
     total_count: int
-    r"""Total number of commerce plans."""
+    r"""Total number of plans."""
 
 
 class PaginatedCommercePlanResponse(BaseModel):
     r"""A list of commerce plans."""
 
     data: List[CommercePlan]
-    r"""Array of commerce plans."""
+    r"""Array of plans."""
 
     total_count: int
-    r"""Total number of commerce plans."""
+    r"""Total number of plans."""

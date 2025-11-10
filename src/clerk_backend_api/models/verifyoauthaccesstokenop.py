@@ -50,7 +50,7 @@ class VerifyOAuthAccessTokenOauthAccessTokensResponseResponseBodyData(BaseModel)
     errors: List[VerifyOAuthAccessTokenOauthAccessTokensErrors]
 
 
-@dataclass(frozen=True)
+@dataclass(unsafe_hash=True)
 class VerifyOAuthAccessTokenOauthAccessTokensResponseResponseBody(ClerkBaseError):
     r"""404 Not Found"""
 
@@ -87,7 +87,7 @@ class VerifyOAuthAccessTokenOauthAccessTokensResponseBodyData(BaseModel):
     errors: List[VerifyOAuthAccessTokenErrors]
 
 
-@dataclass(frozen=True)
+@dataclass(unsafe_hash=True)
 class VerifyOAuthAccessTokenOauthAccessTokensResponseBody(ClerkBaseError):
     r"""400 Bad Request"""
 

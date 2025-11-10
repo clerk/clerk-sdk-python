@@ -15,9 +15,9 @@ class ListOrganizationMembershipsRequestTypedDict(TypedDict):
     By prepending one of those values with + or -, we can choose to sort in ascending (ASC) or descending (DESC) order.\" 
     """
     user_id: NotRequired[List[str]]
-    r"""Returns users with the user ids specified. For each user id, the `+` and `-` can be
-    prepended to the id, which denote whether the respective user id should be included or
-    excluded from the result set. Accepts up to 100 user ids. Any user ids not found are ignored.
+    r"""Returns users with the user IDs specified. For each user ID, the `+` and `-` can be
+    prepended to the ID, which denote whether the respective user ID should be included or
+    excluded from the result set. Accepts up to 100 user IDs. Any user IDs not found are ignored.
     """
     email_address: NotRequired[List[str]]
     r"""Returns users with the specified email addresses. Accepts up to 100 email addresses. Any email addresses not found are ignored."""
@@ -31,13 +31,13 @@ class ListOrganizationMembershipsRequestTypedDict(TypedDict):
     web3_wallet: NotRequired[List[str]]
     r"""Returns users with the specified web3 wallet addresses.
     Accepts up to 100 web3 wallet addresses.
-    Any web3 wallet addressed not found are ignored.
+    Any web3 wallet addresses not found are ignored.
     """
     role: NotRequired[List[str]]
     r"""Returns users with the specified roles. Accepts up to 100 roles. Any roles not found are ignored."""
     query: NotRequired[str]
     r"""Returns users that match the given query.
-    For possible matches, we check the email addresses, phone numbers, usernames, web3 wallets, user ids, first and last names.
+    For possible matches, we check the email addresses, phone numbers, usernames, web3 wallets, user IDs, first and last names.
     The query value doesn't need to match the exact value you are looking for, it is capable of partial matches as well.
     """
     email_address_query: NotRequired[str]
@@ -99,9 +99,9 @@ class ListOrganizationMembershipsRequest(BaseModel):
         Optional[List[str]],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = None
-    r"""Returns users with the user ids specified. For each user id, the `+` and `-` can be
-    prepended to the id, which denote whether the respective user id should be included or
-    excluded from the result set. Accepts up to 100 user ids. Any user ids not found are ignored.
+    r"""Returns users with the user IDs specified. For each user ID, the `+` and `-` can be
+    prepended to the ID, which denote whether the respective user ID should be included or
+    excluded from the result set. Accepts up to 100 user IDs. Any user IDs not found are ignored.
     """
 
     email_address: Annotated[
@@ -131,7 +131,7 @@ class ListOrganizationMembershipsRequest(BaseModel):
     ] = None
     r"""Returns users with the specified web3 wallet addresses.
     Accepts up to 100 web3 wallet addresses.
-    Any web3 wallet addressed not found are ignored.
+    Any web3 wallet addresses not found are ignored.
     """
 
     role: Annotated[
@@ -145,7 +145,7 @@ class ListOrganizationMembershipsRequest(BaseModel):
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = None
     r"""Returns users that match the given query.
-    For possible matches, we check the email addresses, phone numbers, usernames, web3 wallets, user ids, first and last names.
+    For possible matches, we check the email addresses, phone numbers, usernames, web3 wallets, user IDs, first and last names.
     The query value doesn't need to match the exact value you are looking for, it is capable of partial matches as well.
     """
 

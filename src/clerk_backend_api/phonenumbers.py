@@ -89,7 +89,7 @@ class PhoneNumbers(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="CreatePhoneNumber",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -194,7 +194,7 @@ class PhoneNumbers(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="CreatePhoneNumber",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -285,7 +285,7 @@ class PhoneNumbers(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="GetPhoneNumber",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -376,7 +376,7 @@ class PhoneNumbers(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="GetPhoneNumber",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -467,7 +467,7 @@ class PhoneNumbers(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="DeletePhoneNumber",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -558,7 +558,7 @@ class PhoneNumbers(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="DeletePhoneNumber",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -602,7 +602,9 @@ class PhoneNumbers(BaseSDK):
         :param phone_number_id: The ID of the phone number to update
         :param verified: The phone number will be marked as verified.
         :param primary: Set this phone number as the primary phone number for the user.
-        :param reserved_for_second_factor: Set this phone number as reserved for multi-factor authentication. The phone number must also be verified. If there are no other reserved second factors, the phone number will be set as the default second factor.
+        :param reserved_for_second_factor: Set this phone number as reserved for multi-factor authentication.
+            The phone number must also be verified.
+            If there are no other reserved second factors, the phone number will be set as the default second factor.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -667,7 +669,7 @@ class PhoneNumbers(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="UpdatePhoneNumber",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -711,7 +713,9 @@ class PhoneNumbers(BaseSDK):
         :param phone_number_id: The ID of the phone number to update
         :param verified: The phone number will be marked as verified.
         :param primary: Set this phone number as the primary phone number for the user.
-        :param reserved_for_second_factor: Set this phone number as reserved for multi-factor authentication. The phone number must also be verified. If there are no other reserved second factors, the phone number will be set as the default second factor.
+        :param reserved_for_second_factor: Set this phone number as reserved for multi-factor authentication.
+            The phone number must also be verified.
+            If there are no other reserved second factors, the phone number will be set as the default second factor.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -776,7 +780,7 @@ class PhoneNumbers(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="UpdatePhoneNumber",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,

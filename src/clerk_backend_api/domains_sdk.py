@@ -69,7 +69,7 @@ class DomainsSDK(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="ListDomains",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -148,7 +148,7 @@ class DomainsSDK(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="ListDomains",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -242,7 +242,7 @@ class DomainsSDK(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="AddDomain",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -340,7 +340,7 @@ class DomainsSDK(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="AddDomain",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -430,7 +430,7 @@ class DomainsSDK(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="DeleteDomain",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -520,7 +520,7 @@ class DomainsSDK(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="DeleteDomain",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -567,9 +567,14 @@ class DomainsSDK(BaseSDK):
         update the instance's home origin, affecting the default application paths.
 
         :param domain_id: The ID of the domain that will be updated.
-        :param name: The new domain name. For development instances, can contain the port, i.e `myhostname:3000`. For production instances, must be a valid FQDN, i.e `mysite.com`. Cannot contain protocol scheme.
-        :param proxy_url: The full URL of the proxy that will forward requests to Clerk's Frontend API. Can only be updated for production instances.
-        :param is_secondary: Whether this is a domain for a secondary app, meaning that any subdomain provided is significant and will be stored as part of the domain. This is useful for supporting multiple apps (one primary and multiple secondaries) on the same root domain (eTLD+1).
+        :param name: The new domain name. For development instances, can contain the port,
+            i.e `myhostname:3000`. For production instances, must be a valid FQDN,
+            i.e `mysite.com`. Cannot contain protocol scheme.
+        :param proxy_url: The full URL of the proxy that will forward requests to Clerk's Frontend API.
+            Can only be updated for production instances.
+        :param is_secondary: Whether this is a domain for a secondary app, meaning that any subdomain provided is significant and
+            will be stored as part of the domain. This is useful for supporting multiple apps (one primary and
+            multiple secondaries) on the same root domain (eTLD+1).
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -634,7 +639,7 @@ class DomainsSDK(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="UpdateDomain",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -681,9 +686,14 @@ class DomainsSDK(BaseSDK):
         update the instance's home origin, affecting the default application paths.
 
         :param domain_id: The ID of the domain that will be updated.
-        :param name: The new domain name. For development instances, can contain the port, i.e `myhostname:3000`. For production instances, must be a valid FQDN, i.e `mysite.com`. Cannot contain protocol scheme.
-        :param proxy_url: The full URL of the proxy that will forward requests to Clerk's Frontend API. Can only be updated for production instances.
-        :param is_secondary: Whether this is a domain for a secondary app, meaning that any subdomain provided is significant and will be stored as part of the domain. This is useful for supporting multiple apps (one primary and multiple secondaries) on the same root domain (eTLD+1).
+        :param name: The new domain name. For development instances, can contain the port,
+            i.e `myhostname:3000`. For production instances, must be a valid FQDN,
+            i.e `mysite.com`. Cannot contain protocol scheme.
+        :param proxy_url: The full URL of the proxy that will forward requests to Clerk's Frontend API.
+            Can only be updated for production instances.
+        :param is_secondary: Whether this is a domain for a secondary app, meaning that any subdomain provided is significant and
+            will be stored as part of the domain. This is useful for supporting multiple apps (one primary and
+            multiple secondaries) on the same root domain (eTLD+1).
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -748,7 +758,7 @@ class DomainsSDK(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="UpdateDomain",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,

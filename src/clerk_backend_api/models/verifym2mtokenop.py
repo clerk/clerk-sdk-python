@@ -43,7 +43,7 @@ class VerifyM2MTokenM2mResponseResponseBodyData(BaseModel):
     errors: List[VerifyM2MTokenM2mErrors]
 
 
-@dataclass(frozen=True)
+@dataclass(unsafe_hash=True)
 class VerifyM2MTokenM2mResponseResponseBody(ClerkBaseError):
     r"""404 Not Found"""
 
@@ -78,7 +78,7 @@ class VerifyM2MTokenM2mResponseBodyData(BaseModel):
     errors: List[VerifyM2MTokenErrors]
 
 
-@dataclass(frozen=True)
+@dataclass(unsafe_hash=True)
 class VerifyM2MTokenM2mResponseBody(ClerkBaseError):
     r"""400 Bad Request"""
 

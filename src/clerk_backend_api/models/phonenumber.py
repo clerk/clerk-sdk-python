@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 from .identificationlink import IdentificationLink, IdentificationLinkTypedDict
-from clerk_backend_api import utils
+from clerk_backend_api import models, utils
 from clerk_backend_api.types import (
     BaseModel,
     Nullable,
@@ -12,7 +12,7 @@ from clerk_backend_api.types import (
 )
 from clerk_backend_api.utils import get_discriminator, validate_open_enum
 from enum import Enum
-from pydantic import Discriminator, Tag, model_serializer
+from pydantic import Discriminator, Tag, field_serializer, model_serializer
 from pydantic.functional_validators import PlainValidator
 from typing import List, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
@@ -59,6 +59,15 @@ class VerificationAdmin(BaseModel):
     object: Optional[VerificationAdminVerificationPhoneNumberObject] = None
 
     verified_at_client: OptionalNullable[str] = UNSET
+
+    @field_serializer("strategy")
+    def serialize_strategy(self, value):
+        if isinstance(value, str):
+            try:
+                return models.VerificationAdminVerificationStrategy(value)
+            except ValueError:
+                return value
+        return value
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
@@ -131,6 +140,15 @@ class VerificationOTP(BaseModel):
     object: Optional[VerificationOtpVerificationObject] = None
 
     verified_at_client: OptionalNullable[str] = UNSET
+
+    @field_serializer("strategy")
+    def serialize_strategy(self, value):
+        if isinstance(value, str):
+            try:
+                return models.VerificationOtpVerificationStrategy(value)
+            except ValueError:
+                return value
+        return value
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

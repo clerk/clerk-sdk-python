@@ -11,3 +11,4 @@ Deleted Object
 | `id`                      | *Optional[str]*           | :heavy_minus_sign:        | N/A                       | deleted_object_id_example |
 | `slug`                    | *Optional[str]*           | :heavy_minus_sign:        | N/A                       | deleted-object-slug       |
 | `deleted`                 | *bool*                    | :heavy_check_mark:        | N/A                       | true                      |
+| `external_id`             | *Optional[str]*           | :heavy_minus_sign:        | N/A                       |                           |

@@ -3,7 +3,7 @@
 from dataclasses import dataclass
 
 
-@dataclass(frozen=True)
+@dataclass(unsafe_hash=True)
 class NoResponseError(Exception):
     """Error raised when no HTTP response is received from the server."""
 

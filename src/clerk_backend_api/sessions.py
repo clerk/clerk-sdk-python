@@ -33,9 +33,14 @@ class Sessions(BaseSDK):
         :param client_id: List sessions for the given client
         :param user_id: List sessions for the given user
         :param status: Filter sessions by the provided status
-        :param paginated: Whether to paginate the results. If true, the results will be paginated. If false, the results will not be paginated.
-        :param limit: Applies a limit to the number of results returned. Can be used for paginating the results together with `offset`.
-        :param offset: Skip the first `offset` results when paginating. Needs to be an integer greater or equal to zero. To be used in conjunction with `limit`.
+        :param paginated: Whether to paginate the results.
+            If true, the results will be paginated.
+            If false, the results will not be paginated.
+        :param limit: Applies a limit to the number of results returned.
+            Can be used for paginating the results together with `offset`.
+        :param offset: Skip the first `offset` results when paginating.
+            Needs to be an integer greater or equal to zero.
+            To be used in conjunction with `limit`.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -93,7 +98,7 @@ class Sessions(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="GetSessionList",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -140,9 +145,14 @@ class Sessions(BaseSDK):
         :param client_id: List sessions for the given client
         :param user_id: List sessions for the given user
         :param status: Filter sessions by the provided status
-        :param paginated: Whether to paginate the results. If true, the results will be paginated. If false, the results will not be paginated.
-        :param limit: Applies a limit to the number of results returned. Can be used for paginating the results together with `offset`.
-        :param offset: Skip the first `offset` results when paginating. Needs to be an integer greater or equal to zero. To be used in conjunction with `limit`.
+        :param paginated: Whether to paginate the results.
+            If true, the results will be paginated.
+            If false, the results will not be paginated.
+        :param limit: Applies a limit to the number of results returned.
+            Can be used for paginating the results together with `offset`.
+        :param offset: Skip the first `offset` results when paginating.
+            Needs to be an integer greater or equal to zero.
+            To be used in conjunction with `limit`.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -200,7 +210,7 @@ class Sessions(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="GetSessionList",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -302,7 +312,7 @@ class Sessions(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="createSession",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -406,7 +416,7 @@ class Sessions(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="createSession",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -497,7 +507,7 @@ class Sessions(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="GetSession",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -586,7 +596,7 @@ class Sessions(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="GetSession",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -630,8 +640,9 @@ class Sessions(BaseSDK):
         are validation errors, which signals the SDKs to fall back to the handshake flow.
 
         :param session_id: The ID of the session
-        :param expired_token: The JWT that is sent via the `__session` cookie from your frontend. Note: this JWT must be associated with the supplied session ID.
-        :param refresh_token: The JWT that is sent via the `__session` cookie from your frontend.
+        :param expired_token: The JWT that is sent via the `__session` cookie from your frontend.
+            Note: this JWT must be associated with the supplied session ID.
+        :param refresh_token: The refresh token from the `__refresh` cookie set via FAPI's handshake flow.
         :param request_origin: The origin of the request.
         :param request_headers: The headers of the request.
         :param format_: The format of the response.
@@ -703,7 +714,7 @@ class Sessions(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="RefreshSession",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -747,8 +758,9 @@ class Sessions(BaseSDK):
         are validation errors, which signals the SDKs to fall back to the handshake flow.
 
         :param session_id: The ID of the session
-        :param expired_token: The JWT that is sent via the `__session` cookie from your frontend. Note: this JWT must be associated with the supplied session ID.
-        :param refresh_token: The JWT that is sent via the `__session` cookie from your frontend.
+        :param expired_token: The JWT that is sent via the `__session` cookie from your frontend.
+            Note: this JWT must be associated with the supplied session ID.
+        :param refresh_token: The refresh token from the `__refresh` cookie set via FAPI's handshake flow.
         :param request_origin: The origin of the request.
         :param request_headers: The headers of the request.
         :param format_: The format of the response.
@@ -820,7 +832,7 @@ class Sessions(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="RefreshSession",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -910,7 +922,7 @@ class Sessions(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="RevokeSession",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -1000,7 +1012,7 @@ class Sessions(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="RevokeSession",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -1101,7 +1113,7 @@ class Sessions(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="CreateSessionToken",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -1204,7 +1216,7 @@ class Sessions(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="CreateSessionToken",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -1240,13 +1252,13 @@ class Sessions(BaseSDK):
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
     ) -> Optional[models.CreateSessionTokenFromTemplateResponseBody]:
-        r"""Create a session token from a jwt template
+        r"""Create a session token from a JWT template
 
-        Creates a JSON Web Token(JWT) based on a session and a JWT Template name defined for your instance
+        Creates a JSON Web Token (JWT) based on a session and a JWT Template name defined for your instance
 
         :param session_id: The ID of the session
-        :param template_name: The name of the JWT Template defined in your instance (e.g. `custom_hasura`).
-        :param expires_in_seconds: Use this parameter to override the JWT token lifetime.
+        :param template_name: The name of the JWT template defined in your instance (e.g. `custom_hasura`).
+        :param expires_in_seconds: Use this parameter to override the JWT lifetime.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1310,7 +1322,7 @@ class Sessions(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="CreateSessionTokenFromTemplate",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -1346,13 +1358,13 @@ class Sessions(BaseSDK):
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
     ) -> Optional[models.CreateSessionTokenFromTemplateResponseBody]:
-        r"""Create a session token from a jwt template
+        r"""Create a session token from a JWT template
 
-        Creates a JSON Web Token(JWT) based on a session and a JWT Template name defined for your instance
+        Creates a JSON Web Token (JWT) based on a session and a JWT Template name defined for your instance
 
         :param session_id: The ID of the session
-        :param template_name: The name of the JWT Template defined in your instance (e.g. `custom_hasura`).
-        :param expires_in_seconds: Use this parameter to override the JWT token lifetime.
+        :param template_name: The name of the JWT template defined in your instance (e.g. `custom_hasura`).
+        :param expires_in_seconds: Use this parameter to override the JWT lifetime.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1416,7 +1428,7 @@ class Sessions(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="CreateSessionTokenFromTemplate",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,

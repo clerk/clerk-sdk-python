@@ -23,6 +23,7 @@ class OrganizationMembershipPublicUserDataTypedDict(TypedDict):
     image_url: str
     has_image: bool
     identifier: NotRequired[Nullable[str]]
+    username: NotRequired[Nullable[str]]
 
 
 class OrganizationMembershipPublicUserData(BaseModel):
@@ -47,10 +48,18 @@ class OrganizationMembershipPublicUserData(BaseModel):
 
     identifier: OptionalNullable[str] = UNSET
 
+    username: OptionalNullable[str] = UNSET
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["identifier"]
-        nullable_fields = ["first_name", "last_name", "profile_image_url", "identifier"]
+        optional_fields = ["identifier", "username"]
+        nullable_fields = [
+            "first_name",
+            "last_name",
+            "profile_image_url",
+            "identifier",
+            "username",
+        ]
         null_default_fields = []
 
         serialized = handler(self)

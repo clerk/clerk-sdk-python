@@ -29,6 +29,7 @@ class CreateOrganizationRequestBodyTypedDict(TypedDict):
     r"""A slug for the new organization.
     Can contain only lowercase alphanumeric characters and the dash \"-\".
     Must be unique for the instance.
+    This field should only be included when slugs are enabled in the organization settings, refer to our [documentation](https://clerk.com/docs/guides/organizations/overview#organization-slugs).
     """
     max_allowed_memberships: NotRequired[Nullable[int]]
     r"""The maximum number of memberships allowed for this organization"""
@@ -56,6 +57,7 @@ class CreateOrganizationRequestBody(BaseModel):
     r"""A slug for the new organization.
     Can contain only lowercase alphanumeric characters and the dash \"-\".
     Must be unique for the instance.
+    This field should only be included when slugs are enabled in the organization settings, refer to our [documentation](https://clerk.com/docs/guides/organizations/overview#organization-slugs).
     """
 
     max_allowed_memberships: OptionalNullable[int] = UNSET

@@ -1,6 +1,6 @@
 # PlanPeriod
 
-The billing period for this subscription.
+The billing period for this subscription item.
 
 
 ## Values

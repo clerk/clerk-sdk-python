@@ -68,7 +68,7 @@ class Webhooks(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="CreateSvixApp",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -150,7 +150,7 @@ class Webhooks(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="CreateSvixApp",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -232,7 +232,7 @@ class Webhooks(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="DeleteSvixApp",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -314,7 +314,7 @@ class Webhooks(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="DeleteSvixApp",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -347,7 +347,7 @@ class Webhooks(BaseSDK):
     ) -> Optional[models.SvixURL]:
         r"""Create a Svix Dashboard URL
 
-        Generate a new url for accessing the Svix's management dashboard for that particular instance
+        Generate a new URL for accessing the Svix's management dashboard for that particular instance
 
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -396,7 +396,7 @@ class Webhooks(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="GenerateSvixAuthURL",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -429,7 +429,7 @@ class Webhooks(BaseSDK):
     ) -> Optional[models.SvixURL]:
         r"""Create a Svix Dashboard URL
 
-        Generate a new url for accessing the Svix's management dashboard for that particular instance
+        Generate a new URL for accessing the Svix's management dashboard for that particular instance
 
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -478,7 +478,7 @@ class Webhooks(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="GenerateSvixAuthURL",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,

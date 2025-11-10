@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 from .identificationlink import IdentificationLink, IdentificationLinkTypedDict
-from clerk_backend_api import utils
+from clerk_backend_api import models, utils
 from clerk_backend_api.types import (
     BaseModel,
     Nullable,
@@ -12,7 +12,7 @@ from clerk_backend_api.types import (
 )
 from clerk_backend_api.utils import get_discriminator, validate_open_enum
 from enum import Enum
-from pydantic import Discriminator, Tag, model_serializer
+from pydantic import Discriminator, Tag, field_serializer, model_serializer
 from pydantic.functional_validators import PlainValidator
 from typing import List, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
@@ -121,7 +121,6 @@ class VerificationSamlErrorClerkErrorTypedDict(TypedDict):
     long_message: str
     code: str
     meta: NotRequired[ClerkErrorErrorMetaTypedDict]
-    clerk_trace_id: NotRequired[str]
 
 
 class VerificationSamlErrorClerkError(BaseModel):
@@ -132,8 +131,6 @@ class VerificationSamlErrorClerkError(BaseModel):
     code: str
 
     meta: Optional[ClerkErrorErrorMeta] = None
-
-    clerk_trace_id: Optional[str] = None
 
 
 VerificationErrorTypedDict = VerificationSamlErrorClerkErrorTypedDict
@@ -252,6 +249,15 @@ class Ticket(BaseModel):
 
     verified_at_client: OptionalNullable[str] = UNSET
 
+    @field_serializer("strategy")
+    def serialize_strategy(self, value):
+        if isinstance(value, str):
+            try:
+                return models.VerificationTicketVerificationStrategy(value)
+            except ValueError:
+                return value
+        return value
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = ["object", "verified_at_client"]
@@ -305,7 +311,6 @@ class ErrorClerkErrorTypedDict(TypedDict):
     long_message: str
     code: str
     meta: NotRequired[ErrorMetaTypedDict]
-    clerk_trace_id: NotRequired[str]
 
 
 class ErrorClerkError(BaseModel):
@@ -316,8 +321,6 @@ class ErrorClerkError(BaseModel):
     code: str
 
     meta: Optional[ErrorMeta] = None
-
-    clerk_trace_id: Optional[str] = None
 
 
 ErrorTypedDict = ErrorClerkErrorTypedDict
@@ -416,6 +419,15 @@ class Admin(BaseModel):
 
     verified_at_client: OptionalNullable[str] = UNSET
 
+    @field_serializer("strategy")
+    def serialize_strategy(self, value):
+        if isinstance(value, str):
+            try:
+                return models.VerificationStrategy(value)
+            except ValueError:
+                return value
+        return value
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = ["object", "verified_at_client"]
@@ -485,6 +497,15 @@ class Otp(BaseModel):
     object: Optional[VerificationObject] = None
 
     verified_at_client: OptionalNullable[str] = UNSET
+
+    @field_serializer("strategy")
+    def serialize_strategy(self, value):
+        if isinstance(value, str):
+            try:
+                return models.Strategy(value)
+            except ValueError:
+                return value
+        return value
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
@@ -601,6 +622,15 @@ class EmailAddress(BaseModel):
     r"""Indicates whether this email address domain matches an active enterprise connection.
 
     """
+
+    @field_serializer("object")
+    def serialize_object(self, value):
+        if isinstance(value, str):
+            try:
+                return models.EmailAddressObject(value)
+            except ValueError:
+                return value
+        return value
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

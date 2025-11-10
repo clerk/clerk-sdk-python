@@ -2,6 +2,15 @@
 
 from __future__ import annotations
 from .commercemoneyresponse import CommerceMoneyResponse, CommerceMoneyResponseTypedDict
+from .commercepayerresponse import CommercePayerResponse, CommercePayerResponseTypedDict
+from .commercepaymentmethodresponse import (
+    CommercePaymentMethodResponse,
+    CommercePaymentMethodResponseTypedDict,
+)
+from .commercesubscriptioncreditresponse import (
+    CommerceSubscriptionCreditResponse,
+    CommerceSubscriptionCreditResponseTypedDict,
+)
 from .featureresponse import FeatureResponse, FeatureResponseTypedDict
 from clerk_backend_api.types import (
     BaseModel,
@@ -10,6 +19,7 @@ from clerk_backend_api.types import (
     UNSET,
     UNSET_SENTINEL,
 )
+from datetime import date
 from enum import Enum
 import pydantic
 from pydantic import model_serializer
@@ -27,89 +37,13 @@ class CommerceSubscriptionItemStatus(str, Enum):
     r"""Current status of the subscription item."""
 
     ACTIVE = "active"
+    CANCELED = "canceled"
+    EXPIRED = "expired"
     ENDED = "ended"
     PAST_DUE = "past_due"
     UPCOMING = "upcoming"
     INCOMPLETE = "incomplete"
     ABANDONED = "abandoned"
-
-
-class CommerceSubscriptionItemAmountTypedDict(TypedDict):
-    r"""Credit amount."""
-
-    amount: int
-    r"""The amount in cents."""
-    amount_formatted: str
-    r"""The formatted amount as a string (e.g., \"$49.99\")."""
-    currency: str
-    r"""The currency code (e.g., \"USD\")."""
-    currency_symbol: str
-    r"""The currency symbol (e.g., \"$\")."""
-
-
-class CommerceSubscriptionItemAmount(BaseModel):
-    r"""Credit amount."""
-
-    amount: int
-    r"""The amount in cents."""
-
-    amount_formatted: str
-    r"""The formatted amount as a string (e.g., \"$49.99\")."""
-
-    currency: str
-    r"""The currency code (e.g., \"USD\")."""
-
-    currency_symbol: str
-    r"""The currency symbol (e.g., \"$\")."""
-
-
-class CreditTypedDict(TypedDict):
-    r"""Credit information (only available in PaymentAttempt events)."""
-
-    amount: NotRequired[Nullable[CommerceSubscriptionItemAmountTypedDict]]
-    r"""Credit amount."""
-    cycle_remaining_percent: NotRequired[float]
-    r"""Percentage of the billing cycle remaining."""
-
-
-class Credit(BaseModel):
-    r"""Credit information (only available in PaymentAttempt events)."""
-
-    amount: OptionalNullable[CommerceSubscriptionItemAmount] = UNSET
-    r"""Credit amount."""
-
-    cycle_remaining_percent: Optional[float] = None
-    r"""Percentage of the billing cycle remaining."""
-
-    @model_serializer(mode="wrap")
-    def serialize_model(self, handler):
-        optional_fields = ["amount", "cycle_remaining_percent"]
-        nullable_fields = ["amount"]
-        null_default_fields = []
-
-        serialized = handler(self)
-
-        m = {}
-
-        for n, f in type(self).model_fields.items():
-            k = f.alias or n
-            val = serialized.get(k)
-            serialized.pop(k, None)
-
-            optional_nullable = k in optional_fields and k in nullable_fields
-            is_set = (
-                self.__pydantic_fields_set__.intersection({n})
-                or k in null_default_fields
-            )  # pylint: disable=no-member
-
-            if val is not None and val != UNSET_SENTINEL:
-                m[k] = val
-            elif val != UNSET_SENTINEL and (
-                not k in optional_fields or (optional_nullable and is_set)
-            ):
-                m[k] = val
-
-        return m
 
 
 class CommerceSubscriptionItemPlanObject(str, Enum):
@@ -118,36 +52,70 @@ class CommerceSubscriptionItemPlanObject(str, Enum):
     COMMERCE_PLAN = "commerce_plan"
 
 
+class CommerceSubscriptionItemAnnualMonthlyFeeTypedDict(TypedDict):
+    amount: int
+    r"""The amount in cents."""
+    amount_formatted: str
+    r"""The formatted amount as a string (e.g., \"$49.99\")."""
+    currency: str
+    r"""The currency code (e.g., \"USD\")."""
+    currency_symbol: str
+    r"""The currency symbol (e.g., \"$\")."""
+
+
+class CommerceSubscriptionItemAnnualMonthlyFee(BaseModel):
+    amount: int
+    r"""The amount in cents."""
+
+    amount_formatted: str
+    r"""The formatted amount as a string (e.g., \"$49.99\")."""
+
+    currency: str
+    r"""The currency code (e.g., \"USD\")."""
+
+    currency_symbol: str
+    r"""The currency symbol (e.g., \"$\")."""
+
+
+class CommerceSubscriptionItemAnnualFeeTypedDict(TypedDict):
+    amount: int
+    r"""The amount in cents."""
+    amount_formatted: str
+    r"""The formatted amount as a string (e.g., \"$49.99\")."""
+    currency: str
+    r"""The currency code (e.g., \"USD\")."""
+    currency_symbol: str
+    r"""The currency symbol (e.g., \"$\")."""
+
+
+class CommerceSubscriptionItemAnnualFee(BaseModel):
+    amount: int
+    r"""The amount in cents."""
+
+    amount_formatted: str
+    r"""The formatted amount as a string (e.g., \"$49.99\")."""
+
+    currency: str
+    r"""The currency code (e.g., \"USD\")."""
+
+    currency_symbol: str
+    r"""The currency symbol (e.g., \"$\")."""
+
+
 class PlanTypedDict(TypedDict):
-    r"""The associated commerce plan."""
+    r"""The associated plan."""
 
     object: CommerceSubscriptionItemPlanObject
     r"""String representing the object's type. Objects of the same type share the same value."""
     id: str
-    r"""Unique identifier for the commerce plan."""
+    r"""Unique identifier for the plan."""
     name: str
-    r"""The name of the commerce plan."""
+    r"""The name of the plan."""
     fee: CommerceMoneyResponseTypedDict
-    annual_monthly_fee: CommerceMoneyResponseTypedDict
-    annual_fee: CommerceMoneyResponseTypedDict
-    amount: int
-    r"""The amount in cents for the plan."""
-    amount_formatted: str
-    r"""The formatted amount as a string (e.g., \"$49.99\")."""
-    annual_monthly_amount: int
-    r"""The monthly amount in cents when billed annually."""
-    annual_monthly_amount_formatted: str
-    r"""The formatted annual monthly amount as a string."""
-    annual_amount: int
-    r"""The total annual amount in cents."""
-    annual_amount_formatted: str
-    r"""The formatted annual amount as a string."""
-    currency_symbol: str
-    r"""The currency symbol (e.g., \"$\")."""
-    currency: str
-    r"""The currency code (e.g., \"USD\")."""
-    description: str
-    r"""The description of the commerce plan."""
+    annual_monthly_fee: Nullable[CommerceSubscriptionItemAnnualMonthlyFeeTypedDict]
+    annual_fee: Nullable[CommerceSubscriptionItemAnnualFeeTypedDict]
+    description: Nullable[str]
+    r"""The description of the plan."""
     product_id: str
     r"""The ID of the product this plan belongs to."""
     is_default: bool
@@ -158,70 +126,40 @@ class PlanTypedDict(TypedDict):
     r"""Whether this plan is publicly visible."""
     has_base_fee: bool
     r"""Whether this plan has a base fee."""
-    payer_type: List[str]
-    r"""The types of payers that can use this plan."""
     for_payer_type: str
     r"""The payer type this plan is designed for."""
     slug: str
     r"""The URL-friendly slug for the plan."""
-    avatar_url: str
+    avatar_url: Nullable[str]
     r"""The URL of the plan's avatar image."""
-    features: List[FeatureResponseTypedDict]
-    r"""The features included in this plan."""
-    period: NotRequired[str]
-    r"""The billing period for the plan."""
-    interval: NotRequired[int]
-    r"""The billing interval."""
-    free_trial_enabled: NotRequired[bool]
+    free_trial_enabled: bool
     r"""Whether free trial is enabled for this plan."""
-    free_trial_days: NotRequired[Nullable[int]]
+    free_trial_days: Nullable[int]
     r"""Number of free trial days for this plan."""
+    features: NotRequired[List[FeatureResponseTypedDict]]
+    r"""The features included in this plan."""
 
 
 class Plan(BaseModel):
-    r"""The associated commerce plan."""
+    r"""The associated plan."""
 
     object: CommerceSubscriptionItemPlanObject
     r"""String representing the object's type. Objects of the same type share the same value."""
 
     id: str
-    r"""Unique identifier for the commerce plan."""
+    r"""Unique identifier for the plan."""
 
     name: str
-    r"""The name of the commerce plan."""
+    r"""The name of the plan."""
 
     fee: CommerceMoneyResponse
 
-    annual_monthly_fee: CommerceMoneyResponse
+    annual_monthly_fee: Nullable[CommerceSubscriptionItemAnnualMonthlyFee]
 
-    annual_fee: CommerceMoneyResponse
+    annual_fee: Nullable[CommerceSubscriptionItemAnnualFee]
 
-    amount: int
-    r"""The amount in cents for the plan."""
-
-    amount_formatted: str
-    r"""The formatted amount as a string (e.g., \"$49.99\")."""
-
-    annual_monthly_amount: int
-    r"""The monthly amount in cents when billed annually."""
-
-    annual_monthly_amount_formatted: str
-    r"""The formatted annual monthly amount as a string."""
-
-    annual_amount: int
-    r"""The total annual amount in cents."""
-
-    annual_amount_formatted: str
-    r"""The formatted annual amount as a string."""
-
-    currency_symbol: str
-    r"""The currency symbol (e.g., \"$\")."""
-
-    currency: str
-    r"""The currency code (e.g., \"USD\")."""
-
-    description: str
-    r"""The description of the commerce plan."""
+    description: Nullable[str]
+    r"""The description of the plan."""
 
     product_id: str
     r"""The ID of the product this plan belongs to."""
@@ -238,42 +176,34 @@ class Plan(BaseModel):
     has_base_fee: bool
     r"""Whether this plan has a base fee."""
 
-    payer_type: List[str]
-    r"""The types of payers that can use this plan."""
-
     for_payer_type: str
     r"""The payer type this plan is designed for."""
 
     slug: str
     r"""The URL-friendly slug for the plan."""
 
-    avatar_url: str
+    avatar_url: Nullable[str]
     r"""The URL of the plan's avatar image."""
 
-    features: List[FeatureResponse]
-    r"""The features included in this plan."""
-
-    period: Optional[str] = None
-    r"""The billing period for the plan."""
-
-    interval: Optional[int] = None
-    r"""The billing interval."""
-
-    free_trial_enabled: Optional[bool] = None
+    free_trial_enabled: bool
     r"""Whether free trial is enabled for this plan."""
 
-    free_trial_days: OptionalNullable[int] = UNSET
+    free_trial_days: Nullable[int]
     r"""Number of free trial days for this plan."""
+
+    features: Optional[List[FeatureResponse]] = None
+    r"""The features included in this plan."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = [
-            "period",
-            "interval",
-            "free_trial_enabled",
+        optional_fields = ["features"]
+        nullable_fields = [
+            "annual_monthly_fee",
+            "annual_fee",
+            "description",
+            "avatar_url",
             "free_trial_days",
         ]
-        nullable_fields = ["free_trial_days"]
         null_default_fields = []
 
         serialized = handler(self)
@@ -302,222 +232,13 @@ class Plan(BaseModel):
 
 
 class PlanPeriod(str, Enum):
-    r"""The billing period for this subscription."""
+    r"""The billing period for this subscription item."""
 
     MONTH = "month"
     ANNUAL = "annual"
 
 
-class CommerceSubscriptionItemPaymentSourceObject(str, Enum):
-    r"""String representing the object's type. Objects of the same type share the same value."""
-
-    COMMERCE_SOURCE = "commerce_source"
-
-
-class PaymentMethod(str, Enum):
-    r"""The payment method type."""
-
-    CARD = "card"
-    APPLE_PAY = "apple_pay"
-    GOOGLE_PAY = "google_pay"
-
-
-class CommerceSubscriptionItemPaymentSourceStatus(str, Enum):
-    r"""Status of the payment source."""
-
-    ACTIVE = "active"
-    DISCONNECTED = "disconnected"
-
-
-class PaymentSourceTypedDict(TypedDict):
-    r"""The payment source associated with this subscription."""
-
-    object: CommerceSubscriptionItemPaymentSourceObject
-    r"""String representing the object's type. Objects of the same type share the same value."""
-    id: str
-    r"""Unique identifier for the payment source."""
-    payer_id: str
-    r"""Unique identifier for the payer."""
-    payment_method: PaymentMethod
-    r"""The payment method type."""
-    gateway: str
-    r"""The payment gateway."""
-    gateway_external_id: str
-    r"""External ID in the payment gateway."""
-    last4: str
-    r"""Last 4 digits of the card (for card payment sources)."""
-    status: CommerceSubscriptionItemPaymentSourceStatus
-    r"""Status of the payment source."""
-    wallet_type: str
-    r"""Type of wallet (if applicable)."""
-    card_type: str
-    r"""Type of card (if applicable)."""
-    created_at: int
-    r"""Unix timestamp (in milliseconds) when the payment source was created."""
-    updated_at: int
-    r"""Unix timestamp (in milliseconds) when the payment source was last updated."""
-    is_default: NotRequired[Nullable[bool]]
-    r"""Whether this is the default payment source for the payer."""
-    gateway_external_account_id: NotRequired[Nullable[str]]
-    r"""External account ID in the payment gateway."""
-    expiry_year: NotRequired[int]
-    r"""Card expiration year (for card payment sources)."""
-    expiry_month: NotRequired[int]
-    r"""Card expiration month (for card payment sources)."""
-    is_removable: NotRequired[Nullable[bool]]
-    r"""Whether this payment source can be removed."""
-
-
-class PaymentSource(BaseModel):
-    r"""The payment source associated with this subscription."""
-
-    object: CommerceSubscriptionItemPaymentSourceObject
-    r"""String representing the object's type. Objects of the same type share the same value."""
-
-    id: str
-    r"""Unique identifier for the payment source."""
-
-    payer_id: str
-    r"""Unique identifier for the payer."""
-
-    payment_method: PaymentMethod
-    r"""The payment method type."""
-
-    gateway: str
-    r"""The payment gateway."""
-
-    gateway_external_id: str
-    r"""External ID in the payment gateway."""
-
-    last4: str
-    r"""Last 4 digits of the card (for card payment sources)."""
-
-    status: CommerceSubscriptionItemPaymentSourceStatus
-    r"""Status of the payment source."""
-
-    wallet_type: str
-    r"""Type of wallet (if applicable)."""
-
-    card_type: str
-    r"""Type of card (if applicable)."""
-
-    created_at: int
-    r"""Unix timestamp (in milliseconds) when the payment source was created."""
-
-    updated_at: int
-    r"""Unix timestamp (in milliseconds) when the payment source was last updated."""
-
-    is_default: OptionalNullable[bool] = UNSET
-    r"""Whether this is the default payment source for the payer."""
-
-    gateway_external_account_id: OptionalNullable[str] = UNSET
-    r"""External account ID in the payment gateway."""
-
-    expiry_year: Optional[int] = None
-    r"""Card expiration year (for card payment sources)."""
-
-    expiry_month: Optional[int] = None
-    r"""Card expiration month (for card payment sources)."""
-
-    is_removable: OptionalNullable[bool] = UNSET
-    r"""Whether this payment source can be removed."""
-
-    @model_serializer(mode="wrap")
-    def serialize_model(self, handler):
-        optional_fields = [
-            "is_default",
-            "gateway_external_account_id",
-            "expiry_year",
-            "expiry_month",
-            "is_removable",
-        ]
-        nullable_fields = ["is_default", "gateway_external_account_id", "is_removable"]
-        null_default_fields = []
-
-        serialized = handler(self)
-
-        m = {}
-
-        for n, f in type(self).model_fields.items():
-            k = f.alias or n
-            val = serialized.get(k)
-            serialized.pop(k, None)
-
-            optional_nullable = k in optional_fields and k in nullable_fields
-            is_set = (
-                self.__pydantic_fields_set__.intersection({n})
-                or k in null_default_fields
-            )  # pylint: disable=no-member
-
-            if val is not None and val != UNSET_SENTINEL:
-                m[k] = val
-            elif val != UNSET_SENTINEL and (
-                not k in optional_fields or (optional_nullable and is_set)
-            ):
-                m[k] = val
-
-        return m
-
-
-class LifetimePaidTypedDict(TypedDict):
-    r"""Total amount paid over the lifetime of this subscription."""
-
-    amount: int
-    r"""The amount in cents."""
-    amount_formatted: str
-    r"""The formatted amount as a string (e.g., \"$49.99\")."""
-    currency: str
-    r"""The currency code (e.g., \"USD\")."""
-    currency_symbol: str
-    r"""The currency symbol (e.g., \"$\")."""
-
-
-class LifetimePaid(BaseModel):
-    r"""Total amount paid over the lifetime of this subscription."""
-
-    amount: int
-    r"""The amount in cents."""
-
-    amount_formatted: str
-    r"""The formatted amount as a string (e.g., \"$49.99\")."""
-
-    currency: str
-    r"""The currency code (e.g., \"USD\")."""
-
-    currency_symbol: str
-    r"""The currency symbol (e.g., \"$\")."""
-
-
-class AmountTypedDict(TypedDict):
-    r"""Current amount for this subscription."""
-
-    amount: int
-    r"""The amount in cents."""
-    amount_formatted: str
-    r"""The formatted amount as a string (e.g., \"$49.99\")."""
-    currency: str
-    r"""The currency code (e.g., \"USD\")."""
-    currency_symbol: str
-    r"""The currency symbol (e.g., \"$\")."""
-
-
-class Amount(BaseModel):
-    r"""Current amount for this subscription."""
-
-    amount: int
-    r"""The amount in cents."""
-
-    amount_formatted: str
-    r"""The formatted amount as a string (e.g., \"$49.99\")."""
-
-    currency: str
-    r"""The currency code (e.g., \"USD\")."""
-
-    currency_symbol: str
-    r"""The currency symbol (e.g., \"$\")."""
-
-
-class CommerceSubscriptionItemNextInvoiceAmountTypedDict(TypedDict):
+class CommerceSubscriptionItemAmountTypedDict(TypedDict):
     r"""Amount for the next payment."""
 
     amount: int
@@ -530,85 +251,7 @@ class CommerceSubscriptionItemNextInvoiceAmountTypedDict(TypedDict):
     r"""The currency symbol (e.g., \"$\")."""
 
 
-class CommerceSubscriptionItemNextInvoiceAmount(BaseModel):
-    r"""Amount for the next payment."""
-
-    amount: int
-    r"""The amount in cents."""
-
-    amount_formatted: str
-    r"""The formatted amount as a string (e.g., \"$49.99\")."""
-
-    currency: str
-    r"""The currency code (e.g., \"USD\")."""
-
-    currency_symbol: str
-    r"""The currency symbol (e.g., \"$\")."""
-
-
-class NextInvoiceTypedDict(TypedDict):
-    r"""Information about the next invoice."""
-
-    amount: NotRequired[Nullable[CommerceSubscriptionItemNextInvoiceAmountTypedDict]]
-    r"""Amount for the next payment."""
-    date_: NotRequired[Nullable[int]]
-    r"""Unix timestamp (in milliseconds) for the next payment date."""
-
-
-class NextInvoice(BaseModel):
-    r"""Information about the next invoice."""
-
-    amount: OptionalNullable[CommerceSubscriptionItemNextInvoiceAmount] = UNSET
-    r"""Amount for the next payment."""
-
-    date_: Annotated[OptionalNullable[int], pydantic.Field(alias="date")] = UNSET
-    r"""Unix timestamp (in milliseconds) for the next payment date."""
-
-    @model_serializer(mode="wrap")
-    def serialize_model(self, handler):
-        optional_fields = ["amount", "date"]
-        nullable_fields = ["amount", "date"]
-        null_default_fields = []
-
-        serialized = handler(self)
-
-        m = {}
-
-        for n, f in type(self).model_fields.items():
-            k = f.alias or n
-            val = serialized.get(k)
-            serialized.pop(k, None)
-
-            optional_nullable = k in optional_fields and k in nullable_fields
-            is_set = (
-                self.__pydantic_fields_set__.intersection({n})
-                or k in null_default_fields
-            )  # pylint: disable=no-member
-
-            if val is not None and val != UNSET_SENTINEL:
-                m[k] = val
-            elif val != UNSET_SENTINEL and (
-                not k in optional_fields or (optional_nullable and is_set)
-            ):
-                m[k] = val
-
-        return m
-
-
-class CommerceSubscriptionItemNextPaymentAmountTypedDict(TypedDict):
-    r"""Amount for the next payment."""
-
-    amount: int
-    r"""The amount in cents."""
-    amount_formatted: str
-    r"""The formatted amount as a string (e.g., \"$49.99\")."""
-    currency: str
-    r"""The currency code (e.g., \"USD\")."""
-    currency_symbol: str
-    r"""The currency symbol (e.g., \"$\")."""
-
-
-class CommerceSubscriptionItemNextPaymentAmount(BaseModel):
+class CommerceSubscriptionItemAmount(BaseModel):
     r"""Amount for the next payment."""
 
     amount: int
@@ -627,7 +270,7 @@ class CommerceSubscriptionItemNextPaymentAmount(BaseModel):
 class NextPaymentTypedDict(TypedDict):
     r"""Information about the next payment."""
 
-    amount: NotRequired[Nullable[CommerceSubscriptionItemNextPaymentAmountTypedDict]]
+    amount: NotRequired[Nullable[CommerceSubscriptionItemAmountTypedDict]]
     r"""Amount for the next payment."""
     date_: NotRequired[Nullable[int]]
     r"""Unix timestamp (in milliseconds) for the next payment date."""
@@ -636,7 +279,7 @@ class NextPaymentTypedDict(TypedDict):
 class NextPayment(BaseModel):
     r"""Information about the next payment."""
 
-    amount: OptionalNullable[CommerceSubscriptionItemNextPaymentAmount] = UNSET
+    amount: OptionalNullable[CommerceSubscriptionItemAmount] = UNSET
     r"""Amount for the next payment."""
 
     date_: Annotated[OptionalNullable[int], pydantic.Field(alias="date")] = UNSET
@@ -673,81 +316,6 @@ class NextPayment(BaseModel):
         return m
 
 
-class CommerceSubscriptionItemPayerObject(str, Enum):
-    r"""String representing the object's type. Objects of the same type share the same value."""
-
-    COMMERCE_PAYER = "commerce_payer"
-
-
-class PayerTypedDict(TypedDict):
-    r"""The payer associated with this subscription."""
-
-    object: CommerceSubscriptionItemPayerObject
-    r"""String representing the object's type. Objects of the same type share the same value."""
-    id: str
-    r"""Unique identifier for the payer."""
-    instance_id: str
-    r"""Unique identifier for the Clerk instance."""
-    first_name: str
-    r"""First name of the payer."""
-    last_name: str
-    r"""Last name of the payer."""
-    email: str
-    r"""Email address of the payer."""
-    image_url: str
-    r"""URL of the payer's image/avatar."""
-    created_at: int
-    r"""Unix timestamp (in milliseconds) when the payer was created."""
-    updated_at: int
-    r"""Unix timestamp (in milliseconds) when the payer was last updated."""
-    user_id: NotRequired[str]
-    r"""User ID for user-type payers."""
-    organization_id: NotRequired[str]
-    r"""Organization ID for org-type payers."""
-    organization_name: NotRequired[str]
-    r"""Organization name for org-type payers."""
-
-
-class Payer(BaseModel):
-    r"""The payer associated with this subscription."""
-
-    object: CommerceSubscriptionItemPayerObject
-    r"""String representing the object's type. Objects of the same type share the same value."""
-
-    id: str
-    r"""Unique identifier for the payer."""
-
-    instance_id: str
-    r"""Unique identifier for the Clerk instance."""
-
-    first_name: str
-    r"""First name of the payer."""
-
-    last_name: str
-    r"""Last name of the payer."""
-
-    email: str
-    r"""Email address of the payer."""
-
-    image_url: str
-    r"""URL of the payer's image/avatar."""
-
-    created_at: int
-    r"""Unix timestamp (in milliseconds) when the payer was created."""
-
-    updated_at: int
-    r"""Unix timestamp (in milliseconds) when the payer was last updated."""
-
-    user_id: Optional[str] = None
-    r"""User ID for user-type payers."""
-
-    organization_id: Optional[str] = None
-    r"""Organization ID for org-type payers."""
-
-    organization_name: Optional[str] = None
-    r"""Organization name for org-type payers."""
-
-
 class CommerceSubscriptionItemTypedDict(TypedDict):
     object: CommerceSubscriptionItemObject
     r"""String representing the object's type. Objects of the same type share the same value."""
@@ -757,48 +325,38 @@ class CommerceSubscriptionItemTypedDict(TypedDict):
     r"""Unique identifier for the Clerk instance."""
     status: CommerceSubscriptionItemStatus
     r"""Current status of the subscription item."""
-    plan_id: str
+    plan_id: Nullable[str]
     r"""Unique identifier for the associated plan."""
-    plan: Nullable[PlanTypedDict]
-    r"""The associated commerce plan."""
     plan_period: PlanPeriod
-    r"""The billing period for this subscription."""
-    payment_source_id: str
-    r"""Unique identifier for the payment source."""
+    r"""The billing period for this subscription item."""
     payer_id: str
     r"""Unique identifier for the payer."""
     is_free_trial: bool
-    r"""Whether this subscription is currently on a free trial."""
-    proration_date: str
-    r"""Date used for proration calculations."""
-    created_at: int
-    r"""Unix timestamp (in milliseconds) when the subscription was created."""
-    updated_at: int
-    r"""Unix timestamp (in milliseconds) when the subscription was last updated."""
-    credit: NotRequired[Nullable[CreditTypedDict]]
-    r"""Credit information (only available in PaymentAttempt events)."""
-    payment_source: NotRequired[Nullable[PaymentSourceTypedDict]]
-    r"""The payment source associated with this subscription."""
-    lifetime_paid: NotRequired[Nullable[LifetimePaidTypedDict]]
-    r"""Total amount paid over the lifetime of this subscription."""
-    amount: NotRequired[Nullable[AmountTypedDict]]
-    r"""Current amount for this subscription."""
-    next_invoice: NotRequired[Nullable[NextInvoiceTypedDict]]
-    r"""Information about the next invoice."""
+    r"""Whether this subscription item includes a free trial."""
+    period_start: int
+    r"""Unix timestamp (in milliseconds) when the current period started."""
+    period_end: Nullable[int]
+    r"""Unix timestamp (in milliseconds) when the current period ends."""
+    canceled_at: Nullable[int]
+    r"""Unix timestamp (in milliseconds) when the subscription item was canceled."""
+    past_due_at: Nullable[int]
+    r"""Unix timestamp (in milliseconds) when the subscription item became past due."""
+    ended_at: Nullable[int]
+    r"""Unix timestamp (in milliseconds) when the subscription item ended."""
+    credit: NotRequired[CommerceSubscriptionCreditResponseTypedDict]
+    plan: NotRequired[Nullable[PlanTypedDict]]
+    r"""The associated plan."""
+    payment_method: NotRequired[CommercePaymentMethodResponseTypedDict]
+    lifetime_paid: NotRequired[CommerceMoneyResponseTypedDict]
     next_payment: NotRequired[Nullable[NextPaymentTypedDict]]
     r"""Information about the next payment."""
-    payer: NotRequired[Nullable[PayerTypedDict]]
-    r"""The payer associated with this subscription."""
-    period_start: NotRequired[Nullable[int]]
-    r"""Unix timestamp (in milliseconds) when the current period started."""
-    period_end: NotRequired[Nullable[int]]
-    r"""Unix timestamp (in milliseconds) when the current period ends."""
-    canceled_at: NotRequired[Nullable[int]]
-    r"""Unix timestamp (in milliseconds) when the subscription was canceled."""
-    past_due_at: NotRequired[Nullable[int]]
-    r"""Unix timestamp (in milliseconds) when the subscription became past due."""
-    ended_at: NotRequired[Nullable[int]]
-    r"""Unix timestamp (in milliseconds) when the subscription ended."""
+    payer: NotRequired[CommercePayerResponseTypedDict]
+    proration_date: NotRequired[date]
+    r"""The day the subscription item was prorated from. Only available in some responses."""
+    created_at: NotRequired[int]
+    r"""Unix timestamp (in milliseconds) when the subscription item was created."""
+    updated_at: NotRequired[int]
+    r"""Unix timestamp (in milliseconds) when the subscription item was last updated."""
 
 
 class CommerceSubscriptionItem(BaseModel):
@@ -814,95 +372,73 @@ class CommerceSubscriptionItem(BaseModel):
     status: CommerceSubscriptionItemStatus
     r"""Current status of the subscription item."""
 
-    plan_id: str
+    plan_id: Nullable[str]
     r"""Unique identifier for the associated plan."""
 
-    plan: Nullable[Plan]
-    r"""The associated commerce plan."""
-
     plan_period: PlanPeriod
-    r"""The billing period for this subscription."""
-
-    payment_source_id: str
-    r"""Unique identifier for the payment source."""
+    r"""The billing period for this subscription item."""
 
     payer_id: str
     r"""Unique identifier for the payer."""
 
     is_free_trial: bool
-    r"""Whether this subscription is currently on a free trial."""
+    r"""Whether this subscription item includes a free trial."""
 
-    proration_date: str
-    r"""Date used for proration calculations."""
+    period_start: int
+    r"""Unix timestamp (in milliseconds) when the current period started."""
 
-    created_at: int
-    r"""Unix timestamp (in milliseconds) when the subscription was created."""
+    period_end: Nullable[int]
+    r"""Unix timestamp (in milliseconds) when the current period ends."""
 
-    updated_at: int
-    r"""Unix timestamp (in milliseconds) when the subscription was last updated."""
+    canceled_at: Nullable[int]
+    r"""Unix timestamp (in milliseconds) when the subscription item was canceled."""
 
-    credit: OptionalNullable[Credit] = UNSET
-    r"""Credit information (only available in PaymentAttempt events)."""
+    past_due_at: Nullable[int]
+    r"""Unix timestamp (in milliseconds) when the subscription item became past due."""
 
-    payment_source: OptionalNullable[PaymentSource] = UNSET
-    r"""The payment source associated with this subscription."""
+    ended_at: Nullable[int]
+    r"""Unix timestamp (in milliseconds) when the subscription item ended."""
 
-    lifetime_paid: OptionalNullable[LifetimePaid] = UNSET
-    r"""Total amount paid over the lifetime of this subscription."""
+    credit: Optional[CommerceSubscriptionCreditResponse] = None
 
-    amount: OptionalNullable[Amount] = UNSET
-    r"""Current amount for this subscription."""
+    plan: OptionalNullable[Plan] = UNSET
+    r"""The associated plan."""
 
-    next_invoice: OptionalNullable[NextInvoice] = UNSET
-    r"""Information about the next invoice."""
+    payment_method: Optional[CommercePaymentMethodResponse] = None
+
+    lifetime_paid: Optional[CommerceMoneyResponse] = None
 
     next_payment: OptionalNullable[NextPayment] = UNSET
     r"""Information about the next payment."""
 
-    payer: OptionalNullable[Payer] = UNSET
-    r"""The payer associated with this subscription."""
+    payer: Optional[CommercePayerResponse] = None
 
-    period_start: OptionalNullable[int] = UNSET
-    r"""Unix timestamp (in milliseconds) when the current period started."""
+    proration_date: Optional[date] = None
+    r"""The day the subscription item was prorated from. Only available in some responses."""
 
-    period_end: OptionalNullable[int] = UNSET
-    r"""Unix timestamp (in milliseconds) when the current period ends."""
+    created_at: Optional[int] = None
+    r"""Unix timestamp (in milliseconds) when the subscription item was created."""
 
-    canceled_at: OptionalNullable[int] = UNSET
-    r"""Unix timestamp (in milliseconds) when the subscription was canceled."""
-
-    past_due_at: OptionalNullable[int] = UNSET
-    r"""Unix timestamp (in milliseconds) when the subscription became past due."""
-
-    ended_at: OptionalNullable[int] = UNSET
-    r"""Unix timestamp (in milliseconds) when the subscription ended."""
+    updated_at: Optional[int] = None
+    r"""Unix timestamp (in milliseconds) when the subscription item was last updated."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = [
             "credit",
-            "payment_source",
+            "plan",
+            "payment_method",
             "lifetime_paid",
-            "amount",
-            "next_invoice",
             "next_payment",
             "payer",
-            "period_start",
-            "period_end",
-            "canceled_at",
-            "past_due_at",
-            "ended_at",
+            "proration_date",
+            "created_at",
+            "updated_at",
         ]
         nullable_fields = [
-            "credit",
+            "plan_id",
             "plan",
-            "payment_source",
-            "lifetime_paid",
-            "amount",
-            "next_invoice",
             "next_payment",
-            "payer",
-            "period_start",
             "period_end",
             "canceled_at",
             "past_due_at",

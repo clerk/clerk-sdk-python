@@ -1,6 +1,6 @@
 # Amount
 
-Current amount for this subscription.
+Credit amount.
 
 
 ## Fields

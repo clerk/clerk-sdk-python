@@ -38,6 +38,11 @@ class TwoTypedDict(TypedDict):
     provider: str
     user_count: int
     sync_user_attributes: bool
+    allow_subdomains: bool
+    allow_idp_initiated: bool
+    disable_additional_identifications: bool
+    force_authn: bool
+    r"""Enable or deactivate ForceAuthn"""
     created_at: int
     r"""Unix timestamp of creation.
 
@@ -51,9 +56,6 @@ class TwoTypedDict(TypedDict):
     idp_metadata: NotRequired[Nullable[str]]
     organization_id: NotRequired[Nullable[str]]
     attribute_mapping: NotRequired[SAMLConnectionAttributeMappingTypedDict]
-    allow_subdomains: NotRequired[bool]
-    allow_idp_initiated: NotRequired[bool]
-    disable_additional_identifications: NotRequired[bool]
 
 
 class Two(BaseModel):
@@ -85,6 +87,15 @@ class Two(BaseModel):
 
     sync_user_attributes: bool
 
+    allow_subdomains: bool
+
+    allow_idp_initiated: bool
+
+    disable_additional_identifications: bool
+
+    force_authn: bool
+    r"""Enable or deactivate ForceAuthn"""
+
     created_at: int
     r"""Unix timestamp of creation.
 
@@ -110,12 +121,6 @@ class Two(BaseModel):
 
     attribute_mapping: Optional[SAMLConnectionAttributeMapping] = None
 
-    allow_subdomains: Optional[bool] = None
-
-    allow_idp_initiated: Optional[bool] = None
-
-    disable_additional_identifications: Optional[bool] = None
-
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = [
@@ -124,9 +129,6 @@ class Two(BaseModel):
             "idp_metadata",
             "organization_id",
             "attribute_mapping",
-            "allow_subdomains",
-            "allow_idp_initiated",
-            "disable_additional_identifications",
         ]
         nullable_fields = [
             "idp_entity_id",
@@ -182,6 +184,11 @@ class OneTypedDict(TypedDict):
     provider: str
     user_count: int
     sync_user_attributes: bool
+    allow_subdomains: bool
+    allow_idp_initiated: bool
+    disable_additional_identifications: bool
+    force_authn: bool
+    r"""Enable or deactivate ForceAuthn"""
     created_at: int
     r"""Unix timestamp of creation.
 
@@ -195,9 +202,6 @@ class OneTypedDict(TypedDict):
     idp_metadata: NotRequired[Nullable[str]]
     organization_id: NotRequired[Nullable[str]]
     attribute_mapping: NotRequired[SAMLConnectionAttributeMappingTypedDict]
-    allow_subdomains: NotRequired[bool]
-    allow_idp_initiated: NotRequired[bool]
-    disable_additional_identifications: NotRequired[bool]
 
 
 class One(BaseModel):
@@ -234,6 +238,15 @@ class One(BaseModel):
 
     sync_user_attributes: bool
 
+    allow_subdomains: bool
+
+    allow_idp_initiated: bool
+
+    disable_additional_identifications: bool
+
+    force_authn: bool
+    r"""Enable or deactivate ForceAuthn"""
+
     created_at: int
     r"""Unix timestamp of creation.
 
@@ -254,12 +267,6 @@ class One(BaseModel):
 
     attribute_mapping: Optional[SAMLConnectionAttributeMapping] = None
 
-    allow_subdomains: Optional[bool] = None
-
-    allow_idp_initiated: Optional[bool] = None
-
-    disable_additional_identifications: Optional[bool] = None
-
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = [
@@ -268,9 +275,6 @@ class One(BaseModel):
             "idp_metadata",
             "organization_id",
             "attribute_mapping",
-            "allow_subdomains",
-            "allow_idp_initiated",
-            "disable_additional_identifications",
         ]
         nullable_fields = [
             "idp_entity_id",

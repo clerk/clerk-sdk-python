@@ -68,6 +68,8 @@ class RequestBody2TypedDict(TypedDict):
     r"""The ID of the organization to which users of this SAML Connection will be added"""
     attribute_mapping: NotRequired[Nullable[RequestBodyAttributeMappingTypedDict]]
     r"""Define the attribute name mapping between Identity Provider and Clerk's user properties"""
+    force_authn: NotRequired[bool]
+    r"""Enable or deactivate ForceAuthn"""
 
 
 class RequestBody2(BaseModel):
@@ -109,6 +111,9 @@ class RequestBody2(BaseModel):
     attribute_mapping: OptionalNullable[RequestBodyAttributeMapping] = UNSET
     r"""Define the attribute name mapping between Identity Provider and Clerk's user properties"""
 
+    force_authn: Optional[bool] = None
+    r"""Enable or deactivate ForceAuthn"""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = [
@@ -120,6 +125,7 @@ class RequestBody2(BaseModel):
             "idp_metadata",
             "organization_id",
             "attribute_mapping",
+            "force_authn",
         ]
         nullable_fields = [
             "idp_entity_id",
@@ -212,6 +218,8 @@ class RequestBody1TypedDict(TypedDict):
         Nullable[CreateSAMLConnectionRequestBodyAttributeMappingTypedDict]
     ]
     r"""Define the attribute name mapping between Identity Provider and Clerk's user properties"""
+    force_authn: NotRequired[bool]
+    r"""Enable or deactivate ForceAuthn"""
 
 
 class RequestBody1(BaseModel):
@@ -255,6 +263,9 @@ class RequestBody1(BaseModel):
     ] = UNSET
     r"""Define the attribute name mapping between Identity Provider and Clerk's user properties"""
 
+    force_authn: Optional[bool] = None
+    r"""Enable or deactivate ForceAuthn"""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = [
@@ -266,6 +277,7 @@ class RequestBody1(BaseModel):
             "idp_metadata",
             "organization_id",
             "attribute_mapping",
+            "force_authn",
         ]
         nullable_fields = [
             "idp_entity_id",

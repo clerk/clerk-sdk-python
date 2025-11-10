@@ -76,7 +76,7 @@ class CreateM2MTokenM2mResponseResponseBodyData(BaseModel):
     errors: List[CreateM2MTokenErrors]
 
 
-@dataclass(frozen=True)
+@dataclass(unsafe_hash=True)
 class CreateM2MTokenM2mResponseResponseBody(ClerkBaseError):
     r"""409 Conflict"""
 
@@ -111,7 +111,7 @@ class CreateM2MTokenM2mResponseBodyData(BaseModel):
     errors: List[Errors]
 
 
-@dataclass(frozen=True)
+@dataclass(unsafe_hash=True)
 class CreateM2MTokenM2mResponseBody(ClerkBaseError):
     r"""400 Bad Request"""
 

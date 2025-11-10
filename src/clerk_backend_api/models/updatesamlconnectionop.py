@@ -16,7 +16,7 @@ from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class AttributeMappingTypedDict(TypedDict):
-    r"""Define the atrtibute name mapping between Identity Provider and Clerk's user properties"""
+    r"""Define the attribute name mapping between Identity Provider and Clerk's user properties"""
 
     user_id: NotRequired[str]
     email_address: NotRequired[str]
@@ -25,7 +25,7 @@ class AttributeMappingTypedDict(TypedDict):
 
 
 class AttributeMapping(BaseModel):
-    r"""Define the atrtibute name mapping between Identity Provider and Clerk's user properties"""
+    r"""Define the attribute name mapping between Identity Provider and Clerk's user properties"""
 
     user_id: Optional[str] = None
 
@@ -44,9 +44,9 @@ class UpdateSAMLConnectionRequestBodyTypedDict(TypedDict):
     domains: NotRequired[Nullable[List[str]]]
     r"""A list of the domains on use for the SAML connection"""
     idp_entity_id: NotRequired[Nullable[str]]
-    r"""The entity id as provided by the IdP"""
+    r"""The Entity ID as provided by the IdP"""
     idp_sso_url: NotRequired[Nullable[str]]
-    r"""The SSO url as provided by the IdP"""
+    r"""The SSO URL as provided by the IdP"""
     idp_certificate: NotRequired[Nullable[str]]
     r"""The x509 certificated as provided by the IdP"""
     idp_metadata_url: NotRequired[Nullable[str]]
@@ -56,7 +56,7 @@ class UpdateSAMLConnectionRequestBodyTypedDict(TypedDict):
     organization_id: NotRequired[Nullable[str]]
     r"""The ID of the organization to which users of this SAML Connection will be added"""
     attribute_mapping: NotRequired[Nullable[AttributeMappingTypedDict]]
-    r"""Define the atrtibute name mapping between Identity Provider and Clerk's user properties"""
+    r"""Define the attribute name mapping between Identity Provider and Clerk's user properties"""
     active: NotRequired[Nullable[bool]]
     r"""Activate or de-activate the SAML Connection"""
     sync_user_attributes: NotRequired[Nullable[bool]]
@@ -67,6 +67,8 @@ class UpdateSAMLConnectionRequestBodyTypedDict(TypedDict):
     r"""Enable or deactivate IdP-initiated flows"""
     disable_additional_identifications: NotRequired[Nullable[bool]]
     r"""Enable or deactivate additional identifications"""
+    force_authn: NotRequired[bool]
+    r"""Enable or deactivate ForceAuthn"""
 
 
 class UpdateSAMLConnectionRequestBody(BaseModel):
@@ -85,10 +87,10 @@ class UpdateSAMLConnectionRequestBody(BaseModel):
     r"""A list of the domains on use for the SAML connection"""
 
     idp_entity_id: OptionalNullable[str] = UNSET
-    r"""The entity id as provided by the IdP"""
+    r"""The Entity ID as provided by the IdP"""
 
     idp_sso_url: OptionalNullable[str] = UNSET
-    r"""The SSO url as provided by the IdP"""
+    r"""The SSO URL as provided by the IdP"""
 
     idp_certificate: OptionalNullable[str] = UNSET
     r"""The x509 certificated as provided by the IdP"""
@@ -103,7 +105,7 @@ class UpdateSAMLConnectionRequestBody(BaseModel):
     r"""The ID of the organization to which users of this SAML Connection will be added"""
 
     attribute_mapping: OptionalNullable[AttributeMapping] = UNSET
-    r"""Define the atrtibute name mapping between Identity Provider and Clerk's user properties"""
+    r"""Define the attribute name mapping between Identity Provider and Clerk's user properties"""
 
     active: OptionalNullable[bool] = UNSET
     r"""Activate or de-activate the SAML Connection"""
@@ -119,6 +121,9 @@ class UpdateSAMLConnectionRequestBody(BaseModel):
 
     disable_additional_identifications: OptionalNullable[bool] = UNSET
     r"""Enable or deactivate additional identifications"""
+
+    force_authn: Optional[bool] = None
+    r"""Enable or deactivate ForceAuthn"""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
@@ -138,6 +143,7 @@ class UpdateSAMLConnectionRequestBody(BaseModel):
             "allow_subdomains",
             "allow_idp_initiated",
             "disable_additional_identifications",
+            "force_authn",
         ]
         nullable_fields = [
             "name",

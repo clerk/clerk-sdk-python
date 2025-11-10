@@ -86,7 +86,7 @@ with Clerk(
 
 ## generate_svix_auth_url
 
-Generate a new url for accessing the Svix's management dashboard for that particular instance
+Generate a new URL for accessing the Svix's management dashboard for that particular instance
 
 ### Example Usage
 

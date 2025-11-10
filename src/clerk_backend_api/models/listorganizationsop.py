@@ -17,14 +17,14 @@ class ListOrganizationsRequestTypedDict(TypedDict):
     Uses exact match for organization ID and partial match for name and slug.
     """
     user_id: NotRequired[List[str]]
-    r"""Returns organizations with the user ids specified. Any user ids not found are ignored.
-    For each user id, the `+` and `-` can be prepended to the id, which denote whether the
+    r"""Returns organizations that include any of the specified user IDs as members. Any user IDs not found are ignored.
+    For each user ID, the `+` and `-` can be prepended to the ID, which denote whether the
     respective organization should be included or excluded from the result set.
     """
     organization_id: NotRequired[List[str]]
-    r"""Returns organizations with the organization ids specified. Any organization ids not found are ignored.
-    For each organization id, the `+` and `-` can be prepended to the id, which denote whether the
-    respective organization should be included or excluded from the result set. Accepts up to 100 organization ids.
+    r"""Returns organizations with the organization IDs specified. Any organization IDs not found are ignored.
+    For each organization ID, the `+` and `-` can be prepended to the ID, which denote whether the
+    respective organization should be included or excluded from the result set. Accepts up to 100 organization IDs.
     Example: ?organization_id=+org_1&organization_id=-org_2
     """
     order_by: NotRequired[str]
@@ -71,8 +71,8 @@ class ListOrganizationsRequest(BaseModel):
         Optional[List[str]],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = None
-    r"""Returns organizations with the user ids specified. Any user ids not found are ignored.
-    For each user id, the `+` and `-` can be prepended to the id, which denote whether the
+    r"""Returns organizations that include any of the specified user IDs as members. Any user IDs not found are ignored.
+    For each user ID, the `+` and `-` can be prepended to the ID, which denote whether the
     respective organization should be included or excluded from the result set.
     """
 
@@ -80,9 +80,9 @@ class ListOrganizationsRequest(BaseModel):
         Optional[List[str]],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = None
-    r"""Returns organizations with the organization ids specified. Any organization ids not found are ignored.
-    For each organization id, the `+` and `-` can be prepended to the id, which denote whether the
-    respective organization should be included or excluded from the result set. Accepts up to 100 organization ids.
+    r"""Returns organizations with the organization IDs specified. Any organization IDs not found are ignored.
+    For each organization ID, the `+` and `-` can be prepended to the ID, which denote whether the
+    respective organization should be included or excluded from the result set. Accepts up to 100 organization IDs.
     Example: ?organization_id=+org_1&organization_id=-org_2
     """
 

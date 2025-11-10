@@ -22,9 +22,14 @@ class JwtTemplates(BaseSDK):
     ) -> Optional[List[models.JWTTemplate]]:
         r"""List all templates
 
-        :param paginated: Whether to paginate the results. If true, the results will be paginated. If false, the results will not be paginated.
-        :param limit: Applies a limit to the number of results returned. Can be used for paginating the results together with `offset`.
-        :param offset: Skip the first `offset` results when paginating. Needs to be an integer greater or equal to zero. To be used in conjunction with `limit`.
+        :param paginated: Whether to paginate the results.
+            If true, the results will be paginated.
+            If false, the results will not be paginated.
+        :param limit: Applies a limit to the number of results returned.
+            Can be used for paginating the results together with `offset`.
+        :param offset: Skip the first `offset` results when paginating.
+            Needs to be an integer greater or equal to zero.
+            To be used in conjunction with `limit`.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -79,7 +84,7 @@ class JwtTemplates(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="ListJWTTemplates",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -111,9 +116,14 @@ class JwtTemplates(BaseSDK):
     ) -> Optional[List[models.JWTTemplate]]:
         r"""List all templates
 
-        :param paginated: Whether to paginate the results. If true, the results will be paginated. If false, the results will not be paginated.
-        :param limit: Applies a limit to the number of results returned. Can be used for paginating the results together with `offset`.
-        :param offset: Skip the first `offset` results when paginating. Needs to be an integer greater or equal to zero. To be used in conjunction with `limit`.
+        :param paginated: Whether to paginate the results.
+            If true, the results will be paginated.
+            If false, the results will not be paginated.
+        :param limit: Applies a limit to the number of results returned.
+            Can be used for paginating the results together with `offset`.
+        :param offset: Skip the first `offset` results when paginating.
+            Needs to be an integer greater or equal to zero.
+            To be used in conjunction with `limit`.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -168,7 +178,7 @@ class JwtTemplates(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="ListJWTTemplates",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -267,7 +277,7 @@ class JwtTemplates(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="CreateJWTTemplate",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -370,7 +380,7 @@ class JwtTemplates(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="CreateJWTTemplate",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -459,7 +469,7 @@ class JwtTemplates(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="GetJWTTemplate",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -548,7 +558,7 @@ class JwtTemplates(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="GetJWTTemplate",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -596,8 +606,8 @@ class JwtTemplates(BaseSDK):
         :param template_id: The ID of the JWT template to update
         :param name: JWT template name
         :param claims: JWT template claims in JSON format
-        :param lifetime: JWT token lifetime
-        :param allowed_clock_skew: JWT token allowed clock skew
+        :param lifetime: JWT lifetime
+        :param allowed_clock_skew: JWT allowed clock skew
         :param custom_signing_key: Whether a custom signing key/algorithm is also provided for this template
         :param signing_algorithm: The custom signing algorithm to use when minting JWTs. Required if `custom_signing_key` is `true`.
         :param signing_key: The custom signing private key to use when minting JWTs. Required if `custom_signing_key` is `true`.
@@ -669,7 +679,7 @@ class JwtTemplates(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="UpdateJWTTemplate",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -717,8 +727,8 @@ class JwtTemplates(BaseSDK):
         :param template_id: The ID of the JWT template to update
         :param name: JWT template name
         :param claims: JWT template claims in JSON format
-        :param lifetime: JWT token lifetime
-        :param allowed_clock_skew: JWT token allowed clock skew
+        :param lifetime: JWT lifetime
+        :param allowed_clock_skew: JWT allowed clock skew
         :param custom_signing_key: Whether a custom signing key/algorithm is also provided for this template
         :param signing_algorithm: The custom signing algorithm to use when minting JWTs. Required if `custom_signing_key` is `true`.
         :param signing_key: The custom signing private key to use when minting JWTs. Required if `custom_signing_key` is `true`.
@@ -790,7 +800,7 @@ class JwtTemplates(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="UpdateJWTTemplate",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -877,7 +887,7 @@ class JwtTemplates(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="DeleteJWTTemplate",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
@@ -964,7 +974,7 @@ class JwtTemplates(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="DeleteJWTTemplate",
-                oauth2_scopes=[],
+                oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,

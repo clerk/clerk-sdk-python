@@ -18,9 +18,9 @@ class UpdateOrganizationMembershipRequestBody(BaseModel):
 
 class UpdateOrganizationMembershipRequestTypedDict(TypedDict):
     organization_id: str
-    r"""The ID of the organization to which the membership belongs"""
+    r"""The ID of the organization to which this membership belongs"""
     user_id: str
-    r"""The ID of the user that this membership belongs to"""
+    r"""The ID of the user to which this membership belongs"""
     request_body: UpdateOrganizationMembershipRequestBodyTypedDict
 
 
@@ -28,12 +28,12 @@ class UpdateOrganizationMembershipRequest(BaseModel):
     organization_id: Annotated[
         str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))
     ]
-    r"""The ID of the organization to which the membership belongs"""
+    r"""The ID of the organization to which this membership belongs"""
 
     user_id: Annotated[
         str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))
     ]
-    r"""The ID of the user that this membership belongs to"""
+    r"""The ID of the user to which this membership belongs"""
 
     request_body: Annotated[
         UpdateOrganizationMembershipRequestBody,
