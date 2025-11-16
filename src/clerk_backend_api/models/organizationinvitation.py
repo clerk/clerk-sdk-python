@@ -25,6 +25,7 @@ class OrganizationInvitationTypedDict(TypedDict):
     email_address: str
     role: str
     role_name: str
+    inviter_id: Nullable[str]
     public_metadata: Dict[str, Any]
     url: Nullable[str]
     expires_at: Nullable[int]
@@ -54,6 +55,8 @@ class OrganizationInvitation(BaseModel):
 
     role_name: str
 
+    inviter_id: Nullable[str]
+
     public_metadata: Dict[str, Any]
 
     url: Nullable[str]
@@ -76,7 +79,7 @@ class OrganizationInvitation(BaseModel):
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = ["organization_id", "status", "private_metadata"]
-        nullable_fields = ["url", "expires_at"]
+        nullable_fields = ["inviter_id", "url", "expires_at"]
         null_default_fields = []
 
         serialized = handler(self)

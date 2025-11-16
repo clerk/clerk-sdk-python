@@ -22,10 +22,6 @@ class UpdateInstanceAuthConfigRequestBodyTypedDict(TypedDict):
     """
     progressive_sign_up: NotRequired[Nullable[bool]]
     r"""Enable the Progressive Sign Up algorithm. Refer to the [docs](https://clerk.com/docs/upgrade-guides/progressive-sign-up) for more info."""
-    enhanced_email_deliverability: NotRequired[Nullable[bool]]
-    r"""The \"enhanced_email_deliverability\" feature will send emails from \"verifications@clerk.dev\" instead of your domain.
-    This can be helpful if you do not have a high domain reputation.
-    """
     test_mode: NotRequired[Nullable[bool]]
     r"""Toggles test mode for this instance, allowing the use of test email addresses and phone numbers.
     Defaults to true for development instances.
@@ -45,11 +41,6 @@ class UpdateInstanceAuthConfigRequestBody(BaseModel):
     progressive_sign_up: OptionalNullable[bool] = UNSET
     r"""Enable the Progressive Sign Up algorithm. Refer to the [docs](https://clerk.com/docs/upgrade-guides/progressive-sign-up) for more info."""
 
-    enhanced_email_deliverability: OptionalNullable[bool] = UNSET
-    r"""The \"enhanced_email_deliverability\" feature will send emails from \"verifications@clerk.dev\" instead of your domain.
-    This can be helpful if you do not have a high domain reputation.
-    """
-
     test_mode: OptionalNullable[bool] = UNSET
     r"""Toggles test mode for this instance, allowing the use of test email addresses and phone numbers.
     Defaults to true for development instances.
@@ -61,14 +52,12 @@ class UpdateInstanceAuthConfigRequestBody(BaseModel):
             "restricted_to_allowlist",
             "from_email_address",
             "progressive_sign_up",
-            "enhanced_email_deliverability",
             "test_mode",
         ]
         nullable_fields = [
             "restricted_to_allowlist",
             "from_email_address",
             "progressive_sign_up",
-            "enhanced_email_deliverability",
             "test_mode",
         ]
         null_default_fields = []

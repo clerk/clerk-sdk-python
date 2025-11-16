@@ -21,10 +21,6 @@ class UpdateInstanceRequestBodyTypedDict(TypedDict):
     """
     hibp: NotRequired[Nullable[bool]]
     r"""Whether the instance should be using the HIBP service to check passwords for breaches"""
-    enhanced_email_deliverability: NotRequired[Nullable[bool]]
-    r"""The \"enhanced_email_deliverability\" feature will send emails from \"verifications@clerk.dev\" instead of your domain.
-    This can be helpful if you do not have a high domain reputation.
-    """
     support_email: NotRequired[Nullable[str]]
     clerk_js_version: NotRequired[Nullable[str]]
     development_origin: NotRequired[Nullable[str]]
@@ -46,11 +42,6 @@ class UpdateInstanceRequestBody(BaseModel):
 
     hibp: OptionalNullable[bool] = UNSET
     r"""Whether the instance should be using the HIBP service to check passwords for breaches"""
-
-    enhanced_email_deliverability: OptionalNullable[bool] = UNSET
-    r"""The \"enhanced_email_deliverability\" feature will send emails from \"verifications@clerk.dev\" instead of your domain.
-    This can be helpful if you do not have a high domain reputation.
-    """
 
     support_email: OptionalNullable[str] = UNSET
 
@@ -79,7 +70,6 @@ class UpdateInstanceRequestBody(BaseModel):
         optional_fields = [
             "test_mode",
             "hibp",
-            "enhanced_email_deliverability",
             "support_email",
             "clerk_js_version",
             "development_origin",
@@ -90,7 +80,6 @@ class UpdateInstanceRequestBody(BaseModel):
         nullable_fields = [
             "test_mode",
             "hibp",
-            "enhanced_email_deliverability",
             "support_email",
             "clerk_js_version",
             "development_origin",
