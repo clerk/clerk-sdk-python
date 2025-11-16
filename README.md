@@ -272,6 +272,9 @@ def verify_machine_token(request: httpx.Request):
 
 ### [billing](docs/sdks/billing/README.md)
 
+* [list_plans](docs/sdks/billing/README.md#list_plans) - List all billing plans
+* [list_subscription_items](docs/sdks/billing/README.md#list_subscription_items) - List all subscription items
+* [cancel_subscription_item](docs/sdks/billing/README.md#cancel_subscription_item) - Cancel a subscription item
 * [extend_subscription_item_free_trial](docs/sdks/billing/README.md#extend_subscription_item_free_trial) - Extend free trial for a subscription item
 * [list_statements](docs/sdks/billing/README.md#list_statements) - List all billing statements
 * [get_statement](docs/sdks/billing/README.md#get_statement) - Retrieve a billing statement
@@ -288,12 +291,6 @@ def verify_machine_token(request: httpx.Request):
 * [~~list~~](docs/sdks/clients/README.md#list) - List all clients :warning: **Deprecated**
 * [verify](docs/sdks/clients/README.md#verify) - Verify a client
 * [get](docs/sdks/clients/README.md#get) - Get a client
-
-### [commerce](docs/sdks/commerce/README.md)
-
-* [list_plans](docs/sdks/commerce/README.md#list_plans) - List all commerce plans
-* [list_subscription_items](docs/sdks/commerce/README.md#list_subscription_items) - List all subscription items
-* [cancel_subscription_item](docs/sdks/commerce/README.md#cancel_subscription_item) - Cancel a subscription item
 
 ### [domains](docs/sdks/domainssdk/README.md)
 

@@ -457,6 +457,8 @@ class Invitations(BaseSDK):
         of the email addresses you provide unless you set `ignore_existing` to `true` for specific email addresses. Please
         note that there must be no existing user for any of the email addresses you provide, and this rule cannot be bypassed.
 
+        This endpoint is limited to a maximum of 10 invitations per API call. If you need to send more invitations, please make multiple requests.
+
         :param request: The request object to send.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -553,6 +555,8 @@ class Invitations(BaseSDK):
         invitations as emails by setting the `notify` parameter to `true`. There cannot be an existing invitation for any
         of the email addresses you provide unless you set `ignore_existing` to `true` for specific email addresses. Please
         note that there must be no existing user for any of the email addresses you provide, and this rule cannot be bypassed.
+
+        This endpoint is limited to a maximum of 10 invitations per API call. If you need to send more invitations, please make multiple requests.
 
         :param request: The request object to send.
         :param retries: Override the default retry configuration for this method

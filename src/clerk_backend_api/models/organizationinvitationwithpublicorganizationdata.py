@@ -29,6 +29,7 @@ class OrganizationInvitationWithPublicOrganizationDataTypedDict(TypedDict):
     email_address: str
     role: str
     role_name: str
+    inviter_id: Nullable[str]
     public_metadata: Dict[str, Any]
     url: Nullable[str]
     expires_at: Nullable[int]
@@ -61,6 +62,8 @@ class OrganizationInvitationWithPublicOrganizationData(BaseModel):
 
     role_name: str
 
+    inviter_id: Nullable[str]
+
     public_metadata: Dict[str, Any]
 
     url: Nullable[str]
@@ -92,7 +95,7 @@ class OrganizationInvitationWithPublicOrganizationData(BaseModel):
             "private_metadata",
             "public_organization_data",
         ]
-        nullable_fields = ["url", "expires_at"]
+        nullable_fields = ["inviter_id", "url", "expires_at"]
         null_default_fields = []
 
         serialized = handler(self)

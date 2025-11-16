@@ -84,6 +84,7 @@ with Clerk(
 
     res = clerk.sessions.create(request={
         "user_id": "<id>",
+        "active_organization_id": "<id>",
     })
 
     assert res is not None
