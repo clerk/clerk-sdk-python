@@ -4,7 +4,8 @@ permissions:
   contents: write
   pull-requests: write
   statuses: write
-"on":
+  id-token: write
+on:
   push:
     branches:
       - main
@@ -12,9 +13,12 @@ permissions:
       - RELEASES.md
       - '*/RELEASES.md'
 jobs:
+  mint_pypi_token:
+    uses: ./.github/workflows/pypi_mint_token.yaml
   publish:
+    needs: mint_pypi_token
     uses: speakeasy-api/sdk-generation-action/.github/workflows/sdk-publish.yaml@v15
     secrets:
       github_access_token: ${{ secrets.GITHUB_TOKEN }}
-      pypi_token: ${{ secrets.PYPI_TOKEN }}
+      pypi_token: ${{ needs.mint_pypi_token.outputs.pypi_token }}
       speakeasy_api_key: ${{ secrets.SPEAKEASY_API_KEY }}
