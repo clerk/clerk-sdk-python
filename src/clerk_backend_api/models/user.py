@@ -2,9 +2,14 @@
 
 from __future__ import annotations
 from .emailaddress import EmailAddress, EmailAddressTypedDict
+from .enterpriseaccount import EnterpriseAccount, EnterpriseAccountTypedDict
 from .externalaccountwithverification import (
     ExternalAccountWithVerification,
     ExternalAccountWithVerificationTypedDict,
+)
+from .organizationmembership import (
+    OrganizationMembership,
+    OrganizationMembershipTypedDict,
 )
 from .passkey import Passkey, PasskeyTypedDict
 from .phonenumber import PhoneNumber, PhoneNumberTypedDict
@@ -65,6 +70,7 @@ class UserTypedDict(TypedDict):
     """
     external_accounts: List[ExternalAccountWithVerificationTypedDict]
     saml_accounts: List[SAMLAccountTypedDict]
+    enterprise_accounts: List[EnterpriseAccountTypedDict]
     last_sign_in_at: Nullable[int]
     r"""Unix timestamp of last sign-in.
 
@@ -114,6 +120,11 @@ class UserTypedDict(TypedDict):
     image_url: NotRequired[str]
     private_metadata: NotRequired[Nullable[Dict[str, Any]]]
     unsafe_metadata: NotRequired[Dict[str, Any]]
+    password_last_updated_at: NotRequired[Nullable[int]]
+    r"""Unix timestamp of when the user's password was last updated.
+
+    """
+    organization_memberships: NotRequired[List[OrganizationMembershipTypedDict]]
     create_organizations_limit: NotRequired[Nullable[int]]
     r"""The maximum number of organizations the user can create. 0 means unlimited.
 
@@ -177,6 +188,8 @@ class User(BaseModel):
     external_accounts: List[ExternalAccountWithVerification]
 
     saml_accounts: List[SAMLAccount]
+
+    enterprise_accounts: List[EnterpriseAccount]
 
     last_sign_in_at: Nullable[int]
     r"""Unix timestamp of last sign-in.
@@ -248,6 +261,13 @@ class User(BaseModel):
 
     unsafe_metadata: Optional[Dict[str, Any]] = None
 
+    password_last_updated_at: OptionalNullable[int] = UNSET
+    r"""Unix timestamp of when the user's password was last updated.
+
+    """
+
+    organization_memberships: Optional[List[OrganizationMembership]] = None
+
     create_organizations_limit: OptionalNullable[int] = UNSET
     r"""The maximum number of organizations the user can create. 0 means unlimited.
 
@@ -261,6 +281,8 @@ class User(BaseModel):
             "image_url",
             "private_metadata",
             "unsafe_metadata",
+            "password_last_updated_at",
+            "organization_memberships",
             "create_organizations_limit",
         ]
         nullable_fields = [
@@ -275,6 +297,7 @@ class User(BaseModel):
             "private_metadata",
             "mfa_enabled_at",
             "mfa_disabled_at",
+            "password_last_updated_at",
             "last_sign_in_at",
             "lockout_expires_in_seconds",
             "verification_attempts_remaining",

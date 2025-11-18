@@ -18,7 +18,7 @@ class OauthAccessTokens(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.VerifyOAuthAccessTokenResponseBody]:
+    ) -> models.VerifyOAuthAccessTokenResponseBody:
         r"""Verify an OAuth Access Token
 
         :param access_token: The access token to verify.
@@ -90,7 +90,7 @@ class OauthAccessTokens(BaseSDK):
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(
-                Optional[models.VerifyOAuthAccessTokenResponseBody], http_res
+                models.VerifyOAuthAccessTokenResponseBody, http_res
             )
         if utils.match_response(http_res, "400", "application/json"):
             response_data = unmarshal_json_response(
@@ -125,7 +125,7 @@ class OauthAccessTokens(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.VerifyOAuthAccessTokenResponseBody]:
+    ) -> models.VerifyOAuthAccessTokenResponseBody:
         r"""Verify an OAuth Access Token
 
         :param access_token: The access token to verify.
@@ -197,7 +197,7 @@ class OauthAccessTokens(BaseSDK):
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(
-                Optional[models.VerifyOAuthAccessTokenResponseBody], http_res
+                models.VerifyOAuthAccessTokenResponseBody, http_res
             )
         if utils.match_response(http_res, "400", "application/json"):
             response_data = unmarshal_json_response(

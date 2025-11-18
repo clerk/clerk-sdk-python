@@ -24,8 +24,6 @@ with Clerk(
 
     res = clerk.oauth_access_tokens.verify(access_token="XXXXXXXXXXXXXX")
 
-    assert res is not None
-
     # Handle response
     print(res)
 

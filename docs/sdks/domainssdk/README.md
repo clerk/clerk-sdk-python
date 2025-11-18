@@ -28,8 +28,6 @@ with Clerk(
 
     res = clerk.domains.list()
 
-    assert res is not None
-
     # Handle response
     print(res)
 
@@ -76,8 +74,6 @@ with Clerk(
         "proxy_url": "https://proxy.example.com",
     })
 
-    assert res is not None
-
     # Handle response
     print(res)
 
@@ -118,8 +114,6 @@ with Clerk(
 ) as clerk:
 
     res = clerk.domains.delete(domain_id="domain_12345")
-
-    assert res is not None
 
     # Handle response
     print(res)
@@ -167,8 +161,6 @@ with Clerk(
 ) as clerk:
 
     res = clerk.domains.update(domain_id="domain_12345", name="example.com", proxy_url="http://proxy.example.com", is_secondary=False)
-
-    assert res is not None
 
     # Handle response
     print(res)

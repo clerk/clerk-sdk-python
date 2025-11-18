@@ -22,7 +22,7 @@ class PhoneNumbers(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.PhoneNumber]:
+    ) -> models.PhoneNumber:
         r"""Create a phone number
 
         Create a new phone number
@@ -99,7 +99,7 @@ class PhoneNumbers(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.PhoneNumber], http_res)
+            return unmarshal_json_response(models.PhoneNumber, http_res)
         if utils.match_response(
             http_res, ["400", "401", "403", "404", "422"], "application/json"
         ):
@@ -127,7 +127,7 @@ class PhoneNumbers(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.PhoneNumber]:
+    ) -> models.PhoneNumber:
         r"""Create a phone number
 
         Create a new phone number
@@ -204,7 +204,7 @@ class PhoneNumbers(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.PhoneNumber], http_res)
+            return unmarshal_json_response(models.PhoneNumber, http_res)
         if utils.match_response(
             http_res, ["400", "401", "403", "404", "422"], "application/json"
         ):
@@ -227,7 +227,7 @@ class PhoneNumbers(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.PhoneNumber]:
+    ) -> models.PhoneNumber:
         r"""Retrieve a phone number
 
         Returns the details of a phone number
@@ -295,7 +295,7 @@ class PhoneNumbers(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.PhoneNumber], http_res)
+            return unmarshal_json_response(models.PhoneNumber, http_res)
         if utils.match_response(
             http_res, ["400", "401", "403", "404"], "application/json"
         ):
@@ -318,7 +318,7 @@ class PhoneNumbers(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.PhoneNumber]:
+    ) -> models.PhoneNumber:
         r"""Retrieve a phone number
 
         Returns the details of a phone number
@@ -386,7 +386,7 @@ class PhoneNumbers(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.PhoneNumber], http_res)
+            return unmarshal_json_response(models.PhoneNumber, http_res)
         if utils.match_response(
             http_res, ["400", "401", "403", "404"], "application/json"
         ):
@@ -409,7 +409,7 @@ class PhoneNumbers(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.DeletedObject]:
+    ) -> models.DeletedObject:
         r"""Delete a phone number
 
         Delete the phone number with the given ID
@@ -477,7 +477,7 @@ class PhoneNumbers(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.DeletedObject], http_res)
+            return unmarshal_json_response(models.DeletedObject, http_res)
         if utils.match_response(
             http_res, ["400", "401", "403", "404"], "application/json"
         ):
@@ -500,7 +500,7 @@ class PhoneNumbers(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.DeletedObject]:
+    ) -> models.DeletedObject:
         r"""Delete a phone number
 
         Delete the phone number with the given ID
@@ -568,7 +568,7 @@ class PhoneNumbers(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.DeletedObject], http_res)
+            return unmarshal_json_response(models.DeletedObject, http_res)
         if utils.match_response(
             http_res, ["400", "401", "403", "404"], "application/json"
         ):
@@ -594,7 +594,7 @@ class PhoneNumbers(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.PhoneNumber]:
+    ) -> models.PhoneNumber:
         r"""Update a phone number
 
         Updates a phone number
@@ -679,7 +679,7 @@ class PhoneNumbers(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.PhoneNumber], http_res)
+            return unmarshal_json_response(models.PhoneNumber, http_res)
         if utils.match_response(
             http_res, ["400", "401", "403", "404"], "application/json"
         ):
@@ -705,7 +705,7 @@ class PhoneNumbers(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.PhoneNumber]:
+    ) -> models.PhoneNumber:
         r"""Update a phone number
 
         Updates a phone number
@@ -790,7 +790,7 @@ class PhoneNumbers(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.PhoneNumber], http_res)
+            return unmarshal_json_response(models.PhoneNumber, http_res)
         if utils.match_response(
             http_res, ["400", "401", "403", "404"], "application/json"
         ):

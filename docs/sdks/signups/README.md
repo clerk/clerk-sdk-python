@@ -25,8 +25,6 @@ with Clerk(
 
     res = clerk.sign_ups.get(id="<id>")
 
-    assert res is not None
-
     # Handle response
     print(res)
 
@@ -66,8 +64,6 @@ with Clerk(
 ) as clerk:
 
     res = clerk.sign_ups.update(id="signup_1234567890abcdef", external_id="ext_id_7890abcdef123456", custom_action=False)
-
-    assert res is not None
 
     # Handle response
     print(res)

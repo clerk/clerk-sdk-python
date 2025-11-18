@@ -16,7 +16,7 @@ class DomainsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.Domains]:
+    ) -> models.Domains:
         r"""List all instance domains
 
         Use this endpoint to get a list of all domains for an instance.
@@ -78,7 +78,7 @@ class DomainsSDK(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.Domains], http_res)
+            return unmarshal_json_response(models.Domains, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError("API error occurred", http_res, http_res_text)
@@ -95,7 +95,7 @@ class DomainsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.Domains]:
+    ) -> models.Domains:
         r"""List all instance domains
 
         Use this endpoint to get a list of all domains for an instance.
@@ -157,7 +157,7 @@ class DomainsSDK(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.Domains], http_res)
+            return unmarshal_json_response(models.Domains, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError("API error occurred", http_res, http_res_text)
@@ -177,7 +177,7 @@ class DomainsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.Domain]:
+    ) -> models.Domain:
         r"""Add a domain
 
         Add a new domain for your instance.
@@ -252,7 +252,7 @@ class DomainsSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.Domain], http_res)
+            return unmarshal_json_response(models.Domain, http_res)
         if utils.match_response(http_res, ["400", "402", "422"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -275,7 +275,7 @@ class DomainsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.Domain]:
+    ) -> models.Domain:
         r"""Add a domain
 
         Add a new domain for your instance.
@@ -350,7 +350,7 @@ class DomainsSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.Domain], http_res)
+            return unmarshal_json_response(models.Domain, http_res)
         if utils.match_response(http_res, ["400", "402", "422"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -371,7 +371,7 @@ class DomainsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.DeletedObject]:
+    ) -> models.DeletedObject:
         r"""Delete a satellite domain
 
         Deletes a satellite domain for the instance.
@@ -440,7 +440,7 @@ class DomainsSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.DeletedObject], http_res)
+            return unmarshal_json_response(models.DeletedObject, http_res)
         if utils.match_response(http_res, ["403", "404"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -461,7 +461,7 @@ class DomainsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.DeletedObject]:
+    ) -> models.DeletedObject:
         r"""Delete a satellite domain
 
         Deletes a satellite domain for the instance.
@@ -530,7 +530,7 @@ class DomainsSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.DeletedObject], http_res)
+            return unmarshal_json_response(models.DeletedObject, http_res)
         if utils.match_response(http_res, ["403", "404"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -554,7 +554,7 @@ class DomainsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.Domain]:
+    ) -> models.Domain:
         r"""Update a domain
 
         The `proxy_url` can be updated only for production instances.
@@ -649,7 +649,7 @@ class DomainsSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.Domain], http_res)
+            return unmarshal_json_response(models.Domain, http_res)
         if utils.match_response(http_res, ["400", "404", "422"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -673,7 +673,7 @@ class DomainsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.Domain]:
+    ) -> models.Domain:
         r"""Update a domain
 
         The `proxy_url` can be updated only for production instances.
@@ -768,7 +768,7 @@ class DomainsSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.Domain], http_res)
+            return unmarshal_json_response(models.Domain, http_res)
         if utils.match_response(http_res, ["400", "404", "422"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)

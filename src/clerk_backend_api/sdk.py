@@ -30,7 +30,6 @@ if TYPE_CHECKING:
     from clerk_backend_api.billing import Billing
     from clerk_backend_api.blocklistidentifiers_sdk import BlocklistIdentifiersSDK
     from clerk_backend_api.clients import Clients
-    from clerk_backend_api.commerce import Commerce
     from clerk_backend_api.domains_sdk import DomainsSDK
     from clerk_backend_api.emailaddresses import EmailAddresses
     from clerk_backend_api.emailandsmstemplates import EmailAndSmsTemplates
@@ -106,7 +105,6 @@ class Clerk(BaseSDK):
     saml_connections: "SamlConnectionsSDK"
     testing_tokens: "TestingTokens"
     waitlist_entries: "WaitlistEntriesSDK"
-    commerce: "Commerce"
     billing: "Billing"
     m2m: "M2m"
     oauth_access_tokens: "OauthAccessTokens"
@@ -176,7 +174,6 @@ class Clerk(BaseSDK):
             "clerk_backend_api.waitlistentries_sdk",
             "WaitlistEntriesSDK",
         ),
-        "commerce": ("clerk_backend_api.commerce", "Commerce"),
         "billing": ("clerk_backend_api.billing", "Billing"),
         "m2m": ("clerk_backend_api.m2m", "M2m"),
         "oauth_access_tokens": (

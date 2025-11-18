@@ -31,8 +31,6 @@ with Clerk(
 
     res = clerk.waitlist_entries.list(limit=20, offset=10, query="<value>", status=clerk_backend_api.ListWaitlistEntriesQueryParamStatus.INVITED, order_by="-created_at")
 
-    assert res is not None
-
     # Handle response
     print(res)
 
@@ -79,8 +77,6 @@ with Clerk(
         "email_address": "Victoria21@gmail.com",
     })
 
-    assert res is not None
-
     # Handle response
     print(res)
 
@@ -120,8 +116,6 @@ with Clerk(
 ) as clerk:
 
     res = clerk.waitlist_entries.delete(waitlist_entry_id="<id>")
-
-    assert res is not None
 
     # Handle response
     print(res)
@@ -163,8 +157,6 @@ with Clerk(
 
     res = clerk.waitlist_entries.invite(waitlist_entry_id="<id>", ignore_existing=False)
 
-    assert res is not None
-
     # Handle response
     print(res)
 
@@ -205,8 +197,6 @@ with Clerk(
 ) as clerk:
 
     res = clerk.waitlist_entries.reject(waitlist_entry_id="<id>")
-
-    assert res is not None
 
     # Handle response
     print(res)

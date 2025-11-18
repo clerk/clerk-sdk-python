@@ -22,7 +22,7 @@ class EmailAddresses(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.EmailAddress]:
+    ) -> models.EmailAddress:
         r"""Create an email address
 
         Create a new email address
@@ -99,7 +99,7 @@ class EmailAddresses(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.EmailAddress], http_res)
+            return unmarshal_json_response(models.EmailAddress, http_res)
         if utils.match_response(
             http_res, ["400", "401", "403", "404", "422"], "application/json"
         ):
@@ -127,7 +127,7 @@ class EmailAddresses(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.EmailAddress]:
+    ) -> models.EmailAddress:
         r"""Create an email address
 
         Create a new email address
@@ -204,7 +204,7 @@ class EmailAddresses(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.EmailAddress], http_res)
+            return unmarshal_json_response(models.EmailAddress, http_res)
         if utils.match_response(
             http_res, ["400", "401", "403", "404", "422"], "application/json"
         ):
@@ -227,7 +227,7 @@ class EmailAddresses(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.EmailAddress]:
+    ) -> models.EmailAddress:
         r"""Retrieve an email address
 
         Returns the details of an email address.
@@ -295,7 +295,7 @@ class EmailAddresses(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.EmailAddress], http_res)
+            return unmarshal_json_response(models.EmailAddress, http_res)
         if utils.match_response(
             http_res, ["400", "401", "403", "404"], "application/json"
         ):
@@ -318,7 +318,7 @@ class EmailAddresses(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.EmailAddress]:
+    ) -> models.EmailAddress:
         r"""Retrieve an email address
 
         Returns the details of an email address.
@@ -386,7 +386,7 @@ class EmailAddresses(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.EmailAddress], http_res)
+            return unmarshal_json_response(models.EmailAddress, http_res)
         if utils.match_response(
             http_res, ["400", "401", "403", "404"], "application/json"
         ):
@@ -409,7 +409,7 @@ class EmailAddresses(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.DeletedObject]:
+    ) -> models.DeletedObject:
         r"""Delete an email address
 
         Delete the email address with the given ID
@@ -477,7 +477,7 @@ class EmailAddresses(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.DeletedObject], http_res)
+            return unmarshal_json_response(models.DeletedObject, http_res)
         if utils.match_response(
             http_res, ["400", "401", "403", "404"], "application/json"
         ):
@@ -500,7 +500,7 @@ class EmailAddresses(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.DeletedObject]:
+    ) -> models.DeletedObject:
         r"""Delete an email address
 
         Delete the email address with the given ID
@@ -568,7 +568,7 @@ class EmailAddresses(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.DeletedObject], http_res)
+            return unmarshal_json_response(models.DeletedObject, http_res)
         if utils.match_response(
             http_res, ["400", "401", "403", "404"], "application/json"
         ):
@@ -593,7 +593,7 @@ class EmailAddresses(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.EmailAddress]:
+    ) -> models.EmailAddress:
         r"""Update an email address
 
         Updates an email address.
@@ -674,7 +674,7 @@ class EmailAddresses(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.EmailAddress], http_res)
+            return unmarshal_json_response(models.EmailAddress, http_res)
         if utils.match_response(
             http_res, ["400", "401", "403", "404"], "application/json"
         ):
@@ -699,7 +699,7 @@ class EmailAddresses(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.EmailAddress]:
+    ) -> models.EmailAddress:
         r"""Update an email address
 
         Updates an email address.
@@ -780,7 +780,7 @@ class EmailAddresses(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.EmailAddress], http_res)
+            return unmarshal_json_response(models.EmailAddress, http_res)
         if utils.match_response(
             http_res, ["400", "401", "403", "404"], "application/json"
         ):

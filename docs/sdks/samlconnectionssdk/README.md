@@ -32,8 +32,6 @@ with Clerk(
         "<id 1>",
     ])
 
-    assert res is not None
-
     # Handle response
     print(res)
 
@@ -101,8 +99,6 @@ with Clerk(
         "force_authn": False,
     })
 
-    assert res is not None
-
     # Handle response
     print(res)
 
@@ -142,8 +138,6 @@ with Clerk(
 ) as clerk:
 
     res = clerk.saml_connections.get(saml_connection_id="saml_conn_123")
-
-    assert res is not None
 
     # Handle response
     print(res)
@@ -193,8 +187,6 @@ with Clerk(
         "first_name": "Jane",
         "last_name": "Doe",
     }, active=True, sync_user_attributes=False, allow_subdomains=True, allow_idp_initiated=False, disable_additional_identifications=False, force_authn=True)
-
-    assert res is not None
 
     # Handle response
     print(res)
@@ -251,8 +243,6 @@ with Clerk(
 ) as clerk:
 
     res = clerk.saml_connections.delete(saml_connection_id="saml_conn_123_delete")
-
-    assert res is not None
 
     # Handle response
     print(res)

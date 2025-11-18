@@ -29,8 +29,6 @@ with Clerk(
         "user_id": "user_12345",
     })
 
-    assert res is not None
-
     # Handle response
     print(res)
 
@@ -70,8 +68,6 @@ with Clerk(
 ) as clerk:
 
     res = clerk.sign_in_tokens.revoke(sign_in_token_id="tok_test_1234567890")
-
-    assert res is not None
 
     # Handle response
     print(res)

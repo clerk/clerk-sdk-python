@@ -24,7 +24,7 @@ class OrganizationInvitationsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.OrganizationInvitationsWithPublicOrganizationData]:
+    ) -> models.OrganizationInvitationsWithPublicOrganizationData:
         r"""Get a list of organization invitations for the current instance
 
         This request returns the list of organization invitations for the instance.
@@ -114,8 +114,7 @@ class OrganizationInvitationsSDK(BaseSDK):
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(
-                Optional[models.OrganizationInvitationsWithPublicOrganizationData],
-                http_res,
+                models.OrganizationInvitationsWithPublicOrganizationData, http_res
             )
         if utils.match_response(http_res, ["400", "404", "422"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
@@ -146,7 +145,7 @@ class OrganizationInvitationsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.OrganizationInvitationsWithPublicOrganizationData]:
+    ) -> models.OrganizationInvitationsWithPublicOrganizationData:
         r"""Get a list of organization invitations for the current instance
 
         This request returns the list of organization invitations for the instance.
@@ -236,8 +235,7 @@ class OrganizationInvitationsSDK(BaseSDK):
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(
-                Optional[models.OrganizationInvitationsWithPublicOrganizationData],
-                http_res,
+                models.OrganizationInvitationsWithPublicOrganizationData, http_res
             )
         if utils.match_response(http_res, ["400", "404", "422"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
@@ -269,7 +267,7 @@ class OrganizationInvitationsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.OrganizationInvitation]:
+    ) -> models.OrganizationInvitation:
         r"""Create and send an organization invitation
 
         Creates a new organization invitation and sends an email to the provided `email_address` with a link to accept the invitation and join the organization.
@@ -378,9 +376,7 @@ class OrganizationInvitationsSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                Optional[models.OrganizationInvitation], http_res
-            )
+            return unmarshal_json_response(models.OrganizationInvitation, http_res)
         if utils.match_response(
             http_res, ["400", "403", "404", "422"], "application/json"
         ):
@@ -410,7 +406,7 @@ class OrganizationInvitationsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.OrganizationInvitation]:
+    ) -> models.OrganizationInvitation:
         r"""Create and send an organization invitation
 
         Creates a new organization invitation and sends an email to the provided `email_address` with a link to accept the invitation and join the organization.
@@ -519,9 +515,7 @@ class OrganizationInvitationsSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                Optional[models.OrganizationInvitation], http_res
-            )
+            return unmarshal_json_response(models.OrganizationInvitation, http_res)
         if utils.match_response(
             http_res, ["400", "403", "404", "422"], "application/json"
         ):
@@ -549,7 +543,7 @@ class OrganizationInvitationsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.OrganizationInvitations]:
+    ) -> models.OrganizationInvitations:
         r"""Get a list of organization invitations
 
         This request returns the list of organization invitations.
@@ -640,9 +634,7 @@ class OrganizationInvitationsSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                Optional[models.OrganizationInvitations], http_res
-            )
+            return unmarshal_json_response(models.OrganizationInvitations, http_res)
         if utils.match_response(http_res, ["400", "404", "422"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -668,7 +660,7 @@ class OrganizationInvitationsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.OrganizationInvitations]:
+    ) -> models.OrganizationInvitations:
         r"""Get a list of organization invitations
 
         This request returns the list of organization invitations.
@@ -759,9 +751,7 @@ class OrganizationInvitationsSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                Optional[models.OrganizationInvitations], http_res
-            )
+            return unmarshal_json_response(models.OrganizationInvitations, http_res)
         if utils.match_response(http_res, ["400", "404", "422"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -786,10 +776,13 @@ class OrganizationInvitationsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.OrganizationInvitations]:
+    ) -> models.OrganizationInvitations:
         r"""Bulk create and send organization invitations
 
         Creates new organization invitations in bulk and sends out emails to the provided email addresses with a link to accept the invitation and join the organization.
+
+        This endpoint is limited to a maximum of 10 invitations per API call. If you need to send more invitations, please make multiple requests.
+
         You can specify a different `role` for each invited organization member.
         New organization invitations get a \"pending\" status until they are revoked by an organization administrator or accepted by the invitee.
         The request body supports passing an optional `redirect_url` parameter for each invitation.
@@ -877,9 +870,7 @@ class OrganizationInvitationsSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                Optional[models.OrganizationInvitations], http_res
-            )
+            return unmarshal_json_response(models.OrganizationInvitations, http_res)
         if utils.match_response(
             http_res, ["400", "403", "404", "422"], "application/json"
         ):
@@ -906,10 +897,13 @@ class OrganizationInvitationsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.OrganizationInvitations]:
+    ) -> models.OrganizationInvitations:
         r"""Bulk create and send organization invitations
 
         Creates new organization invitations in bulk and sends out emails to the provided email addresses with a link to accept the invitation and join the organization.
+
+        This endpoint is limited to a maximum of 10 invitations per API call. If you need to send more invitations, please make multiple requests.
+
         You can specify a different `role` for each invited organization member.
         New organization invitations get a \"pending\" status until they are revoked by an organization administrator or accepted by the invitee.
         The request body supports passing an optional `redirect_url` parameter for each invitation.
@@ -997,9 +991,7 @@ class OrganizationInvitationsSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                Optional[models.OrganizationInvitations], http_res
-            )
+            return unmarshal_json_response(models.OrganizationInvitations, http_res)
         if utils.match_response(
             http_res, ["400", "403", "404", "422"], "application/json"
         ):
@@ -1027,7 +1019,7 @@ class OrganizationInvitationsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.OrganizationInvitations]:
+    ) -> models.OrganizationInvitations:
         r"""Get a list of pending organization invitations
 
         This request returns the list of organization invitations with \"pending\" status.
@@ -1107,9 +1099,7 @@ class OrganizationInvitationsSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                Optional[models.OrganizationInvitations], http_res
-            )
+            return unmarshal_json_response(models.OrganizationInvitations, http_res)
         if utils.match_response(http_res, ["400", "404"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -1135,7 +1125,7 @@ class OrganizationInvitationsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.OrganizationInvitations]:
+    ) -> models.OrganizationInvitations:
         r"""Get a list of pending organization invitations
 
         This request returns the list of organization invitations with \"pending\" status.
@@ -1215,9 +1205,7 @@ class OrganizationInvitationsSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                Optional[models.OrganizationInvitations], http_res
-            )
+            return unmarshal_json_response(models.OrganizationInvitations, http_res)
         if utils.match_response(http_res, ["400", "404"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -1239,7 +1227,7 @@ class OrganizationInvitationsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.OrganizationInvitation]:
+    ) -> models.OrganizationInvitation:
         r"""Retrieve an organization invitation by ID
 
         Use this request to get an existing organization invitation by ID.
@@ -1309,9 +1297,7 @@ class OrganizationInvitationsSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                Optional[models.OrganizationInvitation], http_res
-            )
+            return unmarshal_json_response(models.OrganizationInvitation, http_res)
         if utils.match_response(http_res, ["400", "403", "404"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -1333,7 +1319,7 @@ class OrganizationInvitationsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.OrganizationInvitation]:
+    ) -> models.OrganizationInvitation:
         r"""Retrieve an organization invitation by ID
 
         Use this request to get an existing organization invitation by ID.
@@ -1403,9 +1389,7 @@ class OrganizationInvitationsSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                Optional[models.OrganizationInvitation], http_res
-            )
+            return unmarshal_json_response(models.OrganizationInvitation, http_res)
         if utils.match_response(http_res, ["400", "403", "404"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -1428,7 +1412,7 @@ class OrganizationInvitationsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.OrganizationInvitation]:
+    ) -> models.OrganizationInvitation:
         r"""Revoke a pending organization invitation
 
         Use this request to revoke a previously issued organization invitation.
@@ -1514,9 +1498,7 @@ class OrganizationInvitationsSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                Optional[models.OrganizationInvitation], http_res
-            )
+            return unmarshal_json_response(models.OrganizationInvitation, http_res)
         if utils.match_response(http_res, ["400", "403", "404"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -1539,7 +1521,7 @@ class OrganizationInvitationsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.OrganizationInvitation]:
+    ) -> models.OrganizationInvitation:
         r"""Revoke a pending organization invitation
 
         Use this request to revoke a previously issued organization invitation.
@@ -1625,9 +1607,7 @@ class OrganizationInvitationsSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                Optional[models.OrganizationInvitation], http_res
-            )
+            return unmarshal_json_response(models.OrganizationInvitation, http_res)
         if utils.match_response(http_res, ["400", "403", "404"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)

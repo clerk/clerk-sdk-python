@@ -16,7 +16,7 @@ class InstanceSettingsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.Instance]:
+    ) -> models.Instance:
         r"""Fetch the current instance
 
         Fetches the current instance
@@ -77,7 +77,7 @@ class InstanceSettingsSDK(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.Instance], http_res)
+            return unmarshal_json_response(models.Instance, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError("API error occurred", http_res, http_res_text)
@@ -94,7 +94,7 @@ class InstanceSettingsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.Instance]:
+    ) -> models.Instance:
         r"""Fetch the current instance
 
         Fetches the current instance
@@ -155,7 +155,7 @@ class InstanceSettingsSDK(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.Instance], http_res)
+            return unmarshal_json_response(models.Instance, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError("API error occurred", http_res, http_res_text)
@@ -376,7 +376,7 @@ class InstanceSettingsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.InstanceRestrictions]:
+    ) -> models.InstanceRestrictions:
         r"""Update instance restrictions
 
         Updates the restriction settings of an instance
@@ -453,9 +453,7 @@ class InstanceSettingsSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                Optional[models.InstanceRestrictions], http_res
-            )
+            return unmarshal_json_response(models.InstanceRestrictions, http_res)
         if utils.match_response(http_res, ["402", "422"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -481,7 +479,7 @@ class InstanceSettingsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.InstanceRestrictions]:
+    ) -> models.InstanceRestrictions:
         r"""Update instance restrictions
 
         Updates the restriction settings of an instance
@@ -558,9 +556,7 @@ class InstanceSettingsSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                Optional[models.InstanceRestrictions], http_res
-            )
+            return unmarshal_json_response(models.InstanceRestrictions, http_res)
         if utils.match_response(http_res, ["402", "422"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -804,7 +800,7 @@ class InstanceSettingsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.OrganizationSettings]:
+    ) -> models.OrganizationSettings:
         r"""Update instance organization settings
 
         Updates the organization settings of the instance
@@ -883,9 +879,7 @@ class InstanceSettingsSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                Optional[models.OrganizationSettings], http_res
-            )
+            return unmarshal_json_response(models.OrganizationSettings, http_res)
         if utils.match_response(
             http_res, ["400", "402", "404", "422"], "application/json"
         ):
@@ -913,7 +907,7 @@ class InstanceSettingsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.OrganizationSettings]:
+    ) -> models.OrganizationSettings:
         r"""Update instance organization settings
 
         Updates the organization settings of the instance
@@ -992,9 +986,7 @@ class InstanceSettingsSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                Optional[models.OrganizationSettings], http_res
-            )
+            return unmarshal_json_response(models.OrganizationSettings, http_res)
         if utils.match_response(
             http_res, ["400", "402", "404", "422"], "application/json"
         ):

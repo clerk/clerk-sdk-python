@@ -29,7 +29,7 @@ class EmailAndSmsTemplates(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.Template]:
+    ) -> models.Template:
         r"""Update a template for a given type and slug
 
         Updates the existing template of the given type and slug
@@ -127,7 +127,7 @@ class EmailAndSmsTemplates(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.Template], http_res)
+            return unmarshal_json_response(models.Template, http_res)
         if utils.match_response(
             http_res, ["400", "401", "402", "403", "404", "422"], "application/json"
         ):
@@ -161,7 +161,7 @@ class EmailAndSmsTemplates(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.Template]:
+    ) -> models.Template:
         r"""Update a template for a given type and slug
 
         Updates the existing template of the given type and slug
@@ -259,7 +259,7 @@ class EmailAndSmsTemplates(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.Template], http_res)
+            return unmarshal_json_response(models.Template, http_res)
         if utils.match_response(
             http_res, ["400", "401", "402", "403", "404", "422"], "application/json"
         ):

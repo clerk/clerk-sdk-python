@@ -18,7 +18,7 @@ class M2m(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.CreateM2MTokenResponseBody]:
+    ) -> models.CreateM2MTokenResponseBody:
         r"""Create a M2M Token
 
         Creates a new M2M Token. Must be authenticated via a Machine Secret Key.
@@ -91,9 +91,7 @@ class M2m(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "201", "application/json"):
-            return unmarshal_json_response(
-                Optional[models.CreateM2MTokenResponseBody], http_res
-            )
+            return unmarshal_json_response(models.CreateM2MTokenResponseBody, http_res)
         if utils.match_response(http_res, "400", "application/json"):
             response_data = unmarshal_json_response(
                 models.CreateM2MTokenM2mResponseBodyData, http_res
@@ -122,7 +120,7 @@ class M2m(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.CreateM2MTokenResponseBody]:
+    ) -> models.CreateM2MTokenResponseBody:
         r"""Create a M2M Token
 
         Creates a new M2M Token. Must be authenticated via a Machine Secret Key.
@@ -195,9 +193,7 @@ class M2m(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "201", "application/json"):
-            return unmarshal_json_response(
-                Optional[models.CreateM2MTokenResponseBody], http_res
-            )
+            return unmarshal_json_response(models.CreateM2MTokenResponseBody, http_res)
         if utils.match_response(http_res, "400", "application/json"):
             response_data = unmarshal_json_response(
                 models.CreateM2MTokenM2mResponseBodyData, http_res
@@ -229,7 +225,7 @@ class M2m(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.GetM2MTokensResponseBody]:
+    ) -> models.GetM2MTokensResponseBody:
         r"""Get M2M Tokens
 
         Fetches M2M tokens for a specific machine.
@@ -310,9 +306,7 @@ class M2m(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                Optional[models.GetM2MTokensResponseBody], http_res
-            )
+            return unmarshal_json_response(models.GetM2MTokensResponseBody, http_res)
         if utils.match_response(http_res, "400", "application/json"):
             response_data = unmarshal_json_response(
                 models.GetM2MTokensM2mResponseBodyData, http_res
@@ -349,7 +343,7 @@ class M2m(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.GetM2MTokensResponseBody]:
+    ) -> models.GetM2MTokensResponseBody:
         r"""Get M2M Tokens
 
         Fetches M2M tokens for a specific machine.
@@ -430,9 +424,7 @@ class M2m(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                Optional[models.GetM2MTokensResponseBody], http_res
-            )
+            return unmarshal_json_response(models.GetM2MTokensResponseBody, http_res)
         if utils.match_response(http_res, "400", "application/json"):
             response_data = unmarshal_json_response(
                 models.GetM2MTokensM2mResponseBodyData, http_res
@@ -466,7 +458,7 @@ class M2m(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.RevokeM2MTokenResponseBody]:
+    ) -> models.RevokeM2MTokenResponseBody:
         r"""Revoke a M2M Token
 
         Revokes a M2M Token.
@@ -550,9 +542,7 @@ class M2m(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                Optional[models.RevokeM2MTokenResponseBody], http_res
-            )
+            return unmarshal_json_response(models.RevokeM2MTokenResponseBody, http_res)
         if utils.match_response(http_res, "400", "application/json"):
             response_data = unmarshal_json_response(
                 models.RevokeM2MTokenM2mResponseBodyData, http_res
@@ -581,7 +571,7 @@ class M2m(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.RevokeM2MTokenResponseBody]:
+    ) -> models.RevokeM2MTokenResponseBody:
         r"""Revoke a M2M Token
 
         Revokes a M2M Token.
@@ -665,9 +655,7 @@ class M2m(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                Optional[models.RevokeM2MTokenResponseBody], http_res
-            )
+            return unmarshal_json_response(models.RevokeM2MTokenResponseBody, http_res)
         if utils.match_response(http_res, "400", "application/json"):
             response_data = unmarshal_json_response(
                 models.RevokeM2MTokenM2mResponseBodyData, http_res
@@ -695,7 +683,7 @@ class M2m(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.VerifyM2MTokenResponseBody]:
+    ) -> models.VerifyM2MTokenResponseBody:
         r"""Verify a M2M Token
 
         Verifies a M2M Token.
@@ -771,9 +759,7 @@ class M2m(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                Optional[models.VerifyM2MTokenResponseBody], http_res
-            )
+            return unmarshal_json_response(models.VerifyM2MTokenResponseBody, http_res)
         if utils.match_response(http_res, "400", "application/json"):
             response_data = unmarshal_json_response(
                 models.VerifyM2MTokenM2mResponseBodyData, http_res
@@ -801,7 +787,7 @@ class M2m(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.VerifyM2MTokenResponseBody]:
+    ) -> models.VerifyM2MTokenResponseBody:
         r"""Verify a M2M Token
 
         Verifies a M2M Token.
@@ -877,9 +863,7 @@ class M2m(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                Optional[models.VerifyM2MTokenResponseBody], http_res
-            )
+            return unmarshal_json_response(models.VerifyM2MTokenResponseBody, http_res)
         if utils.match_response(http_res, "400", "application/json"):
             response_data = unmarshal_json_response(
                 models.VerifyM2MTokenM2mResponseBodyData, http_res

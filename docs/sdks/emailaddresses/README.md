@@ -32,8 +32,6 @@ with Clerk(
         "primary": True,
     })
 
-    assert res is not None
-
     # Handle response
     print(res)
 
@@ -73,8 +71,6 @@ with Clerk(
 ) as clerk:
 
     res = clerk.email_addresses.get(email_address_id="email_address_id_example")
-
-    assert res is not None
 
     # Handle response
     print(res)
@@ -116,8 +112,6 @@ with Clerk(
 
     res = clerk.email_addresses.delete(email_address_id="email_address_id_example")
 
-    assert res is not None
-
     # Handle response
     print(res)
 
@@ -157,8 +151,6 @@ with Clerk(
 ) as clerk:
 
     res = clerk.email_addresses.update(email_address_id="email_address_id_example", verified=False, primary=True)
-
-    assert res is not None
 
     # Handle response
     print(res)

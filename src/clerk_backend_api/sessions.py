@@ -22,7 +22,7 @@ class Sessions(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[List[models.Session]]:
+    ) -> List[models.Session]:
         r"""List all sessions
 
         Returns a list of all sessions.
@@ -108,7 +108,7 @@ class Sessions(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[List[models.Session]], http_res)
+            return unmarshal_json_response(List[models.Session], http_res)
         if utils.match_response(http_res, ["400", "401", "422"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -134,7 +134,7 @@ class Sessions(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[List[models.Session]]:
+    ) -> List[models.Session]:
         r"""List all sessions
 
         Returns a list of all sessions.
@@ -220,7 +220,7 @@ class Sessions(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[List[models.Session]], http_res)
+            return unmarshal_json_response(List[models.Session], http_res)
         if utils.match_response(http_res, ["400", "401", "422"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -246,7 +246,7 @@ class Sessions(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.Session]:
+    ) -> models.Session:
         r"""Create a new active session
 
         Create a new active session for the provided user ID.
@@ -322,7 +322,7 @@ class Sessions(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.Session], http_res)
+            return unmarshal_json_response(models.Session, http_res)
         if utils.match_response(
             http_res, ["400", "401", "404", "422"], "application/json"
         ):
@@ -350,7 +350,7 @@ class Sessions(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.Session]:
+    ) -> models.Session:
         r"""Create a new active session
 
         Create a new active session for the provided user ID.
@@ -426,7 +426,7 @@ class Sessions(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.Session], http_res)
+            return unmarshal_json_response(models.Session, http_res)
         if utils.match_response(
             http_res, ["400", "401", "404", "422"], "application/json"
         ):
@@ -449,7 +449,7 @@ class Sessions(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.Session]:
+    ) -> models.Session:
         r"""Retrieve a session
 
         Retrieve the details of a session
@@ -517,7 +517,7 @@ class Sessions(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.Session], http_res)
+            return unmarshal_json_response(models.Session, http_res)
         if utils.match_response(http_res, ["400", "401", "404"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -538,7 +538,7 @@ class Sessions(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.Session]:
+    ) -> models.Session:
         r"""Retrieve a session
 
         Retrieve the details of a session
@@ -606,7 +606,7 @@ class Sessions(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.Session], http_res)
+            return unmarshal_json_response(models.Session, http_res)
         if utils.match_response(http_res, ["400", "401", "404"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -633,7 +633,7 @@ class Sessions(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.SessionRefresh]:
+    ) -> models.SessionRefresh:
         r"""Refresh a session
 
         Refreshes a session by creating a new session token. A 401 is returned when there
@@ -724,7 +724,7 @@ class Sessions(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.SessionRefresh], http_res)
+            return unmarshal_json_response(models.SessionRefresh, http_res)
         if utils.match_response(http_res, ["400", "401"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -751,7 +751,7 @@ class Sessions(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.SessionRefresh]:
+    ) -> models.SessionRefresh:
         r"""Refresh a session
 
         Refreshes a session by creating a new session token. A 401 is returned when there
@@ -842,7 +842,7 @@ class Sessions(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.SessionRefresh], http_res)
+            return unmarshal_json_response(models.SessionRefresh, http_res)
         if utils.match_response(http_res, ["400", "401"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -863,7 +863,7 @@ class Sessions(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.Session]:
+    ) -> models.Session:
         r"""Revoke a session
 
         Sets the status of a session as \"revoked\", which is an unauthenticated state.
@@ -932,7 +932,7 @@ class Sessions(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.Session], http_res)
+            return unmarshal_json_response(models.Session, http_res)
         if utils.match_response(http_res, ["400", "401", "404"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -953,7 +953,7 @@ class Sessions(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.Session]:
+    ) -> models.Session:
         r"""Revoke a session
 
         Sets the status of a session as \"revoked\", which is an unauthenticated state.
@@ -1022,7 +1022,7 @@ class Sessions(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.Session], http_res)
+            return unmarshal_json_response(models.Session, http_res)
         if utils.match_response(http_res, ["400", "401", "404"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -1044,7 +1044,7 @@ class Sessions(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.CreateSessionTokenResponseBody]:
+    ) -> models.CreateSessionTokenResponseBody:
         r"""Create a session token
 
         Creates a session JSON Web Token (JWT) based on a session.
@@ -1124,7 +1124,7 @@ class Sessions(BaseSDK):
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(
-                Optional[models.CreateSessionTokenResponseBody], http_res
+                models.CreateSessionTokenResponseBody, http_res
             )
         if utils.match_response(http_res, ["401", "404"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
@@ -1147,7 +1147,7 @@ class Sessions(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.CreateSessionTokenResponseBody]:
+    ) -> models.CreateSessionTokenResponseBody:
         r"""Create a session token
 
         Creates a session JSON Web Token (JWT) based on a session.
@@ -1227,7 +1227,7 @@ class Sessions(BaseSDK):
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(
-                Optional[models.CreateSessionTokenResponseBody], http_res
+                models.CreateSessionTokenResponseBody, http_res
             )
         if utils.match_response(http_res, ["401", "404"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
@@ -1251,7 +1251,7 @@ class Sessions(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.CreateSessionTokenFromTemplateResponseBody]:
+    ) -> models.CreateSessionTokenFromTemplateResponseBody:
         r"""Create a session token from a JWT template
 
         Creates a JSON Web Token (JWT) based on a session and a JWT Template name defined for your instance
@@ -1333,7 +1333,7 @@ class Sessions(BaseSDK):
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(
-                Optional[models.CreateSessionTokenFromTemplateResponseBody], http_res
+                models.CreateSessionTokenFromTemplateResponseBody, http_res
             )
         if utils.match_response(http_res, ["401", "404"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
@@ -1357,7 +1357,7 @@ class Sessions(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.CreateSessionTokenFromTemplateResponseBody]:
+    ) -> models.CreateSessionTokenFromTemplateResponseBody:
         r"""Create a session token from a JWT template
 
         Creates a JSON Web Token (JWT) based on a session and a JWT Template name defined for your instance
@@ -1439,7 +1439,7 @@ class Sessions(BaseSDK):
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(
-                Optional[models.CreateSessionTokenFromTemplateResponseBody], http_res
+                models.CreateSessionTokenFromTemplateResponseBody, http_res
             )
         if utils.match_response(http_res, ["401", "404"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)

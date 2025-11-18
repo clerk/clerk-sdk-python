@@ -10,8 +10,6 @@ with Clerk(
 
     res = clerk.email_addresses.get(email_address_id="email_address_id_example")
 
-    assert res is not None
-
     # Handle response
     print(res)
 ```
@@ -32,8 +30,6 @@ async def main():
     ) as clerk:
 
         res = await clerk.email_addresses.get_async(email_address_id="email_address_id_example")
-
-        assert res is not None
 
         # Handle response
         print(res)

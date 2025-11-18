@@ -27,8 +27,6 @@ with Clerk(
 
     res = clerk.email_and_sms_templates.upsert(template_type=clerk_backend_api.UpsertTemplatePathParamTemplateType.SMS, slug="verification-code", name="Verification Code", subject="Your Verification Code", markup="<p>Your code: {{code}}</p>", body="Use this code to verify your email: {{code}}", delivered_by_clerk=True, from_email_name="hello", reply_to_email_name="support")
 
-    assert res is not None
-
     # Handle response
     print(res)
 

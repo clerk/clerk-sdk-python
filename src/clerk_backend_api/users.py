@@ -19,7 +19,7 @@ class Users(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[List[models.User]]:
+    ) -> List[models.User]:
         r"""List all users
 
         Returns a list of all users.
@@ -88,7 +88,7 @@ class Users(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[List[models.User]], http_res)
+            return unmarshal_json_response(List[models.User], http_res)
         if utils.match_response(http_res, ["400", "401", "422"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -111,7 +111,7 @@ class Users(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[List[models.User]]:
+    ) -> List[models.User]:
         r"""List all users
 
         Returns a list of all users.
@@ -180,7 +180,7 @@ class Users(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[List[models.User]], http_res)
+            return unmarshal_json_response(List[models.User], http_res)
         if utils.match_response(http_res, ["400", "401", "422"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -224,7 +224,7 @@ class Users(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.User]:
+    ) -> models.User:
         r"""Create a new user
 
         Creates a new user. Your user management settings determine how you should setup your user model.
@@ -379,7 +379,7 @@ class Users(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.User], http_res)
+            return unmarshal_json_response(models.User, http_res)
         if utils.match_response(
             http_res, ["400", "401", "403", "422"], "application/json"
         ):
@@ -425,7 +425,7 @@ class Users(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.User]:
+    ) -> models.User:
         r"""Create a new user
 
         Creates a new user. Your user management settings determine how you should setup your user model.
@@ -580,7 +580,7 @@ class Users(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.User], http_res)
+            return unmarshal_json_response(models.User, http_res)
         if utils.match_response(
             http_res, ["400", "401", "403", "422"], "application/json"
         ):
@@ -620,7 +620,7 @@ class Users(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.TotalCount]:
+    ) -> models.TotalCount:
         r"""Count users
 
         Returns a total count of all users that match the given filtering criteria.
@@ -750,7 +750,7 @@ class Users(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.TotalCount], http_res)
+            return unmarshal_json_response(models.TotalCount, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -788,7 +788,7 @@ class Users(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.TotalCount]:
+    ) -> models.TotalCount:
         r"""Count users
 
         Returns a total count of all users that match the given filtering criteria.
@@ -918,7 +918,7 @@ class Users(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.TotalCount], http_res)
+            return unmarshal_json_response(models.TotalCount, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -939,7 +939,7 @@ class Users(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.User]:
+    ) -> models.User:
         r"""Retrieve a user
 
         Retrieve the details of a user
@@ -1007,7 +1007,7 @@ class Users(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.User], http_res)
+            return unmarshal_json_response(models.User, http_res)
         if utils.match_response(http_res, ["400", "401", "404"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -1028,7 +1028,7 @@ class Users(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.User]:
+    ) -> models.User:
         r"""Retrieve a user
 
         Retrieve the details of a user
@@ -1096,7 +1096,7 @@ class Users(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.User], http_res)
+            return unmarshal_json_response(models.User, http_res)
         if utils.match_response(http_res, ["400", "401", "404"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -1143,7 +1143,7 @@ class Users(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.User]:
+    ) -> models.User:
         r"""Update a user
 
         Update a user's attributes.
@@ -1302,7 +1302,7 @@ class Users(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.User], http_res)
+            return unmarshal_json_response(models.User, http_res)
         if utils.match_response(
             http_res, ["400", "401", "404", "422"], "application/json"
         ):
@@ -1351,7 +1351,7 @@ class Users(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.User]:
+    ) -> models.User:
         r"""Update a user
 
         Update a user's attributes.
@@ -1510,7 +1510,7 @@ class Users(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.User], http_res)
+            return unmarshal_json_response(models.User, http_res)
         if utils.match_response(
             http_res, ["400", "401", "404", "422"], "application/json"
         ):
@@ -1533,7 +1533,7 @@ class Users(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.DeletedObject]:
+    ) -> models.DeletedObject:
         r"""Delete a user
 
         Delete the specified user
@@ -1601,7 +1601,7 @@ class Users(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.DeletedObject], http_res)
+            return unmarshal_json_response(models.DeletedObject, http_res)
         if utils.match_response(http_res, ["400", "401", "404"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -1622,7 +1622,7 @@ class Users(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.DeletedObject]:
+    ) -> models.DeletedObject:
         r"""Delete a user
 
         Delete the specified user
@@ -1690,7 +1690,7 @@ class Users(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.DeletedObject], http_res)
+            return unmarshal_json_response(models.DeletedObject, http_res)
         if utils.match_response(http_res, ["400", "401", "404"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -1711,7 +1711,7 @@ class Users(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.User]:
+    ) -> models.User:
         r"""Ban a user
 
         Marks the given user as banned, which means that all their sessions are revoked and they are not allowed to sign in again.
@@ -1779,7 +1779,7 @@ class Users(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.User], http_res)
+            return unmarshal_json_response(models.User, http_res)
         if utils.match_response(http_res, "402", "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -1800,7 +1800,7 @@ class Users(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.User]:
+    ) -> models.User:
         r"""Ban a user
 
         Marks the given user as banned, which means that all their sessions are revoked and they are not allowed to sign in again.
@@ -1868,7 +1868,7 @@ class Users(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.User], http_res)
+            return unmarshal_json_response(models.User, http_res)
         if utils.match_response(http_res, "402", "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -1889,7 +1889,7 @@ class Users(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.User]:
+    ) -> models.User:
         r"""Unban a user
 
         Removes the ban mark from the given user.
@@ -1957,7 +1957,7 @@ class Users(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.User], http_res)
+            return unmarshal_json_response(models.User, http_res)
         if utils.match_response(http_res, "402", "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -1978,7 +1978,7 @@ class Users(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.User]:
+    ) -> models.User:
         r"""Unban a user
 
         Removes the ban mark from the given user.
@@ -2046,7 +2046,7 @@ class Users(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.User], http_res)
+            return unmarshal_json_response(models.User, http_res)
         if utils.match_response(http_res, "402", "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -2067,7 +2067,7 @@ class Users(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[List[models.User]]:
+    ) -> List[models.User]:
         r"""Ban multiple users
 
         Marks multiple users as banned, which means that all their sessions are revoked and they are not allowed to sign in again.
@@ -2138,7 +2138,7 @@ class Users(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[List[models.User]], http_res)
+            return unmarshal_json_response(List[models.User], http_res)
         if utils.match_response(http_res, ["400", "402"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -2159,7 +2159,7 @@ class Users(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[List[models.User]]:
+    ) -> List[models.User]:
         r"""Ban multiple users
 
         Marks multiple users as banned, which means that all their sessions are revoked and they are not allowed to sign in again.
@@ -2230,7 +2230,7 @@ class Users(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[List[models.User]], http_res)
+            return unmarshal_json_response(List[models.User], http_res)
         if utils.match_response(http_res, ["400", "402"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -2251,7 +2251,7 @@ class Users(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[List[models.User]]:
+    ) -> List[models.User]:
         r"""Unban multiple users
 
         Removes the ban mark from multiple users.
@@ -2322,7 +2322,7 @@ class Users(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[List[models.User]], http_res)
+            return unmarshal_json_response(List[models.User], http_res)
         if utils.match_response(http_res, ["400", "402"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -2343,7 +2343,7 @@ class Users(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[List[models.User]]:
+    ) -> List[models.User]:
         r"""Unban multiple users
 
         Removes the ban mark from multiple users.
@@ -2414,7 +2414,7 @@ class Users(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[List[models.User]], http_res)
+            return unmarshal_json_response(List[models.User], http_res)
         if utils.match_response(http_res, ["400", "402"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -2435,7 +2435,7 @@ class Users(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.User]:
+    ) -> models.User:
         r"""Lock a user
 
         Marks the given user as locked, which means they are not allowed to sign in again until the lock expires.
@@ -2504,7 +2504,7 @@ class Users(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.User], http_res)
+            return unmarshal_json_response(models.User, http_res)
         if utils.match_response(http_res, "403", "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -2525,7 +2525,7 @@ class Users(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.User]:
+    ) -> models.User:
         r"""Lock a user
 
         Marks the given user as locked, which means they are not allowed to sign in again until the lock expires.
@@ -2594,7 +2594,7 @@ class Users(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.User], http_res)
+            return unmarshal_json_response(models.User, http_res)
         if utils.match_response(http_res, "403", "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -2615,7 +2615,7 @@ class Users(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.User]:
+    ) -> models.User:
         r"""Unlock a user
 
         Removes the lock from the given user.
@@ -2683,7 +2683,7 @@ class Users(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.User], http_res)
+            return unmarshal_json_response(models.User, http_res)
         if utils.match_response(http_res, "403", "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -2704,7 +2704,7 @@ class Users(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.User]:
+    ) -> models.User:
         r"""Unlock a user
 
         Removes the lock from the given user.
@@ -2772,7 +2772,7 @@ class Users(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.User], http_res)
+            return unmarshal_json_response(models.User, http_res)
         if utils.match_response(http_res, "403", "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -2794,7 +2794,7 @@ class Users(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.User]:
+    ) -> models.User:
         r"""Set user profile image
 
         Update a user's profile image
@@ -2873,7 +2873,7 @@ class Users(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.User], http_res)
+            return unmarshal_json_response(models.User, http_res)
         if utils.match_response(http_res, ["400", "401", "404"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -2895,7 +2895,7 @@ class Users(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.User]:
+    ) -> models.User:
         r"""Set user profile image
 
         Update a user's profile image
@@ -2974,7 +2974,7 @@ class Users(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.User], http_res)
+            return unmarshal_json_response(models.User, http_res)
         if utils.match_response(http_res, ["400", "401", "404"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -2995,7 +2995,7 @@ class Users(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.User]:
+    ) -> models.User:
         r"""Delete user profile image
 
         Delete a user's profile image
@@ -3063,7 +3063,7 @@ class Users(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.User], http_res)
+            return unmarshal_json_response(models.User, http_res)
         if utils.match_response(http_res, "404", "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -3084,7 +3084,7 @@ class Users(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.User]:
+    ) -> models.User:
         r"""Delete user profile image
 
         Delete a user's profile image
@@ -3152,7 +3152,7 @@ class Users(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.User], http_res)
+            return unmarshal_json_response(models.User, http_res)
         if utils.match_response(http_res, "404", "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -3176,7 +3176,7 @@ class Users(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.User]:
+    ) -> models.User:
         r"""Merge and update a user's metadata
 
         Update a user's metadata attributes by merging existing values with the provided parameters.
@@ -3271,7 +3271,7 @@ class Users(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.User], http_res)
+            return unmarshal_json_response(models.User, http_res)
         if utils.match_response(
             http_res, ["400", "401", "404", "422"], "application/json"
         ):
@@ -3297,7 +3297,7 @@ class Users(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.User]:
+    ) -> models.User:
         r"""Merge and update a user's metadata
 
         Update a user's metadata attributes by merging existing values with the provided parameters.
@@ -3392,7 +3392,7 @@ class Users(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.User], http_res)
+            return unmarshal_json_response(models.User, http_res)
         if utils.match_response(
             http_res, ["400", "401", "404", "422"], "application/json"
         ):
@@ -3415,7 +3415,7 @@ class Users(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.CommerceSubscription]:
+    ) -> models.CommerceSubscription:
         r"""Retrieve a user's billing subscription
 
         Retrieves the billing subscription for the specified user.
@@ -3485,9 +3485,7 @@ class Users(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                Optional[models.CommerceSubscription], http_res
-            )
+            return unmarshal_json_response(models.CommerceSubscription, http_res)
         if utils.match_response(
             http_res, ["400", "401", "403", "404", "422"], "application/json"
         ):
@@ -3513,7 +3511,7 @@ class Users(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.CommerceSubscription]:
+    ) -> models.CommerceSubscription:
         r"""Retrieve a user's billing subscription
 
         Retrieves the billing subscription for the specified user.
@@ -3583,9 +3581,7 @@ class Users(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                Optional[models.CommerceSubscription], http_res
-            )
+            return unmarshal_json_response(models.CommerceSubscription, http_res)
         if utils.match_response(
             http_res, ["400", "401", "403", "404", "422"], "application/json"
         ):
@@ -3615,7 +3611,7 @@ class Users(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[List[models.OAuthAccessToken]]:
+    ) -> List[models.OAuthAccessToken]:
         r"""Retrieve the OAuth access token of a user
 
         Fetch the corresponding OAuth access token for a user that has previously authenticated with a particular OAuth provider.
@@ -3697,9 +3693,7 @@ class Users(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                Optional[List[models.OAuthAccessToken]], http_res
-            )
+            return unmarshal_json_response(List[models.OAuthAccessToken], http_res)
         if utils.match_response(http_res, ["400", "404", "422"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -3724,7 +3718,7 @@ class Users(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[List[models.OAuthAccessToken]]:
+    ) -> List[models.OAuthAccessToken]:
         r"""Retrieve the OAuth access token of a user
 
         Fetch the corresponding OAuth access token for a user that has previously authenticated with a particular OAuth provider.
@@ -3806,9 +3800,7 @@ class Users(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                Optional[List[models.OAuthAccessToken]], http_res
-            )
+            return unmarshal_json_response(List[models.OAuthAccessToken], http_res)
         if utils.match_response(http_res, ["400", "404", "422"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -3831,7 +3823,7 @@ class Users(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.OrganizationMemberships]:
+    ) -> models.OrganizationMemberships:
         r"""Retrieve all memberships for a user
 
         Retrieve a paginated list of the user's organization memberships
@@ -3906,9 +3898,7 @@ class Users(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                Optional[models.OrganizationMemberships], http_res
-            )
+            return unmarshal_json_response(models.OrganizationMemberships, http_res)
         if utils.match_response(http_res, "403", "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -3931,7 +3921,7 @@ class Users(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.OrganizationMemberships]:
+    ) -> models.OrganizationMemberships:
         r"""Retrieve all memberships for a user
 
         Retrieve a paginated list of the user's organization memberships
@@ -4006,9 +3996,7 @@ class Users(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                Optional[models.OrganizationMemberships], http_res
-            )
+            return unmarshal_json_response(models.OrganizationMemberships, http_res)
         if utils.match_response(http_res, "403", "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -4032,7 +4020,7 @@ class Users(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.OrganizationInvitationsWithPublicOrganizationData]:
+    ) -> models.OrganizationInvitationsWithPublicOrganizationData:
         r"""Retrieve all invitations for a user
 
         Retrieve a paginated list of the user's organization invitations
@@ -4110,8 +4098,7 @@ class Users(BaseSDK):
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(
-                Optional[models.OrganizationInvitationsWithPublicOrganizationData],
-                http_res,
+                models.OrganizationInvitationsWithPublicOrganizationData, http_res
             )
         if utils.match_response(http_res, ["400", "403", "404"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
@@ -4136,7 +4123,7 @@ class Users(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.OrganizationInvitationsWithPublicOrganizationData]:
+    ) -> models.OrganizationInvitationsWithPublicOrganizationData:
         r"""Retrieve all invitations for a user
 
         Retrieve a paginated list of the user's organization invitations
@@ -4214,8 +4201,7 @@ class Users(BaseSDK):
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(
-                Optional[models.OrganizationInvitationsWithPublicOrganizationData],
-                http_res,
+                models.OrganizationInvitationsWithPublicOrganizationData, http_res
             )
         if utils.match_response(http_res, ["400", "403", "404"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
@@ -4238,7 +4224,7 @@ class Users(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.VerifyPasswordResponseBody]:
+    ) -> models.VerifyPasswordResponseBody:
         r"""Verify the password of a user
 
         Check that the user's password matches the supplied input.
@@ -4318,9 +4304,7 @@ class Users(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                Optional[models.VerifyPasswordResponseBody], http_res
-            )
+            return unmarshal_json_response(models.VerifyPasswordResponseBody, http_res)
         if utils.match_response(http_res, "500", "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -4342,7 +4326,7 @@ class Users(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.VerifyPasswordResponseBody]:
+    ) -> models.VerifyPasswordResponseBody:
         r"""Verify the password of a user
 
         Check that the user's password matches the supplied input.
@@ -4422,9 +4406,7 @@ class Users(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                Optional[models.VerifyPasswordResponseBody], http_res
-            )
+            return unmarshal_json_response(models.VerifyPasswordResponseBody, http_res)
         if utils.match_response(http_res, "500", "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -4446,7 +4428,7 @@ class Users(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.VerifyTOTPResponseBody]:
+    ) -> models.VerifyTOTPResponseBody:
         r"""Verify a TOTP or backup code for a user
 
         Verify that the provided TOTP or backup code is valid for the user.
@@ -4528,9 +4510,7 @@ class Users(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                Optional[models.VerifyTOTPResponseBody], http_res
-            )
+            return unmarshal_json_response(models.VerifyTOTPResponseBody, http_res)
         if utils.match_response(http_res, "500", "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -4552,7 +4532,7 @@ class Users(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.VerifyTOTPResponseBody]:
+    ) -> models.VerifyTOTPResponseBody:
         r"""Verify a TOTP or backup code for a user
 
         Verify that the provided TOTP or backup code is valid for the user.
@@ -4634,9 +4614,7 @@ class Users(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                Optional[models.VerifyTOTPResponseBody], http_res
-            )
+            return unmarshal_json_response(models.VerifyTOTPResponseBody, http_res)
         if utils.match_response(http_res, "500", "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -4657,7 +4635,7 @@ class Users(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.DisableMFAResponseBody]:
+    ) -> models.DisableMFAResponseBody:
         r"""Disable a user's MFA methods
 
         Disable all of a user's MFA methods (e.g. OTP sent via SMS, TOTP on their authenticator app) at once.
@@ -4725,9 +4703,7 @@ class Users(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                Optional[models.DisableMFAResponseBody], http_res
-            )
+            return unmarshal_json_response(models.DisableMFAResponseBody, http_res)
         if utils.match_response(http_res, "404", "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -4751,7 +4727,7 @@ class Users(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.DisableMFAResponseBody]:
+    ) -> models.DisableMFAResponseBody:
         r"""Disable a user's MFA methods
 
         Disable all of a user's MFA methods (e.g. OTP sent via SMS, TOTP on their authenticator app) at once.
@@ -4819,9 +4795,7 @@ class Users(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                Optional[models.DisableMFAResponseBody], http_res
-            )
+            return unmarshal_json_response(models.DisableMFAResponseBody, http_res)
         if utils.match_response(http_res, "404", "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -4845,7 +4819,7 @@ class Users(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.DeleteBackupCodeResponseBody]:
+    ) -> models.DeleteBackupCodeResponseBody:
         r"""Disable all user's Backup codes
 
         Disable all of a user's backup codes.
@@ -4914,7 +4888,7 @@ class Users(BaseSDK):
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(
-                Optional[models.DeleteBackupCodeResponseBody], http_res
+                models.DeleteBackupCodeResponseBody, http_res
             )
         if utils.match_response(http_res, "404", "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
@@ -4939,7 +4913,7 @@ class Users(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.DeleteBackupCodeResponseBody]:
+    ) -> models.DeleteBackupCodeResponseBody:
         r"""Disable all user's Backup codes
 
         Disable all of a user's backup codes.
@@ -5008,7 +4982,7 @@ class Users(BaseSDK):
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(
-                Optional[models.DeleteBackupCodeResponseBody], http_res
+                models.DeleteBackupCodeResponseBody, http_res
             )
         if utils.match_response(http_res, "404", "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
@@ -5034,7 +5008,7 @@ class Users(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.DeletedObject]:
+    ) -> models.DeletedObject:
         r"""Delete a user passkey
 
         Delete the passkey identification for a given user and notify them through email.
@@ -5104,7 +5078,7 @@ class Users(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.DeletedObject], http_res)
+            return unmarshal_json_response(models.DeletedObject, http_res)
         if utils.match_response(http_res, ["403", "404"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -5129,7 +5103,7 @@ class Users(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.DeletedObject]:
+    ) -> models.DeletedObject:
         r"""Delete a user passkey
 
         Delete the passkey identification for a given user and notify them through email.
@@ -5199,7 +5173,7 @@ class Users(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.DeletedObject], http_res)
+            return unmarshal_json_response(models.DeletedObject, http_res)
         if utils.match_response(http_res, ["403", "404"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -5224,7 +5198,7 @@ class Users(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.DeletedObject]:
+    ) -> models.DeletedObject:
         r"""Delete a user web3 wallet
 
         Delete the web3 wallet identification for a given user.
@@ -5294,7 +5268,7 @@ class Users(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.DeletedObject], http_res)
+            return unmarshal_json_response(models.DeletedObject, http_res)
         if utils.match_response(http_res, ["400", "403", "404"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -5319,7 +5293,7 @@ class Users(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.DeletedObject]:
+    ) -> models.DeletedObject:
         r"""Delete a user web3 wallet
 
         Delete the web3 wallet identification for a given user.
@@ -5389,7 +5363,7 @@ class Users(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.DeletedObject], http_res)
+            return unmarshal_json_response(models.DeletedObject, http_res)
         if utils.match_response(http_res, ["400", "403", "404"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -5413,7 +5387,7 @@ class Users(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.DeleteTOTPResponseBody]:
+    ) -> models.DeleteTOTPResponseBody:
         r"""Delete all the user's TOTPs
 
         Deletes all of the user's TOTPs.
@@ -5481,9 +5455,7 @@ class Users(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                Optional[models.DeleteTOTPResponseBody], http_res
-            )
+            return unmarshal_json_response(models.DeleteTOTPResponseBody, http_res)
         if utils.match_response(http_res, "404", "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -5507,7 +5479,7 @@ class Users(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.DeleteTOTPResponseBody]:
+    ) -> models.DeleteTOTPResponseBody:
         r"""Delete all the user's TOTPs
 
         Deletes all of the user's TOTPs.
@@ -5575,9 +5547,7 @@ class Users(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                Optional[models.DeleteTOTPResponseBody], http_res
-            )
+            return unmarshal_json_response(models.DeleteTOTPResponseBody, http_res)
         if utils.match_response(http_res, "404", "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -5602,7 +5572,7 @@ class Users(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.DeletedObject]:
+    ) -> models.DeletedObject:
         r"""Delete External Account
 
         Delete an external account by ID.
@@ -5672,7 +5642,7 @@ class Users(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.DeletedObject], http_res)
+            return unmarshal_json_response(models.DeletedObject, http_res)
         if utils.match_response(http_res, ["400", "403", "404"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -5697,7 +5667,7 @@ class Users(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.DeletedObject]:
+    ) -> models.DeletedObject:
         r"""Delete External Account
 
         Delete an external account by ID.
@@ -5767,7 +5737,7 @@ class Users(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.DeletedObject], http_res)
+            return unmarshal_json_response(models.DeletedObject, http_res)
         if utils.match_response(http_res, ["400", "403", "404"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -5793,7 +5763,7 @@ class Users(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.OrganizationMemberships]:
+    ) -> models.OrganizationMemberships:
         r"""Get a list of all organization memberships within an instance.
 
         Retrieves all organization user memberships for the given instance.
@@ -5870,9 +5840,7 @@ class Users(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                Optional[models.OrganizationMemberships], http_res
-            )
+            return unmarshal_json_response(models.OrganizationMemberships, http_res)
         if utils.match_response(http_res, ["400", "401", "422"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -5898,7 +5866,7 @@ class Users(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.OrganizationMemberships]:
+    ) -> models.OrganizationMemberships:
         r"""Get a list of all organization memberships within an instance.
 
         Retrieves all organization user memberships for the given instance.
@@ -5975,9 +5943,7 @@ class Users(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                Optional[models.OrganizationMemberships], http_res
-            )
+            return unmarshal_json_response(models.OrganizationMemberships, http_res)
         if utils.match_response(http_res, ["400", "401", "422"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)

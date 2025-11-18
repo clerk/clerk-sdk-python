@@ -19,7 +19,7 @@ class OrganizationMembershipsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.OrganizationMembership]:
+    ) -> models.OrganizationMembership:
         r"""Create a new organization membership
 
         Adds a user as a member to the given organization.
@@ -100,9 +100,7 @@ class OrganizationMembershipsSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                Optional[models.OrganizationMembership], http_res
-            )
+            return unmarshal_json_response(models.OrganizationMembership, http_res)
         if utils.match_response(
             http_res, ["400", "403", "404", "422"], "application/json"
         ):
@@ -127,7 +125,7 @@ class OrganizationMembershipsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.OrganizationMembership]:
+    ) -> models.OrganizationMembership:
         r"""Create a new organization membership
 
         Adds a user as a member to the given organization.
@@ -208,9 +206,7 @@ class OrganizationMembershipsSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                Optional[models.OrganizationMembership], http_res
-            )
+            return unmarshal_json_response(models.OrganizationMembership, http_res)
         if utils.match_response(
             http_res, ["400", "403", "404", "422"], "application/json"
         ):
@@ -251,7 +247,7 @@ class OrganizationMembershipsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.OrganizationMemberships]:
+    ) -> models.OrganizationMemberships:
         r"""Get a list of all members of an organization
 
         Retrieves all user memberships for the given organization
@@ -374,9 +370,7 @@ class OrganizationMembershipsSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                Optional[models.OrganizationMemberships], http_res
-            )
+            return unmarshal_json_response(models.OrganizationMemberships, http_res)
         if utils.match_response(http_res, ["401", "422"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -415,7 +409,7 @@ class OrganizationMembershipsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.OrganizationMemberships]:
+    ) -> models.OrganizationMemberships:
         r"""Get a list of all members of an organization
 
         Retrieves all user memberships for the given organization
@@ -538,9 +532,7 @@ class OrganizationMembershipsSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                Optional[models.OrganizationMemberships], http_res
-            )
+            return unmarshal_json_response(models.OrganizationMemberships, http_res)
         if utils.match_response(http_res, ["401", "422"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -563,7 +555,7 @@ class OrganizationMembershipsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.OrganizationMembership]:
+    ) -> models.OrganizationMembership:
         r"""Update an organization membership
 
         Updates the properties of an existing organization membership
@@ -644,9 +636,7 @@ class OrganizationMembershipsSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                Optional[models.OrganizationMembership], http_res
-            )
+            return unmarshal_json_response(models.OrganizationMembership, http_res)
         if utils.match_response(http_res, ["404", "422"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -669,7 +659,7 @@ class OrganizationMembershipsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.OrganizationMembership]:
+    ) -> models.OrganizationMembership:
         r"""Update an organization membership
 
         Updates the properties of an existing organization membership
@@ -750,9 +740,7 @@ class OrganizationMembershipsSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                Optional[models.OrganizationMembership], http_res
-            )
+            return unmarshal_json_response(models.OrganizationMembership, http_res)
         if utils.match_response(http_res, ["404", "422"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -774,7 +762,7 @@ class OrganizationMembershipsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.OrganizationMembership]:
+    ) -> models.OrganizationMembership:
         r"""Remove a member from an organization
 
         Removes the given membership from the organization
@@ -844,9 +832,7 @@ class OrganizationMembershipsSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                Optional[models.OrganizationMembership], http_res
-            )
+            return unmarshal_json_response(models.OrganizationMembership, http_res)
         if utils.match_response(http_res, ["401", "404", "422"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -868,7 +854,7 @@ class OrganizationMembershipsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.OrganizationMembership]:
+    ) -> models.OrganizationMembership:
         r"""Remove a member from an organization
 
         Removes the given membership from the organization
@@ -938,9 +924,7 @@ class OrganizationMembershipsSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                Optional[models.OrganizationMembership], http_res
-            )
+            return unmarshal_json_response(models.OrganizationMembership, http_res)
         if utils.match_response(http_res, ["401", "404", "422"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -964,7 +948,7 @@ class OrganizationMembershipsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.OrganizationMembership]:
+    ) -> models.OrganizationMembership:
         r"""Merge and update organization membership metadata
 
         Update an organization membership's metadata attributes by merging existing values with the provided parameters.
@@ -1051,9 +1035,7 @@ class OrganizationMembershipsSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                Optional[models.OrganizationMembership], http_res
-            )
+            return unmarshal_json_response(models.OrganizationMembership, http_res)
         if utils.match_response(http_res, ["400", "404", "422"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -1077,7 +1059,7 @@ class OrganizationMembershipsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.OrganizationMembership]:
+    ) -> models.OrganizationMembership:
         r"""Merge and update organization membership metadata
 
         Update an organization membership's metadata attributes by merging existing values with the provided parameters.
@@ -1164,9 +1146,7 @@ class OrganizationMembershipsSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                Optional[models.OrganizationMembership], http_res
-            )
+            return unmarshal_json_response(models.OrganizationMembership, http_res)
         if utils.match_response(http_res, ["400", "404", "422"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)

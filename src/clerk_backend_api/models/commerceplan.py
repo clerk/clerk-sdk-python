@@ -5,9 +5,10 @@ from .commercemoneyresponse import CommerceMoneyResponse, CommerceMoneyResponseT
 from .featureresponse import FeatureResponse, FeatureResponseTypedDict
 from clerk_backend_api.types import BaseModel, Nullable, UNSET_SENTINEL
 from enum import Enum
+import pydantic
 from pydantic import model_serializer
 from typing import List, Optional
-from typing_extensions import NotRequired, TypedDict
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class CommercePlanObject(str, Enum):
@@ -121,7 +122,12 @@ class CommercePlan(BaseModel):
     description: Nullable[str]
     r"""The description of the plan."""
 
-    product_id: str
+    product_id: Annotated[
+        str,
+        pydantic.Field(
+            deprecated="warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
+        ),
+    ]
     r"""The ID of the product this plan belongs to."""
 
     is_default: bool

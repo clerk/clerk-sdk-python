@@ -24,7 +24,7 @@ class OrganizationsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.Organizations]:
+    ) -> models.Organizations:
         r"""Get a list of organizations for an instance
 
         This request returns the list of organizations for an instance.
@@ -123,7 +123,7 @@ class OrganizationsSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.Organizations], http_res)
+            return unmarshal_json_response(models.Organizations, http_res)
         if utils.match_response(http_res, ["400", "403", "422"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -151,7 +151,7 @@ class OrganizationsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.Organizations]:
+    ) -> models.Organizations:
         r"""Get a list of organizations for an instance
 
         This request returns the list of organizations for an instance.
@@ -250,7 +250,7 @@ class OrganizationsSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.Organizations], http_res)
+            return unmarshal_json_response(models.Organizations, http_res)
         if utils.match_response(http_res, ["400", "403", "422"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -276,7 +276,7 @@ class OrganizationsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.Organization]:
+    ) -> models.Organization:
         r"""Create an organization
 
         Creates a new organization with the given name for an instance.
@@ -362,7 +362,7 @@ class OrganizationsSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.Organization], http_res)
+            return unmarshal_json_response(models.Organization, http_res)
         if utils.match_response(http_res, ["400", "403", "422"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -388,7 +388,7 @@ class OrganizationsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.Organization]:
+    ) -> models.Organization:
         r"""Create an organization
 
         Creates a new organization with the given name for an instance.
@@ -474,7 +474,7 @@ class OrganizationsSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.Organization], http_res)
+            return unmarshal_json_response(models.Organization, http_res)
         if utils.match_response(http_res, ["400", "403", "422"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -497,7 +497,7 @@ class OrganizationsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.Organization]:
+    ) -> models.Organization:
         r"""Retrieve an organization by ID or slug
 
         Fetches the organization whose ID or slug matches the provided `id_or_slug` URL query parameter.
@@ -569,7 +569,7 @@ class OrganizationsSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.Organization], http_res)
+            return unmarshal_json_response(models.Organization, http_res)
         if utils.match_response(http_res, ["403", "404"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -592,7 +592,7 @@ class OrganizationsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.Organization]:
+    ) -> models.Organization:
         r"""Retrieve an organization by ID or slug
 
         Fetches the organization whose ID or slug matches the provided `id_or_slug` URL query parameter.
@@ -664,7 +664,7 @@ class OrganizationsSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.Organization], http_res)
+            return unmarshal_json_response(models.Organization, http_res)
         if utils.match_response(http_res, ["403", "404"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -692,7 +692,7 @@ class OrganizationsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.Organization]:
+    ) -> models.Organization:
         r"""Update an organization
 
         Updates an existing organization
@@ -785,7 +785,7 @@ class OrganizationsSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.Organization], http_res)
+            return unmarshal_json_response(models.Organization, http_res)
         if utils.match_response(
             http_res, ["402", "403", "404", "422"], "application/json"
         ):
@@ -815,7 +815,7 @@ class OrganizationsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.Organization]:
+    ) -> models.Organization:
         r"""Update an organization
 
         Updates an existing organization
@@ -908,7 +908,7 @@ class OrganizationsSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.Organization], http_res)
+            return unmarshal_json_response(models.Organization, http_res)
         if utils.match_response(
             http_res, ["402", "403", "404", "422"], "application/json"
         ):
@@ -931,7 +931,7 @@ class OrganizationsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.DeletedObject]:
+    ) -> models.DeletedObject:
         r"""Delete an organization
 
         Deletes the given organization.
@@ -1001,7 +1001,7 @@ class OrganizationsSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.DeletedObject], http_res)
+            return unmarshal_json_response(models.DeletedObject, http_res)
         if utils.match_response(http_res, "404", "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -1022,7 +1022,7 @@ class OrganizationsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.DeletedObject]:
+    ) -> models.DeletedObject:
         r"""Delete an organization
 
         Deletes the given organization.
@@ -1092,7 +1092,7 @@ class OrganizationsSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.DeletedObject], http_res)
+            return unmarshal_json_response(models.DeletedObject, http_res)
         if utils.match_response(http_res, "404", "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -1115,7 +1115,7 @@ class OrganizationsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.Organization]:
+    ) -> models.Organization:
         r"""Merge and update metadata for an organization
 
         Update organization metadata attributes by merging existing values with the provided parameters.
@@ -1201,7 +1201,7 @@ class OrganizationsSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.Organization], http_res)
+            return unmarshal_json_response(models.Organization, http_res)
         if utils.match_response(
             http_res, ["400", "401", "404", "422"], "application/json"
         ):
@@ -1226,7 +1226,7 @@ class OrganizationsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.Organization]:
+    ) -> models.Organization:
         r"""Merge and update metadata for an organization
 
         Update organization metadata attributes by merging existing values with the provided parameters.
@@ -1312,7 +1312,7 @@ class OrganizationsSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.Organization], http_res)
+            return unmarshal_json_response(models.Organization, http_res)
         if utils.match_response(
             http_res, ["400", "401", "404", "422"], "application/json"
         ):
@@ -1340,7 +1340,7 @@ class OrganizationsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.OrganizationWithLogo]:
+    ) -> models.OrganizationWithLogo:
         r"""Upload a logo for the organization
 
         Set or replace an organization's logo, by uploading an image file.
@@ -1424,9 +1424,7 @@ class OrganizationsSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                Optional[models.OrganizationWithLogo], http_res
-            )
+            return unmarshal_json_response(models.OrganizationWithLogo, http_res)
         if utils.match_response(
             http_res, ["400", "403", "404", "413"], "application/json"
         ):
@@ -1454,7 +1452,7 @@ class OrganizationsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.OrganizationWithLogo]:
+    ) -> models.OrganizationWithLogo:
         r"""Upload a logo for the organization
 
         Set or replace an organization's logo, by uploading an image file.
@@ -1538,9 +1536,7 @@ class OrganizationsSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                Optional[models.OrganizationWithLogo], http_res
-            )
+            return unmarshal_json_response(models.OrganizationWithLogo, http_res)
         if utils.match_response(
             http_res, ["400", "403", "404", "413"], "application/json"
         ):
@@ -1563,7 +1559,7 @@ class OrganizationsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.Organization]:
+    ) -> models.Organization:
         r"""Delete the organization's logo.
 
         Delete the organization's logo.
@@ -1631,7 +1627,7 @@ class OrganizationsSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.Organization], http_res)
+            return unmarshal_json_response(models.Organization, http_res)
         if utils.match_response(http_res, "404", "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -1652,7 +1648,7 @@ class OrganizationsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.Organization]:
+    ) -> models.Organization:
         r"""Delete the organization's logo.
 
         Delete the organization's logo.
@@ -1720,7 +1716,7 @@ class OrganizationsSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.Organization], http_res)
+            return unmarshal_json_response(models.Organization, http_res)
         if utils.match_response(http_res, "404", "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -1741,7 +1737,7 @@ class OrganizationsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.CommerceSubscription]:
+    ) -> models.CommerceSubscription:
         r"""Retrieve an organization's billing subscription
 
         Retrieves the billing subscription for the specified organization.
@@ -1811,9 +1807,7 @@ class OrganizationsSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                Optional[models.CommerceSubscription], http_res
-            )
+            return unmarshal_json_response(models.CommerceSubscription, http_res)
         if utils.match_response(
             http_res, ["400", "401", "403", "404", "422"], "application/json"
         ):
@@ -1839,7 +1833,7 @@ class OrganizationsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.CommerceSubscription]:
+    ) -> models.CommerceSubscription:
         r"""Retrieve an organization's billing subscription
 
         Retrieves the billing subscription for the specified organization.
@@ -1909,9 +1903,7 @@ class OrganizationsSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                Optional[models.CommerceSubscription], http_res
-            )
+            return unmarshal_json_response(models.CommerceSubscription, http_res)
         if utils.match_response(
             http_res, ["400", "401", "403", "404", "422"], "application/json"
         ):

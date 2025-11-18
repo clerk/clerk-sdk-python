@@ -32,8 +32,6 @@ with Clerk(
 
     res = clerk.oauth_applications.list(limit=20, offset=10, order_by="+created_at", name_query="<value>")
 
-    assert res is not None
-
     # Handle response
     print(res)
 
@@ -86,8 +84,6 @@ with Clerk(
         "public": True,
     })
 
-    assert res is not None
-
     # Handle response
     print(res)
 
@@ -128,8 +124,6 @@ with Clerk(
 
     res = clerk.oauth_applications.get(oauth_application_id="oauth_app_12345")
 
-    assert res is not None
-
     # Handle response
     print(res)
 
@@ -169,8 +163,6 @@ with Clerk(
 ) as clerk:
 
     res = clerk.oauth_applications.update(oauth_application_id="oauth_app_67890", name="Updated OAuth App Name", redirect_uris=None, scopes="profile email public_metadata private_metadata", consent_screen_enabled=None, pkce_required=None, public=None)
-
-    assert res is not None
 
     # Handle response
     print(res)
@@ -220,8 +212,6 @@ with Clerk(
 
     res = clerk.oauth_applications.delete(oauth_application_id="oauth_app_09876")
 
-    assert res is not None
-
     # Handle response
     print(res)
 
@@ -262,8 +252,6 @@ with Clerk(
 ) as clerk:
 
     res = clerk.oauth_applications.rotate_secret(oauth_application_id="oauth_application_12345")
-
-    assert res is not None
 
     # Handle response
     print(res)

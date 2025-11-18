@@ -26,8 +26,6 @@ with Clerk(
 
     res = clerk.webhooks.create_svix_app()
 
-    assert res is not None
-
     # Handle response
     print(res)
 
@@ -100,8 +98,6 @@ with Clerk(
 ) as clerk:
 
     res = clerk.webhooks.generate_svix_auth_url()
-
-    assert res is not None
 
     # Handle response
     print(res)
