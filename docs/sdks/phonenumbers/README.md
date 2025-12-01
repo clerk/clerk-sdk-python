@@ -33,8 +33,6 @@ with Clerk(
         "reserved_for_second_factor": False,
     })
 
-    assert res is not None
-
     # Handle response
     print(res)
 
@@ -74,8 +72,6 @@ with Clerk(
 ) as clerk:
 
     res = clerk.phone_numbers.get(phone_number_id="phone_12345")
-
-    assert res is not None
 
     # Handle response
     print(res)
@@ -117,8 +113,6 @@ with Clerk(
 
     res = clerk.phone_numbers.delete(phone_number_id="phone_12345")
 
-    assert res is not None
-
     # Handle response
     print(res)
 
@@ -158,8 +152,6 @@ with Clerk(
 ) as clerk:
 
     res = clerk.phone_numbers.update(phone_number_id="phone_12345", verified=False, primary=True, reserved_for_second_factor=True)
-
-    assert res is not None
 
     # Handle response
     print(res)

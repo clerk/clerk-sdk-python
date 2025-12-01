@@ -34,8 +34,6 @@ with Clerk(
         "proxy_url": "https://example.com/__clerk",
     })
 
-    assert res is not None
-
     # Handle response
     print(res)
 

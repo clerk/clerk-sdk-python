@@ -24,8 +24,6 @@ with Clerk(
 
     res = clerk.jwks.get_jwks()
 
-    assert res is not None
-
     # Handle response
     print(res)
 

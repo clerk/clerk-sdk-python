@@ -26,8 +26,6 @@ with Clerk(
 
     res = clerk.templates.preview(template_type="email", slug="welcome-email", subject="Welcome to our service!", body="Hi, thank you for joining our service.", from_email_name="hello", reply_to_email_name="support")
 
-    assert res is not None
-
     # Handle response
     print(res)
 

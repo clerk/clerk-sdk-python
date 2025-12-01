@@ -26,11 +26,8 @@ with Clerk(
     res = clerk.beta_features.update_instance_settings(request={
         "from_email_address": "noreply",
         "progressive_sign_up": True,
-        "enhanced_email_deliverability": True,
         "test_mode": True,
     })
-
-    assert res is not None
 
     # Handle response
     print(res)

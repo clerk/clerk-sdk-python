@@ -22,7 +22,7 @@ class Invitations(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.Invitation]:
+    ) -> models.Invitation:
         r"""Create an invitation
 
         Creates a new invitation for the given email address and sends the invitation email.
@@ -71,6 +71,7 @@ class Invitations(BaseSDK):
                 "json",
                 Optional[models.CreateInvitationRequestBody],
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -101,7 +102,7 @@ class Invitations(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.Invitation], http_res)
+            return unmarshal_json_response(models.Invitation, http_res)
         if utils.match_response(http_res, ["400", "422"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -127,7 +128,7 @@ class Invitations(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.Invitation]:
+    ) -> models.Invitation:
         r"""Create an invitation
 
         Creates a new invitation for the given email address and sends the invitation email.
@@ -176,6 +177,7 @@ class Invitations(BaseSDK):
                 "json",
                 Optional[models.CreateInvitationRequestBody],
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -206,7 +208,7 @@ class Invitations(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.Invitation], http_res)
+            return unmarshal_json_response(models.Invitation, http_res)
         if utils.match_response(http_res, ["400", "422"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -232,7 +234,7 @@ class Invitations(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[List[models.Invitation]]:
+    ) -> List[models.Invitation]:
         r"""List all invitations
 
         Returns all non-revoked invitations for your application, sorted by creation date
@@ -290,6 +292,7 @@ class Invitations(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -319,7 +322,7 @@ class Invitations(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[List[models.Invitation]], http_res)
+            return unmarshal_json_response(List[models.Invitation], http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError("API error occurred", http_res, http_res_text)
@@ -342,7 +345,7 @@ class Invitations(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[List[models.Invitation]]:
+    ) -> List[models.Invitation]:
         r"""List all invitations
 
         Returns all non-revoked invitations for your application, sorted by creation date
@@ -400,6 +403,7 @@ class Invitations(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -429,7 +433,7 @@ class Invitations(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[List[models.Invitation]], http_res)
+            return unmarshal_json_response(List[models.Invitation], http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError("API error occurred", http_res, http_res_text)
@@ -449,13 +453,15 @@ class Invitations(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[List[models.Invitation]]:
+    ) -> List[models.Invitation]:
         r"""Create multiple invitations
 
         Use this API operation to create multiple invitations for the provided email addresses. You can choose to send the
         invitations as emails by setting the `notify` parameter to `true`. There cannot be an existing invitation for any
         of the email addresses you provide unless you set `ignore_existing` to `true` for specific email addresses. Please
         note that there must be no existing user for any of the email addresses you provide, and this rule cannot be bypassed.
+
+        This endpoint is limited to a maximum of 10 invitations per API call. If you need to send more invitations, please make multiple requests.
 
         :param request: The request object to send.
         :param retries: Override the default retry configuration for this method
@@ -493,6 +499,7 @@ class Invitations(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, True, "json", Optional[List[models.RequestBody]]
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -523,7 +530,7 @@ class Invitations(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[List[models.Invitation]], http_res)
+            return unmarshal_json_response(List[models.Invitation], http_res)
         if utils.match_response(http_res, ["400", "422"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -546,13 +553,15 @@ class Invitations(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[List[models.Invitation]]:
+    ) -> List[models.Invitation]:
         r"""Create multiple invitations
 
         Use this API operation to create multiple invitations for the provided email addresses. You can choose to send the
         invitations as emails by setting the `notify` parameter to `true`. There cannot be an existing invitation for any
         of the email addresses you provide unless you set `ignore_existing` to `true` for specific email addresses. Please
         note that there must be no existing user for any of the email addresses you provide, and this rule cannot be bypassed.
+
+        This endpoint is limited to a maximum of 10 invitations per API call. If you need to send more invitations, please make multiple requests.
 
         :param request: The request object to send.
         :param retries: Override the default retry configuration for this method
@@ -590,6 +599,7 @@ class Invitations(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, True, "json", Optional[List[models.RequestBody]]
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -620,7 +630,7 @@ class Invitations(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[List[models.Invitation]], http_res)
+            return unmarshal_json_response(List[models.Invitation], http_res)
         if utils.match_response(http_res, ["400", "422"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -641,7 +651,7 @@ class Invitations(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.InvitationRevoked]:
+    ) -> models.InvitationRevoked:
         r"""Revokes an invitation
 
         Revokes the given invitation.
@@ -682,6 +692,7 @@ class Invitations(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -712,7 +723,7 @@ class Invitations(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.InvitationRevoked], http_res)
+            return unmarshal_json_response(models.InvitationRevoked, http_res)
         if utils.match_response(http_res, ["400", "404"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -733,7 +744,7 @@ class Invitations(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.InvitationRevoked]:
+    ) -> models.InvitationRevoked:
         r"""Revokes an invitation
 
         Revokes the given invitation.
@@ -774,6 +785,7 @@ class Invitations(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -804,7 +816,7 @@ class Invitations(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.InvitationRevoked], http_res)
+            return unmarshal_json_response(models.InvitationRevoked, http_res)
         if utils.match_response(http_res, ["400", "404"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)

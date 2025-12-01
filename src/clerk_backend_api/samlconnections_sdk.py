@@ -21,7 +21,7 @@ class SamlConnectionsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.SAMLConnections]:
+    ) -> models.SAMLConnections:
         r"""Get a list of SAML Connections for an instance
 
         Returns the list of SAML Connections for an instance.
@@ -80,6 +80,7 @@ class SamlConnectionsSDK(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -110,7 +111,7 @@ class SamlConnectionsSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.SAMLConnections], http_res)
+            return unmarshal_json_response(models.SAMLConnections, http_res)
         if utils.match_response(http_res, ["402", "403", "422"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -135,7 +136,7 @@ class SamlConnectionsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.SAMLConnections]:
+    ) -> models.SAMLConnections:
         r"""Get a list of SAML Connections for an instance
 
         Returns the list of SAML Connections for an instance.
@@ -194,6 +195,7 @@ class SamlConnectionsSDK(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -224,7 +226,7 @@ class SamlConnectionsSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.SAMLConnections], http_res)
+            return unmarshal_json_response(models.SAMLConnections, http_res)
         if utils.match_response(http_res, ["402", "403", "422"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -250,7 +252,7 @@ class SamlConnectionsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.SchemasSAMLConnection]:
+    ) -> models.SchemasSAMLConnection:
         r"""Create a SAML Connection
 
         Create a new SAML Connection.
@@ -297,6 +299,7 @@ class SamlConnectionsSDK(BaseSDK):
                 "json",
                 Optional[models.CreateSAMLConnectionRequestBody],
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -327,9 +330,7 @@ class SamlConnectionsSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                Optional[models.SchemasSAMLConnection], http_res
-            )
+            return unmarshal_json_response(models.SchemasSAMLConnection, http_res)
         if utils.match_response(
             http_res, ["402", "403", "404", "422"], "application/json"
         ):
@@ -357,7 +358,7 @@ class SamlConnectionsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.SchemasSAMLConnection]:
+    ) -> models.SchemasSAMLConnection:
         r"""Create a SAML Connection
 
         Create a new SAML Connection.
@@ -404,6 +405,7 @@ class SamlConnectionsSDK(BaseSDK):
                 "json",
                 Optional[models.CreateSAMLConnectionRequestBody],
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -434,9 +436,7 @@ class SamlConnectionsSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                Optional[models.SchemasSAMLConnection], http_res
-            )
+            return unmarshal_json_response(models.SchemasSAMLConnection, http_res)
         if utils.match_response(
             http_res, ["402", "403", "404", "422"], "application/json"
         ):
@@ -459,7 +459,7 @@ class SamlConnectionsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.SchemasSAMLConnection]:
+    ) -> models.SchemasSAMLConnection:
         r"""Retrieve a SAML Connection by ID
 
         Fetches the SAML Connection whose ID matches the provided `saml_connection_id` in the path.
@@ -497,6 +497,7 @@ class SamlConnectionsSDK(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -527,9 +528,7 @@ class SamlConnectionsSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                Optional[models.SchemasSAMLConnection], http_res
-            )
+            return unmarshal_json_response(models.SchemasSAMLConnection, http_res)
         if utils.match_response(http_res, ["402", "403", "404"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -550,7 +549,7 @@ class SamlConnectionsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.SchemasSAMLConnection]:
+    ) -> models.SchemasSAMLConnection:
         r"""Retrieve a SAML Connection by ID
 
         Fetches the SAML Connection whose ID matches the provided `saml_connection_id` in the path.
@@ -588,6 +587,7 @@ class SamlConnectionsSDK(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -618,9 +618,7 @@ class SamlConnectionsSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                Optional[models.SchemasSAMLConnection], http_res
-            )
+            return unmarshal_json_response(models.SchemasSAMLConnection, http_res)
         if utils.match_response(http_res, ["402", "403", "404"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -659,7 +657,7 @@ class SamlConnectionsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.SchemasSAMLConnection]:
+    ) -> models.SchemasSAMLConnection:
         r"""Update a SAML Connection
 
         Updates the SAML Connection whose ID matches the provided `id` in the path.
@@ -740,6 +738,7 @@ class SamlConnectionsSDK(BaseSDK):
                 "json",
                 models.UpdateSAMLConnectionRequestBody,
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -770,9 +769,7 @@ class SamlConnectionsSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                Optional[models.SchemasSAMLConnection], http_res
-            )
+            return unmarshal_json_response(models.SchemasSAMLConnection, http_res)
         if utils.match_response(
             http_res, ["402", "403", "404", "422"], "application/json"
         ):
@@ -813,7 +810,7 @@ class SamlConnectionsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.SchemasSAMLConnection]:
+    ) -> models.SchemasSAMLConnection:
         r"""Update a SAML Connection
 
         Updates the SAML Connection whose ID matches the provided `id` in the path.
@@ -894,6 +891,7 @@ class SamlConnectionsSDK(BaseSDK):
                 "json",
                 models.UpdateSAMLConnectionRequestBody,
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -924,9 +922,7 @@ class SamlConnectionsSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                Optional[models.SchemasSAMLConnection], http_res
-            )
+            return unmarshal_json_response(models.SchemasSAMLConnection, http_res)
         if utils.match_response(
             http_res, ["402", "403", "404", "422"], "application/json"
         ):
@@ -949,7 +945,7 @@ class SamlConnectionsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.DeletedObject]:
+    ) -> models.DeletedObject:
         r"""Delete a SAML Connection
 
         Deletes the SAML Connection whose ID matches the provided `id` in the path.
@@ -987,6 +983,7 @@ class SamlConnectionsSDK(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -1017,7 +1014,7 @@ class SamlConnectionsSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.DeletedObject], http_res)
+            return unmarshal_json_response(models.DeletedObject, http_res)
         if utils.match_response(http_res, ["402", "403", "404"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -1038,7 +1035,7 @@ class SamlConnectionsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.DeletedObject]:
+    ) -> models.DeletedObject:
         r"""Delete a SAML Connection
 
         Deletes the SAML Connection whose ID matches the provided `id` in the path.
@@ -1076,6 +1073,7 @@ class SamlConnectionsSDK(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -1106,7 +1104,7 @@ class SamlConnectionsSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.DeletedObject], http_res)
+            return unmarshal_json_response(models.DeletedObject, http_res)
         if utils.match_response(http_res, ["402", "403", "404"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)

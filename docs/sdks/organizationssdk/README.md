@@ -39,8 +39,6 @@ with Clerk(
         "-name",
     ], order_by="-created_at", limit=20, offset=10)
 
-    assert res is not None
-
     # Handle response
     print(res)
 
@@ -109,8 +107,6 @@ with Clerk(
         "created_at": "1718855032267",
     })
 
-    assert res is not None
-
     # Handle response
     print(res)
 
@@ -150,8 +146,6 @@ with Clerk(
 ) as clerk:
 
     res = clerk.organizations.get(organization_id="org_123", include_members_count=False, include_missing_member_with_elevated_permissions=False)
-
-    assert res is not None
 
     # Handle response
     print(res)
@@ -199,8 +193,6 @@ with Clerk(
 
     }, name="New Organization Name", slug="new-org-slug", max_allowed_memberships=100, admin_delete_enabled=True, created_at="1720203056033")
 
-    assert res is not None
-
     # Handle response
     print(res)
 
@@ -237,6 +229,9 @@ Deletes the given organization.
 Please note that deleting an organization will also delete all memberships and invitations.
 This is not reversible.
 
+After the organization is deleted, any user's active sessions that contain the deleted
+organization will be cleared.
+
 ### Example Usage
 
 <!-- UsageSnippet language="python" operationID="DeleteOrganization" method="delete" path="/organizations/{organization_id}" -->
@@ -249,8 +244,6 @@ with Clerk(
 ) as clerk:
 
     res = clerk.organizations.delete(organization_id="org_321_delete")
-
-    assert res is not None
 
     # Handle response
     print(res)
@@ -298,8 +291,6 @@ with Clerk(
     }, private_metadata={
         "internal_use_only": "Future plans discussion.",
     })
-
-    assert res is not None
 
     # Handle response
     print(res)
@@ -349,8 +340,6 @@ with Clerk(
         "content": open("example.file", "rb"),
     }, uploader_user_id="user_67890")
 
-    assert res is not None
-
     # Handle response
     print(res)
 
@@ -393,8 +382,6 @@ with Clerk(
 
     res = clerk.organizations.delete_logo(organization_id="org_12345")
 
-    assert res is not None
-
     # Handle response
     print(res)
 
@@ -436,8 +423,6 @@ with Clerk(
 ) as clerk:
 
     res = clerk.organizations.get_billing_subscription(organization_id="<id>")
-
-    assert res is not None
 
     # Handle response
     print(res)

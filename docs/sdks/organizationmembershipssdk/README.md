@@ -28,8 +28,6 @@ with Clerk(
 
     res = clerk.organization_memberships.create(organization_id="org_123", user_id="user_456", role="admin")
 
-    assert res is not None
-
     # Handle response
     print(res)
 
@@ -85,8 +83,6 @@ with Clerk(
     ], role=[
         "<value 1>",
     ], query="<value>", email_address_query="<value>", phone_number_query="<value>", username_query="<value>", name_query="<value>", last_active_at_before=1700690400000, last_active_at_after=1700690400000, created_at_before=1730160000000, created_at_after=1730160000000, limit=20, offset=10)
-
-    assert res is not None
 
     # Handle response
     print(res)
@@ -146,8 +142,6 @@ with Clerk(
 
     res = clerk.organization_memberships.update(organization_id="org_12345", user_id="user_67890", role="admin")
 
-    assert res is not None
-
     # Handle response
     print(res)
 
@@ -189,8 +183,6 @@ with Clerk(
 ) as clerk:
 
     res = clerk.organization_memberships.delete(organization_id="org_12345", user_id="user_67890")
-
-    assert res is not None
 
     # Handle response
     print(res)
@@ -238,8 +230,6 @@ with Clerk(
     }, private_metadata={
 
     })
-
-    assert res is not None
 
     # Handle response
     print(res)

@@ -87,8 +87,6 @@ with Clerk(
         "offset": 10,
     })
 
-    assert res is not None
-
     # Handle response
     print(res)
 
@@ -151,8 +149,6 @@ with Clerk(
             "theme": "dark",
         },
     }, delete_self_enabled=True, legal_accepted_at="<value>", skip_legal_checks=False, create_organization_enabled=None, create_organizations_limit=81560, created_at="2023-03-15T07:15:20.902Z")
-
-    assert res is not None
 
     # Handle response
     print(res)
@@ -231,8 +227,6 @@ with Clerk(
         "John Doe",
     ], query="<value>", email_address_query="<value>", phone_number_query="<value>", username_query="<value>", name_query="<value>", banned=True, last_active_at_before=1700690400000, last_active_at_after=1700690400000, last_active_at_since=1700690400000, created_at_before=1730160000000, created_at_after=1730160000000)
 
-    assert res is not None
-
     # Handle response
     print(res)
 
@@ -289,8 +283,6 @@ with Clerk(
 ) as clerk:
 
     res = clerk.users.get(user_id="usr_1")
-
-    assert res is not None
 
     # Handle response
     print(res)
@@ -351,8 +343,6 @@ with Clerk(
     }, unsafe_metadata={
         "age": 30,
     }, delete_self_enabled=True, create_organization_enabled=False, legal_accepted_at="<value>", skip_legal_checks=False, create_organizations_limit=824457, created_at="2021-04-05T14:30:00.000Z")
-
-    assert res is not None
 
     # Handle response
     print(res)
@@ -420,8 +410,6 @@ with Clerk(
 
     res = clerk.users.delete(user_id="usr_1")
 
-    assert res is not None
-
     # Handle response
     print(res)
 
@@ -462,8 +450,6 @@ with Clerk(
 
     res = clerk.users.ban(user_id="user_12345")
 
-    assert res is not None
-
     # Handle response
     print(res)
 
@@ -503,8 +489,6 @@ with Clerk(
 ) as clerk:
 
     res = clerk.users.unban(user_id="user_12345")
-
-    assert res is not None
 
     # Handle response
     print(res)
@@ -550,8 +534,6 @@ with Clerk(
         "<value 3>",
     ])
 
-    assert res is not None
-
     # Handle response
     print(res)
 
@@ -596,8 +578,6 @@ with Clerk(
         "<value 3>",
     ])
 
-    assert res is not None
-
     # Handle response
     print(res)
 
@@ -639,8 +619,6 @@ with Clerk(
 
     res = clerk.users.lock(user_id="user_123456789")
 
-    assert res is not None
-
     # Handle response
     print(res)
 
@@ -680,8 +658,6 @@ with Clerk(
 ) as clerk:
 
     res = clerk.users.unlock(user_id="user_12345")
-
-    assert res is not None
 
     # Handle response
     print(res)
@@ -726,8 +702,6 @@ with Clerk(
         "content": open("example.file", "rb"),
     })
 
-    assert res is not None
-
     # Handle response
     print(res)
 
@@ -768,8 +742,6 @@ with Clerk(
 ) as clerk:
 
     res = clerk.users.delete_profile_image(user_id="usr_test123")
-
-    assert res is not None
 
     # Handle response
     print(res)
@@ -826,8 +798,6 @@ with Clerk(
         "key1": "<value>",
     })
 
-    assert res is not None
-
     # Handle response
     print(res)
 
@@ -873,8 +843,6 @@ with Clerk(
 
     res = clerk.users.get_billing_subscription(user_id="<id>")
 
-    assert res is not None
-
     # Handle response
     print(res)
 
@@ -916,8 +884,6 @@ with Clerk(
 ) as clerk:
 
     res = clerk.users.get_o_auth_access_token(user_id="user_123", provider="oauth_google", paginated=True, limit=20, offset=10)
-
-    assert res is not None
 
     # Handle response
     print(res)
@@ -963,8 +929,6 @@ with Clerk(
 
     res = clerk.users.get_organization_memberships(user_id="usr_1234567890", limit=20, offset=10)
 
-    assert res is not None
-
     # Handle response
     print(res)
 
@@ -1007,8 +971,6 @@ with Clerk(
 ) as clerk:
 
     res = clerk.users.get_organization_invitations(user_id="<id>", limit=20, offset=10, status=clerk_backend_api.UsersGetOrganizationInvitationsQueryParamStatus.PENDING)
-
-    assert res is not None
 
     # Handle response
     print(res)
@@ -1054,8 +1016,6 @@ with Clerk(
 
     res = clerk.users.verify_password(user_id="user_123", password="securepassword123")
 
-    assert res is not None
-
     # Handle response
     print(res)
 
@@ -1100,8 +1060,6 @@ with Clerk(
 
     res = clerk.users.verify_totp(user_id="usr_1a2b3c", code="123456")
 
-    assert res is not None
-
     # Handle response
     print(res)
 
@@ -1142,8 +1100,6 @@ with Clerk(
 ) as clerk:
 
     res = clerk.users.disable_mfa(user_id="user_123456")
-
-    assert res is not None
 
     # Handle response
     print(res)
@@ -1186,8 +1142,6 @@ with Clerk(
 
     res = clerk.users.delete_backup_codes(user_id="<id>")
 
-    assert res is not None
-
     # Handle response
     print(res)
 
@@ -1228,8 +1182,6 @@ with Clerk(
 ) as clerk:
 
     res = clerk.users.delete_passkey(user_id="<id>", passkey_identification_id="<id>")
-
-    assert res is not None
 
     # Handle response
     print(res)
@@ -1273,8 +1225,6 @@ with Clerk(
 
     res = clerk.users.delete_web3_wallet(user_id="<id>", web3_wallet_identification_id="<id>")
 
-    assert res is not None
-
     # Handle response
     print(res)
 
@@ -1317,8 +1267,6 @@ with Clerk(
 
     res = clerk.users.delete_totp(user_id="<id>")
 
-    assert res is not None
-
     # Handle response
     print(res)
 
@@ -1359,8 +1307,6 @@ with Clerk(
 ) as clerk:
 
     res = clerk.users.delete_external_account(user_id="<id>", external_account_id="<id>")
-
-    assert res is not None
 
     # Handle response
     print(res)
@@ -1403,8 +1349,6 @@ with Clerk(
 ) as clerk:
 
     res = clerk.users.get_instance_organization_memberships(order_by="<value>", limit=20, offset=10)
-
-    assert res is not None
 
     # Handle response
     print(res)

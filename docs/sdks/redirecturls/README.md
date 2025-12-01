@@ -27,8 +27,6 @@ with Clerk(
 
     res = clerk.redirect_urls.list(paginated=True, limit=20, offset=10)
 
-    assert res is not None
-
     # Handle response
     print(res)
 
@@ -72,8 +70,6 @@ with Clerk(
         "url": "https://my-app.com/oauth-callback",
     })
 
-    assert res is not None
-
     # Handle response
     print(res)
 
@@ -114,8 +110,6 @@ with Clerk(
 
     res = clerk.redirect_urls.get(id="redir_01FG4K9G5NWSQ4ZPT4TQE4Z7G3")
 
-    assert res is not None
-
     # Handle response
     print(res)
 
@@ -155,8 +149,6 @@ with Clerk(
 ) as clerk:
 
     res = clerk.redirect_urls.delete(id="redir_01FG4K9G5NWSQ4ZPT4TQE4Z7G3")
-
-    assert res is not None
 
     # Handle response
     print(res)

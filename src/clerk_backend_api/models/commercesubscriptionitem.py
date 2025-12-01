@@ -161,7 +161,12 @@ class Plan(BaseModel):
     description: Nullable[str]
     r"""The description of the plan."""
 
-    product_id: str
+    product_id: Annotated[
+        str,
+        pydantic.Field(
+            deprecated="warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
+        ),
+    ]
     r"""The ID of the product this plan belongs to."""
 
     is_default: bool

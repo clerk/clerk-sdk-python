@@ -27,8 +27,6 @@ with Clerk(
 
     res = clerk.m2m.create_token(seconds_until_expiration=9240.85, claims="<value>")
 
-    assert res is not None
-
     # Handle response
     print(res)
 
@@ -75,8 +73,6 @@ with Clerk(
 ) as clerk:
 
     res = clerk.m2m.list_tokens(subject="<value>", revoked=False, expired=False, limit=10, offset=0)
-
-    assert res is not None
 
     # Handle response
     print(res)
@@ -129,8 +125,6 @@ with Clerk(
 
     res = clerk.m2m.revoke_token(m2m_token_id="<id>", revocation_reason="<value>")
 
-    assert res is not None
-
     # Handle response
     print(res)
 
@@ -177,8 +171,6 @@ with Clerk(
 ) as clerk:
 
     res = clerk.m2m.verify_token(token="<value>")
-
-    assert res is not None
 
     # Handle response
     print(res)

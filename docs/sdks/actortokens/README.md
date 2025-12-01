@@ -32,8 +32,6 @@ with Clerk(
         ),
     ))
 
-    assert res is not None
-
     # Handle response
     print(res)
 
@@ -73,8 +71,6 @@ with Clerk(
 ) as clerk:
 
     res = clerk.actor_tokens.revoke(actor_token_id="act_tok_abcdefghijk")
-
-    assert res is not None
 
     # Handle response
     print(res)

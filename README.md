@@ -143,8 +143,6 @@ with Clerk(
 
     res = clerk.email_addresses.get(email_address_id="email_address_id_example")
 
-    assert res is not None
-
     # Handle response
     print(res)
 ```
@@ -165,8 +163,6 @@ async def main():
     ) as clerk:
 
         res = await clerk.email_addresses.get_async(email_address_id="email_address_id_example")
-
-        assert res is not None
 
         # Handle response
         print(res)
@@ -272,6 +268,9 @@ def verify_machine_token(request: httpx.Request):
 
 ### [billing](docs/sdks/billing/README.md)
 
+* [list_plans](docs/sdks/billing/README.md#list_plans) - List all billing plans
+* [list_subscription_items](docs/sdks/billing/README.md#list_subscription_items) - List all subscription items
+* [cancel_subscription_item](docs/sdks/billing/README.md#cancel_subscription_item) - Cancel a subscription item
 * [extend_subscription_item_free_trial](docs/sdks/billing/README.md#extend_subscription_item_free_trial) - Extend free trial for a subscription item
 * [list_statements](docs/sdks/billing/README.md#list_statements) - List all billing statements
 * [get_statement](docs/sdks/billing/README.md#get_statement) - Retrieve a billing statement
@@ -288,12 +287,6 @@ def verify_machine_token(request: httpx.Request):
 * [~~list~~](docs/sdks/clients/README.md#list) - List all clients :warning: **Deprecated**
 * [verify](docs/sdks/clients/README.md#verify) - Verify a client
 * [get](docs/sdks/clients/README.md#get) - Get a client
-
-### [commerce](docs/sdks/commerce/README.md)
-
-* [list_plans](docs/sdks/commerce/README.md#list_plans) - List all commerce plans
-* [list_subscription_items](docs/sdks/commerce/README.md#list_subscription_items) - List all subscription items
-* [cancel_subscription_item](docs/sdks/commerce/README.md#cancel_subscription_item) - Cancel a subscription item
 
 ### [domains](docs/sdks/domainssdk/README.md)
 
@@ -408,6 +401,24 @@ def verify_machine_token(request: httpx.Request):
 * [update](docs/sdks/organizationmembershipssdk/README.md#update) - Update an organization membership
 * [delete](docs/sdks/organizationmembershipssdk/README.md#delete) - Remove a member from an organization
 * [update_metadata](docs/sdks/organizationmembershipssdk/README.md#update_metadata) - Merge and update organization membership metadata
+
+### [organization_permissions](docs/sdks/organizationpermissions/README.md)
+
+* [list](docs/sdks/organizationpermissions/README.md#list) - Get a list of all organization permissions
+* [create](docs/sdks/organizationpermissions/README.md#create) - Create a new organization permission
+* [get](docs/sdks/organizationpermissions/README.md#get) - Get an organization permission
+* [update](docs/sdks/organizationpermissions/README.md#update) - Update an organization permission
+* [delete](docs/sdks/organizationpermissions/README.md#delete) - Delete an organization permission
+
+### [organization_roles](docs/sdks/organizationroles/README.md)
+
+* [list](docs/sdks/organizationroles/README.md#list) - Get a list of organization roles
+* [create](docs/sdks/organizationroles/README.md#create) - Create an organization role
+* [get](docs/sdks/organizationroles/README.md#get) - Retrieve an organization role
+* [update](docs/sdks/organizationroles/README.md#update) - Update an organization role
+* [delete](docs/sdks/organizationroles/README.md#delete) - Delete an organization role
+* [assign_permission](docs/sdks/organizationroles/README.md#assign_permission) - Assign a permission to an organization role
+* [remove_permission](docs/sdks/organizationroles/README.md#remove_permission) - Remove a permission from an organization role
 
 ### [organizations](docs/sdks/organizationssdk/README.md)
 
@@ -546,8 +557,6 @@ with Clerk(
         "content": open("example.file", "rb"),
     })
 
-    assert res is not None
-
     # Handle response
     print(res)
 
@@ -621,8 +630,6 @@ with Clerk(
             "token": "jwt_token_example",
         })
 
-        assert res is not None
-
         # Handle response
         print(res)
 
@@ -657,17 +664,17 @@ with Clerk(
 
 
 **Inherit from [`ClerkBaseError`](./src/clerk_backend_api/models/clerkbaseerror.py)**:
-* [`CreateM2MTokenM2mResponseBody`](./src/clerk_backend_api/models/createm2mtokenm2mresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 158 methods.*
-* [`GetM2MTokensM2mResponseBody`](./src/clerk_backend_api/models/getm2mtokensm2mresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 158 methods.*
-* [`RevokeM2MTokenM2mResponseBody`](./src/clerk_backend_api/models/revokem2mtokenm2mresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 158 methods.*
-* [`VerifyM2MTokenM2mResponseBody`](./src/clerk_backend_api/models/verifym2mtokenm2mresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 158 methods.*
-* [`VerifyOAuthAccessTokenOauthAccessTokensResponseBody`](./src/clerk_backend_api/models/verifyoauthaccesstokenoauthaccesstokensresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 158 methods.*
-* [`GetM2MTokensM2mResponseResponseBody`](./src/clerk_backend_api/models/getm2mtokensm2mresponseresponsebody.py): 403 Forbidden. Status code `403`. Applicable to 1 of 158 methods.*
-* [`GetM2MTokensM2mResponse404ResponseBody`](./src/clerk_backend_api/models/getm2mtokensm2mresponse404responsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 158 methods.*
-* [`RevokeM2MTokenM2mResponseResponseBody`](./src/clerk_backend_api/models/revokem2mtokenm2mresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 158 methods.*
-* [`VerifyM2MTokenM2mResponseResponseBody`](./src/clerk_backend_api/models/verifym2mtokenm2mresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 158 methods.*
-* [`VerifyOAuthAccessTokenOauthAccessTokensResponseResponseBody`](./src/clerk_backend_api/models/verifyoauthaccesstokenoauthaccesstokensresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 158 methods.*
-* [`CreateM2MTokenM2mResponseResponseBody`](./src/clerk_backend_api/models/createm2mtokenm2mresponseresponsebody.py): 409 Conflict. Status code `409`. Applicable to 1 of 158 methods.*
+* [`CreateM2MTokenM2mResponseBody`](./src/clerk_backend_api/models/createm2mtokenm2mresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 170 methods.*
+* [`GetM2MTokensM2mResponseBody`](./src/clerk_backend_api/models/getm2mtokensm2mresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 170 methods.*
+* [`RevokeM2MTokenM2mResponseBody`](./src/clerk_backend_api/models/revokem2mtokenm2mresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 170 methods.*
+* [`VerifyM2MTokenM2mResponseBody`](./src/clerk_backend_api/models/verifym2mtokenm2mresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 170 methods.*
+* [`VerifyOAuthAccessTokenOauthAccessTokensResponseBody`](./src/clerk_backend_api/models/verifyoauthaccesstokenoauthaccesstokensresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 170 methods.*
+* [`GetM2MTokensM2mResponseResponseBody`](./src/clerk_backend_api/models/getm2mtokensm2mresponseresponsebody.py): 403 Forbidden. Status code `403`. Applicable to 1 of 170 methods.*
+* [`GetM2MTokensM2mResponse404ResponseBody`](./src/clerk_backend_api/models/getm2mtokensm2mresponse404responsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 170 methods.*
+* [`RevokeM2MTokenM2mResponseResponseBody`](./src/clerk_backend_api/models/revokem2mtokenm2mresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 170 methods.*
+* [`VerifyM2MTokenM2mResponseResponseBody`](./src/clerk_backend_api/models/verifym2mtokenm2mresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 170 methods.*
+* [`VerifyOAuthAccessTokenOauthAccessTokensResponseResponseBody`](./src/clerk_backend_api/models/verifyoauthaccesstokenoauthaccesstokensresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 170 methods.*
+* [`CreateM2MTokenM2mResponseResponseBody`](./src/clerk_backend_api/models/createm2mtokenm2mresponseresponsebody.py): 409 Conflict. Status code `409`. Applicable to 1 of 170 methods.*
 * [`ResponseValidationError`](./src/clerk_backend_api/models/responsevalidationerror.py): Type mismatch between the response data and the expected Pydantic model. Provides access to the Pydantic validation error via the `cause` attribute.
 
 </details>

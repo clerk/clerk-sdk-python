@@ -24,8 +24,6 @@ with Clerk(
 
     res = clerk.testing_tokens.create()
 
-    assert res is not None
-
     # Handle response
     print(res)
 

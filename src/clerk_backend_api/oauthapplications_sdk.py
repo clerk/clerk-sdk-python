@@ -20,7 +20,7 @@ class OauthApplicationsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.OAuthApplications]:
+    ) -> models.OAuthApplications:
         r"""Get a list of OAuth applications for an instance
 
         This request returns the list of OAuth applications for an instance.
@@ -75,6 +75,7 @@ class OauthApplicationsSDK(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -105,7 +106,7 @@ class OauthApplicationsSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.OAuthApplications], http_res)
+            return unmarshal_json_response(models.OAuthApplications, http_res)
         if utils.match_response(http_res, ["400", "403", "422"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -129,7 +130,7 @@ class OauthApplicationsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.OAuthApplications]:
+    ) -> models.OAuthApplications:
         r"""Get a list of OAuth applications for an instance
 
         This request returns the list of OAuth applications for an instance.
@@ -184,6 +185,7 @@ class OauthApplicationsSDK(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -214,7 +216,7 @@ class OauthApplicationsSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.OAuthApplications], http_res)
+            return unmarshal_json_response(models.OAuthApplications, http_res)
         if utils.match_response(http_res, ["400", "403", "422"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -240,7 +242,7 @@ class OauthApplicationsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.OAuthApplicationWithSecret]:
+    ) -> models.OAuthApplicationWithSecret:
         r"""Create an OAuth application
 
         Creates a new OAuth application with the given name and callback URL for an instance.
@@ -289,6 +291,7 @@ class OauthApplicationsSDK(BaseSDK):
                 "json",
                 Optional[models.CreateOAuthApplicationRequestBody],
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -319,9 +322,7 @@ class OauthApplicationsSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                Optional[models.OAuthApplicationWithSecret], http_res
-            )
+            return unmarshal_json_response(models.OAuthApplicationWithSecret, http_res)
         if utils.match_response(http_res, ["400", "403", "422"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -347,7 +348,7 @@ class OauthApplicationsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.OAuthApplicationWithSecret]:
+    ) -> models.OAuthApplicationWithSecret:
         r"""Create an OAuth application
 
         Creates a new OAuth application with the given name and callback URL for an instance.
@@ -396,6 +397,7 @@ class OauthApplicationsSDK(BaseSDK):
                 "json",
                 Optional[models.CreateOAuthApplicationRequestBody],
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -426,9 +428,7 @@ class OauthApplicationsSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                Optional[models.OAuthApplicationWithSecret], http_res
-            )
+            return unmarshal_json_response(models.OAuthApplicationWithSecret, http_res)
         if utils.match_response(http_res, ["400", "403", "422"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -449,7 +449,7 @@ class OauthApplicationsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.OAuthApplication]:
+    ) -> models.OAuthApplication:
         r"""Retrieve an OAuth application by ID
 
         Fetches the OAuth application whose ID matches the provided `id` in the path.
@@ -487,6 +487,7 @@ class OauthApplicationsSDK(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -517,7 +518,7 @@ class OauthApplicationsSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.OAuthApplication], http_res)
+            return unmarshal_json_response(models.OAuthApplication, http_res)
         if utils.match_response(http_res, ["403", "404"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -538,7 +539,7 @@ class OauthApplicationsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.OAuthApplication]:
+    ) -> models.OAuthApplication:
         r"""Retrieve an OAuth application by ID
 
         Fetches the OAuth application whose ID matches the provided `id` in the path.
@@ -576,6 +577,7 @@ class OauthApplicationsSDK(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -606,7 +608,7 @@ class OauthApplicationsSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.OAuthApplication], http_res)
+            return unmarshal_json_response(models.OAuthApplication, http_res)
         if utils.match_response(http_res, ["403", "404"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -634,7 +636,7 @@ class OauthApplicationsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.OAuthApplication]:
+    ) -> models.OAuthApplication:
         r"""Update an OAuth application
 
         Updates an existing OAuth application
@@ -696,6 +698,7 @@ class OauthApplicationsSDK(BaseSDK):
                 "json",
                 models.UpdateOAuthApplicationRequestBody,
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -726,7 +729,7 @@ class OauthApplicationsSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.OAuthApplication], http_res)
+            return unmarshal_json_response(models.OAuthApplication, http_res)
         if utils.match_response(
             http_res, ["400", "403", "404", "422"], "application/json"
         ):
@@ -756,7 +759,7 @@ class OauthApplicationsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.OAuthApplication]:
+    ) -> models.OAuthApplication:
         r"""Update an OAuth application
 
         Updates an existing OAuth application
@@ -818,6 +821,7 @@ class OauthApplicationsSDK(BaseSDK):
                 "json",
                 models.UpdateOAuthApplicationRequestBody,
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -848,7 +852,7 @@ class OauthApplicationsSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.OAuthApplication], http_res)
+            return unmarshal_json_response(models.OAuthApplication, http_res)
         if utils.match_response(
             http_res, ["400", "403", "404", "422"], "application/json"
         ):
@@ -871,7 +875,7 @@ class OauthApplicationsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.DeletedObject]:
+    ) -> models.DeletedObject:
         r"""Delete an OAuth application
 
         Deletes the given OAuth application.
@@ -910,6 +914,7 @@ class OauthApplicationsSDK(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -940,7 +945,7 @@ class OauthApplicationsSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.DeletedObject], http_res)
+            return unmarshal_json_response(models.DeletedObject, http_res)
         if utils.match_response(http_res, ["403", "404"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -961,7 +966,7 @@ class OauthApplicationsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.DeletedObject]:
+    ) -> models.DeletedObject:
         r"""Delete an OAuth application
 
         Deletes the given OAuth application.
@@ -1000,6 +1005,7 @@ class OauthApplicationsSDK(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -1030,7 +1036,7 @@ class OauthApplicationsSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.DeletedObject], http_res)
+            return unmarshal_json_response(models.DeletedObject, http_res)
         if utils.match_response(http_res, ["403", "404"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -1051,7 +1057,7 @@ class OauthApplicationsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.OAuthApplicationWithSecret]:
+    ) -> models.OAuthApplicationWithSecret:
         r"""Rotate the client secret of the given OAuth application
 
         Rotates the OAuth application's client secret.
@@ -1090,6 +1096,7 @@ class OauthApplicationsSDK(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -1120,9 +1127,7 @@ class OauthApplicationsSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                Optional[models.OAuthApplicationWithSecret], http_res
-            )
+            return unmarshal_json_response(models.OAuthApplicationWithSecret, http_res)
         if utils.match_response(http_res, ["403", "404"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -1143,7 +1148,7 @@ class OauthApplicationsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.OAuthApplicationWithSecret]:
+    ) -> models.OAuthApplicationWithSecret:
         r"""Rotate the client secret of the given OAuth application
 
         Rotates the OAuth application's client secret.
@@ -1182,6 +1187,7 @@ class OauthApplicationsSDK(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -1212,9 +1218,7 @@ class OauthApplicationsSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                Optional[models.OAuthApplicationWithSecret], http_res
-            )
+            return unmarshal_json_response(models.OAuthApplicationWithSecret, http_res)
         if utils.match_response(http_res, ["403", "404"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
