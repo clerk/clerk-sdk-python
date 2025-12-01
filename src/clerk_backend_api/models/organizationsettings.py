@@ -43,6 +43,7 @@ class OrganizationSettingsTypedDict(TypedDict):
     domains_enrollment_modes: List[DomainsEnrollmentModes]
     domains_default_role: str
     r"""The role key that it will be used in order to create an organization invitation or suggestion."""
+    max_role_sets_allowed: NotRequired[int]
     max_allowed_permissions: NotRequired[int]
     r"""max_allowed_permissions is now a no-op, as permissions are now unlimited"""
     slug_disabled: NotRequired[bool]
@@ -75,6 +76,8 @@ class OrganizationSettings(BaseModel):
     domains_default_role: str
     r"""The role key that it will be used in order to create an organization invitation or suggestion."""
 
+    max_role_sets_allowed: Optional[int] = None
+
     max_allowed_permissions: Annotated[
         Optional[int],
         pydantic.Field(
@@ -91,6 +94,7 @@ class OrganizationSettings(BaseModel):
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = [
+            "max_role_sets_allowed",
             "max_allowed_permissions",
             "slug_disabled",
             "initial_role_set_key",

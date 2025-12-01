@@ -30,8 +30,6 @@ with Clerk(
 
     res = clerk.clients.list(paginated=False, limit=20, offset=10)
 
-    assert res is not None
-
     # Handle response
     print(res)
 
@@ -76,8 +74,6 @@ with Clerk(
         "token": "jwt_token_example",
     })
 
-    assert res is not None
-
     # Handle response
     print(res)
 
@@ -117,8 +113,6 @@ with Clerk(
 ) as clerk:
 
     res = clerk.clients.get(client_id="cli_123456789")
-
-    assert res is not None
 
     # Handle response
     print(res)

@@ -26,8 +26,6 @@ with Clerk(
 
     res = clerk.allowlist_identifiers.list(paginated=False, limit=20, offset=10)
 
-    assert res is not None
-
     # Handle response
     print(res)
 
@@ -73,8 +71,6 @@ with Clerk(
         "notify": True,
     })
 
-    assert res is not None
-
     # Handle response
     print(res)
 
@@ -114,8 +110,6 @@ with Clerk(
 ) as clerk:
 
     res = clerk.allowlist_identifiers.delete(identifier_id="example_identifier_id")
-
-    assert res is not None
 
     # Handle response
     print(res)

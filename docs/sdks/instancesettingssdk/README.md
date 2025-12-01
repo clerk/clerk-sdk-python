@@ -28,8 +28,6 @@ with Clerk(
 
     res = clerk.instance_settings.get()
 
-    assert res is not None
-
     # Handle response
     print(res)
 
@@ -69,7 +67,6 @@ with Clerk(
     clerk.instance_settings.update(request={
         "test_mode": True,
         "hibp": False,
-        "enhanced_email_deliverability": True,
         "support_email": "support@example.com",
         "clerk_js_version": "2.3.1",
         "development_origin": "http://localhost:3000",
@@ -121,8 +118,6 @@ with Clerk(
         "block_email_subaddresses": True,
         "block_disposable_email_domains": True,
     })
-
-    assert res is not None
 
     # Handle response
     print(res)
@@ -217,8 +212,6 @@ with Clerk(
         "creator_role_id": "creator_role",
         "domains_default_role_id": "member_role",
     })
-
-    assert res is not None
 
     # Handle response
     print(res)

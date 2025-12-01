@@ -38,8 +38,6 @@ with Clerk(
         "template_slug": clerk_backend_api.TemplateSlug.INVITATION,
     })
 
-    assert res is not None
-
     # Handle response
     print(res)
 
@@ -81,8 +79,6 @@ with Clerk(
 
     res = clerk.invitations.list(status=clerk_backend_api.ListInvitationsQueryParamStatus.ACCEPTED, query="<value>", order_by="pending", paginated=False, limit=20, offset=10)
 
-    assert res is not None
-
     # Handle response
     print(res)
 
@@ -117,6 +113,8 @@ invitations as emails by setting the `notify` parameter to `true`. There cannot 
 of the email addresses you provide unless you set `ignore_existing` to `true` for specific email addresses. Please
 note that there must be no existing user for any of the email addresses you provide, and this rule cannot be bypassed.
 
+This endpoint is limited to a maximum of 10 invitations per API call. If you need to send more invitations, please make multiple requests.
+
 ### Example Usage
 
 <!-- UsageSnippet language="python" operationID="CreateBulkInvitations" method="post" path="/invitations/bulk" -->
@@ -146,8 +144,6 @@ with Clerk(
             "expires_in_days": 606004,
         },
     ])
-
-    assert res is not None
 
     # Handle response
     print(res)
@@ -191,8 +187,6 @@ with Clerk(
 ) as clerk:
 
     res = clerk.invitations.revoke(invitation_id="inv_123")
-
-    assert res is not None
 
     # Handle response
     print(res)

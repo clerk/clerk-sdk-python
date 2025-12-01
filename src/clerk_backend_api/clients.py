@@ -23,7 +23,7 @@ class Clients(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[List[models.Client]]:
+    ) -> List[models.Client]:
         r"""List all clients
 
         Returns a list of all clients. The clients are returned sorted by creation date,
@@ -72,6 +72,7 @@ class Clients(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -102,7 +103,7 @@ class Clients(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[List[models.Client]], http_res)
+            return unmarshal_json_response(List[models.Client], http_res)
         if utils.match_response(
             http_res, ["400", "401", "410", "422"], "application/json"
         ):
@@ -130,7 +131,7 @@ class Clients(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[List[models.Client]]:
+    ) -> List[models.Client]:
         r"""List all clients
 
         Returns a list of all clients. The clients are returned sorted by creation date,
@@ -179,6 +180,7 @@ class Clients(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -209,7 +211,7 @@ class Clients(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[List[models.Client]], http_res)
+            return unmarshal_json_response(List[models.Client], http_res)
         if utils.match_response(
             http_res, ["400", "401", "410", "422"], "application/json"
         ):
@@ -236,7 +238,7 @@ class Clients(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.Client]:
+    ) -> models.Client:
         r"""Verify a client
 
         Verifies the client in the provided token
@@ -277,6 +279,7 @@ class Clients(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, True, "json", Optional[models.VerifyClientRequestBody]
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -307,7 +310,7 @@ class Clients(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.Client], http_res)
+            return unmarshal_json_response(models.Client, http_res)
         if utils.match_response(http_res, ["400", "401", "404"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -332,7 +335,7 @@ class Clients(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.Client]:
+    ) -> models.Client:
         r"""Verify a client
 
         Verifies the client in the provided token
@@ -373,6 +376,7 @@ class Clients(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, True, "json", Optional[models.VerifyClientRequestBody]
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -403,7 +407,7 @@ class Clients(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.Client], http_res)
+            return unmarshal_json_response(models.Client, http_res)
         if utils.match_response(http_res, ["400", "401", "404"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -424,7 +428,7 @@ class Clients(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.Client]:
+    ) -> models.Client:
         r"""Get a client
 
         Returns the details of a client.
@@ -462,6 +466,7 @@ class Clients(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -492,7 +497,7 @@ class Clients(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.Client], http_res)
+            return unmarshal_json_response(models.Client, http_res)
         if utils.match_response(http_res, ["400", "401", "404"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -513,7 +518,7 @@ class Clients(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.Client]:
+    ) -> models.Client:
         r"""Get a client
 
         Returns the details of a client.
@@ -551,6 +556,7 @@ class Clients(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -581,7 +587,7 @@ class Clients(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.Client], http_res)
+            return unmarshal_json_response(models.Client, http_res)
         if utils.match_response(http_res, ["400", "401", "404"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)

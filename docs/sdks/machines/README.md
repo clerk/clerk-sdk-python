@@ -34,8 +34,6 @@ with Clerk(
 
     res = clerk.machines.list(limit=20, offset=10, query="<value>", order_by="-created_at")
 
-    assert res is not None
-
     # Handle response
     print(res)
 
@@ -86,8 +84,6 @@ with Clerk(
         ],
     })
 
-    assert res is not None
-
     # Handle response
     print(res)
 
@@ -127,8 +123,6 @@ with Clerk(
 ) as clerk:
 
     res = clerk.machines.get(machine_id="<id>")
-
-    assert res is not None
 
     # Handle response
     print(res)
@@ -170,8 +164,6 @@ with Clerk(
 ) as clerk:
 
     res = clerk.machines.update(machine_id="<id>", name="<value>", default_token_ttl=754540)
-
-    assert res is not None
 
     # Handle response
     print(res)
@@ -215,8 +207,6 @@ with Clerk(
 
     res = clerk.machines.delete(machine_id="<id>")
 
-    assert res is not None
-
     # Handle response
     print(res)
 
@@ -256,8 +246,6 @@ with Clerk(
 ) as clerk:
 
     res = clerk.machines.get_secret_key(machine_id="<id>")
-
-    assert res is not None
 
     # Handle response
     print(res)
@@ -301,8 +289,6 @@ with Clerk(
 
     res = clerk.machines.rotate_secret_key(machine_id="<id>", previous_token_ttl=632625)
 
-    assert res is not None
-
     # Handle response
     print(res)
 
@@ -345,8 +331,6 @@ with Clerk(
 
     res = clerk.machines.create_scope(machine_id="<id>", to_machine_id="<id>")
 
-    assert res is not None
-
     # Handle response
     print(res)
 
@@ -387,8 +371,6 @@ with Clerk(
 ) as clerk:
 
     res = clerk.machines.delete_scope(machine_id="<id>", other_machine_id="<id>")
-
-    assert res is not None
 
     # Handle response
     print(res)

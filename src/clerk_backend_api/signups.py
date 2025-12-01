@@ -17,7 +17,7 @@ class SignUps(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.SignUp]:
+    ) -> models.SignUp:
         r"""Retrieve a sign-up by ID
 
         Retrieve the details of the sign-up with the given ID
@@ -55,6 +55,7 @@ class SignUps(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -85,7 +86,7 @@ class SignUps(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.SignUp], http_res)
+            return unmarshal_json_response(models.SignUp, http_res)
         if utils.match_response(http_res, "403", "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -106,7 +107,7 @@ class SignUps(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.SignUp]:
+    ) -> models.SignUp:
         r"""Retrieve a sign-up by ID
 
         Retrieve the details of the sign-up with the given ID
@@ -144,6 +145,7 @@ class SignUps(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -174,7 +176,7 @@ class SignUps(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.SignUp], http_res)
+            return unmarshal_json_response(models.SignUp, http_res)
         if utils.match_response(http_res, "403", "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -197,7 +199,7 @@ class SignUps(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.SignUp]:
+    ) -> models.SignUp:
         r"""Update a sign-up
 
         Update the sign-up with the given ID
@@ -249,6 +251,7 @@ class SignUps(BaseSDK):
                 "json",
                 Optional[models.UpdateSignUpRequestBody],
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -279,7 +282,7 @@ class SignUps(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.SignUp], http_res)
+            return unmarshal_json_response(models.SignUp, http_res)
         if utils.match_response(http_res, "403", "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -302,7 +305,7 @@ class SignUps(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.SignUp]:
+    ) -> models.SignUp:
         r"""Update a sign-up
 
         Update the sign-up with the given ID
@@ -354,6 +357,7 @@ class SignUps(BaseSDK):
                 "json",
                 Optional[models.UpdateSignUpRequestBody],
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -384,7 +388,7 @@ class SignUps(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.SignUp], http_res)
+            return unmarshal_json_response(models.SignUp, http_res)
         if utils.match_response(http_res, "403", "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)

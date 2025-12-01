@@ -45,6 +45,10 @@ class OrganizationMembershipOrganizationTypedDict(TypedDict):
     pending_invitations_count: NotRequired[int]
     private_metadata: NotRequired[Dict[str, Any]]
     created_by: NotRequired[str]
+    last_active_at: NotRequired[int]
+    r"""Unix timestamp of last activity.
+
+    """
 
 
 class OrganizationMembershipOrganization(BaseModel):
@@ -85,6 +89,11 @@ class OrganizationMembershipOrganization(BaseModel):
     private_metadata: Optional[Dict[str, Any]] = None
 
     created_by: Optional[str] = None
+
+    last_active_at: Optional[int] = None
+    r"""Unix timestamp of last activity.
+
+    """
 
 
 class OrganizationMembershipTypedDict(TypedDict):

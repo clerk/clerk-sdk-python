@@ -20,7 +20,7 @@ class OrganizationDomainsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.OrganizationDomain]:
+    ) -> models.OrganizationDomain:
         r"""Create a new organization domain.
 
         Creates a new organization domain. By default the domain is verified, but can be optionally set to unverified.
@@ -73,6 +73,7 @@ class OrganizationDomainsSDK(BaseSDK):
                 "json",
                 models.CreateOrganizationDomainRequestBody,
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -103,9 +104,7 @@ class OrganizationDomainsSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                Optional[models.OrganizationDomain], http_res
-            )
+            return unmarshal_json_response(models.OrganizationDomain, http_res)
         if utils.match_response(
             http_res, ["400", "403", "404", "422"], "application/json"
         ):
@@ -131,7 +130,7 @@ class OrganizationDomainsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.OrganizationDomain]:
+    ) -> models.OrganizationDomain:
         r"""Create a new organization domain.
 
         Creates a new organization domain. By default the domain is verified, but can be optionally set to unverified.
@@ -184,6 +183,7 @@ class OrganizationDomainsSDK(BaseSDK):
                 "json",
                 models.CreateOrganizationDomainRequestBody,
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -214,9 +214,7 @@ class OrganizationDomainsSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                Optional[models.OrganizationDomain], http_res
-            )
+            return unmarshal_json_response(models.OrganizationDomain, http_res)
         if utils.match_response(
             http_res, ["400", "403", "404", "422"], "application/json"
         ):
@@ -243,7 +241,7 @@ class OrganizationDomainsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.OrganizationDomains]:
+    ) -> models.OrganizationDomains:
         r"""Get a list of all domains of an organization.
 
         Get a list of all domains of an organization.
@@ -292,6 +290,7 @@ class OrganizationDomainsSDK(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -322,9 +321,7 @@ class OrganizationDomainsSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                Optional[models.OrganizationDomains], http_res
-            )
+            return unmarshal_json_response(models.OrganizationDomains, http_res)
         if utils.match_response(http_res, ["401", "422"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -349,7 +346,7 @@ class OrganizationDomainsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.OrganizationDomains]:
+    ) -> models.OrganizationDomains:
         r"""Get a list of all domains of an organization.
 
         Get a list of all domains of an organization.
@@ -398,6 +395,7 @@ class OrganizationDomainsSDK(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -428,9 +426,7 @@ class OrganizationDomainsSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                Optional[models.OrganizationDomains], http_res
-            )
+            return unmarshal_json_response(models.OrganizationDomains, http_res)
         if utils.match_response(http_res, ["401", "422"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -454,7 +450,7 @@ class OrganizationDomainsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.OrganizationDomain]:
+    ) -> models.OrganizationDomain:
         r"""Update an organization domain.
 
         Updates the properties of an existing organization domain.
@@ -507,6 +503,7 @@ class OrganizationDomainsSDK(BaseSDK):
                 "json",
                 models.UpdateOrganizationDomainRequestBody,
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -537,9 +534,7 @@ class OrganizationDomainsSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                Optional[models.OrganizationDomain], http_res
-            )
+            return unmarshal_json_response(models.OrganizationDomain, http_res)
         if utils.match_response(http_res, ["400", "404", "422"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -563,7 +558,7 @@ class OrganizationDomainsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.OrganizationDomain]:
+    ) -> models.OrganizationDomain:
         r"""Update an organization domain.
 
         Updates the properties of an existing organization domain.
@@ -616,6 +611,7 @@ class OrganizationDomainsSDK(BaseSDK):
                 "json",
                 models.UpdateOrganizationDomainRequestBody,
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -646,9 +642,7 @@ class OrganizationDomainsSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                Optional[models.OrganizationDomain], http_res
-            )
+            return unmarshal_json_response(models.OrganizationDomain, http_res)
         if utils.match_response(http_res, ["400", "404", "422"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -670,7 +664,7 @@ class OrganizationDomainsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.DeletedObject]:
+    ) -> models.DeletedObject:
         r"""Remove a domain from an organization.
 
         Removes the given domain from the organization.
@@ -710,6 +704,7 @@ class OrganizationDomainsSDK(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -740,7 +735,7 @@ class OrganizationDomainsSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.DeletedObject], http_res)
+            return unmarshal_json_response(models.DeletedObject, http_res)
         if utils.match_response(http_res, ["400", "401", "404"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -762,7 +757,7 @@ class OrganizationDomainsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.DeletedObject]:
+    ) -> models.DeletedObject:
         r"""Remove a domain from an organization.
 
         Removes the given domain from the organization.
@@ -802,6 +797,7 @@ class OrganizationDomainsSDK(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -832,7 +828,7 @@ class OrganizationDomainsSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.DeletedObject], http_res)
+            return unmarshal_json_response(models.DeletedObject, http_res)
         if utils.match_response(http_res, ["400", "401", "404"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -859,7 +855,7 @@ class OrganizationDomainsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.OrganizationDomains]:
+    ) -> models.OrganizationDomains:
         r"""List all organization domains
 
         Retrieves a list of all organization domains within the current instance.
@@ -929,6 +925,7 @@ class OrganizationDomainsSDK(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -959,9 +956,7 @@ class OrganizationDomainsSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                Optional[models.OrganizationDomains], http_res
-            )
+            return unmarshal_json_response(models.OrganizationDomains, http_res)
         if utils.match_response(http_res, ["401", "403", "422"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -988,7 +983,7 @@ class OrganizationDomainsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.OrganizationDomains]:
+    ) -> models.OrganizationDomains:
         r"""List all organization domains
 
         Retrieves a list of all organization domains within the current instance.
@@ -1058,6 +1053,7 @@ class OrganizationDomainsSDK(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -1088,9 +1084,7 @@ class OrganizationDomainsSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                Optional[models.OrganizationDomains], http_res
-            )
+            return unmarshal_json_response(models.OrganizationDomains, http_res)
         if utils.match_response(http_res, ["401", "403", "422"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)

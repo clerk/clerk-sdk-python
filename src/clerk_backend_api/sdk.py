@@ -30,7 +30,6 @@ if TYPE_CHECKING:
     from clerk_backend_api.billing import Billing
     from clerk_backend_api.blocklistidentifiers_sdk import BlocklistIdentifiersSDK
     from clerk_backend_api.clients import Clients
-    from clerk_backend_api.commerce import Commerce
     from clerk_backend_api.domains_sdk import DomainsSDK
     from clerk_backend_api.emailaddresses import EmailAddresses
     from clerk_backend_api.emailandsmstemplates import EmailAndSmsTemplates
@@ -47,6 +46,8 @@ if TYPE_CHECKING:
     from clerk_backend_api.organizationdomains_sdk import OrganizationDomainsSDK
     from clerk_backend_api.organizationinvitations_sdk import OrganizationInvitationsSDK
     from clerk_backend_api.organizationmemberships_sdk import OrganizationMembershipsSDK
+    from clerk_backend_api.organizationpermissions import OrganizationPermissions
+    from clerk_backend_api.organizationroles import OrganizationRoles
     from clerk_backend_api.organizations_sdk import OrganizationsSDK
     from clerk_backend_api.phonenumbers import PhoneNumbers
     from clerk_backend_api.proxychecks import ProxyChecks
@@ -96,6 +97,7 @@ class Clerk(BaseSDK):
     jwt_templates: "JwtTemplates"
     machines: "Machines"
     organizations: "OrganizationsSDK"
+    organization_roles: "OrganizationRoles"
     organization_memberships: "OrganizationMembershipsSDK"
     organization_domains: "OrganizationDomainsSDK"
     proxy_checks: "ProxyChecks"
@@ -106,8 +108,8 @@ class Clerk(BaseSDK):
     saml_connections: "SamlConnectionsSDK"
     testing_tokens: "TestingTokens"
     waitlist_entries: "WaitlistEntriesSDK"
-    commerce: "Commerce"
     billing: "Billing"
+    organization_permissions: "OrganizationPermissions"
     m2m: "M2m"
     oauth_access_tokens: "OauthAccessTokens"
     _sub_sdk_map = {
@@ -151,6 +153,10 @@ class Clerk(BaseSDK):
         "jwt_templates": ("clerk_backend_api.jwttemplates", "JwtTemplates"),
         "machines": ("clerk_backend_api.machines", "Machines"),
         "organizations": ("clerk_backend_api.organizations_sdk", "OrganizationsSDK"),
+        "organization_roles": (
+            "clerk_backend_api.organizationroles",
+            "OrganizationRoles",
+        ),
         "organization_memberships": (
             "clerk_backend_api.organizationmemberships_sdk",
             "OrganizationMembershipsSDK",
@@ -176,8 +182,11 @@ class Clerk(BaseSDK):
             "clerk_backend_api.waitlistentries_sdk",
             "WaitlistEntriesSDK",
         ),
-        "commerce": ("clerk_backend_api.commerce", "Commerce"),
         "billing": ("clerk_backend_api.billing", "Billing"),
+        "organization_permissions": (
+            "clerk_backend_api.organizationpermissions",
+            "OrganizationPermissions",
+        ),
         "m2m": ("clerk_backend_api.m2m", "M2m"),
         "oauth_access_tokens": (
             "clerk_backend_api.oauthaccesstokens",

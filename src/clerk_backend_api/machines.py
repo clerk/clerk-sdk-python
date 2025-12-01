@@ -20,7 +20,7 @@ class Machines(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.MachineList]:
+    ) -> models.MachineList:
         r"""Get a list of machines for an instance
 
         This request returns the list of machines for an instance. The machines are
@@ -74,6 +74,7 @@ class Machines(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -104,7 +105,7 @@ class Machines(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.MachineList], http_res)
+            return unmarshal_json_response(models.MachineList, http_res)
         if utils.match_response(
             http_res, ["400", "401", "403", "422"], "application/json"
         ):
@@ -130,7 +131,7 @@ class Machines(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.MachineList]:
+    ) -> models.MachineList:
         r"""Get a list of machines for an instance
 
         This request returns the list of machines for an instance. The machines are
@@ -184,6 +185,7 @@ class Machines(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -214,7 +216,7 @@ class Machines(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.MachineList], http_res)
+            return unmarshal_json_response(models.MachineList, http_res)
         if utils.match_response(
             http_res, ["400", "401", "403", "422"], "application/json"
         ):
@@ -242,7 +244,7 @@ class Machines(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.MachineCreated]:
+    ) -> models.MachineCreated:
         r"""Create a machine
 
         Creates a new machine.
@@ -285,6 +287,7 @@ class Machines(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, True, "json", Optional[models.CreateMachineRequestBody]
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -315,7 +318,7 @@ class Machines(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.MachineCreated], http_res)
+            return unmarshal_json_response(models.MachineCreated, http_res)
         if utils.match_response(
             http_res, ["400", "401", "403", "422"], "application/json"
         ):
@@ -343,7 +346,7 @@ class Machines(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.MachineCreated]:
+    ) -> models.MachineCreated:
         r"""Create a machine
 
         Creates a new machine.
@@ -386,6 +389,7 @@ class Machines(BaseSDK):
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, True, "json", Optional[models.CreateMachineRequestBody]
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -416,7 +420,7 @@ class Machines(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.MachineCreated], http_res)
+            return unmarshal_json_response(models.MachineCreated, http_res)
         if utils.match_response(
             http_res, ["400", "401", "403", "422"], "application/json"
         ):
@@ -439,7 +443,7 @@ class Machines(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.Machine]:
+    ) -> models.Machine:
         r"""Retrieve a machine
 
         Returns the details of a machine.
@@ -477,6 +481,7 @@ class Machines(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -507,7 +512,7 @@ class Machines(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.Machine], http_res)
+            return unmarshal_json_response(models.Machine, http_res)
         if utils.match_response(
             http_res, ["400", "401", "403", "404", "422"], "application/json"
         ):
@@ -530,7 +535,7 @@ class Machines(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.Machine]:
+    ) -> models.Machine:
         r"""Retrieve a machine
 
         Returns the details of a machine.
@@ -568,6 +573,7 @@ class Machines(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -598,7 +604,7 @@ class Machines(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.Machine], http_res)
+            return unmarshal_json_response(models.Machine, http_res)
         if utils.match_response(
             http_res, ["400", "401", "403", "404", "422"], "application/json"
         ):
@@ -623,7 +629,7 @@ class Machines(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.Machine]:
+    ) -> models.Machine:
         r"""Update a machine
 
         Updates an existing machine.
@@ -675,6 +681,7 @@ class Machines(BaseSDK):
                 "json",
                 Optional[models.UpdateMachineRequestBody],
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -705,7 +712,7 @@ class Machines(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.Machine], http_res)
+            return unmarshal_json_response(models.Machine, http_res)
         if utils.match_response(
             http_res, ["400", "401", "403", "404", "422"], "application/json"
         ):
@@ -730,7 +737,7 @@ class Machines(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.Machine]:
+    ) -> models.Machine:
         r"""Update a machine
 
         Updates an existing machine.
@@ -782,6 +789,7 @@ class Machines(BaseSDK):
                 "json",
                 Optional[models.UpdateMachineRequestBody],
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -812,7 +820,7 @@ class Machines(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.Machine], http_res)
+            return unmarshal_json_response(models.Machine, http_res)
         if utils.match_response(
             http_res, ["400", "401", "403", "404", "422"], "application/json"
         ):
@@ -835,7 +843,7 @@ class Machines(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.MachineDeleted]:
+    ) -> models.MachineDeleted:
         r"""Delete a machine
 
         Deletes a machine.
@@ -873,6 +881,7 @@ class Machines(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -903,7 +912,7 @@ class Machines(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.MachineDeleted], http_res)
+            return unmarshal_json_response(models.MachineDeleted, http_res)
         if utils.match_response(
             http_res, ["400", "401", "403", "404", "422"], "application/json"
         ):
@@ -926,7 +935,7 @@ class Machines(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.MachineDeleted]:
+    ) -> models.MachineDeleted:
         r"""Delete a machine
 
         Deletes a machine.
@@ -964,6 +973,7 @@ class Machines(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -994,7 +1004,7 @@ class Machines(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.MachineDeleted], http_res)
+            return unmarshal_json_response(models.MachineDeleted, http_res)
         if utils.match_response(
             http_res, ["400", "401", "403", "404", "422"], "application/json"
         ):
@@ -1017,7 +1027,7 @@ class Machines(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.MachineSecretKey]:
+    ) -> models.MachineSecretKey:
         r"""Retrieve a machine secret key
 
         Returns the secret key for a machine.
@@ -1055,6 +1065,7 @@ class Machines(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -1085,7 +1096,7 @@ class Machines(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.MachineSecretKey], http_res)
+            return unmarshal_json_response(models.MachineSecretKey, http_res)
         if utils.match_response(
             http_res, ["400", "401", "403", "404"], "application/json"
         ):
@@ -1108,7 +1119,7 @@ class Machines(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.MachineSecretKey]:
+    ) -> models.MachineSecretKey:
         r"""Retrieve a machine secret key
 
         Returns the secret key for a machine.
@@ -1146,6 +1157,7 @@ class Machines(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -1176,7 +1188,7 @@ class Machines(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.MachineSecretKey], http_res)
+            return unmarshal_json_response(models.MachineSecretKey, http_res)
         if utils.match_response(
             http_res, ["400", "401", "403", "404"], "application/json"
         ):
@@ -1200,7 +1212,7 @@ class Machines(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.MachineSecretKey]:
+    ) -> models.MachineSecretKey:
         r"""Rotate a machine's secret key
 
         Rotates the machine's secret key.
@@ -1253,6 +1265,7 @@ class Machines(BaseSDK):
                 "json",
                 models.RotateMachineSecretKeyRequestBody,
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -1283,7 +1296,7 @@ class Machines(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.MachineSecretKey], http_res)
+            return unmarshal_json_response(models.MachineSecretKey, http_res)
         if utils.match_response(
             http_res, ["400", "401", "403", "404", "422"], "application/json"
         ):
@@ -1307,7 +1320,7 @@ class Machines(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.MachineSecretKey]:
+    ) -> models.MachineSecretKey:
         r"""Rotate a machine's secret key
 
         Rotates the machine's secret key.
@@ -1360,6 +1373,7 @@ class Machines(BaseSDK):
                 "json",
                 models.RotateMachineSecretKeyRequestBody,
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -1390,7 +1404,7 @@ class Machines(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.MachineSecretKey], http_res)
+            return unmarshal_json_response(models.MachineSecretKey, http_res)
         if utils.match_response(
             http_res, ["400", "401", "403", "404", "422"], "application/json"
         ):
@@ -1414,7 +1428,7 @@ class Machines(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.MachineScope]:
+    ) -> models.MachineScope:
         r"""Create a machine scope
 
         Creates a new machine scope, allowing the specified machine to access another machine.
@@ -1464,6 +1478,7 @@ class Machines(BaseSDK):
                 "json",
                 Optional[models.CreateMachineScopeRequestBody],
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -1494,7 +1509,7 @@ class Machines(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.MachineScope], http_res)
+            return unmarshal_json_response(models.MachineScope, http_res)
         if utils.match_response(
             http_res, ["400", "401", "403", "404", "409", "422"], "application/json"
         ):
@@ -1518,7 +1533,7 @@ class Machines(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.MachineScope]:
+    ) -> models.MachineScope:
         r"""Create a machine scope
 
         Creates a new machine scope, allowing the specified machine to access another machine.
@@ -1568,6 +1583,7 @@ class Machines(BaseSDK):
                 "json",
                 Optional[models.CreateMachineScopeRequestBody],
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -1598,7 +1614,7 @@ class Machines(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.MachineScope], http_res)
+            return unmarshal_json_response(models.MachineScope, http_res)
         if utils.match_response(
             http_res, ["400", "401", "403", "404", "409", "422"], "application/json"
         ):
@@ -1622,7 +1638,7 @@ class Machines(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.MachineScopeDeleted]:
+    ) -> models.MachineScopeDeleted:
         r"""Delete a machine scope
 
         Deletes a machine scope, removing access from one machine to another.
@@ -1662,6 +1678,7 @@ class Machines(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -1692,9 +1709,7 @@ class Machines(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                Optional[models.MachineScopeDeleted], http_res
-            )
+            return unmarshal_json_response(models.MachineScopeDeleted, http_res)
         if utils.match_response(
             http_res, ["400", "401", "403", "404", "422"], "application/json"
         ):
@@ -1718,7 +1733,7 @@ class Machines(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.MachineScopeDeleted]:
+    ) -> models.MachineScopeDeleted:
         r"""Delete a machine scope
 
         Deletes a machine scope, removing access from one machine to another.
@@ -1758,6 +1773,7 @@ class Machines(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -1788,9 +1804,7 @@ class Machines(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                Optional[models.MachineScopeDeleted], http_res
-            )
+            return unmarshal_json_response(models.MachineScopeDeleted, http_res)
         if utils.match_response(
             http_res, ["400", "401", "403", "404", "422"], "application/json"
         ):

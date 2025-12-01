@@ -28,8 +28,6 @@ with Clerk(
 
     res = clerk.jwt_templates.list(paginated=True, limit=20, offset=10)
 
-    assert res is not None
-
     # Handle response
     print(res)
 
@@ -79,8 +77,6 @@ with Clerk(
         "signing_key": "PRIVATE_KEY_PLACEHOLDER",
     })
 
-    assert res is not None
-
     # Handle response
     print(res)
 
@@ -121,8 +117,6 @@ with Clerk(
 
     res = clerk.jwt_templates.get(template_id="template_123")
 
-    assert res is not None
-
     # Handle response
     print(res)
 
@@ -162,8 +156,6 @@ with Clerk(
 ) as clerk:
 
     res = clerk.jwt_templates.update(template_id="<id>", name="<value>", claims={}, lifetime=62.24, allowed_clock_skew=258.27, custom_signing_key=False, signing_algorithm="<value>", signing_key=None)
-
-    assert res is not None
 
     # Handle response
     print(res)
@@ -211,8 +203,6 @@ with Clerk(
 ) as clerk:
 
     res = clerk.jwt_templates.delete(template_id="<id>")
-
-    assert res is not None
 
     # Handle response
     print(res)

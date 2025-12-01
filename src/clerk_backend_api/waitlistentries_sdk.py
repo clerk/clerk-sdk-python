@@ -21,7 +21,7 @@ class WaitlistEntriesSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.WaitlistEntries]:
+    ) -> models.WaitlistEntries:
         r"""List all waitlist entries
 
         Retrieve a list of waitlist entries for the instance.
@@ -77,6 +77,7 @@ class WaitlistEntriesSDK(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -106,7 +107,7 @@ class WaitlistEntriesSDK(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.WaitlistEntries], http_res)
+            return unmarshal_json_response(models.WaitlistEntries, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError("API error occurred", http_res, http_res_text)
@@ -128,7 +129,7 @@ class WaitlistEntriesSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.WaitlistEntries]:
+    ) -> models.WaitlistEntries:
         r"""List all waitlist entries
 
         Retrieve a list of waitlist entries for the instance.
@@ -184,6 +185,7 @@ class WaitlistEntriesSDK(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -213,7 +215,7 @@ class WaitlistEntriesSDK(BaseSDK):
         )
 
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.WaitlistEntries], http_res)
+            return unmarshal_json_response(models.WaitlistEntries, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError("API error occurred", http_res, http_res_text)
@@ -236,7 +238,7 @@ class WaitlistEntriesSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.WaitlistEntry]:
+    ) -> models.WaitlistEntry:
         r"""Create a waitlist entry
 
         Creates a new waitlist entry for the given email address.
@@ -284,6 +286,7 @@ class WaitlistEntriesSDK(BaseSDK):
                 "json",
                 Optional[models.CreateWaitlistEntryRequestBody],
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -314,7 +317,7 @@ class WaitlistEntriesSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.WaitlistEntry], http_res)
+            return unmarshal_json_response(models.WaitlistEntry, http_res)
         if utils.match_response(http_res, ["400", "422"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -340,7 +343,7 @@ class WaitlistEntriesSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.WaitlistEntry]:
+    ) -> models.WaitlistEntry:
         r"""Create a waitlist entry
 
         Creates a new waitlist entry for the given email address.
@@ -388,6 +391,7 @@ class WaitlistEntriesSDK(BaseSDK):
                 "json",
                 Optional[models.CreateWaitlistEntryRequestBody],
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -418,7 +422,7 @@ class WaitlistEntriesSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.WaitlistEntry], http_res)
+            return unmarshal_json_response(models.WaitlistEntry, http_res)
         if utils.match_response(http_res, ["400", "422"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -439,7 +443,7 @@ class WaitlistEntriesSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.DeletedObject]:
+    ) -> models.DeletedObject:
         r"""Delete a pending waitlist entry
 
         Delete a pending waitlist entry.
@@ -477,6 +481,7 @@ class WaitlistEntriesSDK(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -507,7 +512,7 @@ class WaitlistEntriesSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.DeletedObject], http_res)
+            return unmarshal_json_response(models.DeletedObject, http_res)
         if utils.match_response(
             http_res, ["400", "404", "409", "422"], "application/json"
         ):
@@ -530,7 +535,7 @@ class WaitlistEntriesSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.DeletedObject]:
+    ) -> models.DeletedObject:
         r"""Delete a pending waitlist entry
 
         Delete a pending waitlist entry.
@@ -568,6 +573,7 @@ class WaitlistEntriesSDK(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -598,7 +604,7 @@ class WaitlistEntriesSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.DeletedObject], http_res)
+            return unmarshal_json_response(models.DeletedObject, http_res)
         if utils.match_response(
             http_res, ["400", "404", "409", "422"], "application/json"
         ):
@@ -622,7 +628,7 @@ class WaitlistEntriesSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.WaitlistEntry]:
+    ) -> models.WaitlistEntry:
         r"""Invite a waitlist entry
 
         Send an invite to the email address in a waitlist entry.
@@ -671,6 +677,7 @@ class WaitlistEntriesSDK(BaseSDK):
                 "json",
                 Optional[models.InviteWaitlistEntryRequestBody],
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -701,7 +708,7 @@ class WaitlistEntriesSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.WaitlistEntry], http_res)
+            return unmarshal_json_response(models.WaitlistEntry, http_res)
         if utils.match_response(
             http_res, ["400", "404", "409", "422"], "application/json"
         ):
@@ -725,7 +732,7 @@ class WaitlistEntriesSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.WaitlistEntry]:
+    ) -> models.WaitlistEntry:
         r"""Invite a waitlist entry
 
         Send an invite to the email address in a waitlist entry.
@@ -774,6 +781,7 @@ class WaitlistEntriesSDK(BaseSDK):
                 "json",
                 Optional[models.InviteWaitlistEntryRequestBody],
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -804,7 +812,7 @@ class WaitlistEntriesSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.WaitlistEntry], http_res)
+            return unmarshal_json_response(models.WaitlistEntry, http_res)
         if utils.match_response(
             http_res, ["400", "404", "409", "422"], "application/json"
         ):
@@ -827,7 +835,7 @@ class WaitlistEntriesSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.WaitlistEntry]:
+    ) -> models.WaitlistEntry:
         r"""Reject a waitlist entry
 
         Reject a waitlist entry.
@@ -865,6 +873,7 @@ class WaitlistEntriesSDK(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -895,7 +904,7 @@ class WaitlistEntriesSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.WaitlistEntry], http_res)
+            return unmarshal_json_response(models.WaitlistEntry, http_res)
         if utils.match_response(
             http_res, ["400", "404", "409", "422"], "application/json"
         ):
@@ -918,7 +927,7 @@ class WaitlistEntriesSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.WaitlistEntry]:
+    ) -> models.WaitlistEntry:
         r"""Reject a waitlist entry
 
         Reject a waitlist entry.
@@ -956,6 +965,7 @@ class WaitlistEntriesSDK(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -986,7 +996,7 @@ class WaitlistEntriesSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.WaitlistEntry], http_res)
+            return unmarshal_json_response(models.WaitlistEntry, http_res)
         if utils.match_response(
             http_res, ["400", "404", "409", "422"], "application/json"
         ):

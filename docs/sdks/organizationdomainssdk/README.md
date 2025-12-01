@@ -28,8 +28,6 @@ with Clerk(
 
     res = clerk.organization_domains.create(organization_id="<id>", name="<value>", enrollment_mode="<value>", verified=False)
 
-    assert res is not None
-
     # Handle response
     print(res)
 
@@ -72,8 +70,6 @@ with Clerk(
 ) as clerk:
 
     res = clerk.organization_domains.list(organization_id="<id>", verified="<value>", enrollment_mode="<value>", limit=20, offset=10)
-
-    assert res is not None
 
     # Handle response
     print(res)
@@ -119,8 +115,6 @@ with Clerk(
 
     res = clerk.organization_domains.update(organization_id="<id>", domain_id="<id>", enrollment_mode="<value>", verified=True)
 
-    assert res is not None
-
     # Handle response
     print(res)
 
@@ -163,8 +157,6 @@ with Clerk(
 ) as clerk:
 
     res = clerk.organization_domains.delete(organization_id="<id>", domain_id="<id>")
-
-    assert res is not None
 
     # Handle response
     print(res)
@@ -215,8 +207,6 @@ with Clerk(
     res = clerk.organization_domains.list_all(organization_id="<id>", verified=clerk_backend_api.Verified.TRUE, enrollment_mode=[
         clerk_backend_api.QueryParamEnrollmentMode.AUTOMATIC_SUGGESTION,
     ], query="<value>", order_by="-created_at", offset=10, limit=20)
-
-    assert res is not None
 
     # Handle response
     print(res)

@@ -23,7 +23,7 @@ class BetaFeatures(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.InstanceSettings]:
+    ) -> models.InstanceSettings:
         r"""Update instance settings
 
         Updates the settings of an instance
@@ -70,6 +70,7 @@ class BetaFeatures(BaseSDK):
                 "json",
                 Optional[models.UpdateInstanceAuthConfigRequestBody],
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -100,7 +101,7 @@ class BetaFeatures(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.InstanceSettings], http_res)
+            return unmarshal_json_response(models.InstanceSettings, http_res)
         if utils.match_response(http_res, ["402", "422"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -126,7 +127,7 @@ class BetaFeatures(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.InstanceSettings]:
+    ) -> models.InstanceSettings:
         r"""Update instance settings
 
         Updates the settings of an instance
@@ -173,6 +174,7 @@ class BetaFeatures(BaseSDK):
                 "json",
                 Optional[models.UpdateInstanceAuthConfigRequestBody],
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -203,7 +205,7 @@ class BetaFeatures(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.InstanceSettings], http_res)
+            return unmarshal_json_response(models.InstanceSettings, http_res)
         if utils.match_response(http_res, ["402", "422"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -285,6 +287,7 @@ class BetaFeatures(BaseSDK):
                 "json",
                 Optional[models.UpdateProductionInstanceDomainRequestBody],
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -397,6 +400,7 @@ class BetaFeatures(BaseSDK):
                 "json",
                 Optional[models.UpdateProductionInstanceDomainRequestBody],
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 

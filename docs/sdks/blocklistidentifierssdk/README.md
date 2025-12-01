@@ -26,8 +26,6 @@ with Clerk(
 
     res = clerk.blocklist_identifiers.list()
 
-    assert res is not None
-
     # Handle response
     print(res)
 
@@ -69,8 +67,6 @@ with Clerk(
         "identifier": "example@example.com",
     })
 
-    assert res is not None
-
     # Handle response
     print(res)
 
@@ -110,8 +106,6 @@ with Clerk(
 ) as clerk:
 
     res = clerk.blocklist_identifiers.delete(identifier_id="identifier123")
-
-    assert res is not None
 
     # Handle response
     print(res)

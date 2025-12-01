@@ -22,7 +22,7 @@ class ActorTokens(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.ActorToken]:
+    ) -> models.ActorToken:
         r"""Create actor token
 
         Create an actor token that can be used to impersonate the given user.
@@ -70,6 +70,7 @@ class ActorTokens(BaseSDK):
                 "json",
                 Optional[models.CreateActorTokenRequestBody],
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -100,7 +101,7 @@ class ActorTokens(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.ActorToken], http_res)
+            return unmarshal_json_response(models.ActorToken, http_res)
         if utils.match_response(http_res, ["400", "402", "422"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -126,7 +127,7 @@ class ActorTokens(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.ActorToken]:
+    ) -> models.ActorToken:
         r"""Create actor token
 
         Create an actor token that can be used to impersonate the given user.
@@ -174,6 +175,7 @@ class ActorTokens(BaseSDK):
                 "json",
                 Optional[models.CreateActorTokenRequestBody],
             ),
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -204,7 +206,7 @@ class ActorTokens(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.ActorToken], http_res)
+            return unmarshal_json_response(models.ActorToken, http_res)
         if utils.match_response(http_res, ["400", "402", "422"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -225,7 +227,7 @@ class ActorTokens(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.ActorToken]:
+    ) -> models.ActorToken:
         r"""Revoke actor token
 
         Revokes a pending actor token.
@@ -263,6 +265,7 @@ class ActorTokens(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -293,7 +296,7 @@ class ActorTokens(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.ActorToken], http_res)
+            return unmarshal_json_response(models.ActorToken, http_res)
         if utils.match_response(http_res, ["400", "404"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -314,7 +317,7 @@ class ActorTokens(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.ActorToken]:
+    ) -> models.ActorToken:
         r"""Revoke actor token
 
         Revokes a pending actor token.
@@ -352,6 +355,7 @@ class ActorTokens(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
 
@@ -382,7 +386,7 @@ class ActorTokens(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(Optional[models.ActorToken], http_res)
+            return unmarshal_json_response(models.ActorToken, http_res)
         if utils.match_response(http_res, ["400", "404"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)

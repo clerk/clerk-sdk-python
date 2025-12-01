@@ -3,8 +3,10 @@
 from __future__ import annotations
 from .cookies import Cookies, CookiesTypedDict
 from .token import Token, TokenTypedDict
+from clerk_backend_api.utils import get_discriminator
+from pydantic import Discriminator, Tag
 from typing import Union
-from typing_extensions import TypeAliasType
+from typing_extensions import Annotated, TypeAliasType
 
 
 SessionRefreshTypedDict = TypeAliasType(
@@ -13,5 +15,8 @@ SessionRefreshTypedDict = TypeAliasType(
 r"""Success"""
 
 
-SessionRefresh = TypeAliasType("SessionRefresh", Union[Token, Cookies])
+SessionRefresh = Annotated[
+    Union[Annotated[Token, Tag("token")], Annotated[Cookies, Tag("cookies")]],
+    Discriminator(lambda m: get_discriminator(m, "object", "object")),
+]
 r"""Success"""

@@ -36,8 +36,6 @@ with Clerk(
 
     res = clerk.organization_invitations.get_all(order_by="-created_at", status=clerk_backend_api.ListInstanceOrganizationInvitationsQueryParamStatus.ACCEPTED, query="<value>", limit=20, offset=10)
 
-    assert res is not None
-
     # Handle response
     print(res)
 
@@ -102,8 +100,6 @@ with Clerk(
         "private_key": "secret_value",
     }, redirect_url="https://example.com/welcome", expires_in_days=785754)
 
-    assert res is not None
-
     # Handle response
     print(res)
 
@@ -157,8 +153,6 @@ with Clerk(
 
     res = clerk.organization_invitations.list(organization_id="org_12345", status=clerk_backend_api.ListOrganizationInvitationsQueryParamStatus.ACCEPTED, email_address="Theresa13@yahoo.com", order_by="pending", limit=20, offset=10)
 
-    assert res is not None
-
     # Handle response
     print(res)
 
@@ -190,6 +184,9 @@ with Clerk(
 ## bulk_create
 
 Creates new organization invitations in bulk and sends out emails to the provided email addresses with a link to accept the invitation and join the organization.
+
+This endpoint is limited to a maximum of 10 invitations per API call. If you need to send more invitations, please make multiple requests.
+
 You can specify a different `role` for each invited organization member.
 New organization invitations get a "pending" status until they are revoked by an organization administrator or accepted by the invitee.
 The request body supports passing an optional `redirect_url` parameter for each invitation.
@@ -243,8 +240,6 @@ with Clerk(
         },
     ])
 
-    assert res is not None
-
     # Handle response
     print(res)
 
@@ -293,8 +288,6 @@ with Clerk(
 
     res = clerk.organization_invitations.list_pending(organization_id="org_12345", limit=20, offset=10)
 
-    assert res is not None
-
     # Handle response
     print(res)
 
@@ -336,8 +329,6 @@ with Clerk(
 ) as clerk:
 
     res = clerk.organization_invitations.get(organization_id="org_123456789", invitation_id="inv_987654321")
-
-    assert res is not None
 
     # Handle response
     print(res)
@@ -383,8 +374,6 @@ with Clerk(
 ) as clerk:
 
     res = clerk.organization_invitations.revoke(organization_id="org_123456", invitation_id="inv_123456", requesting_user_id="usr_12345")
-
-    assert res is not None
 
     # Handle response
     print(res)
