@@ -28,6 +28,6 @@ jobs:
             echo "::add-mask::${api_token}"
   
             # see the next step in the workflow for an example of using this step output
-            echo "pypy_token=${api_token}" >> "${GITHUB_OUTPUT}"
+            echo "pypi_token=${api_token}" >> "${GITHUB_OUTPUT}"
     outputs:
       pypi_token: ${{ steps.mint-token.outputs.pypi_token }}
