@@ -24,10 +24,6 @@ jobs:
             resp=$(curl -X POST https://pypi.org/_/oidc/mint-token -d "{\"token\": \"${oidc_token}\"}")
             api_token=$(jq -r '.token' <<< "${resp}")
   
-            # mask the newly minted API token, so that we don't accidentally leak it
-            echo "::add-mask::${api_token}"
-  
-            # see the next step in the workflow for an example of using this step output
             echo "pypi_token=${api_token}" >> "${GITHUB_OUTPUT}"
     outputs:
       pypi_token: ${{ steps.mint-token.outputs.pypi_token }}
