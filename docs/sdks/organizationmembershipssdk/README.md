@@ -26,7 +26,15 @@ with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 ) as clerk:
 
-    res = clerk.organization_memberships.create(organization_id="org_123", user_id="user_456", role="admin")
+    res = clerk.organization_memberships.create(organization_id="org_123", user_id="user_456", role="admin", public_metadata={
+        "key": "<value>",
+        "key1": "<value>",
+        "key2": "<value>",
+    }, private_metadata={
+        "key": "<value>",
+        "key1": "<value>",
+        "key2": "<value>",
+    })
 
     # Handle response
     print(res)
@@ -35,12 +43,14 @@ with Clerk(
 
 ### Parameters
 
-| Parameter                                                              | Type                                                                   | Required                                                               | Description                                                            | Example                                                                |
-| ---------------------------------------------------------------------- | ---------------------------------------------------------------------- | ---------------------------------------------------------------------- | ---------------------------------------------------------------------- | ---------------------------------------------------------------------- |
-| `organization_id`                                                      | *str*                                                                  | :heavy_check_mark:                                                     | The ID of the organization where the new membership will be created    | org_123                                                                |
-| `user_id`                                                              | *str*                                                                  | :heavy_check_mark:                                                     | The ID of the user that will be added as a member in the organization. | user_456                                                               |
-| `role`                                                                 | *str*                                                                  | :heavy_check_mark:                                                     | The role that the new member will have in the organization.            | admin                                                                  |
-| `retries`                                                              | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)       | :heavy_minus_sign:                                                     | Configuration to override the default retry behavior of the client.    |                                                                        |
+| Parameter                                                                                         | Type                                                                                              | Required                                                                                          | Description                                                                                       | Example                                                                                           |
+| ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| `organization_id`                                                                                 | *str*                                                                                             | :heavy_check_mark:                                                                                | The ID of the organization where the new membership will be created                               | org_123                                                                                           |
+| `user_id`                                                                                         | *str*                                                                                             | :heavy_check_mark:                                                                                | The ID of the user that will be added as a member in the organization.                            | user_456                                                                                          |
+| `role`                                                                                            | *str*                                                                                             | :heavy_check_mark:                                                                                | The role that the new member will have in the organization.                                       | admin                                                                                             |
+| `public_metadata`                                                                                 | Dict[str, *Any*]                                                                                  | :heavy_minus_sign:                                                                                | Metadata saved on the organization membership, that is visible to both your frontend and backend. |                                                                                                   |
+| `private_metadata`                                                                                | Dict[str, *Any*]                                                                                  | :heavy_minus_sign:                                                                                | Metadata saved on the organization membership that is only visible to your backend.               |                                                                                                   |
+| `retries`                                                                                         | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                  | :heavy_minus_sign:                                                                                | Configuration to override the default retry behavior of the client.                               |                                                                                                   |
 
 ### Response
 

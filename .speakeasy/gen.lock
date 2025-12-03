@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: bfe29c99-6e67-43fe-b928-64d6a5ed6aa8
 management:
-  docChecksum: 9c61c279cbe491f56133c340d8083aca
+  docChecksum: 7048c9e525af400fb5ced0ae281a5639
   docVersion: "2025-11-10"
-  speakeasyVersion: 1.666.0
-  generationVersion: 2.768.0
-  releaseVersion: 4.1.1
-  configChecksum: 2c81f18a3089e5b92bccd5b6ee8f1e61
+  speakeasyVersion: 1.666.2
+  generationVersion: 2.768.1
+  releaseVersion: 4.1.2
+  configChecksum: e602cdab2ca60cf56c5062bff93e591c
   repoURL: https://github.com/clerk/clerk-sdk-python.git
   installationURL: https://github.com/clerk/clerk-sdk-python.git
   published: true
@@ -340,6 +340,7 @@ generatedFiles:
   - docs/models/organizationinvitation.md
   - docs/models/organizationinvitationobject.md
   - docs/models/organizationinvitationpublicorganizationdata.md
+  - docs/models/organizationinvitationpublicuserdata.md
   - docs/models/organizationinvitations.md
   - docs/models/organizationinvitationswithpublicorganizationdata.md
   - docs/models/organizationinvitationwithpublicorganizationdata.md
@@ -401,6 +402,9 @@ generatedFiles:
   - docs/models/requestbody2.md
   - docs/models/requestbodyattributemapping.md
   - docs/models/requestbodyprovider.md
+  - docs/models/responsebody1.md
+  - docs/models/responsebody2.md
+  - docs/models/responsebodyobject.md
   - docs/models/reverttemplatepathparamtemplatetype.md
   - docs/models/reverttemplaterequest.md
   - docs/models/revokeactortokenrequest.md
@@ -629,7 +633,6 @@ generatedFiles:
   - docs/models/verifyoauthaccesstokenoauthaccesstokenserrors.md
   - docs/models/verifyoauthaccesstokenoauthaccesstokensresponsebody.md
   - docs/models/verifyoauthaccesstokenoauthaccesstokensresponseresponsebody.md
-  - docs/models/verifyoauthaccesstokenobject.md
   - docs/models/verifyoauthaccesstokenrequestbody.md
   - docs/models/verifyoauthaccesstokenresponsebody.md
   - docs/models/verifypasswordrequest.md
@@ -881,6 +884,7 @@ generatedFiles:
   - src/clerk_backend_api/models/organizationdomains.py
   - src/clerk_backend_api/models/organizationinvitation.py
   - src/clerk_backend_api/models/organizationinvitationpublicorganizationdata.py
+  - src/clerk_backend_api/models/organizationinvitationpublicuserdata.py
   - src/clerk_backend_api/models/organizationinvitations.py
   - src/clerk_backend_api/models/organizationinvitationswithpublicorganizationdata.py
   - src/clerk_backend_api/models/organizationinvitationwithpublicorganizationdata.py
@@ -1777,7 +1781,7 @@ examples:
         application/json: {"email_address": "user@example.com", "inviter_user_id": "user_67890", "role": "admin", "public_metadata": {"key": "value"}, "private_metadata": {"private_key": "secret_value"}, "redirect_url": "https://example.com/welcome", "expires_in_days": 785754}
       responses:
         "200":
-          application/json: {"object": "organization_invitation", "id": "inv_12345", "email_address": "user@example.com", "role": "admin", "role_name": "<value>", "organization_id": "org_12345", "inviter_id": "<id>", "status": "pending", "public_metadata": {"key": "value"}, "private_metadata": {"private_key": "secret_value"}, "url": "https://watery-knitting.name", "expires_at": 56370, "created_at": 1622547600, "updated_at": 1622551200}
+          application/json: {"object": "organization_invitation", "id": "inv_12345", "email_address": "user@example.com", "role": "admin", "role_name": "<value>", "organization_id": "org_12345", "inviter_id": "<id>", "public_inviter_data": {"user_id": "<id>", "first_name": "Stevie", "last_name": "Kuvalis", "image_url": "https://prime-babushka.net", "has_image": true, "identifier": "<value>"}, "status": "pending", "public_metadata": {"key": "value"}, "private_metadata": {"private_key": "secret_value"}, "url": "https://watery-knitting.name", "expires_at": 56370, "created_at": 1622547600, "updated_at": 1622551200}
         "400":
           application/json: {"errors": [{"message": "Invalid input", "long_message": "The input provided does not meet the requirements.", "code": "400_bad_request", "meta": {}}], "meta": {}}
   ListOrganizationInvitations:
@@ -1793,7 +1797,7 @@ examples:
           order_by: "pending"
       responses:
         "200":
-          application/json: {"data": [{"object": "organization_invitation", "id": "inv_12345", "email_address": "user@example.com", "role": "member", "role_name": "<value>", "organization_id": "org_12345", "inviter_id": "<id>", "status": "pending", "public_metadata": {"key": "value"}, "private_metadata": {"private_key": "secret_value"}, "url": "https://heavenly-scenario.com/", "expires_at": 515101, "created_at": 1617981379, "updated_at": 1625581379}], "total_count": 10}
+          application/json: {"data": [{"object": "organization_invitation", "id": "inv_12345", "email_address": "user@example.com", "role": "member", "role_name": "<value>", "organization_id": "org_12345", "inviter_id": "<id>", "public_inviter_data": {"user_id": "<id>", "first_name": "Alivia", "last_name": "Connelly", "image_url": "https://milky-airline.net", "has_image": false, "identifier": "<value>"}, "status": "pending", "public_metadata": {"key": "value"}, "private_metadata": {"private_key": "secret_value"}, "url": "https://heavenly-scenario.com/", "expires_at": 515101, "created_at": 1617981379, "updated_at": 1625581379}], "total_count": 10}
         "400":
           application/json: {"errors": [{"message": "Invalid input", "long_message": "The input provided does not meet the requirements.", "code": "400_bad_request", "meta": {}}], "meta": {}}
   CreateOrganizationInvitationBulk:
@@ -1805,7 +1809,7 @@ examples:
         application/json: [{"email_address": "newmember@example.com", "inviter_user_id": "user_67890", "role": "admin", "public_metadata": {}, "private_metadata": {}, "redirect_url": "https://example.com/welcome", "expires_in_days": 488764}, {"email_address": "newmember@example.com", "inviter_user_id": "user_67890", "role": "admin", "public_metadata": {}, "private_metadata": {}, "redirect_url": "https://example.com/welcome", "expires_in_days": 488764}]
       responses:
         "200":
-          application/json: {"data": [{"object": "organization_invitation", "id": "inv_12345", "email_address": "user@example.com", "role": "member", "role_name": "<value>", "organization_id": "org_12345", "inviter_id": "<id>", "status": "pending", "public_metadata": {"key": "value"}, "private_metadata": {"private_key": "secret_value"}, "url": "https://cooperative-dress.biz", "expires_at": 715454, "created_at": 1617981379, "updated_at": 1625581379}], "total_count": 10}
+          application/json: {"data": [{"object": "organization_invitation", "id": "inv_12345", "email_address": "user@example.com", "role": "member", "role_name": "<value>", "organization_id": "org_12345", "inviter_id": "<id>", "public_inviter_data": {"user_id": "<id>", "first_name": "Jeffrey", "last_name": "Connelly", "image_url": "https://downright-papa.net/", "has_image": true, "identifier": "<value>"}, "status": "pending", "public_metadata": {"key": "value"}, "private_metadata": {"private_key": "secret_value"}, "url": "https://cooperative-dress.biz", "expires_at": 715454, "created_at": 1617981379, "updated_at": 1625581379}], "total_count": 10}
         "400":
           application/json: {"errors": [{"message": "Invalid input", "long_message": "The input provided does not meet the requirements.", "code": "400_bad_request", "meta": {}}], "meta": {}}
   ListPendingOrganizationInvitations:
@@ -1830,7 +1834,7 @@ examples:
           offset: 10
       responses:
         "200":
-          application/json: {"data": [{"object": "organization_invitation", "id": "inv_12345", "email_address": "user@example.com", "role": "member", "role_name": "<value>", "organization_id": "org_12345", "inviter_id": "<id>", "status": "pending", "public_metadata": {"key": "value"}, "private_metadata": {"private_key": "secret_value"}, "url": "https://junior-tribe.com", "expires_at": 713465, "created_at": 1617981379, "updated_at": 1625581379}], "total_count": 10}
+          application/json: {"data": [{"object": "organization_invitation", "id": "inv_12345", "email_address": "user@example.com", "role": "member", "role_name": "<value>", "organization_id": "org_12345", "inviter_id": "<id>", "public_inviter_data": {"user_id": "<id>", "first_name": "Isabell", "last_name": "Lueilwitz", "image_url": "https://sophisticated-pacemaker.biz", "has_image": false, "identifier": "<value>"}, "status": "pending", "public_metadata": {"key": "value"}, "private_metadata": {"private_key": "secret_value"}, "url": "https://junior-tribe.com", "expires_at": 713465, "created_at": 1617981379, "updated_at": 1625581379}], "total_count": 10}
         "400":
           application/json: {"errors": [{"message": "Invalid input", "long_message": "The input provided does not meet the requirements.", "code": "400_bad_request", "meta": {}}], "meta": {}}
   GetOrganizationInvitation:
@@ -1841,7 +1845,7 @@ examples:
           invitation_id: "inv_987654321"
       responses:
         "200":
-          application/json: {"object": "organization_invitation", "id": "inv_12345", "email_address": "user@example.com", "role": "admin", "role_name": "<value>", "organization_id": "org_12345", "inviter_id": "<id>", "status": "pending", "public_metadata": {"key": "value"}, "private_metadata": {"private_key": "secret_value"}, "url": "https://weekly-humor.net/", "expires_at": 585405, "created_at": 1622547600, "updated_at": 1622551200}
+          application/json: {"object": "organization_invitation", "id": "inv_12345", "email_address": "user@example.com", "role": "admin", "role_name": "<value>", "organization_id": "org_12345", "inviter_id": "<id>", "public_inviter_data": {"user_id": "<id>", "first_name": null, "last_name": "Simonis", "image_url": "https://outlying-cricket.com", "has_image": false, "identifier": "<value>"}, "status": "pending", "public_metadata": {"key": "value"}, "private_metadata": {"private_key": "secret_value"}, "url": "https://weekly-humor.net/", "expires_at": 585405, "created_at": 1622547600, "updated_at": 1622551200}
         "400":
           application/json: {"errors": [{"message": "Invalid input", "long_message": "The input provided does not meet the requirements.", "code": "400_bad_request", "meta": {}}], "meta": {}}
   RevokeOrganizationInvitation:
@@ -1854,7 +1858,7 @@ examples:
         application/json: {"requesting_user_id": "usr_12345"}
       responses:
         "200":
-          application/json: {"object": "organization_invitation", "id": "inv_12345", "email_address": "user@example.com", "role": "admin", "role_name": "<value>", "organization_id": "org_12345", "inviter_id": null, "status": "pending", "public_metadata": {"key": "value"}, "private_metadata": {"private_key": "secret_value"}, "url": null, "expires_at": 45978, "created_at": 1622547600, "updated_at": 1622551200}
+          application/json: {"object": "organization_invitation", "id": "inv_12345", "email_address": "user@example.com", "role": "admin", "role_name": "<value>", "organization_id": "org_12345", "inviter_id": null, "public_inviter_data": null, "status": "pending", "public_metadata": {"key": "value"}, "private_metadata": {"private_key": "secret_value"}, "url": null, "expires_at": 45978, "created_at": 1622547600, "updated_at": 1622551200}
         "400":
           application/json: {"errors": [{"message": "Invalid input", "long_message": "The input provided does not meet the requirements.", "code": "400_bad_request", "meta": {}}], "meta": {}}
   ListAllowlistIdentifiers:
@@ -2193,7 +2197,7 @@ examples:
         path:
           organization_id: "org_123"
       requestBody:
-        application/json: {"user_id": "user_456", "role": "admin"}
+        application/json: {"user_id": "user_456", "role": "admin", "public_metadata": {"key": "<value>", "key1": "<value>", "key2": "<value>"}, "private_metadata": {"key": "<value>", "key1": "<value>", "key2": "<value>"}}
       responses:
         "200":
           application/json: {"id": "org_mem_123", "object": "organization_membership", "role": "member", "role_name": "<value>", "permissions": ["read", "write"], "public_metadata": {}, "private_metadata": {}, "organization": {"object": "organization", "id": "org_123", "name": "Acme Corp", "slug": "acme-corp", "image_url": "https://well-worn-nectarine.net", "has_image": false, "members_count": 150, "missing_member_with_elevated_permissions": false, "pending_invitations_count": 957199, "max_allowed_memberships": 300, "admin_delete_enabled": true, "public_metadata": {"public_info": "Info visible to everyone"}, "private_metadata": {"internal_use_only": "Sensitive data"}, "created_by": "user_123456", "created_at": 1625078400, "updated_at": 1625164800, "last_active_at": 758232}, "public_user_data": {"user_id": "<id>", "first_name": "Petra", "last_name": "Rath", "profile_image_url": "https://joyful-coal.net", "image_url": "https://nutritious-mentor.org/", "has_image": true, "identifier": "<value>", "username": "Verner74"}, "created_at": 1625078400, "updated_at": 1625164800}
@@ -3180,3 +3184,15 @@ examples:
           application/json: {"errors": [{"message": "Invalid input", "long_message": "The input provided does not meet the requirements.", "code": "400_bad_request", "meta": {}}], "meta": {}}
 examplesVersion: 1.0.2
 generatedTests: {}
+releaseNotes: |
+  ## Python SDK Changes:
+  * `clerk.oauth_access_tokens.verify()`:  `response` **Changed** **Breaking** :warning:
+  * `clerk.users.get_organization_invitations()`:  `response.data.[].public_inviter_data` **Added**
+  * `clerk.organization_invitations.get_all()`:  `response.data.[].public_inviter_data` **Added**
+  * `clerk.organization_invitations.create()`:  `response.public_inviter_data` **Added**
+  * `clerk.organization_invitations.list()`:  `response.data.[].public_inviter_data` **Added**
+  * `clerk.organization_invitations.bulk_create()`:  `response.data.[].public_inviter_data` **Added**
+  * `clerk.organization_invitations.list_pending()`:  `response.data.[].public_inviter_data` **Added**
+  * `clerk.organization_invitations.get()`:  `response.public_inviter_data` **Added**
+  * `clerk.organization_invitations.revoke()`:  `response.public_inviter_data` **Added**
+  * `clerk.organization_memberships.create()`:  `request` **Changed**

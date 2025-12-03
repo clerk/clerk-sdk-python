@@ -3,18 +3,17 @@
 200 OK
 
 
-## Fields
+## Supported Types
 
-| Field                                                                            | Type                                                                             | Required                                                                         | Description                                                                      | Example                                                                          |
-| -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
-| `object`                                                                         | [models.VerifyOAuthAccessTokenObject](../models/verifyoauthaccesstokenobject.md) | :heavy_check_mark:                                                               | N/A                                                                              | clerk_idp_oauth_access_token                                                     |
-| `id`                                                                             | *str*                                                                            | :heavy_check_mark:                                                               | N/A                                                                              | oat_0ef5a7a33d87ed87ee7954c845d80450                                             |
-| `client_id`                                                                      | *str*                                                                            | :heavy_check_mark:                                                               | N/A                                                                              | client_2xhFjEI5X2qWRvtV13BzSj8H6Dk                                               |
-| `subject`                                                                        | *str*                                                                            | :heavy_check_mark:                                                               | N/A                                                                              | user_2xhFjEI5X2qWRvtV13BzSj8H6Dk                                                 |
-| `scopes`                                                                         | List[*str*]                                                                      | :heavy_check_mark:                                                               | N/A                                                                              | [<br/>"read",<br/>"write"<br/>]                                                  |
-| `revoked`                                                                        | *bool*                                                                           | :heavy_check_mark:                                                               | N/A                                                                              | false                                                                            |
-| `revocation_reason`                                                              | *Nullable[str]*                                                                  | :heavy_check_mark:                                                               | N/A                                                                              | Revoked by user                                                                  |
-| `expired`                                                                        | *bool*                                                                           | :heavy_check_mark:                                                               | N/A                                                                              | false                                                                            |
-| `expiration`                                                                     | *Nullable[float]*                                                                | :heavy_check_mark:                                                               | N/A                                                                              | 1716883200                                                                       |
-| `created_at`                                                                     | *float*                                                                          | :heavy_check_mark:                                                               | N/A                                                                              | 1716883200                                                                       |
-| `updated_at`                                                                     | *float*                                                                          | :heavy_check_mark:                                                               | N/A                                                                              | 1716883200                                                                       |
+### `models.ResponseBody1`
+
+```python
+value: models.ResponseBody1 = /* values here */
+```
+
+### `models.ResponseBody2`
+
+```python
+value: models.ResponseBody2 = /* values here */
+```
+

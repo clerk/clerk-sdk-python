@@ -1,4 +1,4 @@
-# VerifyOAuthAccessTokenObject
+# ResponseBodyObject
 
 
 ## Values
