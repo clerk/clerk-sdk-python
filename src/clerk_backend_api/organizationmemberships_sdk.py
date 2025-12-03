@@ -15,6 +15,8 @@ class OrganizationMembershipsSDK(BaseSDK):
         organization_id: str,
         user_id: str,
         role: str,
+        public_metadata: OptionalNullable[Dict[str, Any]] = UNSET,
+        private_metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -27,6 +29,8 @@ class OrganizationMembershipsSDK(BaseSDK):
         :param organization_id: The ID of the organization where the new membership will be created
         :param user_id: The ID of the user that will be added as a member in the organization.
         :param role: The role that the new member will have in the organization.
+        :param public_metadata: Metadata saved on the organization membership, that is visible to both your frontend and backend.
+        :param private_metadata: Metadata saved on the organization membership that is only visible to your backend.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -47,6 +51,8 @@ class OrganizationMembershipsSDK(BaseSDK):
             request_body=models.CreateOrganizationMembershipRequestBody(
                 user_id=user_id,
                 role=role,
+                public_metadata=public_metadata,
+                private_metadata=private_metadata,
             ),
         )
 
@@ -122,6 +128,8 @@ class OrganizationMembershipsSDK(BaseSDK):
         organization_id: str,
         user_id: str,
         role: str,
+        public_metadata: OptionalNullable[Dict[str, Any]] = UNSET,
+        private_metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -134,6 +142,8 @@ class OrganizationMembershipsSDK(BaseSDK):
         :param organization_id: The ID of the organization where the new membership will be created
         :param user_id: The ID of the user that will be added as a member in the organization.
         :param role: The role that the new member will have in the organization.
+        :param public_metadata: Metadata saved on the organization membership, that is visible to both your frontend and backend.
+        :param private_metadata: Metadata saved on the organization membership that is only visible to your backend.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -154,6 +164,8 @@ class OrganizationMembershipsSDK(BaseSDK):
             request_body=models.CreateOrganizationMembershipRequestBody(
                 user_id=user_id,
                 role=role,
+                public_metadata=public_metadata,
+                private_metadata=private_metadata,
             ),
         )
 
