@@ -279,9 +279,17 @@ class RequestState:
                                               name=self.payload.get('name'),
                                               scopes=self.payload.get('scopes'))
             if token_type == TokenType.API_KEY:
+                subject = self.payload.get('subject')
+                user_id = None
+                org_id = None
+                if subject:
+                    if subject.startswith('user_'):
+                        user_id = subject
+                    elif subject.startswith('org_'):
+                        org_id = subject
                 return APIKeyMachineAuthObject(id=self.payload.get('id'),
-                                                user_id=self.payload.get('subject'),
-                                                org_id=self.payload.get('org_id'),
+                                                user_id=user_id,
+                                                org_id=org_id,
                                                 name=self.payload.get('name'),
                                                 scopes=self.payload.get('scopes'),
                                                 claims=self.payload.get('claims'))
