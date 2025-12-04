@@ -370,6 +370,55 @@ def test_api_key_machine_auth_token(mock_verify_token):
 
 
 @patch("clerk_backend_api.security.authenticaterequest.verify_token", autospec=True)
+def test_api_key_machine_auth_token_with_org_subject(mock_verify_token):
+    """Test that API key with org_ prefixed subject maps to org_id, not user_id."""
+    mock_verify_token.return_value = {
+      "object": "api_key",
+      "id": "ak_3beecc9c60adb5f9b850e91a8ee1e992",
+      "type": "api_key",
+      "subject": "org_2xhFjEI5X2qWRvtV13BzSj8H6Dk",
+      "name": "ORG_API_KEY",
+      "description": "This is an org-level API Key",
+      "claims": {
+        "foo": "bar"
+      },
+      "scopes": [
+        "read",
+        "write"
+      ],
+      "revoked": False,
+      "revocation_reason": "Revoked by user",
+      "expired": False,
+      "expiration": 1716883200,
+      "created_by": "user_2xhFjEI5X2qWRvtV13BzSj8H6Dk",
+      "last_used_at": 1716883200,
+      "created_at": 1716883200,
+      "updated_at": 1716883200
+    }
+
+    request = MockRequest(headers=make_headers(auth_token="ak_0ef5a7a33d87ed87ee7954c845d80450"))
+    opts = AuthenticateRequestOptions(
+        secret_key=None,
+        jwt_key=None,
+        audience="test-audience",
+        authorized_parties=["https://example.com"],
+        clock_skew_in_ms=5000,
+        accepts_token=["api_key"])
+    state = authenticate_request(request, opts)
+    assert state.is_authenticated
+    assert state.token == "ak_0ef5a7a33d87ed87ee7954c845d80450"
+    api_key_machine_auth_object = state.to_auth()
+
+    assert api_key_machine_auth_object is not None
+    assert api_key_machine_auth_object.token_type.value == "api_key"
+    assert api_key_machine_auth_object.id == "ak_3beecc9c60adb5f9b850e91a8ee1e992"
+    assert api_key_machine_auth_object.user_id is None
+    assert api_key_machine_auth_object.org_id == "org_2xhFjEI5X2qWRvtV13BzSj8H6Dk"
+    assert api_key_machine_auth_object.name == "ORG_API_KEY"
+    assert api_key_machine_auth_object.claims == {"foo": "bar"}
+
+
+@patch("clerk_backend_api.security.authenticaterequest.verify_token", autospec=True)
 def test_m2m_machine_auth_token(mock_verify_token):
     mock_verify_token.return_value = {
       "object": "machine_to_machine_token",
