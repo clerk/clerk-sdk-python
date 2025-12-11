@@ -129,6 +129,8 @@ class UserTypedDict(TypedDict):
     r"""The maximum number of organizations the user can create. 0 means unlimited.
 
     """
+    bypass_client_trust: NotRequired[bool]
+    r"""When set to `true`, the user will bypass client trust checks during sign-in."""
 
 
 class User(BaseModel):
@@ -273,6 +275,9 @@ class User(BaseModel):
 
     """
 
+    bypass_client_trust: Optional[bool] = False
+    r"""When set to `true`, the user will bypass client trust checks during sign-in."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = [
@@ -284,6 +289,7 @@ class User(BaseModel):
             "password_last_updated_at",
             "organization_memberships",
             "create_organizations_limit",
+            "bypass_client_trust",
         ]
         nullable_fields = [
             "external_id",

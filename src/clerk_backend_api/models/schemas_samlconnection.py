@@ -56,6 +56,7 @@ class TwoTypedDict(TypedDict):
     idp_metadata: NotRequired[Nullable[str]]
     organization_id: NotRequired[Nullable[str]]
     attribute_mapping: NotRequired[SAMLConnectionAttributeMappingTypedDict]
+    enterprise_connection_id: NotRequired[Nullable[str]]
 
 
 class Two(BaseModel):
@@ -121,6 +122,8 @@ class Two(BaseModel):
 
     attribute_mapping: Optional[SAMLConnectionAttributeMapping] = None
 
+    enterprise_connection_id: OptionalNullable[str] = UNSET
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = [
@@ -129,6 +132,7 @@ class Two(BaseModel):
             "idp_metadata",
             "organization_id",
             "attribute_mapping",
+            "enterprise_connection_id",
         ]
         nullable_fields = [
             "idp_entity_id",
@@ -137,6 +141,7 @@ class Two(BaseModel):
             "idp_metadata_url",
             "idp_metadata",
             "organization_id",
+            "enterprise_connection_id",
         ]
         null_default_fields = []
 
@@ -202,6 +207,7 @@ class OneTypedDict(TypedDict):
     idp_metadata: NotRequired[Nullable[str]]
     organization_id: NotRequired[Nullable[str]]
     attribute_mapping: NotRequired[SAMLConnectionAttributeMappingTypedDict]
+    enterprise_connection_id: NotRequired[Nullable[str]]
 
 
 class One(BaseModel):
@@ -267,6 +273,8 @@ class One(BaseModel):
 
     attribute_mapping: Optional[SAMLConnectionAttributeMapping] = None
 
+    enterprise_connection_id: OptionalNullable[str] = UNSET
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = [
@@ -275,6 +283,7 @@ class One(BaseModel):
             "idp_metadata",
             "organization_id",
             "attribute_mapping",
+            "enterprise_connection_id",
         ]
         nullable_fields = [
             "idp_entity_id",
@@ -283,6 +292,7 @@ class One(BaseModel):
             "idp_metadata_url",
             "idp_metadata",
             "organization_id",
+            "enterprise_connection_id",
         ]
         null_default_fields = []
 

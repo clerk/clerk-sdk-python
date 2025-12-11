@@ -1,5 +1,4 @@
 # OrganizationPermissions
-(*organization_permissions*)
 
 ## Overview
 

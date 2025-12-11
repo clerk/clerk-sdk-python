@@ -1,5 +1,4 @@
 # RedirectUrls
-(*redirect_urls*)
 
 ## Overview
 

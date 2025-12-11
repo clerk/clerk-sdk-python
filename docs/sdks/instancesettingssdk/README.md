@@ -1,5 +1,4 @@
-# InstanceSettingsSDK
-(*instance_settings*)
+# InstanceSettings
 
 ## Overview
 

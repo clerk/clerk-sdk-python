@@ -250,23 +250,34 @@ def verify_machine_token(request: httpx.Request):
 <details open>
 <summary>Available methods</summary>
 
-### [actor_tokens](docs/sdks/actortokens/README.md)
+### [ActorTokens](docs/sdks/actortokens/README.md)
 
 * [create](docs/sdks/actortokens/README.md#create) - Create actor token
 * [revoke](docs/sdks/actortokens/README.md#revoke) - Revoke actor token
 
-### [allowlist_identifiers](docs/sdks/allowlistidentifiers/README.md)
+### [AllowlistIdentifiers](docs/sdks/allowlistidentifiers/README.md)
 
 * [list](docs/sdks/allowlistidentifiers/README.md#list) - List all identifiers on the allow-list
 * [create](docs/sdks/allowlistidentifiers/README.md#create) - Add identifier to the allow-list
 * [delete](docs/sdks/allowlistidentifiers/README.md#delete) - Delete identifier from allow-list
 
-### [beta_features](docs/sdks/betafeatures/README.md)
+### [APIKeys](docs/sdks/apikeys/README.md)
+
+* [create_api_key](docs/sdks/apikeys/README.md#create_api_key) - Create an API Key
+* [get_api_keys](docs/sdks/apikeys/README.md#get_api_keys) - Get API Keys
+* [get_api_key](docs/sdks/apikeys/README.md#get_api_key) - Get an API Key by ID
+* [update_api_key](docs/sdks/apikeys/README.md#update_api_key) - Update an API Key
+* [delete_api_key](docs/sdks/apikeys/README.md#delete_api_key) - Delete an API Key
+* [get_api_key_secret](docs/sdks/apikeys/README.md#get_api_key_secret) - Get an API Key Secret
+* [revoke_api_key](docs/sdks/apikeys/README.md#revoke_api_key) - Revoke an API Key
+* [verify_api_key](docs/sdks/apikeys/README.md#verify_api_key) - Verify an API Key
+
+### [BetaFeatures](docs/sdks/betafeatures/README.md)
 
 * [update_instance_settings](docs/sdks/betafeatures/README.md#update_instance_settings) - Update instance settings
 * [~~update_production_instance_domain~~](docs/sdks/betafeatures/README.md#update_production_instance_domain) - Update production instance domain :warning: **Deprecated**
 
-### [billing](docs/sdks/billing/README.md)
+### [Billing](docs/sdks/billing/README.md)
 
 * [list_plans](docs/sdks/billing/README.md#list_plans) - List all billing plans
 * [list_subscription_items](docs/sdks/billing/README.md#list_subscription_items) - List all subscription items
@@ -276,44 +287,44 @@ def verify_machine_token(request: httpx.Request):
 * [get_statement](docs/sdks/billing/README.md#get_statement) - Retrieve a billing statement
 * [get_statement_payment_attempts](docs/sdks/billing/README.md#get_statement_payment_attempts) - List payment attempts for a billing statement
 
-### [blocklist_identifiers](docs/sdks/blocklistidentifierssdk/README.md)
+### [BlocklistIdentifiers](docs/sdks/blocklistidentifierssdk/README.md)
 
 * [list](docs/sdks/blocklistidentifierssdk/README.md#list) - List all identifiers on the block-list
 * [create](docs/sdks/blocklistidentifierssdk/README.md#create) - Add identifier to the block-list
 * [delete](docs/sdks/blocklistidentifierssdk/README.md#delete) - Delete identifier from block-list
 
-### [clients](docs/sdks/clients/README.md)
+### [Clients](docs/sdks/clients/README.md)
 
 * [~~list~~](docs/sdks/clients/README.md#list) - List all clients :warning: **Deprecated**
 * [verify](docs/sdks/clients/README.md#verify) - Verify a client
 * [get](docs/sdks/clients/README.md#get) - Get a client
 
-### [domains](docs/sdks/domainssdk/README.md)
+### [Domains](docs/sdks/domainssdk/README.md)
 
 * [list](docs/sdks/domainssdk/README.md#list) - List all instance domains
 * [add](docs/sdks/domainssdk/README.md#add) - Add a domain
 * [delete](docs/sdks/domainssdk/README.md#delete) - Delete a satellite domain
 * [update](docs/sdks/domainssdk/README.md#update) - Update a domain
 
-### [email_addresses](docs/sdks/emailaddresses/README.md)
+### [EmailAddresses](docs/sdks/emailaddresses/README.md)
 
 * [create](docs/sdks/emailaddresses/README.md#create) - Create an email address
 * [get](docs/sdks/emailaddresses/README.md#get) - Retrieve an email address
 * [delete](docs/sdks/emailaddresses/README.md#delete) - Delete an email address
 * [update](docs/sdks/emailaddresses/README.md#update) - Update an email address
 
-### [~~email_and_sms_templates~~](docs/sdks/emailandsmstemplates/README.md)
+### [~~EmailAndSmsTemplates~~](docs/sdks/emailandsmstemplates/README.md)
 
 * [~~upsert~~](docs/sdks/emailandsmstemplates/README.md#upsert) - Update a template for a given type and slug :warning: **Deprecated**
 
-### [~~email_sms_templates~~](docs/sdks/emailsmstemplates/README.md)
+### [~~EmailSMSTemplates~~](docs/sdks/emailsmstemplates/README.md)
 
 * [~~list~~](docs/sdks/emailsmstemplates/README.md#list) - List all templates :warning: **Deprecated**
 * [~~get~~](docs/sdks/emailsmstemplates/README.md#get) - Retrieve a template :warning: **Deprecated**
 * [~~revert~~](docs/sdks/emailsmstemplates/README.md#revert) - Revert a template :warning: **Deprecated**
 * [~~toggle_template_delivery~~](docs/sdks/emailsmstemplates/README.md#toggle_template_delivery) - Toggle the delivery by Clerk for a template of a given type and slug :warning: **Deprecated**
 
-### [instance_settings](docs/sdks/instancesettingssdk/README.md)
+### [InstanceSettings](docs/sdks/instancesettingssdk/README.md)
 
 * [get](docs/sdks/instancesettingssdk/README.md#get) - Fetch the current instance
 * [update](docs/sdks/instancesettingssdk/README.md#update) - Update instance settings
@@ -321,18 +332,18 @@ def verify_machine_token(request: httpx.Request):
 * [change_domain](docs/sdks/instancesettingssdk/README.md#change_domain) - Update production instance domain
 * [update_organization_settings](docs/sdks/instancesettingssdk/README.md#update_organization_settings) - Update instance organization settings
 
-### [invitations](docs/sdks/invitations/README.md)
+### [Invitations](docs/sdks/invitations/README.md)
 
 * [create](docs/sdks/invitations/README.md#create) - Create an invitation
 * [list](docs/sdks/invitations/README.md#list) - List all invitations
 * [bulk_create](docs/sdks/invitations/README.md#bulk_create) - Create multiple invitations
 * [revoke](docs/sdks/invitations/README.md#revoke) - Revokes an invitation
 
-### [jwks](docs/sdks/jwkssdk/README.md)
+### [Jwks](docs/sdks/jwkssdk/README.md)
 
 * [get_jwks](docs/sdks/jwkssdk/README.md#get_jwks) - Retrieve the JSON Web Key Set of the instance
 
-### [jwt_templates](docs/sdks/jwttemplates/README.md)
+### [JwtTemplates](docs/sdks/jwttemplates/README.md)
 
 * [list](docs/sdks/jwttemplates/README.md#list) - List all templates
 * [create](docs/sdks/jwttemplates/README.md#create) - Create a JWT template
@@ -340,14 +351,14 @@ def verify_machine_token(request: httpx.Request):
 * [update](docs/sdks/jwttemplates/README.md#update) - Update a JWT template
 * [delete](docs/sdks/jwttemplates/README.md#delete) - Delete a Template
 
-### [m2m](docs/sdks/m2m/README.md)
+### [M2m](docs/sdks/m2m/README.md)
 
 * [create_token](docs/sdks/m2m/README.md#create_token) - Create a M2M Token
 * [list_tokens](docs/sdks/m2m/README.md#list_tokens) - Get M2M Tokens
 * [revoke_token](docs/sdks/m2m/README.md#revoke_token) - Revoke a M2M Token
 * [verify_token](docs/sdks/m2m/README.md#verify_token) - Verify a M2M Token
 
-### [machines](docs/sdks/machines/README.md)
+### [Machines](docs/sdks/machines/README.md)
 
 * [list](docs/sdks/machines/README.md#list) - Get a list of machines for an instance
 * [create](docs/sdks/machines/README.md#create) - Create a machine
@@ -359,15 +370,15 @@ def verify_machine_token(request: httpx.Request):
 * [create_scope](docs/sdks/machines/README.md#create_scope) - Create a machine scope
 * [delete_scope](docs/sdks/machines/README.md#delete_scope) - Delete a machine scope
 
-### [miscellaneous](docs/sdks/miscellaneous/README.md)
+### [Miscellaneous](docs/sdks/miscellaneous/README.md)
 
 * [get_public_interstitial](docs/sdks/miscellaneous/README.md#get_public_interstitial) - Returns the markup for the interstitial page
 
-### [oauth_access_tokens](docs/sdks/oauthaccesstokens/README.md)
+### [OauthAccessTokens](docs/sdks/oauthaccesstokens/README.md)
 
 * [verify](docs/sdks/oauthaccesstokens/README.md#verify) - Verify an OAuth Access Token
 
-### [oauth_applications](docs/sdks/oauthapplicationssdk/README.md)
+### [OauthApplications](docs/sdks/oauthapplicationssdk/README.md)
 
 * [list](docs/sdks/oauthapplicationssdk/README.md#list) - Get a list of OAuth applications for an instance
 * [create](docs/sdks/oauthapplicationssdk/README.md#create) - Create an OAuth application
@@ -376,7 +387,7 @@ def verify_machine_token(request: httpx.Request):
 * [delete](docs/sdks/oauthapplicationssdk/README.md#delete) - Delete an OAuth application
 * [rotate_secret](docs/sdks/oauthapplicationssdk/README.md#rotate_secret) - Rotate the client secret of the given OAuth application
 
-### [organization_domains](docs/sdks/organizationdomainssdk/README.md)
+### [OrganizationDomains](docs/sdks/organizationdomainssdk/README.md)
 
 * [create](docs/sdks/organizationdomainssdk/README.md#create) - Create a new organization domain.
 * [list](docs/sdks/organizationdomainssdk/README.md#list) - Get a list of all domains of an organization.
@@ -384,7 +395,7 @@ def verify_machine_token(request: httpx.Request):
 * [delete](docs/sdks/organizationdomainssdk/README.md#delete) - Remove a domain from an organization.
 * [list_all](docs/sdks/organizationdomainssdk/README.md#list_all) - List all organization domains
 
-### [organization_invitations](docs/sdks/organizationinvitationssdk/README.md)
+### [OrganizationInvitations](docs/sdks/organizationinvitationssdk/README.md)
 
 * [get_all](docs/sdks/organizationinvitationssdk/README.md#get_all) - Get a list of organization invitations for the current instance
 * [create](docs/sdks/organizationinvitationssdk/README.md#create) - Create and send an organization invitation
@@ -394,7 +405,7 @@ def verify_machine_token(request: httpx.Request):
 * [get](docs/sdks/organizationinvitationssdk/README.md#get) - Retrieve an organization invitation by ID
 * [revoke](docs/sdks/organizationinvitationssdk/README.md#revoke) - Revoke a pending organization invitation
 
-### [organization_memberships](docs/sdks/organizationmembershipssdk/README.md)
+### [OrganizationMemberships](docs/sdks/organizationmembershipssdk/README.md)
 
 * [create](docs/sdks/organizationmembershipssdk/README.md#create) - Create a new organization membership
 * [list](docs/sdks/organizationmembershipssdk/README.md#list) - Get a list of all members of an organization
@@ -402,7 +413,7 @@ def verify_machine_token(request: httpx.Request):
 * [delete](docs/sdks/organizationmembershipssdk/README.md#delete) - Remove a member from an organization
 * [update_metadata](docs/sdks/organizationmembershipssdk/README.md#update_metadata) - Merge and update organization membership metadata
 
-### [organization_permissions](docs/sdks/organizationpermissions/README.md)
+### [OrganizationPermissions](docs/sdks/organizationpermissions/README.md)
 
 * [list](docs/sdks/organizationpermissions/README.md#list) - Get a list of all organization permissions
 * [create](docs/sdks/organizationpermissions/README.md#create) - Create a new organization permission
@@ -410,7 +421,7 @@ def verify_machine_token(request: httpx.Request):
 * [update](docs/sdks/organizationpermissions/README.md#update) - Update an organization permission
 * [delete](docs/sdks/organizationpermissions/README.md#delete) - Delete an organization permission
 
-### [organization_roles](docs/sdks/organizationroles/README.md)
+### [OrganizationRoles](docs/sdks/organizationroles/README.md)
 
 * [list](docs/sdks/organizationroles/README.md#list) - Get a list of organization roles
 * [create](docs/sdks/organizationroles/README.md#create) - Create an organization role
@@ -420,7 +431,7 @@ def verify_machine_token(request: httpx.Request):
 * [assign_permission](docs/sdks/organizationroles/README.md#assign_permission) - Assign a permission to an organization role
 * [remove_permission](docs/sdks/organizationroles/README.md#remove_permission) - Remove a permission from an organization role
 
-### [organizations](docs/sdks/organizationssdk/README.md)
+### [Organizations](docs/sdks/organizationssdk/README.md)
 
 * [list](docs/sdks/organizationssdk/README.md#list) - Get a list of organizations for an instance
 * [create](docs/sdks/organizationssdk/README.md#create) - Create an organization
@@ -432,25 +443,25 @@ def verify_machine_token(request: httpx.Request):
 * [delete_logo](docs/sdks/organizationssdk/README.md#delete_logo) - Delete the organization's logo.
 * [get_billing_subscription](docs/sdks/organizationssdk/README.md#get_billing_subscription) - Retrieve an organization's billing subscription
 
-### [phone_numbers](docs/sdks/phonenumbers/README.md)
+### [PhoneNumbers](docs/sdks/phonenumbers/README.md)
 
 * [create](docs/sdks/phonenumbers/README.md#create) - Create a phone number
 * [get](docs/sdks/phonenumbers/README.md#get) - Retrieve a phone number
 * [delete](docs/sdks/phonenumbers/README.md#delete) - Delete a phone number
 * [update](docs/sdks/phonenumbers/README.md#update) - Update a phone number
 
-### [proxy_checks](docs/sdks/proxychecks/README.md)
+### [ProxyChecks](docs/sdks/proxychecks/README.md)
 
 * [verify](docs/sdks/proxychecks/README.md#verify) - Verify the proxy configuration for your domain
 
-### [redirect_urls](docs/sdks/redirecturls/README.md)
+### [RedirectUrls](docs/sdks/redirecturls/README.md)
 
 * [list](docs/sdks/redirecturls/README.md#list) - List all redirect URLs
 * [create](docs/sdks/redirecturls/README.md#create) - Create a redirect URL
 * [get](docs/sdks/redirecturls/README.md#get) - Retrieve a redirect URL
 * [delete](docs/sdks/redirecturls/README.md#delete) - Delete a redirect URL
 
-### [saml_connections](docs/sdks/samlconnectionssdk/README.md)
+### [SamlConnections](docs/sdks/samlconnectionssdk/README.md)
 
 * [list](docs/sdks/samlconnectionssdk/README.md#list) - Get a list of SAML Connections for an instance
 * [create](docs/sdks/samlconnectionssdk/README.md#create) - Create a SAML Connection
@@ -458,7 +469,7 @@ def verify_machine_token(request: httpx.Request):
 * [update](docs/sdks/samlconnectionssdk/README.md#update) - Update a SAML Connection
 * [delete](docs/sdks/samlconnectionssdk/README.md#delete) - Delete a SAML Connection
 
-### [sessions](docs/sdks/sessions/README.md)
+### [Sessions](docs/sdks/sessions/README.md)
 
 * [list](docs/sdks/sessions/README.md#list) - List all sessions
 * [create](docs/sdks/sessions/README.md#create) - Create a new active session
@@ -468,25 +479,25 @@ def verify_machine_token(request: httpx.Request):
 * [create_token](docs/sdks/sessions/README.md#create_token) - Create a session token
 * [create_token_from_template](docs/sdks/sessions/README.md#create_token_from_template) - Create a session token from a JWT template
 
-### [sign_in_tokens](docs/sdks/signintokens/README.md)
+### [SignInTokens](docs/sdks/signintokens/README.md)
 
 * [create](docs/sdks/signintokens/README.md#create) - Create sign-in token
 * [revoke](docs/sdks/signintokens/README.md#revoke) - Revoke the given sign-in token
 
-### [sign_ups](docs/sdks/signups/README.md)
+### [SignUps](docs/sdks/signups/README.md)
 
 * [get](docs/sdks/signups/README.md#get) - Retrieve a sign-up by ID
 * [update](docs/sdks/signups/README.md#update) - Update a sign-up
 
-### [~~templates~~](docs/sdks/templates/README.md)
+### [~~Templates~~](docs/sdks/templates/README.md)
 
 * [~~preview~~](docs/sdks/templates/README.md#preview) - Preview changes to a template :warning: **Deprecated**
 
-### [testing_tokens](docs/sdks/testingtokens/README.md)
+### [TestingTokens](docs/sdks/testingtokens/README.md)
 
 * [create](docs/sdks/testingtokens/README.md#create) - Retrieve a new testing token
 
-### [users](docs/sdks/users/README.md)
+### [Users](docs/sdks/users/README.md)
 
 * [list](docs/sdks/users/README.md#list) - List all users
 * [create](docs/sdks/users/README.md#create) - Create a new user
@@ -517,7 +528,7 @@ def verify_machine_token(request: httpx.Request):
 * [delete_external_account](docs/sdks/users/README.md#delete_external_account) - Delete External Account
 * [get_instance_organization_memberships](docs/sdks/users/README.md#get_instance_organization_memberships) - Get a list of all organization memberships within an instance.
 
-### [waitlist_entries](docs/sdks/waitlistentriessdk/README.md)
+### [WaitlistEntries](docs/sdks/waitlistentriessdk/README.md)
 
 * [list](docs/sdks/waitlistentriessdk/README.md#list) - List all waitlist entries
 * [create](docs/sdks/waitlistentriessdk/README.md#create) - Create a waitlist entry
@@ -525,7 +536,7 @@ def verify_machine_token(request: httpx.Request):
 * [invite](docs/sdks/waitlistentriessdk/README.md#invite) - Invite a waitlist entry
 * [reject](docs/sdks/waitlistentriessdk/README.md#reject) - Reject a waitlist entry
 
-### [webhooks](docs/sdks/webhooks/README.md)
+### [Webhooks](docs/sdks/webhooks/README.md)
 
 * [create_svix_app](docs/sdks/webhooks/README.md#create_svix_app) - Create a Svix app
 * [delete_svix_app](docs/sdks/webhooks/README.md#delete_svix_app) - Delete a Svix app
@@ -653,7 +664,7 @@ with Clerk(
 * [`ClerkBaseError`](./src/clerk_backend_api/models/clerkbaseerror.py): The base class for HTTP error responses.
   * [`ClerkErrors`](./src/clerk_backend_api/models/clerkerrors.py): Request was not successful. *
 
-<details><summary>Less common errors (16)</summary>
+<details><summary>Less common errors (32)</summary>
 
 <br />
 
@@ -664,17 +675,33 @@ with Clerk(
 
 
 **Inherit from [`ClerkBaseError`](./src/clerk_backend_api/models/clerkbaseerror.py)**:
-* [`CreateM2MTokenM2mResponseBody`](./src/clerk_backend_api/models/createm2mtokenm2mresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 170 methods.*
-* [`GetM2MTokensM2mResponseBody`](./src/clerk_backend_api/models/getm2mtokensm2mresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 170 methods.*
-* [`RevokeM2MTokenM2mResponseBody`](./src/clerk_backend_api/models/revokem2mtokenm2mresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 170 methods.*
-* [`VerifyM2MTokenM2mResponseBody`](./src/clerk_backend_api/models/verifym2mtokenm2mresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 170 methods.*
-* [`VerifyOAuthAccessTokenOauthAccessTokensResponseBody`](./src/clerk_backend_api/models/verifyoauthaccesstokenoauthaccesstokensresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 170 methods.*
-* [`GetM2MTokensM2mResponseResponseBody`](./src/clerk_backend_api/models/getm2mtokensm2mresponseresponsebody.py): 403 Forbidden. Status code `403`. Applicable to 1 of 170 methods.*
-* [`GetM2MTokensM2mResponse404ResponseBody`](./src/clerk_backend_api/models/getm2mtokensm2mresponse404responsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 170 methods.*
-* [`RevokeM2MTokenM2mResponseResponseBody`](./src/clerk_backend_api/models/revokem2mtokenm2mresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 170 methods.*
-* [`VerifyM2MTokenM2mResponseResponseBody`](./src/clerk_backend_api/models/verifym2mtokenm2mresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 170 methods.*
-* [`VerifyOAuthAccessTokenOauthAccessTokensResponseResponseBody`](./src/clerk_backend_api/models/verifyoauthaccesstokenoauthaccesstokensresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 170 methods.*
-* [`CreateM2MTokenM2mResponseResponseBody`](./src/clerk_backend_api/models/createm2mtokenm2mresponseresponsebody.py): 409 Conflict. Status code `409`. Applicable to 1 of 170 methods.*
+* [`CreateAPIKeyAPIKeysResponseBody`](./src/clerk_backend_api/models/createapikeyapikeysresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 178 methods.*
+* [`GetAPIKeysAPIKeysResponseBody`](./src/clerk_backend_api/models/getapikeysapikeysresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 178 methods.*
+* [`GetAPIKeyAPIKeysResponseBody`](./src/clerk_backend_api/models/getapikeyapikeysresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 178 methods.*
+* [`UpdateAPIKeyAPIKeysResponseBody`](./src/clerk_backend_api/models/updateapikeyapikeysresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 178 methods.*
+* [`DeleteAPIKeyAPIKeysResponseBody`](./src/clerk_backend_api/models/deleteapikeyapikeysresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 178 methods.*
+* [`GetAPIKeySecretAPIKeysResponseBody`](./src/clerk_backend_api/models/getapikeysecretapikeysresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 178 methods.*
+* [`RevokeAPIKeyAPIKeysResponseBody`](./src/clerk_backend_api/models/revokeapikeyapikeysresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 178 methods.*
+* [`VerifyAPIKeyAPIKeysResponseBody`](./src/clerk_backend_api/models/verifyapikeyapikeysresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 178 methods.*
+* [`CreateM2MTokenM2mResponseBody`](./src/clerk_backend_api/models/createm2mtokenm2mresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 178 methods.*
+* [`GetM2MTokensM2mResponseBody`](./src/clerk_backend_api/models/getm2mtokensm2mresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 178 methods.*
+* [`RevokeM2MTokenM2mResponseBody`](./src/clerk_backend_api/models/revokem2mtokenm2mresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 178 methods.*
+* [`VerifyM2MTokenM2mResponseBody`](./src/clerk_backend_api/models/verifym2mtokenm2mresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 178 methods.*
+* [`VerifyOAuthAccessTokenOauthAccessTokensResponseBody`](./src/clerk_backend_api/models/verifyoauthaccesstokenoauthaccesstokensresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 178 methods.*
+* [`GetM2MTokensM2mResponseResponseBody`](./src/clerk_backend_api/models/getm2mtokensm2mresponseresponsebody.py): 403 Forbidden. Status code `403`. Applicable to 1 of 178 methods.*
+* [`GetAPIKeysAPIKeysResponseResponseBody`](./src/clerk_backend_api/models/getapikeysapikeysresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 178 methods.*
+* [`GetAPIKeyAPIKeysResponseResponseBody`](./src/clerk_backend_api/models/getapikeyapikeysresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 178 methods.*
+* [`UpdateAPIKeyAPIKeysResponseResponseBody`](./src/clerk_backend_api/models/updateapikeyapikeysresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 178 methods.*
+* [`DeleteAPIKeyAPIKeysResponseResponseBody`](./src/clerk_backend_api/models/deleteapikeyapikeysresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 178 methods.*
+* [`GetAPIKeySecretAPIKeysResponseResponseBody`](./src/clerk_backend_api/models/getapikeysecretapikeysresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 178 methods.*
+* [`RevokeAPIKeyAPIKeysResponseResponseBody`](./src/clerk_backend_api/models/revokeapikeyapikeysresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 178 methods.*
+* [`VerifyAPIKeyAPIKeysResponseResponseBody`](./src/clerk_backend_api/models/verifyapikeyapikeysresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 178 methods.*
+* [`GetM2MTokensM2mResponse404ResponseBody`](./src/clerk_backend_api/models/getm2mtokensm2mresponse404responsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 178 methods.*
+* [`RevokeM2MTokenM2mResponseResponseBody`](./src/clerk_backend_api/models/revokem2mtokenm2mresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 178 methods.*
+* [`VerifyM2MTokenM2mResponseResponseBody`](./src/clerk_backend_api/models/verifym2mtokenm2mresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 178 methods.*
+* [`VerifyOAuthAccessTokenOauthAccessTokensResponseResponseBody`](./src/clerk_backend_api/models/verifyoauthaccesstokenoauthaccesstokensresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 178 methods.*
+* [`CreateAPIKeyAPIKeysResponseResponseBody`](./src/clerk_backend_api/models/createapikeyapikeysresponseresponsebody.py): 409 Conflict. Status code `409`. Applicable to 1 of 178 methods.*
+* [`CreateM2MTokenM2mResponseResponseBody`](./src/clerk_backend_api/models/createm2mtokenm2mresponseresponsebody.py): 409 Conflict. Status code `409`. Applicable to 1 of 178 methods.*
 * [`ResponseValidationError`](./src/clerk_backend_api/models/responsevalidationerror.py): Type mismatch between the response data and the expected Pydantic model. Provides access to the Pydantic validation error via the `cause` attribute.
 
 </details>

@@ -1,5 +1,4 @@
 # Machines
-(*machines*)
 
 ## Overview
 

@@ -1,5 +1,4 @@
 # M2m
-(*m2m*)
 
 ## Overview
 

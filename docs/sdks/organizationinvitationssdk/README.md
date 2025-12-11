@@ -1,5 +1,4 @@
-# OrganizationInvitationsSDK
-(*organization_invitations*)
+# OrganizationInvitations
 
 ## Overview
 

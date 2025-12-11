@@ -2,7 +2,10 @@
 
 from __future__ import annotations
 from .commercemoneyresponse import CommerceMoneyResponse, CommerceMoneyResponseTypedDict
-from .featureresponse import FeatureResponse, FeatureResponseTypedDict
+from .schemas_featureresponse import (
+    SchemasFeatureResponse,
+    SchemasFeatureResponseTypedDict,
+)
 from clerk_backend_api.types import (
     BaseModel,
     Nullable,
@@ -166,7 +169,7 @@ class SchemasCommerceSubscriptionItemPlanTypedDict(TypedDict):
     r"""The URL-friendly slug for the plan."""
     avatar_url: str
     r"""The URL of the plan's avatar image."""
-    features: List[FeatureResponseTypedDict]
+    features: List[SchemasFeatureResponseTypedDict]
     r"""The features included in this plan."""
     period: NotRequired[str]
     r"""The billing period for the plan."""
@@ -250,7 +253,7 @@ class SchemasCommerceSubscriptionItemPlan(BaseModel):
     avatar_url: str
     r"""The URL of the plan's avatar image."""
 
-    features: List[FeatureResponse]
+    features: List[SchemasFeatureResponse]
     r"""The features included in this plan."""
 
     period: Optional[str] = None

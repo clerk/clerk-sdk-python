@@ -1,5 +1,4 @@
-# DomainsSDK
-(*domains*)
+# Domains
 
 ## Overview
 

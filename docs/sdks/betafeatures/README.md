@@ -1,5 +1,4 @@
 # BetaFeatures
-(*beta_features*)
 
 ## Overview
 

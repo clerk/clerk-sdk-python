@@ -1,5 +1,7 @@
-# Templates
-(*templates*)
+# ~~Templates~~
+
+> [!WARNING]
+> This SDK is **DEPRECATED**
 
 ## Overview
 

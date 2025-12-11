@@ -26,6 +26,7 @@ from .security import (
 if TYPE_CHECKING:
     from clerk_backend_api.actortokens import ActorTokens
     from clerk_backend_api.allowlistidentifiers import AllowlistIdentifiers
+    from clerk_backend_api.api_keys import APIKeys
     from clerk_backend_api.betafeatures import BetaFeatures
     from clerk_backend_api.billing import Billing
     from clerk_backend_api.blocklistidentifiers_sdk import BlocklistIdentifiersSDK
@@ -110,6 +111,8 @@ class Clerk(BaseSDK):
     waitlist_entries: "WaitlistEntriesSDK"
     billing: "Billing"
     organization_permissions: "OrganizationPermissions"
+    api_keys: "APIKeys"
+    r"""Endpoints for managing API Keys"""
     m2m: "M2m"
     oauth_access_tokens: "OauthAccessTokens"
     _sub_sdk_map = {
@@ -187,6 +190,7 @@ class Clerk(BaseSDK):
             "clerk_backend_api.organizationpermissions",
             "OrganizationPermissions",
         ),
+        "api_keys": ("clerk_backend_api.api_keys", "APIKeys"),
         "m2m": ("clerk_backend_api.m2m", "M2m"),
         "oauth_access_tokens": (
             "clerk_backend_api.oauthaccesstokens",

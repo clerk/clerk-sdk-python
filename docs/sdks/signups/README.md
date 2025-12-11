@@ -1,5 +1,4 @@
 # SignUps
-(*sign_ups*)
 
 ## Overview
 

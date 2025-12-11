@@ -1,21 +1,21 @@
-speakeasyVersion: 1.668.0
+speakeasyVersion: 1.675.4
 sources:
     clerk-openapi:
         sourceNamespace: clerk-openapi
-        sourceRevisionDigest: sha256:36db86b92aac6cde6e7ae62c89af4d313dbe1b3984fdf5d7835284ef03f14b70
-        sourceBlobDigest: sha256:66177bd0988ce80de4e194c112420918e9d57e5611627ef082a0a3ae55d4de70
+        sourceRevisionDigest: sha256:09b381d1731c7bb152fc6dba85bf99b2177dc9d23ca25192603196d8549af4c2
+        sourceBlobDigest: sha256:33fc4e4e521dbde227ffb63777693bcb96c241a26d7b0e307fa2cb9d3a5e1610
         tags:
             - latest
-            - speakeasy-sdk-regen-1764889692
+            - speakeasy-sdk-regen-1765481971
             - "2025-11-10"
 targets:
     clerk-sdk-python:
         source: clerk-openapi
         sourceNamespace: clerk-openapi
-        sourceRevisionDigest: sha256:36db86b92aac6cde6e7ae62c89af4d313dbe1b3984fdf5d7835284ef03f14b70
-        sourceBlobDigest: sha256:66177bd0988ce80de4e194c112420918e9d57e5611627ef082a0a3ae55d4de70
+        sourceRevisionDigest: sha256:09b381d1731c7bb152fc6dba85bf99b2177dc9d23ca25192603196d8549af4c2
+        sourceBlobDigest: sha256:33fc4e4e521dbde227ffb63777693bcb96c241a26d7b0e307fa2cb9d3a5e1610
         codeSamplesNamespace: clerk-openapi-python-code-samples
-        codeSamplesRevisionDigest: sha256:45ed03348b18dd19f85c46b0ee6f03dd2c06fb025ff637f20ce64e4655077c0c
+        codeSamplesRevisionDigest: sha256:b4a32406ece8ceb85b90020a77787302aa1bc828c3a104f48236fd560a4fc240
 workflow:
     workflowVersion: 1.0.0
     speakeasyVersion: latest

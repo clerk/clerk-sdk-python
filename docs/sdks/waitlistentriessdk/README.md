@@ -1,5 +1,4 @@
-# WaitlistEntriesSDK
-(*waitlist_entries*)
+# WaitlistEntries
 
 ## Overview
 
