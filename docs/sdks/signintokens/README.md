@@ -1,5 +1,4 @@
 # SignInTokens
-(*sign_in_tokens*)
 
 ## Overview
 

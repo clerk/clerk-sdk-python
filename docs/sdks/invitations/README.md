@@ -1,5 +1,4 @@
 # Invitations
-(*invitations*)
 
 ## Overview
 

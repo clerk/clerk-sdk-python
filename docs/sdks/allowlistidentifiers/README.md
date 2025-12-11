@@ -1,5 +1,4 @@
 # AllowlistIdentifiers
-(*allowlist_identifiers*)
 
 ## Overview
 

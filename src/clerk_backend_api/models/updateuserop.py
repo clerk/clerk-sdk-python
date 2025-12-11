@@ -103,6 +103,8 @@ class UpdateUserRequestBodyTypedDict(TypedDict):
     r"""The maximum number of organizations the user can create. 0 means unlimited."""
     created_at: NotRequired[Nullable[str]]
     r"""A custom date/time denoting _when_ the user signed up to the application, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`)."""
+    bypass_client_trust: NotRequired[Nullable[bool]]
+    r"""When set to `true`, the user will bypass client trust checks during sign-in."""
 
 
 class UpdateUserRequestBody(BaseModel):
@@ -220,6 +222,9 @@ class UpdateUserRequestBody(BaseModel):
     created_at: OptionalNullable[str] = UNSET
     r"""A custom date/time denoting _when_ the user signed up to the application, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`)."""
 
+    bypass_client_trust: OptionalNullable[bool] = UNSET
+    r"""When set to `true`, the user will bypass client trust checks during sign-in."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = [
@@ -249,6 +254,7 @@ class UpdateUserRequestBody(BaseModel):
             "skip_legal_checks",
             "create_organizations_limit",
             "created_at",
+            "bypass_client_trust",
         ]
         nullable_fields = [
             "external_id",
@@ -274,6 +280,7 @@ class UpdateUserRequestBody(BaseModel):
             "skip_legal_checks",
             "create_organizations_limit",
             "created_at",
+            "bypass_client_trust",
         ]
         null_default_fields = []
 

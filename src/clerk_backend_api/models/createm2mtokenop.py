@@ -58,13 +58,13 @@ class CreateM2MTokenRequestBody(BaseModel):
         return m
 
 
-class CreateM2MTokenErrorsTypedDict(TypedDict):
+class CreateM2MTokenM2mErrorsTypedDict(TypedDict):
     message: str
     long_message: str
     code: str
 
 
-class CreateM2MTokenErrors(BaseModel):
+class CreateM2MTokenM2mErrors(BaseModel):
     message: str
 
     long_message: str
@@ -73,7 +73,7 @@ class CreateM2MTokenErrors(BaseModel):
 
 
 class CreateM2MTokenM2mResponseResponseBodyData(BaseModel):
-    errors: List[CreateM2MTokenErrors]
+    errors: List[CreateM2MTokenM2mErrors]
 
 
 @dataclass(unsafe_hash=True)
@@ -93,13 +93,13 @@ class CreateM2MTokenM2mResponseResponseBody(ClerkBaseError):
         object.__setattr__(self, "data", data)
 
 
-class ErrorsTypedDict(TypedDict):
+class CreateM2MTokenErrorsTypedDict(TypedDict):
     message: str
     long_message: str
     code: str
 
 
-class Errors(BaseModel):
+class CreateM2MTokenErrors(BaseModel):
     message: str
 
     long_message: str
@@ -108,7 +108,7 @@ class Errors(BaseModel):
 
 
 class CreateM2MTokenM2mResponseBodyData(BaseModel):
-    errors: List[Errors]
+    errors: List[CreateM2MTokenErrors]
 
 
 @dataclass(unsafe_hash=True)

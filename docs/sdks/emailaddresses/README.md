@@ -1,5 +1,4 @@
 # EmailAddresses
-(*email_addresses*)
 
 ## Overview
 

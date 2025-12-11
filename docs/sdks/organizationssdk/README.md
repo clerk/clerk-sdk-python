@@ -1,5 +1,4 @@
-# OrganizationsSDK
-(*organizations*)
+# Organizations
 
 ## Overview
 

@@ -222,6 +222,7 @@ class Users(BaseSDK):
         create_organization_enabled: OptionalNullable[bool] = UNSET,
         create_organizations_limit: OptionalNullable[int] = UNSET,
         created_at: OptionalNullable[str] = UNSET,
+        bypass_client_trust: OptionalNullable[bool] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -293,6 +294,7 @@ class Users(BaseSDK):
         :param create_organizations_limit: The maximum number of organizations the user can create. 0 means unlimited.
 
         :param created_at: A custom date/time denoting _when_ the user signed up to the application, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`).
+        :param bypass_client_trust: When set to `true`, the user will bypass client trust checks during sign-in.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -333,6 +335,7 @@ class Users(BaseSDK):
             create_organization_enabled=create_organization_enabled,
             create_organizations_limit=create_organizations_limit,
             created_at=created_at,
+            bypass_client_trust=bypass_client_trust,
         )
 
         req = self._build_request(
@@ -424,6 +427,7 @@ class Users(BaseSDK):
         create_organization_enabled: OptionalNullable[bool] = UNSET,
         create_organizations_limit: OptionalNullable[int] = UNSET,
         created_at: OptionalNullable[str] = UNSET,
+        bypass_client_trust: OptionalNullable[bool] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -495,6 +499,7 @@ class Users(BaseSDK):
         :param create_organizations_limit: The maximum number of organizations the user can create. 0 means unlimited.
 
         :param created_at: A custom date/time denoting _when_ the user signed up to the application, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`).
+        :param bypass_client_trust: When set to `true`, the user will bypass client trust checks during sign-in.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -535,6 +540,7 @@ class Users(BaseSDK):
             create_organization_enabled=create_organization_enabled,
             create_organizations_limit=create_organizations_limit,
             created_at=created_at,
+            bypass_client_trust=bypass_client_trust,
         )
 
         req = self._build_request_async(
@@ -1147,6 +1153,7 @@ class Users(BaseSDK):
         skip_legal_checks: OptionalNullable[bool] = UNSET,
         create_organizations_limit: OptionalNullable[int] = UNSET,
         created_at: OptionalNullable[str] = UNSET,
+        bypass_client_trust: OptionalNullable[bool] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1217,6 +1224,7 @@ class Users(BaseSDK):
             It is not recommended to skip legal checks unless you are migrating a user to Clerk.
         :param create_organizations_limit: The maximum number of organizations the user can create. 0 means unlimited.
         :param created_at: A custom date/time denoting _when_ the user signed up to the application, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`).
+        :param bypass_client_trust: When set to `true`, the user will bypass client trust checks during sign-in.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1261,6 +1269,7 @@ class Users(BaseSDK):
                 skip_legal_checks=skip_legal_checks,
                 create_organizations_limit=create_organizations_limit,
                 created_at=created_at,
+                bypass_client_trust=bypass_client_trust,
             ),
         )
 
@@ -1356,6 +1365,7 @@ class Users(BaseSDK):
         skip_legal_checks: OptionalNullable[bool] = UNSET,
         create_organizations_limit: OptionalNullable[int] = UNSET,
         created_at: OptionalNullable[str] = UNSET,
+        bypass_client_trust: OptionalNullable[bool] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1426,6 +1436,7 @@ class Users(BaseSDK):
             It is not recommended to skip legal checks unless you are migrating a user to Clerk.
         :param create_organizations_limit: The maximum number of organizations the user can create. 0 means unlimited.
         :param created_at: A custom date/time denoting _when_ the user signed up to the application, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`).
+        :param bypass_client_trust: When set to `true`, the user will bypass client trust checks during sign-in.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1470,6 +1481,7 @@ class Users(BaseSDK):
                 skip_legal_checks=skip_legal_checks,
                 create_organizations_limit=create_organizations_limit,
                 created_at=created_at,
+                bypass_client_trust=bypass_client_trust,
             ),
         )
 

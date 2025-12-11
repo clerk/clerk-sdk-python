@@ -1,5 +1,4 @@
-# OrganizationMembershipsSDK
-(*organization_memberships*)
+# OrganizationMemberships
 
 ## Overview
 

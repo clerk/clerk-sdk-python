@@ -1,5 +1,4 @@
 # OrganizationRoles
-(*organization_roles*)
 
 ## Overview
 

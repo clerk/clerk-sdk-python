@@ -1,5 +1,4 @@
-# JwksSDK
-(*jwks*)
+# Jwks
 
 ## Overview
 

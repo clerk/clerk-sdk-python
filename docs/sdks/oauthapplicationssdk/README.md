@@ -1,5 +1,4 @@
-# OauthApplicationsSDK
-(*oauth_applications*)
+# OauthApplications
 
 ## Overview
 

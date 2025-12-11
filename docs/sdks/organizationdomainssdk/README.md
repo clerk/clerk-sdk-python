@@ -1,5 +1,4 @@
-# OrganizationDomainsSDK
-(*organization_domains*)
+# OrganizationDomains
 
 ## Overview
 

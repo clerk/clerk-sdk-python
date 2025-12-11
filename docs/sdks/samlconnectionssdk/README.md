@@ -1,5 +1,4 @@
-# SamlConnectionsSDK
-(*saml_connections*)
+# SamlConnections
 
 ## Overview
 

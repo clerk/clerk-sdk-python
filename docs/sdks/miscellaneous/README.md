@@ -1,5 +1,4 @@
 # Miscellaneous
-(*miscellaneous*)
 
 ## Overview
 

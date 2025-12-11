@@ -1,5 +1,4 @@
 # JwtTemplates
-(*jwt_templates*)
 
 ## Overview
 

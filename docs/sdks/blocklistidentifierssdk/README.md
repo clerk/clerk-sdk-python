@@ -1,5 +1,4 @@
-# BlocklistIdentifiersSDK
-(*blocklist_identifiers*)
+# BlocklistIdentifiers
 
 ## Overview
 

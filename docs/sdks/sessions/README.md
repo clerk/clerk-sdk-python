@@ -1,5 +1,4 @@
 # Sessions
-(*sessions*)
 
 ## Overview
 
