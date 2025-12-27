@@ -1,25 +1,25 @@
 lockVersion: 2.0.0
 id: bfe29c99-6e67-43fe-b928-64d6a5ed6aa8
 management:
-  docChecksum: 0287e8de7608f4dc4fbbea8b43cf9a7b
+  docChecksum: 80ccadede87ffc30c6689828d63503d1
   docVersion: "2025-11-10"
-  speakeasyVersion: 1.675.4
-  generationVersion: 2.779.2
-  releaseVersion: 4.2.0
-  configChecksum: b1fe406888b77cfb62c3d99dc9a485ff
+  speakeasyVersion: 1.680.5
+  generationVersion: 2.788.7
+  releaseVersion: 4.2.1
+  configChecksum: ddcc3abc13eae68781cd493783b7bf2e
   repoURL: https://github.com/clerk/clerk-sdk-python.git
   installationURL: https://github.com/clerk/clerk-sdk-python.git
   published: true
 persistentEdits:
-  generation_id: eff32e01-f0ed-4067-b833-0d1501a86cd8
-  pristine_commit_hash: 02fc710ca46f4ada60271f80f7098701b4764c29
-  pristine_tree_hash: ae88024246fb0f804f9f0ef3b5075472b6d03ddc
+  generation_id: cb31e01d-6ba3-421a-b703-16af1b8b1035
+  pristine_commit_hash: 996b57ee8057086380bebe9be311b5b827484aa3
+  pristine_tree_hash: 4ff8b0ecebcb4e6a6b9234d11043c91de454a363
 features:
   python:
     additionalDependencies: 1.0.0
     additionalProperties: 1.0.1
     constsAndDefaults: 1.0.5
-    core: 5.23.13
+    core: 5.23.15
     customCodeRegions: 0.1.1
     defaultEnabledRetries: 0.2.0
     deprecations: 3.0.2
@@ -398,8 +398,8 @@ trackedFiles:
     pristine_git_object: 4f970e8ed33eb42bc52a45c38c5def61385a4adb
   docs/models/createmachinerequestbody.md:
     id: 08e58089a5cc
-    last_write_checksum: sha1:c53dd4c88768179675f60c586ddd3779ca76c725
-    pristine_git_object: 2f76374ebaeb02ce14f816f5d769f898a6bdf6cb
+    last_write_checksum: sha1:50a4af99593ba1b0dc4cde6d2c8b53e3f3e813e3
+    pristine_git_object: 9d66e5b1e53de0eee54521c4b32f6d55a8dfb2bc
   docs/models/createmachinescoperequest.md:
     id: 950dd3ce4a9b
     last_write_checksum: sha1:1aa4b48a1f62d924b3754eaa70aabab03acd3c6a
@@ -514,8 +514,8 @@ trackedFiles:
     pristine_git_object: aba9df9901592d507551828248e22b3f9e0695db
   docs/models/createuserrequestbody.md:
     id: 39d743a30444
-    last_write_checksum: sha1:b481cb542a47d7a10cf9141267dbb01c700cde26
-    pristine_git_object: 4b4fa5f39d76314acc93ee300848f36d75c04f84
+    last_write_checksum: sha1:14775dbfdcde9eb3217682d882b6c6d5c093daab
+    pristine_git_object: dddc01662e3debcfd472e2aab2ad47fd19cc70d4
   docs/models/createwaitlistentryrequestbody.md:
     id: 181ff2ee24c2
     last_write_checksum: sha1:65f994c81871aa15c81f31fdca105e6831cc87c8
@@ -2802,8 +2802,8 @@ trackedFiles:
     pristine_git_object: 5c15a18a6205c1840ae2d6535bde2763d88559a7
   docs/sdks/machines/README.md:
     id: ab83178bf481
-    last_write_checksum: sha1:12fe358dd4f255a7c577d92c21f2b85d63221cfa
-    pristine_git_object: e2ae33128d24c2340d9574a6ff957a1ff8428104
+    last_write_checksum: sha1:336c9e9051ada8ad871f1f3d53b597e0a073b084
+    pristine_git_object: d028c155da5a150faff1949caf8131ae627190ac
   docs/sdks/miscellaneous/README.md:
     id: 897f13c5866e
     last_write_checksum: sha1:c809c94363c5defe32f983fbc40da193b5249550
@@ -2878,8 +2878,8 @@ trackedFiles:
     pristine_git_object: 3b5b06e9e6e00d8c21aa5de0fa5754acec7173d5
   docs/sdks/users/README.md:
     id: 5d80027045fe
-    last_write_checksum: sha1:f20dd8e05de5d94137b7ce1149cbd394d00402aa
-    pristine_git_object: e6bf7e4cec2a877b3db3125bbae0efb7889df3a2
+    last_write_checksum: sha1:973e1b465766543e32cebf78dda24fceef9e2f6b
+    pristine_git_object: 3852a3c5965a25dce72c1bbbd33f7f3b03658d4e
   docs/sdks/waitlistentriessdk/README.md:
     id: be78acbbb2f4
     last_write_checksum: sha1:39f30b2bae25126fbb0457013220b3b38fbae0fe
@@ -2902,8 +2902,8 @@ trackedFiles:
     pristine_git_object: cd1ee9f8ff424dca35c15ec5515aa1fa7aed2693
   pyproject.toml:
     id: 5d07e7d72637
-    last_write_checksum: sha1:cbe1a1086e6572342a826d4448650bedd5ef2b1e
-    pristine_git_object: 978f22cde056d6f788fe74ddf32767c6ea243150
+    last_write_checksum: sha1:3d35ff5ad431ccbeb32d7d79b8450f1ef185d1f3
+    pristine_git_object: a43bd66fe46c33ed602c4fbeab7c521dd423dc63
   scripts/prepare_readme.py:
     id: e0c5957a6035
     last_write_checksum: sha1:419f10ccc385a29136e599315b61a0aa7a1c3e15
@@ -2930,8 +2930,8 @@ trackedFiles:
     pristine_git_object: 4926429d3dfb2c34589715971acb070ed3756559
   src/clerk_backend_api/_version.py:
     id: 9bcb16a88e08
-    last_write_checksum: sha1:4d50c4318076e8009e03fcdba5f1cc82946f08c3
-    pristine_git_object: 58ad7898f18d0a24580f82c4d9352a85271441c7
+    last_write_checksum: sha1:ae13c518a4e00a456859735a4a1e3663af80fa02
+    pristine_git_object: 5195d2bb9ce1505f307aec16e74f2818a5490aa4
   src/clerk_backend_api/actortokens.py:
     id: 3b3f89863233
     last_write_checksum: sha1:b83001f21b2750ff95b82cc953ae588d8468d82a
@@ -3006,8 +3006,8 @@ trackedFiles:
     pristine_git_object: 658e691cc6895bbecad0856d5af35ceda0adb91e
   src/clerk_backend_api/machines.py:
     id: 5fbf914a1578
-    last_write_checksum: sha1:c818fd6d78be7187253b1b57391444110e15aa4a
-    pristine_git_object: ac48476138b58423fa9fcf5b34a686d64269ecf0
+    last_write_checksum: sha1:2b77c684baed1bc0db3f8089a939b3146c97d51a
+    pristine_git_object: 4c9d61540114699d36d15200f5c0277119fb8c5c
   src/clerk_backend_api/miscellaneous.py:
     id: 70bb358bb701
     last_write_checksum: sha1:954fa6a04d112b80c7e8b16b4e8e87950504d0bb
@@ -3070,8 +3070,8 @@ trackedFiles:
     pristine_git_object: 9e04464d8aa9b2be93c999a525a4a9700623dc3b
   src/clerk_backend_api/models/clerkerrors.py:
     id: 6d281fef4fc7
-    last_write_checksum: sha1:ebe4207bf109382056c58ed573c8c30222a19211
-    pristine_git_object: f5b008f249481c8ce4198ac4e01db0522a4ed8a0
+    last_write_checksum: sha1:5aae5b16a119642aa3fef28537f02dc47959e3d8
+    pristine_git_object: 7658c12b00359d59a39263571e84cf3f2cc18f9b
   src/clerk_backend_api/models/client.py:
     id: e9612d07140a
     last_write_checksum: sha1:4309f6e79aeee77cd55f8c21e80a09bb4dfb4b31
@@ -3154,8 +3154,8 @@ trackedFiles:
     pristine_git_object: ab1d8a88648773fd311fc330efed5428455f7b0d
   src/clerk_backend_api/models/createmachineop.py:
     id: e9e4c3a0de8b
-    last_write_checksum: sha1:301525670e5a5e1b7041b414eca8e7edb8ec0dd3
-    pristine_git_object: 3f598e0083a73bda3b227402db79926fd5fd27c9
+    last_write_checksum: sha1:f8740cefd0cbebfcc8a7a66dd38c3b2bf4d9bc29
+    pristine_git_object: e77d5eecd23b4b08ee3fc66831470d7050c2fffe
   src/clerk_backend_api/models/createmachinescopeop.py:
     id: e3ab996637b6
     last_write_checksum: sha1:39dcafd28750a4c40c1132a2b611c2d82c221cdc
@@ -3222,8 +3222,8 @@ trackedFiles:
     pristine_git_object: 4b45ca7ae8e373cf7444571e7b03add659f28c46
   src/clerk_backend_api/models/createuserop.py:
     id: bacf02afe019
-    last_write_checksum: sha1:7bc1300514cb795d45b04c232504cfb33b2362b0
-    pristine_git_object: b2a17314ffd34f529dc1217f1c72c64685c17a2a
+    last_write_checksum: sha1:69de92262196a97314b57602d8fb37befdd9e12d
+    pristine_git_object: 32f2d42eb477ece75d20bfa3907cae54e8951f92
   src/clerk_backend_api/models/createwaitlistentryop.py:
     id: 5fc8451ee608
     last_write_checksum: sha1:3dde15df04f61cbc37d7fc5980bedaeb9195feef
@@ -4194,8 +4194,8 @@ trackedFiles:
     pristine_git_object: 231c2e37283a76082f1a064c7aae47f8ee4ee694
   src/clerk_backend_api/users.py:
     id: 6f835640685a
-    last_write_checksum: sha1:674a66a98f02bd4c7800ee9c7f20994728c4e91b
-    pristine_git_object: 5e0954137e49aecf81038e9cb3a294ead39fbbfb
+    last_write_checksum: sha1:2c296ebb6d9bd735d68c0f2317dc15afa2a8dd21
+    pristine_git_object: a18bf52ac2838ba2d1ce6d7134c4b2634f4c6354
   src/clerk_backend_api/utils/__init__.py:
     id: a8b67e49e50a
     last_write_checksum: sha1:81e0385b93362e0f3f6911b65bd4cc601ebc11e1
@@ -4643,7 +4643,7 @@ examples:
   CreateUser:
     speakeasy-default-create-user:
       requestBody:
-        application/json: {"external_id": "ext-id-001", "first_name": "John", "last_name": "Doe", "locale": "en", "email_address": ["john.doe@example.com"], "phone_number": ["+12345678901"], "web3_wallet": ["0x123456789abcdef0x123456789abcdef"], "username": "johndoe123", "password": "Secure*Pass4", "password_digest": "$argon2i$v=19$m=4096,t=3,p=1$4t6CL3P7YiHBtwESXawI8Hm20zJj4cs7/4/G3c187e0$m7RQFczcKr5bIR0IIxbpO2P0tyrLjf3eUW3M3QSwnLc", "password_hasher": "<value>", "skip_password_checks": false, "skip_password_requirement": false, "totp_secret": "base32totpsecretkey", "backup_codes": ["123456", "654321"], "public_metadata": {"role": "user"}, "private_metadata": {"internal_id": "789"}, "unsafe_metadata": {"preferences": {"theme": "dark"}}, "delete_self_enabled": true, "legal_accepted_at": "<value>", "skip_legal_checks": false, "create_organization_enabled": null, "create_organizations_limit": 81560, "created_at": "2023-03-15T07:15:20.902Z", "bypass_client_trust": true}
+        application/json: {"external_id": "ext-id-001", "first_name": "John", "last_name": "Doe", "locale": "en", "email_address": ["john.doe@example.com"], "phone_number": ["+12345678901"], "web3_wallet": ["0x123456789abcdef0x123456789abcdef"], "username": "johndoe123", "password": "Secure*Pass4", "password_digest": "$argon2i$v=19$m=4096,t=3,p=1$4t6CL3P7YiHBtwESXawI8Hm20zJj4cs7/4/G3c187e0$m7RQFczcKr5bIR0IIxbpO2P0tyrLjf3eUW3M3QSwnLc", "password_hasher": "<value>", "skip_password_checks": false, "skip_password_requirement": false, "totp_secret": "base32totpsecretkey", "backup_codes": ["123456", "654321"], "public_metadata": {"role": "user"}, "private_metadata": {"internal_id": "789"}, "unsafe_metadata": {"preferences": {"theme": "dark"}}, "delete_self_enabled": true, "legal_accepted_at": "<value>", "skip_legal_checks": false, "skip_user_requirement": true, "create_organization_enabled": null, "create_organizations_limit": 81560, "created_at": "2023-03-15T07:15:20.902Z", "bypass_client_trust": true}
       responses:
         "200":
           application/json: {"id": "user_id_123", "object": "user", "external_id": "external_user_id_123", "primary_email_address_id": "email_id_123", "primary_phone_number_id": "phone_id_123", "primary_web3_wallet_id": "wallet_id_123", "username": "john_doe", "first_name": "John", "last_name": "Doe", "locale": "nl", "image_url": "https://example.com/new-profile.jpg", "has_image": true, "public_metadata": {"role": "admin"}, "private_metadata": {"ssn": "123-45-6789"}, "unsafe_metadata": {"theme": "dark"}, "email_addresses": [{"id": "email_id_123", "object": "email_address", "email_address": "john.doe@example.com", "reserved": false, "verification": {"object": "verification_ticket", "status": "verified", "strategy": "ticket", "attempts": null, "expire_at": null, "verified_at_client": "<value>"}, "linked_to": [{"type": "oauth_google", "id": "link_12345"}], "matches_sso_connection": true, "created_at": 1609459200, "updated_at": 1609459200}], "phone_numbers": [{"id": "phone_id_123", "object": "phone_number", "phone_number": "+12345678901", "reserved_for_second_factor": false, "default_second_factor": true, "reserved": false, "verification": {"object": "verification_otp", "status": "verified", "strategy": "phone_code", "attempts": 2, "expire_at": 1622852400, "verified_at_client": "<value>"}, "linked_to": [{"type": "oauth_google", "id": "link_id_123"}], "backup_codes": ["code1", "code2", "code3"], "created_at": 1609459200, "updated_at": 1609459200}], "web3_wallets": [{"id": "wallet_id_123", "object": "web3_wallet", "web3_wallet": "0x123456789abcdef", "verification": {"object": "verification_admin", "status": "verified", "strategy": "admin", "attempts": 0, "expire_at": 1620000000, "verified_at_client": "<value>"}, "created_at": 1609459200, "updated_at": 1609459200}], "passkeys": [{"id": "passkey_id_123", "object": "passkey", "name": "My Passkey", "last_used_at": 1615852800, "verification": {"object": "verification_passkey", "status": "verified", "strategy": "passkey", "nonce": "nonce", "message": "<value>", "attempts": null, "expire_at": null, "verified_at_client": "<value>"}}], "password_enabled": true, "two_factor_enabled": true, "totp_enabled": true, "backup_code_enabled": true, "mfa_enabled_at": 1615852800, "mfa_disabled_at": null, "password_last_updated_at": 15137, "external_accounts": [{"object": "facebook_account", "id": "ext_account_id_123", "provider": "Facebook", "identification_id": "<id>", "provider_user_id": "<id>", "approved_scopes": "<value>", "email_address": "Jordi_Considine@hotmail.com", "first_name": "Nova", "last_name": "Barrows", "image_url": null, "username": "Peggie1", "phone_number": "(240) 834-3897 x5758", "public_metadata": {"key": "<value>", "key1": "<value>"}, "label": null, "created_at": 149561, "updated_at": 182730, "verification": {"object": "verification_google_one_tap", "status": "unverified", "strategy": "google_one_tap", "expire_at": 432680, "attempts": 818362, "verified_at_client": "<value>", "error": {"message": "Error message", "long_message": "Longer error message with more details", "code": "error_code", "meta": {}}}, "user_id": "user_id_at_provider"}], "saml_accounts": [{"id": "saml_account_id_123", "object": "saml_account", "provider": "SAML Provider", "active": true, "email_address": "user@example.com", "first_name": "John", "last_name": "Doe", "provider_user_id": "prov_user_id_123", "last_authenticated_at": 35779, "public_metadata": {"department": "IT"}, "verification": {"object": "verification_ticket", "status": "verified", "strategy": "ticket", "attempts": null, "expire_at": 1622852400, "verified_at_client": "<value>"}, "saml_connection": {"id": "sc_1234567890", "name": "My Company SAML Config", "domain": "mycompany.com", "domains": ["<value 1>"], "active": true, "provider": "saml_custom", "sync_user_attributes": true, "allow_subdomains": false, "allow_idp_initiated": true, "disable_additional_identifications": true, "created_at": 1614768000, "updated_at": 1622540800}}], "enterprise_accounts": [{"id": "<id>", "object": "enterprise_account", "protocol": "saml", "provider": "<value>", "active": false, "email_address": "Jay.Schmitt@gmail.com", "first_name": "Vincenza", "last_name": "Rosenbaum", "provider_user_id": "<id>", "enterprise_connection_id": "<id>", "public_metadata": {"key": "<value>", "key1": "<value>"}, "verification": {"object": "verification_ticket", "status": "expired", "strategy": "ticket", "attempts": 485856, "expire_at": 538593, "verified_at_client": null}, "enterprise_connection": null, "last_authenticated_at": 793877}], "organization_memberships": [{"id": "org_mem_123", "object": "organization_membership", "role": "member", "role_name": "<value>", "permissions": ["read", "write"], "public_metadata": {}, "private_metadata": {}, "organization": {"object": "organization", "id": "org_123", "name": "Acme Corp", "slug": "acme-corp", "image_url": "https://any-pension.com", "has_image": false, "members_count": 150, "missing_member_with_elevated_permissions": false, "pending_invitations_count": 8333, "max_allowed_memberships": 300, "admin_delete_enabled": true, "public_metadata": {"public_info": "Info visible to everyone"}, "private_metadata": {"internal_use_only": "Sensitive data"}, "created_by": "user_123456", "created_at": 1625078400, "updated_at": 1625164800, "last_active_at": 149561}, "public_user_data": {"user_id": "<id>", "first_name": "Susana", "last_name": "Kling", "profile_image_url": "https://suburban-doing.name/", "image_url": "https://faraway-onset.info/", "has_image": false, "identifier": "<value>", "username": "Savannah83"}, "created_at": 1625078400, "updated_at": 1625164800}], "last_sign_in_at": 1622852400, "banned": false, "locked": false, "lockout_expires_in_seconds": null, "verification_attempts_remaining": 5, "updated_at": 1622852400, "created_at": 1609459200, "delete_self_enabled": true, "create_organization_enabled": true, "create_organizations_limit": 476222, "last_active_at": 1700690400000, "legal_accepted_at": 1700690400000, "bypass_client_trust": false}
@@ -6534,7 +6534,9 @@ examples:
           application/json: {"errors": [{"message": "some details about the error", "long_message": "some details about the error", "code": "some_error_code"}]}
 examplesVersion: 1.0.2
 generatedTests: {}
-releaseNotes: "## Python SDK Changes:\n* `clerk.users.get_billing_subscription()`:  `response.subscription_items.[].plan.features.[]` **Changed** **Breaking** :warning:\n* `clerk.billing.cancel_subscription_item()`:  `response.plan.features.[]` **Changed** **Breaking** :warning:\n* `clerk.billing.list_subscription_items()`:  `response.data.[].plan.features.[]` **Changed** **Breaking** :warning:\n* `clerk.billing.list_plans()`:  `response.data.[].features.[]` **Changed** **Breaking** :warning:\n* `clerk.organizations.get_billing_subscription()`:  `response.subscription_items.[].plan.features.[]` **Changed** **Breaking** :warning:\n* `clerk.api_keys.verify_api_key()`: **Added**\n* `clerk.users.set_profile_image()`:  `response.bypass_client_trust` **Added**\n* `clerk.api_keys.create_api_key()`: **Added**\n* `clerk.users.list()`:  `response.[].bypass_client_trust` **Added**\n* `clerk.users.create()`: \n  *  `request.bypass_client_trust` **Added**\n  *  `response.bypass_client_trust` **Added**\n* `clerk.users.get()`:  `response.bypass_client_trust` **Added**\n* `clerk.users.update()`: \n  *  `request.bypass_client_trust` **Added**\n  *  `response.bypass_client_trust` **Added**\n* `clerk.users.ban()`:  `response.bypass_client_trust` **Added**\n* `clerk.users.unban()`:  `response.bypass_client_trust` **Added**\n* `clerk.users.bulk_ban()`:  `response.[].bypass_client_trust` **Added**\n* `clerk.users.bulk_unban()`:  `response.[].bypass_client_trust` **Added**\n* `clerk.users.lock()`:  `response.bypass_client_trust` **Added**\n* `clerk.users.unlock()`:  `response.bypass_client_trust` **Added**\n* `clerk.api_keys.revoke_api_key()`: **Added**\n* `clerk.users.delete_profile_image()`:  `response.bypass_client_trust` **Added**\n* `clerk.users.update_metadata()`:  `response.bypass_client_trust` **Added**\n* `clerk.api_keys.get_api_key_secret()`: **Added**\n* `clerk.api_keys.delete_api_key()`: **Added**\n* `clerk.saml_connections.list()`:  `response.data.[]` **Changed**\n* `clerk.saml_connections.create()`:  `response` **Changed**\n* `clerk.saml_connections.get()`:  `response` **Changed**\n* `clerk.saml_connections.update()`:  `response` **Changed**\n* `clerk.api_keys.update_api_key()`: **Added**\n* `clerk.api_keys.get_api_key()`: **Added**\n* `clerk.api_keys.get_api_keys()`: **Added**\n"
+releaseNotes: |
+  ## Python SDK Changes:
+  * `clerk.users.create()`:  `request.skip_user_requirement` **Added**
 generatedFiles:
   - .gitattributes
   - .vscode/settings.json

@@ -20,7 +20,6 @@ class ClerkErrorsMeta(BaseModel):
 
 class ClerkErrorsData(BaseModel):
     errors: List[ClerkError]
-
     meta: Optional[ClerkErrorsMeta] = None
 
 
