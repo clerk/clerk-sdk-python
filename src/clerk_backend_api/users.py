@@ -219,6 +219,7 @@ class Users(BaseSDK):
         delete_self_enabled: OptionalNullable[bool] = UNSET,
         legal_accepted_at: OptionalNullable[str] = UNSET,
         skip_legal_checks: OptionalNullable[bool] = UNSET,
+        skip_user_requirement: OptionalNullable[bool] = UNSET,
         create_organization_enabled: OptionalNullable[bool] = UNSET,
         create_organizations_limit: OptionalNullable[int] = UNSET,
         created_at: OptionalNullable[str] = UNSET,
@@ -289,6 +290,10 @@ class Users(BaseSDK):
         :param legal_accepted_at: A custom timestamp denoting _when_ the user accepted legal requirements, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`).
         :param skip_legal_checks: When set to `true` all legal checks are skipped.
             It is not recommended to skip legal checks unless you are migrating a user to Clerk.
+        :param skip_user_requirement: When set to `true`, identification types are not enforced.
+            At least one identification type must be enabled and provided on your instance (email, phone, web3 wallet, or username).
+            Users created without required identification types cannot use those authentication strategies
+            It is not recommended to use this flag unless you need to allow Clerk UI components to prompt for required fields while BAPI creates users with minimal data, or for migration a user to Clerk.
         :param create_organization_enabled: If enabled, user can create organizations via FAPI.
 
         :param create_organizations_limit: The maximum number of organizations the user can create. 0 means unlimited.
@@ -332,6 +337,7 @@ class Users(BaseSDK):
             delete_self_enabled=delete_self_enabled,
             legal_accepted_at=legal_accepted_at,
             skip_legal_checks=skip_legal_checks,
+            skip_user_requirement=skip_user_requirement,
             create_organization_enabled=create_organization_enabled,
             create_organizations_limit=create_organizations_limit,
             created_at=created_at,
@@ -424,6 +430,7 @@ class Users(BaseSDK):
         delete_self_enabled: OptionalNullable[bool] = UNSET,
         legal_accepted_at: OptionalNullable[str] = UNSET,
         skip_legal_checks: OptionalNullable[bool] = UNSET,
+        skip_user_requirement: OptionalNullable[bool] = UNSET,
         create_organization_enabled: OptionalNullable[bool] = UNSET,
         create_organizations_limit: OptionalNullable[int] = UNSET,
         created_at: OptionalNullable[str] = UNSET,
@@ -494,6 +501,10 @@ class Users(BaseSDK):
         :param legal_accepted_at: A custom timestamp denoting _when_ the user accepted legal requirements, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`).
         :param skip_legal_checks: When set to `true` all legal checks are skipped.
             It is not recommended to skip legal checks unless you are migrating a user to Clerk.
+        :param skip_user_requirement: When set to `true`, identification types are not enforced.
+            At least one identification type must be enabled and provided on your instance (email, phone, web3 wallet, or username).
+            Users created without required identification types cannot use those authentication strategies
+            It is not recommended to use this flag unless you need to allow Clerk UI components to prompt for required fields while BAPI creates users with minimal data, or for migration a user to Clerk.
         :param create_organization_enabled: If enabled, user can create organizations via FAPI.
 
         :param create_organizations_limit: The maximum number of organizations the user can create. 0 means unlimited.
@@ -537,6 +548,7 @@ class Users(BaseSDK):
             delete_self_enabled=delete_self_enabled,
             legal_accepted_at=legal_accepted_at,
             skip_legal_checks=skip_legal_checks,
+            skip_user_requirement=skip_user_requirement,
             create_organization_enabled=create_organization_enabled,
             create_organizations_limit=create_organizations_limit,
             created_at=created_at,

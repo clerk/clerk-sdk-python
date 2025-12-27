@@ -10,7 +10,7 @@ class CreateMachineRequestBodyTypedDict(TypedDict):
     name: str
     r"""The name of the machine"""
     scoped_machines: NotRequired[List[str]]
-    r"""Array of machine IDs that this machine will have access to. Maximum of 25 scopes per machine."""
+    r"""Array of machine IDs that this machine will have access to. Maximum of 150 scopes per machine."""
     default_token_ttl: NotRequired[int]
     r"""The default time-to-live (TTL) in seconds for tokens created by this machine. Must be at least 1 second."""
 
@@ -20,7 +20,7 @@ class CreateMachineRequestBody(BaseModel):
     r"""The name of the machine"""
 
     scoped_machines: Optional[List[str]] = None
-    r"""Array of machine IDs that this machine will have access to. Maximum of 25 scopes per machine."""
+    r"""Array of machine IDs that this machine will have access to. Maximum of 150 scopes per machine."""
 
     default_token_ttl: Optional[int] = 3600
     r"""The default time-to-live (TTL) in seconds for tokens created by this machine. Must be at least 1 second."""

@@ -101,6 +101,12 @@ class CreateUserRequestBodyTypedDict(TypedDict):
     r"""When set to `true` all legal checks are skipped.
     It is not recommended to skip legal checks unless you are migrating a user to Clerk.
     """
+    skip_user_requirement: NotRequired[Nullable[bool]]
+    r"""When set to `true`, identification types are not enforced.
+    At least one identification type must be enabled and provided on your instance (email, phone, web3 wallet, or username).
+    Users created without required identification types cannot use those authentication strategies
+    It is not recommended to use this flag unless you need to allow Clerk UI components to prompt for required fields while BAPI creates users with minimal data, or for migration a user to Clerk.
+    """
     create_organization_enabled: NotRequired[Nullable[bool]]
     r"""If enabled, user can create organizations via FAPI.
 
@@ -224,6 +230,13 @@ class CreateUserRequestBody(BaseModel):
     It is not recommended to skip legal checks unless you are migrating a user to Clerk.
     """
 
+    skip_user_requirement: OptionalNullable[bool] = UNSET
+    r"""When set to `true`, identification types are not enforced.
+    At least one identification type must be enabled and provided on your instance (email, phone, web3 wallet, or username).
+    Users created without required identification types cannot use those authentication strategies
+    It is not recommended to use this flag unless you need to allow Clerk UI components to prompt for required fields while BAPI creates users with minimal data, or for migration a user to Clerk.
+    """
+
     create_organization_enabled: OptionalNullable[bool] = UNSET
     r"""If enabled, user can create organizations via FAPI.
 
@@ -264,6 +277,7 @@ class CreateUserRequestBody(BaseModel):
             "delete_self_enabled",
             "legal_accepted_at",
             "skip_legal_checks",
+            "skip_user_requirement",
             "create_organization_enabled",
             "create_organizations_limit",
             "created_at",
@@ -283,6 +297,7 @@ class CreateUserRequestBody(BaseModel):
             "delete_self_enabled",
             "legal_accepted_at",
             "skip_legal_checks",
+            "skip_user_requirement",
             "create_organization_enabled",
             "create_organizations_limit",
             "created_at",
