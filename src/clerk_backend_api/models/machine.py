@@ -5,8 +5,9 @@ from .machinewithoutscopedmachines import (
     MachineWithoutScopedMachines,
     MachineWithoutScopedMachinesTypedDict,
 )
-from clerk_backend_api.types import BaseModel
+from clerk_backend_api.types import BaseModel, UNSET_SENTINEL
 from enum import Enum
+from pydantic import model_serializer
 from typing import List, Optional
 from typing_extensions import NotRequired, TypedDict
 
@@ -56,3 +57,19 @@ class Machine(BaseModel):
 
     default_token_ttl: Optional[int] = 3600
     r"""The default time-to-live (TTL) in seconds for tokens created by this machine."""
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["default_token_ttl"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k)
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m

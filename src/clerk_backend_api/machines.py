@@ -1432,7 +1432,7 @@ class Machines(BaseSDK):
         r"""Create a machine scope
 
         Creates a new machine scope, allowing the specified machine to access another machine.
-        Maximum of 25 scopes per machine.
+        Maximum of 150 scopes per machine.
 
         :param machine_id: The ID of the machine that will have access to another machine
         :param to_machine_id: The ID of the machine that will be scoped to the current machine
@@ -1537,7 +1537,7 @@ class Machines(BaseSDK):
         r"""Create a machine scope
 
         Creates a new machine scope, allowing the specified machine to access another machine.
-        Maximum of 25 scopes per machine.
+        Maximum of 150 scopes per machine.
 
         :param machine_id: The ID of the machine that will have access to another machine
         :param to_machine_id: The ID of the machine that will be scoped to the current machine

@@ -219,6 +219,7 @@ class Users(BaseSDK):
         delete_self_enabled: OptionalNullable[bool] = UNSET,
         legal_accepted_at: OptionalNullable[str] = UNSET,
         skip_legal_checks: OptionalNullable[bool] = UNSET,
+        skip_user_requirement: OptionalNullable[bool] = UNSET,
         create_organization_enabled: OptionalNullable[bool] = UNSET,
         create_organizations_limit: OptionalNullable[int] = UNSET,
         created_at: OptionalNullable[str] = UNSET,
@@ -264,7 +265,7 @@ class Users(BaseSDK):
             The algorithms we support at the moment are [`bcrypt`](https://en.wikipedia.org/wiki/Bcrypt), [`bcrypt_sha256_django`](https://docs.djangoproject.com/en/4.0/topics/auth/passwords/), [`md5`](https://en.wikipedia.org/wiki/MD5), `pbkdf2_sha1`, `pbkdf2_sha256`, [`pbkdf2_sha256_django`](https://docs.djangoproject.com/en/4.0/topics/auth/passwords/),
             [`phpass`](https://www.openwall.com/phpass/), `md5_phpass`, [`scrypt_firebase`](https://firebaseopensource.com/projects/firebase/scrypt/),
             [`scrypt_werkzeug`](https://werkzeug.palletsprojects.com/en/3.0.x/utils/#werkzeug.security.generate_password_hash), [`sha256`](https://en.wikipedia.org/wiki/SHA-2),
-            [`ldap_ssha`](https://www.openldap.org/faq/data/cache/347.html) and the [`argon2`](https://argon2.online/) variants: `argon2i` and `argon2id`.
+            [`ldap_ssha`](https://www.openldap.org/faq/data/cache/347.html), the [`argon2`](https://argon2.online/) variants: `argon2i` and `argon2id`, and `sha512_symfony`, the SHA-512 variant of the [Symfony](https://symfony.com/doc/current/security/passwords.html) legacy hasher.
 
             Each of the supported hashers expects the incoming digest to be in a particular format. See the [Clerk docs](https://clerk.com/docs/references/backend/user/create-user) for more information.
         :param skip_password_checks: When set to `true` all password checks are skipped.
@@ -289,6 +290,10 @@ class Users(BaseSDK):
         :param legal_accepted_at: A custom timestamp denoting _when_ the user accepted legal requirements, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`).
         :param skip_legal_checks: When set to `true` all legal checks are skipped.
             It is not recommended to skip legal checks unless you are migrating a user to Clerk.
+        :param skip_user_requirement: When set to `true`, identification types are not enforced.
+            At least one identification type must be enabled and provided on your instance (email, phone, web3 wallet, or username).
+            Users created without required identification types cannot use those authentication strategies
+            It is not recommended to use this flag unless you need to allow Clerk UI components to prompt for required fields while BAPI creates users with minimal data, or for migration a user to Clerk.
         :param create_organization_enabled: If enabled, user can create organizations via FAPI.
 
         :param create_organizations_limit: The maximum number of organizations the user can create. 0 means unlimited.
@@ -332,6 +337,7 @@ class Users(BaseSDK):
             delete_self_enabled=delete_self_enabled,
             legal_accepted_at=legal_accepted_at,
             skip_legal_checks=skip_legal_checks,
+            skip_user_requirement=skip_user_requirement,
             create_organization_enabled=create_organization_enabled,
             create_organizations_limit=create_organizations_limit,
             created_at=created_at,
@@ -424,6 +430,7 @@ class Users(BaseSDK):
         delete_self_enabled: OptionalNullable[bool] = UNSET,
         legal_accepted_at: OptionalNullable[str] = UNSET,
         skip_legal_checks: OptionalNullable[bool] = UNSET,
+        skip_user_requirement: OptionalNullable[bool] = UNSET,
         create_organization_enabled: OptionalNullable[bool] = UNSET,
         create_organizations_limit: OptionalNullable[int] = UNSET,
         created_at: OptionalNullable[str] = UNSET,
@@ -469,7 +476,7 @@ class Users(BaseSDK):
             The algorithms we support at the moment are [`bcrypt`](https://en.wikipedia.org/wiki/Bcrypt), [`bcrypt_sha256_django`](https://docs.djangoproject.com/en/4.0/topics/auth/passwords/), [`md5`](https://en.wikipedia.org/wiki/MD5), `pbkdf2_sha1`, `pbkdf2_sha256`, [`pbkdf2_sha256_django`](https://docs.djangoproject.com/en/4.0/topics/auth/passwords/),
             [`phpass`](https://www.openwall.com/phpass/), `md5_phpass`, [`scrypt_firebase`](https://firebaseopensource.com/projects/firebase/scrypt/),
             [`scrypt_werkzeug`](https://werkzeug.palletsprojects.com/en/3.0.x/utils/#werkzeug.security.generate_password_hash), [`sha256`](https://en.wikipedia.org/wiki/SHA-2),
-            [`ldap_ssha`](https://www.openldap.org/faq/data/cache/347.html) and the [`argon2`](https://argon2.online/) variants: `argon2i` and `argon2id`.
+            [`ldap_ssha`](https://www.openldap.org/faq/data/cache/347.html), the [`argon2`](https://argon2.online/) variants: `argon2i` and `argon2id`, and `sha512_symfony`, the SHA-512 variant of the [Symfony](https://symfony.com/doc/current/security/passwords.html) legacy hasher.
 
             Each of the supported hashers expects the incoming digest to be in a particular format. See the [Clerk docs](https://clerk.com/docs/references/backend/user/create-user) for more information.
         :param skip_password_checks: When set to `true` all password checks are skipped.
@@ -494,6 +501,10 @@ class Users(BaseSDK):
         :param legal_accepted_at: A custom timestamp denoting _when_ the user accepted legal requirements, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`).
         :param skip_legal_checks: When set to `true` all legal checks are skipped.
             It is not recommended to skip legal checks unless you are migrating a user to Clerk.
+        :param skip_user_requirement: When set to `true`, identification types are not enforced.
+            At least one identification type must be enabled and provided on your instance (email, phone, web3 wallet, or username).
+            Users created without required identification types cannot use those authentication strategies
+            It is not recommended to use this flag unless you need to allow Clerk UI components to prompt for required fields while BAPI creates users with minimal data, or for migration a user to Clerk.
         :param create_organization_enabled: If enabled, user can create organizations via FAPI.
 
         :param create_organizations_limit: The maximum number of organizations the user can create. 0 means unlimited.
@@ -537,6 +548,7 @@ class Users(BaseSDK):
             delete_self_enabled=delete_self_enabled,
             legal_accepted_at=legal_accepted_at,
             skip_legal_checks=skip_legal_checks,
+            skip_user_requirement=skip_user_requirement,
             create_organization_enabled=create_organization_enabled,
             create_organizations_limit=create_organizations_limit,
             created_at=created_at,
@@ -608,24 +620,9 @@ class Users(BaseSDK):
     def count(
         self,
         *,
-        email_address: Optional[List[str]] = None,
-        phone_number: Optional[List[str]] = None,
-        external_id: Optional[List[str]] = None,
-        username: Optional[List[str]] = None,
-        web3_wallet: Optional[List[str]] = None,
-        user_id: Optional[List[str]] = None,
-        organization_id: Optional[List[str]] = None,
-        query: Optional[str] = None,
-        email_address_query: Optional[str] = None,
-        phone_number_query: Optional[str] = None,
-        username_query: Optional[str] = None,
-        name_query: Optional[str] = None,
-        banned: Optional[bool] = None,
-        last_active_at_before: Optional[int] = None,
-        last_active_at_after: Optional[int] = None,
-        last_active_at_since: Optional[int] = None,
-        created_at_before: Optional[int] = None,
-        created_at_after: Optional[int] = None,
+        request: Union[
+            models.GetUsersCountRequest, models.GetUsersCountRequestTypedDict
+        ] = models.GetUsersCountRequest(),
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -635,52 +632,7 @@ class Users(BaseSDK):
 
         Returns a total count of all users that match the given filtering criteria.
 
-        :param email_address: Counts users with the specified email addresses.
-            Accepts up to 100 email addresses.
-            Any email addresses not found are ignored.
-        :param phone_number: Counts users with the specified phone numbers.
-            Accepts up to 100 phone numbers.
-            Any phone numbers not found are ignored.
-        :param external_id: Counts users with the specified external IDs.
-            Accepts up to 100 external IDs.
-            Any external IDs not found are ignored.
-        :param username: Counts users with the specified usernames.
-            Accepts up to 100 usernames.
-            Any usernames not found are ignored.
-        :param web3_wallet: Counts users with the specified web3 wallet addresses.
-            Accepts up to 100 web3 wallet addresses.
-            Any web3 wallet addresses not found are ignored.
-        :param user_id: Counts users with the user IDs specified.
-            Accepts up to 100 user IDs.
-            Any user IDs not found are ignored.
-        :param organization_id: Returns users that have memberships to the given organizations. For each organization ID, the `+` and `-`
-            can be prepended to the ID, which denote whether the respective organization should be included or
-            excluded from the result set. Accepts up to 100 organization IDs.
-        :param query: Counts users that match the given query.
-            For possible matches, we check the email addresses, phone numbers, usernames, web3 wallets, user IDs, first and last names.
-            The query value doesn't need to match the exact value you are looking for, it is capable of partial matches as well.
-        :param email_address_query: Counts users with emails that match the given query, via case-insensitive partial match.
-            For example, `email_address_query=ello` will match a user with the email `HELLO@example.com`,
-            and will be included in the resulting count.
-        :param phone_number_query: Counts users with phone numbers that match the given query, via case-insensitive partial match.
-            For example, `phone_number_query=555` will match a user with the phone number `+1555xxxxxxx`,
-            and will be included in the resulting count.
-        :param username_query: Counts users with usernames that match the given query, via case-insensitive partial match.
-            For example, `username_query=CoolUser` will match a user with the username `SomeCoolUser`,
-            and will be included in the resulting count.
-        :param name_query: Returns users with names that match the given query, via case-insensitive partial match.
-        :param banned: Counts users which are either banned (`banned=true`) or not banned (`banned=false`).
-        :param last_active_at_before: Returns users whose last session activity was before the given date (with millisecond precision).
-            Example: use 1700690400000 to retrieve users whose last session activity was before 2023-11-23.
-        :param last_active_at_after: Returns users whose last session activity was after the given date (with millisecond precision).
-            Example: use 1700690400000 to retrieve users whose last session activity was after 2023-11-23.
-        :param last_active_at_since: Returns users that had session activity since the given date.
-            Example: use 1700690400000 to retrieve users that had session activity from 2023-11-23 until the current day.
-            Deprecated in favor of `last_active_at_after`.
-        :param created_at_before: Returns users who have been created before the given date (with millisecond precision).
-            Example: use 1730160000000 to retrieve users who have been created before 2024-10-29.
-        :param created_at_after: Returns users who have been created after the given date (with millisecond precision).
-            Example: use 1730160000000 to retrieve users who have been created after 2024-10-29.
+        :param request: The request object to send.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -696,26 +648,9 @@ class Users(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.GetUsersCountRequest(
-            email_address=email_address,
-            phone_number=phone_number,
-            external_id=external_id,
-            username=username,
-            web3_wallet=web3_wallet,
-            user_id=user_id,
-            organization_id=organization_id,
-            query=query,
-            email_address_query=email_address_query,
-            phone_number_query=phone_number_query,
-            username_query=username_query,
-            name_query=name_query,
-            banned=banned,
-            last_active_at_before=last_active_at_before,
-            last_active_at_after=last_active_at_after,
-            last_active_at_since=last_active_at_since,
-            created_at_before=created_at_before,
-            created_at_after=created_at_after,
-        )
+        if not isinstance(request, BaseModel):
+            request = utils.unmarshal(request, models.GetUsersCountRequest)
+        request = cast(models.GetUsersCountRequest, request)
 
         req = self._build_request(
             method="GET",
@@ -777,24 +712,9 @@ class Users(BaseSDK):
     async def count_async(
         self,
         *,
-        email_address: Optional[List[str]] = None,
-        phone_number: Optional[List[str]] = None,
-        external_id: Optional[List[str]] = None,
-        username: Optional[List[str]] = None,
-        web3_wallet: Optional[List[str]] = None,
-        user_id: Optional[List[str]] = None,
-        organization_id: Optional[List[str]] = None,
-        query: Optional[str] = None,
-        email_address_query: Optional[str] = None,
-        phone_number_query: Optional[str] = None,
-        username_query: Optional[str] = None,
-        name_query: Optional[str] = None,
-        banned: Optional[bool] = None,
-        last_active_at_before: Optional[int] = None,
-        last_active_at_after: Optional[int] = None,
-        last_active_at_since: Optional[int] = None,
-        created_at_before: Optional[int] = None,
-        created_at_after: Optional[int] = None,
+        request: Union[
+            models.GetUsersCountRequest, models.GetUsersCountRequestTypedDict
+        ] = models.GetUsersCountRequest(),
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -804,52 +724,7 @@ class Users(BaseSDK):
 
         Returns a total count of all users that match the given filtering criteria.
 
-        :param email_address: Counts users with the specified email addresses.
-            Accepts up to 100 email addresses.
-            Any email addresses not found are ignored.
-        :param phone_number: Counts users with the specified phone numbers.
-            Accepts up to 100 phone numbers.
-            Any phone numbers not found are ignored.
-        :param external_id: Counts users with the specified external IDs.
-            Accepts up to 100 external IDs.
-            Any external IDs not found are ignored.
-        :param username: Counts users with the specified usernames.
-            Accepts up to 100 usernames.
-            Any usernames not found are ignored.
-        :param web3_wallet: Counts users with the specified web3 wallet addresses.
-            Accepts up to 100 web3 wallet addresses.
-            Any web3 wallet addresses not found are ignored.
-        :param user_id: Counts users with the user IDs specified.
-            Accepts up to 100 user IDs.
-            Any user IDs not found are ignored.
-        :param organization_id: Returns users that have memberships to the given organizations. For each organization ID, the `+` and `-`
-            can be prepended to the ID, which denote whether the respective organization should be included or
-            excluded from the result set. Accepts up to 100 organization IDs.
-        :param query: Counts users that match the given query.
-            For possible matches, we check the email addresses, phone numbers, usernames, web3 wallets, user IDs, first and last names.
-            The query value doesn't need to match the exact value you are looking for, it is capable of partial matches as well.
-        :param email_address_query: Counts users with emails that match the given query, via case-insensitive partial match.
-            For example, `email_address_query=ello` will match a user with the email `HELLO@example.com`,
-            and will be included in the resulting count.
-        :param phone_number_query: Counts users with phone numbers that match the given query, via case-insensitive partial match.
-            For example, `phone_number_query=555` will match a user with the phone number `+1555xxxxxxx`,
-            and will be included in the resulting count.
-        :param username_query: Counts users with usernames that match the given query, via case-insensitive partial match.
-            For example, `username_query=CoolUser` will match a user with the username `SomeCoolUser`,
-            and will be included in the resulting count.
-        :param name_query: Returns users with names that match the given query, via case-insensitive partial match.
-        :param banned: Counts users which are either banned (`banned=true`) or not banned (`banned=false`).
-        :param last_active_at_before: Returns users whose last session activity was before the given date (with millisecond precision).
-            Example: use 1700690400000 to retrieve users whose last session activity was before 2023-11-23.
-        :param last_active_at_after: Returns users whose last session activity was after the given date (with millisecond precision).
-            Example: use 1700690400000 to retrieve users whose last session activity was after 2023-11-23.
-        :param last_active_at_since: Returns users that had session activity since the given date.
-            Example: use 1700690400000 to retrieve users that had session activity from 2023-11-23 until the current day.
-            Deprecated in favor of `last_active_at_after`.
-        :param created_at_before: Returns users who have been created before the given date (with millisecond precision).
-            Example: use 1730160000000 to retrieve users who have been created before 2024-10-29.
-        :param created_at_after: Returns users who have been created after the given date (with millisecond precision).
-            Example: use 1730160000000 to retrieve users who have been created after 2024-10-29.
+        :param request: The request object to send.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -865,26 +740,9 @@ class Users(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.GetUsersCountRequest(
-            email_address=email_address,
-            phone_number=phone_number,
-            external_id=external_id,
-            username=username,
-            web3_wallet=web3_wallet,
-            user_id=user_id,
-            organization_id=organization_id,
-            query=query,
-            email_address_query=email_address_query,
-            phone_number_query=phone_number_query,
-            username_query=username_query,
-            name_query=name_query,
-            banned=banned,
-            last_active_at_before=last_active_at_before,
-            last_active_at_after=last_active_at_after,
-            last_active_at_since=last_active_at_since,
-            created_at_before=created_at_before,
-            created_at_after=created_at_after,
-        )
+        if not isinstance(request, BaseModel):
+            request = utils.unmarshal(request, models.GetUsersCountRequest)
+        request = cast(models.GetUsersCountRequest, request)
 
         req = self._build_request_async(
             method="GET",
@@ -1201,7 +1059,7 @@ class Users(BaseSDK):
             The algorithms we support at the moment are [`bcrypt`](https://en.wikipedia.org/wiki/Bcrypt), [`bcrypt_sha256_django`](https://docs.djangoproject.com/en/4.0/topics/auth/passwords/), [`md5`](https://en.wikipedia.org/wiki/MD5), `pbkdf2_sha1`, `pbkdf2_sha256`, [`pbkdf2_sha256_django`](https://docs.djangoproject.com/en/4.0/topics/auth/passwords/),
             [`phpass`](https://www.openwall.com/phpass/), `md5_phpass`, [`scrypt_firebase`](https://firebaseopensource.com/projects/firebase/scrypt/),
             [`scrypt_werkzeug`](https://werkzeug.palletsprojects.com/en/3.0.x/utils/#werkzeug.security.generate_password_hash), [`sha256`](https://en.wikipedia.org/wiki/SHA-2),
-            [`ldap_ssha`](https://www.openldap.org/faq/data/cache/347.html) and the [`argon2`](https://argon2.online/) variants: `argon2i` and `argon2id`.
+            [`ldap_ssha`](https://www.openldap.org/faq/data/cache/347.html), the [`argon2`](https://argon2.online/) variants: `argon2i` and `argon2id`, and `sha512_symfony`, the SHA-512 variant of the [Symfony](https://symfony.com/doc/current/security/passwords.html) legacy hasher.
 
             Each of the supported hashers expects the incoming digest to be in a particular format. See the [Clerk docs](https://clerk.com/docs/references/backend/user/create-user) for more information.
         :param skip_password_checks: Set it to `true` if you're updating the user's password and want to skip any password policy settings check. This parameter can only be used when providing a `password`.
@@ -1413,7 +1271,7 @@ class Users(BaseSDK):
             The algorithms we support at the moment are [`bcrypt`](https://en.wikipedia.org/wiki/Bcrypt), [`bcrypt_sha256_django`](https://docs.djangoproject.com/en/4.0/topics/auth/passwords/), [`md5`](https://en.wikipedia.org/wiki/MD5), `pbkdf2_sha1`, `pbkdf2_sha256`, [`pbkdf2_sha256_django`](https://docs.djangoproject.com/en/4.0/topics/auth/passwords/),
             [`phpass`](https://www.openwall.com/phpass/), `md5_phpass`, [`scrypt_firebase`](https://firebaseopensource.com/projects/firebase/scrypt/),
             [`scrypt_werkzeug`](https://werkzeug.palletsprojects.com/en/3.0.x/utils/#werkzeug.security.generate_password_hash), [`sha256`](https://en.wikipedia.org/wiki/SHA-2),
-            [`ldap_ssha`](https://www.openldap.org/faq/data/cache/347.html) and the [`argon2`](https://argon2.online/) variants: `argon2i` and `argon2id`.
+            [`ldap_ssha`](https://www.openldap.org/faq/data/cache/347.html), the [`argon2`](https://argon2.online/) variants: `argon2i` and `argon2id`, and `sha512_symfony`, the SHA-512 variant of the [Symfony](https://symfony.com/doc/current/security/passwords.html) legacy hasher.
 
             Each of the supported hashers expects the incoming digest to be in a particular format. See the [Clerk docs](https://clerk.com/docs/references/backend/user/create-user) for more information.
         :param skip_password_checks: Set it to `true` if you're updating the user's password and want to skip any password policy settings check. This parameter can only be used when providing a `password`.
@@ -5808,6 +5666,398 @@ class Users(BaseSDK):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
         if utils.match_response(http_res, "500", "application/json"):
+            response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
+            raise models.ClerkErrors(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError("API error occurred", http_res, http_res_text)
+
+        raise models.SDKError("Unexpected response received", http_res)
+
+    def set_password_compromised(
+        self,
+        *,
+        user_id: str,
+        revoke_all_sessions: OptionalNullable[bool] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.User:
+        r"""Set a user's password as compromised
+
+        Sets the given user's password as compromised. The user will be prompted to reset their password on their next sign-in.
+
+        :param user_id: The ID of the user to set the password as compromised
+        :param revoke_all_sessions:
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.SetUserPasswordCompromisedRequest(
+            user_id=user_id,
+            request_body=models.SetUserPasswordCompromisedRequestBody(
+                revoke_all_sessions=revoke_all_sessions,
+            ),
+        )
+
+        req = self._build_request(
+            method="POST",
+            path="/users/{user_id}/password/set_compromised",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request.request_body,
+                False,
+                True,
+                "json",
+                Optional[models.SetUserPasswordCompromisedRequestBody],
+            ),
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["5XX"])
+
+        http_res = self.do_request(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="SetUserPasswordCompromised",
+                oauth2_scopes=None,
+                security_source=self.sdk_configuration.security,
+            ),
+            request=req,
+            error_status_codes=["400", "401", "403", "404", "422", "4XX", "5XX"],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(models.User, http_res)
+        if utils.match_response(
+            http_res, ["400", "401", "403", "404", "422"], "application/json"
+        ):
+            response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
+            raise models.ClerkErrors(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError("API error occurred", http_res, http_res_text)
+
+        raise models.SDKError("Unexpected response received", http_res)
+
+    async def set_password_compromised_async(
+        self,
+        *,
+        user_id: str,
+        revoke_all_sessions: OptionalNullable[bool] = UNSET,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.User:
+        r"""Set a user's password as compromised
+
+        Sets the given user's password as compromised. The user will be prompted to reset their password on their next sign-in.
+
+        :param user_id: The ID of the user to set the password as compromised
+        :param revoke_all_sessions:
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.SetUserPasswordCompromisedRequest(
+            user_id=user_id,
+            request_body=models.SetUserPasswordCompromisedRequestBody(
+                revoke_all_sessions=revoke_all_sessions,
+            ),
+        )
+
+        req = self._build_request_async(
+            method="POST",
+            path="/users/{user_id}/password/set_compromised",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request.request_body,
+                False,
+                True,
+                "json",
+                Optional[models.SetUserPasswordCompromisedRequestBody],
+            ),
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["5XX"])
+
+        http_res = await self.do_request_async(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="SetUserPasswordCompromised",
+                oauth2_scopes=None,
+                security_source=self.sdk_configuration.security,
+            ),
+            request=req,
+            error_status_codes=["400", "401", "403", "404", "422", "4XX", "5XX"],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(models.User, http_res)
+        if utils.match_response(
+            http_res, ["400", "401", "403", "404", "422"], "application/json"
+        ):
+            response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
+            raise models.ClerkErrors(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError("API error occurred", http_res, http_res_text)
+
+        raise models.SDKError("Unexpected response received", http_res)
+
+    def unset_password_compromised(
+        self,
+        *,
+        user_id: str,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.User:
+        r"""Unset a user's password as compromised
+
+        Sets the given user's password as no longer compromised. The user will no longer be prompted to reset their password on their next sign-in.
+
+        :param user_id: The ID of the user to unset the compromised status for
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.UnsetUserPasswordCompromisedRequest(
+            user_id=user_id,
+        )
+
+        req = self._build_request(
+            method="POST",
+            path="/users/{user_id}/password/unset_compromised",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["5XX"])
+
+        http_res = self.do_request(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="UnsetUserPasswordCompromised",
+                oauth2_scopes=None,
+                security_source=self.sdk_configuration.security,
+            ),
+            request=req,
+            error_status_codes=["400", "401", "403", "404", "422", "4XX", "5XX"],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(models.User, http_res)
+        if utils.match_response(
+            http_res, ["400", "401", "403", "404", "422"], "application/json"
+        ):
+            response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
+            raise models.ClerkErrors(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError("API error occurred", http_res, http_res_text)
+
+        raise models.SDKError("Unexpected response received", http_res)
+
+    async def unset_password_compromised_async(
+        self,
+        *,
+        user_id: str,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.User:
+        r"""Unset a user's password as compromised
+
+        Sets the given user's password as no longer compromised. The user will no longer be prompted to reset their password on their next sign-in.
+
+        :param user_id: The ID of the user to unset the compromised status for
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.UnsetUserPasswordCompromisedRequest(
+            user_id=user_id,
+        )
+
+        req = self._build_request_async(
+            method="POST",
+            path="/users/{user_id}/password/unset_compromised",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["5XX"])
+
+        http_res = await self.do_request_async(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="UnsetUserPasswordCompromised",
+                oauth2_scopes=None,
+                security_source=self.sdk_configuration.security,
+            ),
+            request=req,
+            error_status_codes=["400", "401", "403", "404", "422", "4XX", "5XX"],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(models.User, http_res)
+        if utils.match_response(
+            http_res, ["400", "401", "403", "404", "422"], "application/json"
+        ):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):

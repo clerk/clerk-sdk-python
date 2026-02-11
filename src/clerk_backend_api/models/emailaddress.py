@@ -10,10 +10,9 @@ from clerk_backend_api.types import (
     UNSET,
     UNSET_SENTINEL,
 )
-from clerk_backend_api.utils import get_discriminator, validate_open_enum
+from clerk_backend_api.utils import get_discriminator
 from enum import Enum
 from pydantic import Discriminator, Tag, field_serializer, model_serializer
-from pydantic.functional_validators import PlainValidator
 from typing import List, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
@@ -63,31 +62,26 @@ class EmailLink(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["object", "verified_at_client"]
-        nullable_fields = ["attempts", "expire_at", "verified_at_client"]
-        null_default_fields = []
-
+        optional_fields = set(["object", "verified_at_client"])
+        nullable_fields = set(["attempts", "expire_at", "verified_at_client"])
         serialized = handler(self)
-
         m = {}
 
         for n, f in type(self).model_fields.items():
             k = f.alias or n
             val = serialized.get(k)
-            serialized.pop(k, None)
+            is_nullable_and_explicitly_set = (
+                k in nullable_fields
+                and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
+            )
 
-            optional_nullable = k in optional_fields and k in nullable_fields
-            is_set = (
-                self.__pydantic_fields_set__.intersection({n})
-                or k in null_default_fields
-            )  # pylint: disable=no-member
-
-            if val is not None and val != UNSET_SENTINEL:
-                m[k] = val
-            elif val != UNSET_SENTINEL and (
-                not k in optional_fields or (optional_nullable and is_set)
-            ):
-                m[k] = val
+            if val != UNSET_SENTINEL:
+                if (
+                    val is not None
+                    or k not in optional_fields
+                    or is_nullable_and_explicitly_set
+                ):
+                    m[k] = val
 
         return m
 
@@ -132,6 +126,22 @@ class VerificationSamlErrorClerkError(BaseModel):
 
     meta: Optional[ClerkErrorErrorMeta] = None
 
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["meta"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k)
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m
+
 
 VerificationErrorTypedDict = VerificationSamlErrorClerkErrorTypedDict
 
@@ -169,43 +179,42 @@ class Saml(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = [
-            "object",
-            "external_verification_redirect_url",
-            "error",
-            "expire_at",
-            "verified_at_client",
-        ]
-        nullable_fields = [
-            "external_verification_redirect_url",
-            "error",
-            "expire_at",
-            "attempts",
-            "verified_at_client",
-        ]
-        null_default_fields = []
-
+        optional_fields = set(
+            [
+                "object",
+                "external_verification_redirect_url",
+                "error",
+                "expire_at",
+                "verified_at_client",
+            ]
+        )
+        nullable_fields = set(
+            [
+                "external_verification_redirect_url",
+                "error",
+                "expire_at",
+                "attempts",
+                "verified_at_client",
+            ]
+        )
         serialized = handler(self)
-
         m = {}
 
         for n, f in type(self).model_fields.items():
             k = f.alias or n
             val = serialized.get(k)
-            serialized.pop(k, None)
+            is_nullable_and_explicitly_set = (
+                k in nullable_fields
+                and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
+            )
 
-            optional_nullable = k in optional_fields and k in nullable_fields
-            is_set = (
-                self.__pydantic_fields_set__.intersection({n})
-                or k in null_default_fields
-            )  # pylint: disable=no-member
-
-            if val is not None and val != UNSET_SENTINEL:
-                m[k] = val
-            elif val != UNSET_SENTINEL and (
-                not k in optional_fields or (optional_nullable and is_set)
-            ):
-                m[k] = val
+            if val != UNSET_SENTINEL:
+                if (
+                    val is not None
+                    or k not in optional_fields
+                    or is_nullable_and_explicitly_set
+                ):
+                    m[k] = val
 
         return m
 
@@ -236,10 +245,7 @@ class TicketTypedDict(TypedDict):
 class Ticket(BaseModel):
     status: VerificationTicketVerificationStatus
 
-    strategy: Annotated[
-        VerificationTicketVerificationStrategy,
-        PlainValidator(validate_open_enum(False)),
-    ]
+    strategy: VerificationTicketVerificationStrategy
 
     attempts: Nullable[int]
 
@@ -260,31 +266,26 @@ class Ticket(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["object", "verified_at_client"]
-        nullable_fields = ["attempts", "expire_at", "verified_at_client"]
-        null_default_fields = []
-
+        optional_fields = set(["object", "verified_at_client"])
+        nullable_fields = set(["attempts", "expire_at", "verified_at_client"])
         serialized = handler(self)
-
         m = {}
 
         for n, f in type(self).model_fields.items():
             k = f.alias or n
             val = serialized.get(k)
-            serialized.pop(k, None)
+            is_nullable_and_explicitly_set = (
+                k in nullable_fields
+                and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
+            )
 
-            optional_nullable = k in optional_fields and k in nullable_fields
-            is_set = (
-                self.__pydantic_fields_set__.intersection({n})
-                or k in null_default_fields
-            )  # pylint: disable=no-member
-
-            if val is not None and val != UNSET_SENTINEL:
-                m[k] = val
-            elif val != UNSET_SENTINEL and (
-                not k in optional_fields or (optional_nullable and is_set)
-            ):
-                m[k] = val
+            if val != UNSET_SENTINEL:
+                if (
+                    val is not None
+                    or k not in optional_fields
+                    or is_nullable_and_explicitly_set
+                ):
+                    m[k] = val
 
         return m
 
@@ -322,6 +323,22 @@ class ErrorClerkError(BaseModel):
 
     meta: Optional[ErrorMeta] = None
 
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["meta"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k)
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m
+
 
 ErrorTypedDict = ErrorClerkErrorTypedDict
 
@@ -356,31 +373,26 @@ class FromOAuth(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["object", "error", "verified_at_client"]
-        nullable_fields = ["error", "expire_at", "attempts", "verified_at_client"]
-        null_default_fields = []
-
+        optional_fields = set(["object", "error", "verified_at_client"])
+        nullable_fields = set(["error", "expire_at", "attempts", "verified_at_client"])
         serialized = handler(self)
-
         m = {}
 
         for n, f in type(self).model_fields.items():
             k = f.alias or n
             val = serialized.get(k)
-            serialized.pop(k, None)
+            is_nullable_and_explicitly_set = (
+                k in nullable_fields
+                and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
+            )
 
-            optional_nullable = k in optional_fields and k in nullable_fields
-            is_set = (
-                self.__pydantic_fields_set__.intersection({n})
-                or k in null_default_fields
-            )  # pylint: disable=no-member
-
-            if val is not None and val != UNSET_SENTINEL:
-                m[k] = val
-            elif val != UNSET_SENTINEL and (
-                not k in optional_fields or (optional_nullable and is_set)
-            ):
-                m[k] = val
+            if val != UNSET_SENTINEL:
+                if (
+                    val is not None
+                    or k not in optional_fields
+                    or is_nullable_and_explicitly_set
+                ):
+                    m[k] = val
 
         return m
 
@@ -409,7 +421,7 @@ class AdminTypedDict(TypedDict):
 class Admin(BaseModel):
     status: VerificationAdminVerificationStatus
 
-    strategy: Annotated[VerificationStrategy, PlainValidator(validate_open_enum(False))]
+    strategy: VerificationStrategy
 
     attempts: Nullable[int]
 
@@ -430,31 +442,26 @@ class Admin(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["object", "verified_at_client"]
-        nullable_fields = ["attempts", "expire_at", "verified_at_client"]
-        null_default_fields = []
-
+        optional_fields = set(["object", "verified_at_client"])
+        nullable_fields = set(["attempts", "expire_at", "verified_at_client"])
         serialized = handler(self)
-
         m = {}
 
         for n, f in type(self).model_fields.items():
             k = f.alias or n
             val = serialized.get(k)
-            serialized.pop(k, None)
+            is_nullable_and_explicitly_set = (
+                k in nullable_fields
+                and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
+            )
 
-            optional_nullable = k in optional_fields and k in nullable_fields
-            is_set = (
-                self.__pydantic_fields_set__.intersection({n})
-                or k in null_default_fields
-            )  # pylint: disable=no-member
-
-            if val is not None and val != UNSET_SENTINEL:
-                m[k] = val
-            elif val != UNSET_SENTINEL and (
-                not k in optional_fields or (optional_nullable and is_set)
-            ):
-                m[k] = val
+            if val != UNSET_SENTINEL:
+                if (
+                    val is not None
+                    or k not in optional_fields
+                    or is_nullable_and_explicitly_set
+                ):
+                    m[k] = val
 
         return m
 
@@ -488,7 +495,7 @@ class OtpTypedDict(TypedDict):
 class Otp(BaseModel):
     status: VerificationStatus
 
-    strategy: Annotated[Strategy, PlainValidator(validate_open_enum(False))]
+    strategy: Strategy
 
     attempts: Nullable[int]
 
@@ -509,31 +516,26 @@ class Otp(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["object", "verified_at_client"]
-        nullable_fields = ["attempts", "expire_at", "verified_at_client"]
-        null_default_fields = []
-
+        optional_fields = set(["object", "verified_at_client"])
+        nullable_fields = set(["attempts", "expire_at", "verified_at_client"])
         serialized = handler(self)
-
         m = {}
 
         for n, f in type(self).model_fields.items():
             k = f.alias or n
             val = serialized.get(k)
-            serialized.pop(k, None)
+            is_nullable_and_explicitly_set = (
+                k in nullable_fields
+                and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
+            )
 
-            optional_nullable = k in optional_fields and k in nullable_fields
-            is_set = (
-                self.__pydantic_fields_set__.intersection({n})
-                or k in null_default_fields
-            )  # pylint: disable=no-member
-
-            if val is not None and val != UNSET_SENTINEL:
-                m[k] = val
-            elif val != UNSET_SENTINEL and (
-                not k in optional_fields or (optional_nullable and is_set)
-            ):
-                m[k] = val
+            if val != UNSET_SENTINEL:
+                if (
+                    val is not None
+                    or k not in optional_fields
+                    or is_nullable_and_explicitly_set
+                ):
+                    m[k] = val
 
         return m
 
@@ -593,7 +595,7 @@ class EmailAddressTypedDict(TypedDict):
 class EmailAddress(BaseModel):
     r"""Success"""
 
-    object: Annotated[EmailAddressObject, PlainValidator(validate_open_enum(False))]
+    object: EmailAddressObject
     r"""String representing the object's type. Objects of the same type share the same value.
 
     """
@@ -634,30 +636,25 @@ class EmailAddress(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["id", "matches_sso_connection"]
-        nullable_fields = ["verification"]
-        null_default_fields = []
-
+        optional_fields = set(["id", "matches_sso_connection"])
+        nullable_fields = set(["verification"])
         serialized = handler(self)
-
         m = {}
 
         for n, f in type(self).model_fields.items():
             k = f.alias or n
             val = serialized.get(k)
-            serialized.pop(k, None)
+            is_nullable_and_explicitly_set = (
+                k in nullable_fields
+                and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
+            )
 
-            optional_nullable = k in optional_fields and k in nullable_fields
-            is_set = (
-                self.__pydantic_fields_set__.intersection({n})
-                or k in null_default_fields
-            )  # pylint: disable=no-member
-
-            if val is not None and val != UNSET_SENTINEL:
-                m[k] = val
-            elif val != UNSET_SENTINEL and (
-                not k in optional_fields or (optional_nullable and is_set)
-            ):
-                m[k] = val
+            if val != UNSET_SENTINEL:
+                if (
+                    val is not None
+                    or k not in optional_fields
+                    or is_nullable_and_explicitly_set
+                ):
+                    m[k] = val
 
         return m

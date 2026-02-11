@@ -2,6 +2,8 @@
 
 ## Overview
 
+Modify the settings of your instance.
+
 ### Available Operations
 
 * [get](#get) - Fetch the current instance
@@ -9,6 +11,8 @@
 * [update_restrictions](#update_restrictions) - Update instance restrictions
 * [change_domain](#change_domain) - Update production instance domain
 * [update_organization_settings](#update_organization_settings) - Update instance organization settings
+* [get_instance_protect](#get_instance_protect) - Get instance protect settings
+* [update_instance_protect](#update_instance_protect) - Update instance protect settings
 
 ## get
 
@@ -233,4 +237,85 @@ with Clerk(
 | Error Type         | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
 | models.ClerkErrors | 400, 402, 404, 422 | application/json   |
+| models.SDKError    | 4XX, 5XX           | \*/\*              |
+
+## get_instance_protect
+
+Get instance protect settings
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="GetInstanceProtect" method="get" path="/instance/protect" -->
+```python
+from clerk_backend_api import Clerk
+
+
+with Clerk(
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+) as clerk:
+
+    res = clerk.instance_settings.get_instance_protect()
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+
+### Response
+
+**[models.InstanceProtect](../../models/instanceprotect.md)**
+
+### Errors
+
+| Error Type      | Status Code     | Content Type    |
+| --------------- | --------------- | --------------- |
+| models.SDKError | 4XX, 5XX        | \*/\*           |
+
+## update_instance_protect
+
+Update instance protect settings
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="UpdateInstanceProtect" method="patch" path="/instance/protect" -->
+```python
+from clerk_backend_api import Clerk
+
+
+with Clerk(
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+) as clerk:
+
+    res = clerk.instance_settings.update_instance_protect(request={
+        "rules_enabled": True,
+        "specter_enabled": True,
+    })
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                                                   | Type                                                                                        | Required                                                                                    | Description                                                                                 |
+| ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| `request`                                                                                   | [models.UpdateInstanceProtectRequestBody](../../models/updateinstanceprotectrequestbody.md) | :heavy_check_mark:                                                                          | The request object to use for the request.                                                  |
+| `retries`                                                                                   | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                            | :heavy_minus_sign:                                                                          | Configuration to override the default retry behavior of the client.                         |
+
+### Response
+
+**[models.InstanceProtect](../../models/instanceprotect.md)**
+
+### Errors
+
+| Error Type         | Status Code        | Content Type       |
+| ------------------ | ------------------ | ------------------ |
+| models.ClerkErrors | 422                | application/json   |
 | models.SDKError    | 4XX, 5XX           | \*/\*              |

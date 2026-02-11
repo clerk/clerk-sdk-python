@@ -1,0 +1,18 @@
+# DefaultRole
+
+The default role assigned to new organization members
+
+
+## Fields
+
+| Field                                                                    | Type                                                                     | Required                                                                 | Description                                                              |
+| ------------------------------------------------------------------------ | ------------------------------------------------------------------------ | ------------------------------------------------------------------------ | ------------------------------------------------------------------------ |
+| `object`                                                                 | [models.RoleSetDefaultRoleObject](../models/rolesetdefaultroleobject.md) | :heavy_check_mark:                                                       | N/A                                                                      |
+| `id`                                                                     | *str*                                                                    | :heavy_check_mark:                                                       | The unique identifier of the role                                        |
+| `name`                                                                   | *str*                                                                    | :heavy_check_mark:                                                       | The name of the role                                                     |
+| `key`                                                                    | *str*                                                                    | :heavy_check_mark:                                                       | The key of the role (e.g., "org:admin", "org:member")                    |
+| `description`                                                            | *Nullable[str]*                                                          | :heavy_check_mark:                                                       | Optional description of the role                                         |
+| `members_count`                                                          | *OptionalNullable[int]*                                                  | :heavy_minus_sign:                                                       | The number of members assigned to this role within the role set          |
+| `has_members`                                                            | *OptionalNullable[bool]*                                                 | :heavy_minus_sign:                                                       | Whether this role has any members assigned within the role set           |
+| `created_at`                                                             | *int*                                                                    | :heavy_check_mark:                                                       | Unix timestamp of role creation                                          |
+| `updated_at`                                                             | *int*                                                                    | :heavy_check_mark:                                                       | Unix timestamp of last role update                                       |

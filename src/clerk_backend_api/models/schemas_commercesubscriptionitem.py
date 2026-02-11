@@ -86,31 +86,26 @@ class Credit(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["amount", "cycle_remaining_percent"]
-        nullable_fields = ["amount"]
-        null_default_fields = []
-
+        optional_fields = set(["amount", "cycle_remaining_percent"])
+        nullable_fields = set(["amount"])
         serialized = handler(self)
-
         m = {}
 
         for n, f in type(self).model_fields.items():
             k = f.alias or n
             val = serialized.get(k)
-            serialized.pop(k, None)
+            is_nullable_and_explicitly_set = (
+                k in nullable_fields
+                and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
+            )
 
-            optional_nullable = k in optional_fields and k in nullable_fields
-            is_set = (
-                self.__pydantic_fields_set__.intersection({n})
-                or k in null_default_fields
-            )  # pylint: disable=no-member
-
-            if val is not None and val != UNSET_SENTINEL:
-                m[k] = val
-            elif val != UNSET_SENTINEL and (
-                not k in optional_fields or (optional_nullable and is_set)
-            ):
-                m[k] = val
+            if val != UNSET_SENTINEL:
+                if (
+                    val is not None
+                    or k not in optional_fields
+                    or is_nullable_and_explicitly_set
+                ):
+                    m[k] = val
 
         return m
 
@@ -270,36 +265,28 @@ class SchemasCommerceSubscriptionItemPlan(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = [
-            "period",
-            "interval",
-            "free_trial_enabled",
-            "free_trial_days",
-        ]
-        nullable_fields = ["free_trial_days"]
-        null_default_fields = []
-
+        optional_fields = set(
+            ["period", "interval", "free_trial_enabled", "free_trial_days"]
+        )
+        nullable_fields = set(["free_trial_days"])
         serialized = handler(self)
-
         m = {}
 
         for n, f in type(self).model_fields.items():
             k = f.alias or n
             val = serialized.get(k)
-            serialized.pop(k, None)
+            is_nullable_and_explicitly_set = (
+                k in nullable_fields
+                and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
+            )
 
-            optional_nullable = k in optional_fields and k in nullable_fields
-            is_set = (
-                self.__pydantic_fields_set__.intersection({n})
-                or k in null_default_fields
-            )  # pylint: disable=no-member
-
-            if val is not None and val != UNSET_SENTINEL:
-                m[k] = val
-            elif val != UNSET_SENTINEL and (
-                not k in optional_fields or (optional_nullable and is_set)
-            ):
-                m[k] = val
+            if val != UNSET_SENTINEL:
+                if (
+                    val is not None
+                    or k not in optional_fields
+                    or is_nullable_and_explicitly_set
+                ):
+                    m[k] = val
 
         return m
 
@@ -427,37 +414,36 @@ class PaymentSource(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = [
-            "is_default",
-            "gateway_external_account_id",
-            "expiry_year",
-            "expiry_month",
-            "is_removable",
-        ]
-        nullable_fields = ["is_default", "gateway_external_account_id", "is_removable"]
-        null_default_fields = []
-
+        optional_fields = set(
+            [
+                "is_default",
+                "gateway_external_account_id",
+                "expiry_year",
+                "expiry_month",
+                "is_removable",
+            ]
+        )
+        nullable_fields = set(
+            ["is_default", "gateway_external_account_id", "is_removable"]
+        )
         serialized = handler(self)
-
         m = {}
 
         for n, f in type(self).model_fields.items():
             k = f.alias or n
             val = serialized.get(k)
-            serialized.pop(k, None)
+            is_nullable_and_explicitly_set = (
+                k in nullable_fields
+                and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
+            )
 
-            optional_nullable = k in optional_fields and k in nullable_fields
-            is_set = (
-                self.__pydantic_fields_set__.intersection({n})
-                or k in null_default_fields
-            )  # pylint: disable=no-member
-
-            if val is not None and val != UNSET_SENTINEL:
-                m[k] = val
-            elif val != UNSET_SENTINEL and (
-                not k in optional_fields or (optional_nullable and is_set)
-            ):
-                m[k] = val
+            if val != UNSET_SENTINEL:
+                if (
+                    val is not None
+                    or k not in optional_fields
+                    or is_nullable_and_explicitly_set
+                ):
+                    m[k] = val
 
         return m
 
@@ -571,31 +557,26 @@ class NextInvoice(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["amount", "date"]
-        nullable_fields = ["amount", "date"]
-        null_default_fields = []
-
+        optional_fields = set(["amount", "date"])
+        nullable_fields = set(["amount", "date"])
         serialized = handler(self)
-
         m = {}
 
         for n, f in type(self).model_fields.items():
             k = f.alias or n
             val = serialized.get(k)
-            serialized.pop(k, None)
+            is_nullable_and_explicitly_set = (
+                k in nullable_fields
+                and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
+            )
 
-            optional_nullable = k in optional_fields and k in nullable_fields
-            is_set = (
-                self.__pydantic_fields_set__.intersection({n})
-                or k in null_default_fields
-            )  # pylint: disable=no-member
-
-            if val is not None and val != UNSET_SENTINEL:
-                m[k] = val
-            elif val != UNSET_SENTINEL and (
-                not k in optional_fields or (optional_nullable and is_set)
-            ):
-                m[k] = val
+            if val != UNSET_SENTINEL:
+                if (
+                    val is not None
+                    or k not in optional_fields
+                    or is_nullable_and_explicitly_set
+                ):
+                    m[k] = val
 
         return m
 
@@ -651,31 +632,26 @@ class SchemasCommerceSubscriptionItemNextPayment(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["amount", "date"]
-        nullable_fields = ["amount", "date"]
-        null_default_fields = []
-
+        optional_fields = set(["amount", "date"])
+        nullable_fields = set(["amount", "date"])
         serialized = handler(self)
-
         m = {}
 
         for n, f in type(self).model_fields.items():
             k = f.alias or n
             val = serialized.get(k)
-            serialized.pop(k, None)
+            is_nullable_and_explicitly_set = (
+                k in nullable_fields
+                and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
+            )
 
-            optional_nullable = k in optional_fields and k in nullable_fields
-            is_set = (
-                self.__pydantic_fields_set__.intersection({n})
-                or k in null_default_fields
-            )  # pylint: disable=no-member
-
-            if val is not None and val != UNSET_SENTINEL:
-                m[k] = val
-            elif val != UNSET_SENTINEL and (
-                not k in optional_fields or (optional_nullable and is_set)
-            ):
-                m[k] = val
+            if val != UNSET_SENTINEL:
+                if (
+                    val is not None
+                    or k not in optional_fields
+                    or is_nullable_and_explicitly_set
+                ):
+                    m[k] = val
 
         return m
 
@@ -754,6 +730,22 @@ class Payer(BaseModel):
     organization_name: Optional[str] = None
     r"""Organization name for org-type payers."""
 
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["user_id", "organization_id", "organization_name"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k)
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m
+
 
 class SchemasCommerceSubscriptionItemTypedDict(TypedDict):
     r"""A commerce subscription item."""
@@ -786,6 +778,8 @@ class SchemasCommerceSubscriptionItemTypedDict(TypedDict):
     r"""Unix timestamp (in milliseconds) when the subscription was last updated."""
     credit: NotRequired[Nullable[CreditTypedDict]]
     r"""Credit information (only available in PaymentAttempt events)."""
+    price_id: NotRequired[str]
+    r"""Unique identifier for the associated price"""
     payment_source: NotRequired[Nullable[PaymentSourceTypedDict]]
     r"""The payment source associated with this subscription."""
     lifetime_paid: NotRequired[Nullable[LifetimePaidTypedDict]]
@@ -857,6 +851,9 @@ class SchemasCommerceSubscriptionItem(BaseModel):
     credit: OptionalNullable[Credit] = UNSET
     r"""Credit information (only available in PaymentAttempt events)."""
 
+    price_id: Optional[str] = None
+    r"""Unique identifier for the associated price"""
+
     payment_source: OptionalNullable[PaymentSource] = UNSET
     r"""The payment source associated with this subscription."""
 
@@ -892,57 +889,57 @@ class SchemasCommerceSubscriptionItem(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = [
-            "credit",
-            "payment_source",
-            "lifetime_paid",
-            "amount",
-            "next_invoice",
-            "next_payment",
-            "payer",
-            "period_start",
-            "period_end",
-            "canceled_at",
-            "past_due_at",
-            "ended_at",
-        ]
-        nullable_fields = [
-            "credit",
-            "plan",
-            "payment_source",
-            "lifetime_paid",
-            "amount",
-            "next_invoice",
-            "next_payment",
-            "payer",
-            "period_start",
-            "period_end",
-            "canceled_at",
-            "past_due_at",
-            "ended_at",
-        ]
-        null_default_fields = []
-
+        optional_fields = set(
+            [
+                "credit",
+                "price_id",
+                "payment_source",
+                "lifetime_paid",
+                "amount",
+                "next_invoice",
+                "next_payment",
+                "payer",
+                "period_start",
+                "period_end",
+                "canceled_at",
+                "past_due_at",
+                "ended_at",
+            ]
+        )
+        nullable_fields = set(
+            [
+                "credit",
+                "plan",
+                "payment_source",
+                "lifetime_paid",
+                "amount",
+                "next_invoice",
+                "next_payment",
+                "payer",
+                "period_start",
+                "period_end",
+                "canceled_at",
+                "past_due_at",
+                "ended_at",
+            ]
+        )
         serialized = handler(self)
-
         m = {}
 
         for n, f in type(self).model_fields.items():
             k = f.alias or n
             val = serialized.get(k)
-            serialized.pop(k, None)
+            is_nullable_and_explicitly_set = (
+                k in nullable_fields
+                and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
+            )
 
-            optional_nullable = k in optional_fields and k in nullable_fields
-            is_set = (
-                self.__pydantic_fields_set__.intersection({n})
-                or k in null_default_fields
-            )  # pylint: disable=no-member
-
-            if val is not None and val != UNSET_SENTINEL:
-                m[k] = val
-            elif val != UNSET_SENTINEL and (
-                not k in optional_fields or (optional_nullable and is_set)
-            ):
-                m[k] = val
+            if val != UNSET_SENTINEL:
+                if (
+                    val is not None
+                    or k not in optional_fields
+                    or is_nullable_and_explicitly_set
+                ):
+                    m[k] = val
 
         return m

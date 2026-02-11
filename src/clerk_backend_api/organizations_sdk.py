@@ -359,14 +359,16 @@ class OrganizationsSDK(BaseSDK):
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
-            error_status_codes=["400", "403", "422", "4XX", "5XX"],
+            error_status_codes=["400", "402", "403", "422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(models.Organization, http_res)
-        if utils.match_response(http_res, ["400", "403", "422"], "application/json"):
+        if utils.match_response(
+            http_res, ["400", "402", "403", "422"], "application/json"
+        ):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
@@ -472,14 +474,16 @@ class OrganizationsSDK(BaseSDK):
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
-            error_status_codes=["400", "403", "422", "4XX", "5XX"],
+            error_status_codes=["400", "402", "403", "422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(models.Organization, http_res)
-        if utils.match_response(http_res, ["400", "403", "422"], "application/json"):
+        if utils.match_response(
+            http_res, ["400", "402", "403", "422"], "application/json"
+        ):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):

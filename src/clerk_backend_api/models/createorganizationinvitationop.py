@@ -35,6 +35,10 @@ class CreateOrganizationInvitationRequestBodyTypedDict(TypedDict):
     r"""Optional URL that the invitee will be redirected to once they accept the invitation by clicking the join link in the invitation email."""
     expires_in_days: NotRequired[Nullable[int]]
     r"""The number of days the invitation will be valid for. By default, the invitation has a 30 days expire."""
+    notify: NotRequired[Nullable[bool]]
+    r"""Optional flag which denotes whether an email invitation should be sent to the given email address.
+    Defaults to `true`.
+    """
 
 
 class CreateOrganizationInvitationRequestBody(BaseModel):
@@ -65,45 +69,51 @@ class CreateOrganizationInvitationRequestBody(BaseModel):
     expires_in_days: OptionalNullable[int] = UNSET
     r"""The number of days the invitation will be valid for. By default, the invitation has a 30 days expire."""
 
+    notify: OptionalNullable[bool] = True
+    r"""Optional flag which denotes whether an email invitation should be sent to the given email address.
+    Defaults to `true`.
+    """
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = [
-            "inviter_user_id",
-            "public_metadata",
-            "private_metadata",
-            "redirect_url",
-            "expires_in_days",
-        ]
-        nullable_fields = [
-            "inviter_user_id",
-            "public_metadata",
-            "private_metadata",
-            "redirect_url",
-            "expires_in_days",
-        ]
-        null_default_fields = []
-
+        optional_fields = set(
+            [
+                "inviter_user_id",
+                "public_metadata",
+                "private_metadata",
+                "redirect_url",
+                "expires_in_days",
+                "notify",
+            ]
+        )
+        nullable_fields = set(
+            [
+                "inviter_user_id",
+                "public_metadata",
+                "private_metadata",
+                "redirect_url",
+                "expires_in_days",
+                "notify",
+            ]
+        )
         serialized = handler(self)
-
         m = {}
 
         for n, f in type(self).model_fields.items():
             k = f.alias or n
             val = serialized.get(k)
-            serialized.pop(k, None)
+            is_nullable_and_explicitly_set = (
+                k in nullable_fields
+                and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
+            )
 
-            optional_nullable = k in optional_fields and k in nullable_fields
-            is_set = (
-                self.__pydantic_fields_set__.intersection({n})
-                or k in null_default_fields
-            )  # pylint: disable=no-member
-
-            if val is not None and val != UNSET_SENTINEL:
-                m[k] = val
-            elif val != UNSET_SENTINEL and (
-                not k in optional_fields or (optional_nullable and is_set)
-            ):
-                m[k] = val
+            if val != UNSET_SENTINEL:
+                if (
+                    val is not None
+                    or k not in optional_fields
+                    or is_nullable_and_explicitly_set
+                ):
+                    m[k] = val
 
         return m
 
@@ -124,3 +134,19 @@ class CreateOrganizationInvitationRequest(BaseModel):
         Optional[CreateOrganizationInvitationRequestBody],
         FieldMetadata(request=RequestMetadata(media_type="application/json")),
     ] = None
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["RequestBody"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k)
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m

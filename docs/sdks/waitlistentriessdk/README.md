@@ -6,6 +6,7 @@
 
 * [list](#list) - List all waitlist entries
 * [create](#create) - Create a waitlist entry
+* [bulk_create](#bulk_create) - Create multiple waitlist entries
 * [delete](#delete) - Delete a pending waitlist entry
 * [invite](#invite) - Invite a waitlist entry
 * [reject](#reject) - Reject a waitlist entry
@@ -91,6 +92,57 @@ with Clerk(
 ### Response
 
 **[models.WaitlistEntry](../../models/waitlistentry.md)**
+
+### Errors
+
+| Error Type         | Status Code        | Content Type       |
+| ------------------ | ------------------ | ------------------ |
+| models.ClerkErrors | 400, 422           | application/json   |
+| models.SDKError    | 4XX, 5XX           | \*/\*              |
+
+## bulk_create
+
+Creates multiple waitlist entries for the provided email addresses.
+You can choose whether to send confirmation emails by setting the `notify` parameter to `true` or `false` for each entry.
+If the `notify` parameter is omitted, it defaults to `true`.
+
+If an email address is already on the waitlist, no new entry will be created and the existing waitlist entry will be returned.
+Duplicate email addresses within the same request are not allowed.
+
+This endpoint is limited to a maximum of 50 entries per API call. If you need to add more entries, please make multiple requests.
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="CreateBulkWaitlistEntries" method="post" path="/waitlist_entries/bulk" -->
+```python
+from clerk_backend_api import Clerk
+
+
+with Clerk(
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+) as clerk:
+
+    res = clerk.waitlist_entries.bulk_create(request=[
+        {
+            "email_address": "Katelin.Brekke10@yahoo.com",
+        },
+    ])
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                             | Type                                                                  | Required                                                              | Description                                                           |
+| --------------------------------------------------------------------- | --------------------------------------------------------------------- | --------------------------------------------------------------------- | --------------------------------------------------------------------- |
+| `request`                                                             | [List[models.CreateBulkWaitlistEntriesRequestBody]](../../models/.md) | :heavy_check_mark:                                                    | The request object to use for the request.                            |
+| `retries`                                                             | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)      | :heavy_minus_sign:                                                    | Configuration to override the default retry behavior of the client.   |
+
+### Response
+
+**[List[models.WaitlistEntry]](../../models/.md)**
 
 ### Errors
 

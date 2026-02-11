@@ -40,37 +40,28 @@ class UpdateAPIKeyRequestBody(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = [
-            "claims",
-            "scopes",
-            "description",
-            "subject",
-            "seconds_until_expiration",
-        ]
-        nullable_fields = ["claims", "description", "seconds_until_expiration"]
-        null_default_fields = []
-
+        optional_fields = set(
+            ["claims", "scopes", "description", "subject", "seconds_until_expiration"]
+        )
+        nullable_fields = set(["claims", "description", "seconds_until_expiration"])
         serialized = handler(self)
-
         m = {}
 
         for n, f in type(self).model_fields.items():
             k = f.alias or n
             val = serialized.get(k)
-            serialized.pop(k, None)
+            is_nullable_and_explicitly_set = (
+                k in nullable_fields
+                and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
+            )
 
-            optional_nullable = k in optional_fields and k in nullable_fields
-            is_set = (
-                self.__pydantic_fields_set__.intersection({n})
-                or k in null_default_fields
-            )  # pylint: disable=no-member
-
-            if val is not None and val != UNSET_SENTINEL:
-                m[k] = val
-            elif val != UNSET_SENTINEL and (
-                not k in optional_fields or (optional_nullable and is_set)
-            ):
-                m[k] = val
+            if val != UNSET_SENTINEL:
+                if (
+                    val is not None
+                    or k not in optional_fields
+                    or is_nullable_and_explicitly_set
+                ):
+                    m[k] = val
 
         return m
 
@@ -181,10 +172,14 @@ class UpdateAPIKeyResponseBodyTypedDict(TypedDict):
     revocation_reason: Nullable[str]
     expired: bool
     expiration: Nullable[float]
+    r"""The timestamp for when the API key will expire, in milliseconds"""
     created_by: Nullable[str]
     last_used_at: Nullable[float]
+    r"""The timestamp for when the API key was last used, in milliseconds"""
     created_at: float
+    r"""The timestamp for when the API key was created, in milliseconds"""
     updated_at: float
+    r"""The timestamp for when the API key was last updated, in milliseconds"""
     description: NotRequired[Nullable[str]]
 
 
@@ -212,50 +207,51 @@ class UpdateAPIKeyResponseBody(BaseModel):
     expired: bool
 
     expiration: Nullable[float]
+    r"""The timestamp for when the API key will expire, in milliseconds"""
 
     created_by: Nullable[str]
 
     last_used_at: Nullable[float]
+    r"""The timestamp for when the API key was last used, in milliseconds"""
 
     created_at: float
+    r"""The timestamp for when the API key was created, in milliseconds"""
 
     updated_at: float
+    r"""The timestamp for when the API key was last updated, in milliseconds"""
 
     description: OptionalNullable[str] = UNSET
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["description"]
-        nullable_fields = [
-            "description",
-            "claims",
-            "revocation_reason",
-            "expiration",
-            "created_by",
-            "last_used_at",
-        ]
-        null_default_fields = []
-
+        optional_fields = set(["description"])
+        nullable_fields = set(
+            [
+                "description",
+                "claims",
+                "revocation_reason",
+                "expiration",
+                "created_by",
+                "last_used_at",
+            ]
+        )
         serialized = handler(self)
-
         m = {}
 
         for n, f in type(self).model_fields.items():
             k = f.alias or n
             val = serialized.get(k)
-            serialized.pop(k, None)
+            is_nullable_and_explicitly_set = (
+                k in nullable_fields
+                and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
+            )
 
-            optional_nullable = k in optional_fields and k in nullable_fields
-            is_set = (
-                self.__pydantic_fields_set__.intersection({n})
-                or k in null_default_fields
-            )  # pylint: disable=no-member
-
-            if val is not None and val != UNSET_SENTINEL:
-                m[k] = val
-            elif val != UNSET_SENTINEL and (
-                not k in optional_fields or (optional_nullable and is_set)
-            ):
-                m[k] = val
+            if val != UNSET_SENTINEL:
+                if (
+                    val is not None
+                    or k not in optional_fields
+                    or is_nullable_and_explicitly_set
+                ):
+                    m[k] = val
 
         return m

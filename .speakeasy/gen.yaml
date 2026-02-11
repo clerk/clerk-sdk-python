@@ -13,6 +13,7 @@ generation:
     requestResponseComponentNamesFeb2024: true
     securityFeb2025: false
     sharedErrorComponentsApr2025: false
+    sharedNestedComponentsJan2026: false
   auth:
     oAuth2ClientCredentialsEnabled: true
     oAuth2PasswordEnabled: false
@@ -20,18 +21,19 @@ generation:
   schemas:
     allOfMergeStrategy: shallowMerge
   requestBodyFieldName: ""
+  versioningStrategy: automatic
   persistentEdits: {}
   tests:
     generateTests: true
     generateNewTests: false
     skipResponseBodyAssertions: false
 python:
-  version: 4.2.0
+  version: 5.0.0
   additionalDependencies:
     dev:
       pytest: ^8.3.3
     main:
-      cryptography: ">=45.0.0,<47.0.0"
+      cryptography: '>=45.0.0,<47.0.0'
       pyjwt: ^2.9.0
   allowedRedefinedBuiltins:
     - id
@@ -42,6 +44,7 @@ python:
     - Clerk
   baseErrorName: ClerkBaseError
   clientServerStatusCodesAsErrors: true
+  constFieldCasing: upper
   defaultErrorName: SDKError
   description: Python Client SDK for clerk.dev
   enableCustomCodeRegions: true
@@ -51,6 +54,7 @@ python:
   flattenGlobalSecurity: true
   flattenRequests: true
   flatteningOrder: parameters-first
+  forwardCompatibleEnumsByDefault: false
   imports:
     option: openapi
     paths:
@@ -76,3 +80,4 @@ python:
   responseFormat: flat
   sseFlatResponse: false
   templateVersion: v2
+  useAsyncHooks: false
