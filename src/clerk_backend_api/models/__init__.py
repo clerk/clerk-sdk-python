@@ -16,6 +16,12 @@ if TYPE_CHECKING:
         ActorTokenTypedDict,
     )
     from .adddomainop import AddDomainRequestBody, AddDomainRequestBodyTypedDict
+    from .addrolestorolesetop import (
+        AddRolesToRoleSetRequest,
+        AddRolesToRoleSetRequestBody,
+        AddRolesToRoleSetRequestBodyTypedDict,
+        AddRolesToRoleSetRequestTypedDict,
+    )
     from .allowlistidentifier import (
         AllowlistIdentifier,
         AllowlistIdentifierObject,
@@ -36,6 +42,11 @@ if TYPE_CHECKING:
         PayeeTypedDict,
         SubscriptionItem,
         SubscriptionItemTypedDict,
+    )
+    from .billingpriceresponse import (
+        BillingPriceResponse,
+        BillingPriceResponseObject,
+        BillingPriceResponseTypedDict,
     )
     from .billingstatement import (
         BillingStatement,
@@ -100,6 +111,19 @@ if TYPE_CHECKING:
         CommercePlanObject,
         CommercePlanTypedDict,
     )
+    from .commercepricetransitiondetails import (
+        CommercePriceTransitionDetails,
+        CommercePriceTransitionDetailsTypedDict,
+        EffectiveMode,
+        ImmediateCharge,
+        ImmediateChargeTypedDict,
+        PreviousSubscriptionItemStatus,
+    )
+    from .commercepricetransitionresponse import (
+        CommercePriceTransitionResponse,
+        CommercePriceTransitionResponseObject,
+        CommercePriceTransitionResponseTypedDict,
+    )
     from .commercesubscription import (
         CommerceSubscription,
         CommerceSubscriptionObject,
@@ -160,6 +184,14 @@ if TYPE_CHECKING:
         Errors,
         ErrorsTypedDict,
     )
+    from .createbillingpricerequest import (
+        CreateBillingPriceRequest,
+        CreateBillingPriceRequestTypedDict,
+    )
+    from .createbillingpricetransitionop import (
+        CreateBillingPriceTransitionRequest,
+        CreateBillingPriceTransitionRequestTypedDict,
+    )
     from .createblocklistidentifierop import (
         CreateBlocklistIdentifierRequestBody,
         CreateBlocklistIdentifierRequestBodyTypedDict,
@@ -168,6 +200,10 @@ if TYPE_CHECKING:
         CreateBulkInvitationsTemplateSlug,
         RequestBody,
         RequestBodyTypedDict,
+    )
+    from .createbulkwaitlistentriesop import (
+        CreateBulkWaitlistEntriesRequestBody,
+        CreateBulkWaitlistEntriesRequestBodyTypedDict,
     )
     from .createemailaddressop import (
         CreateEmailAddressRequestBody,
@@ -256,6 +292,11 @@ if TYPE_CHECKING:
     from .createredirecturlop import (
         CreateRedirectURLRequestBody,
         CreateRedirectURLRequestBodyTypedDict,
+    )
+    from .createrolesetop import (
+        CreateRoleSetRequestBody,
+        CreateRoleSetRequestBodyTypedDict,
+        CreateRoleSetType,
     )
     from .createsamlconnectionop import (
         CreateSAMLConnectionRequestBody,
@@ -591,6 +632,10 @@ if TYPE_CHECKING:
         GetAPIKeysResponseBodyTypedDict,
         IncludeInvalid,
     )
+    from .getbillingpricelistop import (
+        GetBillingPriceListRequest,
+        GetBillingPriceListRequestTypedDict,
+    )
     from .getbillingstatementlistop import (
         GetBillingStatementListRequest,
         GetBillingStatementListRequestTypedDict,
@@ -681,6 +726,7 @@ if TYPE_CHECKING:
         GetPublicInterstitialRequestTypedDict,
     )
     from .getredirecturlop import GetRedirectURLRequest, GetRedirectURLRequestTypedDict
+    from .getrolesetop import GetRoleSetRequest, GetRoleSetRequestTypedDict
     from .getsamlconnectionop import (
         GetSAMLConnectionRequest,
         GetSAMLConnectionRequestTypedDict,
@@ -714,6 +760,11 @@ if TYPE_CHECKING:
     from .instancegetorganizationmembershipsop import (
         InstanceGetOrganizationMembershipsRequest,
         InstanceGetOrganizationMembershipsRequestTypedDict,
+    )
+    from .instanceprotect import (
+        InstanceProtect,
+        InstanceProtectObject,
+        InstanceProtectTypedDict,
     )
     from .instancerestrictions import (
         InstanceRestrictions,
@@ -813,6 +864,7 @@ if TYPE_CHECKING:
         ListRedirectURLsRequest,
         ListRedirectURLsRequestTypedDict,
     )
+    from .listrolesetsop import ListRoleSetsRequest, ListRoleSetsRequestTypedDict
     from .listsamlconnectionsop import (
         ListSAMLConnectionsRequest,
         ListSAMLConnectionsRequestTypedDict,
@@ -945,6 +997,10 @@ if TYPE_CHECKING:
         PaginatedBillingPaymentAttemptResponse,
         PaginatedBillingPaymentAttemptResponseTypedDict,
     )
+    from .paginatedbillingpriceresponse import (
+        PaginatedBillingPriceResponse,
+        PaginatedBillingPriceResponseTypedDict,
+    )
     from .paginatedbillingstatementresponse import (
         PaginatedBillingStatementResponse,
         PaginatedBillingStatementResponseTypedDict,
@@ -997,6 +1053,10 @@ if TYPE_CHECKING:
         PreviewTemplateResponseBody,
         PreviewTemplateResponseBodyTypedDict,
     )
+    from .pricetransitionrequest import (
+        PriceTransitionRequest,
+        PriceTransitionRequestTypedDict,
+    )
     from .proxycheck import ProxyCheck, ProxyCheckObject, ProxyCheckTypedDict
     from .redirecturl import RedirectURL, RedirectURLObject, RedirectURLTypedDict
     from .refreshsessionop import (
@@ -1013,6 +1073,18 @@ if TYPE_CHECKING:
     from .removepermissionfromorganizationroleop import (
         RemovePermissionFromOrganizationRoleRequest,
         RemovePermissionFromOrganizationRoleRequestTypedDict,
+    )
+    from .replaceroleinrolesetop import (
+        ReplaceRoleInRoleSetRequest,
+        ReplaceRoleInRoleSetRequestBody,
+        ReplaceRoleInRoleSetRequestBodyTypedDict,
+        ReplaceRoleInRoleSetRequestTypedDict,
+    )
+    from .replacerolesetop import (
+        ReplaceRoleSetRequest,
+        ReplaceRoleSetRequestBody,
+        ReplaceRoleSetRequestBodyTypedDict,
+        ReplaceRoleSetRequestTypedDict,
     )
     from .responsevalidationerror import ResponseValidationError
     from .reverttemplateop import (
@@ -1075,6 +1147,23 @@ if TYPE_CHECKING:
     )
     from .role import Role, RoleObject, RoleTypedDict
     from .roles import Roles, RolesTypedDict
+    from .roleset import (
+        CreatorRole,
+        CreatorRoleTypedDict,
+        DefaultRole,
+        DefaultRoleTypedDict,
+        RoleSet,
+        RoleSetCreatorRoleObject,
+        RoleSetDefaultRoleObject,
+        RoleSetMigration,
+        RoleSetMigrationTypedDict,
+        RoleSetObject,
+        RoleSetRoleSetMigrationObject,
+        RoleSetTypedDict,
+        Type,
+    )
+    from .rolesetitem import RoleSetItem, RoleSetItemObject, RoleSetItemTypedDict
+    from .rolesets import RoleSets, RoleSetsTypedDict
     from .rotatemachinesecretkeyop import (
         RotateMachineSecretKeyRequest,
         RotateMachineSecretKeyRequestBody,
@@ -1121,6 +1210,11 @@ if TYPE_CHECKING:
         SAMLConnectionAttributeMappingTypedDict,
     )
     from .samlconnections import SAMLConnections, SAMLConnectionsTypedDict
+    from .schemas_commerceplan import (
+        SchemasCommercePlan,
+        SchemasCommercePlanObject,
+        SchemasCommercePlanTypedDict,
+    )
     from .schemas_commercesubscriptionitem import (
         Credit,
         CreditTypedDict,
@@ -1186,6 +1280,12 @@ if TYPE_CHECKING:
     )
     from .sessionrefresh import SessionRefresh, SessionRefreshTypedDict
     from .sessiontask import SessionTask, SessionTaskTypedDict
+    from .setuserpasswordcompromisedop import (
+        SetUserPasswordCompromisedRequest,
+        SetUserPasswordCompromisedRequestBody,
+        SetUserPasswordCompromisedRequestBodyTypedDict,
+        SetUserPasswordCompromisedRequestTypedDict,
+    )
     from .setuserprofileimageop import (
         File,
         FileTypedDict,
@@ -1233,6 +1333,10 @@ if TYPE_CHECKING:
     from .totalcount import TotalCount, TotalCountObject, TotalCountTypedDict
     from .unbanuserop import UnbanUserRequest, UnbanUserRequestTypedDict
     from .unlockuserop import UnlockUserRequest, UnlockUserRequestTypedDict
+    from .unsetuserpasswordcompromisedop import (
+        UnsetUserPasswordCompromisedRequest,
+        UnsetUserPasswordCompromisedRequestTypedDict,
+    )
     from .updateapikeyop import (
         UpdateAPIKeyAPIKeysErrors,
         UpdateAPIKeyAPIKeysErrorsTypedDict,
@@ -1273,6 +1377,10 @@ if TYPE_CHECKING:
     from .updateinstanceorganizationsettingsop import (
         UpdateInstanceOrganizationSettingsRequestBody,
         UpdateInstanceOrganizationSettingsRequestBodyTypedDict,
+    )
+    from .updateinstanceprotectop import (
+        UpdateInstanceProtectRequestBody,
+        UpdateInstanceProtectRequestBodyTypedDict,
     )
     from .updateinstancerestrictionsop import (
         UpdateInstanceRestrictionsRequestBody,
@@ -1343,6 +1451,13 @@ if TYPE_CHECKING:
     from .updateproductioninstancedomainop import (
         UpdateProductionInstanceDomainRequestBody,
         UpdateProductionInstanceDomainRequestBodyTypedDict,
+    )
+    from .updaterolesetop import (
+        UpdateRoleSetRequest,
+        UpdateRoleSetRequestBody,
+        UpdateRoleSetRequestBodyTypedDict,
+        UpdateRoleSetRequestTypedDict,
+        UpdateRoleSetType,
     )
     from .updatesamlconnectionop import (
         AttributeMapping,
@@ -1519,6 +1634,10 @@ __all__ = [
     "ActorTypedDict",
     "AddDomainRequestBody",
     "AddDomainRequestBodyTypedDict",
+    "AddRolesToRoleSetRequest",
+    "AddRolesToRoleSetRequestBody",
+    "AddRolesToRoleSetRequestBodyTypedDict",
+    "AddRolesToRoleSetRequestTypedDict",
     "Admin",
     "AdminTypedDict",
     "AllowlistIdentifier",
@@ -1540,6 +1659,9 @@ __all__ = [
     "BillingPaymentAttemptObject",
     "BillingPaymentAttemptStatus",
     "BillingPaymentAttemptTypedDict",
+    "BillingPriceResponse",
+    "BillingPriceResponseObject",
+    "BillingPriceResponseTypedDict",
     "BillingStatement",
     "BillingStatementGroupsObject",
     "BillingStatementObject",
@@ -1593,6 +1715,11 @@ __all__ = [
     "CommercePlan",
     "CommercePlanObject",
     "CommercePlanTypedDict",
+    "CommercePriceTransitionDetails",
+    "CommercePriceTransitionDetailsTypedDict",
+    "CommercePriceTransitionResponse",
+    "CommercePriceTransitionResponseObject",
+    "CommercePriceTransitionResponseTypedDict",
     "CommerceSubscription",
     "CommerceSubscriptionCreditResponse",
     "CommerceSubscriptionCreditResponseTypedDict",
@@ -1632,9 +1759,15 @@ __all__ = [
     "CreateActorTokenRequestBodyTypedDict",
     "CreateAllowlistIdentifierRequestBody",
     "CreateAllowlistIdentifierRequestBodyTypedDict",
+    "CreateBillingPriceRequest",
+    "CreateBillingPriceRequestTypedDict",
+    "CreateBillingPriceTransitionRequest",
+    "CreateBillingPriceTransitionRequestTypedDict",
     "CreateBlocklistIdentifierRequestBody",
     "CreateBlocklistIdentifierRequestBodyTypedDict",
     "CreateBulkInvitationsTemplateSlug",
+    "CreateBulkWaitlistEntriesRequestBody",
+    "CreateBulkWaitlistEntriesRequestBodyTypedDict",
     "CreateEmailAddressRequestBody",
     "CreateEmailAddressRequestBodyTypedDict",
     "CreateInvitationRequestBody",
@@ -1690,6 +1823,9 @@ __all__ = [
     "CreatePhoneNumberRequestBodyTypedDict",
     "CreateRedirectURLRequestBody",
     "CreateRedirectURLRequestBodyTypedDict",
+    "CreateRoleSetRequestBody",
+    "CreateRoleSetRequestBodyTypedDict",
+    "CreateRoleSetType",
     "CreateSAMLConnectionRequestBody",
     "CreateSAMLConnectionRequestBodyAttributeMapping",
     "CreateSAMLConnectionRequestBodyAttributeMappingTypedDict",
@@ -1716,10 +1852,14 @@ __all__ = [
     "CreateUserRequestBodyTypedDict",
     "CreateWaitlistEntryRequestBody",
     "CreateWaitlistEntryRequestBodyTypedDict",
+    "CreatorRole",
+    "CreatorRoleTypedDict",
     "Credit",
     "CreditTypedDict",
     "Data",
     "DataTypedDict",
+    "DefaultRole",
+    "DefaultRoleTypedDict",
     "DeleteAPIKeyAPIKeysErrors",
     "DeleteAPIKeyAPIKeysErrorsTypedDict",
     "DeleteAPIKeyAPIKeysResponseBody",
@@ -1795,6 +1935,7 @@ __all__ = [
     "Domains",
     "DomainsEnrollmentModes",
     "DomainsTypedDict",
+    "EffectiveMode",
     "EmailAddress",
     "EmailAddressObject",
     "EmailAddressTypedDict",
@@ -1879,6 +2020,8 @@ __all__ = [
     "GetAPIKeysRequestTypedDict",
     "GetAPIKeysResponseBody",
     "GetAPIKeysResponseBodyTypedDict",
+    "GetBillingPriceListRequest",
+    "GetBillingPriceListRequestTypedDict",
     "GetBillingStatementListRequest",
     "GetBillingStatementListRequestTypedDict",
     "GetBillingStatementPaymentAttemptsRequest",
@@ -1939,6 +2082,8 @@ __all__ = [
     "GetPublicInterstitialRequestTypedDict",
     "GetRedirectURLRequest",
     "GetRedirectURLRequestTypedDict",
+    "GetRoleSetRequest",
+    "GetRoleSetRequestTypedDict",
     "GetSAMLConnectionRequest",
     "GetSAMLConnectionRequestTypedDict",
     "GetSessionListRequest",
@@ -1966,11 +2111,16 @@ __all__ = [
     "IdentificationLink",
     "IdentificationLinkTypedDict",
     "IdentifierType",
+    "ImmediateCharge",
+    "ImmediateChargeTypedDict",
     "IncludeInvalid",
     "Instance",
     "InstanceGetOrganizationMembershipsRequest",
     "InstanceGetOrganizationMembershipsRequestTypedDict",
     "InstanceObject",
+    "InstanceProtect",
+    "InstanceProtectObject",
+    "InstanceProtectTypedDict",
     "InstanceRestrictions",
     "InstanceRestrictionsObject",
     "InstanceRestrictionsTypedDict",
@@ -2032,6 +2182,8 @@ __all__ = [
     "ListPendingOrganizationInvitationsRequestTypedDict",
     "ListRedirectURLsRequest",
     "ListRedirectURLsRequestTypedDict",
+    "ListRoleSetsRequest",
+    "ListRoleSetsRequestTypedDict",
     "ListSAMLConnectionsRequest",
     "ListSAMLConnectionsRequestTypedDict",
     "ListWaitlistEntriesQueryParamStatus",
@@ -2140,6 +2292,8 @@ __all__ = [
     "OtpTypedDict",
     "PaginatedBillingPaymentAttemptResponse",
     "PaginatedBillingPaymentAttemptResponseTypedDict",
+    "PaginatedBillingPriceResponse",
+    "PaginatedBillingPriceResponseTypedDict",
     "PaginatedBillingStatementResponse",
     "PaginatedBillingStatementResponseTypedDict",
     "PaginatedCommercePlanResponse",
@@ -2180,6 +2334,9 @@ __all__ = [
     "PreviewTemplateRequestTypedDict",
     "PreviewTemplateResponseBody",
     "PreviewTemplateResponseBodyTypedDict",
+    "PreviousSubscriptionItemStatus",
+    "PriceTransitionRequest",
+    "PriceTransitionRequestTypedDict",
     "Protocol",
     "Provider",
     "ProxyCheck",
@@ -2201,6 +2358,14 @@ __all__ = [
     "RejectWaitlistEntryRequestTypedDict",
     "RemovePermissionFromOrganizationRoleRequest",
     "RemovePermissionFromOrganizationRoleRequestTypedDict",
+    "ReplaceRoleInRoleSetRequest",
+    "ReplaceRoleInRoleSetRequestBody",
+    "ReplaceRoleInRoleSetRequestBodyTypedDict",
+    "ReplaceRoleInRoleSetRequestTypedDict",
+    "ReplaceRoleSetRequest",
+    "ReplaceRoleSetRequestBody",
+    "ReplaceRoleSetRequestBodyTypedDict",
+    "ReplaceRoleSetRequestTypedDict",
     "RequestBody",
     "RequestBody1",
     "RequestBody1TypedDict",
@@ -2263,6 +2428,19 @@ __all__ = [
     "RevokeSignInTokenRequestTypedDict",
     "Role",
     "RoleObject",
+    "RoleSet",
+    "RoleSetCreatorRoleObject",
+    "RoleSetDefaultRoleObject",
+    "RoleSetItem",
+    "RoleSetItemObject",
+    "RoleSetItemTypedDict",
+    "RoleSetMigration",
+    "RoleSetMigrationTypedDict",
+    "RoleSetObject",
+    "RoleSetRoleSetMigrationObject",
+    "RoleSetTypedDict",
+    "RoleSets",
+    "RoleSetsTypedDict",
     "RoleTypedDict",
     "Roles",
     "RolesTypedDict",
@@ -2292,6 +2470,9 @@ __all__ = [
     "SamlConnection",
     "SamlConnectionTypedDict",
     "SamlTypedDict",
+    "SchemasCommercePlan",
+    "SchemasCommercePlanObject",
+    "SchemasCommercePlanTypedDict",
     "SchemasCommerceSubscriptionItem",
     "SchemasCommerceSubscriptionItemAmount",
     "SchemasCommerceSubscriptionItemAmountTypedDict",
@@ -2331,6 +2512,10 @@ __all__ = [
     "SessionTask",
     "SessionTaskTypedDict",
     "SessionTypedDict",
+    "SetUserPasswordCompromisedRequest",
+    "SetUserPasswordCompromisedRequestBody",
+    "SetUserPasswordCompromisedRequestBodyTypedDict",
+    "SetUserPasswordCompromisedRequestTypedDict",
     "SetUserProfileImageRequest",
     "SetUserProfileImageRequestBody",
     "SetUserProfileImageRequestBodyTypedDict",
@@ -2380,10 +2565,13 @@ __all__ = [
     "TotalsTypedDict",
     "Two",
     "TwoTypedDict",
+    "Type",
     "UnbanUserRequest",
     "UnbanUserRequestTypedDict",
     "UnlockUserRequest",
     "UnlockUserRequestTypedDict",
+    "UnsetUserPasswordCompromisedRequest",
+    "UnsetUserPasswordCompromisedRequestTypedDict",
     "UpdateAPIKeyAPIKeysErrors",
     "UpdateAPIKeyAPIKeysErrorsTypedDict",
     "UpdateAPIKeyAPIKeysResponseBody",
@@ -2411,6 +2599,8 @@ __all__ = [
     "UpdateInstanceAuthConfigRequestBodyTypedDict",
     "UpdateInstanceOrganizationSettingsRequestBody",
     "UpdateInstanceOrganizationSettingsRequestBodyTypedDict",
+    "UpdateInstanceProtectRequestBody",
+    "UpdateInstanceProtectRequestBodyTypedDict",
     "UpdateInstanceRequestBody",
     "UpdateInstanceRequestBodyTypedDict",
     "UpdateInstanceRestrictionsRequestBody",
@@ -2459,6 +2649,11 @@ __all__ = [
     "UpdatePhoneNumberRequestTypedDict",
     "UpdateProductionInstanceDomainRequestBody",
     "UpdateProductionInstanceDomainRequestBodyTypedDict",
+    "UpdateRoleSetRequest",
+    "UpdateRoleSetRequestBody",
+    "UpdateRoleSetRequestBodyTypedDict",
+    "UpdateRoleSetRequestTypedDict",
+    "UpdateRoleSetType",
     "UpdateSAMLConnectionRequest",
     "UpdateSAMLConnectionRequestBody",
     "UpdateSAMLConnectionRequestBodyTypedDict",
@@ -2679,6 +2874,10 @@ _dynamic_imports: dict[str, str] = {
     "ActorTokenTypedDict": ".actortoken",
     "AddDomainRequestBody": ".adddomainop",
     "AddDomainRequestBodyTypedDict": ".adddomainop",
+    "AddRolesToRoleSetRequest": ".addrolestorolesetop",
+    "AddRolesToRoleSetRequestBody": ".addrolestorolesetop",
+    "AddRolesToRoleSetRequestBodyTypedDict": ".addrolestorolesetop",
+    "AddRolesToRoleSetRequestTypedDict": ".addrolestorolesetop",
     "AllowlistIdentifier": ".allowlistidentifier",
     "AllowlistIdentifierObject": ".allowlistidentifier",
     "AllowlistIdentifierTypedDict": ".allowlistidentifier",
@@ -2695,6 +2894,9 @@ _dynamic_imports: dict[str, str] = {
     "PayeeTypedDict": ".billingpaymentattempt",
     "SubscriptionItem": ".billingpaymentattempt",
     "SubscriptionItemTypedDict": ".billingpaymentattempt",
+    "BillingPriceResponse": ".billingpriceresponse",
+    "BillingPriceResponseObject": ".billingpriceresponse",
+    "BillingPriceResponseTypedDict": ".billingpriceresponse",
     "BillingStatement": ".billingstatement",
     "BillingStatementGroupsObject": ".billingstatement",
     "BillingStatementObject": ".billingstatement",
@@ -2744,6 +2946,15 @@ _dynamic_imports: dict[str, str] = {
     "CommercePlan": ".commerceplan",
     "CommercePlanObject": ".commerceplan",
     "CommercePlanTypedDict": ".commerceplan",
+    "CommercePriceTransitionDetails": ".commercepricetransitiondetails",
+    "CommercePriceTransitionDetailsTypedDict": ".commercepricetransitiondetails",
+    "EffectiveMode": ".commercepricetransitiondetails",
+    "ImmediateCharge": ".commercepricetransitiondetails",
+    "ImmediateChargeTypedDict": ".commercepricetransitiondetails",
+    "PreviousSubscriptionItemStatus": ".commercepricetransitiondetails",
+    "CommercePriceTransitionResponse": ".commercepricetransitionresponse",
+    "CommercePriceTransitionResponseObject": ".commercepricetransitionresponse",
+    "CommercePriceTransitionResponseTypedDict": ".commercepricetransitionresponse",
     "CommerceSubscription": ".commercesubscription",
     "CommerceSubscriptionObject": ".commercesubscription",
     "CommerceSubscriptionStatus": ".commercesubscription",
@@ -2792,11 +3003,17 @@ _dynamic_imports: dict[str, str] = {
     "CreateAPIKeyResponseBodyTypedDict": ".createapikeyop",
     "Errors": ".createapikeyop",
     "ErrorsTypedDict": ".createapikeyop",
+    "CreateBillingPriceRequest": ".createbillingpricerequest",
+    "CreateBillingPriceRequestTypedDict": ".createbillingpricerequest",
+    "CreateBillingPriceTransitionRequest": ".createbillingpricetransitionop",
+    "CreateBillingPriceTransitionRequestTypedDict": ".createbillingpricetransitionop",
     "CreateBlocklistIdentifierRequestBody": ".createblocklistidentifierop",
     "CreateBlocklistIdentifierRequestBodyTypedDict": ".createblocklistidentifierop",
     "CreateBulkInvitationsTemplateSlug": ".createbulkinvitationsop",
     "RequestBody": ".createbulkinvitationsop",
     "RequestBodyTypedDict": ".createbulkinvitationsop",
+    "CreateBulkWaitlistEntriesRequestBody": ".createbulkwaitlistentriesop",
+    "CreateBulkWaitlistEntriesRequestBodyTypedDict": ".createbulkwaitlistentriesop",
     "CreateEmailAddressRequestBody": ".createemailaddressop",
     "CreateEmailAddressRequestBodyTypedDict": ".createemailaddressop",
     "CreateInvitationRequestBody": ".createinvitationop",
@@ -2853,6 +3070,9 @@ _dynamic_imports: dict[str, str] = {
     "CreatePhoneNumberRequestBodyTypedDict": ".createphonenumberop",
     "CreateRedirectURLRequestBody": ".createredirecturlop",
     "CreateRedirectURLRequestBodyTypedDict": ".createredirecturlop",
+    "CreateRoleSetRequestBody": ".createrolesetop",
+    "CreateRoleSetRequestBodyTypedDict": ".createrolesetop",
+    "CreateRoleSetType": ".createrolesetop",
     "CreateSAMLConnectionRequestBody": ".createsamlconnectionop",
     "CreateSAMLConnectionRequestBodyAttributeMapping": ".createsamlconnectionop",
     "CreateSAMLConnectionRequestBodyAttributeMappingTypedDict": ".createsamlconnectionop",
@@ -3121,6 +3341,8 @@ _dynamic_imports: dict[str, str] = {
     "GetAPIKeysResponseBody": ".getapikeysop",
     "GetAPIKeysResponseBodyTypedDict": ".getapikeysop",
     "IncludeInvalid": ".getapikeysop",
+    "GetBillingPriceListRequest": ".getbillingpricelistop",
+    "GetBillingPriceListRequestTypedDict": ".getbillingpricelistop",
     "GetBillingStatementListRequest": ".getbillingstatementlistop",
     "GetBillingStatementListRequestTypedDict": ".getbillingstatementlistop",
     "GetBillingStatementRequest": ".getbillingstatementop",
@@ -3185,6 +3407,8 @@ _dynamic_imports: dict[str, str] = {
     "GetPublicInterstitialRequestTypedDict": ".getpublicinterstitialop",
     "GetRedirectURLRequest": ".getredirecturlop",
     "GetRedirectURLRequestTypedDict": ".getredirecturlop",
+    "GetRoleSetRequest": ".getrolesetop",
+    "GetRoleSetRequestTypedDict": ".getrolesetop",
     "GetSAMLConnectionRequest": ".getsamlconnectionop",
     "GetSAMLConnectionRequestTypedDict": ".getsamlconnectionop",
     "GetSessionListRequest": ".getsessionlistop",
@@ -3215,6 +3439,9 @@ _dynamic_imports: dict[str, str] = {
     "InstanceTypedDict": ".instance",
     "InstanceGetOrganizationMembershipsRequest": ".instancegetorganizationmembershipsop",
     "InstanceGetOrganizationMembershipsRequestTypedDict": ".instancegetorganizationmembershipsop",
+    "InstanceProtect": ".instanceprotect",
+    "InstanceProtectObject": ".instanceprotect",
+    "InstanceProtectTypedDict": ".instanceprotect",
     "InstanceRestrictions": ".instancerestrictions",
     "InstanceRestrictionsObject": ".instancerestrictions",
     "InstanceRestrictionsTypedDict": ".instancerestrictions",
@@ -3277,6 +3504,8 @@ _dynamic_imports: dict[str, str] = {
     "ListPendingOrganizationInvitationsRequestTypedDict": ".listpendingorganizationinvitationsop",
     "ListRedirectURLsRequest": ".listredirecturlsop",
     "ListRedirectURLsRequestTypedDict": ".listredirecturlsop",
+    "ListRoleSetsRequest": ".listrolesetsop",
+    "ListRoleSetsRequestTypedDict": ".listrolesetsop",
     "ListSAMLConnectionsRequest": ".listsamlconnectionsop",
     "ListSAMLConnectionsRequestTypedDict": ".listsamlconnectionsop",
     "ListWaitlistEntriesQueryParamStatus": ".listwaitlistentriesop",
@@ -3372,6 +3601,8 @@ _dynamic_imports: dict[str, str] = {
     "OrganizationWithLogoTypedDict": ".organizationwithlogo",
     "PaginatedBillingPaymentAttemptResponse": ".paginatedbillingpaymentattemptresponse",
     "PaginatedBillingPaymentAttemptResponseTypedDict": ".paginatedbillingpaymentattemptresponse",
+    "PaginatedBillingPriceResponse": ".paginatedbillingpriceresponse",
+    "PaginatedBillingPriceResponseTypedDict": ".paginatedbillingpriceresponse",
     "PaginatedBillingStatementResponse": ".paginatedbillingstatementresponse",
     "PaginatedBillingStatementResponseTypedDict": ".paginatedbillingstatementresponse",
     "PaginatedCommercePlanResponse": ".paginatedcommerceplanresponse",
@@ -3415,6 +3646,8 @@ _dynamic_imports: dict[str, str] = {
     "PreviewTemplateRequestTypedDict": ".previewtemplateop",
     "PreviewTemplateResponseBody": ".previewtemplateop",
     "PreviewTemplateResponseBodyTypedDict": ".previewtemplateop",
+    "PriceTransitionRequest": ".pricetransitionrequest",
+    "PriceTransitionRequestTypedDict": ".pricetransitionrequest",
     "ProxyCheck": ".proxycheck",
     "ProxyCheckObject": ".proxycheck",
     "ProxyCheckTypedDict": ".proxycheck",
@@ -3430,6 +3663,14 @@ _dynamic_imports: dict[str, str] = {
     "RejectWaitlistEntryRequestTypedDict": ".rejectwaitlistentryop",
     "RemovePermissionFromOrganizationRoleRequest": ".removepermissionfromorganizationroleop",
     "RemovePermissionFromOrganizationRoleRequestTypedDict": ".removepermissionfromorganizationroleop",
+    "ReplaceRoleInRoleSetRequest": ".replaceroleinrolesetop",
+    "ReplaceRoleInRoleSetRequestBody": ".replaceroleinrolesetop",
+    "ReplaceRoleInRoleSetRequestBodyTypedDict": ".replaceroleinrolesetop",
+    "ReplaceRoleInRoleSetRequestTypedDict": ".replaceroleinrolesetop",
+    "ReplaceRoleSetRequest": ".replacerolesetop",
+    "ReplaceRoleSetRequestBody": ".replacerolesetop",
+    "ReplaceRoleSetRequestBodyTypedDict": ".replacerolesetop",
+    "ReplaceRoleSetRequestTypedDict": ".replacerolesetop",
     "ResponseValidationError": ".responsevalidationerror",
     "RevertTemplatePathParamTemplateType": ".reverttemplateop",
     "RevertTemplateRequest": ".reverttemplateop",
@@ -3481,6 +3722,24 @@ _dynamic_imports: dict[str, str] = {
     "RoleTypedDict": ".role",
     "Roles": ".roles",
     "RolesTypedDict": ".roles",
+    "CreatorRole": ".roleset",
+    "CreatorRoleTypedDict": ".roleset",
+    "DefaultRole": ".roleset",
+    "DefaultRoleTypedDict": ".roleset",
+    "RoleSet": ".roleset",
+    "RoleSetCreatorRoleObject": ".roleset",
+    "RoleSetDefaultRoleObject": ".roleset",
+    "RoleSetMigration": ".roleset",
+    "RoleSetMigrationTypedDict": ".roleset",
+    "RoleSetObject": ".roleset",
+    "RoleSetRoleSetMigrationObject": ".roleset",
+    "RoleSetTypedDict": ".roleset",
+    "Type": ".roleset",
+    "RoleSetItem": ".rolesetitem",
+    "RoleSetItemObject": ".rolesetitem",
+    "RoleSetItemTypedDict": ".rolesetitem",
+    "RoleSets": ".rolesets",
+    "RoleSetsTypedDict": ".rolesets",
     "RotateMachineSecretKeyRequest": ".rotatemachinesecretkeyop",
     "RotateMachineSecretKeyRequestBody": ".rotatemachinesecretkeyop",
     "RotateMachineSecretKeyRequestBodyTypedDict": ".rotatemachinesecretkeyop",
@@ -3520,6 +3779,9 @@ _dynamic_imports: dict[str, str] = {
     "SAMLConnectionAttributeMappingTypedDict": ".samlconnectionattributemapping",
     "SAMLConnections": ".samlconnections",
     "SAMLConnectionsTypedDict": ".samlconnections",
+    "SchemasCommercePlan": ".schemas_commerceplan",
+    "SchemasCommercePlanObject": ".schemas_commerceplan",
+    "SchemasCommercePlanTypedDict": ".schemas_commerceplan",
     "Credit": ".schemas_commercesubscriptionitem",
     "CreditTypedDict": ".schemas_commercesubscriptionitem",
     "LifetimePaid": ".schemas_commercesubscriptionitem",
@@ -3578,6 +3840,10 @@ _dynamic_imports: dict[str, str] = {
     "SessionRefreshTypedDict": ".sessionrefresh",
     "SessionTask": ".sessiontask",
     "SessionTaskTypedDict": ".sessiontask",
+    "SetUserPasswordCompromisedRequest": ".setuserpasswordcompromisedop",
+    "SetUserPasswordCompromisedRequestBody": ".setuserpasswordcompromisedop",
+    "SetUserPasswordCompromisedRequestBodyTypedDict": ".setuserpasswordcompromisedop",
+    "SetUserPasswordCompromisedRequestTypedDict": ".setuserpasswordcompromisedop",
     "File": ".setuserprofileimageop",
     "FileTypedDict": ".setuserprofileimageop",
     "SetUserProfileImageRequest": ".setuserprofileimageop",
@@ -3624,6 +3890,8 @@ _dynamic_imports: dict[str, str] = {
     "UnbanUserRequestTypedDict": ".unbanuserop",
     "UnlockUserRequest": ".unlockuserop",
     "UnlockUserRequestTypedDict": ".unlockuserop",
+    "UnsetUserPasswordCompromisedRequest": ".unsetuserpasswordcompromisedop",
+    "UnsetUserPasswordCompromisedRequestTypedDict": ".unsetuserpasswordcompromisedop",
     "UpdateAPIKeyAPIKeysErrors": ".updateapikeyop",
     "UpdateAPIKeyAPIKeysErrorsTypedDict": ".updateapikeyop",
     "UpdateAPIKeyAPIKeysResponseBody": ".updateapikeyop",
@@ -3653,6 +3921,8 @@ _dynamic_imports: dict[str, str] = {
     "UpdateInstanceRequestBodyTypedDict": ".updateinstanceop",
     "UpdateInstanceOrganizationSettingsRequestBody": ".updateinstanceorganizationsettingsop",
     "UpdateInstanceOrganizationSettingsRequestBodyTypedDict": ".updateinstanceorganizationsettingsop",
+    "UpdateInstanceProtectRequestBody": ".updateinstanceprotectop",
+    "UpdateInstanceProtectRequestBodyTypedDict": ".updateinstanceprotectop",
     "UpdateInstanceRestrictionsRequestBody": ".updateinstancerestrictionsop",
     "UpdateInstanceRestrictionsRequestBodyTypedDict": ".updateinstancerestrictionsop",
     "UpdateJWTTemplateClaims": ".updatejwttemplateop",
@@ -3699,6 +3969,11 @@ _dynamic_imports: dict[str, str] = {
     "UpdatePhoneNumberRequestTypedDict": ".updatephonenumberop",
     "UpdateProductionInstanceDomainRequestBody": ".updateproductioninstancedomainop",
     "UpdateProductionInstanceDomainRequestBodyTypedDict": ".updateproductioninstancedomainop",
+    "UpdateRoleSetRequest": ".updaterolesetop",
+    "UpdateRoleSetRequestBody": ".updaterolesetop",
+    "UpdateRoleSetRequestBodyTypedDict": ".updaterolesetop",
+    "UpdateRoleSetRequestTypedDict": ".updaterolesetop",
+    "UpdateRoleSetType": ".updaterolesetop",
     "AttributeMapping": ".updatesamlconnectionop",
     "AttributeMappingTypedDict": ".updatesamlconnectionop",
     "UpdateSAMLConnectionRequest": ".updatesamlconnectionop",

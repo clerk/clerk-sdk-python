@@ -1,0 +1,9 @@
+# SetUserPasswordCompromisedRequest
+
+
+## Fields
+
+| Field                                                                                                        | Type                                                                                                         | Required                                                                                                     | Description                                                                                                  |
+| ------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------ |
+| `user_id`                                                                                                    | *str*                                                                                                        | :heavy_check_mark:                                                                                           | The ID of the user to set the password as compromised                                                        |
+| `request_body`                                                                                               | [Optional[models.SetUserPasswordCompromisedRequestBody]](../models/setuserpasswordcompromisedrequestbody.md) | :heavy_minus_sign:                                                                                           | N/A                                                                                                          |

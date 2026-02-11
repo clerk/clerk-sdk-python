@@ -1,0 +1,9 @@
+# ReplaceRoleSetRequestBody
+
+
+## Fields
+
+| Field                                                                                                               | Type                                                                                                                | Required                                                                                                            | Description                                                                                                         |
+| ------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| `dest_role_set_key`                                                                                                 | *str*                                                                                                               | :heavy_check_mark:                                                                                                  | The key of the destination role set                                                                                 |
+| `reassignment_mappings`                                                                                             | Dict[str, *str*]                                                                                                    | :heavy_minus_sign:                                                                                                  | Mappings from source role keys to destination role keys.<br/>Required if members have roles that need to be reassigned. |

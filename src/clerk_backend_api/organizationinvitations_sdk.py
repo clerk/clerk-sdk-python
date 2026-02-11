@@ -265,6 +265,7 @@ class OrganizationInvitationsSDK(BaseSDK):
         private_metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         redirect_url: OptionalNullable[str] = UNSET,
         expires_in_days: OptionalNullable[int] = UNSET,
+        notify: OptionalNullable[bool] = True,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -300,6 +301,8 @@ class OrganizationInvitationsSDK(BaseSDK):
             When the organization invitation is accepted, the metadata will be transferred to the newly created organization membership.
         :param redirect_url: Optional URL that the invitee will be redirected to once they accept the invitation by clicking the join link in the invitation email.
         :param expires_in_days: The number of days the invitation will be valid for. By default, the invitation has a 30 days expire.
+        :param notify: Optional flag which denotes whether an email invitation should be sent to the given email address.
+            Defaults to `true`.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -325,6 +328,7 @@ class OrganizationInvitationsSDK(BaseSDK):
                 private_metadata=private_metadata,
                 redirect_url=redirect_url,
                 expires_in_days=expires_in_days,
+                notify=notify,
             ),
         )
 
@@ -405,6 +409,7 @@ class OrganizationInvitationsSDK(BaseSDK):
         private_metadata: OptionalNullable[Dict[str, Any]] = UNSET,
         redirect_url: OptionalNullable[str] = UNSET,
         expires_in_days: OptionalNullable[int] = UNSET,
+        notify: OptionalNullable[bool] = True,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -440,6 +445,8 @@ class OrganizationInvitationsSDK(BaseSDK):
             When the organization invitation is accepted, the metadata will be transferred to the newly created organization membership.
         :param redirect_url: Optional URL that the invitee will be redirected to once they accept the invitation by clicking the join link in the invitation email.
         :param expires_in_days: The number of days the invitation will be valid for. By default, the invitation has a 30 days expire.
+        :param notify: Optional flag which denotes whether an email invitation should be sent to the given email address.
+            Defaults to `true`.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -465,6 +472,7 @@ class OrganizationInvitationsSDK(BaseSDK):
                 private_metadata=private_metadata,
                 redirect_url=redirect_url,
                 expires_in_days=expires_in_days,
+                notify=notify,
             ),
         )
 

@@ -5,9 +5,12 @@
 ### Available Operations
 
 * [list_plans](#list_plans) - List all billing plans
+* [list_prices](#list_prices) - List all billing prices
+* [create_price](#create_price) - Create a custom billing price
 * [list_subscription_items](#list_subscription_items) - List all subscription items
 * [cancel_subscription_item](#cancel_subscription_item) - Cancel a subscription item
 * [extend_subscription_item_free_trial](#extend_subscription_item_free_trial) - Extend free trial for a subscription item
+* [create_price_transition](#create_price_transition) - Create a price transition for a subscription item
 * [list_statements](#list_statements) - List all billing statements
 * [get_statement](#get_statement) - Retrieve a billing statement
 * [get_statement_payment_attempts](#get_statement_payment_attempts) - List payment attempts for a billing statement
@@ -55,6 +58,97 @@ with Clerk(
 | Error Type         | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
 | models.ClerkErrors | 400, 401, 422      | application/json   |
+| models.ClerkErrors | 500                | application/json   |
+| models.SDKError    | 4XX, 5XX           | \*/\*              |
+
+## list_prices
+
+Returns a list of all prices for the instance. The prices are returned sorted by amount ascending,
+then by creation date descending. This includes both default and custom prices. Pagination is supported.
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="GetBillingPriceList" method="get" path="/billing/prices" -->
+```python
+from clerk_backend_api import Clerk
+
+
+with Clerk(
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+) as clerk:
+
+    res = clerk.billing.list_prices(paginated=True, limit=20, offset=10, plan_id="<id>")
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                                                                                                 | Type                                                                                                                                      | Required                                                                                                                                  | Description                                                                                                                               | Example                                                                                                                                   |
+| ----------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| `paginated`                                                                                                                               | *Optional[bool]*                                                                                                                          | :heavy_minus_sign:                                                                                                                        | Whether to paginate the results.<br/>If true, the results will be paginated.<br/>If false, the results will not be paginated.             |                                                                                                                                           |
+| `limit`                                                                                                                                   | *Optional[int]*                                                                                                                           | :heavy_minus_sign:                                                                                                                        | Applies a limit to the number of results returned.<br/>Can be used for paginating the results together with `offset`.                     | 20                                                                                                                                        |
+| `offset`                                                                                                                                  | *Optional[int]*                                                                                                                           | :heavy_minus_sign:                                                                                                                        | Skip the first `offset` results when paginating.<br/>Needs to be an integer greater or equal to zero.<br/>To be used in conjunction with `limit`. | 10                                                                                                                                        |
+| `plan_id`                                                                                                                                 | *Optional[str]*                                                                                                                           | :heavy_minus_sign:                                                                                                                        | Filter prices by plan ID                                                                                                                  |                                                                                                                                           |
+| `retries`                                                                                                                                 | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                          | :heavy_minus_sign:                                                                                                                        | Configuration to override the default retry behavior of the client.                                                                       |                                                                                                                                           |
+
+### Response
+
+**[models.PaginatedBillingPriceResponse](../../models/paginatedbillingpriceresponse.md)**
+
+### Errors
+
+| Error Type         | Status Code        | Content Type       |
+| ------------------ | ------------------ | ------------------ |
+| models.ClerkErrors | 400, 401, 404, 422 | application/json   |
+| models.ClerkErrors | 500                | application/json   |
+| models.SDKError    | 4XX, 5XX           | \*/\*              |
+
+## create_price
+
+Creates a custom price for a billing plan. Custom prices allow you to offer different pricing
+to specific customers while maintaining the same plan structure.
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="CreateBillingPrice" method="post" path="/billing/prices" -->
+```python
+from clerk_backend_api import Clerk
+
+
+with Clerk(
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+) as clerk:
+
+    res = clerk.billing.create_price(plan_id="<id>", amount=826545, currency="USD", annual_monthly_amount=565484, description="why whoa remarkable properly freely at creative following inspect woot")
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `plan_id`                                                           | *str*                                                               | :heavy_check_mark:                                                  | The ID of the plan this price belongs to.                           |
+| `amount`                                                            | *int*                                                               | :heavy_check_mark:                                                  | The amount in cents for the price. Must be at least $1 (100 cents). |
+| `currency`                                                          | *Optional[str]*                                                     | :heavy_minus_sign:                                                  | The currency code (e.g., "USD"). Defaults to USD.                   |
+| `annual_monthly_amount`                                             | *Optional[int]*                                                     | :heavy_minus_sign:                                                  | The monthly amount in cents when billed annually. Optional.         |
+| `description`                                                       | *Optional[str]*                                                     | :heavy_minus_sign:                                                  | An optional description for this custom price.                      |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+
+### Response
+
+**[models.BillingPriceResponse](../../models/billingpriceresponse.md)**
+
+### Errors
+
+| Error Type         | Status Code        | Content Type       |
+| ------------------ | ------------------ | ------------------ |
+| models.ClerkErrors | 400, 401, 404, 422 | application/json   |
 | models.ClerkErrors | 500                | application/json   |
 | models.SDKError    | 4XX, 5XX           | \*/\*              |
 
@@ -195,6 +289,50 @@ with Clerk(
 | models.ClerkErrors      | 400, 401, 403, 404, 422 | application/json        |
 | models.ClerkErrors      | 500                     | application/json        |
 | models.SDKError         | 4XX, 5XX                | \*/\*                   |
+
+## create_price_transition
+
+Creates a price transition for the specified subscription item.
+This may create an upcoming subscription item or activate immediately depending on plan and payer rules.
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="CreateBillingPriceTransition" method="post" path="/billing/subscription_items/{subscription_item_id}/price_transition" -->
+```python
+from clerk_backend_api import Clerk
+
+
+with Clerk(
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+) as clerk:
+
+    res = clerk.billing.create_price_transition(subscription_item_id="<id>", from_price_id="<id>", to_price_id="<id>")
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `subscription_item_id`                                              | *str*                                                               | :heavy_check_mark:                                                  | The ID of the subscription item to transition                       |
+| `from_price_id`                                                     | *str*                                                               | :heavy_check_mark:                                                  | The current price ID of the subscription item.                      |
+| `to_price_id`                                                       | *str*                                                               | :heavy_check_mark:                                                  | The target price ID to transition to.                               |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+
+### Response
+
+**[models.CommercePriceTransitionResponse](../../models/commercepricetransitionresponse.md)**
+
+### Errors
+
+| Error Type                   | Status Code                  | Content Type                 |
+| ---------------------------- | ---------------------------- | ---------------------------- |
+| models.ClerkErrors           | 400, 401, 403, 404, 409, 422 | application/json             |
+| models.ClerkErrors           | 500                          | application/json             |
+| models.SDKError              | 4XX, 5XX                     | \*/\*                        |
 
 ## list_statements
 

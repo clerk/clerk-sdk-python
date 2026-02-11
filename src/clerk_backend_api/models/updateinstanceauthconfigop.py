@@ -21,7 +21,7 @@ class UpdateInstanceAuthConfigRequestBodyTypedDict(TypedDict):
     Note that this value should contain only the local part of the address (e.g. `foo` for `foo@example.com`).
     """
     progressive_sign_up: NotRequired[Nullable[bool]]
-    r"""Enable the Progressive Sign Up algorithm. Refer to the [docs](https://clerk.com/docs/upgrade-guides/progressive-sign-up) for more info."""
+    r"""Enable the Progressive Sign Up algorithm. This feature is deprecated, please contact support if you need assistance."""
     test_mode: NotRequired[Nullable[bool]]
     r"""Toggles test mode for this instance, allowing the use of test email addresses and phone numbers.
     Defaults to true for development instances.
@@ -39,7 +39,7 @@ class UpdateInstanceAuthConfigRequestBody(BaseModel):
     """
 
     progressive_sign_up: OptionalNullable[bool] = UNSET
-    r"""Enable the Progressive Sign Up algorithm. Refer to the [docs](https://clerk.com/docs/upgrade-guides/progressive-sign-up) for more info."""
+    r"""Enable the Progressive Sign Up algorithm. This feature is deprecated, please contact support if you need assistance."""
 
     test_mode: OptionalNullable[bool] = UNSET
     r"""Toggles test mode for this instance, allowing the use of test email addresses and phone numbers.
@@ -48,40 +48,39 @@ class UpdateInstanceAuthConfigRequestBody(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = [
-            "restricted_to_allowlist",
-            "from_email_address",
-            "progressive_sign_up",
-            "test_mode",
-        ]
-        nullable_fields = [
-            "restricted_to_allowlist",
-            "from_email_address",
-            "progressive_sign_up",
-            "test_mode",
-        ]
-        null_default_fields = []
-
+        optional_fields = set(
+            [
+                "restricted_to_allowlist",
+                "from_email_address",
+                "progressive_sign_up",
+                "test_mode",
+            ]
+        )
+        nullable_fields = set(
+            [
+                "restricted_to_allowlist",
+                "from_email_address",
+                "progressive_sign_up",
+                "test_mode",
+            ]
+        )
         serialized = handler(self)
-
         m = {}
 
         for n, f in type(self).model_fields.items():
             k = f.alias or n
             val = serialized.get(k)
-            serialized.pop(k, None)
+            is_nullable_and_explicitly_set = (
+                k in nullable_fields
+                and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
+            )
 
-            optional_nullable = k in optional_fields and k in nullable_fields
-            is_set = (
-                self.__pydantic_fields_set__.intersection({n})
-                or k in null_default_fields
-            )  # pylint: disable=no-member
-
-            if val is not None and val != UNSET_SENTINEL:
-                m[k] = val
-            elif val != UNSET_SENTINEL and (
-                not k in optional_fields or (optional_nullable and is_set)
-            ):
-                m[k] = val
+            if val != UNSET_SENTINEL:
+                if (
+                    val is not None
+                    or k not in optional_fields
+                    or is_nullable_and_explicitly_set
+                ):
+                    m[k] = val
 
         return m

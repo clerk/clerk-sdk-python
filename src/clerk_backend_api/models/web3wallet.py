@@ -9,10 +9,9 @@ from clerk_backend_api.types import (
     UNSET,
     UNSET_SENTINEL,
 )
-from clerk_backend_api.utils import get_discriminator, validate_open_enum
+from clerk_backend_api.utils import get_discriminator
 from enum import Enum
 from pydantic import Discriminator, Tag, field_serializer, model_serializer
-from pydantic.functional_validators import PlainValidator
 from typing import Optional, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
@@ -49,10 +48,7 @@ class VerificationAdminVerificationAdminTypedDict(TypedDict):
 class VerificationAdminVerificationAdmin(BaseModel):
     status: VerificationAdminVerificationWeb3WalletStatus
 
-    strategy: Annotated[
-        VerificationAdminVerificationWeb3WalletStrategy,
-        PlainValidator(validate_open_enum(False)),
-    ]
+    strategy: VerificationAdminVerificationWeb3WalletStrategy
 
     attempts: Nullable[int]
 
@@ -73,31 +69,26 @@ class VerificationAdminVerificationAdmin(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["object", "verified_at_client"]
-        nullable_fields = ["attempts", "expire_at", "verified_at_client"]
-        null_default_fields = []
-
+        optional_fields = set(["object", "verified_at_client"])
+        nullable_fields = set(["attempts", "expire_at", "verified_at_client"])
         serialized = handler(self)
-
         m = {}
 
         for n, f in type(self).model_fields.items():
             k = f.alias or n
             val = serialized.get(k)
-            serialized.pop(k, None)
+            is_nullable_and_explicitly_set = (
+                k in nullable_fields
+                and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
+            )
 
-            optional_nullable = k in optional_fields and k in nullable_fields
-            is_set = (
-                self.__pydantic_fields_set__.intersection({n})
-                or k in null_default_fields
-            )  # pylint: disable=no-member
-
-            if val is not None and val != UNSET_SENTINEL:
-                m[k] = val
-            elif val != UNSET_SENTINEL and (
-                not k in optional_fields or (optional_nullable and is_set)
-            ):
-                m[k] = val
+            if val != UNSET_SENTINEL:
+                if (
+                    val is not None
+                    or k not in optional_fields
+                    or is_nullable_and_explicitly_set
+                ):
+                    m[k] = val
 
         return m
 
@@ -151,37 +142,28 @@ class Web3Signature(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["object", "nonce", "message", "verified_at_client"]
-        nullable_fields = [
-            "nonce",
-            "message",
-            "attempts",
-            "expire_at",
-            "verified_at_client",
-        ]
-        null_default_fields = []
-
+        optional_fields = set(["object", "nonce", "message", "verified_at_client"])
+        nullable_fields = set(
+            ["nonce", "message", "attempts", "expire_at", "verified_at_client"]
+        )
         serialized = handler(self)
-
         m = {}
 
         for n, f in type(self).model_fields.items():
             k = f.alias or n
             val = serialized.get(k)
-            serialized.pop(k, None)
+            is_nullable_and_explicitly_set = (
+                k in nullable_fields
+                and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
+            )
 
-            optional_nullable = k in optional_fields and k in nullable_fields
-            is_set = (
-                self.__pydantic_fields_set__.intersection({n})
-                or k in null_default_fields
-            )  # pylint: disable=no-member
-
-            if val is not None and val != UNSET_SENTINEL:
-                m[k] = val
-            elif val != UNSET_SENTINEL and (
-                not k in optional_fields or (optional_nullable and is_set)
-            ):
-                m[k] = val
+            if val != UNSET_SENTINEL:
+                if (
+                    val is not None
+                    or k not in optional_fields
+                    or is_nullable_and_explicitly_set
+                ):
+                    m[k] = val
 
         return m
 
@@ -243,30 +225,25 @@ class Web3Wallet(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = ["id"]
-        nullable_fields = ["verification"]
-        null_default_fields = []
-
+        optional_fields = set(["id"])
+        nullable_fields = set(["verification"])
         serialized = handler(self)
-
         m = {}
 
         for n, f in type(self).model_fields.items():
             k = f.alias or n
             val = serialized.get(k)
-            serialized.pop(k, None)
+            is_nullable_and_explicitly_set = (
+                k in nullable_fields
+                and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
+            )
 
-            optional_nullable = k in optional_fields and k in nullable_fields
-            is_set = (
-                self.__pydantic_fields_set__.intersection({n})
-                or k in null_default_fields
-            )  # pylint: disable=no-member
-
-            if val is not None and val != UNSET_SENTINEL:
-                m[k] = val
-            elif val != UNSET_SENTINEL and (
-                not k in optional_fields or (optional_nullable and is_set)
-            ):
-                m[k] = val
+            if val != UNSET_SENTINEL:
+                if (
+                    val is not None
+                    or k not in optional_fields
+                    or is_nullable_and_explicitly_set
+                ):
+                    m[k] = val
 
         return m

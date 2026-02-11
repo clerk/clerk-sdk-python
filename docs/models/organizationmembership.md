@@ -1,6 +1,6 @@
 # OrganizationMembership
 
-Hello world
+A user's membership in an organization
 
 
 ## Fields

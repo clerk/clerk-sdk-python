@@ -62,7 +62,7 @@ class UpdateUserRequestBodyTypedDict(TypedDict):
     The algorithms we support at the moment are [`bcrypt`](https://en.wikipedia.org/wiki/Bcrypt), [`bcrypt_sha256_django`](https://docs.djangoproject.com/en/4.0/topics/auth/passwords/), [`md5`](https://en.wikipedia.org/wiki/MD5), `pbkdf2_sha1`, `pbkdf2_sha256`, [`pbkdf2_sha256_django`](https://docs.djangoproject.com/en/4.0/topics/auth/passwords/),
     [`phpass`](https://www.openwall.com/phpass/), `md5_phpass`, [`scrypt_firebase`](https://firebaseopensource.com/projects/firebase/scrypt/),
     [`scrypt_werkzeug`](https://werkzeug.palletsprojects.com/en/3.0.x/utils/#werkzeug.security.generate_password_hash), [`sha256`](https://en.wikipedia.org/wiki/SHA-2),
-    [`ldap_ssha`](https://www.openldap.org/faq/data/cache/347.html) and the [`argon2`](https://argon2.online/) variants: `argon2i` and `argon2id`.
+    [`ldap_ssha`](https://www.openldap.org/faq/data/cache/347.html), the [`argon2`](https://argon2.online/) variants: `argon2i` and `argon2id`, and `sha512_symfony`, the SHA-512 variant of the [Symfony](https://symfony.com/doc/current/security/passwords.html) legacy hasher.
 
     Each of the supported hashers expects the incoming digest to be in a particular format. See the [Clerk docs](https://clerk.com/docs/references/backend/user/create-user) for more information.
     """
@@ -167,7 +167,7 @@ class UpdateUserRequestBody(BaseModel):
     The algorithms we support at the moment are [`bcrypt`](https://en.wikipedia.org/wiki/Bcrypt), [`bcrypt_sha256_django`](https://docs.djangoproject.com/en/4.0/topics/auth/passwords/), [`md5`](https://en.wikipedia.org/wiki/MD5), `pbkdf2_sha1`, `pbkdf2_sha256`, [`pbkdf2_sha256_django`](https://docs.djangoproject.com/en/4.0/topics/auth/passwords/),
     [`phpass`](https://www.openwall.com/phpass/), `md5_phpass`, [`scrypt_firebase`](https://firebaseopensource.com/projects/firebase/scrypt/),
     [`scrypt_werkzeug`](https://werkzeug.palletsprojects.com/en/3.0.x/utils/#werkzeug.security.generate_password_hash), [`sha256`](https://en.wikipedia.org/wiki/SHA-2),
-    [`ldap_ssha`](https://www.openldap.org/faq/data/cache/347.html) and the [`argon2`](https://argon2.online/) variants: `argon2i` and `argon2id`.
+    [`ldap_ssha`](https://www.openldap.org/faq/data/cache/347.html), the [`argon2`](https://argon2.online/) variants: `argon2i` and `argon2id`, and `sha512_symfony`, the SHA-512 variant of the [Symfony](https://symfony.com/doc/current/security/passwords.html) legacy hasher.
 
     Each of the supported hashers expects the incoming digest to be in a particular format. See the [Clerk docs](https://clerk.com/docs/references/backend/user/create-user) for more information.
     """
@@ -227,84 +227,83 @@ class UpdateUserRequestBody(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = [
-            "external_id",
-            "first_name",
-            "last_name",
-            "locale",
-            "primary_email_address_id",
-            "notify_primary_email_address_changed",
-            "primary_phone_number_id",
-            "primary_web3_wallet_id",
-            "username",
-            "profile_image_id",
-            "password",
-            "password_digest",
-            "password_hasher",
-            "skip_password_checks",
-            "sign_out_of_other_sessions",
-            "totp_secret",
-            "backup_codes",
-            "public_metadata",
-            "private_metadata",
-            "unsafe_metadata",
-            "delete_self_enabled",
-            "create_organization_enabled",
-            "legal_accepted_at",
-            "skip_legal_checks",
-            "create_organizations_limit",
-            "created_at",
-            "bypass_client_trust",
-        ]
-        nullable_fields = [
-            "external_id",
-            "first_name",
-            "last_name",
-            "locale",
-            "primary_email_address_id",
-            "notify_primary_email_address_changed",
-            "primary_phone_number_id",
-            "primary_web3_wallet_id",
-            "username",
-            "profile_image_id",
-            "password",
-            "skip_password_checks",
-            "sign_out_of_other_sessions",
-            "totp_secret",
-            "public_metadata",
-            "private_metadata",
-            "unsafe_metadata",
-            "delete_self_enabled",
-            "create_organization_enabled",
-            "legal_accepted_at",
-            "skip_legal_checks",
-            "create_organizations_limit",
-            "created_at",
-            "bypass_client_trust",
-        ]
-        null_default_fields = []
-
+        optional_fields = set(
+            [
+                "external_id",
+                "first_name",
+                "last_name",
+                "locale",
+                "primary_email_address_id",
+                "notify_primary_email_address_changed",
+                "primary_phone_number_id",
+                "primary_web3_wallet_id",
+                "username",
+                "profile_image_id",
+                "password",
+                "password_digest",
+                "password_hasher",
+                "skip_password_checks",
+                "sign_out_of_other_sessions",
+                "totp_secret",
+                "backup_codes",
+                "public_metadata",
+                "private_metadata",
+                "unsafe_metadata",
+                "delete_self_enabled",
+                "create_organization_enabled",
+                "legal_accepted_at",
+                "skip_legal_checks",
+                "create_organizations_limit",
+                "created_at",
+                "bypass_client_trust",
+            ]
+        )
+        nullable_fields = set(
+            [
+                "external_id",
+                "first_name",
+                "last_name",
+                "locale",
+                "primary_email_address_id",
+                "notify_primary_email_address_changed",
+                "primary_phone_number_id",
+                "primary_web3_wallet_id",
+                "username",
+                "profile_image_id",
+                "password",
+                "skip_password_checks",
+                "sign_out_of_other_sessions",
+                "totp_secret",
+                "public_metadata",
+                "private_metadata",
+                "unsafe_metadata",
+                "delete_self_enabled",
+                "create_organization_enabled",
+                "legal_accepted_at",
+                "skip_legal_checks",
+                "create_organizations_limit",
+                "created_at",
+                "bypass_client_trust",
+            ]
+        )
         serialized = handler(self)
-
         m = {}
 
         for n, f in type(self).model_fields.items():
             k = f.alias or n
             val = serialized.get(k)
-            serialized.pop(k, None)
+            is_nullable_and_explicitly_set = (
+                k in nullable_fields
+                and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
+            )
 
-            optional_nullable = k in optional_fields and k in nullable_fields
-            is_set = (
-                self.__pydantic_fields_set__.intersection({n})
-                or k in null_default_fields
-            )  # pylint: disable=no-member
-
-            if val is not None and val != UNSET_SENTINEL:
-                m[k] = val
-            elif val != UNSET_SENTINEL and (
-                not k in optional_fields or (optional_nullable and is_set)
-            ):
-                m[k] = val
+            if val != UNSET_SENTINEL:
+                if (
+                    val is not None
+                    or k not in optional_fields
+                    or is_nullable_and_explicitly_set
+                ):
+                    m[k] = val
 
         return m
 

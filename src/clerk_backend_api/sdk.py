@@ -53,6 +53,7 @@ if TYPE_CHECKING:
     from clerk_backend_api.phonenumbers import PhoneNumbers
     from clerk_backend_api.proxychecks import ProxyChecks
     from clerk_backend_api.redirecturls import RedirectUrls
+    from clerk_backend_api.rolesets_sdk import RoleSetsSDK
     from clerk_backend_api.samlconnections_sdk import SamlConnectionsSDK
     from clerk_backend_api.sessions import Sessions
     from clerk_backend_api.signintokens import SignInTokens
@@ -94,6 +95,7 @@ class Clerk(BaseSDK):
     actor_tokens: "ActorTokens"
     domains: "DomainsSDK"
     instance_settings: "InstanceSettingsSDK"
+    r"""Modify the settings of your instance."""
     webhooks: "Webhooks"
     jwt_templates: "JwtTemplates"
     machines: "Machines"
@@ -111,6 +113,7 @@ class Clerk(BaseSDK):
     waitlist_entries: "WaitlistEntriesSDK"
     billing: "Billing"
     organization_permissions: "OrganizationPermissions"
+    role_sets: "RoleSetsSDK"
     api_keys: "APIKeys"
     r"""Endpoints for managing API Keys"""
     m2m: "M2m"
@@ -190,6 +193,7 @@ class Clerk(BaseSDK):
             "clerk_backend_api.organizationpermissions",
             "OrganizationPermissions",
         ),
+        "role_sets": ("clerk_backend_api.rolesets_sdk", "RoleSetsSDK"),
         "api_keys": ("clerk_backend_api.api_keys", "APIKeys"),
         "m2m": ("clerk_backend_api.m2m", "M2m"),
         "oauth_access_tokens": (
