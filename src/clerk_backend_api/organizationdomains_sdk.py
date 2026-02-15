@@ -848,6 +848,7 @@ class OrganizationDomainsSDK(BaseSDK):
         verified: Optional[models.Verified] = None,
         enrollment_mode: Optional[List[models.QueryParamEnrollmentMode]] = None,
         query: Optional[str] = None,
+        domains: Optional[List[str]] = None,
         order_by: Optional[str] = "-created_at",
         offset: Optional[int] = 0,
         limit: Optional[int] = 10,
@@ -875,6 +876,7 @@ class OrganizationDomainsSDK(BaseSDK):
 
             Note: An empty string or whitespace-only value is not allowed and will result in a validation error.
 
+        :param domains: Filter by exact domain names. Accepts multiple values (e.g. domains=example.com&domains=test.org).
         :param order_by: Allows to return organization domains in a particular order.
             At the moment, you can order the returned domains by their `name` or `created_at`.
             In order to specify the direction, you can use the `+/-` symbols prepended to the property to order by.
@@ -907,6 +909,7 @@ class OrganizationDomainsSDK(BaseSDK):
             verified=verified,
             enrollment_mode=enrollment_mode,
             query=query,
+            domains=domains,
             order_by=order_by,
             offset=offset,
             limit=limit,
@@ -976,6 +979,7 @@ class OrganizationDomainsSDK(BaseSDK):
         verified: Optional[models.Verified] = None,
         enrollment_mode: Optional[List[models.QueryParamEnrollmentMode]] = None,
         query: Optional[str] = None,
+        domains: Optional[List[str]] = None,
         order_by: Optional[str] = "-created_at",
         offset: Optional[int] = 0,
         limit: Optional[int] = 10,
@@ -1003,6 +1007,7 @@ class OrganizationDomainsSDK(BaseSDK):
 
             Note: An empty string or whitespace-only value is not allowed and will result in a validation error.
 
+        :param domains: Filter by exact domain names. Accepts multiple values (e.g. domains=example.com&domains=test.org).
         :param order_by: Allows to return organization domains in a particular order.
             At the moment, you can order the returned domains by their `name` or `created_at`.
             In order to specify the direction, you can use the `+/-` symbols prepended to the property to order by.
@@ -1035,6 +1040,7 @@ class OrganizationDomainsSDK(BaseSDK):
             verified=verified,
             enrollment_mode=enrollment_mode,
             query=query,
+            domains=domains,
             order_by=order_by,
             offset=offset,
             limit=limit,
