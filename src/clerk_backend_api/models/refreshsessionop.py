@@ -127,3 +127,9 @@ class RefreshSessionRequest(BaseModel):
                     m[k] = val
 
         return m
+
+
+try:
+    RefreshSessionRequestBody.model_rebuild()
+except NameError:
+    pass

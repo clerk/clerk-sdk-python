@@ -35,6 +35,8 @@ class CreateOrganizationRequestBodyTypedDict(TypedDict):
     r"""The maximum number of memberships allowed for this organization"""
     created_at: NotRequired[Nullable[str]]
     r"""A custom date/time denoting _when_ the organization was created, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`)."""
+    role_set_key: NotRequired[Nullable[str]]
+    r"""The key of the [role set](https://clerk.com/docs/guides/organizations/control-access/role-sets) to assign to this organization."""
 
 
 class CreateOrganizationRequestBody(BaseModel):
@@ -66,6 +68,9 @@ class CreateOrganizationRequestBody(BaseModel):
     created_at: OptionalNullable[str] = UNSET
     r"""A custom date/time denoting _when_ the organization was created, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`)."""
 
+    role_set_key: OptionalNullable[str] = UNSET
+    r"""The key of the [role set](https://clerk.com/docs/guides/organizations/control-access/role-sets) to assign to this organization."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
@@ -76,6 +81,7 @@ class CreateOrganizationRequestBody(BaseModel):
                 "slug",
                 "max_allowed_memberships",
                 "created_at",
+                "role_set_key",
             ]
         )
         nullable_fields = set(
@@ -86,6 +92,7 @@ class CreateOrganizationRequestBody(BaseModel):
                 "slug",
                 "max_allowed_memberships",
                 "created_at",
+                "role_set_key",
             ]
         )
         serialized = handler(self)
