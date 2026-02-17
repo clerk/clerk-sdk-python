@@ -171,6 +171,10 @@ class SessionAuthObjectV2(AuthObject):
     nbf: Optional[int] = None
     email: Optional[str] = None
     azp: Optional[str] = None
+    org_id: Optional[str] = None
+    org_slug: Optional[str] = None
+    org_role: Optional[str] = None
+    org_permissions: Optional[List[str]] = None
 
 
 @dataclass
@@ -259,7 +263,11 @@ class RequestState:
                         role=self.payload.get('role'),
                         sid=self.payload.get('sid'),
                         sub=self.payload.get('sub'),
-                        v=self.payload.get('v')
+                        v=self.payload.get('v'),
+                        org_id=self.payload.get('org_id'),
+                        org_slug=self.payload.get('org_slug'),
+                        org_role=self.payload.get('org_role'),
+                        org_permissions=self.payload.get('org_permissions'),
                     )
 
                 return SessionAuthObjectV1(

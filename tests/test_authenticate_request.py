@@ -226,6 +226,11 @@ def test_valid_v2_token_with_org_permissions_with_jwt_key(mock_verify_token, ses
     assert auth_object.iss == "https://api.clerk.com"
     assert auth_object.sub == "user_123"
     assert auth_object.v == 2
+    assert auth_object.org_id == "org_abc"
+    assert auth_object.org_slug == "org-slug"
+    assert auth_object.org_role == "owner"
+    assert "org:admin:view" in auth_object.org_permissions
+    assert "org:reports:edit" in auth_object.org_permissions
 
 
 
