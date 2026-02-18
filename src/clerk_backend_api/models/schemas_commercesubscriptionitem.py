@@ -689,6 +689,7 @@ class PayerTypedDict(TypedDict):
     r"""Organization ID for org-type payers."""
     organization_name: NotRequired[str]
     r"""Organization name for org-type payers."""
+    credits_balance: NotRequired[CommerceMoneyResponseTypedDict]
 
 
 class Payer(BaseModel):
@@ -730,9 +731,13 @@ class Payer(BaseModel):
     organization_name: Optional[str] = None
     r"""Organization name for org-type payers."""
 
+    credits_balance: Optional[CommerceMoneyResponse] = None
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["user_id", "organization_id", "organization_name"])
+        optional_fields = set(
+            ["user_id", "organization_id", "organization_name", "credits_balance"]
+        )
         serialized = handler(self)
         m = {}
 
@@ -943,3 +948,13 @@ class SchemasCommerceSubscriptionItem(BaseModel):
                     m[k] = val
 
         return m
+
+
+try:
+    NextInvoice.model_rebuild()
+except NameError:
+    pass
+try:
+    SchemasCommerceSubscriptionItemNextPayment.model_rebuild()
+except NameError:
+    pass

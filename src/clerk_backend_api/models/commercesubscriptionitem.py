@@ -471,3 +471,9 @@ class CommerceSubscriptionItem(BaseModel):
                     m[k] = val
 
         return m
+
+
+try:
+    NextPayment.model_rebuild()
+except NameError:
+    pass

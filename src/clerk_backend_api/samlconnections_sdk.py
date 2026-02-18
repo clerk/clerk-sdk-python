@@ -653,6 +653,7 @@ class SamlConnectionsSDK(BaseSDK):
         allow_idp_initiated: OptionalNullable[bool] = UNSET,
         disable_additional_identifications: OptionalNullable[bool] = UNSET,
         force_authn: Optional[bool] = None,
+        consent_verified_domains_deletion: OptionalNullable[bool] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -679,6 +680,7 @@ class SamlConnectionsSDK(BaseSDK):
         :param allow_idp_initiated: Enable or deactivate IdP-initiated flows
         :param disable_additional_identifications: Enable or deactivate additional identifications
         :param force_authn: Enable or deactivate ForceAuthn
+        :param consent_verified_domains_deletion: When enabling the connection, controls behavior when verified domains used for enrollment modes like automatic invitation or automatic suggestion already exist for the same domain. If true, those verified domains are removed and the connection is enabled. If false or omitted, the request fails when any such verified domain exists.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -715,6 +717,7 @@ class SamlConnectionsSDK(BaseSDK):
                 allow_idp_initiated=allow_idp_initiated,
                 disable_additional_identifications=disable_additional_identifications,
                 force_authn=force_authn,
+                consent_verified_domains_deletion=consent_verified_domains_deletion,
             ),
         )
 
@@ -806,6 +809,7 @@ class SamlConnectionsSDK(BaseSDK):
         allow_idp_initiated: OptionalNullable[bool] = UNSET,
         disable_additional_identifications: OptionalNullable[bool] = UNSET,
         force_authn: Optional[bool] = None,
+        consent_verified_domains_deletion: OptionalNullable[bool] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -832,6 +836,7 @@ class SamlConnectionsSDK(BaseSDK):
         :param allow_idp_initiated: Enable or deactivate IdP-initiated flows
         :param disable_additional_identifications: Enable or deactivate additional identifications
         :param force_authn: Enable or deactivate ForceAuthn
+        :param consent_verified_domains_deletion: When enabling the connection, controls behavior when verified domains used for enrollment modes like automatic invitation or automatic suggestion already exist for the same domain. If true, those verified domains are removed and the connection is enabled. If false or omitted, the request fails when any such verified domain exists.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -868,6 +873,7 @@ class SamlConnectionsSDK(BaseSDK):
                 allow_idp_initiated=allow_idp_initiated,
                 disable_additional_identifications=disable_additional_identifications,
                 force_authn=force_authn,
+                consent_verified_domains_deletion=consent_verified_domains_deletion,
             ),
         )
 

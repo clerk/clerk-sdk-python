@@ -37,6 +37,8 @@ class ListAllOrganizationDomainsRequestTypedDict(TypedDict):
     Note: An empty string or whitespace-only value is not allowed and will result in a validation error.
 
     """
+    domains: NotRequired[List[str]]
+    r"""Filter by exact domain names. Accepts multiple values (e.g. domains=example.com&domains=test.org)."""
     order_by: NotRequired[str]
     r"""Allows to return organization domains in a particular order.
     At the moment, you can order the returned domains by their `name` or `created_at`.
@@ -88,6 +90,12 @@ class ListAllOrganizationDomainsRequest(BaseModel):
 
     """
 
+    domains: Annotated[
+        Optional[List[str]],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Filter by exact domain names. Accepts multiple values (e.g. domains=example.com&domains=test.org)."""
+
     order_by: Annotated[
         Optional[str],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
@@ -126,6 +134,7 @@ class ListAllOrganizationDomainsRequest(BaseModel):
                 "verified",
                 "enrollment_mode",
                 "query",
+                "domains",
                 "order_by",
                 "offset",
                 "limit",
