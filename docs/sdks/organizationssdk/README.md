@@ -104,6 +104,7 @@ with Clerk(
         "slug": "neworg",
         "max_allowed_memberships": 100,
         "created_at": "1718855032267",
+        "role_set_key": "<value>",
     })
 
     # Handle response
@@ -190,7 +191,7 @@ with Clerk(
 
     }, private_metadata={
 
-    }, name="New Organization Name", slug="new-org-slug", max_allowed_memberships=100, admin_delete_enabled=True, created_at="1720203056033")
+    }, name="New Organization Name", slug="new-org-slug", max_allowed_memberships=100, admin_delete_enabled=True, created_at="1720203056033", role_set_key="<value>")
 
     # Handle response
     print(res)
@@ -209,6 +210,7 @@ with Clerk(
 | `max_allowed_memberships`                                                                                                       | *OptionalNullable[int]*                                                                                                         | :heavy_minus_sign:                                                                                                              | The maximum number of memberships allowed for this organization                                                                 | 100                                                                                                                             |
 | `admin_delete_enabled`                                                                                                          | *OptionalNullable[bool]*                                                                                                        | :heavy_minus_sign:                                                                                                              | If true, an admin can delete this organization with the Frontend API.                                                           | true                                                                                                                            |
 | `created_at`                                                                                                                    | *OptionalNullable[str]*                                                                                                         | :heavy_minus_sign:                                                                                                              | A custom date/time denoting _when_ the organization was created, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`). |                                                                                                                                 |
+| `role_set_key`                                                                                                                  | *OptionalNullable[str]*                                                                                                         | :heavy_minus_sign:                                                                                                              | The key of the [role set](https://clerk.com/docs/guides/organizations/control-access/role-sets) to assign to this organization. |                                                                                                                                 |
 | `retries`                                                                                                                       | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                | :heavy_minus_sign:                                                                                                              | Configuration to override the default retry behavior of the client.                                                             |                                                                                                                                 |
 
 ### Response

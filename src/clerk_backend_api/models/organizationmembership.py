@@ -5,7 +5,13 @@ from .organizationmembershippublicuserdata import (
     OrganizationMembershipPublicUserData,
     OrganizationMembershipPublicUserDataTypedDict,
 )
-from clerk_backend_api.types import BaseModel, Nullable, UNSET_SENTINEL
+from clerk_backend_api.types import (
+    BaseModel,
+    Nullable,
+    OptionalNullable,
+    UNSET,
+    UNSET_SENTINEL,
+)
 from enum import Enum
 from pydantic import model_serializer
 from typing import Any, Dict, List, Optional
@@ -47,6 +53,10 @@ class OrganizationMembershipOrganizationTypedDict(TypedDict):
     created_by: NotRequired[str]
     last_active_at: NotRequired[int]
     r"""Unix timestamp of last activity.
+
+    """
+    role_set_key: NotRequired[Nullable[str]]
+    r"""The key of the [role set](https://clerk.com/docs/guides/organizations/control-access/role-sets) assigned to this organization.
 
     """
 
@@ -95,6 +105,11 @@ class OrganizationMembershipOrganization(BaseModel):
 
     """
 
+    role_set_key: OptionalNullable[str] = UNSET
+    r"""The key of the [role set](https://clerk.com/docs/guides/organizations/control-access/role-sets) assigned to this organization.
+
+    """
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
@@ -106,17 +121,27 @@ class OrganizationMembershipOrganization(BaseModel):
                 "private_metadata",
                 "created_by",
                 "last_active_at",
+                "role_set_key",
             ]
         )
+        nullable_fields = set(["role_set_key"])
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
             k = f.alias or n
             val = serialized.get(k)
+            is_nullable_and_explicitly_set = (
+                k in nullable_fields
+                and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
+            )
 
             if val != UNSET_SENTINEL:
-                if val is not None or k not in optional_fields:
+                if (
+                    val is not None
+                    or k not in optional_fields
+                    or is_nullable_and_explicitly_set
+                ):
                     m[k] = val
 
         return m

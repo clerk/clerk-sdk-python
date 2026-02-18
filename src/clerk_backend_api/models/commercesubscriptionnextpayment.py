@@ -18,3 +18,9 @@ class CommerceSubscriptionNextPayment(BaseModel):
     r"""Unix timestamp (milliseconds) of the next payment date."""
 
     amount: CommerceMoneyResponse
+
+
+try:
+    CommerceSubscriptionNextPayment.model_rebuild()
+except NameError:
+    pass

@@ -698,6 +698,7 @@ class OrganizationsSDK(BaseSDK):
         max_allowed_memberships: OptionalNullable[int] = UNSET,
         admin_delete_enabled: OptionalNullable[bool] = UNSET,
         created_at: OptionalNullable[str] = UNSET,
+        role_set_key: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -717,6 +718,7 @@ class OrganizationsSDK(BaseSDK):
         :param max_allowed_memberships: The maximum number of memberships allowed for this organization
         :param admin_delete_enabled: If true, an admin can delete this organization with the Frontend API.
         :param created_at: A custom date/time denoting _when_ the organization was created, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`).
+        :param role_set_key: The key of the [role set](https://clerk.com/docs/guides/organizations/control-access/role-sets) to assign to this organization.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -742,6 +744,7 @@ class OrganizationsSDK(BaseSDK):
                 max_allowed_memberships=max_allowed_memberships,
                 admin_delete_enabled=admin_delete_enabled,
                 created_at=created_at,
+                role_set_key=role_set_key,
             ),
         )
 
@@ -822,6 +825,7 @@ class OrganizationsSDK(BaseSDK):
         max_allowed_memberships: OptionalNullable[int] = UNSET,
         admin_delete_enabled: OptionalNullable[bool] = UNSET,
         created_at: OptionalNullable[str] = UNSET,
+        role_set_key: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -841,6 +845,7 @@ class OrganizationsSDK(BaseSDK):
         :param max_allowed_memberships: The maximum number of memberships allowed for this organization
         :param admin_delete_enabled: If true, an admin can delete this organization with the Frontend API.
         :param created_at: A custom date/time denoting _when_ the organization was created, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`).
+        :param role_set_key: The key of the [role set](https://clerk.com/docs/guides/organizations/control-access/role-sets) to assign to this organization.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -866,6 +871,7 @@ class OrganizationsSDK(BaseSDK):
                 max_allowed_memberships=max_allowed_memberships,
                 admin_delete_enabled=admin_delete_enabled,
                 created_at=created_at,
+                role_set_key=role_set_key,
             ),
         )
 

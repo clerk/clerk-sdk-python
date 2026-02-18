@@ -85,6 +85,8 @@ class UpdateSAMLConnectionRequestBodyTypedDict(TypedDict):
     r"""Enable or deactivate additional identifications"""
     force_authn: NotRequired[bool]
     r"""Enable or deactivate ForceAuthn"""
+    consent_verified_domains_deletion: NotRequired[Nullable[bool]]
+    r"""When enabling the connection, controls behavior when verified domains used for enrollment modes like automatic invitation or automatic suggestion already exist for the same domain. If true, those verified domains are removed and the connection is enabled. If false or omitted, the request fails when any such verified domain exists."""
 
 
 class UpdateSAMLConnectionRequestBody(BaseModel):
@@ -141,6 +143,9 @@ class UpdateSAMLConnectionRequestBody(BaseModel):
     force_authn: Optional[bool] = None
     r"""Enable or deactivate ForceAuthn"""
 
+    consent_verified_domains_deletion: OptionalNullable[bool] = UNSET
+    r"""When enabling the connection, controls behavior when verified domains used for enrollment modes like automatic invitation or automatic suggestion already exist for the same domain. If true, those verified domains are removed and the connection is enabled. If false or omitted, the request fails when any such verified domain exists."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
@@ -161,6 +166,7 @@ class UpdateSAMLConnectionRequestBody(BaseModel):
                 "allow_idp_initiated",
                 "disable_additional_identifications",
                 "force_authn",
+                "consent_verified_domains_deletion",
             ]
         )
         nullable_fields = set(
@@ -180,6 +186,7 @@ class UpdateSAMLConnectionRequestBody(BaseModel):
                 "allow_subdomains",
                 "allow_idp_initiated",
                 "disable_additional_identifications",
+                "consent_verified_domains_deletion",
             ]
         )
         serialized = handler(self)
