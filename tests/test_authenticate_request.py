@@ -1,4 +1,4 @@
-from unittest.mock import patch
+from unittest.mock import patch, AsyncMock
 
 import pytest
 from clerk_backend_api.security.types import AuthenticateRequestOptions, AuthStatus, AuthErrorReason
@@ -6,6 +6,7 @@ from clerk_backend_api.security.verifytoken import TokenVerificationError, Token
     VerifyTokenOptions
 
 from clerk_backend_api import authenticate_request
+from clerk_backend_api.security import authenticate_request_async
 
 
 class MockRequest:
@@ -559,4 +560,119 @@ def test_m2m_token_with_machine_secret_key(mock_verify_token):
     assert m2m_machine_auth_object.machine_id == "mch_2xhFjEI5X2qWRvtV13BzSj8H6Dk"
 
 
+# --- Async tests ---
 
+@pytest.mark.asyncio
+async def test_async_missing_token_returns_signed_out(default_options_with_secret_key):
+    request = MockRequest(headers={})
+    state = await authenticate_request_async(request, default_options_with_secret_key)
+    assert state.status == AuthStatus.SIGNED_OUT
+    assert state.reason == AuthErrorReason.SESSION_TOKEN_MISSING
+
+@pytest.mark.asyncio
+async def test_async_missing_secret_key_returns_signed_out(session_token):
+    request = MockRequest(headers=make_headers(auth_token=session_token))
+    opts = AuthenticateRequestOptions(secret_key=None)
+    state = await authenticate_request_async(request, opts)
+    assert state.status == AuthStatus.SIGNED_OUT
+    assert state.reason == AuthErrorReason.SECRET_KEY_MISSING
+
+@pytest.mark.asyncio
+@patch("clerk_backend_api.security.authenticaterequest.verify_token_async", new_callable=AsyncMock)
+async def test_async_valid_v1_token(mock_verify_token, session_token, default_options_with_secret_key):
+    mock_verify_token.return_value = {
+        "sub": "user_123",
+        "aud": "test-audience",
+        "iss": "https://api.clerk.com"
+    }
+
+    request = MockRequest(headers=make_headers(auth_token=session_token))
+    state = await authenticate_request_async(request, default_options_with_secret_key)
+
+    assert state.status == AuthStatus.SIGNED_IN
+    assert state.payload["sub"] == "user_123"
+    assert "org_permissions" not in state.payload
+    assert_verify_called_with(mock_verify_token, session_token, default_options_with_secret_key)
+
+@pytest.mark.asyncio
+@patch("clerk_backend_api.security.authenticaterequest.verify_token_async", new_callable=AsyncMock)
+async def test_async_valid_v1_token_with_jwt_key(mock_verify_token, session_token, default_options_with_jwt_key):
+    mock_verify_token.return_value = {
+        "sub": "user_123",
+        "aud": "test-audience",
+        "iss": "https://api.clerk.com",
+        "org_id": "org_abc",
+        "org_slug": "org-slug",
+        "org_role": "owner",
+        "org_permissions": ["org:admin:view", "org:reports:edit"],
+    }
+
+    request = MockRequest(headers=make_headers(auth_token=session_token))
+    state = await authenticate_request_async(request, default_options_with_jwt_key)
+
+    assert state.status == AuthStatus.SIGNED_IN
+    assert state.payload["sub"] == "user_123"
+
+    assert_verify_called_with(mock_verify_token, session_token, default_options_with_jwt_key)
+
+    auth_object = state.to_auth()
+    assert auth_object is not None
+    assert auth_object.user_id == "user_123"
+    assert auth_object.org_id == "org_abc"
+    assert auth_object.org_role == "owner"
+    assert auth_object.org_permissions == ["org:admin:view", "org:reports:edit"]
+
+@pytest.mark.asyncio
+@patch("clerk_backend_api.security.authenticaterequest.verify_token_async", new_callable=AsyncMock)
+async def test_async_valid_v2_token_with_org_permissions(mock_verify_token, session_token, default_options_with_secret_key):
+    mock_verify_token.return_value = {
+        "sub": "user_123",
+        "v": 2,
+        "fea": "o:admin,o:reports",
+        "o": {
+            "id": "org_abc",
+            "slg": "org-slug",
+            "rol": "owner",
+            "per": "view,edit",
+            "fpm": "1,2"
+        },
+        "aud": "test-audience",
+        "iss": "https://api.clerk.com"
+    }
+
+    request = MockRequest(headers=make_headers(auth_token=session_token))
+    state = await authenticate_request_async(request, default_options_with_secret_key)
+
+    assert state.status == AuthStatus.SIGNED_IN
+    assert state.payload["org_id"] == "org_abc"
+    assert state.payload["org_slug"] == "org-slug"
+    assert state.payload["org_role"] == "owner"
+    assert "org:admin:view" in state.payload["org_permissions"] or "org:reports:edit" in state.payload["org_permissions"]
+    assert_verify_called_with(mock_verify_token, session_token, default_options_with_secret_key)
+
+@pytest.mark.asyncio
+@patch("clerk_backend_api.security.authenticaterequest.verify_token_async", new_callable=AsyncMock)
+async def test_async_token_verification_error_returns_signed_out(mock_verify_token, session_token, default_options_with_secret_key):
+    mock_verify_token.side_effect = TokenVerificationError(reason=TokenVerificationErrorReason.TOKEN_INVALID)
+
+    request = MockRequest(headers=make_headers(auth_token=session_token))
+    state = await authenticate_request_async(request, default_options_with_secret_key)
+
+    assert state.status == AuthStatus.SIGNED_OUT
+    assert state.reason == TokenVerificationErrorReason.TOKEN_INVALID
+    assert_verify_called_with(mock_verify_token, session_token, default_options_with_secret_key)
+
+@pytest.mark.asyncio
+async def test_async_invalid_token_type_returns_signed_out(session_token):
+    request = MockRequest(headers=make_headers(auth_token=session_token))
+    opts = AuthenticateRequestOptions(
+        secret_key="test-secret",
+        jwt_key=None,
+        audience="test-audience",
+        authorized_parties=["https://example.com"],
+        clock_skew_in_ms=5000,
+        accepts_token=["machine_token"]
+    )
+    state = await authenticate_request_async(request, opts)
+    assert state.status == AuthStatus.SIGNED_OUT
+    assert state.reason == AuthErrorReason.TOKEN_TYPE_NOT_SUPPORTED
