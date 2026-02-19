@@ -74,11 +74,7 @@ def _verify_session_token(token: str, options: VerifyTokenOptions) -> Dict[str, 
             raise TokenVerificationError(TokenVerificationErrorReason.TOKEN_INVALID_SIGNATURE) from e
 
         # Key rotation: evict stale cached key, re-fetch, and retry once
-        try:
-            kid = jwt.get_unverified_header(token).get('kid')
-        except jwt.InvalidTokenError:
-            raise TokenVerificationError(TokenVerificationErrorReason.TOKEN_INVALID_SIGNATURE) from e
-
+        kid = jwt.get_unverified_header(token).get('kid')
         __jwkcache.delete(kid)
         jwt_key = _get_remote_jwt_key(token, options)
 
@@ -242,11 +238,7 @@ async def _verify_session_token_async(token: str, options: VerifyTokenOptions) -
             raise TokenVerificationError(TokenVerificationErrorReason.TOKEN_INVALID_SIGNATURE) from e
 
         # Key rotation: evict stale cached key, re-fetch, and retry once
-        try:
-            kid = jwt.get_unverified_header(token).get('kid')
-        except jwt.InvalidTokenError:
-            raise TokenVerificationError(TokenVerificationErrorReason.TOKEN_INVALID_SIGNATURE) from e
-
+        kid = jwt.get_unverified_header(token).get('kid')
         __jwkcache.delete(kid)
         jwt_key = await _get_remote_jwt_key_async(token, options)
 
