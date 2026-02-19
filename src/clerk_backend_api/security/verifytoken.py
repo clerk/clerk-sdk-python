@@ -29,6 +29,25 @@ def verify_token(token: str, options: VerifyTokenOptions) -> Dict[str, Any]:
         return _verify_machine_token(token, options, token_type)
     raise TokenVerificationError(TokenVerificationErrorReason.INVALID_TOKEN_TYPE)
 
+def _decode_token(token: str, jwt_key: str, options: VerifyTokenOptions) -> Dict[str, Any]:
+    """Decode a JWT and validate authorized parties."""
+    payload = jwt.decode(
+        token,
+        jwt_key,
+        algorithms=['RS256'],
+        audience=options.audience,
+        options={'verify_iss': False},
+        leeway=timedelta(milliseconds=float(options.clock_skew_in_ms))
+    )
+
+    if options.authorized_parties is not None:
+        azp = payload.get("azp")
+        if azp is None or azp not in options.authorized_parties:
+            raise TokenVerificationError(TokenVerificationErrorReason.TOKEN_INVALID_AUTHORIZED_PARTIES)
+
+    return payload
+
+
 def _verify_session_token(token: str, options: VerifyTokenOptions) -> Dict[str, Any]:
     """ Verifies a Clerk-generated token signature. Networkless if the options.jwt_key is provided.
         Otherwise, performs a network call to retrieve the JWKS from Clerk's Backend API.
@@ -47,21 +66,7 @@ def _verify_session_token(token: str, options: VerifyTokenOptions) -> Dict[str, 
         raise TokenVerificationError(TokenVerificationErrorReason.SECRET_KEY_MISSING)
 
     try:
-        payload = jwt.decode(
-            token,
-            jwt_key,
-            algorithms=['RS256'],
-            audience=options.audience,
-            options={'verify_iss': False},
-            leeway=timedelta(milliseconds=float(options.clock_skew_in_ms))
-        )
-
-        if options.authorized_parties is not None:
-            azp = payload.get("azp")
-            if azp is None or azp not in options.authorized_parties:
-                raise TokenVerificationError(TokenVerificationErrorReason.TOKEN_INVALID_AUTHORIZED_PARTIES)
-
-        return payload
+        return _decode_token(token, jwt_key, options)
 
     except jwt.InvalidKeyError as e:
         raise TokenVerificationError(TokenVerificationErrorReason.JWK_FAILED_TO_RESOLVE) from e
@@ -79,21 +84,7 @@ def _verify_session_token(token: str, options: VerifyTokenOptions) -> Dict[str, 
         jwt_key = _get_remote_jwt_key(token, options)
 
         try:
-            payload = jwt.decode(
-                token,
-                jwt_key,
-                algorithms=['RS256'],
-                audience=options.audience,
-                options={'verify_iss': False},
-                leeway=timedelta(milliseconds=float(options.clock_skew_in_ms))
-            )
-
-            if options.authorized_parties is not None:
-                azp = payload.get("azp")
-                if azp is None or azp not in options.authorized_parties:
-                    raise TokenVerificationError(TokenVerificationErrorReason.TOKEN_INVALID_AUTHORIZED_PARTIES)
-
-            return payload
+            return _decode_token(token, jwt_key, options)
         except jwt.InvalidSignatureError:
             raise TokenVerificationError(TokenVerificationErrorReason.TOKEN_INVALID_SIGNATURE) from e
     except jwt.InvalidIssuedAtError as e:
@@ -211,21 +202,7 @@ async def _verify_session_token_async(token: str, options: VerifyTokenOptions) -
         raise TokenVerificationError(TokenVerificationErrorReason.SECRET_KEY_MISSING)
 
     try:
-        payload = jwt.decode(
-            token,
-            jwt_key,
-            algorithms=['RS256'],
-            audience=options.audience,
-            options={'verify_iss': False},
-            leeway=timedelta(milliseconds=float(options.clock_skew_in_ms))
-        )
-
-        if options.authorized_parties is not None:
-            azp = payload.get("azp")
-            if azp is None or azp not in options.authorized_parties:
-                raise TokenVerificationError(TokenVerificationErrorReason.TOKEN_INVALID_AUTHORIZED_PARTIES)
-
-        return payload
+        return _decode_token(token, jwt_key, options)
 
     except jwt.InvalidKeyError as e:
         raise TokenVerificationError(TokenVerificationErrorReason.JWK_FAILED_TO_RESOLVE) from e
@@ -243,21 +220,7 @@ async def _verify_session_token_async(token: str, options: VerifyTokenOptions) -
         jwt_key = await _get_remote_jwt_key_async(token, options)
 
         try:
-            payload = jwt.decode(
-                token,
-                jwt_key,
-                algorithms=['RS256'],
-                audience=options.audience,
-                options={'verify_iss': False},
-                leeway=timedelta(milliseconds=float(options.clock_skew_in_ms))
-            )
-
-            if options.authorized_parties is not None:
-                azp = payload.get("azp")
-                if azp is None or azp not in options.authorized_parties:
-                    raise TokenVerificationError(TokenVerificationErrorReason.TOKEN_INVALID_AUTHORIZED_PARTIES)
-
-            return payload
+            return _decode_token(token, jwt_key, options)
         except jwt.InvalidSignatureError:
             raise TokenVerificationError(TokenVerificationErrorReason.TOKEN_INVALID_SIGNATURE) from e
     except jwt.InvalidIssuedAtError as e:
