@@ -70,7 +70,36 @@ def _verify_session_token(token: str, options: VerifyTokenOptions) -> Dict[str, 
     except jwt.InvalidAudienceError as e:
         raise TokenVerificationError(TokenVerificationErrorReason.TOKEN_INVALID_AUDIENCE) from e
     except jwt.InvalidSignatureError as e:
-        raise TokenVerificationError(TokenVerificationErrorReason.TOKEN_INVALID_SIGNATURE) from e
+        if options.jwt_key is not None:
+            raise TokenVerificationError(TokenVerificationErrorReason.TOKEN_INVALID_SIGNATURE) from e
+
+        # Key rotation: evict stale cached key, re-fetch, and retry once
+        try:
+            kid = jwt.get_unverified_header(token).get('kid')
+        except jwt.InvalidTokenError:
+            raise TokenVerificationError(TokenVerificationErrorReason.TOKEN_INVALID_SIGNATURE) from e
+
+        __jwkcache.delete(kid)
+        jwt_key = _get_remote_jwt_key(token, options)
+
+        try:
+            payload = jwt.decode(
+                token,
+                jwt_key,
+                algorithms=['RS256'],
+                audience=options.audience,
+                options={'verify_iss': False},
+                leeway=timedelta(milliseconds=float(options.clock_skew_in_ms))
+            )
+
+            if options.authorized_parties is not None:
+                azp = payload.get("azp")
+                if azp is None or azp not in options.authorized_parties:
+                    raise TokenVerificationError(TokenVerificationErrorReason.TOKEN_INVALID_AUTHORIZED_PARTIES)
+
+            return payload
+        except jwt.InvalidSignatureError:
+            raise TokenVerificationError(TokenVerificationErrorReason.TOKEN_INVALID_SIGNATURE) from e
     except jwt.InvalidIssuedAtError as e:
         raise TokenVerificationError(TokenVerificationErrorReason.TOKEN_IAT_IN_THE_FUTURE) from e
     except jwt.ImmatureSignatureError as e:
@@ -209,7 +238,36 @@ async def _verify_session_token_async(token: str, options: VerifyTokenOptions) -
     except jwt.InvalidAudienceError as e:
         raise TokenVerificationError(TokenVerificationErrorReason.TOKEN_INVALID_AUDIENCE) from e
     except jwt.InvalidSignatureError as e:
-        raise TokenVerificationError(TokenVerificationErrorReason.TOKEN_INVALID_SIGNATURE) from e
+        if options.jwt_key is not None:
+            raise TokenVerificationError(TokenVerificationErrorReason.TOKEN_INVALID_SIGNATURE) from e
+
+        # Key rotation: evict stale cached key, re-fetch, and retry once
+        try:
+            kid = jwt.get_unverified_header(token).get('kid')
+        except jwt.InvalidTokenError:
+            raise TokenVerificationError(TokenVerificationErrorReason.TOKEN_INVALID_SIGNATURE) from e
+
+        __jwkcache.delete(kid)
+        jwt_key = await _get_remote_jwt_key_async(token, options)
+
+        try:
+            payload = jwt.decode(
+                token,
+                jwt_key,
+                algorithms=['RS256'],
+                audience=options.audience,
+                options={'verify_iss': False},
+                leeway=timedelta(milliseconds=float(options.clock_skew_in_ms))
+            )
+
+            if options.authorized_parties is not None:
+                azp = payload.get("azp")
+                if azp is None or azp not in options.authorized_parties:
+                    raise TokenVerificationError(TokenVerificationErrorReason.TOKEN_INVALID_AUTHORIZED_PARTIES)
+
+            return payload
+        except jwt.InvalidSignatureError:
+            raise TokenVerificationError(TokenVerificationErrorReason.TOKEN_INVALID_SIGNATURE) from e
     except jwt.InvalidIssuedAtError as e:
         raise TokenVerificationError(TokenVerificationErrorReason.TOKEN_IAT_IN_THE_FUTURE) from e
     except jwt.ImmatureSignatureError as e:

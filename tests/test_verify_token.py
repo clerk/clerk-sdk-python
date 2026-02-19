@@ -346,6 +346,45 @@ class TestVerifyToken:
 
         assert exc_info.value.reason == TokenVerificationErrorReason.TOKEN_INVALID
 
+    @patch("clerk_backend_api.security.verifytoken.jwt.decode")
+    @patch("clerk_backend_api.security.verifytoken._get_remote_jwt_key")
+    def test_verify_session_token_retries_on_key_rotation(self, mock_get_remote_jwt_key, mock_jwt_decode, options):
+        token = "some.jwt.token"
+        mock_get_remote_jwt_key.side_effect = ["stale_key", "fresh_key"]
+        mock_jwt_decode.side_effect = [jwt.InvalidSignatureError("bad sig"), {"subject": "user_123"}]
+
+        with patch("clerk_backend_api.security.verifytoken.jwt.get_unverified_header", return_value={"kid": "key_123"}):
+            result = verify_token(token, options)
+
+        assert result == {"subject": "user_123"}
+        assert mock_get_remote_jwt_key.call_count == 2
+        assert mock_jwt_decode.call_count == 2
+
+    @patch("clerk_backend_api.security.verifytoken.jwt.decode", side_effect=jwt.InvalidSignatureError("bad sig"))
+    def test_verify_session_token_no_retry_with_jwt_key(self, mock_jwt_decode, options):
+        token = "some.jwt.token"
+        options.jwt_key = "some_pem_key"
+
+        with pytest.raises(TokenVerificationError) as exc_info:
+            verify_token(token, options)
+
+        assert exc_info.value.reason == TokenVerificationErrorReason.TOKEN_INVALID_SIGNATURE
+        mock_jwt_decode.assert_called_once()
+
+    @patch("clerk_backend_api.security.verifytoken.jwt.decode", side_effect=jwt.InvalidSignatureError("bad sig"))
+    @patch("clerk_backend_api.security.verifytoken._get_remote_jwt_key")
+    def test_verify_session_token_retry_still_fails(self, mock_get_remote_jwt_key, mock_jwt_decode, options):
+        token = "some.jwt.token"
+        mock_get_remote_jwt_key.side_effect = ["stale_key", "still_wrong_key"]
+
+        with patch("clerk_backend_api.security.verifytoken.jwt.get_unverified_header", return_value={"kid": "key_123"}):
+            with pytest.raises(TokenVerificationError) as exc_info:
+                verify_token(token, options)
+
+        assert exc_info.value.reason == TokenVerificationErrorReason.TOKEN_INVALID_SIGNATURE
+        assert mock_get_remote_jwt_key.call_count == 2
+        assert mock_jwt_decode.call_count == 2
+
 
 class TestVerifyTokenAsync:
     @pytest.fixture
@@ -492,3 +531,45 @@ class TestVerifyTokenAsync:
                 await verify_token_async(token, options)
 
         assert exc_info.value.reason == TokenVerificationErrorReason.TOKEN_INVALID
+
+    @pytest.mark.asyncio
+    @patch("clerk_backend_api.security.verifytoken.jwt.decode")
+    @patch("clerk_backend_api.security.verifytoken._get_remote_jwt_key_async", new_callable=AsyncMock)
+    async def test_verify_session_token_retries_on_key_rotation(self, mock_get_remote_jwt_key, mock_jwt_decode, options):
+        token = "some.jwt.token"
+        mock_get_remote_jwt_key.side_effect = ["stale_key", "fresh_key"]
+        mock_jwt_decode.side_effect = [jwt.InvalidSignatureError("bad sig"), {"subject": "user_123"}]
+
+        with patch("clerk_backend_api.security.verifytoken.jwt.get_unverified_header", return_value={"kid": "key_123"}):
+            result = await verify_token_async(token, options)
+
+        assert result == {"subject": "user_123"}
+        assert mock_get_remote_jwt_key.call_count == 2
+        assert mock_jwt_decode.call_count == 2
+
+    @pytest.mark.asyncio
+    @patch("clerk_backend_api.security.verifytoken.jwt.decode", side_effect=jwt.InvalidSignatureError("bad sig"))
+    async def test_verify_session_token_no_retry_with_jwt_key(self, mock_jwt_decode, options):
+        token = "some.jwt.token"
+        options.jwt_key = "some_pem_key"
+
+        with pytest.raises(TokenVerificationError) as exc_info:
+            await verify_token_async(token, options)
+
+        assert exc_info.value.reason == TokenVerificationErrorReason.TOKEN_INVALID_SIGNATURE
+        mock_jwt_decode.assert_called_once()
+
+    @pytest.mark.asyncio
+    @patch("clerk_backend_api.security.verifytoken.jwt.decode", side_effect=jwt.InvalidSignatureError("bad sig"))
+    @patch("clerk_backend_api.security.verifytoken._get_remote_jwt_key_async", new_callable=AsyncMock)
+    async def test_verify_session_token_retry_still_fails(self, mock_get_remote_jwt_key, mock_jwt_decode, options):
+        token = "some.jwt.token"
+        mock_get_remote_jwt_key.side_effect = ["stale_key", "still_wrong_key"]
+
+        with patch("clerk_backend_api.security.verifytoken.jwt.get_unverified_header", return_value={"kid": "key_123"}):
+            with pytest.raises(TokenVerificationError) as exc_info:
+                await verify_token_async(token, options)
+
+        assert exc_info.value.reason == TokenVerificationErrorReason.TOKEN_INVALID_SIGNATURE
+        assert mock_get_remote_jwt_key.call_count == 2
+        assert mock_jwt_decode.call_count == 2

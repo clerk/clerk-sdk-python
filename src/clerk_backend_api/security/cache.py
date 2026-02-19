@@ -14,6 +14,10 @@ class Cache:
 
         self.cache[key] = (value, time.time() + self.expiration_time)
 
+    def delete(self, key: Optional[str]):
+        if key is not None:
+            self.cache.pop(key, None)
+
     def get(self, key: Optional[str]) -> Optional[str]:
         if key is None:
             return None
