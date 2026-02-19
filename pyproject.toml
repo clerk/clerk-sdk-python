@@ -1,7 +1,7 @@
 
 [project]
 name = "clerk-backend-api"
-version = "5.0.1"
+version = "5.0.2"
 description = "Python Client SDK for clerk.dev"
 authors = [{ name = "Clerk" },]
 readme = "README-PYPI.md"
@@ -32,7 +32,6 @@ mypy = "==1.15.0"
 pylint = "==3.2.3"
 pyright = "==1.1.398"
 pytest = "^8.3.3"
-pytest-asyncio = "^0.24.0"
 
 [build-system]
 requires = ["poetry-core"]
