@@ -88,7 +88,7 @@ def _build_verify_token_options(options: AuthenticateRequestOptions, session_tok
             clock_skew_in_ms=options.clock_skew_in_ms,
             jwt_key=options.jwt_key,
         )
-    elif options.secret_key:
+    if options.secret_key:
         return VerifyTokenOptions(
             audience=options.audience,
             authorized_parties=options.authorized_parties,
