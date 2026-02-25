@@ -5,20 +5,17 @@ permissions:
   pull-requests: write
   statuses: write
   id-token: write
-on:
+"on":
   push:
     branches:
       - main
     paths:
-      - RELEASES.md
-      - '*/RELEASES.md'
+      - .speakeasy/gen.lock
 jobs:
-  mint_pypi_token:
-    uses: ./.github/workflows/pypi_mint_token.yaml
   publish:
-    needs: mint_pypi_token
     uses: speakeasy-api/sdk-generation-action/.github/workflows/sdk-publish.yaml@v15
+    with:
+      target: clerk-sdk-python
     secrets:
       github_access_token: ${{ secrets.GITHUB_TOKEN }}
-      pypi_token: ${{ needs.mint_pypi_token.outputs.pypi_token }}
       speakeasy_api_key: ${{ secrets.SPEAKEASY_API_KEY }}

@@ -17,7 +17,7 @@ targets:
         output: .
         publish:
             pypi:
-                token: $pypi_token
+                useTrustedPublishing: true
         codeSamples:
             registry:
                 location: registry.speakeasyapi.dev/clerk/clerk/clerk-openapi-python-code-samples
