@@ -233,6 +233,7 @@ if TYPE_CHECKING:
         CreateM2MTokenRequestBodyTypedDict,
         CreateM2MTokenResponseBody,
         CreateM2MTokenResponseBodyTypedDict,
+        TokenFormat,
     )
     from .createmachineop import (
         CreateMachineRequestBody,
@@ -2555,6 +2556,7 @@ __all__ = [
     "ToggleTemplateDeliveryRequestBodyTypedDict",
     "ToggleTemplateDeliveryRequestTypedDict",
     "Token",
+    "TokenFormat",
     "TokenObject",
     "TokenTypedDict",
     "TotalCount",
@@ -3035,6 +3037,7 @@ _dynamic_imports: dict[str, str] = {
     "CreateM2MTokenRequestBodyTypedDict": ".createm2mtokenop",
     "CreateM2MTokenResponseBody": ".createm2mtokenop",
     "CreateM2MTokenResponseBodyTypedDict": ".createm2mtokenop",
+    "TokenFormat": ".createm2mtokenop",
     "CreateMachineRequestBody": ".createmachineop",
     "CreateMachineRequestBodyTypedDict": ".createmachineop",
     "CreateMachineScopeRequest": ".createmachinescopeop",

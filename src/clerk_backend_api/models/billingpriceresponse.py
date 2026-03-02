@@ -39,6 +39,8 @@ class BillingPriceResponseTypedDict(TypedDict):
     r"""The monthly amount in cents when billed annually."""
     fee: CommerceMoneyResponseTypedDict
     annual_monthly_fee: CommerceMoneyResponseTypedDict
+    is_default: bool
+    r"""Whether this price is the default price for its plan."""
     created_at: int
     r"""Unix timestamp (milliseconds) of creation."""
     description: NotRequired[Nullable[str]]
@@ -73,6 +75,9 @@ class BillingPriceResponse(BaseModel):
     fee: CommerceMoneyResponse
 
     annual_monthly_fee: CommerceMoneyResponse
+
+    is_default: bool
+    r"""Whether this price is the default price for its plan."""
 
     created_at: int
     r"""Unix timestamp (milliseconds) of creation."""

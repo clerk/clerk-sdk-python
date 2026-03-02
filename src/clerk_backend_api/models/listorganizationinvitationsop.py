@@ -15,6 +15,7 @@ class ListOrganizationInvitationsQueryParamStatus(str, Enum):
     PENDING = "pending"
     ACCEPTED = "accepted"
     REVOKED = "revoked"
+    EXPIRED = "expired"
 
 
 class ListOrganizationInvitationsRequestTypedDict(TypedDict):
