@@ -12,6 +12,7 @@ class M2m(BaseSDK):
     def create_token(
         self,
         *,
+        token_format: Optional[models.TokenFormat] = models.TokenFormat.OPAQUE,
         seconds_until_expiration: OptionalNullable[float] = UNSET,
         claims: OptionalNullable[Any] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -23,6 +24,7 @@ class M2m(BaseSDK):
 
         Creates a new M2M Token. Must be authenticated via a Machine Secret Key.
 
+        :param token_format:
         :param seconds_until_expiration:
         :param claims:
         :param retries: Override the default retry configuration for this method
@@ -41,6 +43,7 @@ class M2m(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.CreateM2MTokenRequestBody(
+            token_format=token_format,
             seconds_until_expiration=seconds_until_expiration,
             claims=claims,
         )
@@ -115,6 +118,7 @@ class M2m(BaseSDK):
     async def create_token_async(
         self,
         *,
+        token_format: Optional[models.TokenFormat] = models.TokenFormat.OPAQUE,
         seconds_until_expiration: OptionalNullable[float] = UNSET,
         claims: OptionalNullable[Any] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -126,6 +130,7 @@ class M2m(BaseSDK):
 
         Creates a new M2M Token. Must be authenticated via a Machine Secret Key.
 
+        :param token_format:
         :param seconds_until_expiration:
         :param claims:
         :param retries: Override the default retry configuration for this method
@@ -144,6 +149,7 @@ class M2m(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.CreateM2MTokenRequestBody(
+            token_format=token_format,
             seconds_until_expiration=seconds_until_expiration,
             claims=claims,
         )

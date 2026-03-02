@@ -17,6 +17,7 @@ Creates a new M2M Token. Must be authenticated via a Machine Secret Key.
 
 <!-- UsageSnippet language="python" operationID="createM2MToken" method="post" path="/m2m_tokens" -->
 ```python
+import clerk_backend_api
 from clerk_backend_api import Clerk
 
 
@@ -24,7 +25,7 @@ with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 ) as clerk:
 
-    res = clerk.m2m.create_token(seconds_until_expiration=9240.85, claims="<value>")
+    res = clerk.m2m.create_token(token_format=clerk_backend_api.TokenFormat.OPAQUE, seconds_until_expiration=9240.85, claims="<value>")
 
     # Handle response
     print(res)
@@ -35,6 +36,7 @@ with Clerk(
 
 | Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
 | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `token_format`                                                      | [Optional[models.TokenFormat]](../../models/tokenformat.md)         | :heavy_minus_sign:                                                  | N/A                                                                 |
 | `seconds_until_expiration`                                          | *OptionalNullable[float]*                                           | :heavy_minus_sign:                                                  | N/A                                                                 |
 | `claims`                                                            | *OptionalNullable[Any]*                                             | :heavy_minus_sign:                                                  | N/A                                                                 |
 | `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |

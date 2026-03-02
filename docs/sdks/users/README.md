@@ -407,10 +407,10 @@ with Clerk(
 
 ### Errors
 
-| Error Type         | Status Code        | Content Type       |
-| ------------------ | ------------------ | ------------------ |
-| models.ClerkErrors | 400, 401, 404, 422 | application/json   |
-| models.SDKError    | 4XX, 5XX           | \*/\*              |
+| Error Type              | Status Code             | Content Type            |
+| ----------------------- | ----------------------- | ----------------------- |
+| models.ClerkErrors      | 400, 401, 404, 409, 422 | application/json        |
+| models.SDKError         | 4XX, 5XX                | \*/\*                   |
 
 ## delete
 
