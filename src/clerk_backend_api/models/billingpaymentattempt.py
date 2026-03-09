@@ -7,10 +7,17 @@ from .commercepaymentmethodresponse import (
     CommercePaymentMethodResponse,
     CommercePaymentMethodResponseTypedDict,
 )
-from clerk_backend_api.types import BaseModel, Nullable, UNSET_SENTINEL
+from .commerceperunittotal import CommercePerUnitTotal, CommercePerUnitTotalTypedDict
+from clerk_backend_api.types import (
+    BaseModel,
+    Nullable,
+    OptionalNullable,
+    UNSET,
+    UNSET_SENTINEL,
+)
 from enum import Enum
 from pydantic import model_serializer
-from typing import Optional
+from typing import List, Optional
 from typing_extensions import NotRequired, TypedDict
 
 
@@ -34,6 +41,114 @@ class SubscriptionItemTypedDict(TypedDict):
 
 class SubscriptionItem(BaseModel):
     r"""The subscription item associated with this payment attempt."""
+
+
+class BillingPaymentAttemptProrationTypedDict(TypedDict):
+    amount: CommerceMoneyResponseTypedDict
+    cycle_days_remaining: int
+    cycle_days_total: int
+    cycle_remaining_percent: float
+
+
+class BillingPaymentAttemptProration(BaseModel):
+    amount: CommerceMoneyResponse
+
+    cycle_days_remaining: int
+
+    cycle_days_total: int
+
+    cycle_remaining_percent: float
+
+
+class BillingPaymentAttemptPayerTypedDict(TypedDict):
+    remaining_balance: CommerceMoneyResponseTypedDict
+    applied_amount: CommerceMoneyResponseTypedDict
+
+
+class BillingPaymentAttemptPayer(BaseModel):
+    remaining_balance: CommerceMoneyResponse
+
+    applied_amount: CommerceMoneyResponse
+
+
+class BillingPaymentAttemptCreditsTypedDict(TypedDict):
+    proration: Nullable[BillingPaymentAttemptProrationTypedDict]
+    payer: Nullable[BillingPaymentAttemptPayerTypedDict]
+    total: CommerceMoneyResponseTypedDict
+
+
+class BillingPaymentAttemptCredits(BaseModel):
+    proration: Nullable[BillingPaymentAttemptProration]
+
+    payer: Nullable[BillingPaymentAttemptPayer]
+
+    total: CommerceMoneyResponse
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+
+            if val != UNSET_SENTINEL:
+                m[k] = val
+
+        return m
+
+
+class BillingPaymentAttemptTotalsTypedDict(TypedDict):
+    r"""Totals breakdown for this payment attempt."""
+
+    subtotal: CommerceMoneyResponseTypedDict
+    base_fee: CommerceMoneyResponseTypedDict
+    tax_total: CommerceMoneyResponseTypedDict
+    grand_total: CommerceMoneyResponseTypedDict
+    per_unit_totals: NotRequired[List[CommercePerUnitTotalTypedDict]]
+    credits: NotRequired[Nullable[BillingPaymentAttemptCreditsTypedDict]]
+
+
+class BillingPaymentAttemptTotals(BaseModel):
+    r"""Totals breakdown for this payment attempt."""
+
+    subtotal: CommerceMoneyResponse
+
+    base_fee: CommerceMoneyResponse
+
+    tax_total: CommerceMoneyResponse
+
+    grand_total: CommerceMoneyResponse
+
+    per_unit_totals: Optional[List[CommercePerUnitTotal]] = None
+
+    credits: OptionalNullable[BillingPaymentAttemptCredits] = UNSET
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["per_unit_totals", "credits"])
+        nullable_fields = set(["credits"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+            is_nullable_and_explicitly_set = (
+                k in nullable_fields
+                and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
+            )
+
+            if val != UNSET_SENTINEL:
+                if (
+                    val is not None
+                    or k not in optional_fields
+                    or is_nullable_and_explicitly_set
+                ):
+                    m[k] = val
+
+        return m
 
 
 class BillingPaymentAttemptStatus(str, Enum):
@@ -86,6 +201,8 @@ class BillingPaymentAttemptTypedDict(TypedDict):
     r"""Unique identifier for the associated subscription item."""
     subscription_item: NotRequired[SubscriptionItemTypedDict]
     r"""The subscription item associated with this payment attempt."""
+    totals: NotRequired[Nullable[BillingPaymentAttemptTotalsTypedDict]]
+    r"""Totals breakdown for this payment attempt."""
 
 
 class BillingPaymentAttempt(BaseModel):
@@ -152,18 +269,27 @@ class BillingPaymentAttempt(BaseModel):
     subscription_item: Optional[SubscriptionItem] = None
     r"""The subscription item associated with this payment attempt."""
 
+    totals: OptionalNullable[BillingPaymentAttemptTotals] = UNSET
+    r"""Totals breakdown for this payment attempt."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["subscription_item_id", "subscription_item"])
+        optional_fields = set(["subscription_item_id", "subscription_item", "totals"])
         nullable_fields = set(
-            ["gateway_external_id", "gateway_external_url", "paid_at", "failed_at"]
+            [
+                "totals",
+                "gateway_external_id",
+                "gateway_external_url",
+                "paid_at",
+                "failed_at",
+            ]
         )
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
             k = f.alias or n
-            val = serialized.get(k)
+            val = serialized.get(k, serialized.get(n))
             is_nullable_and_explicitly_set = (
                 k in nullable_fields
                 and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member

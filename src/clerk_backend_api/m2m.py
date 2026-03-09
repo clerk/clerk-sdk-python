@@ -12,6 +12,7 @@ class M2m(BaseSDK):
     def create_token(
         self,
         *,
+        token_format: Optional[models.TokenFormat] = models.TokenFormat.OPAQUE,
         seconds_until_expiration: OptionalNullable[float] = UNSET,
         claims: OptionalNullable[Any] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -23,6 +24,7 @@ class M2m(BaseSDK):
 
         Creates a new M2M Token. Must be authenticated via a Machine Secret Key.
 
+        :param token_format:
         :param seconds_until_expiration:
         :param claims:
         :param retries: Override the default retry configuration for this method
@@ -41,6 +43,7 @@ class M2m(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.CreateM2MTokenRequestBody(
+            token_format=token_format,
             seconds_until_expiration=seconds_until_expiration,
             claims=claims,
         )
@@ -115,6 +118,7 @@ class M2m(BaseSDK):
     async def create_token_async(
         self,
         *,
+        token_format: Optional[models.TokenFormat] = models.TokenFormat.OPAQUE,
         seconds_until_expiration: OptionalNullable[float] = UNSET,
         claims: OptionalNullable[Any] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -126,6 +130,7 @@ class M2m(BaseSDK):
 
         Creates a new M2M Token. Must be authenticated via a Machine Secret Key.
 
+        :param token_format:
         :param seconds_until_expiration:
         :param claims:
         :param retries: Override the default retry configuration for this method
@@ -144,6 +149,7 @@ class M2m(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.CreateM2MTokenRequestBody(
+            token_format=token_format,
             seconds_until_expiration=seconds_until_expiration,
             claims=claims,
         )
@@ -231,6 +237,8 @@ class M2m(BaseSDK):
         r"""Get M2M Tokens
 
         Fetches M2M tokens for a specific machine.
+
+        Only tokens created with the opaque token format are returned by this endpoint. JWT-format M2M tokens are stateless and are not stored.
 
         This endpoint can be authenticated by either a Machine Secret Key or by a Clerk Secret Key.
 
@@ -351,6 +359,8 @@ class M2m(BaseSDK):
 
         Fetches M2M tokens for a specific machine.
 
+        Only tokens created with the opaque token format are returned by this endpoint. JWT-format M2M tokens are stateless and are not stored.
+
         This endpoint can be authenticated by either a Machine Secret Key or by a Clerk Secret Key.
 
         - When fetching M2M tokens with a Machine Secret Key, only tokens associated with the authenticated machine can be retrieved.
@@ -467,6 +477,8 @@ class M2m(BaseSDK):
 
         Revokes a M2M Token.
 
+        This endpoint only revokes stored opaque-format M2M tokens. JWT-format M2M tokens are stateless and cannot be revoked.
+
         This endpoint can be authenticated by either a Machine Secret Key or by a Clerk Secret Key.
 
         - When revoking a M2M Token with a Machine Secret Key, the token must managed by the Machine associated with the Machine Secret Key.
@@ -580,6 +592,8 @@ class M2m(BaseSDK):
         r"""Revoke a M2M Token
 
         Revokes a M2M Token.
+
+        This endpoint only revokes stored opaque-format M2M tokens. JWT-format M2M tokens are stateless and cannot be revoked.
 
         This endpoint can be authenticated by either a Machine Secret Key or by a Clerk Secret Key.
 

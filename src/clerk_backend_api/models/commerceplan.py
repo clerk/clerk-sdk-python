@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 from .commercemoneyresponse import CommerceMoneyResponse, CommerceMoneyResponseTypedDict
+from .commerceplanunitprice import CommercePlanUnitPrice, CommercePlanUnitPriceTypedDict
 from .featureresponse import FeatureResponse, FeatureResponseTypedDict
 from clerk_backend_api.types import BaseModel, Nullable, UNSET_SENTINEL
 from enum import Enum
@@ -101,6 +102,8 @@ class CommercePlanTypedDict(TypedDict):
     r"""Number of free trial days for this plan."""
     features: NotRequired[List[FeatureResponseTypedDict]]
     r"""The features included in this plan."""
+    unit_prices: NotRequired[List[CommercePlanUnitPriceTypedDict]]
+    r"""Per-unit pricing tiers for this plan (for example, seats)"""
 
 
 class CommercePlan(BaseModel):
@@ -160,9 +163,12 @@ class CommercePlan(BaseModel):
     features: Optional[List[FeatureResponse]] = None
     r"""The features included in this plan."""
 
+    unit_prices: Optional[List[CommercePlanUnitPrice]] = None
+    r"""Per-unit pricing tiers for this plan (for example, seats)"""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["features"])
+        optional_fields = set(["features", "unit_prices"])
         nullable_fields = set(
             [
                 "annual_monthly_fee",
@@ -177,7 +183,7 @@ class CommercePlan(BaseModel):
 
         for n, f in type(self).model_fields.items():
             k = f.alias or n
-            val = serialized.get(k)
+            val = serialized.get(k, serialized.get(n))
             is_nullable_and_explicitly_set = (
                 k in nullable_fields
                 and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member

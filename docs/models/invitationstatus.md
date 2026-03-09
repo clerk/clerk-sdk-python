@@ -1,5 +1,13 @@
 # InvitationStatus
 
+## Example Usage
+
+```python
+from clerk_backend_api.models import InvitationStatus
+
+value = InvitationStatus.PENDING
+```
+
 
 ## Values
 

@@ -1,5 +1,13 @@
 # DeleteAPIKeyObject
 
+## Example Usage
+
+```python
+from clerk_backend_api.models import DeleteAPIKeyObject
+
+value = DeleteAPIKeyObject.API_KEY
+```
+
 
 ## Values
 

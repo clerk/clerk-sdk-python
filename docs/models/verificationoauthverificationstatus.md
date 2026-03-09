@@ -1,5 +1,15 @@
 # VerificationOauthVerificationStatus
 
+## Example Usage
+
+```python
+from clerk_backend_api.models import VerificationOauthVerificationStatus
+
+value = VerificationOauthVerificationStatus.UNVERIFIED
+
+# Open enum: unrecognized values are captured as UnrecognizedStr
+```
+
 
 ## Values
 

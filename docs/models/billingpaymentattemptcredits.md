@@ -1,0 +1,10 @@
+# BillingPaymentAttemptCredits
+
+
+## Fields
+
+| Field                                                                                          | Type                                                                                           | Required                                                                                       | Description                                                                                    |
+| ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| `proration`                                                                                    | [Nullable[models.BillingPaymentAttemptProration]](../models/billingpaymentattemptproration.md) | :heavy_check_mark:                                                                             | N/A                                                                                            |
+| `payer`                                                                                        | [Nullable[models.BillingPaymentAttemptPayer]](../models/billingpaymentattemptpayer.md)         | :heavy_check_mark:                                                                             | N/A                                                                                            |
+| `total`                                                                                        | [models.CommerceMoneyResponse](../models/commercemoneyresponse.md)                             | :heavy_check_mark:                                                                             | N/A                                                                                            |

@@ -1,5 +1,13 @@
 # IdentifierType
 
+## Example Usage
+
+```python
+from clerk_backend_api.models import IdentifierType
+
+value = IdentifierType.EMAIL_ADDRESS
+```
+
 
 ## Values
 

@@ -20,6 +20,8 @@
 * [delete_profile_image](#delete_profile_image) - Delete user profile image
 * [update_metadata](#update_metadata) - Merge and update a user's metadata
 * [get_billing_subscription](#get_billing_subscription) - Retrieve a user's billing subscription
+* [get_billing_credit_balance](#get_billing_credit_balance) - Retrieve a user's credit balance
+* [adjust_billing_credit_balance](#adjust_billing_credit_balance) - Adjust a user's credit balance
 * [get_o_auth_access_token](#get_o_auth_access_token) - Retrieve the OAuth access token of a user
 * [get_organization_memberships](#get_organization_memberships) - Retrieve all memberships for a user
 * [get_organization_invitations](#get_organization_invitations) - Retrieve all invitations for a user
@@ -407,10 +409,10 @@ with Clerk(
 
 ### Errors
 
-| Error Type         | Status Code        | Content Type       |
-| ------------------ | ------------------ | ------------------ |
-| models.ClerkErrors | 400, 401, 404, 422 | application/json   |
-| models.SDKError    | 4XX, 5XX           | \*/\*              |
+| Error Type              | Status Code             | Content Type            |
+| ----------------------- | ----------------------- | ----------------------- |
+| models.ClerkErrors      | 400, 401, 404, 409, 422 | application/json        |
+| models.SDKError         | 4XX, 5XX                | \*/\*                   |
 
 ## delete
 
@@ -885,6 +887,97 @@ with Clerk(
 | models.ClerkErrors      | 400, 401, 403, 404, 422 | application/json        |
 | models.ClerkErrors      | 500                     | application/json        |
 | models.SDKError         | 4XX, 5XX                | \*/\*                   |
+
+## get_billing_credit_balance
+
+Retrieves the current credit balance for the specified user.
+Credits can be applied during checkout to reduce the charge or automatically applied to upcoming recurring charges
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="GetUserBillingCreditBalance" method="get" path="/users/{user_id}/billing/credits" -->
+```python
+from clerk_backend_api import Clerk
+
+
+with Clerk(
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+) as clerk:
+
+    res = clerk.users.get_billing_credit_balance(user_id="<id>")
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `user_id`                                                           | *str*                                                               | :heavy_check_mark:                                                  | The ID of the user whose credit balance to retrieve                 |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+
+### Response
+
+**[models.CommerceCreditBalanceResponse](../../models/commercecreditbalanceresponse.md)**
+
+### Errors
+
+| Error Type              | Status Code             | Content Type            |
+| ----------------------- | ----------------------- | ----------------------- |
+| models.ClerkErrors      | 400, 401, 403, 404, 422 | application/json        |
+| models.ClerkErrors      | 500                     | application/json        |
+| models.SDKError         | 4XX, 5XX                | \*/\*                   |
+
+## adjust_billing_credit_balance
+
+Increases or decreases the credit balance for the specified user.
+Each adjustment is recorded as a ledger entry. The idempotency_key parameter
+ensures that duplicate requests are safely handled.
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="AdjustUserBillingCreditBalance" method="post" path="/users/{user_id}/billing/credits" -->
+```python
+import clerk_backend_api
+from clerk_backend_api import Clerk
+
+
+with Clerk(
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+) as clerk:
+
+    res = clerk.users.adjust_billing_credit_balance(user_id="<id>", amount=562473, action=clerk_backend_api.Action.DECREASE, idempotency_key="<value>", currency="New Israeli Sheqel", note="<value>")
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                                                                                         | Type                                                                                                                              | Required                                                                                                                          | Description                                                                                                                       |
+| --------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| `user_id`                                                                                                                         | *str*                                                                                                                             | :heavy_check_mark:                                                                                                                | The ID of the user whose credit balance to adjust                                                                                 |
+| `amount`                                                                                                                          | *int*                                                                                                                             | :heavy_check_mark:                                                                                                                | The credit amount in cents. Must be greater than zero.                                                                            |
+| `action`                                                                                                                          | [models.Action](../../models/action.md)                                                                                           | :heavy_check_mark:                                                                                                                | Whether to increase or decrease the credit balance.                                                                               |
+| `idempotency_key`                                                                                                                 | *str*                                                                                                                             | :heavy_check_mark:                                                                                                                | A unique key to ensure the adjustment is applied only once. Repeated requests with the same key return the original ledger entry. |
+| `currency`                                                                                                                        | *Optional[str]*                                                                                                                   | :heavy_minus_sign:                                                                                                                | The currency code (e.g. "USD"). Defaults to USD if not provided.                                                                  |
+| `note`                                                                                                                            | *Optional[str]*                                                                                                                   | :heavy_minus_sign:                                                                                                                | An optional note to attach to the ledger entry.                                                                                   |
+| `retries`                                                                                                                         | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                  | :heavy_minus_sign:                                                                                                                | Configuration to override the default retry behavior of the client.                                                               |
+
+### Response
+
+**[models.CommerceCreditLedgerResponse](../../models/commercecreditledgerresponse.md)**
+
+### Errors
+
+| Error Type                   | Status Code                  | Content Type                 |
+| ---------------------------- | ---------------------------- | ---------------------------- |
+| models.ClerkErrors           | 400, 401, 403, 404, 409, 422 | application/json             |
+| models.ClerkErrors           | 500                          | application/json             |
+| models.SDKError              | 4XX, 5XX                     | \*/\*                        |
 
 ## get_o_auth_access_token
 

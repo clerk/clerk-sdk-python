@@ -1,5 +1,13 @@
 # OAuthAccessTokenObject
 
+## Example Usage
+
+```python
+from clerk_backend_api.models import OAuthAccessTokenObject
+
+value = OAuthAccessTokenObject.OAUTH_ACCESS_TOKEN
+```
+
 
 ## Values
 

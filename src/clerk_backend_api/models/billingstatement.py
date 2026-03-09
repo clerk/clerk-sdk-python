@@ -23,20 +23,23 @@ class BillingStatementStatus(str, Enum):
     CLOSED = "closed"
 
 
-class TotalsTypedDict(TypedDict):
+class BillingStatementTotalsTypedDict(TypedDict):
     r"""Totals for the statement."""
 
     grand_total: CommerceMoneyResponseTypedDict
     subtotal: CommerceMoneyResponseTypedDict
+    base_fee: CommerceMoneyResponseTypedDict
     tax_total: CommerceMoneyResponseTypedDict
 
 
-class Totals(BaseModel):
+class BillingStatementTotals(BaseModel):
     r"""Totals for the statement."""
 
     grand_total: CommerceMoneyResponse
 
     subtotal: CommerceMoneyResponse
+
+    base_fee: CommerceMoneyResponse
 
     tax_total: CommerceMoneyResponse
 
@@ -83,7 +86,7 @@ class BillingStatementTypedDict(TypedDict):
     payer: CommercePayerResponseTypedDict
     status: BillingStatementStatus
     r"""The current status of the statement."""
-    totals: TotalsTypedDict
+    totals: BillingStatementTotalsTypedDict
     r"""Totals for the statement."""
     groups: List[GroupsTypedDict]
     r"""Array of statement groups."""
@@ -107,7 +110,7 @@ class BillingStatement(BaseModel):
     status: BillingStatementStatus
     r"""The current status of the statement."""
 
-    totals: Totals
+    totals: BillingStatementTotals
     r"""Totals for the statement."""
 
     groups: List[Groups]

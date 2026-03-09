@@ -377,7 +377,7 @@ class OrganizationInvitationsSDK(BaseSDK):
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
-            error_status_codes=["400", "403", "404", "422", "4XX", "5XX"],
+            error_status_codes=["400", "402", "403", "404", "422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -385,7 +385,7 @@ class OrganizationInvitationsSDK(BaseSDK):
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(models.OrganizationInvitation, http_res)
         if utils.match_response(
-            http_res, ["400", "403", "404", "422"], "application/json"
+            http_res, ["400", "402", "403", "404", "422"], "application/json"
         ):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -521,7 +521,7 @@ class OrganizationInvitationsSDK(BaseSDK):
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
-            error_status_codes=["400", "403", "404", "422", "4XX", "5XX"],
+            error_status_codes=["400", "402", "403", "404", "422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -529,7 +529,7 @@ class OrganizationInvitationsSDK(BaseSDK):
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(models.OrganizationInvitation, http_res)
         if utils.match_response(
-            http_res, ["400", "403", "404", "422"], "application/json"
+            http_res, ["400", "402", "403", "404", "422"], "application/json"
         ):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)

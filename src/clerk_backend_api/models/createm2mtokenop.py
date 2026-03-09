@@ -17,26 +17,34 @@ from typing import Any, List, Optional
 from typing_extensions import NotRequired, TypedDict
 
 
+class TokenFormat(str, Enum):
+    OPAQUE = "opaque"
+    JWT = "jwt"
+
+
 class CreateM2MTokenRequestBodyTypedDict(TypedDict):
+    token_format: NotRequired[TokenFormat]
     seconds_until_expiration: NotRequired[Nullable[float]]
     claims: NotRequired[Nullable[Any]]
 
 
 class CreateM2MTokenRequestBody(BaseModel):
+    token_format: Optional[TokenFormat] = TokenFormat.OPAQUE
+
     seconds_until_expiration: OptionalNullable[float] = UNSET
 
     claims: OptionalNullable[Any] = UNSET
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["seconds_until_expiration", "claims"])
+        optional_fields = set(["token_format", "seconds_until_expiration", "claims"])
         nullable_fields = set(["seconds_until_expiration", "claims"])
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
             k = f.alias or n
-            val = serialized.get(k)
+            val = serialized.get(k, serialized.get(n))
             is_nullable_and_explicitly_set = (
                 k in nullable_fields
                 and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
@@ -193,7 +201,7 @@ class CreateM2MTokenResponseBody(BaseModel):
 
         for n, f in type(self).model_fields.items():
             k = f.alias or n
-            val = serialized.get(k)
+            val = serialized.get(k, serialized.get(n))
             is_nullable_and_explicitly_set = (
                 k in nullable_fields
                 and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member

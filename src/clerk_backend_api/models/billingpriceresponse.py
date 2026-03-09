@@ -39,6 +39,8 @@ class BillingPriceResponseTypedDict(TypedDict):
     r"""The monthly amount in cents when billed annually."""
     fee: CommerceMoneyResponseTypedDict
     annual_monthly_fee: CommerceMoneyResponseTypedDict
+    is_default: bool
+    r"""Whether this price is the default price for its plan."""
     created_at: int
     r"""Unix timestamp (milliseconds) of creation."""
     description: NotRequired[Nullable[str]]
@@ -74,6 +76,9 @@ class BillingPriceResponse(BaseModel):
 
     annual_monthly_fee: CommerceMoneyResponse
 
+    is_default: bool
+    r"""Whether this price is the default price for its plan."""
+
     created_at: int
     r"""Unix timestamp (milliseconds) of creation."""
 
@@ -89,7 +94,7 @@ class BillingPriceResponse(BaseModel):
 
         for n, f in type(self).model_fields.items():
             k = f.alias or n
-            val = serialized.get(k)
+            val = serialized.get(k, serialized.get(n))
             is_nullable_and_explicitly_set = (
                 k in nullable_fields
                 and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member

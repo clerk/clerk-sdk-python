@@ -2,6 +2,14 @@
 
 When the new price takes effect.
 
+## Example Usage
+
+```python
+from clerk_backend_api.models import EffectiveMode
+
+value = EffectiveMode.IMMEDIATE
+```
+
 
 ## Values
 
