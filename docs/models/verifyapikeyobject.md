@@ -1,5 +1,13 @@
 # VerifyAPIKeyObject
 
+## Example Usage
+
+```python
+from clerk_backend_api.models import VerifyAPIKeyObject
+
+value = VerifyAPIKeyObject.API_KEY
+```
+
 
 ## Values
 

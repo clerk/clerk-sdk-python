@@ -2,6 +2,14 @@
 
 Filter subscription items by status
 
+## Example Usage
+
+```python
+from clerk_backend_api.models import GetCommerceSubscriptionItemListQueryParamStatus
+
+value = GetCommerceSubscriptionItemListQueryParamStatus.ACTIVE
+```
+
 
 ## Values
 

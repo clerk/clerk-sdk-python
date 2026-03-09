@@ -13,6 +13,8 @@
 * [upload_logo](#upload_logo) - Upload a logo for the organization
 * [delete_logo](#delete_logo) - Delete the organization's logo.
 * [get_billing_subscription](#get_billing_subscription) - Retrieve an organization's billing subscription
+* [get_billing_credit_balance](#get_billing_credit_balance) - Retrieve an organization's credit balance
+* [adjust_billing_credit_balance](#adjust_billing_credit_balance) - Adjust an organization's credit balance
 
 ## list
 
@@ -219,10 +221,10 @@ with Clerk(
 
 ### Errors
 
-| Error Type         | Status Code        | Content Type       |
-| ------------------ | ------------------ | ------------------ |
-| models.ClerkErrors | 402, 403, 404, 422 | application/json   |
-| models.SDKError    | 4XX, 5XX           | \*/\*              |
+| Error Type              | Status Code             | Content Type            |
+| ----------------------- | ----------------------- | ----------------------- |
+| models.ClerkErrors      | 400, 402, 403, 404, 422 | application/json        |
+| models.SDKError         | 4XX, 5XX                | \*/\*                   |
 
 ## delete
 
@@ -448,3 +450,94 @@ with Clerk(
 | models.ClerkErrors      | 400, 401, 403, 404, 422 | application/json        |
 | models.ClerkErrors      | 500                     | application/json        |
 | models.SDKError         | 4XX, 5XX                | \*/\*                   |
+
+## get_billing_credit_balance
+
+Retrieves the current credit balance for the specified organization.
+Credits can be applied during checkout to reduce the charge or automatically applied to upcoming recurring charges.
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="GetOrganizationBillingCreditBalance" method="get" path="/organizations/{organization_id}/billing/credits" -->
+```python
+from clerk_backend_api import Clerk
+
+
+with Clerk(
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+) as clerk:
+
+    res = clerk.organizations.get_billing_credit_balance(organization_id="<id>")
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `organization_id`                                                   | *str*                                                               | :heavy_check_mark:                                                  | The ID of the organization whose credit balance to retrieve         |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+
+### Response
+
+**[models.CommerceCreditBalanceResponse](../../models/commercecreditbalanceresponse.md)**
+
+### Errors
+
+| Error Type              | Status Code             | Content Type            |
+| ----------------------- | ----------------------- | ----------------------- |
+| models.ClerkErrors      | 400, 401, 403, 404, 422 | application/json        |
+| models.ClerkErrors      | 500                     | application/json        |
+| models.SDKError         | 4XX, 5XX                | \*/\*                   |
+
+## adjust_billing_credit_balance
+
+Increases or decreases the credit balance for the specified organization.
+Each adjustment is recorded as a ledger entry. The idempotency_key parameter
+ensures that duplicate requests are safely handled.
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="AdjustOrganizationBillingCreditBalance" method="post" path="/organizations/{organization_id}/billing/credits" -->
+```python
+import clerk_backend_api
+from clerk_backend_api import Clerk
+
+
+with Clerk(
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+) as clerk:
+
+    res = clerk.organizations.adjust_billing_credit_balance(organization_id="<id>", amount=245081, action=clerk_backend_api.Action.INCREASE, idempotency_key="<value>", currency="Seychelles Rupee", note="<value>")
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                                                                                         | Type                                                                                                                              | Required                                                                                                                          | Description                                                                                                                       |
+| --------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| `organization_id`                                                                                                                 | *str*                                                                                                                             | :heavy_check_mark:                                                                                                                | The ID of the organization whose credit balance to adjust                                                                         |
+| `amount`                                                                                                                          | *int*                                                                                                                             | :heavy_check_mark:                                                                                                                | The credit amount in cents. Must be greater than zero.                                                                            |
+| `action`                                                                                                                          | [models.Action](../../models/action.md)                                                                                           | :heavy_check_mark:                                                                                                                | Whether to increase or decrease the credit balance.                                                                               |
+| `idempotency_key`                                                                                                                 | *str*                                                                                                                             | :heavy_check_mark:                                                                                                                | A unique key to ensure the adjustment is applied only once. Repeated requests with the same key return the original ledger entry. |
+| `currency`                                                                                                                        | *Optional[str]*                                                                                                                   | :heavy_minus_sign:                                                                                                                | The currency code (e.g. "USD"). Defaults to USD if not provided.                                                                  |
+| `note`                                                                                                                            | *Optional[str]*                                                                                                                   | :heavy_minus_sign:                                                                                                                | An optional note to attach to the ledger entry.                                                                                   |
+| `retries`                                                                                                                         | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                  | :heavy_minus_sign:                                                                                                                | Configuration to override the default retry behavior of the client.                                                               |
+
+### Response
+
+**[models.CommerceCreditLedgerResponse](../../models/commercecreditledgerresponse.md)**
+
+### Errors
+
+| Error Type                   | Status Code                  | Content Type                 |
+| ---------------------------- | ---------------------------- | ---------------------------- |
+| models.ClerkErrors           | 400, 401, 403, 404, 409, 422 | application/json             |
+| models.ClerkErrors           | 500                          | application/json             |
+| models.SDKError              | 4XX, 5XX                     | \*/\*                        |

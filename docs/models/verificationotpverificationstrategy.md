@@ -1,5 +1,15 @@
 # VerificationOtpVerificationStrategy
 
+## Example Usage
+
+```python
+from clerk_backend_api.models import VerificationOtpVerificationStrategy
+
+value = VerificationOtpVerificationStrategy.PHONE_CODE
+
+# Open enum: unrecognized values are captured as UnrecognizedStr
+```
+
 
 ## Values
 

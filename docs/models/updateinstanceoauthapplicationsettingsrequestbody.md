@@ -1,0 +1,9 @@
+# UpdateInstanceOAuthApplicationSettingsRequestBody
+
+
+## Fields
+
+| Field                                                                                                   | Type                                                                                                    | Required                                                                                                | Description                                                                                             |
+| ------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| `dynamic_oauth_client_registration`                                                                     | *OptionalNullable[bool]*                                                                                | :heavy_minus_sign:                                                                                      | Whether dynamic OAuth client registration is enabled for the instance (RFC 7591).                       |
+| `oauth_jwt_access_tokens`                                                                               | *OptionalNullable[bool]*                                                                                | :heavy_minus_sign:                                                                                      | Whether OAuth JWT access tokens are enabled for the instance (disabled indicates opaque access tokens). |

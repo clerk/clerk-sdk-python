@@ -1,5 +1,15 @@
 # Strategy
 
+## Example Usage
+
+```python
+from clerk_backend_api.models import Strategy
+
+value = Strategy.PHONE_CODE
+
+# Open enum: unrecognized values are captured as UnrecognizedStr
+```
+
 
 ## Values
 

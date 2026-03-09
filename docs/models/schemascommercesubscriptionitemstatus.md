@@ -2,6 +2,14 @@
 
 Current status of the subscription item.
 
+## Example Usage
+
+```python
+from clerk_backend_api.models import SchemasCommerceSubscriptionItemStatus
+
+value = SchemasCommerceSubscriptionItemStatus.ACTIVE
+```
+
 
 ## Values
 

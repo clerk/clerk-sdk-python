@@ -2,6 +2,14 @@
 
 The IdP provider of the connection.
 
+## Example Usage
+
+```python
+from clerk_backend_api.models import Provider
+
+value = Provider.SAML_CUSTOM
+```
+
 
 ## Values
 

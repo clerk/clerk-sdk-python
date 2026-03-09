@@ -1,5 +1,13 @@
 # Status
 
+## Example Usage
+
+```python
+from clerk_backend_api.models import Status
+
+value = Status.ACTIVE
+```
+
 
 ## Values
 

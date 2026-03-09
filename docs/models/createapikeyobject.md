@@ -1,5 +1,13 @@
 # CreateAPIKeyObject
 
+## Example Usage
+
+```python
+from clerk_backend_api.models import CreateAPIKeyObject
+
+value = CreateAPIKeyObject.API_KEY
+```
+
 
 ## Values
 

@@ -1,5 +1,13 @@
 # VerificationTicketVerificationSAMLAccountStatus
 
+## Example Usage
+
+```python
+from clerk_backend_api.models import VerificationTicketVerificationSAMLAccountStatus
+
+value = VerificationTicketVerificationSAMLAccountStatus.UNVERIFIED
+```
+
 
 ## Values
 

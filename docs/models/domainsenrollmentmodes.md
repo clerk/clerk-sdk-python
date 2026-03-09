@@ -1,5 +1,13 @@
 # DomainsEnrollmentModes
 
+## Example Usage
+
+```python
+from clerk_backend_api.models import DomainsEnrollmentModes
+
+value = DomainsEnrollmentModes.MANUAL_INVITATION
+```
+
 
 ## Values
 

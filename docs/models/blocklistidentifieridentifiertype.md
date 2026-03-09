@@ -1,5 +1,13 @@
 # BlocklistIdentifierIdentifierType
 
+## Example Usage
+
+```python
+from clerk_backend_api.models import BlocklistIdentifierIdentifierType
+
+value = BlocklistIdentifierIdentifierType.EMAIL_ADDRESS
+```
+
 
 ## Values
 

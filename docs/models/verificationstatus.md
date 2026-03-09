@@ -1,5 +1,13 @@
 # VerificationStatus
 
+## Example Usage
+
+```python
+from clerk_backend_api.models import VerificationStatus
+
+value = VerificationStatus.UNVERIFIED
+```
+
 
 ## Values
 

@@ -14,8 +14,11 @@
 
 ## list
 
-Returns a list of all sessions.
+Returns a list of sessions matching the provided criteria.
 The sessions are returned sorted by creation date, with the newest sessions appearing first.
+
+Note: This endpoint does not return all sessions that have ever existed. Old and inactive sessions are periodically cleaned up and will not be included in the results.
+
 **Deprecation Notice (2024-01-01):** All parameters were initially considered optional, however
 moving forward at least one of `client_id` or `user_id` parameters should be provided.
 

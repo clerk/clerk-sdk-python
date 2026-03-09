@@ -1,5 +1,13 @@
 # VerificationWeb3VerificationStrategy
 
+## Example Usage
+
+```python
+from clerk_backend_api.models import VerificationWeb3VerificationStrategy
+
+value = VerificationWeb3VerificationStrategy.WEB3_METAMASK_SIGNATURE
+```
+
 
 ## Values
 

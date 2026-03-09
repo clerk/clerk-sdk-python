@@ -1,5 +1,13 @@
 # QueryParamEnrollmentMode
 
+## Example Usage
+
+```python
+from clerk_backend_api.models import QueryParamEnrollmentMode
+
+value = QueryParamEnrollmentMode.MANUAL_INVITATION
+```
+
 
 ## Values
 

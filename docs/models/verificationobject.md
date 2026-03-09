@@ -1,5 +1,13 @@
 # VerificationObject
 
+## Example Usage
+
+```python
+from clerk_backend_api.models import VerificationObject
+
+value = VerificationObject.VERIFICATION_OTP
+```
+
 
 ## Values
 

@@ -9,6 +9,8 @@ Modify the settings of your instance.
 * [get](#get) - Fetch the current instance
 * [update](#update) - Update instance settings
 * [update_restrictions](#update_restrictions) - Update instance restrictions
+* [get_o_auth_application_settings](#get_o_auth_application_settings) - Get OAuth application settings
+* [update_o_auth_application_settings](#update_o_auth_application_settings) - Update OAuth application settings
 * [change_domain](#change_domain) - Update production instance domain
 * [update_organization_settings](#update_organization_settings) - Update instance organization settings
 * [get_instance_protect](#get_instance_protect) - Get instance protect settings
@@ -143,6 +145,87 @@ with Clerk(
 | Error Type         | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
 | models.ClerkErrors | 402, 422           | application/json   |
+| models.SDKError    | 4XX, 5XX           | \*/\*              |
+
+## get_o_auth_application_settings
+
+Retrieves the settings for OAuth applications for the instance (dynamic client registration, JWT access tokens, etc.).
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="GetInstanceOAuthApplicationSettings" method="get" path="/instance/oauth_application_settings" -->
+```python
+from clerk_backend_api import Clerk
+
+
+with Clerk(
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+) as clerk:
+
+    res = clerk.instance_settings.get_o_auth_application_settings()
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+
+### Response
+
+**[models.OAuthApplicationSettings](../../models/oauthapplicationsettings.md)**
+
+### Errors
+
+| Error Type      | Status Code     | Content Type    |
+| --------------- | --------------- | --------------- |
+| models.SDKError | 4XX, 5XX        | \*/\*           |
+
+## update_o_auth_application_settings
+
+Updates the OAuth application settings for the instance.
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="UpdateInstanceOAuthApplicationSettings" method="patch" path="/instance/oauth_application_settings" -->
+```python
+from clerk_backend_api import Clerk
+
+
+with Clerk(
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+) as clerk:
+
+    res = clerk.instance_settings.update_o_auth_application_settings(request={
+        "dynamic_oauth_client_registration": False,
+        "oauth_jwt_access_tokens": True,
+    })
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                                                                                     | Type                                                                                                                          | Required                                                                                                                      | Description                                                                                                                   |
+| ----------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| `request`                                                                                                                     | [models.UpdateInstanceOAuthApplicationSettingsRequestBody](../../models/updateinstanceoauthapplicationsettingsrequestbody.md) | :heavy_check_mark:                                                                                                            | The request object to use for the request.                                                                                    |
+| `retries`                                                                                                                     | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                              | :heavy_minus_sign:                                                                                                            | Configuration to override the default retry behavior of the client.                                                           |
+
+### Response
+
+**[models.OAuthApplicationSettings](../../models/oauthapplicationsettings.md)**
+
+### Errors
+
+| Error Type         | Status Code        | Content Type       |
+| ------------------ | ------------------ | ------------------ |
+| models.ClerkErrors | 422                | application/json   |
 | models.SDKError    | 4XX, 5XX           | \*/\*              |
 
 ## change_domain

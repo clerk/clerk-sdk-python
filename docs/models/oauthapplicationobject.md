@@ -1,5 +1,13 @@
 # OAuthApplicationObject
 
+## Example Usage
+
+```python
+from clerk_backend_api.models import OAuthApplicationObject
+
+value = OAuthApplicationObject.OAUTH_APPLICATION
+```
+
 
 ## Values
 

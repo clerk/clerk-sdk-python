@@ -1,5 +1,13 @@
 # WaitlistEntryObject
 
+## Example Usage
+
+```python
+from clerk_backend_api.models import WaitlistEntryObject
+
+value = WaitlistEntryObject.WAITLIST_ENTRY
+```
+
 
 ## Values
 

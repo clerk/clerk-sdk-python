@@ -1,5 +1,13 @@
 # VerificationOauthVerificationEnterpriseAccountObject
 
+## Example Usage
+
+```python
+from clerk_backend_api.models import VerificationOauthVerificationEnterpriseAccountObject
+
+value = VerificationOauthVerificationEnterpriseAccountObject.VERIFICATION_OAUTH
+```
+
 
 ## Values
 
