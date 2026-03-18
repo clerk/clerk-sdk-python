@@ -7,3 +7,103 @@ actions:
   - target: $["components"]["schemas"]["OrganizationMembership"]["properties"]["permissions"]
     update:
       nullable: true
+  - target: $["paths"]["/api_keys"]["post"]["responses"]
+    update:
+      '201':
+        description: 201 Created
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                object:
+                  type: string
+                  enum:
+                    - api_key
+                id:
+                  type: string
+                  pattern: ^ak_[0-9A-Fa-f]{32}$
+                  example: ak_3beecc9c60adb5f9b850e91a8ee1e992
+                type:
+                  type: string
+                  minLength: 3
+                  example: api_key
+                subject:
+                  type: string
+                  pattern: ^(user|org|mch)_\w{27}$
+                  example: user_2xhFjEI5X2qWRvtV13BzSj8H6Dk
+                name:
+                  type: string
+                  example: MY_SERVICE_API_KEY
+                description:
+                  type: string
+                  nullable: true
+                  maxLength: 255
+                  example: This is my API Key
+                claims:
+                  nullable: true
+                  example:
+                    foo: bar
+                scopes:
+                  type: array
+                  items:
+                    type: string
+                  example:
+                    - read
+                    - write
+                secret:
+                  type: string
+                  example: ak_XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+                revoked:
+                  type: boolean
+                  example: false
+                revocation_reason:
+                  type: string
+                  nullable: true
+                  example: Revoked by user
+                expired:
+                  type: boolean
+                  example: false
+                expiration:
+                  type: number
+                  nullable: true
+                  description: The timestamp for when the API key will expire, in milliseconds
+                  example: 1716883200
+                created_by:
+                  type: string
+                  nullable: true
+                  pattern: ^user_\w{27}$
+                  example: user_2xhFjEI5X2qWRvtV13BzSj8H6Dk
+                last_used_at:
+                  type: number
+                  nullable: true
+                  description: The timestamp for when the API key was last used, in milliseconds
+                  example: 1716883200
+                created_at:
+                  type: number
+                  description: The timestamp for when the API key was created, in milliseconds
+                  example: 1716883200
+                updated_at:
+                  type: number
+                  description: The timestamp for when the API key was last updated, in milliseconds
+                  example: 1716883200
+              required:
+                - object
+                - id
+                - type
+                - subject
+                - name
+                - claims
+                - scopes
+                - secret
+                - revoked
+                - revocation_reason
+                - expired
+                - expiration
+                - created_by
+                - last_used_at
+                - created_at
+                - updated_at
+              additionalProperties: false
+  - target: $["paths"]["/api_keys"]["post"]["responses"]["200"]
+    remove: true
