@@ -19,3 +19,15 @@ jobs:
     secrets:
       github_access_token: ${{ secrets.GITHUB_TOKEN }}
       speakeasy_api_key: ${{ secrets.SPEAKEASY_API_KEY }}
+  publish-pypi:
+    needs:
+      - publish
+    if: ${{ needs.publish.outputs.python_regenerated == 'true' && needs.publish.outputs.publish_python == 'true' && needs.publish.outputs.use_pypi_trusted_publishing == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: speakeasy-api/sdk-generation-action/publish-pypi@v15
+        with:
+          github_access_token: ${{ secrets.GITHUB_TOKEN }}
+          python-directory: ${{ needs.publish.outputs.python_directory }}
+          speakeasy_api_key: ${{ secrets.SPEAKEASY_API_KEY }}
