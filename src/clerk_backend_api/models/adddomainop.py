@@ -8,14 +8,18 @@ from clerk_backend_api.types import (
     UNSET,
     UNSET_SENTINEL,
 )
+from clerk_backend_api.utils import validate_const
+import pydantic
 from pydantic import model_serializer
-from typing_extensions import NotRequired, TypedDict
+from pydantic.functional_validators import AfterValidator
+from typing import Literal
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class AddDomainRequestBodyTypedDict(TypedDict):
     name: str
     r"""The new domain name. Can contain the port for development instances."""
-    is_satellite: bool
+    is_satellite: Literal[True]
     r"""Marks the new domain as satellite. Only `true` is accepted at the moment."""
     proxy_url: NotRequired[Nullable[str]]
     r"""The full URL of the proxy which will forward requests to the Clerk Frontend API for this domain. Applicable only to production instances."""
@@ -25,7 +29,10 @@ class AddDomainRequestBody(BaseModel):
     name: str
     r"""The new domain name. Can contain the port for development instances."""
 
-    is_satellite: bool
+    IS_SATELLITE: Annotated[
+        Annotated[Literal[True], AfterValidator(validate_const(True))],
+        pydantic.Field(alias="is_satellite"),
+    ] = True
     r"""Marks the new domain as satellite. Only `true` is accepted at the moment."""
 
     proxy_url: OptionalNullable[str] = UNSET
@@ -55,3 +62,9 @@ class AddDomainRequestBody(BaseModel):
                     m[k] = val
 
         return m
+
+
+try:
+    AddDomainRequestBody.model_rebuild()
+except NameError:
+    pass

@@ -6,49 +6,33 @@ from clerk_backend_api._hooks import HookContext
 from clerk_backend_api.types import BaseModel, OptionalNullable, UNSET
 from clerk_backend_api.utils.unmarshal_json_response import unmarshal_json_response
 from typing import Any, List, Mapping, Optional, Union, cast
-from typing_extensions import deprecated
 
 
-class SamlConnectionsSDK(BaseSDK):
-    @deprecated(
-        "warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
-    )
+class EnterpriseConnectionsSDK(BaseSDK):
     def list(
         self,
         *,
         limit: Optional[int] = 10,
         offset: Optional[int] = 0,
-        query: Optional[str] = None,
-        order_by: Optional[str] = None,
-        organization_id: Optional[List[str]] = None,
+        organization_id: Optional[str] = None,
+        active: Optional[bool] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.SAMLConnections:
-        r"""Get a list of SAML Connections for an instance
+    ) -> models.EnterpriseConnections:
+        r"""List enterprise connections
 
-        Returns the list of SAML Connections for an instance.
+        Returns the list of enterprise connections for the instance.
         Results can be paginated using the optional `limit` and `offset` query parameters.
-        The SAML Connections are ordered by descending creation date and the most recent will be returned first.
-        Deprecated: Use the Enterprise Connections API instead. This endpoint will be removed in future versions.
 
         :param limit: Applies a limit to the number of results returned.
             Can be used for paginating the results together with `offset`.
         :param offset: Skip the first `offset` results when paginating.
             Needs to be an integer greater or equal to zero.
             To be used in conjunction with `limit`.
-        :param query: Returns SAML connections that have a name that matches the given query, via case-insensitive partial match.
-        :param order_by: Sorts organizations memberships by phone_number, email_address, created_at, first_name, last_name or username.
-            By prepending one of those values with + or -,
-            we can choose to sort in ascending (ASC) or descending (DESC) order.
-        :param organization_id: Returns SAML connections that have an associated organization ID to the
-            given organizations.
-            For each organization ID, the `+` and `-` can be
-            prepended to the ID, which denote whether the
-            respective organization should be included or
-            excluded from the result set.
-            Accepts up to 100 organization IDs.
+        :param organization_id: Filter enterprise connections by organization ID
+        :param active: Filter by active status. If true, only active connections are returned. If false, only inactive connections are returned. If omitted, all connections are returned.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -64,17 +48,16 @@ class SamlConnectionsSDK(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.ListSAMLConnectionsRequest(
+        request = models.ListEnterpriseConnectionsRequest(
             limit=limit,
             offset=offset,
-            query=query,
-            order_by=order_by,
             organization_id=organization_id,
+            active=active,
         )
 
         req = self._build_request(
             method="GET",
-            path="/saml_connections",
+            path="/enterprise_connections",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -105,7 +88,7 @@ class SamlConnectionsSDK(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="ListSAMLConnections",
+                operation_id="ListEnterpriseConnections",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
@@ -116,7 +99,7 @@ class SamlConnectionsSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.SAMLConnections, http_res)
+            return unmarshal_json_response(models.EnterpriseConnections, http_res)
         if utils.match_response(http_res, ["402", "403", "422"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -129,45 +112,30 @@ class SamlConnectionsSDK(BaseSDK):
 
         raise models.SDKError("Unexpected response received", http_res)
 
-    @deprecated(
-        "warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
-    )
     async def list_async(
         self,
         *,
         limit: Optional[int] = 10,
         offset: Optional[int] = 0,
-        query: Optional[str] = None,
-        order_by: Optional[str] = None,
-        organization_id: Optional[List[str]] = None,
+        organization_id: Optional[str] = None,
+        active: Optional[bool] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.SAMLConnections:
-        r"""Get a list of SAML Connections for an instance
+    ) -> models.EnterpriseConnections:
+        r"""List enterprise connections
 
-        Returns the list of SAML Connections for an instance.
+        Returns the list of enterprise connections for the instance.
         Results can be paginated using the optional `limit` and `offset` query parameters.
-        The SAML Connections are ordered by descending creation date and the most recent will be returned first.
-        Deprecated: Use the Enterprise Connections API instead. This endpoint will be removed in future versions.
 
         :param limit: Applies a limit to the number of results returned.
             Can be used for paginating the results together with `offset`.
         :param offset: Skip the first `offset` results when paginating.
             Needs to be an integer greater or equal to zero.
             To be used in conjunction with `limit`.
-        :param query: Returns SAML connections that have a name that matches the given query, via case-insensitive partial match.
-        :param order_by: Sorts organizations memberships by phone_number, email_address, created_at, first_name, last_name or username.
-            By prepending one of those values with + or -,
-            we can choose to sort in ascending (ASC) or descending (DESC) order.
-        :param organization_id: Returns SAML connections that have an associated organization ID to the
-            given organizations.
-            For each organization ID, the `+` and `-` can be
-            prepended to the ID, which denote whether the
-            respective organization should be included or
-            excluded from the result set.
-            Accepts up to 100 organization IDs.
+        :param organization_id: Filter enterprise connections by organization ID
+        :param active: Filter by active status. If true, only active connections are returned. If false, only inactive connections are returned. If omitted, all connections are returned.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -183,17 +151,16 @@ class SamlConnectionsSDK(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.ListSAMLConnectionsRequest(
+        request = models.ListEnterpriseConnectionsRequest(
             limit=limit,
             offset=offset,
-            query=query,
-            order_by=order_by,
             organization_id=organization_id,
+            active=active,
         )
 
         req = self._build_request_async(
             method="GET",
-            path="/saml_connections",
+            path="/enterprise_connections",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -224,7 +191,7 @@ class SamlConnectionsSDK(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="ListSAMLConnections",
+                operation_id="ListEnterpriseConnections",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
@@ -235,7 +202,7 @@ class SamlConnectionsSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.SAMLConnections, http_res)
+            return unmarshal_json_response(models.EnterpriseConnections, http_res)
         if utils.match_response(http_res, ["402", "403", "422"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -248,27 +215,23 @@ class SamlConnectionsSDK(BaseSDK):
 
         raise models.SDKError("Unexpected response received", http_res)
 
-    @deprecated(
-        "warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
-    )
     def create(
         self,
         *,
         request: Optional[
             Union[
-                models.CreateSAMLConnectionRequestBody,
-                models.CreateSAMLConnectionRequestBodyTypedDict,
+                models.CreateEnterpriseConnectionRequestBody,
+                models.CreateEnterpriseConnectionRequestBodyTypedDict,
             ]
         ] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.SchemasSAMLConnection:
-        r"""Create a SAML Connection
+    ) -> models.SchemasEnterpriseConnection:
+        r"""Create an enterprise connection
 
-        Create a new SAML Connection.
-        Deprecated: Use the Enterprise Connections API instead. This endpoint will be removed in future versions.
+        Create a new enterprise connection.
 
         :param request: The request object to send.
         :param retries: Override the default retry configuration for this method
@@ -288,13 +251,13 @@ class SamlConnectionsSDK(BaseSDK):
 
         if not isinstance(request, BaseModel):
             request = utils.unmarshal(
-                request, Optional[models.CreateSAMLConnectionRequestBody]
+                request, Optional[models.CreateEnterpriseConnectionRequestBody]
             )
-        request = cast(Optional[models.CreateSAMLConnectionRequestBody], request)
+        request = cast(Optional[models.CreateEnterpriseConnectionRequestBody], request)
 
         req = self._build_request(
             method="POST",
-            path="/saml_connections",
+            path="/enterprise_connections",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -310,7 +273,7 @@ class SamlConnectionsSDK(BaseSDK):
                 False,
                 True,
                 "json",
-                Optional[models.CreateSAMLConnectionRequestBody],
+                Optional[models.CreateEnterpriseConnectionRequestBody],
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -332,7 +295,7 @@ class SamlConnectionsSDK(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="CreateSAMLConnection",
+                operation_id="CreateEnterpriseConnection",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
@@ -342,8 +305,8 @@ class SamlConnectionsSDK(BaseSDK):
         )
 
         response_data: Any = None
-        if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.SchemasSAMLConnection, http_res)
+        if utils.match_response(http_res, "201", "application/json"):
+            return unmarshal_json_response(models.SchemasEnterpriseConnection, http_res)
         if utils.match_response(
             http_res, ["402", "403", "404", "422"], "application/json"
         ):
@@ -358,27 +321,23 @@ class SamlConnectionsSDK(BaseSDK):
 
         raise models.SDKError("Unexpected response received", http_res)
 
-    @deprecated(
-        "warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
-    )
     async def create_async(
         self,
         *,
         request: Optional[
             Union[
-                models.CreateSAMLConnectionRequestBody,
-                models.CreateSAMLConnectionRequestBodyTypedDict,
+                models.CreateEnterpriseConnectionRequestBody,
+                models.CreateEnterpriseConnectionRequestBodyTypedDict,
             ]
         ] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.SchemasSAMLConnection:
-        r"""Create a SAML Connection
+    ) -> models.SchemasEnterpriseConnection:
+        r"""Create an enterprise connection
 
-        Create a new SAML Connection.
-        Deprecated: Use the Enterprise Connections API instead. This endpoint will be removed in future versions.
+        Create a new enterprise connection.
 
         :param request: The request object to send.
         :param retries: Override the default retry configuration for this method
@@ -398,13 +357,13 @@ class SamlConnectionsSDK(BaseSDK):
 
         if not isinstance(request, BaseModel):
             request = utils.unmarshal(
-                request, Optional[models.CreateSAMLConnectionRequestBody]
+                request, Optional[models.CreateEnterpriseConnectionRequestBody]
             )
-        request = cast(Optional[models.CreateSAMLConnectionRequestBody], request)
+        request = cast(Optional[models.CreateEnterpriseConnectionRequestBody], request)
 
         req = self._build_request_async(
             method="POST",
-            path="/saml_connections",
+            path="/enterprise_connections",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -420,7 +379,7 @@ class SamlConnectionsSDK(BaseSDK):
                 False,
                 True,
                 "json",
-                Optional[models.CreateSAMLConnectionRequestBody],
+                Optional[models.CreateEnterpriseConnectionRequestBody],
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -442,7 +401,7 @@ class SamlConnectionsSDK(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="CreateSAMLConnection",
+                operation_id="CreateEnterpriseConnection",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
@@ -452,8 +411,8 @@ class SamlConnectionsSDK(BaseSDK):
         )
 
         response_data: Any = None
-        if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.SchemasSAMLConnection, http_res)
+        if utils.match_response(http_res, "201", "application/json"):
+            return unmarshal_json_response(models.SchemasEnterpriseConnection, http_res)
         if utils.match_response(
             http_res, ["402", "403", "404", "422"], "application/json"
         ):
@@ -468,24 +427,20 @@ class SamlConnectionsSDK(BaseSDK):
 
         raise models.SDKError("Unexpected response received", http_res)
 
-    @deprecated(
-        "warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
-    )
     def get(
         self,
         *,
-        saml_connection_id: str,
+        enterprise_connection_id: str,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.SchemasSAMLConnection:
-        r"""Retrieve a SAML Connection by ID
+    ) -> models.SchemasEnterpriseConnection:
+        r"""Retrieve an enterprise connection
 
-        Fetches the SAML Connection whose ID matches the provided `saml_connection_id` in the path.
-        Deprecated: Use the Enterprise Connections API instead. This endpoint will be removed in future versions.
+        Fetches the enterprise connection whose ID matches the provided `enterprise_connection_id` in the path.
 
-        :param saml_connection_id: The ID of the SAML Connection
+        :param enterprise_connection_id: The ID of the enterprise connection
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -501,13 +456,13 @@ class SamlConnectionsSDK(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.GetSAMLConnectionRequest(
-            saml_connection_id=saml_connection_id,
+        request = models.GetEnterpriseConnectionRequest(
+            enterprise_connection_id=enterprise_connection_id,
         )
 
         req = self._build_request(
             method="GET",
-            path="/saml_connections/{saml_connection_id}",
+            path="/enterprise_connections/{enterprise_connection_id}",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -538,7 +493,7 @@ class SamlConnectionsSDK(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="GetSAMLConnection",
+                operation_id="GetEnterpriseConnection",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
@@ -549,7 +504,7 @@ class SamlConnectionsSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.SchemasSAMLConnection, http_res)
+            return unmarshal_json_response(models.SchemasEnterpriseConnection, http_res)
         if utils.match_response(http_res, ["402", "403", "404"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -562,24 +517,20 @@ class SamlConnectionsSDK(BaseSDK):
 
         raise models.SDKError("Unexpected response received", http_res)
 
-    @deprecated(
-        "warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
-    )
     async def get_async(
         self,
         *,
-        saml_connection_id: str,
+        enterprise_connection_id: str,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.SchemasSAMLConnection:
-        r"""Retrieve a SAML Connection by ID
+    ) -> models.SchemasEnterpriseConnection:
+        r"""Retrieve an enterprise connection
 
-        Fetches the SAML Connection whose ID matches the provided `saml_connection_id` in the path.
-        Deprecated: Use the Enterprise Connections API instead. This endpoint will be removed in future versions.
+        Fetches the enterprise connection whose ID matches the provided `enterprise_connection_id` in the path.
 
-        :param saml_connection_id: The ID of the SAML Connection
+        :param enterprise_connection_id: The ID of the enterprise connection
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -595,13 +546,13 @@ class SamlConnectionsSDK(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.GetSAMLConnectionRequest(
-            saml_connection_id=saml_connection_id,
+        request = models.GetEnterpriseConnectionRequest(
+            enterprise_connection_id=enterprise_connection_id,
         )
 
         req = self._build_request_async(
             method="GET",
-            path="/saml_connections/{saml_connection_id}",
+            path="/enterprise_connections/{enterprise_connection_id}",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -632,7 +583,7 @@ class SamlConnectionsSDK(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="GetSAMLConnection",
+                operation_id="GetEnterpriseConnection",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
@@ -643,7 +594,7 @@ class SamlConnectionsSDK(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.SchemasSAMLConnection, http_res)
+            return unmarshal_json_response(models.SchemasEnterpriseConnection, http_res)
         if utils.match_response(http_res, ["402", "403", "404"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -656,60 +607,49 @@ class SamlConnectionsSDK(BaseSDK):
 
         raise models.SDKError("Unexpected response received", http_res)
 
-    @deprecated(
-        "warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
-    )
     def update(
         self,
         *,
-        saml_connection_id: str,
+        enterprise_connection_id: str,
         name: OptionalNullable[str] = UNSET,
-        domain: OptionalNullable[str] = UNSET,
         domains: OptionalNullable[List[str]] = UNSET,
-        idp_entity_id: OptionalNullable[str] = UNSET,
-        idp_sso_url: OptionalNullable[str] = UNSET,
-        idp_certificate: OptionalNullable[str] = UNSET,
-        idp_metadata_url: OptionalNullable[str] = UNSET,
-        idp_metadata: OptionalNullable[str] = UNSET,
-        organization_id: OptionalNullable[str] = UNSET,
-        attribute_mapping: OptionalNullable[
-            Union[models.AttributeMapping, models.AttributeMappingTypedDict]
-        ] = UNSET,
         active: OptionalNullable[bool] = UNSET,
         sync_user_attributes: OptionalNullable[bool] = UNSET,
-        allow_subdomains: OptionalNullable[bool] = UNSET,
-        allow_idp_initiated: OptionalNullable[bool] = UNSET,
         disable_additional_identifications: OptionalNullable[bool] = UNSET,
-        force_authn: Optional[bool] = None,
-        consent_verified_domains_deletion: OptionalNullable[bool] = UNSET,
+        organization_id: OptionalNullable[str] = UNSET,
+        saml: OptionalNullable[
+            Union[
+                models.UpdateEnterpriseConnectionSaml,
+                models.UpdateEnterpriseConnectionSamlTypedDict,
+            ]
+        ] = UNSET,
+        oidc: OptionalNullable[
+            Union[
+                models.UpdateEnterpriseConnectionOidc,
+                models.UpdateEnterpriseConnectionOidcTypedDict,
+            ]
+        ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.SchemasSAMLConnection:
-        r"""Update a SAML Connection
+    ) -> models.SchemasEnterpriseConnection:
+        r"""Update an enterprise connection
 
-        Updates the SAML Connection whose ID matches the provided `id` in the path.
-        Deprecated: Use the Enterprise Connections API instead. This endpoint will be removed in future versions.
+        Updates the enterprise connection whose ID matches the provided `enterprise_connection_id` in the path.
+        When enabling the connection (setting `active` to true), any existing verified organization domains that match the connection's domains (e.g. used for enrollment modes like automatic invitation) may be deleted so the connection can be enabled.
 
-        :param saml_connection_id: The ID of the SAML Connection to update
-        :param name: The name of the new SAML Connection
-        :param domain: The domain to use for the new SAML Connection
-        :param domains: A list of the domains on use for the SAML connection
-        :param idp_entity_id: The Entity ID as provided by the IdP
-        :param idp_sso_url: The SSO URL as provided by the IdP
-        :param idp_certificate: The x509 certificated as provided by the IdP
-        :param idp_metadata_url: The URL which serves the IdP metadata. If present, it takes priority over the corresponding individual properties and replaces them
-        :param idp_metadata: The XML content of the IdP metadata file. If present, it takes priority over the corresponding individual properties
-        :param organization_id: The ID of the organization to which users of this SAML Connection will be added
-        :param attribute_mapping: Define the attribute name mapping between Identity Provider and Clerk's user properties
-        :param active: Activate or de-activate the SAML Connection
-        :param sync_user_attributes: Controls whether to update the user's attributes in each sign-in
-        :param allow_subdomains: Allow users with an email address subdomain to use this connection in order to authenticate
-        :param allow_idp_initiated: Enable or deactivate IdP-initiated flows
-        :param disable_additional_identifications: Enable or deactivate additional identifications
-        :param force_authn: Enable or deactivate ForceAuthn
-        :param consent_verified_domains_deletion: When enabling the connection, controls behavior when verified domains used for enrollment modes like automatic invitation or automatic suggestion already exist for the same domain. If true, those verified domains are removed and the connection is enabled. If false or omitted, the request fails when any such verified domain exists.
+        :param enterprise_connection_id: The ID of the enterprise connection to update
+        :param name: The display name of the enterprise connection
+        :param domains: Domains associated with the enterprise connection. Values are normalized to lowercase.
+            Empty array means ignored (no change); non-empty array means set domains to the given list (replaces existing).
+        :param active: Whether the enterprise connection is active. When set to true (enabling), any existing verified organization domains for the same domain(s) will be removed so the connection can be enabled.
+        :param sync_user_attributes: Whether to sync user attributes on sign-in
+        :param disable_additional_identifications: Whether to disable additional identifications
+        :param organization_id: Organization ID to link to this enterprise connection. Only linking is supported; sending this field sets or changes the linked organization. There is no way to unlink an organization once linked.
+        :param saml: SAML connection-specific properties. Only applied when the enterprise connection uses SAML.
+            Use this to update IdP configuration, attribute mapping, and other SAML-specific settings.
+        :param oidc: OIDC connection-specific properties. Only applied when the enterprise connection uses OIDC.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -725,34 +665,27 @@ class SamlConnectionsSDK(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.UpdateSAMLConnectionRequest(
-            saml_connection_id=saml_connection_id,
-            request_body=models.UpdateSAMLConnectionRequestBody(
+        request = models.UpdateEnterpriseConnectionRequest(
+            enterprise_connection_id=enterprise_connection_id,
+            request_body=models.UpdateEnterpriseConnectionRequestBody(
                 name=name,
-                domain=domain,
                 domains=domains,
-                idp_entity_id=idp_entity_id,
-                idp_sso_url=idp_sso_url,
-                idp_certificate=idp_certificate,
-                idp_metadata_url=idp_metadata_url,
-                idp_metadata=idp_metadata,
-                organization_id=organization_id,
-                attribute_mapping=utils.get_pydantic_model(
-                    attribute_mapping, OptionalNullable[models.AttributeMapping]
-                ),
                 active=active,
                 sync_user_attributes=sync_user_attributes,
-                allow_subdomains=allow_subdomains,
-                allow_idp_initiated=allow_idp_initiated,
                 disable_additional_identifications=disable_additional_identifications,
-                force_authn=force_authn,
-                consent_verified_domains_deletion=consent_verified_domains_deletion,
+                organization_id=organization_id,
+                saml=utils.get_pydantic_model(
+                    saml, OptionalNullable[models.UpdateEnterpriseConnectionSaml]
+                ),
+                oidc=utils.get_pydantic_model(
+                    oidc, OptionalNullable[models.UpdateEnterpriseConnectionOidc]
+                ),
             ),
         )
 
         req = self._build_request(
             method="PATCH",
-            path="/saml_connections/{saml_connection_id}",
+            path="/enterprise_connections/{enterprise_connection_id}",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -768,7 +701,7 @@ class SamlConnectionsSDK(BaseSDK):
                 False,
                 False,
                 "json",
-                models.UpdateSAMLConnectionRequestBody,
+                models.UpdateEnterpriseConnectionRequestBody,
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -790,20 +723,20 @@ class SamlConnectionsSDK(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="UpdateSAMLConnection",
+                operation_id="UpdateEnterpriseConnection",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
-            error_status_codes=["402", "403", "404", "422", "4XX", "5XX"],
+            error_status_codes=["400", "402", "403", "404", "422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.SchemasSAMLConnection, http_res)
+            return unmarshal_json_response(models.SchemasEnterpriseConnection, http_res)
         if utils.match_response(
-            http_res, ["402", "403", "404", "422"], "application/json"
+            http_res, ["400", "402", "403", "404", "422"], "application/json"
         ):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -816,60 +749,49 @@ class SamlConnectionsSDK(BaseSDK):
 
         raise models.SDKError("Unexpected response received", http_res)
 
-    @deprecated(
-        "warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
-    )
     async def update_async(
         self,
         *,
-        saml_connection_id: str,
+        enterprise_connection_id: str,
         name: OptionalNullable[str] = UNSET,
-        domain: OptionalNullable[str] = UNSET,
         domains: OptionalNullable[List[str]] = UNSET,
-        idp_entity_id: OptionalNullable[str] = UNSET,
-        idp_sso_url: OptionalNullable[str] = UNSET,
-        idp_certificate: OptionalNullable[str] = UNSET,
-        idp_metadata_url: OptionalNullable[str] = UNSET,
-        idp_metadata: OptionalNullable[str] = UNSET,
-        organization_id: OptionalNullable[str] = UNSET,
-        attribute_mapping: OptionalNullable[
-            Union[models.AttributeMapping, models.AttributeMappingTypedDict]
-        ] = UNSET,
         active: OptionalNullable[bool] = UNSET,
         sync_user_attributes: OptionalNullable[bool] = UNSET,
-        allow_subdomains: OptionalNullable[bool] = UNSET,
-        allow_idp_initiated: OptionalNullable[bool] = UNSET,
         disable_additional_identifications: OptionalNullable[bool] = UNSET,
-        force_authn: Optional[bool] = None,
-        consent_verified_domains_deletion: OptionalNullable[bool] = UNSET,
+        organization_id: OptionalNullable[str] = UNSET,
+        saml: OptionalNullable[
+            Union[
+                models.UpdateEnterpriseConnectionSaml,
+                models.UpdateEnterpriseConnectionSamlTypedDict,
+            ]
+        ] = UNSET,
+        oidc: OptionalNullable[
+            Union[
+                models.UpdateEnterpriseConnectionOidc,
+                models.UpdateEnterpriseConnectionOidcTypedDict,
+            ]
+        ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.SchemasSAMLConnection:
-        r"""Update a SAML Connection
+    ) -> models.SchemasEnterpriseConnection:
+        r"""Update an enterprise connection
 
-        Updates the SAML Connection whose ID matches the provided `id` in the path.
-        Deprecated: Use the Enterprise Connections API instead. This endpoint will be removed in future versions.
+        Updates the enterprise connection whose ID matches the provided `enterprise_connection_id` in the path.
+        When enabling the connection (setting `active` to true), any existing verified organization domains that match the connection's domains (e.g. used for enrollment modes like automatic invitation) may be deleted so the connection can be enabled.
 
-        :param saml_connection_id: The ID of the SAML Connection to update
-        :param name: The name of the new SAML Connection
-        :param domain: The domain to use for the new SAML Connection
-        :param domains: A list of the domains on use for the SAML connection
-        :param idp_entity_id: The Entity ID as provided by the IdP
-        :param idp_sso_url: The SSO URL as provided by the IdP
-        :param idp_certificate: The x509 certificated as provided by the IdP
-        :param idp_metadata_url: The URL which serves the IdP metadata. If present, it takes priority over the corresponding individual properties and replaces them
-        :param idp_metadata: The XML content of the IdP metadata file. If present, it takes priority over the corresponding individual properties
-        :param organization_id: The ID of the organization to which users of this SAML Connection will be added
-        :param attribute_mapping: Define the attribute name mapping between Identity Provider and Clerk's user properties
-        :param active: Activate or de-activate the SAML Connection
-        :param sync_user_attributes: Controls whether to update the user's attributes in each sign-in
-        :param allow_subdomains: Allow users with an email address subdomain to use this connection in order to authenticate
-        :param allow_idp_initiated: Enable or deactivate IdP-initiated flows
-        :param disable_additional_identifications: Enable or deactivate additional identifications
-        :param force_authn: Enable or deactivate ForceAuthn
-        :param consent_verified_domains_deletion: When enabling the connection, controls behavior when verified domains used for enrollment modes like automatic invitation or automatic suggestion already exist for the same domain. If true, those verified domains are removed and the connection is enabled. If false or omitted, the request fails when any such verified domain exists.
+        :param enterprise_connection_id: The ID of the enterprise connection to update
+        :param name: The display name of the enterprise connection
+        :param domains: Domains associated with the enterprise connection. Values are normalized to lowercase.
+            Empty array means ignored (no change); non-empty array means set domains to the given list (replaces existing).
+        :param active: Whether the enterprise connection is active. When set to true (enabling), any existing verified organization domains for the same domain(s) will be removed so the connection can be enabled.
+        :param sync_user_attributes: Whether to sync user attributes on sign-in
+        :param disable_additional_identifications: Whether to disable additional identifications
+        :param organization_id: Organization ID to link to this enterprise connection. Only linking is supported; sending this field sets or changes the linked organization. There is no way to unlink an organization once linked.
+        :param saml: SAML connection-specific properties. Only applied when the enterprise connection uses SAML.
+            Use this to update IdP configuration, attribute mapping, and other SAML-specific settings.
+        :param oidc: OIDC connection-specific properties. Only applied when the enterprise connection uses OIDC.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -885,34 +807,27 @@ class SamlConnectionsSDK(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.UpdateSAMLConnectionRequest(
-            saml_connection_id=saml_connection_id,
-            request_body=models.UpdateSAMLConnectionRequestBody(
+        request = models.UpdateEnterpriseConnectionRequest(
+            enterprise_connection_id=enterprise_connection_id,
+            request_body=models.UpdateEnterpriseConnectionRequestBody(
                 name=name,
-                domain=domain,
                 domains=domains,
-                idp_entity_id=idp_entity_id,
-                idp_sso_url=idp_sso_url,
-                idp_certificate=idp_certificate,
-                idp_metadata_url=idp_metadata_url,
-                idp_metadata=idp_metadata,
-                organization_id=organization_id,
-                attribute_mapping=utils.get_pydantic_model(
-                    attribute_mapping, OptionalNullable[models.AttributeMapping]
-                ),
                 active=active,
                 sync_user_attributes=sync_user_attributes,
-                allow_subdomains=allow_subdomains,
-                allow_idp_initiated=allow_idp_initiated,
                 disable_additional_identifications=disable_additional_identifications,
-                force_authn=force_authn,
-                consent_verified_domains_deletion=consent_verified_domains_deletion,
+                organization_id=organization_id,
+                saml=utils.get_pydantic_model(
+                    saml, OptionalNullable[models.UpdateEnterpriseConnectionSaml]
+                ),
+                oidc=utils.get_pydantic_model(
+                    oidc, OptionalNullable[models.UpdateEnterpriseConnectionOidc]
+                ),
             ),
         )
 
         req = self._build_request_async(
             method="PATCH",
-            path="/saml_connections/{saml_connection_id}",
+            path="/enterprise_connections/{enterprise_connection_id}",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -928,7 +843,7 @@ class SamlConnectionsSDK(BaseSDK):
                 False,
                 False,
                 "json",
-                models.UpdateSAMLConnectionRequestBody,
+                models.UpdateEnterpriseConnectionRequestBody,
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -950,20 +865,20 @@ class SamlConnectionsSDK(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="UpdateSAMLConnection",
+                operation_id="UpdateEnterpriseConnection",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
-            error_status_codes=["402", "403", "404", "422", "4XX", "5XX"],
+            error_status_codes=["400", "402", "403", "404", "422", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.SchemasSAMLConnection, http_res)
+            return unmarshal_json_response(models.SchemasEnterpriseConnection, http_res)
         if utils.match_response(
-            http_res, ["402", "403", "404", "422"], "application/json"
+            http_res, ["400", "402", "403", "404", "422"], "application/json"
         ):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -976,24 +891,20 @@ class SamlConnectionsSDK(BaseSDK):
 
         raise models.SDKError("Unexpected response received", http_res)
 
-    @deprecated(
-        "warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
-    )
     def delete(
         self,
         *,
-        saml_connection_id: str,
+        enterprise_connection_id: str,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
     ) -> models.DeletedObject:
-        r"""Delete a SAML Connection
+        r"""Delete an enterprise connection
 
-        Deletes the SAML Connection whose ID matches the provided `id` in the path.
-        Deprecated: Use the Enterprise Connections API instead. This endpoint will be removed in future versions.
+        Deletes the enterprise connection whose ID matches the provided `enterprise_connection_id` in the path.
 
-        :param saml_connection_id: The ID of the SAML Connection to delete
+        :param enterprise_connection_id: The ID of the enterprise connection to delete
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1009,13 +920,13 @@ class SamlConnectionsSDK(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.DeleteSAMLConnectionRequest(
-            saml_connection_id=saml_connection_id,
+        request = models.DeleteEnterpriseConnectionRequest(
+            enterprise_connection_id=enterprise_connection_id,
         )
 
         req = self._build_request(
             method="DELETE",
-            path="/saml_connections/{saml_connection_id}",
+            path="/enterprise_connections/{enterprise_connection_id}",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -1046,7 +957,7 @@ class SamlConnectionsSDK(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="DeleteSAMLConnection",
+                operation_id="DeleteEnterpriseConnection",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),
@@ -1070,24 +981,20 @@ class SamlConnectionsSDK(BaseSDK):
 
         raise models.SDKError("Unexpected response received", http_res)
 
-    @deprecated(
-        "warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
-    )
     async def delete_async(
         self,
         *,
-        saml_connection_id: str,
+        enterprise_connection_id: str,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
     ) -> models.DeletedObject:
-        r"""Delete a SAML Connection
+        r"""Delete an enterprise connection
 
-        Deletes the SAML Connection whose ID matches the provided `id` in the path.
-        Deprecated: Use the Enterprise Connections API instead. This endpoint will be removed in future versions.
+        Deletes the enterprise connection whose ID matches the provided `enterprise_connection_id` in the path.
 
-        :param saml_connection_id: The ID of the SAML Connection to delete
+        :param enterprise_connection_id: The ID of the enterprise connection to delete
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1103,13 +1010,13 @@ class SamlConnectionsSDK(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.DeleteSAMLConnectionRequest(
-            saml_connection_id=saml_connection_id,
+        request = models.DeleteEnterpriseConnectionRequest(
+            enterprise_connection_id=enterprise_connection_id,
         )
 
         req = self._build_request_async(
             method="DELETE",
-            path="/saml_connections/{saml_connection_id}",
+            path="/enterprise_connections/{enterprise_connection_id}",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -1140,7 +1047,7 @@ class SamlConnectionsSDK(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="DeleteSAMLConnection",
+                operation_id="DeleteEnterpriseConnection",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),

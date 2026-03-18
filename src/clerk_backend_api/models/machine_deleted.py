@@ -2,8 +2,12 @@
 
 from __future__ import annotations
 from clerk_backend_api.types import BaseModel
+from clerk_backend_api.utils import validate_const
 from enum import Enum
-from typing_extensions import TypedDict
+import pydantic
+from pydantic.functional_validators import AfterValidator
+from typing import Literal
+from typing_extensions import Annotated, TypedDict
 
 
 class MachineDeletedObject(str, Enum):
@@ -19,7 +23,7 @@ class MachineDeletedTypedDict(TypedDict):
     r"""String representing the object's type."""
     id: str
     r"""The ID of the deleted machine"""
-    deleted: bool
+    deleted: Literal[True]
     r"""Whether the machine was successfully deleted"""
 
 
@@ -32,5 +36,14 @@ class MachineDeleted(BaseModel):
     id: str
     r"""The ID of the deleted machine"""
 
-    deleted: bool
+    DELETED: Annotated[
+        Annotated[Literal[True], AfterValidator(validate_const(True))],
+        pydantic.Field(alias="deleted"),
+    ] = True
     r"""Whether the machine was successfully deleted"""
+
+
+try:
+    MachineDeleted.model_rebuild()
+except NameError:
+    pass

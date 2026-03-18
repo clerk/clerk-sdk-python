@@ -3,12 +3,13 @@
 from __future__ import annotations
 from clerk_backend_api.models import ClerkBaseError
 from clerk_backend_api.types import BaseModel
-from clerk_backend_api.utils import FieldMetadata, PathParamMetadata
+from clerk_backend_api.utils import FieldMetadata, PathParamMetadata, validate_const
 from dataclasses import dataclass, field
 from enum import Enum
 import httpx
 import pydantic
-from typing import List, Optional
+from pydantic.functional_validators import AfterValidator
+from typing import List, Literal, Optional
 from typing_extensions import Annotated, TypedDict
 
 
@@ -103,7 +104,7 @@ class DeleteAPIKeyResponseBodyTypedDict(TypedDict):
 
     id: str
     object: DeleteAPIKeyObject
-    deleted: bool
+    deleted: Literal[True]
 
 
 class DeleteAPIKeyResponseBody(BaseModel):
@@ -113,4 +114,13 @@ class DeleteAPIKeyResponseBody(BaseModel):
 
     object: DeleteAPIKeyObject
 
-    deleted: bool
+    DELETED: Annotated[
+        Annotated[Literal[True], AfterValidator(validate_const(True))],
+        pydantic.Field(alias="deleted"),
+    ] = True
+
+
+try:
+    DeleteAPIKeyResponseBody.model_rebuild()
+except NameError:
+    pass

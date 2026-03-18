@@ -2,8 +2,12 @@
 
 from __future__ import annotations
 from clerk_backend_api.types import BaseModel
+from clerk_backend_api.utils import validate_const
 from enum import Enum
-from typing_extensions import TypedDict
+import pydantic
+from pydantic.functional_validators import AfterValidator
+from typing import Literal
+from typing_extensions import Annotated, TypedDict
 
 
 class MachineScopeDeletedObject(str, Enum):
@@ -21,7 +25,7 @@ class MachineScopeDeletedTypedDict(TypedDict):
     r"""The ID of the machine that had access to the target machine"""
     to_machine_id: str
     r"""The ID of the machine that was being accessed"""
-    deleted: bool
+    deleted: Literal[True]
     r"""Whether the machine scope was successfully deleted"""
 
 
@@ -37,5 +41,14 @@ class MachineScopeDeleted(BaseModel):
     to_machine_id: str
     r"""The ID of the machine that was being accessed"""
 
-    deleted: bool
+    DELETED: Annotated[
+        Annotated[Literal[True], AfterValidator(validate_const(True))],
+        pydantic.Field(alias="deleted"),
+    ] = True
     r"""Whether the machine scope was successfully deleted"""
+
+
+try:
+    MachineScopeDeleted.model_rebuild()
+except NameError:
+    pass

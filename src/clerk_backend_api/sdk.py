@@ -37,6 +37,7 @@ if TYPE_CHECKING:
     from clerk_backend_api.emailaddresses import EmailAddresses
     from clerk_backend_api.emailandsmstemplates import EmailAndSmsTemplates
     from clerk_backend_api.emailsmstemplates import EmailSMSTemplates
+    from clerk_backend_api.enterpriseconnections_sdk import EnterpriseConnectionsSDK
     from clerk_backend_api.instancesettings_sdk import InstanceSettingsSDK
     from clerk_backend_api.invitations import Invitations
     from clerk_backend_api.jwks_sdk import JwksSDK
@@ -111,6 +112,7 @@ class Clerk(BaseSDK):
     sign_ups: "SignUps"
     oauth_applications: "OauthApplicationsSDK"
     saml_connections: "SamlConnectionsSDK"
+    enterprise_connections: "EnterpriseConnectionsSDK"
     testing_tokens: "TestingTokens"
     agent_tasks: "AgentTasks"
     waitlist_entries: "WaitlistEntriesSDK"
@@ -185,6 +187,10 @@ class Clerk(BaseSDK):
         "saml_connections": (
             "clerk_backend_api.samlconnections_sdk",
             "SamlConnectionsSDK",
+        ),
+        "enterprise_connections": (
+            "clerk_backend_api.enterpriseconnections_sdk",
+            "EnterpriseConnectionsSDK",
         ),
         "testing_tokens": ("clerk_backend_api.testingtokens", "TestingTokens"),
         "agent_tasks": ("clerk_backend_api.agenttasks", "AgentTasks"),
