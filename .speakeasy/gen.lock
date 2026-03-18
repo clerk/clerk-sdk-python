@@ -5,15 +5,15 @@ management:
   docVersion: "2025-11-10"
   speakeasyVersion: 1.757.1
   generationVersion: 2.866.2
-  releaseVersion: 5.0.4
-  configChecksum: 92c7d7a82407f7327c2463339ca169eb
+  releaseVersion: 5.0.5
+  configChecksum: aba682ffaf6672a1c4a884df321bc35d
   repoURL: https://github.com/clerk/clerk-sdk-python.git
   installationURL: https://github.com/clerk/clerk-sdk-python.git
   published: true
 persistentEdits:
-  generation_id: 42342fbb-f4e0-47e3-9269-cdc9126c7872
-  pristine_commit_hash: 6e6f3290cb6cec1192b734b31890f09535d8df8c
-  pristine_tree_hash: 7dc3c5dbb6be7d228907c899bcdd82738cdaf548
+  generation_id: 6275a620-df88-4323-b140-2021250a0939
+  pristine_commit_hash: 1661bcca6329856e7d37668af5edfb07944ee140
+  pristine_tree_hash: 3641ef203d27c69e992d72afda977cbdb74208f4
 features:
   python:
     additionalDependencies: 1.0.0
@@ -3310,8 +3310,8 @@ trackedFiles:
     pristine_git_object: 7fd8db13ad9399ab075a5fb70e6da17525ad3ed0
   pyproject.toml:
     id: 5d07e7d72637
-    last_write_checksum: sha1:62528e48e462f2c54e69135808cd74729d0bbb5a
-    pristine_git_object: 1c02802ceef823f21ffa0b3fbc306b42c76d0c9c
+    last_write_checksum: sha1:1736abdaaf0debfeafa8b4dd04eace79eca61a6d
+    pristine_git_object: b6f09b4593382f4a163e60dc63e4eb0db8520c14
   scripts/prepare_readme.py:
     id: e0c5957a6035
     last_write_checksum: sha1:419f10ccc385a29136e599315b61a0aa7a1c3e15
@@ -3338,8 +3338,8 @@ trackedFiles:
     pristine_git_object: 4926429d3dfb2c34589715971acb070ed3756559
   src/clerk_backend_api/_version.py:
     id: 9bcb16a88e08
-    last_write_checksum: sha1:f930600242c5936c071031d47e1736cbf8e4ab3b
-    pristine_git_object: bb2cf04f070cd0f7d0bd622d827fd4f22362dd12
+    last_write_checksum: sha1:c1410ed8793c74676e3c2a17f492909e77bfd15c
+    pristine_git_object: b10d8998290fb80e58e3d1fcb381d6397e44a1cb
   src/clerk_backend_api/actortokens.py:
     id: 3b3f89863233
     last_write_checksum: sha1:b83001f21b2750ff95b82cc953ae588d8468d82a
@@ -7463,19 +7463,6 @@ examples:
           application/json: {"errors": [{"message": "Invalid input", "long_message": "The input provided does not meet the requirements.", "code": "400_bad_request", "meta": {}}], "meta": {}}
 examplesVersion: 1.0.2
 generatedTests: {}
-releaseNotes: |
-  ## Python SDK Changes:
-  * `clerk.api_keys.create_api_key()`:  `response` **Changed** (Breaking ⚠️)
-  * `clerk.enterprise_connections.list()`: **Added**
-  * `clerk.enterprise_connections.create()`: **Added**
-  * `clerk.enterprise_connections.get()`: **Added**
-  * `clerk.enterprise_connections.update()`: **Added**
-  * `clerk.enterprise_connections.delete()`: **Added**
-  * `clerk.saml_connections.list()`: **Deprecated**
-  * `clerk.saml_connections.create()`: **Deprecated**
-  * `clerk.saml_connections.get()`: **Deprecated**
-  * `clerk.saml_connections.update()`: **Deprecated**
-  * `clerk.saml_connections.delete()`: **Deprecated**
 generatedFiles:
   - .gitattributes
   - .vscode/settings.json
