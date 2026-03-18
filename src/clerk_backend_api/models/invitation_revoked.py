@@ -8,10 +8,13 @@ from clerk_backend_api.types import (
     UNSET,
     UNSET_SENTINEL,
 )
+from clerk_backend_api.utils import validate_const
 from enum import Enum
+import pydantic
 from pydantic import model_serializer
-from typing import Any, Dict, Optional
-from typing_extensions import NotRequired, TypedDict
+from pydantic.functional_validators import AfterValidator
+from typing import Any, Dict, Literal, Optional
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class InvitationRevokedObject(str, Enum):
@@ -38,7 +41,7 @@ class InvitationRevokedTypedDict(TypedDict):
     r"""Unix timestamp of last update.
 
     """
-    revoked: NotRequired[bool]
+    revoked: Literal[True]
     url: NotRequired[str]
     expires_at: NotRequired[Nullable[int]]
     r"""Unix timestamp of expiration.
@@ -69,7 +72,10 @@ class InvitationRevoked(BaseModel):
 
     """
 
-    revoked: Optional[bool] = None
+    REVOKED: Annotated[
+        Annotated[Optional[Literal[True]], AfterValidator(validate_const(True))],
+        pydantic.Field(alias="revoked"),
+    ] = True
 
     url: Optional[str] = None
 
@@ -102,3 +108,9 @@ class InvitationRevoked(BaseModel):
                     m[k] = val
 
         return m
+
+
+try:
+    InvitationRevoked.model_rebuild()
+except NameError:
+    pass

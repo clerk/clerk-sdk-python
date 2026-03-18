@@ -3,12 +3,14 @@
 from __future__ import annotations
 from clerk_backend_api.models import ClerkBaseError
 from clerk_backend_api.types import BaseModel, Nullable, UNSET_SENTINEL
+from clerk_backend_api.utils import validate_const
 from dataclasses import dataclass, field
 from enum import Enum
 import httpx
 import pydantic
 from pydantic import model_serializer
-from typing import List, Optional, Union
+from pydantic.functional_validators import AfterValidator
+from typing import List, Literal, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 
@@ -121,12 +123,15 @@ class VerifyOAuthAccessTokenOauthAccessTokensResponseBody(ClerkBaseError):
 
 
 class ResponseBody2TypedDict(TypedDict):
-    active: bool
+    active: Literal[False]
     r"""Indicates that a JWT access token is not active (expired)"""
 
 
 class ResponseBody2(BaseModel):
-    active: bool
+    ACTIVE: Annotated[
+        Annotated[Literal[False], AfterValidator(validate_const(False))],
+        pydantic.Field(alias="active"),
+    ] = False
     r"""Indicates that a JWT access token is not active (expired)"""
 
 
@@ -197,3 +202,9 @@ VerifyOAuthAccessTokenResponseBody = TypeAliasType(
     "VerifyOAuthAccessTokenResponseBody", Union[ResponseBody2, ResponseBody1]
 )
 r"""200 OK"""
+
+
+try:
+    ResponseBody2.model_rebuild()
+except NameError:
+    pass

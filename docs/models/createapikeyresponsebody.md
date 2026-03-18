@@ -1,6 +1,6 @@
 # CreateAPIKeyResponseBody
 
-200 OK
+201 Created
 
 
 ## Fields

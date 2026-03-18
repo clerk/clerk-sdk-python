@@ -157,7 +157,7 @@ class CreateAPIKeyObject(str, Enum):
 
 
 class CreateAPIKeyResponseBodyTypedDict(TypedDict):
-    r"""200 OK"""
+    r"""201 Created"""
 
     object: CreateAPIKeyObject
     id: str
@@ -183,7 +183,7 @@ class CreateAPIKeyResponseBodyTypedDict(TypedDict):
 
 
 class CreateAPIKeyResponseBody(BaseModel):
-    r"""200 OK"""
+    r"""201 Created"""
 
     object: CreateAPIKeyObject
 

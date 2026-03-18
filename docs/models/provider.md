@@ -1,6 +1,6 @@
 # Provider
 
-The IdP provider of the connection.
+The identity provider (e.g. saml_custom, oidc_custom)
 
 ## Example Usage
 
@@ -19,3 +19,4 @@ value = Provider.SAML_CUSTOM
 | `SAML_OKTA`      | saml_okta        |
 | `SAML_GOOGLE`    | saml_google      |
 | `SAML_MICROSOFT` | saml_microsoft   |
+| `OIDC_CUSTOM`    | oidc_custom      |
