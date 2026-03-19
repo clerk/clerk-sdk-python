@@ -3,17 +3,17 @@ id: bfe29c99-6e67-43fe-b928-64d6a5ed6aa8
 management:
   docChecksum: b74e8bcf6a5b2fa6ad456d84d54e6217
   docVersion: "2025-11-10"
-  speakeasyVersion: 1.757.1
+  speakeasyVersion: 1.758.0
   generationVersion: 2.866.2
-  releaseVersion: 5.0.5
-  configChecksum: aba682ffaf6672a1c4a884df321bc35d
+  releaseVersion: 5.0.6
+  configChecksum: b0066396b877dd1101fbe62e5b0e71a0
   repoURL: https://github.com/clerk/clerk-sdk-python.git
   installationURL: https://github.com/clerk/clerk-sdk-python.git
   published: true
 persistentEdits:
-  generation_id: 6275a620-df88-4323-b140-2021250a0939
-  pristine_commit_hash: 1661bcca6329856e7d37668af5edfb07944ee140
-  pristine_tree_hash: 3641ef203d27c69e992d72afda977cbdb74208f4
+  generation_id: a87cf6de-e659-44ba-91ce-29f6e171b23f
+  pristine_commit_hash: dba7912e7c39dc2b0591d4fa690bd3ec7a988392
+  pristine_tree_hash: c2209da6f68b5cb0172729ee7c27dd1bb1717c40
 features:
   python:
     additionalDependencies: 1.0.0
@@ -3310,8 +3310,8 @@ trackedFiles:
     pristine_git_object: 7fd8db13ad9399ab075a5fb70e6da17525ad3ed0
   pyproject.toml:
     id: 5d07e7d72637
-    last_write_checksum: sha1:1736abdaaf0debfeafa8b4dd04eace79eca61a6d
-    pristine_git_object: b6f09b4593382f4a163e60dc63e4eb0db8520c14
+    last_write_checksum: sha1:78934d53bd20759f2f33b34628184d8db87e74b1
+    pristine_git_object: e647d550da910808e64f6d5e27b734c3822ba748
   scripts/prepare_readme.py:
     id: e0c5957a6035
     last_write_checksum: sha1:419f10ccc385a29136e599315b61a0aa7a1c3e15
@@ -3338,8 +3338,8 @@ trackedFiles:
     pristine_git_object: 4926429d3dfb2c34589715971acb070ed3756559
   src/clerk_backend_api/_version.py:
     id: 9bcb16a88e08
-    last_write_checksum: sha1:c1410ed8793c74676e3c2a17f492909e77bfd15c
-    pristine_git_object: b10d8998290fb80e58e3d1fcb381d6397e44a1cb
+    last_write_checksum: sha1:b09adf154953e93b49e587c35f39f730cee42ff1
+    pristine_git_object: 852014023376a2f99bb9172aee82898a453b82ea
   src/clerk_backend_api/actortokens.py:
     id: 3b3f89863233
     last_write_checksum: sha1:b83001f21b2750ff95b82cc953ae588d8468d82a
