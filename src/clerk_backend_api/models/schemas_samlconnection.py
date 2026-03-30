@@ -41,6 +41,7 @@ class TwoTypedDict(TypedDict):
     allow_subdomains: bool
     allow_idp_initiated: bool
     disable_additional_identifications: bool
+    allow_organization_account_linking: bool
     force_authn: bool
     r"""Enable or deactivate ForceAuthn"""
     created_at: int
@@ -93,6 +94,8 @@ class Two(BaseModel):
     allow_idp_initiated: bool
 
     disable_additional_identifications: bool
+
+    allow_organization_account_linking: bool
 
     force_authn: bool
     r"""Enable or deactivate ForceAuthn"""
@@ -191,6 +194,7 @@ class OneTypedDict(TypedDict):
     allow_subdomains: bool
     allow_idp_initiated: bool
     disable_additional_identifications: bool
+    allow_organization_account_linking: bool
     force_authn: bool
     r"""Enable or deactivate ForceAuthn"""
     created_at: int
@@ -248,6 +252,8 @@ class One(BaseModel):
     allow_idp_initiated: bool
 
     disable_additional_identifications: bool
+
+    allow_organization_account_linking: bool
 
     force_authn: bool
     r"""Enable or deactivate ForceAuthn"""

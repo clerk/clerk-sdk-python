@@ -680,6 +680,7 @@ class SamlConnectionsSDK(BaseSDK):
         allow_subdomains: OptionalNullable[bool] = UNSET,
         allow_idp_initiated: OptionalNullable[bool] = UNSET,
         disable_additional_identifications: OptionalNullable[bool] = UNSET,
+        allow_organization_account_linking: OptionalNullable[bool] = UNSET,
         force_authn: Optional[bool] = None,
         consent_verified_domains_deletion: OptionalNullable[bool] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -708,6 +709,7 @@ class SamlConnectionsSDK(BaseSDK):
         :param allow_subdomains: Allow users with an email address subdomain to use this connection in order to authenticate
         :param allow_idp_initiated: Enable or deactivate IdP-initiated flows
         :param disable_additional_identifications: Enable or deactivate additional identifications
+        :param allow_organization_account_linking: Whether this connection supports account linking via organization membership
         :param force_authn: Enable or deactivate ForceAuthn
         :param consent_verified_domains_deletion: When enabling the connection, controls behavior when verified domains used for enrollment modes like automatic invitation or automatic suggestion already exist for the same domain. If true, those verified domains are removed and the connection is enabled. If false or omitted, the request fails when any such verified domain exists.
         :param retries: Override the default retry configuration for this method
@@ -745,6 +747,7 @@ class SamlConnectionsSDK(BaseSDK):
                 allow_subdomains=allow_subdomains,
                 allow_idp_initiated=allow_idp_initiated,
                 disable_additional_identifications=disable_additional_identifications,
+                allow_organization_account_linking=allow_organization_account_linking,
                 force_authn=force_authn,
                 consent_verified_domains_deletion=consent_verified_domains_deletion,
             ),
@@ -840,6 +843,7 @@ class SamlConnectionsSDK(BaseSDK):
         allow_subdomains: OptionalNullable[bool] = UNSET,
         allow_idp_initiated: OptionalNullable[bool] = UNSET,
         disable_additional_identifications: OptionalNullable[bool] = UNSET,
+        allow_organization_account_linking: OptionalNullable[bool] = UNSET,
         force_authn: Optional[bool] = None,
         consent_verified_domains_deletion: OptionalNullable[bool] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -868,6 +872,7 @@ class SamlConnectionsSDK(BaseSDK):
         :param allow_subdomains: Allow users with an email address subdomain to use this connection in order to authenticate
         :param allow_idp_initiated: Enable or deactivate IdP-initiated flows
         :param disable_additional_identifications: Enable or deactivate additional identifications
+        :param allow_organization_account_linking: Whether this connection supports account linking via organization membership
         :param force_authn: Enable or deactivate ForceAuthn
         :param consent_verified_domains_deletion: When enabling the connection, controls behavior when verified domains used for enrollment modes like automatic invitation or automatic suggestion already exist for the same domain. If true, those verified domains are removed and the connection is enabled. If false or omitted, the request fails when any such verified domain exists.
         :param retries: Override the default retry configuration for this method
@@ -905,6 +910,7 @@ class SamlConnectionsSDK(BaseSDK):
                 allow_subdomains=allow_subdomains,
                 allow_idp_initiated=allow_idp_initiated,
                 disable_additional_identifications=disable_additional_identifications,
+                allow_organization_account_linking=allow_organization_account_linking,
                 force_authn=force_authn,
                 consent_verified_domains_deletion=consent_verified_domains_deletion,
             ),

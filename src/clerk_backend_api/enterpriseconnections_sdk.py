@@ -616,6 +616,7 @@ class EnterpriseConnectionsSDK(BaseSDK):
         active: OptionalNullable[bool] = UNSET,
         sync_user_attributes: OptionalNullable[bool] = UNSET,
         disable_additional_identifications: OptionalNullable[bool] = UNSET,
+        allow_organization_account_linking: OptionalNullable[bool] = UNSET,
         organization_id: OptionalNullable[str] = UNSET,
         saml: OptionalNullable[
             Union[
@@ -627,6 +628,12 @@ class EnterpriseConnectionsSDK(BaseSDK):
             Union[
                 models.UpdateEnterpriseConnectionOidc,
                 models.UpdateEnterpriseConnectionOidcTypedDict,
+            ]
+        ] = UNSET,
+        custom_attributes: OptionalNullable[
+            Union[
+                List[models.UpdateEnterpriseConnectionCustomAttributes],
+                List[models.UpdateEnterpriseConnectionCustomAttributesTypedDict],
             ]
         ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -646,10 +653,12 @@ class EnterpriseConnectionsSDK(BaseSDK):
         :param active: Whether the enterprise connection is active. When set to true (enabling), any existing verified organization domains for the same domain(s) will be removed so the connection can be enabled.
         :param sync_user_attributes: Whether to sync user attributes on sign-in
         :param disable_additional_identifications: Whether to disable additional identifications
+        :param allow_organization_account_linking: Whether this connection supports account linking via organization membership
         :param organization_id: Organization ID to link to this enterprise connection. Only linking is supported; sending this field sets or changes the linked organization. There is no way to unlink an organization once linked.
         :param saml: SAML connection-specific properties. Only applied when the enterprise connection uses SAML.
             Use this to update IdP configuration, attribute mapping, and other SAML-specific settings.
-        :param oidc: OIDC connection-specific properties. Only applied when the enterprise connection uses OIDC.
+        :param oidc: OIDC connection-specific properties. Only applied when the enterprise connection uses OIDC (e.g. oidc_custom, oidc_github_enterprise, or oidc_gitlab).
+        :param custom_attributes: Custom attributes to map from the IdP to the user's profile via SSO or SCIM provisioning. Requires the custom attributes feature to be enabled for the instance.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -673,12 +682,19 @@ class EnterpriseConnectionsSDK(BaseSDK):
                 active=active,
                 sync_user_attributes=sync_user_attributes,
                 disable_additional_identifications=disable_additional_identifications,
+                allow_organization_account_linking=allow_organization_account_linking,
                 organization_id=organization_id,
                 saml=utils.get_pydantic_model(
                     saml, OptionalNullable[models.UpdateEnterpriseConnectionSaml]
                 ),
                 oidc=utils.get_pydantic_model(
                     oidc, OptionalNullable[models.UpdateEnterpriseConnectionOidc]
+                ),
+                custom_attributes=utils.get_pydantic_model(
+                    custom_attributes,
+                    OptionalNullable[
+                        List[models.UpdateEnterpriseConnectionCustomAttributes]
+                    ],
                 ),
             ),
         )
@@ -758,6 +774,7 @@ class EnterpriseConnectionsSDK(BaseSDK):
         active: OptionalNullable[bool] = UNSET,
         sync_user_attributes: OptionalNullable[bool] = UNSET,
         disable_additional_identifications: OptionalNullable[bool] = UNSET,
+        allow_organization_account_linking: OptionalNullable[bool] = UNSET,
         organization_id: OptionalNullable[str] = UNSET,
         saml: OptionalNullable[
             Union[
@@ -769,6 +786,12 @@ class EnterpriseConnectionsSDK(BaseSDK):
             Union[
                 models.UpdateEnterpriseConnectionOidc,
                 models.UpdateEnterpriseConnectionOidcTypedDict,
+            ]
+        ] = UNSET,
+        custom_attributes: OptionalNullable[
+            Union[
+                List[models.UpdateEnterpriseConnectionCustomAttributes],
+                List[models.UpdateEnterpriseConnectionCustomAttributesTypedDict],
             ]
         ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -788,10 +811,12 @@ class EnterpriseConnectionsSDK(BaseSDK):
         :param active: Whether the enterprise connection is active. When set to true (enabling), any existing verified organization domains for the same domain(s) will be removed so the connection can be enabled.
         :param sync_user_attributes: Whether to sync user attributes on sign-in
         :param disable_additional_identifications: Whether to disable additional identifications
+        :param allow_organization_account_linking: Whether this connection supports account linking via organization membership
         :param organization_id: Organization ID to link to this enterprise connection. Only linking is supported; sending this field sets or changes the linked organization. There is no way to unlink an organization once linked.
         :param saml: SAML connection-specific properties. Only applied when the enterprise connection uses SAML.
             Use this to update IdP configuration, attribute mapping, and other SAML-specific settings.
-        :param oidc: OIDC connection-specific properties. Only applied when the enterprise connection uses OIDC.
+        :param oidc: OIDC connection-specific properties. Only applied when the enterprise connection uses OIDC (e.g. oidc_custom, oidc_github_enterprise, or oidc_gitlab).
+        :param custom_attributes: Custom attributes to map from the IdP to the user's profile via SSO or SCIM provisioning. Requires the custom attributes feature to be enabled for the instance.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -815,12 +840,19 @@ class EnterpriseConnectionsSDK(BaseSDK):
                 active=active,
                 sync_user_attributes=sync_user_attributes,
                 disable_additional_identifications=disable_additional_identifications,
+                allow_organization_account_linking=allow_organization_account_linking,
                 organization_id=organization_id,
                 saml=utils.get_pydantic_model(
                     saml, OptionalNullable[models.UpdateEnterpriseConnectionSaml]
                 ),
                 oidc=utils.get_pydantic_model(
                     oidc, OptionalNullable[models.UpdateEnterpriseConnectionOidc]
+                ),
+                custom_attributes=utils.get_pydantic_model(
+                    custom_attributes,
+                    OptionalNullable[
+                        List[models.UpdateEnterpriseConnectionCustomAttributes]
+                    ],
                 ),
             ),
         )
