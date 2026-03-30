@@ -3,7 +3,7 @@
 from .basesdk import BaseSDK
 from clerk_backend_api import models, utils
 from clerk_backend_api._hooks import HookContext
-from clerk_backend_api.types import OptionalNullable, UNSET
+from clerk_backend_api.types import Nullable, OptionalNullable, UNSET
 from clerk_backend_api.utils.unmarshal_json_response import unmarshal_json_response
 from datetime import datetime
 from typing import Any, Mapping, Optional
@@ -458,9 +458,9 @@ class Billing(BaseSDK):
         self,
         *,
         plan_id: str,
-        amount: int,
+        amount: Nullable[int],
         currency: Optional[str] = "USD",
-        annual_monthly_amount: Optional[int] = None,
+        annual_monthly_amount: OptionalNullable[int] = UNSET,
         description: Optional[str] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -473,9 +473,9 @@ class Billing(BaseSDK):
         to specific customers while maintaining the same plan structure.
 
         :param plan_id: The ID of the plan this price belongs to.
-        :param amount: The amount in cents for the price. Must be at least $1 (100 cents).
+        :param amount: The monthly amount in cents. Must be at least $1 (100 cents) if not null.
         :param currency: The currency code (e.g., \"USD\"). Defaults to USD.
-        :param annual_monthly_amount: The monthly amount in cents when billed annually. Optional.
+        :param annual_monthly_amount: The monthly amount in cents when billed annually. Must be at least $1 (100 cents) if not null.
         :param description: An optional description for this custom price.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -569,9 +569,9 @@ class Billing(BaseSDK):
         self,
         *,
         plan_id: str,
-        amount: int,
+        amount: Nullable[int],
         currency: Optional[str] = "USD",
-        annual_monthly_amount: Optional[int] = None,
+        annual_monthly_amount: OptionalNullable[int] = UNSET,
         description: Optional[str] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -584,9 +584,9 @@ class Billing(BaseSDK):
         to specific customers while maintaining the same plan structure.
 
         :param plan_id: The ID of the plan this price belongs to.
-        :param amount: The amount in cents for the price. Must be at least $1 (100 cents).
+        :param amount: The monthly amount in cents. Must be at least $1 (100 cents) if not null.
         :param currency: The currency code (e.g., \"USD\"). Defaults to USD.
-        :param annual_monthly_amount: The monthly amount in cents when billed annually. Optional.
+        :param annual_monthly_amount: The monthly amount in cents when billed annually. Must be at least $1 (100 cents) if not null.
         :param description: An optional description for this custom price.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method

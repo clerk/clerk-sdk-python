@@ -1,0 +1,11 @@
+# CustomAttributes
+
+
+## Fields
+
+| Field                                                                                | Type                                                                                 | Required                                                                             | Description                                                                          |
+| ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ |
+| `name`                                                                               | *str*                                                                                | :heavy_check_mark:                                                                   | Display name for the custom attribute                                                |
+| `key`                                                                                | *str*                                                                                | :heavy_check_mark:                                                                   | Key used to store the attribute in the user's public/private/unsafe metadata         |
+| `sso_path`                                                                           | *Optional[str]*                                                                      | :heavy_minus_sign:                                                                   | Path to extract the attribute value from SSO claims (SAML assertions or OIDC claims) |
+| `scim_path`                                                                          | *Optional[str]*                                                                      | :heavy_minus_sign:                                                                   | GJSON path to extract the attribute value from SCIM user resources                   |

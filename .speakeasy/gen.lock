@@ -1,25 +1,25 @@
 lockVersion: 2.0.0
 id: bfe29c99-6e67-43fe-b928-64d6a5ed6aa8
 management:
-  docChecksum: b74e8bcf6a5b2fa6ad456d84d54e6217
+  docChecksum: 520c46e81808b82f8adcce4abe8850da
   docVersion: "2025-11-10"
-  speakeasyVersion: 1.758.0
-  generationVersion: 2.866.2
-  releaseVersion: 5.0.6
-  configChecksum: b0066396b877dd1101fbe62e5b0e71a0
+  speakeasyVersion: 1.759.3
+  generationVersion: 2.869.25
+  releaseVersion: 5.0.7
+  configChecksum: 40a7024c7ddc4c58127d1f1ee9e526fa
   repoURL: https://github.com/clerk/clerk-sdk-python.git
   installationURL: https://github.com/clerk/clerk-sdk-python.git
   published: true
 persistentEdits:
-  generation_id: a87cf6de-e659-44ba-91ce-29f6e171b23f
-  pristine_commit_hash: dba7912e7c39dc2b0591d4fa690bd3ec7a988392
-  pristine_tree_hash: c2209da6f68b5cb0172729ee7c27dd1bb1717c40
+  generation_id: 72fa0ee5-2967-4c03-a079-cdb1b8e2ca78
+  pristine_commit_hash: ad45c06f7d6f96d70debde97a54b8aa5d6c46b21
+  pristine_tree_hash: cd9e7ce8184f8313bd0e4eda301143233e599c7c
 features:
   python:
     additionalDependencies: 1.0.0
     additionalProperties: 1.0.1
     constsAndDefaults: 1.0.7
-    core: 6.0.19
+    core: 6.0.20
     customCodeRegions: 0.1.1
     defaultEnabledRetries: 0.2.0
     deprecations: 3.0.2
@@ -110,8 +110,8 @@ trackedFiles:
     pristine_git_object: 758c005e673e124a8ea599cad785a42ed23f4dde
   docs/models/agenttask.md:
     id: a41b99322257
-    last_write_checksum: sha1:1ae563b8e96d875bb286b8e0e4a78e5d9a2f07ee
-    pristine_git_object: 686502d871c8934c3c6bc5bac38e3968a645749d
+    last_write_checksum: sha1:25f587bc0658c2e5f6f032aa389d5888ff2a6e28
+    pristine_git_object: 82b099a14952517d7f4d9d17e9996401ec9d16ca
   docs/models/agenttaskobject.md:
     id: fac60e8adb3d
     last_write_checksum: sha1:c33bd89a7ffbf2822c835bc1e73f508511c2f896
@@ -182,8 +182,16 @@ trackedFiles:
     pristine_git_object: 04e35934aab98b338857a0703bd22e7a3d12cd4b
   docs/models/billingpriceresponse.md:
     id: db38a8f67a7b
-    last_write_checksum: sha1:10cc2f9f6aa4b01fa5c43639573693355c36fde6
-    pristine_git_object: 03d82b3cfae3f9503e8433ac3c689632603556d5
+    last_write_checksum: sha1:e0dc05efd036e485bf93f93e4aa03f165d40cc08
+    pristine_git_object: 12971a1c7561d929360c514d2e3447fb9b5a9edf
+  docs/models/billingpriceresponseannualmonthlyfee.md:
+    id: 551bbe21f5fd
+    last_write_checksum: sha1:86ac12c8f7538cb3bc72d2762d6bb306bc52f2d3
+    pristine_git_object: 7c7709c28d6ca16918e1ceeb9ab8be34bc9d30ea
+  docs/models/billingpriceresponsefee.md:
+    id: db40da2450a6
+    last_write_checksum: sha1:776cec5f905eaf146f4e0c7bcafb0abf874c4f94
+    pristine_git_object: 786bf38816e412993b26ba58524a719677b2defa
   docs/models/billingpriceresponseobject.md:
     id: 3c0f3c31ffb4
     last_write_checksum: sha1:da10dc26785b9e9e61cae3375429d788cccea83b
@@ -326,8 +334,8 @@ trackedFiles:
     pristine_git_object: 65998837eabdff7b04a6689e41a1a6201b45af3d
   docs/models/commerceplan.md:
     id: 02500030883c
-    last_write_checksum: sha1:b95847038e36e48007fb4f9585f0d156b41c5d8a
-    pristine_git_object: bc5f02a0e047fc2154bda86c6a586220536585b4
+    last_write_checksum: sha1:680348b7d2a06eef0ed95480bedbe76a114b1670
+    pristine_git_object: de699597b042bca96bba6270fbe3980c5f9ca172
   docs/models/commerceplanobject.md:
     id: 01a815f37af4
     last_write_checksum: sha1:85b9dabc3838f6aa06ce6e023166adf8839a8bc2
@@ -380,6 +388,10 @@ trackedFiles:
     id: 1a628479fb20
     last_write_checksum: sha1:b046cf3a742bc064f66ecaf9938b8887eb5d5ec3
     pristine_git_object: e0c9f112de5814eee3eb311a9126ae128340b831
+  docs/models/commercesubscriptionitemfee.md:
+    id: d231986b6979
+    last_write_checksum: sha1:389f9fb931e206c392b328bb3b038b657fe5be21
+    pristine_git_object: 8afcc8d34f85df79d70613a153a08a540209a9d9
   docs/models/commercesubscriptionitemobject.md:
     id: 7c4b622b9a11
     last_write_checksum: sha1:00dda43c1119b964bcba4927fb648d5d7a30783d
@@ -470,8 +482,8 @@ trackedFiles:
     pristine_git_object: 4d75bfc9b72f4a5890dfc567884beb8fddc7e211
   docs/models/createbillingpricerequest.md:
     id: 125c5d321b4f
-    last_write_checksum: sha1:52f1fb1fd31f2c460b77a851e5b6bdb86eb3d764
-    pristine_git_object: c0602ce9f9b42fe44ba5aa1840dbb4bf041cb63c
+    last_write_checksum: sha1:22c75317e3834ca6304788c2702fd52a26f20fce
+    pristine_git_object: 6393b1e1d73482f7e60c5748877085cf737287b1
   docs/models/createbillingpricetransitionrequest.md:
     id: 2f54882189ae
     last_write_checksum: sha1:351cd681d4e927f0b39d172358a2959d7391d856
@@ -496,10 +508,14 @@ trackedFiles:
     id: 91668d7b58d7
     last_write_checksum: sha1:1595f8d8f6c3399238bd316045fd2702bcbecbdf
     pristine_git_object: 0a71dccc66dbe435ccd8d8bbf6d618a510119154
+  docs/models/createenterpriseconnectioncustomattributes.md:
+    id: c0f9ed259c84
+    last_write_checksum: sha1:a37dda7ebaa4fd4e03cd8137879590714b0ca1c7
+    pristine_git_object: 7bfb1a9266ba8f9087a5cf9adf1922833b961142
   docs/models/createenterpriseconnectionrequestbody.md:
     id: 00f05e3e96ba
-    last_write_checksum: sha1:8039ce173d8a673bc783cd938f1cbf73deac9404
-    pristine_git_object: a254905887a3b29043a3665f78ee796007cb51fd
+    last_write_checksum: sha1:b9028d00fbcf5ea4455a07a5451e81dd6529af61
+    pristine_git_object: b2c9519c23bc3f8ee3e4c83e01870f263da78440
   docs/models/createenterpriseconnectionsaml.md:
     id: 139d99b40c0c
     last_write_checksum: sha1:b8392066a5c7f53813787744c55c0e988ff41a54
@@ -692,6 +708,10 @@ trackedFiles:
     id: 5a24a26e67da
     last_write_checksum: sha1:cb9e47011f3f52a22c02fdb2c5cd09cacc4bf329
     pristine_git_object: 2462c6f9b079d5f1d4d8f340e2418fccff59a20d
+  docs/models/customattributes.md:
+    id: f92493c0ab68
+    last_write_checksum: sha1:3d632098f8aa0d606d2dfeade4bd01a055fcfc36
+    pristine_git_object: 4ef008eff9c803bc155402bd40e9cbf4bd580e04
   docs/models/data.md:
     id: 9a31987caf78
     last_write_checksum: sha1:b1fda835a4dde5725d68615b0cf7eedfe06bab9f
@@ -960,6 +980,10 @@ trackedFiles:
     id: c79886fd72f5
     last_write_checksum: sha1:28a9e121adc2c77565d74e2962449ac67e48afcf
     pristine_git_object: a6529cbe75e8ca789f363df60c6626d66fbc2209
+  docs/models/fee.md:
+    id: 2f7fde11efe6
+    last_write_checksum: sha1:d82ae5442bb4ad0bd7b89a7b8eb128824bcd4779
+    pristine_git_object: e5da68e2ee83734d902fab7a56afaf858f4e391c
   docs/models/file.md:
     id: 4ad31355bd1c
     last_write_checksum: sha1:ade4d3c908c664a07a3c333cc24bc1bfb43ab88b
@@ -1578,24 +1602,24 @@ trackedFiles:
     pristine_git_object: 36dc1daa06095402ca8034542d2f2193c868a729
   docs/models/oauthconfig.md:
     id: 702c98bd8aac
-    last_write_checksum: sha1:8e8b966bd1ebf786002c1778aacd094235f389ae
-    pristine_git_object: eacce93e78ea162c052c748e327ba775a45d0160
+    last_write_checksum: sha1:8d4b12ba6344e573927a3f5ae8ab39fd16530666
+    pristine_git_object: 095e976cfe8ecd5ff490e2a17e60b69f67e8f948
   docs/models/object.md:
     id: 7ffe67d0b83f
     last_write_checksum: sha1:4548f466e0d55207132b238be766e05d40e448a3
     pristine_git_object: bef0753ed87a3acd5835faa52b710f2bde3c0014
   docs/models/oidc.md:
     id: a9c0de0b0540
-    last_write_checksum: sha1:3c406ce9f781a6ee4426b0d5935906a0cfc279c4
-    pristine_git_object: 27b83266fcc94951f67d83eac203c5282676c47d
+    last_write_checksum: sha1:4981f687ce37381713eaea864456b1ff79846b4c
+    pristine_git_object: 20f82269b913ac16a2e7fb3c4f41d0e044c05f2b
   docs/models/onbehalfof.md:
     id: 27a8fd6c07d1
     last_write_checksum: sha1:1012d439a3b90f45fcba4c9a142a4227dd68b24f
     pristine_git_object: 409a83fe7e2b8a2fb2c42aec3120f31610830488
   docs/models/one.md:
     id: 69a5df93c480
-    last_write_checksum: sha1:aaaa8fb610c2a91100f530ffb2ff6b5700c3b7c6
-    pristine_git_object: 5e542411413b03d79bd5e456bae1431b2ccc268b
+    last_write_checksum: sha1:9ce98be0bdb82de4a170e37890082b051ac526bb
+    pristine_git_object: 81ffd23710690db14b413879fa92ebf156d6277e
   docs/models/organization.md:
     id: ea9c215ca2eb
     last_write_checksum: sha1:6b63d19916f5d8c770bd338bfe9dafb1ec258fa6
@@ -1790,8 +1814,8 @@ trackedFiles:
     pristine_git_object: 2bbc67deb98c9decedbe8bf5d94dd03a5e5d626a
   docs/models/plan.md:
     id: 900c4149ef4b
-    last_write_checksum: sha1:c836f8e27e9c088462703dea97953b0b067bc5e2
-    pristine_git_object: c07c6b8cf8e423e734c02a5a1cee601552052f86
+    last_write_checksum: sha1:e9625705ac0ee53e0703cf2a682beb8464acd7c9
+    pristine_git_object: 0dc88389e6ba0361dcce48d9379c0322f57745cb
   docs/models/planperiod.md:
     id: b942ce9be6fb
     last_write_checksum: sha1:3f7e04f74c3027d85a072096844a291dd781c00d
@@ -1826,8 +1850,8 @@ trackedFiles:
     pristine_git_object: aac70bef1afc39b4a08b095d4c88ab7abadfe34a
   docs/models/provider.md:
     id: cedb2a98f8e3
-    last_write_checksum: sha1:deafca7b01efa19f7e573e8f7d4ec33c65de8bd6
-    pristine_git_object: 71d1a731ff468a62d52603ada724e399590edfb6
+    last_write_checksum: sha1:df87893897aac9916aa480408beae9d7b04bea5a
+    pristine_git_object: 045d468981c9bb5999e02b490357dbc1dee9f32e
   docs/models/proxycheck.md:
     id: 97c1b1ebb08f
     last_write_checksum: sha1:da503cd8d00de44023d4965baf37ac7f12a5fc0a
@@ -2126,8 +2150,20 @@ trackedFiles:
     pristine_git_object: 7c175e9f24de246ecc1eadf8d597b2ac39f9d742
   docs/models/schemascommerceplan.md:
     id: e31fed3b5ba6
-    last_write_checksum: sha1:da8ad5898a51e8a33d1875442f65fefc88cd0cd9
-    pristine_git_object: 2893aa190f4bfac932e26b0b44de127f5e3d388e
+    last_write_checksum: sha1:4b89885fe04c4e1144cc471739967bb3e3236f12
+    pristine_git_object: 72d7df3120d07657372fc9b6caacf48021e1f402
+  docs/models/schemascommerceplanannualfee.md:
+    id: 0c748b722d84
+    last_write_checksum: sha1:c091972ebc82327295abed464f494d1687c01887
+    pristine_git_object: d89eafb767cfb2e391d2bc4c872f3907c79a3921
+  docs/models/schemascommerceplanannualmonthlyfee.md:
+    id: dc7792f3f094
+    last_write_checksum: sha1:d3a6d16045e54ee8428fdf9367b0629b45a6b4d7
+    pristine_git_object: 5d102134a23e4078848ca8c03c28e1e6621bd385
+  docs/models/schemascommerceplanfee.md:
+    id: 2b5dd6804d88
+    last_write_checksum: sha1:654e96ab2336aee4aba4f1037c719c34cc5362cc
+    pristine_git_object: 5ba0661b581e2669a471527ef074b417105679fa
   docs/models/schemascommerceplanobject.md:
     id: 67f9e9ddb730
     last_write_checksum: sha1:0c61cab1318bbb2c5913ce8d8afa4097b1b46ebb
@@ -2140,10 +2176,22 @@ trackedFiles:
     id: 4d5532405ffd
     last_write_checksum: sha1:231418c1400f8c442c052eb919a4c24611804ba1
     pristine_git_object: 033272244d9d07fc09ce16a46f0fffbe3a562154
+  docs/models/schemascommercesubscriptionitemannualfee.md:
+    id: b3a9aaa80262
+    last_write_checksum: sha1:0da4b7954218bfe7e074eeeb65fcf6eb33e21327
+    pristine_git_object: 7027ae7e86ec2fd8f088b4e9ddea0fbc2ba574e0
+  docs/models/schemascommercesubscriptionitemannualmonthlyfee.md:
+    id: 932582f640aa
+    last_write_checksum: sha1:685d12541e0761be04cc644511192aee60b35ec0
+    pristine_git_object: f64e0c4463a9bbfc226751961a2190e967aeea35
   docs/models/schemascommercesubscriptionitemcreditamount.md:
     id: 09df5555784a
     last_write_checksum: sha1:5d97a1d1c79d4f313a3d2b714993e917ab2cf6b8
     pristine_git_object: 4395358910470c498fd85ec1a3ef55eccb33d0ca
+  docs/models/schemascommercesubscriptionitemfee.md:
+    id: 3147052585d8
+    last_write_checksum: sha1:151d5a08a2e822aaba55ee239ea5cc294ae7659c
+    pristine_git_object: 4f5f79badbe9874591a7f4f1eb8c1313718f0ab0
   docs/models/schemascommercesubscriptionitemnextinvoiceamount.md:
     id: 563a4765aeb6
     last_write_checksum: sha1:42e744fc46b0b7f2c9d0df990eb1aec740736b97
@@ -2174,8 +2222,8 @@ trackedFiles:
     pristine_git_object: edf81824937c63791b9d323e26ed5750e3f19df1
   docs/models/schemascommercesubscriptionitemplan.md:
     id: 4f2f2767d0fb
-    last_write_checksum: sha1:8737a3ada42b8f4d5e80167167bc6f70e201d6f7
-    pristine_git_object: 608d099b10809c421540594cb09e0438716d13bd
+    last_write_checksum: sha1:e826a6dca8b59463c3de682896ab0bd512f1df39
+    pristine_git_object: fc43e9beb3a493dddcf8e720b022e59d6d807684
   docs/models/schemascommercesubscriptionitemplanobject.md:
     id: e2f951a02cc6
     last_write_checksum: sha1:5c5ed09983a02ccf7fc995c07cad09e565743f2f
@@ -2190,8 +2238,8 @@ trackedFiles:
     pristine_git_object: 6e35d845dc738f87761d331bfc04c9ea7a914960
   docs/models/schemasenterpriseconnection.md:
     id: ac6f2bb02a3d
-    last_write_checksum: sha1:2c88610852ee5e042f8895a370befce6b34582b0
-    pristine_git_object: da2b78ca5463add5a2d83550e3500ee6890eac50
+    last_write_checksum: sha1:67ebf8cf475b7da5b88770bfc2fd41c4db140500
+    pristine_git_object: 8d81acc28cdd714e0acad4271d25faf57c1212b9
   docs/models/schemasenterpriseconnectionsamlconnection.md:
     id: 2849d7c9f488
     last_write_checksum: sha1:47041e5923126cbf83e7e710538afce5d4063198
@@ -2378,8 +2426,8 @@ trackedFiles:
     pristine_git_object: 7c94d87ba2983245a7a69f024c72b6090ea5bf14
   docs/models/two.md:
     id: 3720b8efc931
-    last_write_checksum: sha1:314e43073aa00a19e2de3bf0996ab0dba2bd583b
-    pristine_git_object: 6351bace5391744cf56615eb7ba0942481096cb2
+    last_write_checksum: sha1:be9c88f3fa437739d9920448a7228c6e641902cc
+    pristine_git_object: a0dd298b18bff59ae3ca820a76a0e006f7de8a89
   docs/models/type.md:
     id: 98c32f09b2c8
     last_write_checksum: sha1:30b20d26f9bf3a7a2e28765a067e0c2223cbfb76
@@ -2448,18 +2496,22 @@ trackedFiles:
     id: a53a18306c6d
     last_write_checksum: sha1:f30ee2b412f2b9e6a287c96f8541cdc623324931
     pristine_git_object: 8e6ca0bc333d3edf2fda0a07cafcf42f5e2d3dac
+  docs/models/updateenterpriseconnectioncustomattributes.md:
+    id: ff4a9ba508f8
+    last_write_checksum: sha1:9964d4659595e4c2682858730563aa8fd58a2f28
+    pristine_git_object: 76e2fb6efbc584924e1877a7054b5de4d13530d4
   docs/models/updateenterpriseconnectionoidc.md:
     id: 5d1cc56f77d2
-    last_write_checksum: sha1:7976ce7f6f8727ea5be4d0eee2df2dfe0aef0569
-    pristine_git_object: 50016113cb57742acd7dcf804f0b674f2e850788
+    last_write_checksum: sha1:e5fd04250853fdddf770cda2bba1e1f0e37d888a
+    pristine_git_object: 14364b3565bc4be31bf5e9e0165ead11594ad802
   docs/models/updateenterpriseconnectionrequest.md:
     id: 8486d771a1a7
     last_write_checksum: sha1:4212905a3e1cc05b0821028c2ff07c814cf26c03
     pristine_git_object: 67325e726adb41be236bab37edd991738adfd5f3
   docs/models/updateenterpriseconnectionrequestbody.md:
     id: 045dcea6caff
-    last_write_checksum: sha1:2643317eef479e96d6db2ac7d908e983e9b37c34
-    pristine_git_object: a62993e266e2cf262bf92e2a4f9c253b045e8359
+    last_write_checksum: sha1:50958baf04dcd82458fb7c029e38eb999c4a255a
+    pristine_git_object: 6eb7163547cf3034be73f640040856ec66872940
   docs/models/updateenterpriseconnectionsaml.md:
     id: a8740b2681d8
     last_write_checksum: sha1:352188bd7366d0e78e97e430e9d855d3fa7cf0ba
@@ -2594,8 +2646,8 @@ trackedFiles:
     pristine_git_object: c126843b721b472392a1a5a1acd1702e185e51ff
   docs/models/updatesamlconnectionrequestbody.md:
     id: 82dcd79180d6
-    last_write_checksum: sha1:8d387027349d64f082971bb4f624ce02576b8bf0
-    pristine_git_object: dcb4a99fd9ccab80531628eb9f853c9b09f42ece
+    last_write_checksum: sha1:1ee1984e545ab9c34864a8c3854f360d0ba9db89
+    pristine_git_object: e00926cd631eeed54ae11d85fe0685bf22e7ebf9
   docs/models/updatesignuprequest.md:
     id: ef934a29dc73
     last_write_checksum: sha1:d7f9c8b15ae8891933891d545fe5a7b91da9d10e
@@ -3138,8 +3190,8 @@ trackedFiles:
     pristine_git_object: d048d739fb5b2392930eb284eedea95d6efcd9a8
   docs/sdks/agenttasks/README.md:
     id: 809f9d21a2ba
-    last_write_checksum: sha1:49e203c396b97973c3bf8e8e3e1bbd6739d295c1
-    pristine_git_object: f82d65de22296c8ec3afe5f0a028e21d8e7ac1c6
+    last_write_checksum: sha1:37b19fb026c75bf63c9fdd55a07a903a1d91d22a
+    pristine_git_object: d56f0ae59a38adaffa82ac2812d117a81756f397
   docs/sdks/allowlistidentifiers/README.md:
     id: e8a186582c92
     last_write_checksum: sha1:5800fd6e2a20cdbd4fc94980818405e696f6aa4b
@@ -3154,8 +3206,8 @@ trackedFiles:
     pristine_git_object: 35f3f36a78c00a226b588f68ef192a3375c2c4d2
   docs/sdks/billing/README.md:
     id: dc915331dd9d
-    last_write_checksum: sha1:689dbd28ca86fc32018890b41c1d83efeee7af7e
-    pristine_git_object: 65bb2ccbf926c280fbdc24f7d60b7822912aa64b
+    last_write_checksum: sha1:5df507b60cf08279bb729536b1aaddbba6422e18
+    pristine_git_object: 8745c8b60f2bff4c93bb295541086ed0c7f258ae
   docs/sdks/blocklistidentifierssdk/README.md:
     id: 8c5a4397c841
     last_write_checksum: sha1:2b250f0eb6ba83fce9a645c9439358b6e6600654
@@ -3170,8 +3222,8 @@ trackedFiles:
     pristine_git_object: b4c5071dcbedcd6a5f60034a54e00ed3055a40af
   docs/sdks/emailaddresses/README.md:
     id: f5fd208070d3
-    last_write_checksum: sha1:5889a7dfc387ac07e32e7c8cf70189ee1ddfbfd5
-    pristine_git_object: 586ce69d5f7f8b6f2c95a99574e9e49c69948d1a
+    last_write_checksum: sha1:eb0ad89b0b6c0b529beed7d331e7dc89d92c22b9
+    pristine_git_object: 0f962e308cffcc3a80e78c408321dc30ac185735
   docs/sdks/emailandsmstemplates/README.md:
     id: f97f5a6195f4
     last_write_checksum: sha1:21182fc1ed3c6c111146691d07b034937d82f029
@@ -3182,8 +3234,8 @@ trackedFiles:
     pristine_git_object: 40d266c0ca71b4a042c1624998026a9565b4a627
   docs/sdks/enterpriseconnectionssdk/README.md:
     id: f2a1e2452c9d
-    last_write_checksum: sha1:f45225d4ed0ebc72ba9f4456357933cf5b040bbb
-    pristine_git_object: 0ceb9347d3e836580abc646ee57f846411757f53
+    last_write_checksum: sha1:9f593936e487e3fed6464802128ecbd59ae0a17b
+    pristine_git_object: 71dd45081e4cb1341eac135533495855fd8fa4d2
   docs/sdks/instancesettingssdk/README.md:
     id: acfc6e2cdd5f
     last_write_checksum: sha1:c0ecee88e35b3aab3f32a36efd9f57f01caef8f0
@@ -3262,8 +3314,8 @@ trackedFiles:
     pristine_git_object: 274348119cfc9c4dedebd4ecf4f995c44832e2af
   docs/sdks/samlconnectionssdk/README.md:
     id: d7f9ac682d87
-    last_write_checksum: sha1:5ed7869e66017e21bdb6b7f8433f57764497631f
-    pristine_git_object: 538a69cd66ee0443db389b1e8e04c9dd6ffd0b65
+    last_write_checksum: sha1:e1893dd27775fcd00b1d82e9ef16936958d2b720
+    pristine_git_object: 94dc2129fdc801c2fed1da5864b083a0a2cc2abb
   docs/sdks/sessions/README.md:
     id: 57ad62844f79
     last_write_checksum: sha1:aa90f444d0a8b6efe38e390d7987b634eb07ca9a
@@ -3310,8 +3362,8 @@ trackedFiles:
     pristine_git_object: 7fd8db13ad9399ab075a5fb70e6da17525ad3ed0
   pyproject.toml:
     id: 5d07e7d72637
-    last_write_checksum: sha1:78934d53bd20759f2f33b34628184d8db87e74b1
-    pristine_git_object: e647d550da910808e64f6d5e27b734c3822ba748
+    last_write_checksum: sha1:8b52aa1e0d533459ecfb7f8a1ab124e23694af1f
+    pristine_git_object: ede95bcaa40de1d8a4923f46e66e5a87f59e06e4
   scripts/prepare_readme.py:
     id: e0c5957a6035
     last_write_checksum: sha1:419f10ccc385a29136e599315b61a0aa7a1c3e15
@@ -3338,16 +3390,16 @@ trackedFiles:
     pristine_git_object: 4926429d3dfb2c34589715971acb070ed3756559
   src/clerk_backend_api/_version.py:
     id: 9bcb16a88e08
-    last_write_checksum: sha1:b09adf154953e93b49e587c35f39f730cee42ff1
-    pristine_git_object: 852014023376a2f99bb9172aee82898a453b82ea
+    last_write_checksum: sha1:865e145009ddc0df191ab20b261eaa8b8811b5e3
+    pristine_git_object: 1c477c4d7ac6e5636697e741109e2ad8c71d3530
   src/clerk_backend_api/actortokens.py:
     id: 3b3f89863233
     last_write_checksum: sha1:b83001f21b2750ff95b82cc953ae588d8468d82a
     pristine_git_object: b736851584d478610d4d94a3c9690878db20aba1
   src/clerk_backend_api/agenttasks.py:
     id: d3c079113f2a
-    last_write_checksum: sha1:b90b1b412696bf33b90090cea53ac2b13341207c
-    pristine_git_object: dcf9da19f950a77676ec642a282a5578e38d6f89
+    last_write_checksum: sha1:73fa4d3401831896dff222b4c12acc902a63f654
+    pristine_git_object: 1ad830ddf2d1b7cd1d6668bc2e2699706318caf2
   src/clerk_backend_api/allowlistidentifiers.py:
     id: 70ccf975110b
     last_write_checksum: sha1:a2d5205ee0068d14b702ea9ac2ebb0c28d8c9aa3
@@ -3358,16 +3410,16 @@ trackedFiles:
     pristine_git_object: 9fe6026d2da496d071ded823b648b925131421d8
   src/clerk_backend_api/basesdk.py:
     id: 5a15c2d94747
-    last_write_checksum: sha1:e5e76e4c14416f24b81df63939e6b63983703eb6
-    pristine_git_object: eb488183d4c82930b91d5d78ed96d066f4599530
+    last_write_checksum: sha1:0b26850e313668acc370fbad96cd0f07ff145feb
+    pristine_git_object: 0af83821796503ff5f356e74c4b9fedf7ec405ea
   src/clerk_backend_api/betafeatures.py:
     id: ad6307385dcf
     last_write_checksum: sha1:c54636b28c5b7e0d6cb2e721e7cd7acfac0de3da
     pristine_git_object: 9f7613ba5d9963c0ed011dd5ef46fa33c2f6403d
   src/clerk_backend_api/billing.py:
     id: d2a23482b2e9
-    last_write_checksum: sha1:dd51b80760cca7e812d72ea203cf3183e8989c86
-    pristine_git_object: f488b1a0fe3c49d3b7e720fff682102aa24a13cd
+    last_write_checksum: sha1:9cdba548eac9964aa78e6e2ff6f18dc03d17f5f8
+    pristine_git_object: ce3d6696cac9b7ac5251db9dc2b79675d4b246f6
   src/clerk_backend_api/blocklistidentifiers_sdk.py:
     id: 49e67487b740
     last_write_checksum: sha1:513ed50c9c2ba7d7dd3fcc96ee15f8bd299d1c29
@@ -3382,8 +3434,8 @@ trackedFiles:
     pristine_git_object: a88675dd60d7c7ba6c6e49d6f331f19649f88e30
   src/clerk_backend_api/emailaddresses.py:
     id: 90abfcbd4312
-    last_write_checksum: sha1:5437021eac50506d9190a58f4e14dcf1d17c243b
-    pristine_git_object: 3eb1181cd1b63e0f23bda504469a36cec57204f4
+    last_write_checksum: sha1:89f7d2f6bd4a05982b9ee44025cb6e87d46893c0
+    pristine_git_object: 92fa3e2e7b0d531ab136b5b0759ebe083e73688b
   src/clerk_backend_api/emailandsmstemplates.py:
     id: 6b0d6ee5c16d
     last_write_checksum: sha1:5f6a0e91fdc0a38a6c60be0cd5badd97011f1e28
@@ -3394,8 +3446,8 @@ trackedFiles:
     pristine_git_object: 42a28ed82d057f8596de18efe8885c98d0751b0f
   src/clerk_backend_api/enterpriseconnections_sdk.py:
     id: fdae7c06198c
-    last_write_checksum: sha1:f5c1fd1845b7f2418311368732af507fca08182b
-    pristine_git_object: 4ac6a6d55485acd2396a45b467949addd0c609c5
+    last_write_checksum: sha1:f964a00b320c37d45e88bff60099a7db4e3cd44a
+    pristine_git_object: 12078507c4c21b712e2b37a8e8fbba309af1a464
   src/clerk_backend_api/httpclient.py:
     id: e554fdb21199
     last_write_checksum: sha1:5e55338d6ee9f01ab648cad4380201a8a3da7dd7
@@ -3430,8 +3482,8 @@ trackedFiles:
     pristine_git_object: e7c169770991082a5066ac02759632e1af71fbb5
   src/clerk_backend_api/models/__init__.py:
     id: 97d9388d85c1
-    last_write_checksum: sha1:ea33be081150b2bb35e607cc14d5595a0c010715
-    pristine_git_object: 5e14d64e06707e79afc766d1a3ee5abc6ce9bf17
+    last_write_checksum: sha1:b5242bbb81ef34ebad7a74051011f83dcbb6ac16
+    pristine_git_object: 737e9f037be589cb887b4b6b4bf57aebb296758e
   src/clerk_backend_api/models/actortoken.py:
     id: afa1aeb1f89c
     last_write_checksum: sha1:f45c3c3a3572607ac2aead2882b3e6de8e3bfdd6
@@ -3458,8 +3510,8 @@ trackedFiles:
     pristine_git_object: 8278c928681f0e757b7e2867aa91d7856cd4bce3
   src/clerk_backend_api/models/agenttask.py:
     id: 625fdb05f08f
-    last_write_checksum: sha1:760d78781760c0b4b9a6cc65cfb3db8819e7c8f3
-    pristine_git_object: 74d2a70557423511e1275d390821229eb6554d60
+    last_write_checksum: sha1:e7ee511c7bc7d8dd94615b9f511ad4e42c88abcd
+    pristine_git_object: 7b4481c7bdcce541f929f59fee82f4f0f83ee933
   src/clerk_backend_api/models/allowlistidentifier.py:
     id: 15fed620f318
     last_write_checksum: sha1:9ab952bdfc6be83c88cef2880d56f37956ceccd9
@@ -3478,8 +3530,8 @@ trackedFiles:
     pristine_git_object: 4fbd856f15e7bfd4f0a86877576ba228c08dfbdd
   src/clerk_backend_api/models/billingpriceresponse.py:
     id: accd55daa3c3
-    last_write_checksum: sha1:fac2c6832c0d669ea0e6633bcfb00fa5ba748b20
-    pristine_git_object: 6afea9f4309b4cf7963f5eb1ff24f9bdfbee7483
+    last_write_checksum: sha1:467685df75318c5ee2627591169fbd5e50ff933a
+    pristine_git_object: 864a920b24e255458b89e92fa49f97932f039bb1
   src/clerk_backend_api/models/billingstatement.py:
     id: ea675089f24e
     last_write_checksum: sha1:064cbdb47e72184e486787047a051ffbdd0af2f2
@@ -3550,8 +3602,8 @@ trackedFiles:
     pristine_git_object: 5a279e4f652f7cc2d9e0b3c387bc27b24bd4d946
   src/clerk_backend_api/models/commerceplan.py:
     id: 865974d0de5a
-    last_write_checksum: sha1:f66f7cf7b8d8e102afce310564a4f426a690594c
-    pristine_git_object: 04437f237f8efa4389698a4355ac270749825a13
+    last_write_checksum: sha1:99f1c7a29c2451dc40c4b20d7f408c198beb6640
+    pristine_git_object: ce7c063293f7a639e789e060c2f3231bdc28da25
   src/clerk_backend_api/models/commerceplanunitprice.py:
     id: d835998ef008
     last_write_checksum: sha1:4e4e144d8b5d1cd9f2674f037901a6872a6fb8f4
@@ -3578,8 +3630,8 @@ trackedFiles:
     pristine_git_object: 506a196fbe4a0973d608f60ef3767e740f6f4cf0
   src/clerk_backend_api/models/commercesubscriptionitem.py:
     id: 85ab9baf8dde
-    last_write_checksum: sha1:8c2adfede6fdd9f910146fe35d019c1c2f2ba944
-    pristine_git_object: 6d41c6ee21cf9640b6440dcda047d64ad33d068a
+    last_write_checksum: sha1:87166e6a171fbf6cc1ef814cac5852187ac38dbd
+    pristine_git_object: 3efc8630bdd2e3b6f762688e9fb825cb484103ec
   src/clerk_backend_api/models/commercesubscriptionnextpayment.py:
     id: 3f0bb47b0862
     last_write_checksum: sha1:f071c87365502ce03cac8197aea5a6bb9df21bd2
@@ -3606,8 +3658,8 @@ trackedFiles:
     pristine_git_object: 53928a5a8085f16f2ff3bbc6c23095e8752f0f04
   src/clerk_backend_api/models/createbillingpricerequest.py:
     id: b97e499e0829
-    last_write_checksum: sha1:283804849eca02e00ccdc6801fd894ae0e68cb2c
-    pristine_git_object: 245555b45f738e504e766d2c7d4c46486b3b02dc
+    last_write_checksum: sha1:062ea9b11c90e6b8c756a0de98f97602ee4085cf
+    pristine_git_object: 7e2c700119e31561ebec1646708911548cd562b2
   src/clerk_backend_api/models/createbillingpricetransitionop.py:
     id: b2b936b90df7
     last_write_checksum: sha1:6a158d92eb5164cb73cf31b223d2d1a68f0a715f
@@ -3630,8 +3682,8 @@ trackedFiles:
     pristine_git_object: 34c45a26ae1b0ccbab01e5b176efb909f02d3418
   src/clerk_backend_api/models/createenterpriseconnectionop.py:
     id: b5cdd9bc15ad
-    last_write_checksum: sha1:df7a81a8c426b2dc9ac0eb4a381da6f068365196
-    pristine_git_object: cc5ea6a026bd83decd3d25839fad1740f355ff20
+    last_write_checksum: sha1:418b1ee6afa6ecec5bf1c5d37c51f969ba96841f
+    pristine_git_object: 9ba664c325a52be35bc0ddcca390e8652a9c90d6
   src/clerk_backend_api/models/createinvitationop.py:
     id: 479deaac075b
     last_write_checksum: sha1:a108f1ad1f42a813c335e9bcf6abd75fc9851da7
@@ -4426,24 +4478,24 @@ trackedFiles:
     pristine_git_object: 2d04651214b1105ef337d000ffe6a3e4d531ba99
   src/clerk_backend_api/models/schemas_commerceplan.py:
     id: 67304214fcb9
-    last_write_checksum: sha1:a15ad51b171754206a66ac2327c405b5e15effc5
-    pristine_git_object: cf360a12fd23e0678f2db9fbbbe558ededc6fa4c
+    last_write_checksum: sha1:44cc5a610302581b40d71060adc3c02da7fe8a4f
+    pristine_git_object: 40f92d2d4b288e49485d0bfa66309de3680c3f69
   src/clerk_backend_api/models/schemas_commercesubscriptionitem.py:
     id: 3913a47cc4e2
-    last_write_checksum: sha1:9fd43a397ba535bd6ff6772faa261cc78babd165
-    pristine_git_object: bf4b219a518354096fab911168359431b4f0061c
+    last_write_checksum: sha1:3a6494ab7f8f499aa75aff914f5390be9f900bad
+    pristine_git_object: ff826632284bf7abbfff1c22f66ee4c5faeb9905
   src/clerk_backend_api/models/schemas_enterpriseconnection.py:
     id: 0ec93b46d2a1
-    last_write_checksum: sha1:197648b9277f82f5ead7e71898b4a04193d9cd76
-    pristine_git_object: 9519df3ddba8a906a3b2816d2b0594c1a8eecd71
+    last_write_checksum: sha1:c29b3ad054761ca9e935860add0a51aefeb9c03a
+    pristine_git_object: 144dda1718663bdf274c5d56a0be935acbfbe962
   src/clerk_backend_api/models/schemas_featureresponse.py:
     id: 6defa699c0c2
     last_write_checksum: sha1:8b7e9a93a74d40a89005b77bceced6c95575cc8e
     pristine_git_object: badd84478b828f4ea140fb3c8805247992af0557
   src/clerk_backend_api/models/schemas_samlconnection.py:
     id: a3bc0ed49651
-    last_write_checksum: sha1:bed85e31387a6d081b6cd09a91df3e87d06752cf
-    pristine_git_object: af1015ff49876861e8b6d55b6d406a214ee286bc
+    last_write_checksum: sha1:1f03dde605ac6faec1c2068b6511c5e68f7dd4c5
+    pristine_git_object: 84e2dd4ad22a50a86ff45fe1dc00577eb2b6eb84
   src/clerk_backend_api/models/sdkerror.py:
     id: b9a19e5580e3
     last_write_checksum: sha1:5e2c978b6a359bdc765a5e52987604be9ac3dba3
@@ -4542,8 +4594,8 @@ trackedFiles:
     pristine_git_object: 595dedced1e0196e8bac9e03f7579cc8610f4a85
   src/clerk_backend_api/models/updateenterpriseconnectionop.py:
     id: 8838cf277ea7
-    last_write_checksum: sha1:dafebefa40166ca72e41fde4538926baf707b3a1
-    pristine_git_object: 48deb5938e322248f088f1553cb654f3e7ecb68d
+    last_write_checksum: sha1:300fe7868c231eb4611d690f2b29d47979bec256
+    pristine_git_object: b7e1a40c08334ffe9951443e61e1c85826cea5d1
   src/clerk_backend_api/models/updateinstanceauthconfigop.py:
     id: e4d1c554c8a8
     last_write_checksum: sha1:0a7ed65be461eff84e481fdd61f652c4214dd001
@@ -4618,8 +4670,8 @@ trackedFiles:
     pristine_git_object: d947e910a7c880cafe01213816ea378bdf4d1081
   src/clerk_backend_api/models/updatesamlconnectionop.py:
     id: 144ab8498bec
-    last_write_checksum: sha1:929af31f3d39131a4b5085c27ed6042eead29db1
-    pristine_git_object: 87abc42e863fefdb2e843227faf9d994b9be3993
+    last_write_checksum: sha1:6aa32f9f7af47014131b56b6cfe8964f3d72becb
+    pristine_git_object: f4beef01f05b8f588a3bbf7b523f9966b6f6a42a
   src/clerk_backend_api/models/updatesignupop.py:
     id: 8d2a3b3dc83c
     last_write_checksum: sha1:3ada82503b73a33b5d385e67a4f450668e4180d5
@@ -4762,8 +4814,8 @@ trackedFiles:
     pristine_git_object: 7bbdda4d8768dd235d35fed08de4c0252244477f
   src/clerk_backend_api/samlconnections_sdk.py:
     id: 2e33ed64f642
-    last_write_checksum: sha1:0a8eb930a6f37f34b7957c2b2519a822890dd202
-    pristine_git_object: 518894e50be3b648539c0311e51146cc28eaecf0
+    last_write_checksum: sha1:e7487b10cab14f68707aaa87f6f68fae7f712c8d
+    pristine_git_object: 2a17c69859471733a3b3d0069ae9213dc8a245ea
   src/clerk_backend_api/sdk.py:
     id: a4df06d800b5
     last_write_checksum: sha1:83de48b4660337d84cbb66cdd8a9acafd1ce1d5d
@@ -6381,7 +6433,7 @@ examples:
           organization_id: ["<id 1>"]
       responses:
         "200":
-          application/json: {"data": [{"object": "saml_connection", "id": "<id>", "name": "<value>", "domain": "ragged-provision.org", "domains": ["<value 1>", "<value 2>"], "idp_entity_id": "<id>", "idp_sso_url": "https://uncommon-wombat.org/", "idp_certificate": "<value>", "idp_metadata_url": "https://shady-knitting.com/", "idp_metadata": "<value>", "acs_url": "https://superior-louse.info", "sp_entity_id": "<id>", "sp_metadata_url": "https://lone-fellow.name", "organization_id": "<id>", "attribute_mapping": {"user_id": "<id>", "email_address": "Josefa.Crist96@yahoo.com", "first_name": "Bertha", "last_name": "Larkin"}, "active": true, "provider": "<value>", "user_count": 31535, "sync_user_attributes": false, "allow_subdomains": false, "allow_idp_initiated": true, "disable_additional_identifications": true, "force_authn": false, "enterprise_connection_id": "<id>", "created_at": 668266, "updated_at": 2307}, {"object": "saml_connection", "id": "<id>", "name": "<value>", "domains": ["<value 1>", "<value 2>"], "idp_entity_id": "<id>", "idp_sso_url": "https://turbulent-stool.name", "idp_certificate": "<value>", "idp_metadata_url": "https://miserly-lox.org", "idp_metadata": "<value>", "acs_url": "https://youthful-dulcimer.net/", "sp_entity_id": "<id>", "sp_metadata_url": "https://candid-valley.org", "organization_id": null, "attribute_mapping": {"user_id": "<id>", "email_address": "Josefa.Crist96@yahoo.com", "first_name": "Bertha", "last_name": "Larkin"}, "active": true, "provider": "<value>", "user_count": 268622, "sync_user_attributes": false, "allow_subdomains": true, "allow_idp_initiated": false, "disable_additional_identifications": true, "force_authn": false, "enterprise_connection_id": "<id>", "created_at": 773181, "updated_at": 139402}], "total_count": 5}
+          application/json: {"data": [{"object": "saml_connection", "id": "<id>", "name": "<value>", "domain": "ragged-provision.org", "domains": ["<value 1>", "<value 2>"], "idp_entity_id": "<id>", "idp_sso_url": "https://uncommon-wombat.org/", "idp_certificate": "<value>", "idp_metadata_url": "https://shady-knitting.com/", "idp_metadata": "<value>", "acs_url": "https://superior-louse.info", "sp_entity_id": "<id>", "sp_metadata_url": "https://lone-fellow.name", "organization_id": "<id>", "attribute_mapping": {"user_id": "<id>", "email_address": "Josefa.Crist96@yahoo.com", "first_name": "Bertha", "last_name": "Larkin"}, "active": true, "provider": "<value>", "user_count": 31535, "sync_user_attributes": false, "allow_subdomains": false, "allow_idp_initiated": true, "disable_additional_identifications": true, "allow_organization_account_linking": false, "force_authn": false, "enterprise_connection_id": null, "created_at": 994176, "updated_at": 662644}, {"object": "saml_connection", "id": "<id>", "name": "<value>", "domain": "ragged-provision.org", "domains": ["<value 1>", "<value 2>"], "idp_entity_id": "<id>", "idp_sso_url": "https://uncommon-wombat.org/", "idp_certificate": "<value>", "idp_metadata_url": "https://shady-knitting.com/", "idp_metadata": "<value>", "acs_url": "https://superior-louse.info", "sp_entity_id": "<id>", "sp_metadata_url": "https://lone-fellow.name", "organization_id": "<id>", "attribute_mapping": {"user_id": "<id>", "email_address": "Josefa.Crist96@yahoo.com", "first_name": "Bertha", "last_name": "Larkin"}, "active": true, "provider": "<value>", "user_count": 31535, "sync_user_attributes": false, "allow_subdomains": false, "allow_idp_initiated": true, "disable_additional_identifications": true, "allow_organization_account_linking": false, "force_authn": false, "enterprise_connection_id": null, "created_at": 994176, "updated_at": 662644}], "total_count": 5}
         "402":
           application/json: {"errors": [{"message": "Invalid input", "long_message": "The input provided does not meet the requirements.", "code": "400_bad_request", "meta": {}}], "meta": {}}
   CreateSAMLConnection:
@@ -6390,7 +6442,7 @@ examples:
         application/json: {"name": "My SAML Connection", "domain": "example.org", "domains": ["<value 1>", "<value 2>", "<value 3>"], "provider": "saml_custom", "idp_entity_id": "http://idp.example.org/", "idp_sso_url": "http://idp.example.org/sso", "idp_certificate": "MIIDdzCCAl+gAwIBAgIJAKcyBaiiz+DT...", "idp_metadata_url": "http://idp.example.org/metadata.xml", "idp_metadata": "<EntityDescriptor ...", "organization_id": "<id>", "attribute_mapping": {"user_id": "nameid", "email_address": "mail", "first_name": "givenName", "last_name": "surname"}, "force_authn": false}
       responses:
         "200":
-          application/json: {"object": "saml_connection", "id": "<id>", "name": "<value>", "domains": ["<value 1>", "<value 2>"], "idp_entity_id": "<id>", "idp_sso_url": "https://burly-sport.info", "idp_certificate": "<value>", "idp_metadata_url": "https://sizzling-alert.info", "idp_metadata": "<value>", "acs_url": "https://imaginative-summary.name", "sp_entity_id": "<id>", "sp_metadata_url": "https://well-documented-castanet.name", "organization_id": null, "attribute_mapping": {"user_id": "<id>", "email_address": "Armando_Fahey@yahoo.com", "first_name": "Tristin", "last_name": "Altenwerth"}, "active": true, "provider": "<value>", "user_count": 945000, "sync_user_attributes": false, "allow_subdomains": false, "allow_idp_initiated": false, "disable_additional_identifications": false, "force_authn": true, "enterprise_connection_id": "<id>", "created_at": 78753, "updated_at": 507469}
+          application/json: {"object": "saml_connection", "id": "<id>", "name": "<value>", "domains": ["<value 1>", "<value 2>"], "idp_entity_id": "<id>", "idp_sso_url": "https://burly-sport.info", "idp_certificate": "<value>", "idp_metadata_url": "https://sizzling-alert.info", "idp_metadata": "<value>", "acs_url": "https://imaginative-summary.name", "sp_entity_id": "<id>", "sp_metadata_url": "https://well-documented-castanet.name", "organization_id": null, "attribute_mapping": {"user_id": "<id>", "email_address": "Armando_Fahey@yahoo.com", "first_name": "Tristin", "last_name": "Altenwerth"}, "active": true, "provider": "<value>", "user_count": 945000, "sync_user_attributes": false, "allow_subdomains": false, "allow_idp_initiated": false, "disable_additional_identifications": false, "allow_organization_account_linking": false, "force_authn": true, "enterprise_connection_id": "<id>", "created_at": 78753, "updated_at": 507469}
         "402":
           application/json: {"errors": [{"message": "Invalid input", "long_message": "The input provided does not meet the requirements.", "code": "400_bad_request", "meta": {}}], "meta": {}}
   GetSAMLConnection:
@@ -6400,7 +6452,7 @@ examples:
           saml_connection_id: "saml_conn_123"
       responses:
         "200":
-          application/json: {"object": "saml_connection", "id": "<id>", "name": "<value>", "domain": "blushing-hawk.biz", "domains": ["<value 1>"], "idp_entity_id": "<id>", "idp_sso_url": "https://dazzling-numeric.biz/", "idp_certificate": "<value>", "idp_metadata_url": "https://indelible-meatloaf.biz/", "idp_metadata": "<value>", "acs_url": "https://sandy-range.name", "sp_entity_id": "<id>", "sp_metadata_url": "https://elliptical-testimonial.biz", "organization_id": "<id>", "attribute_mapping": {"user_id": "<id>", "email_address": "Breanne_Barton@gmail.com", "first_name": "Chelsie", "last_name": "Farrell"}, "active": true, "provider": "<value>", "user_count": 957137, "sync_user_attributes": false, "allow_subdomains": true, "allow_idp_initiated": true, "disable_additional_identifications": true, "force_authn": true, "enterprise_connection_id": null, "created_at": 104329, "updated_at": 879127}
+          application/json: {"object": "saml_connection", "id": "<id>", "name": "<value>", "domain": "blushing-hawk.biz", "domains": ["<value 1>"], "idp_entity_id": "<id>", "idp_sso_url": "https://dazzling-numeric.biz/", "idp_certificate": "<value>", "idp_metadata_url": "https://indelible-meatloaf.biz/", "idp_metadata": "<value>", "acs_url": "https://sandy-range.name", "sp_entity_id": "<id>", "sp_metadata_url": "https://elliptical-testimonial.biz", "organization_id": "<id>", "attribute_mapping": {"user_id": "<id>", "email_address": "Breanne_Barton@gmail.com", "first_name": "Chelsie", "last_name": "Farrell"}, "active": true, "provider": "<value>", "user_count": 957137, "sync_user_attributes": false, "allow_subdomains": true, "allow_idp_initiated": true, "disable_additional_identifications": true, "allow_organization_account_linking": true, "force_authn": true, "enterprise_connection_id": null, "created_at": 104329, "updated_at": 879127}
         "402":
           application/json: {"errors": [{"message": "Invalid input", "long_message": "The input provided does not meet the requirements.", "code": "400_bad_request", "meta": {}}], "meta": {}}
   UpdateSAMLConnection:
@@ -6409,10 +6461,10 @@ examples:
         path:
           saml_connection_id: "saml_conn_123_update"
       requestBody:
-        application/json: {"name": "Example SAML Connection", "domains": ["<value 1>", "<value 2>", "<value 3>"], "idp_entity_id": "entity_123", "idp_sso_url": "https://idp.example.com/sso", "idp_certificate": "MIIDBTCCAe2gAwIBAgIQ...", "idp_metadata_url": "https://idp.example.com/metadata", "idp_metadata": "<EntityDescriptor>...</EntityDescriptor>", "organization_id": "<id>", "attribute_mapping": {"user_id": "id123", "email_address": "user@example.com", "first_name": "Jane", "last_name": "Doe"}, "active": true, "sync_user_attributes": false, "allow_subdomains": true, "allow_idp_initiated": false, "disable_additional_identifications": false, "force_authn": true, "consent_verified_domains_deletion": false}
+        application/json: {"name": "Example SAML Connection", "domains": ["<value 1>", "<value 2>", "<value 3>"], "idp_entity_id": "entity_123", "idp_sso_url": "https://idp.example.com/sso", "idp_certificate": "MIIDBTCCAe2gAwIBAgIQ...", "idp_metadata_url": "https://idp.example.com/metadata", "idp_metadata": "<EntityDescriptor>...</EntityDescriptor>", "organization_id": "<id>", "attribute_mapping": {"user_id": "id123", "email_address": "user@example.com", "first_name": "Jane", "last_name": "Doe"}, "active": true, "sync_user_attributes": false, "allow_subdomains": true, "allow_idp_initiated": false, "disable_additional_identifications": false, "allow_organization_account_linking": false, "force_authn": true, "consent_verified_domains_deletion": false}
       responses:
         "200":
-          application/json: {"object": "saml_connection", "id": "<id>", "name": "<value>", "domains": ["<value 1>", "<value 2>", "<value 3>"], "idp_entity_id": "<id>", "idp_sso_url": "https://curly-help.info/", "idp_certificate": "<value>", "idp_metadata_url": "https://formal-asset.biz", "idp_metadata": "<value>", "acs_url": "https://insignificant-sock.com/", "sp_entity_id": "<id>", "sp_metadata_url": "https://yellowish-countess.info", "organization_id": "<id>", "attribute_mapping": {"user_id": "<id>", "email_address": "Cristal_Schuppe11@hotmail.com", "first_name": "Kelton", "last_name": "Wehner"}, "active": false, "provider": "<value>", "user_count": 260625, "sync_user_attributes": false, "allow_subdomains": true, "allow_idp_initiated": false, "disable_additional_identifications": true, "force_authn": false, "enterprise_connection_id": "<id>", "created_at": 494539, "updated_at": 491967}
+          application/json: {"object": "saml_connection", "id": "<id>", "name": "<value>", "domains": ["<value 1>", "<value 2>", "<value 3>"], "idp_entity_id": "<id>", "idp_sso_url": "https://curly-help.info/", "idp_certificate": "<value>", "idp_metadata_url": "https://formal-asset.biz", "idp_metadata": "<value>", "acs_url": "https://insignificant-sock.com/", "sp_entity_id": "<id>", "sp_metadata_url": "https://yellowish-countess.info", "organization_id": "<id>", "attribute_mapping": {"user_id": "<id>", "email_address": "Cristal_Schuppe11@hotmail.com", "first_name": "Kelton", "last_name": "Wehner"}, "active": false, "provider": "<value>", "user_count": 260625, "sync_user_attributes": false, "allow_subdomains": true, "allow_idp_initiated": false, "disable_additional_identifications": true, "allow_organization_account_linking": false, "force_authn": false, "enterprise_connection_id": "<id>", "created_at": 494539, "updated_at": 491967}
         "402":
           application/json: {"errors": [{"message": "Invalid input", "long_message": "The input provided does not meet the requirements.", "code": "400_bad_request", "meta": {}}], "meta": {}}
   DeleteSAMLConnection:
@@ -7394,7 +7446,7 @@ examples:
         application/json: {"on_behalf_of": {"user_id": "<id>", "identifier": "<value>"}, "permissions": "*", "agent_name": "<value>", "task_description": "<value>", "redirect_url": "https://brilliant-typewriter.net", "session_max_duration_in_seconds": 1800}
       responses:
         "200":
-          application/json: {"object": "agent_task", "agent_id": "<id>", "task_id": "<id>", "url": "https://heavy-completion.net"}
+          application/json: {"object": "agent_task", "agent_id": "<id>", "agent_task_id": "<id>", "task_id": "<id>", "url": "https://heavy-completion.net"}
         "400":
           application/json: {"errors": [{"message": "Invalid input", "long_message": "The input provided does not meet the requirements.", "code": "400_bad_request", "meta": {}}], "meta": {}}
   RevokeAgentTask:
@@ -7404,7 +7456,7 @@ examples:
           agent_task_id: "<id>"
       responses:
         "200":
-          application/json: {"object": "agent_task", "agent_id": "<id>", "task_id": "<id>", "url": "https://peaceful-railway.net"}
+          application/json: {"object": "agent_task", "agent_id": "<id>", "agent_task_id": "<id>", "task_id": "<id>", "url": "https://peaceful-railway.net"}
         "400":
           application/json: {"errors": [{"message": "Invalid input", "long_message": "The input provided does not meet the requirements.", "code": "400_bad_request", "meta": {}}], "meta": {}}
   ListEnterpriseConnections:
@@ -7417,16 +7469,16 @@ examples:
           active: false
       responses:
         "200":
-          application/json: {"data": [{"id": "<id>", "name": "<value>", "active": true, "domains": [], "organization_id": "<id>", "sync_user_attributes": false, "disable_additional_identifications": true, "saml_connection": {"id": "<id>", "name": "<value>", "idp_entity_id": "<id>", "idp_sso_url": "https://milky-clamp.biz/", "idp_metadata_url": "https://vengeful-airbus.net/", "acs_url": "https://similar-annual.info/", "sp_entity_id": "<id>", "sp_metadata_url": "https://suburban-lashes.net/", "active": false, "allow_idp_initiated": false, "allow_subdomains": false, "force_authn": false}, "oauth_config": {"id": "<id>", "name": "<value>", "provider_key": "<value>", "client_id": "<id>", "discovery_url": null, "logo_public_url": "https://appropriate-caption.net", "created_at": 597158, "updated_at": 307702}, "created_at": 465910, "updated_at": 675758}], "total_count": 594925}
+          application/json: {"data": [{"id": "<id>", "name": "<value>", "active": true, "domains": [], "organization_id": "<id>", "sync_user_attributes": false, "disable_additional_identifications": true, "allow_organization_account_linking": false, "custom_attributes": [{"name": "<value>", "key": "<key>", "sso_path": "<value>", "scim_path": "<value>"}], "saml_connection": {"id": "<id>", "name": "<value>", "idp_entity_id": "<id>", "idp_sso_url": "https://milky-clamp.biz/", "idp_metadata_url": "https://vengeful-airbus.net/", "acs_url": "https://similar-annual.info/", "sp_entity_id": "<id>", "sp_metadata_url": "https://suburban-lashes.net/", "active": false, "allow_idp_initiated": false, "allow_subdomains": false, "force_authn": false}, "oauth_config": {"id": "<id>", "name": "<value>", "provider_key": "<value>", "client_id": "<id>", "discovery_url": null, "logo_public_url": "https://appropriate-caption.net", "created_at": 597158, "updated_at": 307702}, "created_at": 465910, "updated_at": 675758}], "total_count": 594925}
         "402":
           application/json: {"errors": [{"message": "Invalid input", "long_message": "The input provided does not meet the requirements.", "code": "400_bad_request", "meta": {}}], "meta": {}}
   CreateEnterpriseConnection:
     speakeasy-default-create-enterprise-connection:
       requestBody:
-        application/json: {"name": "<value>", "provider": "saml_google", "domains": ["<value 1>", "<value 2>"], "organization_id": "<id>", "active": true, "saml": null, "oidc": {"client_id": "<id>", "client_secret": "<value>", "discovery_url": "https://frugal-brush.org", "auth_url": "https://failing-epic.biz", "token_url": "https://outrageous-haircut.name/", "user_info_url": "https://adolescent-tooth.com", "requires_pkce": true}}
+        application/json: {"name": "<value>", "provider": "saml_google", "domains": ["<value 1>", "<value 2>"], "organization_id": "<id>", "allow_organization_account_linking": false, "active": true, "saml": null, "oidc": {"client_id": "<id>", "client_secret": "<value>", "discovery_url": "https://frugal-brush.org", "auth_url": "https://failing-epic.biz", "token_url": "https://outrageous-haircut.name/", "user_info_url": "https://adolescent-tooth.com", "requires_pkce": true}, "custom_attributes": [{"name": "<value>", "key": "<key>", "sso_path": "<value>", "scim_path": "<value>"}]}
       responses:
         "201":
-          application/json: {"id": "<id>", "name": "<value>", "active": false, "domains": ["<value 1>", "<value 2>"], "organization_id": "<id>", "sync_user_attributes": true, "disable_additional_identifications": false, "saml_connection": {"id": "<id>", "name": "<value>", "idp_entity_id": "<id>", "idp_sso_url": "https://zealous-coal.info", "idp_metadata_url": "https://which-nudge.name/", "acs_url": "https://likely-decision.name", "sp_entity_id": "<id>", "sp_metadata_url": "https://cheap-shoulder.biz/", "active": true, "allow_idp_initiated": false, "allow_subdomains": true, "force_authn": true}, "oauth_config": {"id": "<id>", "name": "<value>", "provider_key": "<value>", "client_id": "<id>", "discovery_url": "https://unruly-smoke.info", "logo_public_url": "https://rusty-flint.biz/", "created_at": 64076, "updated_at": 926778}, "created_at": 955421, "updated_at": 241609}
+          application/json: {"id": "<id>", "name": "<value>", "active": false, "domains": ["<value 1>", "<value 2>"], "organization_id": "<id>", "sync_user_attributes": true, "disable_additional_identifications": false, "allow_organization_account_linking": false, "custom_attributes": [{"name": "<value>", "key": "<key>", "sso_path": "<value>", "scim_path": "<value>"}], "saml_connection": {"id": "<id>", "name": "<value>", "idp_entity_id": "<id>", "idp_sso_url": "https://zealous-coal.info", "idp_metadata_url": "https://which-nudge.name/", "acs_url": "https://likely-decision.name", "sp_entity_id": "<id>", "sp_metadata_url": "https://cheap-shoulder.biz/", "active": true, "allow_idp_initiated": false, "allow_subdomains": true, "force_authn": true}, "oauth_config": {"id": "<id>", "name": "<value>", "provider_key": "<value>", "client_id": "<id>", "discovery_url": "https://unruly-smoke.info", "logo_public_url": "https://rusty-flint.biz/", "created_at": 64076, "updated_at": 926778}, "created_at": 955421, "updated_at": 241609}
         "402":
           application/json: {"errors": [{"message": "Invalid input", "long_message": "The input provided does not meet the requirements.", "code": "400_bad_request", "meta": {}}], "meta": {}}
   GetEnterpriseConnection:
@@ -7436,7 +7488,7 @@ examples:
           enterprise_connection_id: "<id>"
       responses:
         "200":
-          application/json: {"id": "<id>", "name": "<value>", "active": true, "domains": ["<value 1>", "<value 2>", "<value 3>"], "organization_id": "<id>", "sync_user_attributes": true, "disable_additional_identifications": false, "saml_connection": {"id": "<id>", "name": "<value>", "idp_entity_id": "<id>", "idp_sso_url": "https://glittering-retrospectivity.info/", "idp_metadata_url": "https://average-rosemary.org", "acs_url": "https://flawless-mortise.info", "sp_entity_id": "<id>", "sp_metadata_url": "https://imaginative-bin.info", "active": true, "allow_idp_initiated": true, "allow_subdomains": true, "force_authn": true}, "oauth_config": {"id": "<id>", "name": "<value>", "provider_key": "<value>", "client_id": "<id>", "discovery_url": "https://private-dead.com", "logo_public_url": "https://trusty-management.name", "created_at": 606739, "updated_at": 578377}, "created_at": 958854, "updated_at": 973337}
+          application/json: {"id": "<id>", "name": "<value>", "active": true, "domains": ["<value 1>", "<value 2>", "<value 3>"], "organization_id": "<id>", "sync_user_attributes": true, "disable_additional_identifications": false, "allow_organization_account_linking": true, "custom_attributes": [{"name": "<value>", "key": "<key>", "sso_path": "<value>", "scim_path": "<value>"}], "saml_connection": {"id": "<id>", "name": "<value>", "idp_entity_id": "<id>", "idp_sso_url": "https://glittering-retrospectivity.info/", "idp_metadata_url": "https://average-rosemary.org", "acs_url": "https://flawless-mortise.info", "sp_entity_id": "<id>", "sp_metadata_url": "https://imaginative-bin.info", "active": true, "allow_idp_initiated": true, "allow_subdomains": true, "force_authn": true}, "oauth_config": {"id": "<id>", "name": "<value>", "provider_key": "<value>", "client_id": "<id>", "discovery_url": "https://private-dead.com", "logo_public_url": "https://trusty-management.name", "created_at": 606739, "updated_at": 578377}, "created_at": 958854, "updated_at": 973337}
         "402":
           application/json: {"errors": [{"message": "Invalid input", "long_message": "The input provided does not meet the requirements.", "code": "400_bad_request", "meta": {}}], "meta": {}}
   UpdateEnterpriseConnection:
@@ -7445,10 +7497,10 @@ examples:
         path:
           enterprise_connection_id: "<id>"
       requestBody:
-        application/json: {"name": "<value>", "domains": null, "active": false, "sync_user_attributes": true, "disable_additional_identifications": true, "organization_id": "<id>", "saml": {"name": "<value>", "idp_entity_id": "<id>", "idp_sso_url": "https://animated-experience.name/", "idp_certificate": "<value>", "idp_metadata_url": "https://alert-atrium.com/", "idp_metadata": "<value>", "attribute_mapping": {"user_id": "<id>", "email_address": "Eula82@hotmail.com", "first_name": "Pierre", "last_name": "Hoeger"}, "allow_subdomains": false, "allow_idp_initiated": false, "force_authn": false}, "oidc": {"client_id": "<id>", "client_secret": "<value>", "discovery_url": "https://excitable-vista.info", "auth_url": "https://obedient-pasta.org/", "token_url": "https://helpless-gradient.info/", "user_info_url": "https://neglected-chapel.name/", "requires_pkce": false}}
+        application/json: {"name": "<value>", "domains": null, "active": false, "sync_user_attributes": true, "disable_additional_identifications": true, "allow_organization_account_linking": true, "organization_id": "<id>", "saml": {"name": "<value>", "idp_entity_id": "<id>", "idp_sso_url": "https://animated-experience.name/", "idp_certificate": "<value>", "idp_metadata_url": "https://alert-atrium.com/", "idp_metadata": "<value>", "attribute_mapping": {"user_id": "<id>", "email_address": "Eula82@hotmail.com", "first_name": "Pierre", "last_name": "Hoeger"}, "allow_subdomains": false, "allow_idp_initiated": false, "force_authn": false}, "oidc": {"client_id": "<id>", "client_secret": "<value>", "discovery_url": "https://excitable-vista.info", "auth_url": "https://obedient-pasta.org/", "token_url": "https://helpless-gradient.info/", "user_info_url": "https://neglected-chapel.name/", "requires_pkce": false}, "custom_attributes": [{"name": "<value>", "key": "<key>", "sso_path": "<value>", "scim_path": "<value>"}]}
       responses:
         "200":
-          application/json: {"id": "<id>", "name": "<value>", "active": false, "domains": ["<value 1>", "<value 2>", "<value 3>"], "organization_id": "<id>", "sync_user_attributes": true, "disable_additional_identifications": true, "saml_connection": {"id": "<id>", "name": "<value>", "idp_entity_id": "<id>", "idp_sso_url": "https://pure-napkin.info", "idp_metadata_url": "https://immediate-coil.biz", "acs_url": "https://insecure-apricot.net/", "sp_entity_id": "<id>", "sp_metadata_url": "https://spirited-zebra.info/", "active": false, "allow_idp_initiated": true, "allow_subdomains": true, "force_authn": false}, "oauth_config": {"id": "<id>", "name": "<value>", "provider_key": "<value>", "client_id": "<id>", "discovery_url": null, "logo_public_url": "https://genuine-depot.name", "created_at": 446746, "updated_at": 286855}, "created_at": 149468, "updated_at": 206027}
+          application/json: {"id": "<id>", "name": "<value>", "active": false, "domains": ["<value 1>", "<value 2>", "<value 3>"], "organization_id": "<id>", "sync_user_attributes": true, "disable_additional_identifications": true, "allow_organization_account_linking": false, "custom_attributes": [{"name": "<value>", "key": "<key>", "sso_path": "<value>", "scim_path": "<value>"}], "saml_connection": {"id": "<id>", "name": "<value>", "idp_entity_id": "<id>", "idp_sso_url": "https://pure-napkin.info", "idp_metadata_url": "https://immediate-coil.biz", "acs_url": "https://insecure-apricot.net/", "sp_entity_id": "<id>", "sp_metadata_url": "https://spirited-zebra.info/", "active": false, "allow_idp_initiated": true, "allow_subdomains": true, "force_authn": false}, "oauth_config": {"id": "<id>", "name": "<value>", "provider_key": "<value>", "client_id": "<id>", "discovery_url": null, "logo_public_url": "https://genuine-depot.name", "created_at": 446746, "updated_at": 286855}, "created_at": 149468, "updated_at": 206027}
         "400":
           application/json: {"errors": [{"message": "Invalid input", "long_message": "The input provided does not meet the requirements.", "code": "400_bad_request", "meta": {}}], "meta": {}}
   DeleteEnterpriseConnection:
@@ -7463,6 +7515,7 @@ examples:
           application/json: {"errors": [{"message": "Invalid input", "long_message": "The input provided does not meet the requirements.", "code": "400_bad_request", "meta": {}}], "meta": {}}
 examplesVersion: 1.0.2
 generatedTests: {}
+releaseNotes: "## Python SDK Changes:\n* `clerk.billing.list_plans()`:  `response.data[].fee` **Changed** (Breaking ⚠️)\n* `clerk.users.get_billing_subscription()`:  `response.subscription_items[].plan.fee` **Changed** (Breaking ⚠️)\n* `clerk.organizations.get_billing_subscription()`:  `response.subscription_items[].plan.fee` **Changed** (Breaking ⚠️)\n* `clerk.billing.create_price_transition()`:  `response` **Changed** (Breaking ⚠️)\n* `clerk.billing.extend_subscription_item_free_trial()`:  `response.plan` **Changed** (Breaking ⚠️)\n* `clerk.billing.cancel_subscription_item()`:  `response.plan.fee` **Changed** (Breaking ⚠️)\n* `clerk.billing.list_subscription_items()`:  `response.data[].plan.fee` **Changed** (Breaking ⚠️)\n* `clerk.billing.create_price()`: \n  *  `request` **Changed**\n  *  `response` **Changed** (Breaking ⚠️)\n* `clerk.billing.list_prices()`:  `response.data[]` **Changed** (Breaking ⚠️)\n* `clerk.saml_connections.get()`:  `response` **Changed**\n* `clerk.enterprise_connections.update()`: \n  *  `request` **Changed**\n  *  `response` **Changed**\n* `clerk.agent_tasks.create()`:  `response.agent_task_id` **Added**\n* `clerk.agent_tasks.revoke()`:  `response.agent_task_id` **Added**\n* `clerk.enterprise_connections.get()`:  `response` **Changed**\n* `clerk.enterprise_connections.create()`: \n  *  `request` **Changed**\n  *  `response` **Changed**\n* `clerk.enterprise_connections.list()`:  `response.data[]` **Changed**\n* `clerk.saml_connections.update()`: \n  *  `request.allow_organization_account_linking` **Added**\n  *  `response` **Changed**\n* `clerk.email_addresses.delete()`:  `error.status[409]` **Added**\n* `clerk.saml_connections.create()`:  `response` **Changed**\n* `clerk.saml_connections.list()`:  `response.data[]` **Changed**\n"
 generatedFiles:
   - .gitattributes
   - .vscode/settings.json

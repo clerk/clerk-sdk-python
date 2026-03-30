@@ -114,6 +114,31 @@ class CommerceSubscriptionItemPlanObject(str, Enum):
     COMMERCE_PLAN = "commerce_plan"
 
 
+class CommerceSubscriptionItemFeeTypedDict(TypedDict):
+    amount: int
+    r"""The amount in cents."""
+    amount_formatted: str
+    r"""The formatted amount as a string (e.g., \"$49.99\")."""
+    currency: str
+    r"""The currency code (e.g., \"USD\")."""
+    currency_symbol: str
+    r"""The currency symbol (e.g., \"$\")."""
+
+
+class CommerceSubscriptionItemFee(BaseModel):
+    amount: int
+    r"""The amount in cents."""
+
+    amount_formatted: str
+    r"""The formatted amount as a string (e.g., \"$49.99\")."""
+
+    currency: str
+    r"""The currency code (e.g., \"USD\")."""
+
+    currency_symbol: str
+    r"""The currency symbol (e.g., \"$\")."""
+
+
 class CommerceSubscriptionItemAnnualMonthlyFeeTypedDict(TypedDict):
     amount: int
     r"""The amount in cents."""
@@ -173,7 +198,7 @@ class PlanTypedDict(TypedDict):
     r"""Unique identifier for the plan."""
     name: str
     r"""The name of the plan."""
-    fee: CommerceMoneyResponseTypedDict
+    fee: Nullable[CommerceSubscriptionItemFeeTypedDict]
     annual_monthly_fee: Nullable[CommerceSubscriptionItemAnnualMonthlyFeeTypedDict]
     annual_fee: Nullable[CommerceSubscriptionItemAnnualFeeTypedDict]
     description: Nullable[str]
@@ -216,7 +241,7 @@ class Plan(BaseModel):
     name: str
     r"""The name of the plan."""
 
-    fee: CommerceMoneyResponse
+    fee: Nullable[CommerceSubscriptionItemFee]
 
     annual_monthly_fee: Nullable[CommerceSubscriptionItemAnnualMonthlyFee]
 
@@ -271,6 +296,7 @@ class Plan(BaseModel):
         optional_fields = set(["features", "unit_prices"])
         nullable_fields = set(
             [
+                "fee",
                 "annual_monthly_fee",
                 "annual_fee",
                 "description",
