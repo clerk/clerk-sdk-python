@@ -1,11 +1,17 @@
-# SamlConnection
+# SAMLConnection
 
 
 ## Supported Types
 
-### `models.SAMLConnectionSAMLConnection`
+### `models.One`
 
 ```python
-value: models.SAMLConnectionSAMLConnection = /* values here */
+value: models.One = /* values here */
+```
+
+### `models.Two`
+
+```python
+value: models.Two = /* values here */
 ```
 

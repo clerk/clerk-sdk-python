@@ -599,3 +599,13 @@ Based on:
 - [python v5.0.6] .
 ### Releases
 - [PyPI v5.0.6] https://pypi.org/project/clerk-backend-api/5.0.6 - .
+
+## 2026-04-28 00:44:51
+### Changes
+Based on:
+- OpenAPI Doc  
+- Speakeasy CLI 1.761.9 (2.881.4) https://github.com/speakeasy-api/speakeasy
+### Generated
+- [python v5.0.7] .
+### Releases
+- [PyPI v5.0.7] https://pypi.org/project/clerk-backend-api/5.0.7 - .
