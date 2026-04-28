@@ -13,7 +13,48 @@ from typing import List, Optional
 from typing_extensions import NotRequired, TypedDict
 
 
-class SchemasEnterpriseConnectionSamlConnectionTypedDict(TypedDict):
+class CustomAttributesTypedDict(TypedDict):
+    name: str
+    r"""Display name for the custom attribute"""
+    key: str
+    r"""Key used to store the attribute in the user's public/private/unsafe metadata"""
+    sso_path: NotRequired[str]
+    r"""Path to extract the attribute value from SSO claims (SAML assertions or OIDC claims)"""
+    scim_path: NotRequired[str]
+    r"""GJSON path to extract the attribute value from SCIM user resources"""
+
+
+class CustomAttributes(BaseModel):
+    name: str
+    r"""Display name for the custom attribute"""
+
+    key: str
+    r"""Key used to store the attribute in the user's public/private/unsafe metadata"""
+
+    sso_path: Optional[str] = None
+    r"""Path to extract the attribute value from SSO claims (SAML assertions or OIDC claims)"""
+
+    scim_path: Optional[str] = None
+    r"""GJSON path to extract the attribute value from SCIM user resources"""
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["sso_path", "scim_path"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m
+
+
+class EnterpriseConnectionSamlConnectionTypedDict(TypedDict):
     r"""Present when the enterprise connection uses SAML"""
 
     id: NotRequired[str]
@@ -42,7 +83,7 @@ class SchemasEnterpriseConnectionSamlConnectionTypedDict(TypedDict):
     r"""Whether to force re-authentication"""
 
 
-class SchemasEnterpriseConnectionSamlConnection(BaseModel):
+class EnterpriseConnectionSamlConnection(BaseModel):
     r"""Present when the enterprise connection uses SAML"""
 
     id: Optional[str] = None
@@ -132,14 +173,14 @@ class SchemasEnterpriseConnectionSamlConnection(BaseModel):
 
 
 class OauthConfigTypedDict(TypedDict):
-    r"""Present when the enterprise connection uses OIDC"""
+    r"""Present when the enterprise connection uses OIDC or EASIE"""
 
     id: NotRequired[str]
     r"""OAuth config ID"""
     name: NotRequired[str]
     r"""Custom OIDC provider display name"""
     provider_key: NotRequired[str]
-    r"""OAuth provider key (e.g. oidc_custom)"""
+    r"""OAuth provider key (e.g. oidc_custom, oidc_ghe_*, oidc_gitlab_ent_*)"""
     client_id: NotRequired[Nullable[str]]
     r"""OAuth client ID"""
     discovery_url: NotRequired[Nullable[str]]
@@ -153,7 +194,7 @@ class OauthConfigTypedDict(TypedDict):
 
 
 class OauthConfig(BaseModel):
-    r"""Present when the enterprise connection uses OIDC"""
+    r"""Present when the enterprise connection uses OIDC or EASIE"""
 
     id: Optional[str] = None
     r"""OAuth config ID"""
@@ -162,7 +203,7 @@ class OauthConfig(BaseModel):
     r"""Custom OIDC provider display name"""
 
     provider_key: Optional[str] = None
-    r"""OAuth provider key (e.g. oidc_custom)"""
+    r"""OAuth provider key (e.g. oidc_custom, oidc_ghe_*, oidc_gitlab_ent_*)"""
 
     client_id: OptionalNullable[str] = UNSET
     r"""OAuth client ID"""
@@ -216,11 +257,12 @@ class OauthConfig(BaseModel):
         return m
 
 
-class SchemasEnterpriseConnectionTypedDict(TypedDict):
+class EnterpriseConnectionTypedDict(TypedDict):
     id: str
     r"""The enterprise connection ID"""
     name: str
     r"""The display name of the connection"""
+    provider: str
     active: bool
     r"""Whether the enterprise connection is active"""
     domains: List[str]
@@ -229,26 +271,31 @@ class SchemasEnterpriseConnectionTypedDict(TypedDict):
     r"""Unix timestamp in milliseconds when the connection was created"""
     updated_at: int
     r"""Unix timestamp in milliseconds when the connection was last updated"""
+    logo_public_url: NotRequired[Nullable[str]]
     organization_id: NotRequired[Nullable[str]]
     r"""Organization ID when the connection is linked to an organization"""
     sync_user_attributes: NotRequired[bool]
     r"""Controls whether to update the user's attributes on each sign-in"""
     disable_additional_identifications: NotRequired[bool]
     r"""When true, users cannot add additional identifications when using this connection"""
-    saml_connection: NotRequired[
-        Nullable[SchemasEnterpriseConnectionSamlConnectionTypedDict]
-    ]
+    allow_organization_account_linking: NotRequired[bool]
+    r"""Whether this connection supports account linking via organization membership"""
+    custom_attributes: NotRequired[List[CustomAttributesTypedDict]]
+    r"""Custom attributes to map from the IdP to the user's profile via SSO or SCIM provisioning"""
+    saml_connection: NotRequired[Nullable[EnterpriseConnectionSamlConnectionTypedDict]]
     r"""Present when the enterprise connection uses SAML"""
     oauth_config: NotRequired[Nullable[OauthConfigTypedDict]]
-    r"""Present when the enterprise connection uses OIDC"""
+    r"""Present when the enterprise connection uses OIDC or EASIE"""
 
 
-class SchemasEnterpriseConnection(BaseModel):
+class EnterpriseConnection(BaseModel):
     id: str
     r"""The enterprise connection ID"""
 
     name: str
     r"""The display name of the connection"""
+
+    provider: str
 
     active: bool
     r"""Whether the enterprise connection is active"""
@@ -261,6 +308,8 @@ class SchemasEnterpriseConnection(BaseModel):
 
     updated_at: int
     r"""Unix timestamp in milliseconds when the connection was last updated"""
+
+    logo_public_url: OptionalNullable[str] = UNSET
 
     organization_id: OptionalNullable[str] = UNSET
     r"""Organization ID when the connection is linked to an organization"""
@@ -271,24 +320,35 @@ class SchemasEnterpriseConnection(BaseModel):
     disable_additional_identifications: Optional[bool] = None
     r"""When true, users cannot add additional identifications when using this connection"""
 
-    saml_connection: OptionalNullable[SchemasEnterpriseConnectionSamlConnection] = UNSET
+    allow_organization_account_linking: Optional[bool] = None
+    r"""Whether this connection supports account linking via organization membership"""
+
+    custom_attributes: Optional[List[CustomAttributes]] = None
+    r"""Custom attributes to map from the IdP to the user's profile via SSO or SCIM provisioning"""
+
+    saml_connection: OptionalNullable[EnterpriseConnectionSamlConnection] = UNSET
     r"""Present when the enterprise connection uses SAML"""
 
     oauth_config: OptionalNullable[OauthConfig] = UNSET
-    r"""Present when the enterprise connection uses OIDC"""
+    r"""Present when the enterprise connection uses OIDC or EASIE"""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
             [
+                "logo_public_url",
                 "organization_id",
                 "sync_user_attributes",
                 "disable_additional_identifications",
+                "allow_organization_account_linking",
+                "custom_attributes",
                 "saml_connection",
                 "oauth_config",
             ]
         )
-        nullable_fields = set(["organization_id", "saml_connection", "oauth_config"])
+        nullable_fields = set(
+            ["logo_public_url", "organization_id", "saml_connection", "oauth_config"]
+        )
         serialized = handler(self)
         m = {}
 

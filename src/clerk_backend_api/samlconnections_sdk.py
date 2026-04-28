@@ -110,7 +110,7 @@ class SamlConnectionsSDK(BaseSDK):
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
-            error_status_codes=["402", "403", "422", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -229,7 +229,7 @@ class SamlConnectionsSDK(BaseSDK):
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
-            error_status_codes=["402", "403", "422", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -264,7 +264,7 @@ class SamlConnectionsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.SchemasSAMLConnection:
+    ) -> models.SAMLConnection:
         r"""Create a SAML Connection
 
         Create a new SAML Connection.
@@ -337,13 +337,13 @@ class SamlConnectionsSDK(BaseSDK):
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
-            error_status_codes=["402", "403", "404", "422", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.SchemasSAMLConnection, http_res)
+            return unmarshal_json_response(models.SAMLConnection, http_res)
         if utils.match_response(
             http_res, ["402", "403", "404", "422"], "application/json"
         ):
@@ -374,7 +374,7 @@ class SamlConnectionsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.SchemasSAMLConnection:
+    ) -> models.SAMLConnection:
         r"""Create a SAML Connection
 
         Create a new SAML Connection.
@@ -447,13 +447,13 @@ class SamlConnectionsSDK(BaseSDK):
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
-            error_status_codes=["402", "403", "404", "422", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.SchemasSAMLConnection, http_res)
+            return unmarshal_json_response(models.SAMLConnection, http_res)
         if utils.match_response(
             http_res, ["402", "403", "404", "422"], "application/json"
         ):
@@ -479,7 +479,7 @@ class SamlConnectionsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.SchemasSAMLConnection:
+    ) -> models.SAMLConnection:
         r"""Retrieve a SAML Connection by ID
 
         Fetches the SAML Connection whose ID matches the provided `saml_connection_id` in the path.
@@ -543,13 +543,13 @@ class SamlConnectionsSDK(BaseSDK):
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
-            error_status_codes=["402", "403", "404", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.SchemasSAMLConnection, http_res)
+            return unmarshal_json_response(models.SAMLConnection, http_res)
         if utils.match_response(http_res, ["402", "403", "404"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -573,7 +573,7 @@ class SamlConnectionsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.SchemasSAMLConnection:
+    ) -> models.SAMLConnection:
         r"""Retrieve a SAML Connection by ID
 
         Fetches the SAML Connection whose ID matches the provided `saml_connection_id` in the path.
@@ -637,13 +637,13 @@ class SamlConnectionsSDK(BaseSDK):
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
-            error_status_codes=["402", "403", "404", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.SchemasSAMLConnection, http_res)
+            return unmarshal_json_response(models.SAMLConnection, http_res)
         if utils.match_response(http_res, ["402", "403", "404"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -680,13 +680,14 @@ class SamlConnectionsSDK(BaseSDK):
         allow_subdomains: OptionalNullable[bool] = UNSET,
         allow_idp_initiated: OptionalNullable[bool] = UNSET,
         disable_additional_identifications: OptionalNullable[bool] = UNSET,
+        allow_organization_account_linking: OptionalNullable[bool] = UNSET,
         force_authn: Optional[bool] = None,
         consent_verified_domains_deletion: OptionalNullable[bool] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.SchemasSAMLConnection:
+    ) -> models.SAMLConnection:
         r"""Update a SAML Connection
 
         Updates the SAML Connection whose ID matches the provided `id` in the path.
@@ -708,6 +709,7 @@ class SamlConnectionsSDK(BaseSDK):
         :param allow_subdomains: Allow users with an email address subdomain to use this connection in order to authenticate
         :param allow_idp_initiated: Enable or deactivate IdP-initiated flows
         :param disable_additional_identifications: Enable or deactivate additional identifications
+        :param allow_organization_account_linking: Whether this connection supports account linking via organization membership
         :param force_authn: Enable or deactivate ForceAuthn
         :param consent_verified_domains_deletion: When enabling the connection, controls behavior when verified domains used for enrollment modes like automatic invitation or automatic suggestion already exist for the same domain. If true, those verified domains are removed and the connection is enabled. If false or omitted, the request fails when any such verified domain exists.
         :param retries: Override the default retry configuration for this method
@@ -745,6 +747,7 @@ class SamlConnectionsSDK(BaseSDK):
                 allow_subdomains=allow_subdomains,
                 allow_idp_initiated=allow_idp_initiated,
                 disable_additional_identifications=disable_additional_identifications,
+                allow_organization_account_linking=allow_organization_account_linking,
                 force_authn=force_authn,
                 consent_verified_domains_deletion=consent_verified_domains_deletion,
             ),
@@ -795,13 +798,13 @@ class SamlConnectionsSDK(BaseSDK):
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
-            error_status_codes=["402", "403", "404", "422", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.SchemasSAMLConnection, http_res)
+            return unmarshal_json_response(models.SAMLConnection, http_res)
         if utils.match_response(
             http_res, ["402", "403", "404", "422"], "application/json"
         ):
@@ -840,13 +843,14 @@ class SamlConnectionsSDK(BaseSDK):
         allow_subdomains: OptionalNullable[bool] = UNSET,
         allow_idp_initiated: OptionalNullable[bool] = UNSET,
         disable_additional_identifications: OptionalNullable[bool] = UNSET,
+        allow_organization_account_linking: OptionalNullable[bool] = UNSET,
         force_authn: Optional[bool] = None,
         consent_verified_domains_deletion: OptionalNullable[bool] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.SchemasSAMLConnection:
+    ) -> models.SAMLConnection:
         r"""Update a SAML Connection
 
         Updates the SAML Connection whose ID matches the provided `id` in the path.
@@ -868,6 +872,7 @@ class SamlConnectionsSDK(BaseSDK):
         :param allow_subdomains: Allow users with an email address subdomain to use this connection in order to authenticate
         :param allow_idp_initiated: Enable or deactivate IdP-initiated flows
         :param disable_additional_identifications: Enable or deactivate additional identifications
+        :param allow_organization_account_linking: Whether this connection supports account linking via organization membership
         :param force_authn: Enable or deactivate ForceAuthn
         :param consent_verified_domains_deletion: When enabling the connection, controls behavior when verified domains used for enrollment modes like automatic invitation or automatic suggestion already exist for the same domain. If true, those verified domains are removed and the connection is enabled. If false or omitted, the request fails when any such verified domain exists.
         :param retries: Override the default retry configuration for this method
@@ -905,6 +910,7 @@ class SamlConnectionsSDK(BaseSDK):
                 allow_subdomains=allow_subdomains,
                 allow_idp_initiated=allow_idp_initiated,
                 disable_additional_identifications=disable_additional_identifications,
+                allow_organization_account_linking=allow_organization_account_linking,
                 force_authn=force_authn,
                 consent_verified_domains_deletion=consent_verified_domains_deletion,
             ),
@@ -955,13 +961,13 @@ class SamlConnectionsSDK(BaseSDK):
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
-            error_status_codes=["402", "403", "404", "422", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.SchemasSAMLConnection, http_res)
+            return unmarshal_json_response(models.SAMLConnection, http_res)
         if utils.match_response(
             http_res, ["402", "403", "404", "422"], "application/json"
         ):
@@ -1051,7 +1057,7 @@ class SamlConnectionsSDK(BaseSDK):
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
-            error_status_codes=["402", "403", "404", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -1145,7 +1151,7 @@ class SamlConnectionsSDK(BaseSDK):
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
-            error_status_codes=["402", "403", "404", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 

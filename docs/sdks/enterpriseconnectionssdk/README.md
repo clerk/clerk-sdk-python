@@ -78,6 +78,7 @@ with Clerk(
             "<value 2>",
         ],
         "organization_id": "<id>",
+        "allow_organization_account_linking": False,
         "active": True,
         "saml": None,
         "oidc": {
@@ -89,6 +90,14 @@ with Clerk(
             "user_info_url": "https://adolescent-tooth.com",
             "requires_pkce": True,
         },
+        "custom_attributes": [
+            {
+                "name": "<value>",
+                "key": "<key>",
+                "sso_path": "<value>",
+                "scim_path": "<value>",
+            },
+        ],
     })
 
     # Handle response
@@ -105,7 +114,7 @@ with Clerk(
 
 ### Response
 
-**[models.SchemasEnterpriseConnection](../../models/schemasenterpriseconnection.md)**
+**[models.EnterpriseConnection](../../models/enterpriseconnection.md)**
 
 ### Errors
 
@@ -145,7 +154,7 @@ with Clerk(
 
 ### Response
 
-**[models.SchemasEnterpriseConnection](../../models/schemasenterpriseconnection.md)**
+**[models.EnterpriseConnection](../../models/enterpriseconnection.md)**
 
 ### Errors
 
@@ -170,7 +179,7 @@ with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 ) as clerk:
 
-    res = clerk.enterprise_connections.update(enterprise_connection_id="<id>", name="<value>", domains=None, active=False, sync_user_attributes=True, disable_additional_identifications=True, organization_id="<id>", saml={
+    res = clerk.enterprise_connections.update(enterprise_connection_id="<id>", name="<value>", domains=None, active=False, sync_user_attributes=True, disable_additional_identifications=True, allow_organization_account_linking=True, organization_id="<id>", saml={
         "name": "<value>",
         "idp_entity_id": "<id>",
         "idp_sso_url": "https://animated-experience.name/",
@@ -194,7 +203,14 @@ with Clerk(
         "token_url": "https://helpless-gradient.info/",
         "user_info_url": "https://neglected-chapel.name/",
         "requires_pkce": False,
-    })
+    }, custom_attributes=[
+        {
+            "name": "<value>",
+            "key": "<key>",
+            "sso_path": "<value>",
+            "scim_path": "<value>",
+        },
+    ])
 
     # Handle response
     print(res)
@@ -211,14 +227,16 @@ with Clerk(
 | `active`                                                                                                                                                                                               | *OptionalNullable[bool]*                                                                                                                                                                               | :heavy_minus_sign:                                                                                                                                                                                     | Whether the enterprise connection is active. When set to true (enabling), any existing verified organization domains for the same domain(s) will be removed so the connection can be enabled.          |
 | `sync_user_attributes`                                                                                                                                                                                 | *OptionalNullable[bool]*                                                                                                                                                                               | :heavy_minus_sign:                                                                                                                                                                                     | Whether to sync user attributes on sign-in                                                                                                                                                             |
 | `disable_additional_identifications`                                                                                                                                                                   | *OptionalNullable[bool]*                                                                                                                                                                               | :heavy_minus_sign:                                                                                                                                                                                     | Whether to disable additional identifications                                                                                                                                                          |
+| `allow_organization_account_linking`                                                                                                                                                                   | *OptionalNullable[bool]*                                                                                                                                                                               | :heavy_minus_sign:                                                                                                                                                                                     | Whether this connection supports account linking via organization membership                                                                                                                           |
 | `organization_id`                                                                                                                                                                                      | *OptionalNullable[str]*                                                                                                                                                                                | :heavy_minus_sign:                                                                                                                                                                                     | Organization ID to link to this enterprise connection. Only linking is supported; sending this field sets or changes the linked organization. There is no way to unlink an organization once linked.   |
 | `saml`                                                                                                                                                                                                 | [OptionalNullable[models.UpdateEnterpriseConnectionSaml]](../../models/updateenterpriseconnectionsaml.md)                                                                                              | :heavy_minus_sign:                                                                                                                                                                                     | SAML connection-specific properties. Only applied when the enterprise connection uses SAML.<br/>Use this to update IdP configuration, attribute mapping, and other SAML-specific settings.             |
-| `oidc`                                                                                                                                                                                                 | [OptionalNullable[models.UpdateEnterpriseConnectionOidc]](../../models/updateenterpriseconnectionoidc.md)                                                                                              | :heavy_minus_sign:                                                                                                                                                                                     | OIDC connection-specific properties. Only applied when the enterprise connection uses OIDC.                                                                                                            |
+| `oidc`                                                                                                                                                                                                 | [OptionalNullable[models.UpdateEnterpriseConnectionOidc]](../../models/updateenterpriseconnectionoidc.md)                                                                                              | :heavy_minus_sign:                                                                                                                                                                                     | OIDC connection-specific properties. Only applied when the enterprise connection uses OIDC (e.g. oidc_custom, oidc_github_enterprise, or oidc_gitlab).                                                 |
+| `custom_attributes`                                                                                                                                                                                    | List[[models.UpdateEnterpriseConnectionCustomAttributes](../../models/updateenterpriseconnectioncustomattributes.md)]                                                                                  | :heavy_minus_sign:                                                                                                                                                                                     | Custom attributes to map from the IdP to the user's profile via SSO or SCIM provisioning. Requires the custom attributes feature to be enabled for the instance.                                       |
 | `retries`                                                                                                                                                                                              | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                                                                                       | :heavy_minus_sign:                                                                                                                                                                                     | Configuration to override the default retry behavior of the client.                                                                                                                                    |
 
 ### Response
 
-**[models.SchemasEnterpriseConnection](../../models/schemasenterpriseconnection.md)**
+**[models.EnterpriseConnection](../../models/enterpriseconnection.md)**
 
 ### Errors
 
