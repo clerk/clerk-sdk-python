@@ -345,9 +345,12 @@ def verify_machine_token(request: httpx.Request):
 * [get](docs/sdks/instancesettingssdk/README.md#get) - Fetch the current instance
 * [update](docs/sdks/instancesettingssdk/README.md#update) - Update instance settings
 * [update_restrictions](docs/sdks/instancesettingssdk/README.md#update_restrictions) - Update instance restrictions
+* [get_communication](docs/sdks/instancesettingssdk/README.md#get_communication) - Get instance communication settings
+* [update_communication](docs/sdks/instancesettingssdk/README.md#update_communication) - Update instance communication settings
 * [get_o_auth_application_settings](docs/sdks/instancesettingssdk/README.md#get_o_auth_application_settings) - Get OAuth application settings
 * [update_o_auth_application_settings](docs/sdks/instancesettingssdk/README.md#update_o_auth_application_settings) - Update OAuth application settings
 * [change_domain](docs/sdks/instancesettingssdk/README.md#change_domain) - Update production instance domain
+* [get_organization_settings](docs/sdks/instancesettingssdk/README.md#get_organization_settings) - Get instance organization settings
 * [update_organization_settings](docs/sdks/instancesettingssdk/README.md#update_organization_settings) - Update instance organization settings
 * [get_instance_protect](docs/sdks/instancesettingssdk/README.md#get_instance_protect) - Get instance protect settings
 * [update_instance_protect](docs/sdks/instancesettingssdk/README.md#update_instance_protect) - Update instance protect settings
@@ -405,6 +408,7 @@ def verify_machine_token(request: httpx.Request):
 * [get](docs/sdks/oauthapplicationssdk/README.md#get) - Retrieve an OAuth application by ID
 * [update](docs/sdks/oauthapplicationssdk/README.md#update) - Update an OAuth application
 * [delete](docs/sdks/oauthapplicationssdk/README.md#delete) - Delete an OAuth application
+* [upload_logo](docs/sdks/oauthapplicationssdk/README.md#upload_logo) - Upload a logo for the OAuth application
 * [rotate_secret](docs/sdks/oauthapplicationssdk/README.md#rotate_secret) - Rotate the client secret of the given OAuth application
 
 ### [OrganizationDomains](docs/sdks/organizationdomainssdk/README.md)
@@ -712,33 +716,33 @@ with Clerk(
 
 
 **Inherit from [`ClerkBaseError`](./src/clerk_backend_api/models/clerkbaseerror.py)**:
-* [`CreateAPIKeyAPIKeysResponseBody`](./src/clerk_backend_api/models/createapikeyapikeysresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 206 methods.*
-* [`GetAPIKeysAPIKeysResponseBody`](./src/clerk_backend_api/models/getapikeysapikeysresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 206 methods.*
-* [`GetAPIKeyAPIKeysResponseBody`](./src/clerk_backend_api/models/getapikeyapikeysresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 206 methods.*
-* [`UpdateAPIKeyAPIKeysResponseBody`](./src/clerk_backend_api/models/updateapikeyapikeysresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 206 methods.*
-* [`DeleteAPIKeyAPIKeysResponseBody`](./src/clerk_backend_api/models/deleteapikeyapikeysresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 206 methods.*
-* [`GetAPIKeySecretAPIKeysResponseBody`](./src/clerk_backend_api/models/getapikeysecretapikeysresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 206 methods.*
-* [`RevokeAPIKeyAPIKeysResponseBody`](./src/clerk_backend_api/models/revokeapikeyapikeysresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 206 methods.*
-* [`VerifyAPIKeyAPIKeysResponseBody`](./src/clerk_backend_api/models/verifyapikeyapikeysresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 206 methods.*
-* [`CreateM2MTokenM2mResponseBody`](./src/clerk_backend_api/models/createm2mtokenm2mresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 206 methods.*
-* [`GetM2MTokensM2mResponseBody`](./src/clerk_backend_api/models/getm2mtokensm2mresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 206 methods.*
-* [`RevokeM2MTokenM2mResponseBody`](./src/clerk_backend_api/models/revokem2mtokenm2mresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 206 methods.*
-* [`VerifyM2MTokenM2mResponseBody`](./src/clerk_backend_api/models/verifym2mtokenm2mresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 206 methods.*
-* [`VerifyOAuthAccessTokenOauthAccessTokensResponseBody`](./src/clerk_backend_api/models/verifyoauthaccesstokenoauthaccesstokensresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 206 methods.*
-* [`GetM2MTokensM2mResponseResponseBody`](./src/clerk_backend_api/models/getm2mtokensm2mresponseresponsebody.py): 403 Forbidden. Status code `403`. Applicable to 1 of 206 methods.*
-* [`GetAPIKeysAPIKeysResponseResponseBody`](./src/clerk_backend_api/models/getapikeysapikeysresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 206 methods.*
-* [`GetAPIKeyAPIKeysResponseResponseBody`](./src/clerk_backend_api/models/getapikeyapikeysresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 206 methods.*
-* [`UpdateAPIKeyAPIKeysResponseResponseBody`](./src/clerk_backend_api/models/updateapikeyapikeysresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 206 methods.*
-* [`DeleteAPIKeyAPIKeysResponseResponseBody`](./src/clerk_backend_api/models/deleteapikeyapikeysresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 206 methods.*
-* [`GetAPIKeySecretAPIKeysResponseResponseBody`](./src/clerk_backend_api/models/getapikeysecretapikeysresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 206 methods.*
-* [`RevokeAPIKeyAPIKeysResponseResponseBody`](./src/clerk_backend_api/models/revokeapikeyapikeysresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 206 methods.*
-* [`VerifyAPIKeyAPIKeysResponseResponseBody`](./src/clerk_backend_api/models/verifyapikeyapikeysresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 206 methods.*
-* [`GetM2MTokensM2mResponse404ResponseBody`](./src/clerk_backend_api/models/getm2mtokensm2mresponse404responsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 206 methods.*
-* [`RevokeM2MTokenM2mResponseResponseBody`](./src/clerk_backend_api/models/revokem2mtokenm2mresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 206 methods.*
-* [`VerifyM2MTokenM2mResponseResponseBody`](./src/clerk_backend_api/models/verifym2mtokenm2mresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 206 methods.*
-* [`VerifyOAuthAccessTokenOauthAccessTokensResponseResponseBody`](./src/clerk_backend_api/models/verifyoauthaccesstokenoauthaccesstokensresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 206 methods.*
-* [`CreateAPIKeyAPIKeysResponseResponseBody`](./src/clerk_backend_api/models/createapikeyapikeysresponseresponsebody.py): 409 Conflict. Status code `409`. Applicable to 1 of 206 methods.*
-* [`CreateM2MTokenM2mResponseResponseBody`](./src/clerk_backend_api/models/createm2mtokenm2mresponseresponsebody.py): 409 Conflict. Status code `409`. Applicable to 1 of 206 methods.*
+* [`CreateAPIKeyAPIKeysResponseBody`](./src/clerk_backend_api/models/createapikeyapikeysresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 210 methods.*
+* [`GetAPIKeysAPIKeysResponseBody`](./src/clerk_backend_api/models/getapikeysapikeysresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 210 methods.*
+* [`GetAPIKeyAPIKeysResponseBody`](./src/clerk_backend_api/models/getapikeyapikeysresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 210 methods.*
+* [`UpdateAPIKeyAPIKeysResponseBody`](./src/clerk_backend_api/models/updateapikeyapikeysresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 210 methods.*
+* [`DeleteAPIKeyAPIKeysResponseBody`](./src/clerk_backend_api/models/deleteapikeyapikeysresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 210 methods.*
+* [`GetAPIKeySecretAPIKeysResponseBody`](./src/clerk_backend_api/models/getapikeysecretapikeysresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 210 methods.*
+* [`RevokeAPIKeyAPIKeysResponseBody`](./src/clerk_backend_api/models/revokeapikeyapikeysresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 210 methods.*
+* [`VerifyAPIKeyAPIKeysResponseBody`](./src/clerk_backend_api/models/verifyapikeyapikeysresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 210 methods.*
+* [`CreateM2MTokenM2mResponseBody`](./src/clerk_backend_api/models/createm2mtokenm2mresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 210 methods.*
+* [`GetM2MTokensM2mResponseBody`](./src/clerk_backend_api/models/getm2mtokensm2mresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 210 methods.*
+* [`RevokeM2MTokenM2mResponseBody`](./src/clerk_backend_api/models/revokem2mtokenm2mresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 210 methods.*
+* [`VerifyM2MTokenM2mResponseBody`](./src/clerk_backend_api/models/verifym2mtokenm2mresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 210 methods.*
+* [`VerifyOAuthAccessTokenOauthAccessTokensResponseBody`](./src/clerk_backend_api/models/verifyoauthaccesstokenoauthaccesstokensresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 210 methods.*
+* [`GetM2MTokensM2mResponseResponseBody`](./src/clerk_backend_api/models/getm2mtokensm2mresponseresponsebody.py): 403 Forbidden. Status code `403`. Applicable to 1 of 210 methods.*
+* [`GetAPIKeysAPIKeysResponseResponseBody`](./src/clerk_backend_api/models/getapikeysapikeysresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 210 methods.*
+* [`GetAPIKeyAPIKeysResponseResponseBody`](./src/clerk_backend_api/models/getapikeyapikeysresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 210 methods.*
+* [`UpdateAPIKeyAPIKeysResponseResponseBody`](./src/clerk_backend_api/models/updateapikeyapikeysresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 210 methods.*
+* [`DeleteAPIKeyAPIKeysResponseResponseBody`](./src/clerk_backend_api/models/deleteapikeyapikeysresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 210 methods.*
+* [`GetAPIKeySecretAPIKeysResponseResponseBody`](./src/clerk_backend_api/models/getapikeysecretapikeysresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 210 methods.*
+* [`RevokeAPIKeyAPIKeysResponseResponseBody`](./src/clerk_backend_api/models/revokeapikeyapikeysresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 210 methods.*
+* [`VerifyAPIKeyAPIKeysResponseResponseBody`](./src/clerk_backend_api/models/verifyapikeyapikeysresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 210 methods.*
+* [`GetM2MTokensM2mResponse404ResponseBody`](./src/clerk_backend_api/models/getm2mtokensm2mresponse404responsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 210 methods.*
+* [`RevokeM2MTokenM2mResponseResponseBody`](./src/clerk_backend_api/models/revokem2mtokenm2mresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 210 methods.*
+* [`VerifyM2MTokenM2mResponseResponseBody`](./src/clerk_backend_api/models/verifym2mtokenm2mresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 210 methods.*
+* [`VerifyOAuthAccessTokenOauthAccessTokensResponseResponseBody`](./src/clerk_backend_api/models/verifyoauthaccesstokenoauthaccesstokensresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 210 methods.*
+* [`CreateAPIKeyAPIKeysResponseResponseBody`](./src/clerk_backend_api/models/createapikeyapikeysresponseresponsebody.py): 409 Conflict. Status code `409`. Applicable to 1 of 210 methods.*
+* [`CreateM2MTokenM2mResponseResponseBody`](./src/clerk_backend_api/models/createm2mtokenm2mresponseresponsebody.py): 409 Conflict. Status code `409`. Applicable to 1 of 210 methods.*
 * [`ResponseValidationError`](./src/clerk_backend_api/models/responsevalidationerror.py): Type mismatch between the response data and the expected Pydantic model. Provides access to the Pydantic validation error via the `cause` attribute.
 
 </details>

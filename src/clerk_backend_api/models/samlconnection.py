@@ -19,12 +19,12 @@ from typing import List, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 
-class SchemasSAMLConnection2Object(str, Enum):
+class SAMLConnection2Object(str, Enum):
     SAML_CONNECTION = "saml_connection"
 
 
 class TwoTypedDict(TypedDict):
-    object: SchemasSAMLConnection2Object
+    object: SAMLConnection2Object
     id: str
     name: str
     domains: List[str]
@@ -41,6 +41,7 @@ class TwoTypedDict(TypedDict):
     allow_subdomains: bool
     allow_idp_initiated: bool
     disable_additional_identifications: bool
+    allow_organization_account_linking: bool
     force_authn: bool
     r"""Enable or deactivate ForceAuthn"""
     created_at: int
@@ -60,7 +61,7 @@ class TwoTypedDict(TypedDict):
 
 
 class Two(BaseModel):
-    object: SchemasSAMLConnection2Object
+    object: SAMLConnection2Object
 
     id: str
 
@@ -93,6 +94,8 @@ class Two(BaseModel):
     allow_idp_initiated: bool
 
     disable_additional_identifications: bool
+
+    allow_organization_account_linking: bool
 
     force_authn: bool
     r"""Enable or deactivate ForceAuthn"""
@@ -169,12 +172,12 @@ class Two(BaseModel):
         return m
 
 
-class SchemasSAMLConnectionObject(str, Enum):
+class SAMLConnectionObject(str, Enum):
     SAML_CONNECTION = "saml_connection"
 
 
 class OneTypedDict(TypedDict):
-    object: SchemasSAMLConnectionObject
+    object: SAMLConnectionObject
     id: str
     name: str
     domain: str
@@ -191,6 +194,7 @@ class OneTypedDict(TypedDict):
     allow_subdomains: bool
     allow_idp_initiated: bool
     disable_additional_identifications: bool
+    allow_organization_account_linking: bool
     force_authn: bool
     r"""Enable or deactivate ForceAuthn"""
     created_at: int
@@ -210,7 +214,7 @@ class OneTypedDict(TypedDict):
 
 
 class One(BaseModel):
-    object: SchemasSAMLConnectionObject
+    object: SAMLConnectionObject
 
     id: str
 
@@ -248,6 +252,8 @@ class One(BaseModel):
     allow_idp_initiated: bool
 
     disable_additional_identifications: bool
+
+    allow_organization_account_linking: bool
 
     force_authn: bool
     r"""Enable or deactivate ForceAuthn"""
@@ -319,9 +325,9 @@ class One(BaseModel):
         return m
 
 
-SchemasSAMLConnectionTypedDict = TypeAliasType(
-    "SchemasSAMLConnectionTypedDict", Union[OneTypedDict, TwoTypedDict]
+SAMLConnectionTypedDict = TypeAliasType(
+    "SAMLConnectionTypedDict", Union[OneTypedDict, TwoTypedDict]
 )
 
 
-SchemasSAMLConnection = TypeAliasType("SchemasSAMLConnection", Union[One, Two])
+SAMLConnection = TypeAliasType("SAMLConnection", Union[One, Two])

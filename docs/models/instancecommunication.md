@@ -1,0 +1,11 @@
+# InstanceCommunication
+
+Per-instance SMS communication settings, including the SMS country blocklist.
+
+
+## Fields
+
+| Field                                                                                                                                   | Type                                                                                                                                    | Required                                                                                                                                | Description                                                                                                                             |
+| --------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| `object`                                                                                                                                | [models.InstanceCommunicationObject](../models/instancecommunicationobject.md)                                                          | :heavy_check_mark:                                                                                                                      | N/A                                                                                                                                     |
+| `blocked_country_codes`                                                                                                                 | List[*str*]                                                                                                                             | :heavy_check_mark:                                                                                                                      | ISO 3166-1 alpha-2 country codes that are blocked for SMS delivery on this instance. Codes that aren't recognized are silently dropped. |

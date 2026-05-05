@@ -129,10 +129,10 @@ with Clerk(
 
 ### Errors
 
-| Error Type         | Status Code        | Content Type       |
-| ------------------ | ------------------ | ------------------ |
-| models.ClerkErrors | 400, 401, 403, 404 | application/json   |
-| models.SDKError    | 4XX, 5XX           | \*/\*              |
+| Error Type              | Status Code             | Content Type            |
+| ----------------------- | ----------------------- | ----------------------- |
+| models.ClerkErrors      | 400, 401, 403, 404, 409 | application/json        |
+| models.SDKError         | 4XX, 5XX                | \*/\*                   |
 
 ## update
 

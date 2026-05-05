@@ -1,11 +1,11 @@
-# SchemasSAMLConnectionObject
+# SAMLConnection2Object
 
 ## Example Usage
 
 ```python
-from clerk_backend_api.models import SchemasSAMLConnectionObject
+from clerk_backend_api.models import SAMLConnection2Object
 
-value = SchemasSAMLConnectionObject.SAML_CONNECTION
+value = SAMLConnection2Object.SAML_CONNECTION
 ```
 
 

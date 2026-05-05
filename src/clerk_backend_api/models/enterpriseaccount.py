@@ -403,7 +403,7 @@ EnterpriseAccountVerification = Annotated[
 ]
 
 
-class EnterpriseConnection2TypedDict(TypedDict):
+class EnterpriseAccountConnection2TypedDict(TypedDict):
     id: str
     protocol: str
     provider: str
@@ -426,7 +426,7 @@ class EnterpriseConnection2TypedDict(TypedDict):
     domain: NotRequired[str]
 
 
-class EnterpriseConnection2(BaseModel):
+class EnterpriseAccountConnection2(BaseModel):
     id: str
 
     protocol: str
@@ -492,7 +492,7 @@ class EnterpriseConnection2(BaseModel):
         return m
 
 
-class EnterpriseConnection1TypedDict(TypedDict):
+class EnterpriseAccountConnection1TypedDict(TypedDict):
     id: str
     protocol: str
     provider: str
@@ -515,7 +515,7 @@ class EnterpriseConnection1TypedDict(TypedDict):
     domains: NotRequired[List[str]]
 
 
-class EnterpriseConnection1(BaseModel):
+class EnterpriseAccountConnection1(BaseModel):
     id: str
 
     protocol: str
@@ -581,22 +581,22 @@ class EnterpriseConnection1(BaseModel):
         return m
 
 
-EnterpriseConnectionEnterpriseConnectionTypedDict = TypeAliasType(
-    "EnterpriseConnectionEnterpriseConnectionTypedDict",
-    Union[EnterpriseConnection1TypedDict, EnterpriseConnection2TypedDict],
+EnterpriseAccountConnectionTypedDict = TypeAliasType(
+    "EnterpriseAccountConnectionTypedDict",
+    Union[EnterpriseAccountConnection1TypedDict, EnterpriseAccountConnection2TypedDict],
 )
 
 
-EnterpriseConnectionEnterpriseConnection = TypeAliasType(
-    "EnterpriseConnectionEnterpriseConnection",
-    Union[EnterpriseConnection1, EnterpriseConnection2],
+EnterpriseAccountConnection = TypeAliasType(
+    "EnterpriseAccountConnection",
+    Union[EnterpriseAccountConnection1, EnterpriseAccountConnection2],
 )
 
 
-EnterpriseConnectionTypedDict = EnterpriseConnectionEnterpriseConnectionTypedDict
+EnterpriseAccountEnterpriseConnectionTypedDict = EnterpriseAccountConnectionTypedDict
 
 
-EnterpriseConnection = EnterpriseConnectionEnterpriseConnection
+EnterpriseAccountEnterpriseConnection = EnterpriseAccountConnection
 
 
 class EnterpriseAccountTypedDict(TypedDict):
@@ -619,7 +619,9 @@ class EnterpriseAccountTypedDict(TypedDict):
     r"""The unique ID of the user in the external provider's system"""
     enterprise_connection_id: NotRequired[Nullable[str]]
     public_metadata: NotRequired[Dict[str, Any]]
-    enterprise_connection: NotRequired[Nullable[EnterpriseConnectionTypedDict]]
+    enterprise_connection: NotRequired[
+        Nullable[EnterpriseAccountEnterpriseConnectionTypedDict]
+    ]
     last_authenticated_at: NotRequired[Nullable[int]]
     r"""Unix timestamp of last authentication.
 
@@ -658,7 +660,9 @@ class EnterpriseAccount(BaseModel):
 
     public_metadata: Optional[Dict[str, Any]] = None
 
-    enterprise_connection: OptionalNullable[EnterpriseConnection] = UNSET
+    enterprise_connection: OptionalNullable[EnterpriseAccountEnterpriseConnection] = (
+        UNSET
+    )
 
     last_authenticated_at: OptionalNullable[int] = UNSET
     r"""Unix timestamp of last authentication.

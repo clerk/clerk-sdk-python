@@ -1,4 +1,4 @@
-# SchemasEnterpriseConnectionSamlConnection
+# EnterpriseConnectionSamlConnection
 
 Present when the enterprise connection uses SAML
 
