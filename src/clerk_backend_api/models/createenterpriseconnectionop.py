@@ -10,18 +10,20 @@ from clerk_backend_api.types import (
 )
 from enum import Enum
 from pydantic import model_serializer
-from typing import List
+from typing import List, Optional
 from typing_extensions import NotRequired, TypedDict
 
 
 class Provider(str, Enum):
-    r"""The identity provider (e.g. saml_custom, oidc_custom)"""
+    r"""The identity provider (e.g. saml_custom, oidc_custom, oidc_github_enterprise, oidc_gitlab)"""
 
     SAML_CUSTOM = "saml_custom"
     SAML_OKTA = "saml_okta"
     SAML_GOOGLE = "saml_google"
     SAML_MICROSOFT = "saml_microsoft"
     OIDC_CUSTOM = "oidc_custom"
+    OIDC_GITHUB_ENTERPRISE = "oidc_github_enterprise"
+    OIDC_GITLAB = "oidc_gitlab"
 
 
 class CreateEnterpriseConnectionAttributeMappingTypedDict(TypedDict):
@@ -176,7 +178,7 @@ class CreateEnterpriseConnectionSaml(BaseModel):
 
 
 class OidcTypedDict(TypedDict):
-    r"""OIDC connection-specific properties. Only applied when the enterprise connection uses OIDC (e.g. provider is oidc_custom)."""
+    r"""OIDC connection-specific properties. Only applied when the enterprise connection uses OIDC (e.g. provider is oidc_custom, oidc_github_enterprise, or oidc_gitlab)."""
 
     client_id: NotRequired[Nullable[str]]
     r"""OIDC client ID"""
@@ -195,7 +197,7 @@ class OidcTypedDict(TypedDict):
 
 
 class Oidc(BaseModel):
-    r"""OIDC connection-specific properties. Only applied when the enterprise connection uses OIDC (e.g. provider is oidc_custom)."""
+    r"""OIDC connection-specific properties. Only applied when the enterprise connection uses OIDC (e.g. provider is oidc_custom, oidc_github_enterprise, or oidc_gitlab)."""
 
     client_id: OptionalNullable[str] = UNSET
     r"""OIDC client ID"""
@@ -264,15 +266,58 @@ class Oidc(BaseModel):
         return m
 
 
+class CreateEnterpriseConnectionCustomAttributesTypedDict(TypedDict):
+    name: str
+    r"""Display name for the custom attribute"""
+    key: str
+    r"""Key used to store the attribute in the user's metadata"""
+    sso_path: NotRequired[str]
+    r"""Path to extract the attribute value from SSO claims"""
+    scim_path: NotRequired[str]
+    r"""GJSON path to extract the attribute value from SCIM user resources"""
+
+
+class CreateEnterpriseConnectionCustomAttributes(BaseModel):
+    name: str
+    r"""Display name for the custom attribute"""
+
+    key: str
+    r"""Key used to store the attribute in the user's metadata"""
+
+    sso_path: Optional[str] = None
+    r"""Path to extract the attribute value from SSO claims"""
+
+    scim_path: Optional[str] = None
+    r"""GJSON path to extract the attribute value from SCIM user resources"""
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["sso_path", "scim_path"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m
+
+
 class CreateEnterpriseConnectionRequestBodyTypedDict(TypedDict):
     name: str
     r"""The display name of the connection"""
     provider: Provider
-    r"""The identity provider (e.g. saml_custom, oidc_custom)"""
+    r"""The identity provider (e.g. saml_custom, oidc_custom, oidc_github_enterprise, oidc_gitlab)"""
     domains: List[str]
     r"""Domains associated with the enterprise connection (required; at least one). Values are normalized to lowercase. Each domain must be a valid fully qualified domain name."""
     organization_id: NotRequired[Nullable[str]]
     r"""Organization ID when the connection is linked to an organization"""
+    allow_organization_account_linking: NotRequired[Nullable[bool]]
+    r"""Whether this connection supports account linking via organization membership"""
     active: NotRequired[Nullable[bool]]
     r"""Whether the enterprise connection is active. When true, IdP metadata must be provided via the `saml` object."""
     saml: NotRequired[Nullable[CreateEnterpriseConnectionSamlTypedDict]]
@@ -280,7 +325,11 @@ class CreateEnterpriseConnectionRequestBodyTypedDict(TypedDict):
     Use this to set IdP configuration, attribute mapping, and other SAML-specific settings at creation time.
     """
     oidc: NotRequired[Nullable[OidcTypedDict]]
-    r"""OIDC connection-specific properties. Only applied when the enterprise connection uses OIDC (e.g. provider is oidc_custom)."""
+    r"""OIDC connection-specific properties. Only applied when the enterprise connection uses OIDC (e.g. provider is oidc_custom, oidc_github_enterprise, or oidc_gitlab)."""
+    custom_attributes: NotRequired[
+        List[CreateEnterpriseConnectionCustomAttributesTypedDict]
+    ]
+    r"""Custom attributes to map from the IdP to the user's profile via SSO or SCIM provisioning. Requires the custom attributes feature to be enabled for the instance."""
 
 
 class CreateEnterpriseConnectionRequestBody(BaseModel):
@@ -288,13 +337,16 @@ class CreateEnterpriseConnectionRequestBody(BaseModel):
     r"""The display name of the connection"""
 
     provider: Provider
-    r"""The identity provider (e.g. saml_custom, oidc_custom)"""
+    r"""The identity provider (e.g. saml_custom, oidc_custom, oidc_github_enterprise, oidc_gitlab)"""
 
     domains: List[str]
     r"""Domains associated with the enterprise connection (required; at least one). Values are normalized to lowercase. Each domain must be a valid fully qualified domain name."""
 
     organization_id: OptionalNullable[str] = UNSET
     r"""Organization ID when the connection is linked to an organization"""
+
+    allow_organization_account_linking: OptionalNullable[bool] = UNSET
+    r"""Whether this connection supports account linking via organization membership"""
 
     active: OptionalNullable[bool] = UNSET
     r"""Whether the enterprise connection is active. When true, IdP metadata must be provided via the `saml` object."""
@@ -305,12 +357,32 @@ class CreateEnterpriseConnectionRequestBody(BaseModel):
     """
 
     oidc: OptionalNullable[Oidc] = UNSET
-    r"""OIDC connection-specific properties. Only applied when the enterprise connection uses OIDC (e.g. provider is oidc_custom)."""
+    r"""OIDC connection-specific properties. Only applied when the enterprise connection uses OIDC (e.g. provider is oidc_custom, oidc_github_enterprise, or oidc_gitlab)."""
+
+    custom_attributes: Optional[List[CreateEnterpriseConnectionCustomAttributes]] = None
+    r"""Custom attributes to map from the IdP to the user's profile via SSO or SCIM provisioning. Requires the custom attributes feature to be enabled for the instance."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["organization_id", "active", "saml", "oidc"])
-        nullable_fields = set(["organization_id", "active", "saml", "oidc"])
+        optional_fields = set(
+            [
+                "organization_id",
+                "allow_organization_account_linking",
+                "active",
+                "saml",
+                "oidc",
+                "custom_attributes",
+            ]
+        )
+        nullable_fields = set(
+            [
+                "organization_id",
+                "allow_organization_account_linking",
+                "active",
+                "saml",
+                "oidc",
+            ]
+        )
         serialized = handler(self)
         m = {}
 

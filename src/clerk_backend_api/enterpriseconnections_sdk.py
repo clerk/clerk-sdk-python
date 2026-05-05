@@ -93,7 +93,7 @@ class EnterpriseConnectionsSDK(BaseSDK):
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
-            error_status_codes=["402", "403", "422", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -196,7 +196,7 @@ class EnterpriseConnectionsSDK(BaseSDK):
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
-            error_status_codes=["402", "403", "422", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -228,7 +228,7 @@ class EnterpriseConnectionsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.SchemasEnterpriseConnection:
+    ) -> models.EnterpriseConnection:
         r"""Create an enterprise connection
 
         Create a new enterprise connection.
@@ -300,15 +300,15 @@ class EnterpriseConnectionsSDK(BaseSDK):
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
-            error_status_codes=["402", "403", "404", "422", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         response_data: Any = None
         if utils.match_response(http_res, "201", "application/json"):
-            return unmarshal_json_response(models.SchemasEnterpriseConnection, http_res)
+            return unmarshal_json_response(models.EnterpriseConnection, http_res)
         if utils.match_response(
-            http_res, ["402", "403", "404", "422"], "application/json"
+            http_res, ["402", "403", "404", "409", "422"], "application/json"
         ):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -334,7 +334,7 @@ class EnterpriseConnectionsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.SchemasEnterpriseConnection:
+    ) -> models.EnterpriseConnection:
         r"""Create an enterprise connection
 
         Create a new enterprise connection.
@@ -406,15 +406,15 @@ class EnterpriseConnectionsSDK(BaseSDK):
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
-            error_status_codes=["402", "403", "404", "422", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         response_data: Any = None
         if utils.match_response(http_res, "201", "application/json"):
-            return unmarshal_json_response(models.SchemasEnterpriseConnection, http_res)
+            return unmarshal_json_response(models.EnterpriseConnection, http_res)
         if utils.match_response(
-            http_res, ["402", "403", "404", "422"], "application/json"
+            http_res, ["402", "403", "404", "409", "422"], "application/json"
         ):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -435,7 +435,7 @@ class EnterpriseConnectionsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.SchemasEnterpriseConnection:
+    ) -> models.EnterpriseConnection:
         r"""Retrieve an enterprise connection
 
         Fetches the enterprise connection whose ID matches the provided `enterprise_connection_id` in the path.
@@ -498,13 +498,13 @@ class EnterpriseConnectionsSDK(BaseSDK):
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
-            error_status_codes=["402", "403", "404", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.SchemasEnterpriseConnection, http_res)
+            return unmarshal_json_response(models.EnterpriseConnection, http_res)
         if utils.match_response(http_res, ["402", "403", "404"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -525,7 +525,7 @@ class EnterpriseConnectionsSDK(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.SchemasEnterpriseConnection:
+    ) -> models.EnterpriseConnection:
         r"""Retrieve an enterprise connection
 
         Fetches the enterprise connection whose ID matches the provided `enterprise_connection_id` in the path.
@@ -588,13 +588,13 @@ class EnterpriseConnectionsSDK(BaseSDK):
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
-            error_status_codes=["402", "403", "404", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.SchemasEnterpriseConnection, http_res)
+            return unmarshal_json_response(models.EnterpriseConnection, http_res)
         if utils.match_response(http_res, ["402", "403", "404"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -616,6 +616,7 @@ class EnterpriseConnectionsSDK(BaseSDK):
         active: OptionalNullable[bool] = UNSET,
         sync_user_attributes: OptionalNullable[bool] = UNSET,
         disable_additional_identifications: OptionalNullable[bool] = UNSET,
+        allow_organization_account_linking: OptionalNullable[bool] = UNSET,
         organization_id: OptionalNullable[str] = UNSET,
         saml: OptionalNullable[
             Union[
@@ -629,11 +630,17 @@ class EnterpriseConnectionsSDK(BaseSDK):
                 models.UpdateEnterpriseConnectionOidcTypedDict,
             ]
         ] = UNSET,
+        custom_attributes: OptionalNullable[
+            Union[
+                List[models.UpdateEnterpriseConnectionCustomAttributes],
+                List[models.UpdateEnterpriseConnectionCustomAttributesTypedDict],
+            ]
+        ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.SchemasEnterpriseConnection:
+    ) -> models.EnterpriseConnection:
         r"""Update an enterprise connection
 
         Updates the enterprise connection whose ID matches the provided `enterprise_connection_id` in the path.
@@ -646,10 +653,12 @@ class EnterpriseConnectionsSDK(BaseSDK):
         :param active: Whether the enterprise connection is active. When set to true (enabling), any existing verified organization domains for the same domain(s) will be removed so the connection can be enabled.
         :param sync_user_attributes: Whether to sync user attributes on sign-in
         :param disable_additional_identifications: Whether to disable additional identifications
+        :param allow_organization_account_linking: Whether this connection supports account linking via organization membership
         :param organization_id: Organization ID to link to this enterprise connection. Only linking is supported; sending this field sets or changes the linked organization. There is no way to unlink an organization once linked.
         :param saml: SAML connection-specific properties. Only applied when the enterprise connection uses SAML.
             Use this to update IdP configuration, attribute mapping, and other SAML-specific settings.
-        :param oidc: OIDC connection-specific properties. Only applied when the enterprise connection uses OIDC.
+        :param oidc: OIDC connection-specific properties. Only applied when the enterprise connection uses OIDC (e.g. oidc_custom, oidc_github_enterprise, or oidc_gitlab).
+        :param custom_attributes: Custom attributes to map from the IdP to the user's profile via SSO or SCIM provisioning. Requires the custom attributes feature to be enabled for the instance.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -673,12 +682,19 @@ class EnterpriseConnectionsSDK(BaseSDK):
                 active=active,
                 sync_user_attributes=sync_user_attributes,
                 disable_additional_identifications=disable_additional_identifications,
+                allow_organization_account_linking=allow_organization_account_linking,
                 organization_id=organization_id,
                 saml=utils.get_pydantic_model(
                     saml, OptionalNullable[models.UpdateEnterpriseConnectionSaml]
                 ),
                 oidc=utils.get_pydantic_model(
                     oidc, OptionalNullable[models.UpdateEnterpriseConnectionOidc]
+                ),
+                custom_attributes=utils.get_pydantic_model(
+                    custom_attributes,
+                    OptionalNullable[
+                        List[models.UpdateEnterpriseConnectionCustomAttributes]
+                    ],
                 ),
             ),
         )
@@ -728,13 +744,13 @@ class EnterpriseConnectionsSDK(BaseSDK):
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
-            error_status_codes=["400", "402", "403", "404", "422", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.SchemasEnterpriseConnection, http_res)
+            return unmarshal_json_response(models.EnterpriseConnection, http_res)
         if utils.match_response(
             http_res, ["400", "402", "403", "404", "422"], "application/json"
         ):
@@ -758,6 +774,7 @@ class EnterpriseConnectionsSDK(BaseSDK):
         active: OptionalNullable[bool] = UNSET,
         sync_user_attributes: OptionalNullable[bool] = UNSET,
         disable_additional_identifications: OptionalNullable[bool] = UNSET,
+        allow_organization_account_linking: OptionalNullable[bool] = UNSET,
         organization_id: OptionalNullable[str] = UNSET,
         saml: OptionalNullable[
             Union[
@@ -771,11 +788,17 @@ class EnterpriseConnectionsSDK(BaseSDK):
                 models.UpdateEnterpriseConnectionOidcTypedDict,
             ]
         ] = UNSET,
+        custom_attributes: OptionalNullable[
+            Union[
+                List[models.UpdateEnterpriseConnectionCustomAttributes],
+                List[models.UpdateEnterpriseConnectionCustomAttributesTypedDict],
+            ]
+        ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.SchemasEnterpriseConnection:
+    ) -> models.EnterpriseConnection:
         r"""Update an enterprise connection
 
         Updates the enterprise connection whose ID matches the provided `enterprise_connection_id` in the path.
@@ -788,10 +811,12 @@ class EnterpriseConnectionsSDK(BaseSDK):
         :param active: Whether the enterprise connection is active. When set to true (enabling), any existing verified organization domains for the same domain(s) will be removed so the connection can be enabled.
         :param sync_user_attributes: Whether to sync user attributes on sign-in
         :param disable_additional_identifications: Whether to disable additional identifications
+        :param allow_organization_account_linking: Whether this connection supports account linking via organization membership
         :param organization_id: Organization ID to link to this enterprise connection. Only linking is supported; sending this field sets or changes the linked organization. There is no way to unlink an organization once linked.
         :param saml: SAML connection-specific properties. Only applied when the enterprise connection uses SAML.
             Use this to update IdP configuration, attribute mapping, and other SAML-specific settings.
-        :param oidc: OIDC connection-specific properties. Only applied when the enterprise connection uses OIDC.
+        :param oidc: OIDC connection-specific properties. Only applied when the enterprise connection uses OIDC (e.g. oidc_custom, oidc_github_enterprise, or oidc_gitlab).
+        :param custom_attributes: Custom attributes to map from the IdP to the user's profile via SSO or SCIM provisioning. Requires the custom attributes feature to be enabled for the instance.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -815,12 +840,19 @@ class EnterpriseConnectionsSDK(BaseSDK):
                 active=active,
                 sync_user_attributes=sync_user_attributes,
                 disable_additional_identifications=disable_additional_identifications,
+                allow_organization_account_linking=allow_organization_account_linking,
                 organization_id=organization_id,
                 saml=utils.get_pydantic_model(
                     saml, OptionalNullable[models.UpdateEnterpriseConnectionSaml]
                 ),
                 oidc=utils.get_pydantic_model(
                     oidc, OptionalNullable[models.UpdateEnterpriseConnectionOidc]
+                ),
+                custom_attributes=utils.get_pydantic_model(
+                    custom_attributes,
+                    OptionalNullable[
+                        List[models.UpdateEnterpriseConnectionCustomAttributes]
+                    ],
                 ),
             ),
         )
@@ -870,13 +902,13 @@ class EnterpriseConnectionsSDK(BaseSDK):
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
-            error_status_codes=["400", "402", "403", "404", "422", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.SchemasEnterpriseConnection, http_res)
+            return unmarshal_json_response(models.EnterpriseConnection, http_res)
         if utils.match_response(
             http_res, ["400", "402", "403", "404", "422"], "application/json"
         ):
@@ -962,7 +994,7 @@ class EnterpriseConnectionsSDK(BaseSDK):
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
-            error_status_codes=["402", "403", "404", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -1052,7 +1084,7 @@ class EnterpriseConnectionsSDK(BaseSDK):
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
-            error_status_codes=["402", "403", "404", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 

@@ -1,4 +1,4 @@
-# EnterpriseConnection2
+# EnterpriseAccountConnection2
 
 
 ## Fields

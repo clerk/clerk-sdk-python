@@ -8,6 +8,10 @@ from .commercepaymentmethodresponse import (
     CommercePaymentMethodResponseTypedDict,
 )
 from .commerceperunittotal import CommercePerUnitTotal, CommercePerUnitTotalTypedDict
+from .commerceperunittotaltier import (
+    CommercePerUnitTotalTier,
+    CommercePerUnitTotalTierTypedDict,
+)
 from .commerceplanunitprice import CommercePlanUnitPrice, CommercePlanUnitPriceTypedDict
 from .commercesubscriptioncreditresponse import (
     CommerceSubscriptionCreditResponse,
@@ -114,6 +118,31 @@ class CommerceSubscriptionItemPlanObject(str, Enum):
     COMMERCE_PLAN = "commerce_plan"
 
 
+class CommerceSubscriptionItemFeeTypedDict(TypedDict):
+    amount: int
+    r"""The amount in cents."""
+    amount_formatted: str
+    r"""The formatted amount as a string (e.g., \"$49.99\")."""
+    currency: str
+    r"""The currency code (e.g., \"USD\")."""
+    currency_symbol: str
+    r"""The currency symbol (e.g., \"$\")."""
+
+
+class CommerceSubscriptionItemFee(BaseModel):
+    amount: int
+    r"""The amount in cents."""
+
+    amount_formatted: str
+    r"""The formatted amount as a string (e.g., \"$49.99\")."""
+
+    currency: str
+    r"""The currency code (e.g., \"USD\")."""
+
+    currency_symbol: str
+    r"""The currency symbol (e.g., \"$\")."""
+
+
 class CommerceSubscriptionItemAnnualMonthlyFeeTypedDict(TypedDict):
     amount: int
     r"""The amount in cents."""
@@ -173,7 +202,7 @@ class PlanTypedDict(TypedDict):
     r"""Unique identifier for the plan."""
     name: str
     r"""The name of the plan."""
-    fee: CommerceMoneyResponseTypedDict
+    fee: Nullable[CommerceSubscriptionItemFeeTypedDict]
     annual_monthly_fee: Nullable[CommerceSubscriptionItemAnnualMonthlyFeeTypedDict]
     annual_fee: Nullable[CommerceSubscriptionItemAnnualFeeTypedDict]
     description: Nullable[str]
@@ -216,7 +245,7 @@ class Plan(BaseModel):
     name: str
     r"""The name of the plan."""
 
-    fee: CommerceMoneyResponse
+    fee: Nullable[CommerceSubscriptionItemFee]
 
     annual_monthly_fee: Nullable[CommerceSubscriptionItemAnnualMonthlyFee]
 
@@ -271,6 +300,7 @@ class Plan(BaseModel):
         optional_fields = set(["features", "unit_prices"])
         nullable_fields = set(
             [
+                "fee",
                 "annual_monthly_fee",
                 "annual_fee",
                 "description",
@@ -385,6 +415,8 @@ class SeatsTypedDict(TypedDict):
 
     quantity: Nullable[int]
     r"""Seat quantity being billed; null means unlimited"""
+    tiers: NotRequired[List[CommercePerUnitTotalTierTypedDict]]
+    r"""Per-unit cost breakdown by pricing tier"""
 
 
 class Seats(BaseModel):
@@ -393,17 +425,31 @@ class Seats(BaseModel):
     quantity: Nullable[int]
     r"""Seat quantity being billed; null means unlimited"""
 
+    tiers: Optional[List[CommercePerUnitTotalTier]] = None
+    r"""Per-unit cost breakdown by pricing tier"""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
+        optional_fields = set(["tiers"])
+        nullable_fields = set(["quantity"])
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
             k = f.alias or n
             val = serialized.get(k, serialized.get(n))
+            is_nullable_and_explicitly_set = (
+                k in nullable_fields
+                and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
+            )
 
             if val != UNSET_SENTINEL:
-                m[k] = val
+                if (
+                    val is not None
+                    or k not in optional_fields
+                    or is_nullable_and_explicitly_set
+                ):
+                    m[k] = val
 
         return m
 
