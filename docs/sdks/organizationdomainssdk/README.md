@@ -8,6 +8,7 @@
 * [list](#list) - Get a list of all domains of an organization.
 * [update](#update) - Update an organization domain.
 * [delete](#delete) - Remove a domain from an organization.
+* [verify_ownership](#verify_ownership) - Mark an organization domain's ownership as verified
 * [list_all](#list_all) - List all organization domains
 
 ## create
@@ -179,6 +180,54 @@ with Clerk(
 | Error Type         | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
 | models.ClerkErrors | 400, 401, 404      | application/json   |
+| models.SDKError    | 4XX, 5XX           | \*/\*              |
+
+## verify_ownership
+
+Flips the organization domain's ownership state to verified via the
+manual override path, bypassing the self-serve TXT DNS challenge. The
+domain row records strategy=`manual_override` and an
+`organization_domain.ownership_verified` audit event is emitted with the
+same strategy.
+
+Idempotent: re-calling on an already-verified domain returns the current
+ownership state without re-emitting the audit event.
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="VerifyOrganizationDomainOwnership" method="post" path="/organizations/{organization_id}/domains/{domain_id}/verify_ownership" -->
+```python
+from clerk_backend_api import Clerk
+
+
+with Clerk(
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+) as clerk:
+
+    res = clerk.organization_domains.verify_ownership(organization_id="<id>", domain_id="<id>")
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `organization_id`                                                   | *str*                                                               | :heavy_check_mark:                                                  | The ID of the organization to which the domain belongs              |
+| `domain_id`                                                         | *str*                                                               | :heavy_check_mark:                                                  | The ID of the domain                                                |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+
+### Response
+
+**[models.OrganizationDomain](../../models/organizationdomain.md)**
+
+### Errors
+
+| Error Type         | Status Code        | Content Type       |
+| ------------------ | ------------------ | ------------------ |
+| models.ClerkErrors | 401, 403, 404      | application/json   |
 | models.SDKError    | 4XX, 5XX           | \*/\*              |
 
 ## list_all

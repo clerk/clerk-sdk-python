@@ -8,10 +8,19 @@ from clerk_backend_api.types import (
     UNSET,
     UNSET_SENTINEL,
 )
+from enum import Enum
 import pydantic
 from pydantic import model_serializer
 from typing import List, Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
+
+
+class PreferredSignInStrategyWhenPasswordRequired(str, Enum):
+    r"""When password is required at the instance level, sets the preferred sign-in strategy surfaced to Clerk components. Has no effect when password is not required. Defaults to `password`. Set to an empty string to clear the override."""
+
+    PASSWORD = "password"
+    OTP = "otp"
+    UNKNOWN = ""
 
 
 class UpdateInstanceRequestBodyTypedDict(TypedDict):
@@ -32,6 +41,10 @@ class UpdateInstanceRequestBodyTypedDict(TypedDict):
     """
     url_based_session_syncing: NotRequired[Nullable[bool]]
     r"""Whether the instance should use URL-based session syncing in development mode (i.e. without third-party cookies)."""
+    preferred_sign_in_strategy_when_password_required: NotRequired[
+        Nullable[PreferredSignInStrategyWhenPasswordRequired]
+    ]
+    r"""When password is required at the instance level, sets the preferred sign-in strategy surfaced to Clerk components. Has no effect when password is not required. Defaults to `password`. Set to an empty string to clear the override."""
 
 
 class UpdateInstanceRequestBody(BaseModel):
@@ -65,6 +78,11 @@ class UpdateInstanceRequestBody(BaseModel):
     url_based_session_syncing: OptionalNullable[bool] = UNSET
     r"""Whether the instance should use URL-based session syncing in development mode (i.e. without third-party cookies)."""
 
+    preferred_sign_in_strategy_when_password_required: OptionalNullable[
+        PreferredSignInStrategyWhenPasswordRequired
+    ] = UNSET
+    r"""When password is required at the instance level, sets the preferred sign-in strategy surfaced to Clerk components. Has no effect when password is not required. Defaults to `password`. Set to an empty string to clear the override."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
@@ -77,6 +95,7 @@ class UpdateInstanceRequestBody(BaseModel):
                 "allowed_origins",
                 "cookieless_dev",
                 "url_based_session_syncing",
+                "preferred_sign_in_strategy_when_password_required",
             ]
         )
         nullable_fields = set(
@@ -88,6 +107,7 @@ class UpdateInstanceRequestBody(BaseModel):
                 "development_origin",
                 "cookieless_dev",
                 "url_based_session_syncing",
+                "preferred_sign_in_strategy_when_password_required",
             ]
         )
         serialized = handler(self)

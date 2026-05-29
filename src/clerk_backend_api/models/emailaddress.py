@@ -23,6 +23,63 @@ class EmailAddressObject(str, Enum, metaclass=utils.OpenEnumMeta):
     EMAIL_ADDRESS = "email_address"
 
 
+class VerificationScimVerificationObject(str, Enum):
+    VERIFICATION_SCIM = "verification_scim"
+
+
+class VerificationScimVerificationStatus(str, Enum):
+    VERIFIED = "verified"
+
+
+class VerificationScimVerificationStrategy(str, Enum):
+    SCIM = "scim"
+
+
+class VerificationSCIMTypedDict(TypedDict):
+    status: VerificationScimVerificationStatus
+    strategy: VerificationScimVerificationStrategy
+    attempts: Nullable[int]
+    expire_at: Nullable[int]
+    object: NotRequired[VerificationScimVerificationObject]
+
+
+class VerificationSCIM(BaseModel):
+    status: VerificationScimVerificationStatus
+
+    strategy: VerificationScimVerificationStrategy
+
+    attempts: Nullable[int]
+
+    expire_at: Nullable[int]
+
+    object: Optional[VerificationScimVerificationObject] = None
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["object"])
+        nullable_fields = set(["attempts", "expire_at"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+            is_nullable_and_explicitly_set = (
+                k in nullable_fields
+                and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
+            )
+
+            if val != UNSET_SENTINEL:
+                if (
+                    val is not None
+                    or k not in optional_fields
+                    or is_nullable_and_explicitly_set
+                ):
+                    m[k] = val
+
+        return m
+
+
 class VerificationEmailLinkVerificationObject(str, Enum):
     VERIFICATION_EMAIL_LINK = "verification_email_link"
 
@@ -125,6 +182,56 @@ class VerificationSamlErrorClerkError(BaseModel):
     code: str
 
     meta: Optional[ClerkErrorErrorMeta] = None
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["meta"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m
+
+
+class VerificationFromOauthVerificationObject(str, Enum):
+    VERIFICATION_FROM_OAUTH = "verification_from_oauth"
+
+
+class VerificationFromOauthVerificationStatus(str, Enum):
+    UNVERIFIED = "unverified"
+    VERIFIED = "verified"
+
+
+class ErrorMetaTypedDict(TypedDict):
+    pass
+
+
+class ErrorMeta(BaseModel):
+    pass
+
+
+class ErrorClerkErrorTypedDict(TypedDict):
+    message: str
+    long_message: str
+    code: str
+    meta: NotRequired[ErrorMetaTypedDict]
+
+
+class ErrorClerkError(BaseModel):
+    message: str
+
+    long_message: str
+
+    code: str
+
+    meta: Optional[ErrorMeta] = None
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
@@ -285,56 +392,6 @@ class Ticket(BaseModel):
                     or k not in optional_fields
                     or is_nullable_and_explicitly_set
                 ):
-                    m[k] = val
-
-        return m
-
-
-class VerificationFromOauthVerificationObject(str, Enum):
-    VERIFICATION_FROM_OAUTH = "verification_from_oauth"
-
-
-class VerificationFromOauthVerificationStatus(str, Enum):
-    UNVERIFIED = "unverified"
-    VERIFIED = "verified"
-
-
-class ErrorMetaTypedDict(TypedDict):
-    pass
-
-
-class ErrorMeta(BaseModel):
-    pass
-
-
-class ErrorClerkErrorTypedDict(TypedDict):
-    message: str
-    long_message: str
-    code: str
-    meta: NotRequired[ErrorMetaTypedDict]
-
-
-class ErrorClerkError(BaseModel):
-    message: str
-
-    long_message: str
-
-    code: str
-
-    meta: Optional[ErrorMeta] = None
-
-    @model_serializer(mode="wrap")
-    def serialize_model(self, handler):
-        optional_fields = set(["meta"])
-        serialized = handler(self)
-        m = {}
-
-        for n, f in type(self).model_fields.items():
-            k = f.alias or n
-            val = serialized.get(k, serialized.get(n))
-
-            if val != UNSET_SENTINEL:
-                if val is not None or k not in optional_fields:
                     m[k] = val
 
         return m
@@ -543,6 +600,7 @@ class Otp(BaseModel):
 VerificationTypedDict = TypeAliasType(
     "VerificationTypedDict",
     Union[
+        VerificationSCIMTypedDict,
         OtpTypedDict,
         AdminTypedDict,
         TicketTypedDict,
@@ -561,6 +619,7 @@ Verification = Annotated[
         Annotated[Ticket, Tag("verification_ticket")],
         Annotated[Saml, Tag("verification_saml")],
         Annotated[EmailLink, Tag("verification_email_link")],
+        Annotated[VerificationSCIM, Tag("verification_scim")],
     ],
     Discriminator(lambda m: get_discriminator(m, "object", "object")),
 ]

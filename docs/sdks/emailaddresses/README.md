@@ -8,6 +8,7 @@
 * [get](#get) - Retrieve an email address
 * [delete](#delete) - Delete an email address
 * [update](#update) - Update an email address
+* [replace_for_user](#replace_for_user) - Replace a user's email address
 
 ## create
 
@@ -129,10 +130,10 @@ with Clerk(
 
 ### Errors
 
-| Error Type         | Status Code        | Content Type       |
-| ------------------ | ------------------ | ------------------ |
-| models.ClerkErrors | 400, 401, 403, 404 | application/json   |
-| models.SDKError    | 4XX, 5XX           | \*/\*              |
+| Error Type              | Status Code             | Content Type            |
+| ----------------------- | ----------------------- | ----------------------- |
+| models.ClerkErrors      | 400, 401, 403, 404, 409 | application/json        |
+| models.SDKError         | 4XX, 5XX                | \*/\*                   |
 
 ## update
 
@@ -174,4 +175,48 @@ with Clerk(
 | Error Type              | Status Code             | Content Type            |
 | ----------------------- | ----------------------- | ----------------------- |
 | models.ClerkErrors      | 400, 401, 403, 404, 409 | application/json        |
+| models.SDKError         | 4XX, 5XX                | \*/\*                   |
+
+## replace_for_user
+
+Replaces all of the user's email addresses with a single verified, primary email address.
+The new email address is created with the admin verification strategy. Any existing email
+addresses are deleted. If an existing email address is linked to a connected account, the
+request is rejected; remove the connected account first.
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="ReplaceUserEmailAddress" method="put" path="/users/{user_id}/email_address" -->
+```python
+from clerk_backend_api import Clerk
+
+
+with Clerk(
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+) as clerk:
+
+    res = clerk.email_addresses.replace_for_user(user_id="<id>", email_address="Ines83@gmail.com")
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                                                  | Type                                                                                       | Required                                                                                   | Description                                                                                |
+| ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ |
+| `user_id`                                                                                  | *str*                                                                                      | :heavy_check_mark:                                                                         | The ID of the user whose email address to replace                                          |
+| `email_address`                                                                            | *str*                                                                                      | :heavy_check_mark:                                                                         | The new email address. Must adhere to the RFC 5322 specification for email address format. |
+| `retries`                                                                                  | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                           | :heavy_minus_sign:                                                                         | Configuration to override the default retry behavior of the client.                        |
+
+### Response
+
+**[models.EmailAddress](../../models/emailaddress.md)**
+
+### Errors
+
+| Error Type              | Status Code             | Content Type            |
+| ----------------------- | ----------------------- | ----------------------- |
+| models.ClerkErrors      | 400, 401, 403, 404, 422 | application/json        |
 | models.SDKError         | 4XX, 5XX                | \*/\*                   |

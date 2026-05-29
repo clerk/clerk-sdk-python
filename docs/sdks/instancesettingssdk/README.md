@@ -9,9 +9,12 @@ Modify the settings of your instance.
 * [get](#get) - Fetch the current instance
 * [update](#update) - Update instance settings
 * [update_restrictions](#update_restrictions) - Update instance restrictions
+* [get_communication](#get_communication) - Get instance communication settings
+* [update_communication](#update_communication) - Update instance communication settings
 * [get_o_auth_application_settings](#get_o_auth_application_settings) - Get OAuth application settings
 * [update_o_auth_application_settings](#update_o_auth_application_settings) - Update OAuth application settings
 * [change_domain](#change_domain) - Update production instance domain
+* [get_organization_settings](#get_organization_settings) - Get instance organization settings
 * [update_organization_settings](#update_organization_settings) - Update instance organization settings
 * [get_instance_protect](#get_instance_protect) - Get instance protect settings
 * [update_instance_protect](#update_instance_protect) - Update instance protect settings
@@ -62,6 +65,7 @@ Updates the settings of an instance
 
 <!-- UsageSnippet language="python" operationID="UpdateInstance" method="patch" path="/instance" -->
 ```python
+import clerk_backend_api
 from clerk_backend_api import Clerk
 
 
@@ -81,6 +85,7 @@ with Clerk(
             "capacitor://localhost",
         ],
         "url_based_session_syncing": True,
+        "preferred_sign_in_strategy_when_password_required": clerk_backend_api.PreferredSignInStrategyWhenPasswordRequired.PASSWORD,
     })
 
     # Use the SDK ...
@@ -145,6 +150,93 @@ with Clerk(
 | Error Type         | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
 | models.ClerkErrors | 402, 422           | application/json   |
+| models.SDKError    | 4XX, 5XX           | \*/\*              |
+
+## get_communication
+
+Retrieves the per-instance SMS communication settings, including the SMS country blocklist.
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="GetInstanceCommunication" method="get" path="/instance/communication" -->
+```python
+from clerk_backend_api import Clerk
+
+
+with Clerk(
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+) as clerk:
+
+    res = clerk.instance_settings.get_communication()
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+
+### Response
+
+**[models.InstanceCommunication](../../models/instancecommunication.md)**
+
+### Errors
+
+| Error Type      | Status Code     | Content Type    |
+| --------------- | --------------- | --------------- |
+| models.SDKError | 4XX, 5XX        | \*/\*           |
+
+## update_communication
+
+Replaces the SMS country blocklist for this instance. Pass the full set of ISO 3166-1
+alpha-2 country codes that should be blocked; codes that aren't recognized as SMS-tier
+countries are silently dropped from the persisted list. Omitting `blocked_country_codes`
+is a no-op.
+
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="UpdateInstanceCommunication" method="patch" path="/instance/communication" -->
+```python
+from clerk_backend_api import Clerk
+
+
+with Clerk(
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+) as clerk:
+
+    res = clerk.instance_settings.update_communication(request={
+        "blocked_country_codes": [
+            "<value 1>",
+            "<value 2>",
+        ],
+    })
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                                                               | Type                                                                                                    | Required                                                                                                | Description                                                                                             |
+| ------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| `request`                                                                                               | [models.UpdateInstanceCommunicationRequestBody](../../models/updateinstancecommunicationrequestbody.md) | :heavy_check_mark:                                                                                      | The request object to use for the request.                                                              |
+| `retries`                                                                                               | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                        | :heavy_minus_sign:                                                                                      | Configuration to override the default retry behavior of the client.                                     |
+
+### Response
+
+**[models.InstanceCommunication](../../models/instancecommunication.md)**
+
+### Errors
+
+| Error Type         | Status Code        | Content Type       |
+| ------------------ | ------------------ | ------------------ |
+| models.ClerkErrors | 422                | application/json   |
 | models.SDKError    | 4XX, 5XX           | \*/\*              |
 
 ## get_o_auth_application_settings
@@ -268,6 +360,45 @@ with Clerk(
 | Error Type         | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
 | models.ClerkErrors | 400, 422           | application/json   |
+| models.SDKError    | 4XX, 5XX           | \*/\*              |
+
+## get_organization_settings
+
+Retrieves the organization settings of the instance
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="GetInstanceOrganizationSettings" method="get" path="/instance/organization_settings" -->
+```python
+from clerk_backend_api import Clerk
+
+
+with Clerk(
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+) as clerk:
+
+    res = clerk.instance_settings.get_organization_settings()
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+
+### Response
+
+**[models.OrganizationSettings](../../models/organizationsettings.md)**
+
+### Errors
+
+| Error Type         | Status Code        | Content Type       |
+| ------------------ | ------------------ | ------------------ |
+| models.ClerkErrors | 402, 404, 422      | application/json   |
 | models.SDKError    | 4XX, 5XX           | \*/\*              |
 
 ## update_organization_settings

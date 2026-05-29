@@ -39,3 +39,9 @@ value: models.Saml = /* values here */
 value: models.EmailLink = /* values here */
 ```
 
+### `models.VerificationSCIM`
+
+```python
+value: models.VerificationSCIM = /* values here */
+```
+

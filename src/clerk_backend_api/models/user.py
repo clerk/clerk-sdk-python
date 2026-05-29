@@ -35,6 +35,67 @@ class UserObject(str, Enum):
     USER = "user"
 
 
+class ScimTypedDict(TypedDict):
+    r"""Metadata describing a user's linkage to a SCIM directory. This object is only delivered on `user.created` and `user.updated` webhook events, and only when the user is provisioned through a SCIM directory. Its absence does not necessarily mean the user is not SCIM-managed."""
+
+    directory_id: str
+    r"""The ID of the SCIM directory the user is provisioned from.
+
+    """
+    external_id: Nullable[str]
+    r"""The user's external ID as reported by the SCIM directory, if any.
+
+    """
+    directory_enabled: NotRequired[bool]
+    r"""Whether the SCIM directory is currently enabled. Omitted when false.
+
+    """
+
+
+class Scim(BaseModel):
+    r"""Metadata describing a user's linkage to a SCIM directory. This object is only delivered on `user.created` and `user.updated` webhook events, and only when the user is provisioned through a SCIM directory. Its absence does not necessarily mean the user is not SCIM-managed."""
+
+    directory_id: str
+    r"""The ID of the SCIM directory the user is provisioned from.
+
+    """
+
+    external_id: Nullable[str]
+    r"""The user's external ID as reported by the SCIM directory, if any.
+
+    """
+
+    directory_enabled: Optional[bool] = None
+    r"""Whether the SCIM directory is currently enabled. Omitted when false.
+
+    """
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["directory_enabled"])
+        nullable_fields = set(["external_id"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+            is_nullable_and_explicitly_set = (
+                k in nullable_fields
+                and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
+            )
+
+            if val != UNSET_SENTINEL:
+                if (
+                    val is not None
+                    or k not in optional_fields
+                    or is_nullable_and_explicitly_set
+                ):
+                    m[k] = val
+
+        return m
+
+
 class UserTypedDict(TypedDict):
     r"""Success"""
 
@@ -125,12 +186,17 @@ class UserTypedDict(TypedDict):
 
     """
     organization_memberships: NotRequired[List[OrganizationMembershipTypedDict]]
+    deprovisioned: NotRequired[bool]
+    r"""Flag to denote whether user has been deprovisioned and is restricted from signing in.
+
+    """
     create_organizations_limit: NotRequired[Nullable[int]]
     r"""The maximum number of organizations the user can create. 0 means unlimited.
 
     """
     bypass_client_trust: NotRequired[bool]
     r"""When set to `true`, the user will bypass client trust checks during sign-in."""
+    scim: NotRequired[Nullable[ScimTypedDict]]
 
 
 class User(BaseModel):
@@ -270,6 +336,11 @@ class User(BaseModel):
 
     organization_memberships: Optional[List[OrganizationMembership]] = None
 
+    deprovisioned: Optional[bool] = None
+    r"""Flag to denote whether user has been deprovisioned and is restricted from signing in.
+
+    """
+
     create_organizations_limit: OptionalNullable[int] = UNSET
     r"""The maximum number of organizations the user can create. 0 means unlimited.
 
@@ -277,6 +348,8 @@ class User(BaseModel):
 
     bypass_client_trust: Optional[bool] = False
     r"""When set to `true`, the user will bypass client trust checks during sign-in."""
+
+    scim: OptionalNullable[Scim] = UNSET
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
@@ -289,8 +362,10 @@ class User(BaseModel):
                 "unsafe_metadata",
                 "password_last_updated_at",
                 "organization_memberships",
+                "deprovisioned",
                 "create_organizations_limit",
                 "bypass_client_trust",
+                "scim",
             ]
         )
         nullable_fields = set(
@@ -313,6 +388,7 @@ class User(BaseModel):
                 "create_organizations_limit",
                 "last_active_at",
                 "legal_accepted_at",
+                "scim",
             ]
         )
         serialized = handler(self)

@@ -191,7 +191,7 @@ with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 ) as clerk:
 
-    clerk.miscellaneous.get_public_interstitial(frontend_api_query_parameter1="pub_1a2b3c4d", publishable_key="<value>", proxy_url="https://fine-tarragon.info", domain="great-director.net", sign_in_url="https://likable-freckle.net/", use_domain_for_script=False)
+    clerk.miscellaneous.get_public_interstitial(frontend_api_query_parameter1="pub_1a2b3c4d", publishable_key="<value>", proxy_url="https://fine-tarragon.info", domain="great-director.net", sign_in_url="https://likable-freckle.net/", application_name="<value>", logo_url="https://fine-tarragon.info", flow="<value>", use_domain_for_script=False)
 
     # Use the SDK ...
 
@@ -254,6 +254,11 @@ def verify_machine_token(request: httpx.Request):
 
 * [create](docs/sdks/actortokens/README.md#create) - Create actor token
 * [revoke](docs/sdks/actortokens/README.md#revoke) - Revoke actor token
+
+### [AdminPortalLinkTokens](docs/sdks/adminportallinktokens/README.md)
+
+* [create_admin_portal_link_token](docs/sdks/adminportallinktokens/README.md#create_admin_portal_link_token) - Create an Admin Portal Link Token
+* [revoke_admin_portal_link_token](docs/sdks/adminportallinktokens/README.md#revoke_admin_portal_link_token) - Revoke an Admin Portal Link Token
 
 ### [AgentTasks](docs/sdks/agenttasks/README.md)
 
@@ -320,6 +325,7 @@ def verify_machine_token(request: httpx.Request):
 * [get](docs/sdks/emailaddresses/README.md#get) - Retrieve an email address
 * [delete](docs/sdks/emailaddresses/README.md#delete) - Delete an email address
 * [update](docs/sdks/emailaddresses/README.md#update) - Update an email address
+* [replace_for_user](docs/sdks/emailaddresses/README.md#replace_for_user) - Replace a user's email address
 
 ### [~~EmailAndSmsTemplates~~](docs/sdks/emailandsmstemplates/README.md)
 
@@ -345,9 +351,12 @@ def verify_machine_token(request: httpx.Request):
 * [get](docs/sdks/instancesettingssdk/README.md#get) - Fetch the current instance
 * [update](docs/sdks/instancesettingssdk/README.md#update) - Update instance settings
 * [update_restrictions](docs/sdks/instancesettingssdk/README.md#update_restrictions) - Update instance restrictions
+* [get_communication](docs/sdks/instancesettingssdk/README.md#get_communication) - Get instance communication settings
+* [update_communication](docs/sdks/instancesettingssdk/README.md#update_communication) - Update instance communication settings
 * [get_o_auth_application_settings](docs/sdks/instancesettingssdk/README.md#get_o_auth_application_settings) - Get OAuth application settings
 * [update_o_auth_application_settings](docs/sdks/instancesettingssdk/README.md#update_o_auth_application_settings) - Update OAuth application settings
 * [change_domain](docs/sdks/instancesettingssdk/README.md#change_domain) - Update production instance domain
+* [get_organization_settings](docs/sdks/instancesettingssdk/README.md#get_organization_settings) - Get instance organization settings
 * [update_organization_settings](docs/sdks/instancesettingssdk/README.md#update_organization_settings) - Update instance organization settings
 * [get_instance_protect](docs/sdks/instancesettingssdk/README.md#get_instance_protect) - Get instance protect settings
 * [update_instance_protect](docs/sdks/instancesettingssdk/README.md#update_instance_protect) - Update instance protect settings
@@ -405,6 +414,7 @@ def verify_machine_token(request: httpx.Request):
 * [get](docs/sdks/oauthapplicationssdk/README.md#get) - Retrieve an OAuth application by ID
 * [update](docs/sdks/oauthapplicationssdk/README.md#update) - Update an OAuth application
 * [delete](docs/sdks/oauthapplicationssdk/README.md#delete) - Delete an OAuth application
+* [upload_logo](docs/sdks/oauthapplicationssdk/README.md#upload_logo) - Upload a logo for the OAuth application
 * [rotate_secret](docs/sdks/oauthapplicationssdk/README.md#rotate_secret) - Rotate the client secret of the given OAuth application
 
 ### [OrganizationDomains](docs/sdks/organizationdomainssdk/README.md)
@@ -413,6 +423,7 @@ def verify_machine_token(request: httpx.Request):
 * [list](docs/sdks/organizationdomainssdk/README.md#list) - Get a list of all domains of an organization.
 * [update](docs/sdks/organizationdomainssdk/README.md#update) - Update an organization domain.
 * [delete](docs/sdks/organizationdomainssdk/README.md#delete) - Remove a domain from an organization.
+* [verify_ownership](docs/sdks/organizationdomainssdk/README.md#verify_ownership) - Mark an organization domain's ownership as verified
 * [list_all](docs/sdks/organizationdomainssdk/README.md#list_all) - List all organization domains
 
 ### [OrganizationInvitations](docs/sdks/organizationinvitationssdk/README.md)
@@ -471,6 +482,7 @@ def verify_machine_token(request: httpx.Request):
 * [get](docs/sdks/phonenumbers/README.md#get) - Retrieve a phone number
 * [delete](docs/sdks/phonenumbers/README.md#delete) - Delete a phone number
 * [update](docs/sdks/phonenumbers/README.md#update) - Update a phone number
+* [replace_for_user](docs/sdks/phonenumbers/README.md#replace_for_user) - Replace a user's phone number
 
 ### [ProxyChecks](docs/sdks/proxychecks/README.md)
 
@@ -546,6 +558,7 @@ def verify_machine_token(request: httpx.Request):
 * [set_profile_image](docs/sdks/users/README.md#set_profile_image) - Set user profile image
 * [delete_profile_image](docs/sdks/users/README.md#delete_profile_image) - Delete user profile image
 * [update_metadata](docs/sdks/users/README.md#update_metadata) - Merge and update a user's metadata
+* [replace_metadata](docs/sdks/users/README.md#replace_metadata) - Replace a user's metadata
 * [get_billing_subscription](docs/sdks/users/README.md#get_billing_subscription) - Retrieve a user's billing subscription
 * [get_billing_credit_balance](docs/sdks/users/README.md#get_billing_credit_balance) - Retrieve a user's credit balance
 * [adjust_billing_credit_balance](docs/sdks/users/README.md#adjust_billing_credit_balance) - Adjust a user's credit balance
@@ -624,7 +637,7 @@ from clerk_backend_api.utils import BackoffStrategy, RetryConfig
 
 with Clerk() as clerk:
 
-    clerk.miscellaneous.get_public_interstitial(frontend_api_query_parameter1="pub_1a2b3c4d", publishable_key="<value>", proxy_url="https://fine-tarragon.info", domain="great-director.net", sign_in_url="https://likable-freckle.net/", use_domain_for_script=False,
+    clerk.miscellaneous.get_public_interstitial(frontend_api_query_parameter1="pub_1a2b3c4d", publishable_key="<value>", proxy_url="https://fine-tarragon.info", domain="great-director.net", sign_in_url="https://likable-freckle.net/", application_name="<value>", logo_url="https://fine-tarragon.info", flow="<value>", use_domain_for_script=False,
         RetryConfig("backoff", BackoffStrategy(1, 50, 1.1, 100), False))
 
     # Use the SDK ...
@@ -641,7 +654,7 @@ with Clerk(
     retry_config=RetryConfig("backoff", BackoffStrategy(1, 50, 1.1, 100), False),
 ) as clerk:
 
-    clerk.miscellaneous.get_public_interstitial(frontend_api_query_parameter1="pub_1a2b3c4d", publishable_key="<value>", proxy_url="https://fine-tarragon.info", domain="great-director.net", sign_in_url="https://likable-freckle.net/", use_domain_for_script=False)
+    clerk.miscellaneous.get_public_interstitial(frontend_api_query_parameter1="pub_1a2b3c4d", publishable_key="<value>", proxy_url="https://fine-tarragon.info", domain="great-director.net", sign_in_url="https://likable-freckle.net/", application_name="<value>", logo_url="https://fine-tarragon.info", flow="<value>", use_domain_for_script=False)
 
     # Use the SDK ...
 
@@ -701,7 +714,7 @@ with Clerk(
 * [`ClerkBaseError`](./src/clerk_backend_api/models/clerkbaseerror.py): The base class for HTTP error responses.
   * [`ClerkErrors`](./src/clerk_backend_api/models/clerkerrors.py): Request was not successful. *
 
-<details><summary>Less common errors (32)</summary>
+<details><summary>Less common errors (40)</summary>
 
 <br />
 
@@ -712,33 +725,41 @@ with Clerk(
 
 
 **Inherit from [`ClerkBaseError`](./src/clerk_backend_api/models/clerkbaseerror.py)**:
-* [`CreateAPIKeyAPIKeysResponseBody`](./src/clerk_backend_api/models/createapikeyapikeysresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 206 methods.*
-* [`GetAPIKeysAPIKeysResponseBody`](./src/clerk_backend_api/models/getapikeysapikeysresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 206 methods.*
-* [`GetAPIKeyAPIKeysResponseBody`](./src/clerk_backend_api/models/getapikeyapikeysresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 206 methods.*
-* [`UpdateAPIKeyAPIKeysResponseBody`](./src/clerk_backend_api/models/updateapikeyapikeysresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 206 methods.*
-* [`DeleteAPIKeyAPIKeysResponseBody`](./src/clerk_backend_api/models/deleteapikeyapikeysresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 206 methods.*
-* [`GetAPIKeySecretAPIKeysResponseBody`](./src/clerk_backend_api/models/getapikeysecretapikeysresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 206 methods.*
-* [`RevokeAPIKeyAPIKeysResponseBody`](./src/clerk_backend_api/models/revokeapikeyapikeysresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 206 methods.*
-* [`VerifyAPIKeyAPIKeysResponseBody`](./src/clerk_backend_api/models/verifyapikeyapikeysresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 206 methods.*
-* [`CreateM2MTokenM2mResponseBody`](./src/clerk_backend_api/models/createm2mtokenm2mresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 206 methods.*
-* [`GetM2MTokensM2mResponseBody`](./src/clerk_backend_api/models/getm2mtokensm2mresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 206 methods.*
-* [`RevokeM2MTokenM2mResponseBody`](./src/clerk_backend_api/models/revokem2mtokenm2mresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 206 methods.*
-* [`VerifyM2MTokenM2mResponseBody`](./src/clerk_backend_api/models/verifym2mtokenm2mresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 206 methods.*
-* [`VerifyOAuthAccessTokenOauthAccessTokensResponseBody`](./src/clerk_backend_api/models/verifyoauthaccesstokenoauthaccesstokensresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 206 methods.*
-* [`GetM2MTokensM2mResponseResponseBody`](./src/clerk_backend_api/models/getm2mtokensm2mresponseresponsebody.py): 403 Forbidden. Status code `403`. Applicable to 1 of 206 methods.*
-* [`GetAPIKeysAPIKeysResponseResponseBody`](./src/clerk_backend_api/models/getapikeysapikeysresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 206 methods.*
-* [`GetAPIKeyAPIKeysResponseResponseBody`](./src/clerk_backend_api/models/getapikeyapikeysresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 206 methods.*
-* [`UpdateAPIKeyAPIKeysResponseResponseBody`](./src/clerk_backend_api/models/updateapikeyapikeysresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 206 methods.*
-* [`DeleteAPIKeyAPIKeysResponseResponseBody`](./src/clerk_backend_api/models/deleteapikeyapikeysresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 206 methods.*
-* [`GetAPIKeySecretAPIKeysResponseResponseBody`](./src/clerk_backend_api/models/getapikeysecretapikeysresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 206 methods.*
-* [`RevokeAPIKeyAPIKeysResponseResponseBody`](./src/clerk_backend_api/models/revokeapikeyapikeysresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 206 methods.*
-* [`VerifyAPIKeyAPIKeysResponseResponseBody`](./src/clerk_backend_api/models/verifyapikeyapikeysresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 206 methods.*
-* [`GetM2MTokensM2mResponse404ResponseBody`](./src/clerk_backend_api/models/getm2mtokensm2mresponse404responsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 206 methods.*
-* [`RevokeM2MTokenM2mResponseResponseBody`](./src/clerk_backend_api/models/revokem2mtokenm2mresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 206 methods.*
-* [`VerifyM2MTokenM2mResponseResponseBody`](./src/clerk_backend_api/models/verifym2mtokenm2mresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 206 methods.*
-* [`VerifyOAuthAccessTokenOauthAccessTokensResponseResponseBody`](./src/clerk_backend_api/models/verifyoauthaccesstokenoauthaccesstokensresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 206 methods.*
-* [`CreateAPIKeyAPIKeysResponseResponseBody`](./src/clerk_backend_api/models/createapikeyapikeysresponseresponsebody.py): 409 Conflict. Status code `409`. Applicable to 1 of 206 methods.*
-* [`CreateM2MTokenM2mResponseResponseBody`](./src/clerk_backend_api/models/createm2mtokenm2mresponseresponsebody.py): 409 Conflict. Status code `409`. Applicable to 1 of 206 methods.*
+* [`CreateAdminPortalLinkTokenAdminPortalLinkTokensResponseBody`](./src/clerk_backend_api/models/createadminportallinktokenadminportallinktokensresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 216 methods.*
+* [`RevokeAdminPortalLinkTokenAdminPortalLinkTokensResponseBody`](./src/clerk_backend_api/models/revokeadminportallinktokenadminportallinktokensresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 216 methods.*
+* [`CreateAPIKeyAPIKeysResponseBody`](./src/clerk_backend_api/models/createapikeyapikeysresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 216 methods.*
+* [`GetAPIKeysAPIKeysResponseBody`](./src/clerk_backend_api/models/getapikeysapikeysresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 216 methods.*
+* [`GetAPIKeyAPIKeysResponseBody`](./src/clerk_backend_api/models/getapikeyapikeysresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 216 methods.*
+* [`UpdateAPIKeyAPIKeysResponseBody`](./src/clerk_backend_api/models/updateapikeyapikeysresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 216 methods.*
+* [`DeleteAPIKeyAPIKeysResponseBody`](./src/clerk_backend_api/models/deleteapikeyapikeysresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 216 methods.*
+* [`GetAPIKeySecretAPIKeysResponseBody`](./src/clerk_backend_api/models/getapikeysecretapikeysresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 216 methods.*
+* [`RevokeAPIKeyAPIKeysResponseBody`](./src/clerk_backend_api/models/revokeapikeyapikeysresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 216 methods.*
+* [`VerifyAPIKeyAPIKeysResponseBody`](./src/clerk_backend_api/models/verifyapikeyapikeysresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 216 methods.*
+* [`CreateM2MTokenM2mResponseBody`](./src/clerk_backend_api/models/createm2mtokenm2mresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 216 methods.*
+* [`GetM2MTokensM2mResponseBody`](./src/clerk_backend_api/models/getm2mtokensm2mresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 216 methods.*
+* [`RevokeM2MTokenM2mResponseBody`](./src/clerk_backend_api/models/revokem2mtokenm2mresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 216 methods.*
+* [`VerifyM2MTokenM2mResponseBody`](./src/clerk_backend_api/models/verifym2mtokenm2mresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 216 methods.*
+* [`VerifyOAuthAccessTokenOauthAccessTokensResponseBody`](./src/clerk_backend_api/models/verifyoauthaccesstokenoauthaccesstokensresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 216 methods.*
+* [`CreateAdminPortalLinkTokenAdminPortalLinkTokensResponseResponseBody`](./src/clerk_backend_api/models/createadminportallinktokenadminportallinktokensresponseresponsebody.py): 401 Unauthorized. Status code `401`. Applicable to 1 of 216 methods.*
+* [`RevokeAdminPortalLinkTokenAdminPortalLinkTokensResponseResponseBody`](./src/clerk_backend_api/models/revokeadminportallinktokenadminportallinktokensresponseresponsebody.py): 401 Unauthorized. Status code `401`. Applicable to 1 of 216 methods.*
+* [`CreateAdminPortalLinkTokenAdminPortalLinkTokensResponse403ResponseBody`](./src/clerk_backend_api/models/createadminportallinktokenadminportallinktokensresponse403responsebody.py): 403 Forbidden. Status code `403`. Applicable to 1 of 216 methods.*
+* [`RevokeAdminPortalLinkTokenAdminPortalLinkTokensResponse403ResponseBody`](./src/clerk_backend_api/models/revokeadminportallinktokenadminportallinktokensresponse403responsebody.py): 403 Forbidden. Status code `403`. Applicable to 1 of 216 methods.*
+* [`GetM2MTokensM2mResponseResponseBody`](./src/clerk_backend_api/models/getm2mtokensm2mresponseresponsebody.py): 403 Forbidden. Status code `403`. Applicable to 1 of 216 methods.*
+* [`RevokeAdminPortalLinkTokenAdminPortalLinkTokensResponse404ResponseBody`](./src/clerk_backend_api/models/revokeadminportallinktokenadminportallinktokensresponse404responsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 216 methods.*
+* [`GetAPIKeysAPIKeysResponseResponseBody`](./src/clerk_backend_api/models/getapikeysapikeysresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 216 methods.*
+* [`GetAPIKeyAPIKeysResponseResponseBody`](./src/clerk_backend_api/models/getapikeyapikeysresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 216 methods.*
+* [`UpdateAPIKeyAPIKeysResponseResponseBody`](./src/clerk_backend_api/models/updateapikeyapikeysresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 216 methods.*
+* [`DeleteAPIKeyAPIKeysResponseResponseBody`](./src/clerk_backend_api/models/deleteapikeyapikeysresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 216 methods.*
+* [`GetAPIKeySecretAPIKeysResponseResponseBody`](./src/clerk_backend_api/models/getapikeysecretapikeysresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 216 methods.*
+* [`RevokeAPIKeyAPIKeysResponseResponseBody`](./src/clerk_backend_api/models/revokeapikeyapikeysresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 216 methods.*
+* [`VerifyAPIKeyAPIKeysResponseResponseBody`](./src/clerk_backend_api/models/verifyapikeyapikeysresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 216 methods.*
+* [`GetM2MTokensM2mResponse404ResponseBody`](./src/clerk_backend_api/models/getm2mtokensm2mresponse404responsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 216 methods.*
+* [`RevokeM2MTokenM2mResponseResponseBody`](./src/clerk_backend_api/models/revokem2mtokenm2mresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 216 methods.*
+* [`VerifyM2MTokenM2mResponseResponseBody`](./src/clerk_backend_api/models/verifym2mtokenm2mresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 216 methods.*
+* [`VerifyOAuthAccessTokenOauthAccessTokensResponseResponseBody`](./src/clerk_backend_api/models/verifyoauthaccesstokenoauthaccesstokensresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 216 methods.*
+* [`CreateAdminPortalLinkTokenAdminPortalLinkTokensResponse409ResponseBody`](./src/clerk_backend_api/models/createadminportallinktokenadminportallinktokensresponse409responsebody.py): 409 Conflict. Status code `409`. Applicable to 1 of 216 methods.*
+* [`CreateAPIKeyAPIKeysResponseResponseBody`](./src/clerk_backend_api/models/createapikeyapikeysresponseresponsebody.py): 409 Conflict. Status code `409`. Applicable to 1 of 216 methods.*
+* [`CreateM2MTokenM2mResponseResponseBody`](./src/clerk_backend_api/models/createm2mtokenm2mresponseresponsebody.py): 409 Conflict. Status code `409`. Applicable to 1 of 216 methods.*
 * [`ResponseValidationError`](./src/clerk_backend_api/models/responsevalidationerror.py): Type mismatch between the response data and the expected Pydantic model. Provides access to the Pydantic validation error via the `cause` attribute.
 
 </details>
@@ -760,7 +781,7 @@ with Clerk(
     server_url="https://api.clerk.com/v1",
 ) as clerk:
 
-    clerk.miscellaneous.get_public_interstitial(frontend_api_query_parameter1="pub_1a2b3c4d", publishable_key="<value>", proxy_url="https://fine-tarragon.info", domain="great-director.net", sign_in_url="https://likable-freckle.net/", use_domain_for_script=False)
+    clerk.miscellaneous.get_public_interstitial(frontend_api_query_parameter1="pub_1a2b3c4d", publishable_key="<value>", proxy_url="https://fine-tarragon.info", domain="great-director.net", sign_in_url="https://likable-freckle.net/", application_name="<value>", logo_url="https://fine-tarragon.info", flow="<value>", use_domain_for_script=False)
 
     # Use the SDK ...
 

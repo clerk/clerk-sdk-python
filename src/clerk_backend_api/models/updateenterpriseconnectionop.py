@@ -10,7 +10,7 @@ from clerk_backend_api.types import (
 )
 from clerk_backend_api.utils import FieldMetadata, PathParamMetadata, RequestMetadata
 from pydantic import model_serializer
-from typing import List
+from typing import List, Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
 
 
@@ -173,7 +173,7 @@ class UpdateEnterpriseConnectionSaml(BaseModel):
 
 
 class UpdateEnterpriseConnectionOidcTypedDict(TypedDict):
-    r"""OIDC connection-specific properties. Only applied when the enterprise connection uses OIDC."""
+    r"""OIDC connection-specific properties. Only applied when the enterprise connection uses OIDC (e.g. oidc_custom, oidc_github_enterprise, or oidc_gitlab)."""
 
     client_id: NotRequired[Nullable[str]]
     r"""OIDC client ID"""
@@ -192,7 +192,7 @@ class UpdateEnterpriseConnectionOidcTypedDict(TypedDict):
 
 
 class UpdateEnterpriseConnectionOidc(BaseModel):
-    r"""OIDC connection-specific properties. Only applied when the enterprise connection uses OIDC."""
+    r"""OIDC connection-specific properties. Only applied when the enterprise connection uses OIDC (e.g. oidc_custom, oidc_github_enterprise, or oidc_gitlab)."""
 
     client_id: OptionalNullable[str] = UNSET
     r"""OIDC client ID"""
@@ -261,6 +261,47 @@ class UpdateEnterpriseConnectionOidc(BaseModel):
         return m
 
 
+class UpdateEnterpriseConnectionCustomAttributesTypedDict(TypedDict):
+    name: str
+    r"""Display name for the custom attribute"""
+    key: str
+    r"""Key used to store the attribute in the user's metadata"""
+    sso_path: NotRequired[str]
+    r"""Path to extract the attribute value from SSO claims"""
+    scim_path: NotRequired[str]
+    r"""GJSON path to extract the attribute value from SCIM user resources"""
+
+
+class UpdateEnterpriseConnectionCustomAttributes(BaseModel):
+    name: str
+    r"""Display name for the custom attribute"""
+
+    key: str
+    r"""Key used to store the attribute in the user's metadata"""
+
+    sso_path: Optional[str] = None
+    r"""Path to extract the attribute value from SSO claims"""
+
+    scim_path: Optional[str] = None
+    r"""GJSON path to extract the attribute value from SCIM user resources"""
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["sso_path", "scim_path"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m
+
+
 class UpdateEnterpriseConnectionRequestBodyTypedDict(TypedDict):
     name: NotRequired[Nullable[str]]
     r"""The display name of the enterprise connection"""
@@ -274,6 +315,8 @@ class UpdateEnterpriseConnectionRequestBodyTypedDict(TypedDict):
     r"""Whether to sync user attributes on sign-in"""
     disable_additional_identifications: NotRequired[Nullable[bool]]
     r"""Whether to disable additional identifications"""
+    allow_organization_account_linking: NotRequired[Nullable[bool]]
+    r"""Whether this connection supports account linking via organization membership"""
     organization_id: NotRequired[Nullable[str]]
     r"""Organization ID to link to this enterprise connection. Only linking is supported; sending this field sets or changes the linked organization. There is no way to unlink an organization once linked."""
     saml: NotRequired[Nullable[UpdateEnterpriseConnectionSamlTypedDict]]
@@ -281,7 +324,11 @@ class UpdateEnterpriseConnectionRequestBodyTypedDict(TypedDict):
     Use this to update IdP configuration, attribute mapping, and other SAML-specific settings.
     """
     oidc: NotRequired[Nullable[UpdateEnterpriseConnectionOidcTypedDict]]
-    r"""OIDC connection-specific properties. Only applied when the enterprise connection uses OIDC."""
+    r"""OIDC connection-specific properties. Only applied when the enterprise connection uses OIDC (e.g. oidc_custom, oidc_github_enterprise, or oidc_gitlab)."""
+    custom_attributes: NotRequired[
+        Nullable[List[UpdateEnterpriseConnectionCustomAttributesTypedDict]]
+    ]
+    r"""Custom attributes to map from the IdP to the user's profile via SSO or SCIM provisioning. Requires the custom attributes feature to be enabled for the instance."""
 
 
 class UpdateEnterpriseConnectionRequestBody(BaseModel):
@@ -302,6 +349,9 @@ class UpdateEnterpriseConnectionRequestBody(BaseModel):
     disable_additional_identifications: OptionalNullable[bool] = UNSET
     r"""Whether to disable additional identifications"""
 
+    allow_organization_account_linking: OptionalNullable[bool] = UNSET
+    r"""Whether this connection supports account linking via organization membership"""
+
     organization_id: OptionalNullable[str] = UNSET
     r"""Organization ID to link to this enterprise connection. Only linking is supported; sending this field sets or changes the linked organization. There is no way to unlink an organization once linked."""
 
@@ -311,7 +361,12 @@ class UpdateEnterpriseConnectionRequestBody(BaseModel):
     """
 
     oidc: OptionalNullable[UpdateEnterpriseConnectionOidc] = UNSET
-    r"""OIDC connection-specific properties. Only applied when the enterprise connection uses OIDC."""
+    r"""OIDC connection-specific properties. Only applied when the enterprise connection uses OIDC (e.g. oidc_custom, oidc_github_enterprise, or oidc_gitlab)."""
+
+    custom_attributes: OptionalNullable[
+        List[UpdateEnterpriseConnectionCustomAttributes]
+    ] = UNSET
+    r"""Custom attributes to map from the IdP to the user's profile via SSO or SCIM provisioning. Requires the custom attributes feature to be enabled for the instance."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
@@ -322,9 +377,11 @@ class UpdateEnterpriseConnectionRequestBody(BaseModel):
                 "active",
                 "sync_user_attributes",
                 "disable_additional_identifications",
+                "allow_organization_account_linking",
                 "organization_id",
                 "saml",
                 "oidc",
+                "custom_attributes",
             ]
         )
         nullable_fields = set(
@@ -334,9 +391,11 @@ class UpdateEnterpriseConnectionRequestBody(BaseModel):
                 "active",
                 "sync_user_attributes",
                 "disable_additional_identifications",
+                "allow_organization_account_linking",
                 "organization_id",
                 "saml",
                 "oidc",
+                "custom_attributes",
             ]
         )
         serialized = handler(self)

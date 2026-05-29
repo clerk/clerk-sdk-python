@@ -116,6 +116,81 @@ class SchemasCommerceSubscriptionItemPlanObject(str, Enum):
     COMMERCE_PLAN = "commerce_plan"
 
 
+class SchemasCommerceSubscriptionItemFeeTypedDict(TypedDict):
+    amount: int
+    r"""The amount in cents."""
+    amount_formatted: str
+    r"""The formatted amount as a string (e.g., \"$49.99\")."""
+    currency: str
+    r"""The currency code (e.g., \"USD\")."""
+    currency_symbol: str
+    r"""The currency symbol (e.g., \"$\")."""
+
+
+class SchemasCommerceSubscriptionItemFee(BaseModel):
+    amount: int
+    r"""The amount in cents."""
+
+    amount_formatted: str
+    r"""The formatted amount as a string (e.g., \"$49.99\")."""
+
+    currency: str
+    r"""The currency code (e.g., \"USD\")."""
+
+    currency_symbol: str
+    r"""The currency symbol (e.g., \"$\")."""
+
+
+class SchemasCommerceSubscriptionItemAnnualMonthlyFeeTypedDict(TypedDict):
+    amount: int
+    r"""The amount in cents."""
+    amount_formatted: str
+    r"""The formatted amount as a string (e.g., \"$49.99\")."""
+    currency: str
+    r"""The currency code (e.g., \"USD\")."""
+    currency_symbol: str
+    r"""The currency symbol (e.g., \"$\")."""
+
+
+class SchemasCommerceSubscriptionItemAnnualMonthlyFee(BaseModel):
+    amount: int
+    r"""The amount in cents."""
+
+    amount_formatted: str
+    r"""The formatted amount as a string (e.g., \"$49.99\")."""
+
+    currency: str
+    r"""The currency code (e.g., \"USD\")."""
+
+    currency_symbol: str
+    r"""The currency symbol (e.g., \"$\")."""
+
+
+class SchemasCommerceSubscriptionItemAnnualFeeTypedDict(TypedDict):
+    amount: int
+    r"""The amount in cents."""
+    amount_formatted: str
+    r"""The formatted amount as a string (e.g., \"$49.99\")."""
+    currency: str
+    r"""The currency code (e.g., \"USD\")."""
+    currency_symbol: str
+    r"""The currency symbol (e.g., \"$\")."""
+
+
+class SchemasCommerceSubscriptionItemAnnualFee(BaseModel):
+    amount: int
+    r"""The amount in cents."""
+
+    amount_formatted: str
+    r"""The formatted amount as a string (e.g., \"$49.99\")."""
+
+    currency: str
+    r"""The currency code (e.g., \"USD\")."""
+
+    currency_symbol: str
+    r"""The currency symbol (e.g., \"$\")."""
+
+
 class SchemasCommerceSubscriptionItemPlanTypedDict(TypedDict):
     r"""The associated commerce plan."""
 
@@ -125,9 +200,11 @@ class SchemasCommerceSubscriptionItemPlanTypedDict(TypedDict):
     r"""Unique identifier for the commerce plan."""
     name: str
     r"""The name of the commerce plan."""
-    fee: CommerceMoneyResponseTypedDict
-    annual_monthly_fee: CommerceMoneyResponseTypedDict
-    annual_fee: CommerceMoneyResponseTypedDict
+    fee: Nullable[SchemasCommerceSubscriptionItemFeeTypedDict]
+    annual_monthly_fee: Nullable[
+        SchemasCommerceSubscriptionItemAnnualMonthlyFeeTypedDict
+    ]
+    annual_fee: Nullable[SchemasCommerceSubscriptionItemAnnualFeeTypedDict]
     amount: int
     r"""The amount in cents for the plan."""
     amount_formatted: str
@@ -188,11 +265,11 @@ class SchemasCommerceSubscriptionItemPlan(BaseModel):
     name: str
     r"""The name of the commerce plan."""
 
-    fee: CommerceMoneyResponse
+    fee: Nullable[SchemasCommerceSubscriptionItemFee]
 
-    annual_monthly_fee: CommerceMoneyResponse
+    annual_monthly_fee: Nullable[SchemasCommerceSubscriptionItemAnnualMonthlyFee]
 
-    annual_fee: CommerceMoneyResponse
+    annual_fee: Nullable[SchemasCommerceSubscriptionItemAnnualFee]
 
     amount: int
     r"""The amount in cents for the plan."""
@@ -268,7 +345,9 @@ class SchemasCommerceSubscriptionItemPlan(BaseModel):
         optional_fields = set(
             ["period", "interval", "free_trial_enabled", "free_trial_days"]
         )
-        nullable_fields = set(["free_trial_days"])
+        nullable_fields = set(
+            ["fee", "annual_monthly_fee", "annual_fee", "free_trial_days"]
+        )
         serialized = handler(self)
         m = {}
 

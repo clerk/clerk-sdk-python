@@ -3,9 +3,10 @@
 from __future__ import annotations
 from clerk_backend_api.types import BaseModel, UNSET_SENTINEL
 from enum import Enum
+import pydantic
 from pydantic import model_serializer
 from typing import Optional
-from typing_extensions import NotRequired, TypedDict
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class AgentTaskObject(str, Enum):
@@ -20,8 +21,12 @@ class AgentTaskTypedDict(TypedDict):
     r"""A stable identifier for the agent, unique per agent_name within an instance.
 
     """
-    task_id: str
+    agent_task_id: str
     r"""A unique identifier for this agent task.
+
+    """
+    task_id: str
+    r"""A unique identifier for this agent task. Deprecated: use agent_task_id instead.
 
     """
     url: NotRequired[str]
@@ -40,8 +45,18 @@ class AgentTask(BaseModel):
 
     """
 
-    task_id: str
+    agent_task_id: str
     r"""A unique identifier for this agent task.
+
+    """
+
+    task_id: Annotated[
+        str,
+        pydantic.Field(
+            deprecated="warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
+        ),
+    ]
+    r"""A unique identifier for this agent task. Deprecated: use agent_task_id instead.
 
     """
 

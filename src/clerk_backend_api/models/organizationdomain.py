@@ -9,9 +9,10 @@ from clerk_backend_api.types import (
     UNSET_SENTINEL,
 )
 from enum import Enum
+import pydantic
 from pydantic import model_serializer
 from typing import Optional
-from typing_extensions import NotRequired, TypedDict
+from typing_extensions import Annotated, NotRequired, TypedDict, deprecated
 
 
 class OrganizationDomainObject(str, Enum):
@@ -28,31 +29,138 @@ class EnrollmentMode(str, Enum):
     AUTOMATIC_SUGGESTION = "automatic_suggestion"
 
 
-class OrganizationDomainStatus(str, Enum):
-    r"""Status of the verification. It can be `unverified` or `verified`"""
+class AffiliationVerificationTypedDict(TypedDict):
+    r"""Verification details for the user-facing affiliation between the domain and the organization (e.g. affiliation_email_code)."""
 
-    UNVERIFIED = "unverified"
-    VERIFIED = "verified"
+    status: str
+    r"""Status of the verification. It can be `unverified`, `verified`, `failed`, or `expired`."""
+    strategy: str
+    r"""Name of the strategy used to verify the domain"""
+    attempts: Nullable[int]
+    r"""How many attempts have been made to verify the domain"""
+    expire_at: Nullable[int]
+    r"""Unix timestamp of when the verification will expire"""
+    verified_at: Nullable[int]
+    r"""Unix timestamp of when ownership was verified. Only populated on `ownership_verification`; null on `affiliation_verification`.
+
+    """
 
 
+class AffiliationVerification(BaseModel):
+    r"""Verification details for the user-facing affiliation between the domain and the organization (e.g. affiliation_email_code)."""
+
+    status: str
+    r"""Status of the verification. It can be `unverified`, `verified`, `failed`, or `expired`."""
+
+    strategy: str
+    r"""Name of the strategy used to verify the domain"""
+
+    attempts: Nullable[int]
+    r"""How many attempts have been made to verify the domain"""
+
+    expire_at: Nullable[int]
+    r"""Unix timestamp of when the verification will expire"""
+
+    verified_at: Nullable[int]
+    r"""Unix timestamp of when ownership was verified. Only populated on `ownership_verification`; null on `affiliation_verification`.
+
+    """
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+
+            if val != UNSET_SENTINEL:
+                m[k] = val
+
+        return m
+
+
+class OwnershipVerificationTypedDict(TypedDict):
+    r"""Verification details for the underlying DNS domain ownership proof (TXT challenge or dashboard override). Null until ownership has been attempted."""
+
+    status: str
+    r"""Status of the verification. It can be `unverified`, `verified`, `failed`, or `expired`."""
+    strategy: str
+    r"""Name of the strategy used to verify the domain"""
+    attempts: Nullable[int]
+    r"""How many attempts have been made to verify the domain"""
+    expire_at: Nullable[int]
+    r"""Unix timestamp of when the verification will expire"""
+    verified_at: Nullable[int]
+    r"""Unix timestamp of when ownership was verified. Only populated on `ownership_verification`; null on `affiliation_verification`.
+
+    """
+
+
+class OwnershipVerification(BaseModel):
+    r"""Verification details for the underlying DNS domain ownership proof (TXT challenge or dashboard override). Null until ownership has been attempted."""
+
+    status: str
+    r"""Status of the verification. It can be `unverified`, `verified`, `failed`, or `expired`."""
+
+    strategy: str
+    r"""Name of the strategy used to verify the domain"""
+
+    attempts: Nullable[int]
+    r"""How many attempts have been made to verify the domain"""
+
+    expire_at: Nullable[int]
+    r"""Unix timestamp of when the verification will expire"""
+
+    verified_at: Nullable[int]
+    r"""Unix timestamp of when ownership was verified. Only populated on `ownership_verification`; null on `affiliation_verification`.
+
+    """
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+
+            if val != UNSET_SENTINEL:
+                m[k] = val
+
+        return m
+
+
+@deprecated(
+    "warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
+)
 class OrganizationDomainVerificationTypedDict(TypedDict):
-    r"""Verification details for the domain"""
+    r"""Deprecated alias for `affiliation_verification`. Kept for backward compatibility on the current API version; will be removed in the next API version. Prefer `affiliation_verification`."""
 
-    status: OrganizationDomainStatus
-    r"""Status of the verification. It can be `unverified` or `verified`"""
+    status: str
+    r"""Status of the verification. It can be `unverified`, `verified`, `failed`, or `expired`."""
     strategy: str
     r"""Name of the strategy used to verify the domain"""
     attempts: Nullable[int]
     r"""How many attempts have been made to verify the domain"""
     expire_at: Nullable[int]
     r"""Unix timestamp of when the verification will expire"""
+    verified_at: Nullable[int]
+    r"""Unix timestamp of when ownership was verified. Only populated on `ownership_verification`; null on `affiliation_verification`.
+
+    """
 
 
+@deprecated(
+    "warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
+)
 class OrganizationDomainVerification(BaseModel):
-    r"""Verification details for the domain"""
+    r"""Deprecated alias for `affiliation_verification`. Kept for backward compatibility on the current API version; will be removed in the next API version. Prefer `affiliation_verification`."""
 
-    status: OrganizationDomainStatus
-    r"""Status of the verification. It can be `unverified` or `verified`"""
+    status: str
+    r"""Status of the verification. It can be `unverified`, `verified`, `failed`, or `expired`."""
 
     strategy: str
     r"""Name of the strategy used to verify the domain"""
@@ -62,6 +170,11 @@ class OrganizationDomainVerification(BaseModel):
 
     expire_at: Nullable[int]
     r"""Unix timestamp of when the verification will expire"""
+
+    verified_at: Nullable[int]
+    r"""Unix timestamp of when ownership was verified. Only populated on `ownership_verification`; null on `affiliation_verification`.
+
+    """
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
@@ -135,8 +248,18 @@ class OrganizationDomainTypedDict(TypedDict):
     r"""Mode of enrollment for the domain"""
     affiliation_email_address: Nullable[str]
     r"""Affiliation email address for the domain, if available."""
+    affiliation_verification: Nullable[AffiliationVerificationTypedDict]
+    r"""Verification details for the user-facing affiliation between the domain and the organization (e.g. affiliation_email_code).
+
+    """
+    ownership_verification: Nullable[OwnershipVerificationTypedDict]
+    r"""Verification details for the underlying DNS domain ownership proof (TXT challenge or dashboard override). Null until ownership has been attempted.
+
+    """
     verification: Nullable[OrganizationDomainVerificationTypedDict]
-    r"""Verification details for the domain"""
+    r"""Deprecated alias for `affiliation_verification`. Kept for backward compatibility on the current API version; will be removed in the next API version. Prefer `affiliation_verification`.
+
+    """
     total_pending_invitations: int
     r"""Total number of pending invitations associated with this domain"""
     total_pending_suggestions: int
@@ -172,8 +295,25 @@ class OrganizationDomain(BaseModel):
     affiliation_email_address: Nullable[str]
     r"""Affiliation email address for the domain, if available."""
 
-    verification: Nullable[OrganizationDomainVerification]
-    r"""Verification details for the domain"""
+    affiliation_verification: Nullable[AffiliationVerification]
+    r"""Verification details for the user-facing affiliation between the domain and the organization (e.g. affiliation_email_code).
+
+    """
+
+    ownership_verification: Nullable[OwnershipVerification]
+    r"""Verification details for the underlying DNS domain ownership proof (TXT challenge or dashboard override). Null until ownership has been attempted.
+
+    """
+
+    verification: Annotated[
+        Nullable[OrganizationDomainVerification],
+        pydantic.Field(
+            deprecated="warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
+        ),
+    ]
+    r"""Deprecated alias for `affiliation_verification`. Kept for backward compatibility on the current API version; will be removed in the next API version. Prefer `affiliation_verification`.
+
+    """
 
     total_pending_invitations: int
     r"""Total number of pending invitations associated with this domain"""
@@ -194,7 +334,13 @@ class OrganizationDomain(BaseModel):
     def serialize_model(self, handler):
         optional_fields = set(["public_organization_data"])
         nullable_fields = set(
-            ["affiliation_email_address", "verification", "public_organization_data"]
+            [
+                "affiliation_email_address",
+                "affiliation_verification",
+                "ownership_verification",
+                "verification",
+                "public_organization_data",
+            ]
         )
         serialized = handler(self)
         m = {}

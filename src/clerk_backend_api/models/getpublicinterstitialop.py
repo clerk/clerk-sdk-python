@@ -22,6 +22,12 @@ class GetPublicInterstitialRequestTypedDict(TypedDict):
     r"""The domain of your instance"""
     sign_in_url: NotRequired[str]
     r"""The sign in URL of your instance"""
+    application_name: NotRequired[str]
+    r"""The application name shown in the interstitial UI"""
+    logo_url: NotRequired[str]
+    r"""The absolute HTTP(S) application logo URL shown in the interstitial UI"""
+    flow: NotRequired[str]
+    r"""The authentication flow shown in the interstitial UI"""
     use_domain_for_script: NotRequired[bool]
     r"""Whether to use the domain for the script URL"""
 
@@ -68,6 +74,24 @@ class GetPublicInterstitialRequest(BaseModel):
     ] = None
     r"""The sign in URL of your instance"""
 
+    application_name: Annotated[
+        Optional[str],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""The application name shown in the interstitial UI"""
+
+    logo_url: Annotated[
+        Optional[str],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""The absolute HTTP(S) application logo URL shown in the interstitial UI"""
+
+    flow: Annotated[
+        Optional[str],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""The authentication flow shown in the interstitial UI"""
+
     use_domain_for_script: Annotated[
         Optional[bool],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
@@ -84,6 +108,9 @@ class GetPublicInterstitialRequest(BaseModel):
                 "proxy_url",
                 "domain",
                 "sign_in_url",
+                "application_name",
+                "logo_url",
+                "flow",
                 "use_domain_for_script",
             ]
         )

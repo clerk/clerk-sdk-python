@@ -1,0 +1,9 @@
+# VerifyOrganizationDomainOwnershipRequest
+
+
+## Fields
+
+| Field                                                  | Type                                                   | Required                                               | Description                                            |
+| ------------------------------------------------------ | ------------------------------------------------------ | ------------------------------------------------------ | ------------------------------------------------------ |
+| `organization_id`                                      | *str*                                                  | :heavy_check_mark:                                     | The ID of the organization to which the domain belongs |
+| `domain_id`                                            | *str*                                                  | :heavy_check_mark:                                     | The ID of the domain                                   |

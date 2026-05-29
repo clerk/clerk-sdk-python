@@ -246,7 +246,7 @@ SAMLAccountVerification = Annotated[
 ]
 
 
-class SAMLConnection2TypedDict(TypedDict):
+class SAMLAccountConnection2TypedDict(TypedDict):
     id: str
     name: str
     domains: List[str]
@@ -267,7 +267,7 @@ class SAMLConnection2TypedDict(TypedDict):
     disable_additional_identifications: NotRequired[bool]
 
 
-class SAMLConnection2(BaseModel):
+class SAMLAccountConnection2(BaseModel):
     id: str
 
     name: str
@@ -327,7 +327,7 @@ class SAMLConnection2(BaseModel):
         return m
 
 
-class SAMLConnection1TypedDict(TypedDict):
+class SAMLAccountConnection1TypedDict(TypedDict):
     id: str
     name: str
     domain: str
@@ -348,7 +348,7 @@ class SAMLConnection1TypedDict(TypedDict):
     disable_additional_identifications: NotRequired[bool]
 
 
-class SAMLConnection1(BaseModel):
+class SAMLAccountConnection1(BaseModel):
     id: str
 
     name: str
@@ -408,21 +408,21 @@ class SAMLConnection1(BaseModel):
         return m
 
 
-SAMLConnectionSAMLConnectionTypedDict = TypeAliasType(
-    "SAMLConnectionSAMLConnectionTypedDict",
-    Union[SAMLConnection1TypedDict, SAMLConnection2TypedDict],
+SAMLAccountConnectionTypedDict = TypeAliasType(
+    "SAMLAccountConnectionTypedDict",
+    Union[SAMLAccountConnection1TypedDict, SAMLAccountConnection2TypedDict],
 )
 
 
-SAMLConnectionSAMLConnection = TypeAliasType(
-    "SAMLConnectionSAMLConnection", Union[SAMLConnection1, SAMLConnection2]
+SAMLAccountConnection = TypeAliasType(
+    "SAMLAccountConnection", Union[SAMLAccountConnection1, SAMLAccountConnection2]
 )
 
 
-SamlConnectionTypedDict = SAMLConnectionSAMLConnectionTypedDict
+SAMLAccountSAMLConnectionTypedDict = SAMLAccountConnectionTypedDict
 
 
-SamlConnection = SAMLConnectionSAMLConnection
+SAMLAccountSAMLConnection = SAMLAccountConnection
 
 
 class SAMLAccountTypedDict(TypedDict):
@@ -443,7 +443,7 @@ class SAMLAccountTypedDict(TypedDict):
 
     """
     public_metadata: NotRequired[Dict[str, Any]]
-    saml_connection: NotRequired[Nullable[SamlConnectionTypedDict]]
+    saml_connection: NotRequired[Nullable[SAMLAccountSAMLConnectionTypedDict]]
 
 
 class SAMLAccount(BaseModel):
@@ -475,7 +475,7 @@ class SAMLAccount(BaseModel):
 
     public_metadata: Optional[Dict[str, Any]] = None
 
-    saml_connection: OptionalNullable[SamlConnection] = UNSET
+    saml_connection: OptionalNullable[SAMLAccountSAMLConnection] = UNSET
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

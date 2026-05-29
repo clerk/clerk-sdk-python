@@ -1,6 +1,6 @@
 # Oidc
 
-OIDC connection-specific properties. Only applied when the enterprise connection uses OIDC (e.g. provider is oidc_custom).
+OIDC connection-specific properties. Only applied when the enterprise connection uses OIDC (e.g. provider is oidc_custom, oidc_github_enterprise, or oidc_gitlab).
 
 
 ## Fields

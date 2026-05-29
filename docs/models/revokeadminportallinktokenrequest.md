@@ -1,0 +1,9 @@
+# RevokeAdminPortalLinkTokenRequest
+
+
+## Fields
+
+| Field                                                                                              | Type                                                                                               | Required                                                                                           | Description                                                                                        |
+| -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| `admin_portal_link_token_id`                                                                       | *str*                                                                                              | :heavy_check_mark:                                                                                 | N/A                                                                                                |
+| `request_body`                                                                                     | [models.RevokeAdminPortalLinkTokenRequestBody](../models/revokeadminportallinktokenrequestbody.md) | :heavy_check_mark:                                                                                 | N/A                                                                                                |
