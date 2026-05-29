@@ -9,6 +9,7 @@
 * [get](#get) - Retrieve an OAuth application by ID
 * [update](#update) - Update an OAuth application
 * [delete](#delete) - Delete an OAuth application
+* [upload_logo](#upload_logo) - Upload a logo for the OAuth application
 * [rotate_secret](#rotate_secret) - Rotate the client secret of the given OAuth application
 
 ## list
@@ -232,6 +233,54 @@ with Clerk(
 | Error Type         | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
 | models.ClerkErrors | 403, 404           | application/json   |
+| models.SDKError    | 4XX, 5XX           | \*/\*              |
+
+## upload_logo
+
+Set or replace an OAuth application's logo by uploading an image file.
+This endpoint uses the `multipart/form-data` request content type and accepts a file of image type.
+The file size cannot exceed 10MB.
+Only the following file content types are supported: `image/jpeg`, `image/png`, `image/gif`, `image/webp`.
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="UploadOAuthApplicationLogo" method="put" path="/oauth_applications/{oauth_application_id}/logo" -->
+```python
+from clerk_backend_api import Clerk
+
+
+with Clerk(
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+) as clerk:
+
+    res = clerk.oauth_applications.upload_logo(oauth_application_id="<id>", file={
+        "file_name": "example.file",
+        "content": open("example.file", "rb"),
+    }, uploader_user_id="<id>")
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                                               | Type                                                                                    | Required                                                                                | Description                                                                             |
+| --------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
+| `oauth_application_id`                                                                  | *str*                                                                                   | :heavy_check_mark:                                                                      | The ID of the OAuth application for which to upload a logo                              |
+| `file`                                                                                  | [models.UploadOAuthApplicationLogoFile](../../models/uploadoauthapplicationlogofile.md) | :heavy_check_mark:                                                                      | N/A                                                                                     |
+| `uploader_user_id`                                                                      | *Optional[str]*                                                                         | :heavy_minus_sign:                                                                      | The ID of the user that will be credited with the image upload.                         |
+| `retries`                                                                               | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                        | :heavy_minus_sign:                                                                      | Configuration to override the default retry behavior of the client.                     |
+
+### Response
+
+**[models.OAuthApplication](../../models/oauthapplication.md)**
+
+### Errors
+
+| Error Type         | Status Code        | Content Type       |
+| ------------------ | ------------------ | ------------------ |
+| models.ClerkErrors | 400, 403, 404, 413 | application/json   |
 | models.SDKError    | 4XX, 5XX           | \*/\*              |
 
 ## rotate_secret

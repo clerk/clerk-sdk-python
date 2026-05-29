@@ -83,6 +83,8 @@ class UpdateSAMLConnectionRequestBodyTypedDict(TypedDict):
     r"""Enable or deactivate IdP-initiated flows"""
     disable_additional_identifications: NotRequired[Nullable[bool]]
     r"""Enable or deactivate additional identifications"""
+    allow_organization_account_linking: NotRequired[Nullable[bool]]
+    r"""Whether this connection supports account linking via organization membership"""
     force_authn: NotRequired[bool]
     r"""Enable or deactivate ForceAuthn"""
     consent_verified_domains_deletion: NotRequired[Nullable[bool]]
@@ -140,6 +142,9 @@ class UpdateSAMLConnectionRequestBody(BaseModel):
     disable_additional_identifications: OptionalNullable[bool] = UNSET
     r"""Enable or deactivate additional identifications"""
 
+    allow_organization_account_linking: OptionalNullable[bool] = UNSET
+    r"""Whether this connection supports account linking via organization membership"""
+
     force_authn: Optional[bool] = None
     r"""Enable or deactivate ForceAuthn"""
 
@@ -165,6 +170,7 @@ class UpdateSAMLConnectionRequestBody(BaseModel):
                 "allow_subdomains",
                 "allow_idp_initiated",
                 "disable_additional_identifications",
+                "allow_organization_account_linking",
                 "force_authn",
                 "consent_verified_domains_deletion",
             ]
@@ -186,6 +192,7 @@ class UpdateSAMLConnectionRequestBody(BaseModel):
                 "allow_subdomains",
                 "allow_idp_initiated",
                 "disable_additional_identifications",
+                "allow_organization_account_linking",
                 "consent_verified_domains_deletion",
             ]
         )

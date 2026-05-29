@@ -26,6 +26,15 @@ class CreateM2MTokenRequestBodyTypedDict(TypedDict):
     token_format: NotRequired[TokenFormat]
     seconds_until_expiration: NotRequired[Nullable[float]]
     claims: NotRequired[Nullable[Any]]
+    min_remaining_ttl_seconds: NotRequired[int]
+    r"""Enables server-side token reuse for opaque-format tokens. When set, if a non-revoked, non-expired M2M token already exists for this machine with identical `claims` and `scopes` and at least this many seconds of remaining lifetime, that existing token is returned and no new token is minted.
+
+    Use this when caching tokens in application memory across requests is impractical — for example, in serverless functions, short-lived job workers, or autoscaling containers that churn faster than the token TTL. Pooling at the server collapses many redundant create calls into reuse of a single live token, which is the recommended pattern for high-volume M2M traffic.
+
+    Must be strictly less than the effective token lifetime — that is, `seconds_until_expiration` when provided, or the machine's default TTL otherwise. A value greater than or equal to the lifetime is rejected with a 400, since no freshly-minted token would ever satisfy the requirement.
+
+    Only applies to opaque-format tokens (`token_format` defaults to `opaque`). JWT-format tokens are stateless and are never deduplicated.
+    """
 
 
 class CreateM2MTokenRequestBody(BaseModel):
@@ -35,9 +44,26 @@ class CreateM2MTokenRequestBody(BaseModel):
 
     claims: OptionalNullable[Any] = UNSET
 
+    min_remaining_ttl_seconds: Optional[int] = None
+    r"""Enables server-side token reuse for opaque-format tokens. When set, if a non-revoked, non-expired M2M token already exists for this machine with identical `claims` and `scopes` and at least this many seconds of remaining lifetime, that existing token is returned and no new token is minted.
+
+    Use this when caching tokens in application memory across requests is impractical — for example, in serverless functions, short-lived job workers, or autoscaling containers that churn faster than the token TTL. Pooling at the server collapses many redundant create calls into reuse of a single live token, which is the recommended pattern for high-volume M2M traffic.
+
+    Must be strictly less than the effective token lifetime — that is, `seconds_until_expiration` when provided, or the machine's default TTL otherwise. A value greater than or equal to the lifetime is rejected with a 400, since no freshly-minted token would ever satisfy the requirement.
+
+    Only applies to opaque-format tokens (`token_format` defaults to `opaque`). JWT-format tokens are stateless and are never deduplicated.
+    """
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["token_format", "seconds_until_expiration", "claims"])
+        optional_fields = set(
+            [
+                "token_format",
+                "seconds_until_expiration",
+                "claims",
+                "min_remaining_ttl_seconds",
+            ]
+        )
         nullable_fields = set(["seconds_until_expiration", "claims"])
         serialized = handler(self)
         m = {}

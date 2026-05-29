@@ -8,6 +8,7 @@
 * [get](#get) - Retrieve a phone number
 * [delete](#delete) - Delete a phone number
 * [update](#update) - Update a phone number
+* [replace_for_user](#replace_for_user) - Replace a user's phone number
 
 ## create
 
@@ -177,3 +178,47 @@ with Clerk(
 | ------------------ | ------------------ | ------------------ |
 | models.ClerkErrors | 400, 401, 403, 404 | application/json   |
 | models.SDKError    | 4XX, 5XX           | \*/\*              |
+
+## replace_for_user
+
+Replaces all of the user's phone numbers with a single verified, primary phone number.
+The new phone number is created with the admin verification strategy and is not reserved
+for second factor. Any existing phone numbers are deleted; replacing a phone number that is
+reserved for second factor disables the user's MFA.
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="ReplaceUserPhoneNumber" method="put" path="/users/{user_id}/phone_number" -->
+```python
+from clerk_backend_api import Clerk
+
+
+with Clerk(
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+) as clerk:
+
+    res = clerk.phone_numbers.replace_for_user(user_id="<id>", phone_number="1-440-484-8878 x689")
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                                        | Type                                                                             | Required                                                                         | Description                                                                      |
+| -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| `user_id`                                                                        | *str*                                                                            | :heavy_check_mark:                                                               | The ID of the user whose phone number to replace                                 |
+| `phone_number`                                                                   | *str*                                                                            | :heavy_check_mark:                                                               | The new phone number. Must adhere to the E.164 standard for phone number format. |
+| `retries`                                                                        | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                 | :heavy_minus_sign:                                                               | Configuration to override the default retry behavior of the client.              |
+
+### Response
+
+**[models.PhoneNumber](../../models/phonenumber.md)**
+
+### Errors
+
+| Error Type              | Status Code             | Content Type            |
+| ----------------------- | ----------------------- | ----------------------- |
+| models.ClerkErrors      | 400, 401, 403, 404, 422 | application/json        |
+| models.SDKError         | 4XX, 5XX                | \*/\*                   |

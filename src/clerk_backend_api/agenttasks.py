@@ -27,7 +27,7 @@ class AgentTasks(BaseSDK):
 
         Create an agent task on behalf of a user.
         The response contains a URL that, when visited, creates a session for the user.
-        The agent_id is stable per agent_name within an instance. The task_id is unique per call.
+        The agent_id is stable per agent_name within an instance. The agent_task_id is unique per call.
 
         :param request: The request object to send.
         :param retries: Override the default retry configuration for this method
@@ -96,7 +96,7 @@ class AgentTasks(BaseSDK):
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
-            error_status_codes=["400", "404", "422", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -133,7 +133,7 @@ class AgentTasks(BaseSDK):
 
         Create an agent task on behalf of a user.
         The response contains a URL that, when visited, creates a session for the user.
-        The agent_id is stable per agent_name within an instance. The task_id is unique per call.
+        The agent_id is stable per agent_name within an instance. The agent_task_id is unique per call.
 
         :param request: The request object to send.
         :param retries: Override the default retry configuration for this method
@@ -202,7 +202,7 @@ class AgentTasks(BaseSDK):
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
-            error_status_codes=["400", "404", "422", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -292,7 +292,7 @@ class AgentTasks(BaseSDK):
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
-            error_status_codes=["400", "404", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -382,7 +382,7 @@ class AgentTasks(BaseSDK):
                 security_source=self.sdk_configuration.security,
             ),
             request=req,
-            error_status_codes=["400", "404", "4XX", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 

@@ -82,13 +82,13 @@ class CreateAPIKeyRequestBody(BaseModel):
         return m
 
 
-class CreateAPIKeyErrorsTypedDict(TypedDict):
+class CreateAPIKeyAPIKeysErrorsTypedDict(TypedDict):
     message: str
     long_message: str
     code: str
 
 
-class CreateAPIKeyErrors(BaseModel):
+class CreateAPIKeyAPIKeysErrors(BaseModel):
     message: str
 
     long_message: str
@@ -97,7 +97,7 @@ class CreateAPIKeyErrors(BaseModel):
 
 
 class CreateAPIKeyAPIKeysResponseResponseBodyData(BaseModel):
-    errors: List[CreateAPIKeyErrors]
+    errors: List[CreateAPIKeyAPIKeysErrors]
 
 
 @dataclass(unsafe_hash=True)
@@ -117,13 +117,13 @@ class CreateAPIKeyAPIKeysResponseResponseBody(ClerkBaseError):
         object.__setattr__(self, "data", data)
 
 
-class ErrorsTypedDict(TypedDict):
+class CreateAPIKeyErrorsTypedDict(TypedDict):
     message: str
     long_message: str
     code: str
 
 
-class Errors(BaseModel):
+class CreateAPIKeyErrors(BaseModel):
     message: str
 
     long_message: str
@@ -132,7 +132,7 @@ class Errors(BaseModel):
 
 
 class CreateAPIKeyAPIKeysResponseBodyData(BaseModel):
-    errors: List[Errors]
+    errors: List[CreateAPIKeyErrors]
 
 
 @dataclass(unsafe_hash=True)

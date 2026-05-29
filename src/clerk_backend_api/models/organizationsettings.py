@@ -35,6 +35,7 @@ class OrganizationSettingsTypedDict(TypedDict):
     enabled: bool
     max_allowed_memberships: int
     max_allowed_roles: int
+    max_allowed_domains: int
     creator_role: str
     r"""The role key that a user will be assigned after creating an organization."""
     admin_delete_enabled: bool
@@ -62,6 +63,8 @@ class OrganizationSettings(BaseModel):
     max_allowed_memberships: int
 
     max_allowed_roles: int
+
+    max_allowed_domains: int
 
     creator_role: str
     r"""The role key that a user will be assigned after creating an organization."""

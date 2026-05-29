@@ -26,6 +26,7 @@ from .security import (
 
 if TYPE_CHECKING:
     from clerk_backend_api.actortokens import ActorTokens
+    from clerk_backend_api.admin_portal_link_tokens import AdminPortalLinkTokens
     from clerk_backend_api.agenttasks import AgentTasks
     from clerk_backend_api.allowlistidentifiers import AllowlistIdentifiers
     from clerk_backend_api.api_keys import APIKeys
@@ -119,6 +120,7 @@ class Clerk(BaseSDK):
     billing: "Billing"
     organization_permissions: "OrganizationPermissions"
     role_sets: "RoleSetsSDK"
+    admin_portal_link_tokens: "AdminPortalLinkTokens"
     api_keys: "APIKeys"
     r"""Endpoints for managing API Keys"""
     m2m: "M2m"
@@ -204,6 +206,10 @@ class Clerk(BaseSDK):
             "OrganizationPermissions",
         ),
         "role_sets": ("clerk_backend_api.rolesets_sdk", "RoleSetsSDK"),
+        "admin_portal_link_tokens": (
+            "clerk_backend_api.admin_portal_link_tokens",
+            "AdminPortalLinkTokens",
+        ),
         "api_keys": ("clerk_backend_api.api_keys", "APIKeys"),
         "m2m": ("clerk_backend_api.m2m", "M2m"),
         "oauth_access_tokens": (
@@ -257,7 +263,9 @@ class Clerk(BaseSDK):
         ), "The provided async_client must implement the AsyncHttpClient protocol."
 
         security: Any = None
-        if callable(bearer_auth):
+        if bearer_auth is None:
+            security = None
+        elif callable(bearer_auth):
             # pylint: disable=unnecessary-lambda-assignment
             security = lambda: models.Security(bearer_auth=bearer_auth())
         else:
