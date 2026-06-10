@@ -22,6 +22,8 @@ class CustomAttributesTypedDict(TypedDict):
     r"""Path to extract the attribute value from SSO claims (SAML assertions or OIDC claims)"""
     scim_path: NotRequired[str]
     r"""GJSON path to extract the attribute value from SCIM user resources"""
+    multi_valued: NotRequired[bool]
+    r"""When true, the attribute supports multiple values; values from the IdP are written to public_metadata as an array. Defaults to false."""
 
 
 class CustomAttributes(BaseModel):
@@ -37,9 +39,12 @@ class CustomAttributes(BaseModel):
     scim_path: Optional[str] = None
     r"""GJSON path to extract the attribute value from SCIM user resources"""
 
+    multi_valued: Optional[bool] = None
+    r"""When true, the attribute supports multiple values; values from the IdP are written to public_metadata as an array. Defaults to false."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["sso_path", "scim_path"])
+        optional_fields = set(["sso_path", "scim_path", "multi_valued"])
         serialized = handler(self)
         m = {}
 

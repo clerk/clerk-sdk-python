@@ -5,7 +5,7 @@ from clerk_backend_api import models, utils
 from clerk_backend_api._hooks import HookContext
 from clerk_backend_api.types import BaseModel, OptionalNullable, UNSET
 from clerk_backend_api.utils.unmarshal_json_response import unmarshal_json_response
-from typing import Any, List, Mapping, Optional, Union, cast
+from typing import Any, Iterable, List, Mapping, Optional, Union, cast
 
 
 class Invitations(BaseSDK):
@@ -447,7 +447,7 @@ class Invitations(BaseSDK):
         self,
         *,
         request: Optional[
-            Union[List[models.RequestBody], List[models.RequestBodyTypedDict]]
+            Union[Iterable[models.RequestBody], Iterable[models.RequestBodyTypedDict]]
         ] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -547,7 +547,7 @@ class Invitations(BaseSDK):
         self,
         *,
         request: Optional[
-            Union[List[models.RequestBody], List[models.RequestBodyTypedDict]]
+            Union[Iterable[models.RequestBody], Iterable[models.RequestBodyTypedDict]]
         ] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,

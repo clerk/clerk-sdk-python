@@ -9,7 +9,23 @@ from ._version import (
 )
 from .sdk import *
 from .sdkconfiguration import *
-from .models import *
+from typing import TYPE_CHECKING
+from . import models as _models
+
+if TYPE_CHECKING:
+    from .models import *
+else:
+
+    def __getattr__(name: str):
+        try:
+            return getattr(_models, name)
+        except AttributeError:
+            raise AttributeError(
+                f"module {__name__!r} has no attribute {name!r}"
+            ) from None
+
+    def __dir__():
+        return dir(_models) + list(globals().keys())
 
 
 VERSION: str = __version__

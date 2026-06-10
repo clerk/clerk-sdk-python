@@ -7,7 +7,10 @@ from .commercepaymentmethodresponse import (
     CommercePaymentMethodResponse,
     CommercePaymentMethodResponseTypedDict,
 )
-from .commerceperunittotal import CommercePerUnitTotal, CommercePerUnitTotalTypedDict
+from .schemas_commerceperunittotal import (
+    SchemasCommercePerUnitTotal,
+    SchemasCommercePerUnitTotalTypedDict,
+)
 from clerk_backend_api.types import (
     BaseModel,
     Nullable,
@@ -99,6 +102,64 @@ class BillingPaymentAttemptCredits(BaseModel):
         return m
 
 
+class BillingPaymentAttemptTotalsProrationTypedDict(TypedDict):
+    r"""Proration details from passed subscription time"""
+
+    amount: CommerceMoneyResponseTypedDict
+    cycle_days_passed: int
+    r"""Number of days that have passed in the billing cycle"""
+    cycle_days_total: int
+    r"""Total number of days in the billing cycle"""
+    cycle_passed_percent: float
+    r"""Percentage of the billing cycle that has passed"""
+
+
+class BillingPaymentAttemptTotalsProration(BaseModel):
+    r"""Proration details from passed subscription time"""
+
+    amount: CommerceMoneyResponse
+
+    cycle_days_passed: int
+    r"""Number of days that have passed in the billing cycle"""
+
+    cycle_days_total: int
+    r"""Total number of days in the billing cycle"""
+
+    cycle_passed_percent: float
+    r"""Percentage of the billing cycle that has passed"""
+
+
+class BillingPaymentAttemptDiscountsTypedDict(TypedDict):
+    r"""Information about the discounts applied to the payment"""
+
+    proration: Nullable[BillingPaymentAttemptTotalsProrationTypedDict]
+    r"""Proration details from passed subscription time"""
+    total: CommerceMoneyResponseTypedDict
+
+
+class BillingPaymentAttemptDiscounts(BaseModel):
+    r"""Information about the discounts applied to the payment"""
+
+    proration: Nullable[BillingPaymentAttemptTotalsProration]
+    r"""Proration details from passed subscription time"""
+
+    total: CommerceMoneyResponse
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+
+            if val != UNSET_SENTINEL:
+                m[k] = val
+
+        return m
+
+
 class BillingPaymentAttemptTotalsTypedDict(TypedDict):
     r"""Totals breakdown for this payment attempt."""
 
@@ -106,8 +167,10 @@ class BillingPaymentAttemptTotalsTypedDict(TypedDict):
     base_fee: CommerceMoneyResponseTypedDict
     tax_total: CommerceMoneyResponseTypedDict
     grand_total: CommerceMoneyResponseTypedDict
-    per_unit_totals: NotRequired[List[CommercePerUnitTotalTypedDict]]
+    per_unit_totals: NotRequired[List[SchemasCommercePerUnitTotalTypedDict]]
     credits: NotRequired[Nullable[BillingPaymentAttemptCreditsTypedDict]]
+    discounts: NotRequired[Nullable[BillingPaymentAttemptDiscountsTypedDict]]
+    r"""Information about the discounts applied to the payment"""
 
 
 class BillingPaymentAttemptTotals(BaseModel):
@@ -121,14 +184,17 @@ class BillingPaymentAttemptTotals(BaseModel):
 
     grand_total: CommerceMoneyResponse
 
-    per_unit_totals: Optional[List[CommercePerUnitTotal]] = None
+    per_unit_totals: Optional[List[SchemasCommercePerUnitTotal]] = None
 
     credits: OptionalNullable[BillingPaymentAttemptCredits] = UNSET
 
+    discounts: OptionalNullable[BillingPaymentAttemptDiscounts] = UNSET
+    r"""Information about the discounts applied to the payment"""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["per_unit_totals", "credits"])
-        nullable_fields = set(["credits"])
+        optional_fields = set(["per_unit_totals", "credits", "discounts"])
+        nullable_fields = set(["credits", "discounts"])
         serialized = handler(self)
         m = {}
 

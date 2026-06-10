@@ -8,9 +8,20 @@ from clerk_backend_api.types import (
     UNSET,
     UNSET_SENTINEL,
 )
+from enum import Enum
 from pydantic import model_serializer
 from typing import Any, Dict, List, Optional
 from typing_extensions import NotRequired, TypedDict
+
+
+class EmailAddressIdentificationStatus(str, Enum):
+    VERIFIED = "verified"
+    RESERVED = "reserved"
+
+
+class PhoneNumberIdentificationStatus(str, Enum):
+    VERIFIED = "verified"
+    RESERVED = "reserved"
 
 
 class CreateUserRequestBodyTypedDict(TypedDict):
@@ -28,11 +39,33 @@ class CreateUserRequestBodyTypedDict(TypedDict):
     r"""Email addresses to add to the user.
     Must be unique across your instance.
     The first email address will be set as the user's primary email address.
+    Created verified by default; see `email_address_identification_status` to create them reserved.
+    """
+    email_address_identification_status: NotRequired[
+        List[EmailAddressIdentificationStatus]
+    ]
+    r"""Controls the status each email address is created with. Runs parallel to
+    `email_address`: when provided, it must contain exactly one item per email
+    address, applied by position. When omitted or empty, every email address is
+    created `verified`. Set an item to `reserved` to create the corresponding
+    email address reserved instead (unverified but usable for sign-in and locked
+    so no other user can claim it).
     """
     phone_number: NotRequired[List[str]]
     r"""Phone numbers to add to the user.
     Must be unique across your instance.
     The first phone number will be set as the user's primary phone number.
+    Created verified by default; see `phone_number_identification_status` to create them reserved.
+    """
+    phone_number_identification_status: NotRequired[
+        List[PhoneNumberIdentificationStatus]
+    ]
+    r"""Controls the status each phone number is created with. Runs parallel to
+    `phone_number`: when provided, it must contain exactly one item per phone
+    number, applied by position. When omitted or empty, every phone number is
+    created `verified`. Set an item to `reserved` to create the corresponding
+    phone number reserved instead (unverified but usable for sign-in and locked
+    so no other user can claim it).
     """
     web3_wallet: NotRequired[List[str]]
     r"""Web3 wallets to add to the user.
@@ -149,12 +182,36 @@ class CreateUserRequestBody(BaseModel):
     r"""Email addresses to add to the user.
     Must be unique across your instance.
     The first email address will be set as the user's primary email address.
+    Created verified by default; see `email_address_identification_status` to create them reserved.
+    """
+
+    email_address_identification_status: Optional[
+        List[EmailAddressIdentificationStatus]
+    ] = None
+    r"""Controls the status each email address is created with. Runs parallel to
+    `email_address`: when provided, it must contain exactly one item per email
+    address, applied by position. When omitted or empty, every email address is
+    created `verified`. Set an item to `reserved` to create the corresponding
+    email address reserved instead (unverified but usable for sign-in and locked
+    so no other user can claim it).
     """
 
     phone_number: Optional[List[str]] = None
     r"""Phone numbers to add to the user.
     Must be unique across your instance.
     The first phone number will be set as the user's primary phone number.
+    Created verified by default; see `phone_number_identification_status` to create them reserved.
+    """
+
+    phone_number_identification_status: Optional[
+        List[PhoneNumberIdentificationStatus]
+    ] = None
+    r"""Controls the status each phone number is created with. Runs parallel to
+    `phone_number`: when provided, it must contain exactly one item per phone
+    number, applied by position. When omitted or empty, every phone number is
+    created `verified`. Set an item to `reserved` to create the corresponding
+    phone number reserved instead (unverified but usable for sign-in and locked
+    so no other user can claim it).
     """
 
     web3_wallet: Optional[List[str]] = None
@@ -282,7 +339,9 @@ class CreateUserRequestBody(BaseModel):
                 "last_name",
                 "locale",
                 "email_address",
+                "email_address_identification_status",
                 "phone_number",
+                "phone_number_identification_status",
                 "web3_wallet",
                 "username",
                 "password",

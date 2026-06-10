@@ -638,7 +638,7 @@ class Sessions(BaseSDK):
         expired_token: str,
         refresh_token: str,
         request_origin: str,
-        request_headers: OptionalNullable[Dict[str, Any]] = UNSET,
+        request_headers: OptionalNullable[Mapping[str, Any]] = UNSET,
         format_: OptionalNullable[models.Format] = models.Format.TOKEN,
         request_originating_ip: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -680,7 +680,9 @@ class Sessions(BaseSDK):
                 expired_token=expired_token,
                 refresh_token=refresh_token,
                 request_origin=request_origin,
-                request_headers=request_headers,
+                request_headers=utils.unmarshal(
+                    request_headers, OptionalNullable[Dict[str, Any]]
+                ),
                 format_=format_,
                 request_originating_ip=request_originating_ip,
             ),
@@ -757,7 +759,7 @@ class Sessions(BaseSDK):
         expired_token: str,
         refresh_token: str,
         request_origin: str,
-        request_headers: OptionalNullable[Dict[str, Any]] = UNSET,
+        request_headers: OptionalNullable[Mapping[str, Any]] = UNSET,
         format_: OptionalNullable[models.Format] = models.Format.TOKEN,
         request_originating_ip: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -799,7 +801,9 @@ class Sessions(BaseSDK):
                 expired_token=expired_token,
                 refresh_token=refresh_token,
                 request_origin=request_origin,
-                request_headers=request_headers,
+                request_headers=utils.unmarshal(
+                    request_headers, OptionalNullable[Dict[str, Any]]
+                ),
                 format_=format_,
                 request_originating_ip=request_originating_ip,
             ),

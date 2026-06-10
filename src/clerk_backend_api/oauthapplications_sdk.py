@@ -5,7 +5,7 @@ from clerk_backend_api import models, utils
 from clerk_backend_api._hooks import HookContext
 from clerk_backend_api.types import BaseModel, OptionalNullable, UNSET
 from clerk_backend_api.utils.unmarshal_json_response import unmarshal_json_response
-from typing import Any, List, Mapping, Optional, Union, cast
+from typing import Any, Iterable, List, Mapping, Optional, Union, cast
 
 
 class OauthApplicationsSDK(BaseSDK):
@@ -626,7 +626,7 @@ class OauthApplicationsSDK(BaseSDK):
         *,
         oauth_application_id: str,
         name: OptionalNullable[str] = UNSET,
-        redirect_uris: OptionalNullable[List[str]] = UNSET,
+        redirect_uris: OptionalNullable[Iterable[str]] = UNSET,
         callback_url: OptionalNullable[str] = UNSET,
         scopes: OptionalNullable[str] = "profile email",
         consent_screen_enabled: OptionalNullable[bool] = UNSET,
@@ -669,7 +669,9 @@ class OauthApplicationsSDK(BaseSDK):
             oauth_application_id=oauth_application_id,
             request_body=models.UpdateOAuthApplicationRequestBody(
                 name=name,
-                redirect_uris=redirect_uris,
+                redirect_uris=utils.unmarshal(
+                    redirect_uris, OptionalNullable[List[str]]
+                ),
                 callback_url=callback_url,
                 scopes=scopes,
                 consent_screen_enabled=consent_screen_enabled,
@@ -749,7 +751,7 @@ class OauthApplicationsSDK(BaseSDK):
         *,
         oauth_application_id: str,
         name: OptionalNullable[str] = UNSET,
-        redirect_uris: OptionalNullable[List[str]] = UNSET,
+        redirect_uris: OptionalNullable[Iterable[str]] = UNSET,
         callback_url: OptionalNullable[str] = UNSET,
         scopes: OptionalNullable[str] = "profile email",
         consent_screen_enabled: OptionalNullable[bool] = UNSET,
@@ -792,7 +794,9 @@ class OauthApplicationsSDK(BaseSDK):
             oauth_application_id=oauth_application_id,
             request_body=models.UpdateOAuthApplicationRequestBody(
                 name=name,
-                redirect_uris=redirect_uris,
+                redirect_uris=utils.unmarshal(
+                    redirect_uris, OptionalNullable[List[str]]
+                ),
                 callback_url=callback_url,
                 scopes=scopes,
                 consent_screen_enabled=consent_screen_enabled,

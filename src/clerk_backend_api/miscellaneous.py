@@ -17,9 +17,6 @@ class Miscellaneous(BaseSDK):
         proxy_url: Optional[str] = None,
         domain: Optional[str] = None,
         sign_in_url: Optional[str] = None,
-        application_name: Optional[str] = None,
-        logo_url: Optional[str] = None,
-        flow: Optional[str] = None,
         use_domain_for_script: Optional[bool] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -37,9 +34,6 @@ class Miscellaneous(BaseSDK):
         :param proxy_url: The proxy URL of your instance
         :param domain: The domain of your instance
         :param sign_in_url: The sign in URL of your instance
-        :param application_name: The application name shown in the interstitial UI
-        :param logo_url: The absolute HTTP(S) application logo URL shown in the interstitial UI
-        :param flow: The authentication flow shown in the interstitial UI
         :param use_domain_for_script: Whether to use the domain for the script URL
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -63,9 +57,6 @@ class Miscellaneous(BaseSDK):
             proxy_url=proxy_url,
             domain=domain,
             sign_in_url=sign_in_url,
-            application_name=application_name,
-            logo_url=logo_url,
-            flow=flow,
             use_domain_for_script=use_domain_for_script,
         )
 
@@ -130,9 +121,6 @@ class Miscellaneous(BaseSDK):
         proxy_url: Optional[str] = None,
         domain: Optional[str] = None,
         sign_in_url: Optional[str] = None,
-        application_name: Optional[str] = None,
-        logo_url: Optional[str] = None,
-        flow: Optional[str] = None,
         use_domain_for_script: Optional[bool] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -150,9 +138,6 @@ class Miscellaneous(BaseSDK):
         :param proxy_url: The proxy URL of your instance
         :param domain: The domain of your instance
         :param sign_in_url: The sign in URL of your instance
-        :param application_name: The application name shown in the interstitial UI
-        :param logo_url: The absolute HTTP(S) application logo URL shown in the interstitial UI
-        :param flow: The authentication flow shown in the interstitial UI
         :param use_domain_for_script: Whether to use the domain for the script URL
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -176,9 +161,6 @@ class Miscellaneous(BaseSDK):
             proxy_url=proxy_url,
             domain=domain,
             sign_in_url=sign_in_url,
-            application_name=application_name,
-            logo_url=logo_url,
-            flow=flow,
             use_domain_for_script=use_domain_for_script,
         )
 

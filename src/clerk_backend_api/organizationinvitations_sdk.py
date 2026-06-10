@@ -5,7 +5,7 @@ from clerk_backend_api import models, utils
 from clerk_backend_api._hooks import HookContext
 from clerk_backend_api.types import OptionalNullable, UNSET
 from clerk_backend_api.utils.unmarshal_json_response import unmarshal_json_response
-from typing import Any, Dict, List, Mapping, Optional, Union
+from typing import Any, Dict, Iterable, List, Mapping, Optional, Union
 from typing_extensions import deprecated
 
 
@@ -261,8 +261,8 @@ class OrganizationInvitationsSDK(BaseSDK):
         email_address: str,
         role: str,
         inviter_user_id: OptionalNullable[str] = UNSET,
-        public_metadata: OptionalNullable[Dict[str, Any]] = UNSET,
-        private_metadata: OptionalNullable[Dict[str, Any]] = UNSET,
+        public_metadata: OptionalNullable[Mapping[str, Any]] = UNSET,
+        private_metadata: OptionalNullable[Mapping[str, Any]] = UNSET,
         redirect_url: OptionalNullable[str] = UNSET,
         expires_in_days: OptionalNullable[int] = UNSET,
         notify: OptionalNullable[bool] = True,
@@ -324,8 +324,12 @@ class OrganizationInvitationsSDK(BaseSDK):
                 email_address=email_address,
                 inviter_user_id=inviter_user_id,
                 role=role,
-                public_metadata=public_metadata,
-                private_metadata=private_metadata,
+                public_metadata=utils.unmarshal(
+                    public_metadata, OptionalNullable[Dict[str, Any]]
+                ),
+                private_metadata=utils.unmarshal(
+                    private_metadata, OptionalNullable[Dict[str, Any]]
+                ),
                 redirect_url=redirect_url,
                 expires_in_days=expires_in_days,
                 notify=notify,
@@ -405,8 +409,8 @@ class OrganizationInvitationsSDK(BaseSDK):
         email_address: str,
         role: str,
         inviter_user_id: OptionalNullable[str] = UNSET,
-        public_metadata: OptionalNullable[Dict[str, Any]] = UNSET,
-        private_metadata: OptionalNullable[Dict[str, Any]] = UNSET,
+        public_metadata: OptionalNullable[Mapping[str, Any]] = UNSET,
+        private_metadata: OptionalNullable[Mapping[str, Any]] = UNSET,
         redirect_url: OptionalNullable[str] = UNSET,
         expires_in_days: OptionalNullable[int] = UNSET,
         notify: OptionalNullable[bool] = True,
@@ -468,8 +472,12 @@ class OrganizationInvitationsSDK(BaseSDK):
                 email_address=email_address,
                 inviter_user_id=inviter_user_id,
                 role=role,
-                public_metadata=public_metadata,
-                private_metadata=private_metadata,
+                public_metadata=utils.unmarshal(
+                    public_metadata, OptionalNullable[Dict[str, Any]]
+                ),
+                private_metadata=utils.unmarshal(
+                    private_metadata, OptionalNullable[Dict[str, Any]]
+                ),
                 redirect_url=redirect_url,
                 expires_in_days=expires_in_days,
                 notify=notify,
@@ -783,8 +791,8 @@ class OrganizationInvitationsSDK(BaseSDK):
         *,
         organization_id: str,
         request_body: Union[
-            List[models.CreateOrganizationInvitationBulkRequestBody],
-            List[models.CreateOrganizationInvitationBulkRequestBodyTypedDict],
+            Iterable[models.CreateOrganizationInvitationBulkRequestBody],
+            Iterable[models.CreateOrganizationInvitationBulkRequestBodyTypedDict],
         ],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -905,8 +913,8 @@ class OrganizationInvitationsSDK(BaseSDK):
         *,
         organization_id: str,
         request_body: Union[
-            List[models.CreateOrganizationInvitationBulkRequestBody],
-            List[models.CreateOrganizationInvitationBulkRequestBodyTypedDict],
+            Iterable[models.CreateOrganizationInvitationBulkRequestBody],
+            Iterable[models.CreateOrganizationInvitationBulkRequestBodyTypedDict],
         ],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,

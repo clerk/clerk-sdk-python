@@ -5,7 +5,7 @@ from clerk_backend_api import models, utils
 from clerk_backend_api._hooks import HookContext
 from clerk_backend_api.types import BaseModel, OptionalNullable, UNSET
 from clerk_backend_api.utils.unmarshal_json_response import unmarshal_json_response
-from typing import Any, List, Mapping, Optional, Union, cast
+from typing import Any, Iterable, List, Mapping, Optional, Union, cast
 
 
 class WaitlistEntriesSDK(BaseSDK):
@@ -440,8 +440,8 @@ class WaitlistEntriesSDK(BaseSDK):
         *,
         request: Optional[
             Union[
-                List[models.CreateBulkWaitlistEntriesRequestBody],
-                List[models.CreateBulkWaitlistEntriesRequestBodyTypedDict],
+                Iterable[models.CreateBulkWaitlistEntriesRequestBody],
+                Iterable[models.CreateBulkWaitlistEntriesRequestBodyTypedDict],
             ]
         ] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -553,8 +553,8 @@ class WaitlistEntriesSDK(BaseSDK):
         *,
         request: Optional[
             Union[
-                List[models.CreateBulkWaitlistEntriesRequestBody],
-                List[models.CreateBulkWaitlistEntriesRequestBodyTypedDict],
+                Iterable[models.CreateBulkWaitlistEntriesRequestBody],
+                Iterable[models.CreateBulkWaitlistEntriesRequestBodyTypedDict],
             ]
         ] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
