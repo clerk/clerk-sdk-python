@@ -5,7 +5,7 @@ from clerk_backend_api import models, utils
 from clerk_backend_api._hooks import HookContext
 from clerk_backend_api.types import BaseModel, OptionalNullable, UNSET
 from clerk_backend_api.utils.unmarshal_json_response import unmarshal_json_response
-from typing import Any, Dict, List, Mapping, Optional, Union, cast
+from typing import Any, Dict, Iterable, List, Mapping, Optional, Union, cast
 
 
 class Users(BaseSDK):
@@ -202,9 +202,15 @@ class Users(BaseSDK):
         first_name: OptionalNullable[str] = UNSET,
         last_name: OptionalNullable[str] = UNSET,
         locale: OptionalNullable[str] = UNSET,
-        email_address: Optional[List[str]] = None,
-        phone_number: Optional[List[str]] = None,
-        web3_wallet: Optional[List[str]] = None,
+        email_address: Optional[Iterable[str]] = None,
+        email_address_identification_status: Optional[
+            Iterable[models.EmailAddressIdentificationStatus]
+        ] = None,
+        phone_number: Optional[Iterable[str]] = None,
+        phone_number_identification_status: Optional[
+            Iterable[models.PhoneNumberIdentificationStatus]
+        ] = None,
+        web3_wallet: Optional[Iterable[str]] = None,
         username: OptionalNullable[str] = UNSET,
         password: OptionalNullable[str] = UNSET,
         password_digest: OptionalNullable[str] = UNSET,
@@ -212,10 +218,10 @@ class Users(BaseSDK):
         skip_password_checks: OptionalNullable[bool] = UNSET,
         skip_password_requirement: OptionalNullable[bool] = UNSET,
         totp_secret: OptionalNullable[str] = UNSET,
-        backup_codes: Optional[List[str]] = None,
-        public_metadata: Optional[Dict[str, Any]] = None,
-        private_metadata: Optional[Dict[str, Any]] = None,
-        unsafe_metadata: Optional[Dict[str, Any]] = None,
+        backup_codes: Optional[Iterable[str]] = None,
+        public_metadata: Optional[Mapping[str, Any]] = None,
+        private_metadata: Optional[Mapping[str, Any]] = None,
+        unsafe_metadata: Optional[Mapping[str, Any]] = None,
         delete_self_enabled: OptionalNullable[bool] = UNSET,
         legal_accepted_at: OptionalNullable[str] = UNSET,
         skip_legal_checks: OptionalNullable[bool] = UNSET,
@@ -235,7 +241,7 @@ class Users(BaseSDK):
 
         Creates a new user. Your user management settings determine how you should setup your user model.
 
-        Any email address and phone number created using this method will be marked as verified.
+        By default, any email address and phone number created using this method is marked as verified. Use the `email_address_identification_status` and `phone_number_identification_status` arrays to instead create some or all of them as reserved (unverified but usable for sign-in and locked so no other user can claim them).
 
         Note: If you are performing a migration, check out our guide on [zero downtime migrations](https://clerk.com/docs/deployments/migrate-overview).
 
@@ -249,9 +255,23 @@ class Users(BaseSDK):
         :param email_address: Email addresses to add to the user.
             Must be unique across your instance.
             The first email address will be set as the user's primary email address.
+            Created verified by default; see `email_address_identification_status` to create them reserved.
+        :param email_address_identification_status: Controls the status each email address is created with. Runs parallel to
+            `email_address`: when provided, it must contain exactly one item per email
+            address, applied by position. When omitted or empty, every email address is
+            created `verified`. Set an item to `reserved` to create the corresponding
+            email address reserved instead (unverified but usable for sign-in and locked
+            so no other user can claim it).
         :param phone_number: Phone numbers to add to the user.
             Must be unique across your instance.
             The first phone number will be set as the user's primary phone number.
+            Created verified by default; see `phone_number_identification_status` to create them reserved.
+        :param phone_number_identification_status: Controls the status each phone number is created with. Runs parallel to
+            `phone_number`: when provided, it must contain exactly one item per phone
+            number, applied by position. When omitted or empty, every phone number is
+            created `verified`. Set an item to `reserved` to create the corresponding
+            phone number reserved instead (unverified but usable for sign-in and locked
+            so no other user can claim it).
         :param web3_wallet: Web3 wallets to add to the user.
             Must be unique across your instance.
             The first wallet will be set as the user's primary wallet.
@@ -327,9 +347,17 @@ class Users(BaseSDK):
             first_name=first_name,
             last_name=last_name,
             locale=locale,
-            email_address=email_address,
-            phone_number=phone_number,
-            web3_wallet=web3_wallet,
+            email_address=utils.unmarshal(email_address, Optional[List[str]]),
+            email_address_identification_status=utils.unmarshal(
+                email_address_identification_status,
+                Optional[List[models.EmailAddressIdentificationStatus]],
+            ),
+            phone_number=utils.unmarshal(phone_number, Optional[List[str]]),
+            phone_number_identification_status=utils.unmarshal(
+                phone_number_identification_status,
+                Optional[List[models.PhoneNumberIdentificationStatus]],
+            ),
+            web3_wallet=utils.unmarshal(web3_wallet, Optional[List[str]]),
             username=username,
             password=password,
             password_digest=password_digest,
@@ -337,10 +365,12 @@ class Users(BaseSDK):
             skip_password_checks=skip_password_checks,
             skip_password_requirement=skip_password_requirement,
             totp_secret=totp_secret,
-            backup_codes=backup_codes,
-            public_metadata=public_metadata,
-            private_metadata=private_metadata,
-            unsafe_metadata=unsafe_metadata,
+            backup_codes=utils.unmarshal(backup_codes, Optional[List[str]]),
+            public_metadata=utils.unmarshal(public_metadata, Optional[Dict[str, Any]]),
+            private_metadata=utils.unmarshal(
+                private_metadata, Optional[Dict[str, Any]]
+            ),
+            unsafe_metadata=utils.unmarshal(unsafe_metadata, Optional[Dict[str, Any]]),
             delete_self_enabled=delete_self_enabled,
             legal_accepted_at=legal_accepted_at,
             skip_legal_checks=skip_legal_checks,
@@ -422,9 +452,15 @@ class Users(BaseSDK):
         first_name: OptionalNullable[str] = UNSET,
         last_name: OptionalNullable[str] = UNSET,
         locale: OptionalNullable[str] = UNSET,
-        email_address: Optional[List[str]] = None,
-        phone_number: Optional[List[str]] = None,
-        web3_wallet: Optional[List[str]] = None,
+        email_address: Optional[Iterable[str]] = None,
+        email_address_identification_status: Optional[
+            Iterable[models.EmailAddressIdentificationStatus]
+        ] = None,
+        phone_number: Optional[Iterable[str]] = None,
+        phone_number_identification_status: Optional[
+            Iterable[models.PhoneNumberIdentificationStatus]
+        ] = None,
+        web3_wallet: Optional[Iterable[str]] = None,
         username: OptionalNullable[str] = UNSET,
         password: OptionalNullable[str] = UNSET,
         password_digest: OptionalNullable[str] = UNSET,
@@ -432,10 +468,10 @@ class Users(BaseSDK):
         skip_password_checks: OptionalNullable[bool] = UNSET,
         skip_password_requirement: OptionalNullable[bool] = UNSET,
         totp_secret: OptionalNullable[str] = UNSET,
-        backup_codes: Optional[List[str]] = None,
-        public_metadata: Optional[Dict[str, Any]] = None,
-        private_metadata: Optional[Dict[str, Any]] = None,
-        unsafe_metadata: Optional[Dict[str, Any]] = None,
+        backup_codes: Optional[Iterable[str]] = None,
+        public_metadata: Optional[Mapping[str, Any]] = None,
+        private_metadata: Optional[Mapping[str, Any]] = None,
+        unsafe_metadata: Optional[Mapping[str, Any]] = None,
         delete_self_enabled: OptionalNullable[bool] = UNSET,
         legal_accepted_at: OptionalNullable[str] = UNSET,
         skip_legal_checks: OptionalNullable[bool] = UNSET,
@@ -455,7 +491,7 @@ class Users(BaseSDK):
 
         Creates a new user. Your user management settings determine how you should setup your user model.
 
-        Any email address and phone number created using this method will be marked as verified.
+        By default, any email address and phone number created using this method is marked as verified. Use the `email_address_identification_status` and `phone_number_identification_status` arrays to instead create some or all of them as reserved (unverified but usable for sign-in and locked so no other user can claim them).
 
         Note: If you are performing a migration, check out our guide on [zero downtime migrations](https://clerk.com/docs/deployments/migrate-overview).
 
@@ -469,9 +505,23 @@ class Users(BaseSDK):
         :param email_address: Email addresses to add to the user.
             Must be unique across your instance.
             The first email address will be set as the user's primary email address.
+            Created verified by default; see `email_address_identification_status` to create them reserved.
+        :param email_address_identification_status: Controls the status each email address is created with. Runs parallel to
+            `email_address`: when provided, it must contain exactly one item per email
+            address, applied by position. When omitted or empty, every email address is
+            created `verified`. Set an item to `reserved` to create the corresponding
+            email address reserved instead (unverified but usable for sign-in and locked
+            so no other user can claim it).
         :param phone_number: Phone numbers to add to the user.
             Must be unique across your instance.
             The first phone number will be set as the user's primary phone number.
+            Created verified by default; see `phone_number_identification_status` to create them reserved.
+        :param phone_number_identification_status: Controls the status each phone number is created with. Runs parallel to
+            `phone_number`: when provided, it must contain exactly one item per phone
+            number, applied by position. When omitted or empty, every phone number is
+            created `verified`. Set an item to `reserved` to create the corresponding
+            phone number reserved instead (unverified but usable for sign-in and locked
+            so no other user can claim it).
         :param web3_wallet: Web3 wallets to add to the user.
             Must be unique across your instance.
             The first wallet will be set as the user's primary wallet.
@@ -547,9 +597,17 @@ class Users(BaseSDK):
             first_name=first_name,
             last_name=last_name,
             locale=locale,
-            email_address=email_address,
-            phone_number=phone_number,
-            web3_wallet=web3_wallet,
+            email_address=utils.unmarshal(email_address, Optional[List[str]]),
+            email_address_identification_status=utils.unmarshal(
+                email_address_identification_status,
+                Optional[List[models.EmailAddressIdentificationStatus]],
+            ),
+            phone_number=utils.unmarshal(phone_number, Optional[List[str]]),
+            phone_number_identification_status=utils.unmarshal(
+                phone_number_identification_status,
+                Optional[List[models.PhoneNumberIdentificationStatus]],
+            ),
+            web3_wallet=utils.unmarshal(web3_wallet, Optional[List[str]]),
             username=username,
             password=password,
             password_digest=password_digest,
@@ -557,10 +615,12 @@ class Users(BaseSDK):
             skip_password_checks=skip_password_checks,
             skip_password_requirement=skip_password_requirement,
             totp_secret=totp_secret,
-            backup_codes=backup_codes,
-            public_metadata=public_metadata,
-            private_metadata=private_metadata,
-            unsafe_metadata=unsafe_metadata,
+            backup_codes=utils.unmarshal(backup_codes, Optional[List[str]]),
+            public_metadata=utils.unmarshal(public_metadata, Optional[Dict[str, Any]]),
+            private_metadata=utils.unmarshal(
+                private_metadata, Optional[Dict[str, Any]]
+            ),
+            unsafe_metadata=utils.unmarshal(unsafe_metadata, Optional[Dict[str, Any]]),
             delete_self_enabled=delete_self_enabled,
             legal_accepted_at=legal_accepted_at,
             skip_legal_checks=skip_legal_checks,
@@ -1019,10 +1079,10 @@ class Users(BaseSDK):
         skip_password_checks: OptionalNullable[bool] = UNSET,
         sign_out_of_other_sessions: OptionalNullable[bool] = UNSET,
         totp_secret: OptionalNullable[str] = UNSET,
-        backup_codes: Optional[List[str]] = None,
-        public_metadata: OptionalNullable[Dict[str, Any]] = UNSET,
-        private_metadata: OptionalNullable[Dict[str, Any]] = UNSET,
-        unsafe_metadata: OptionalNullable[Dict[str, Any]] = UNSET,
+        backup_codes: Optional[Iterable[str]] = None,
+        public_metadata: OptionalNullable[Mapping[str, Any]] = UNSET,
+        private_metadata: OptionalNullable[Mapping[str, Any]] = UNSET,
+        unsafe_metadata: OptionalNullable[Mapping[str, Any]] = UNSET,
         delete_self_enabled: OptionalNullable[bool] = UNSET,
         create_organization_enabled: OptionalNullable[bool] = UNSET,
         legal_accepted_at: OptionalNullable[str] = UNSET,
@@ -1136,10 +1196,16 @@ class Users(BaseSDK):
                 skip_password_checks=skip_password_checks,
                 sign_out_of_other_sessions=sign_out_of_other_sessions,
                 totp_secret=totp_secret,
-                backup_codes=backup_codes,
-                public_metadata=public_metadata,
-                private_metadata=private_metadata,
-                unsafe_metadata=unsafe_metadata,
+                backup_codes=utils.unmarshal(backup_codes, Optional[List[str]]),
+                public_metadata=utils.unmarshal(
+                    public_metadata, OptionalNullable[Dict[str, Any]]
+                ),
+                private_metadata=utils.unmarshal(
+                    private_metadata, OptionalNullable[Dict[str, Any]]
+                ),
+                unsafe_metadata=utils.unmarshal(
+                    unsafe_metadata, OptionalNullable[Dict[str, Any]]
+                ),
                 delete_self_enabled=delete_self_enabled,
                 create_organization_enabled=create_organization_enabled,
                 legal_accepted_at=legal_accepted_at,
@@ -1232,10 +1298,10 @@ class Users(BaseSDK):
         skip_password_checks: OptionalNullable[bool] = UNSET,
         sign_out_of_other_sessions: OptionalNullable[bool] = UNSET,
         totp_secret: OptionalNullable[str] = UNSET,
-        backup_codes: Optional[List[str]] = None,
-        public_metadata: OptionalNullable[Dict[str, Any]] = UNSET,
-        private_metadata: OptionalNullable[Dict[str, Any]] = UNSET,
-        unsafe_metadata: OptionalNullable[Dict[str, Any]] = UNSET,
+        backup_codes: Optional[Iterable[str]] = None,
+        public_metadata: OptionalNullable[Mapping[str, Any]] = UNSET,
+        private_metadata: OptionalNullable[Mapping[str, Any]] = UNSET,
+        unsafe_metadata: OptionalNullable[Mapping[str, Any]] = UNSET,
         delete_self_enabled: OptionalNullable[bool] = UNSET,
         create_organization_enabled: OptionalNullable[bool] = UNSET,
         legal_accepted_at: OptionalNullable[str] = UNSET,
@@ -1349,10 +1415,16 @@ class Users(BaseSDK):
                 skip_password_checks=skip_password_checks,
                 sign_out_of_other_sessions=sign_out_of_other_sessions,
                 totp_secret=totp_secret,
-                backup_codes=backup_codes,
-                public_metadata=public_metadata,
-                private_metadata=private_metadata,
-                unsafe_metadata=unsafe_metadata,
+                backup_codes=utils.unmarshal(backup_codes, Optional[List[str]]),
+                public_metadata=utils.unmarshal(
+                    public_metadata, OptionalNullable[Dict[str, Any]]
+                ),
+                private_metadata=utils.unmarshal(
+                    private_metadata, OptionalNullable[Dict[str, Any]]
+                ),
+                unsafe_metadata=utils.unmarshal(
+                    unsafe_metadata, OptionalNullable[Dict[str, Any]]
+                ),
                 delete_self_enabled=delete_self_enabled,
                 create_organization_enabled=create_organization_enabled,
                 legal_accepted_at=legal_accepted_at,
@@ -1968,7 +2040,7 @@ class Users(BaseSDK):
     def bulk_ban(
         self,
         *,
-        user_ids: List[str],
+        user_ids: Iterable[str],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1995,7 +2067,7 @@ class Users(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.UsersBanRequestBody(
-            user_ids=user_ids,
+            user_ids=utils.unmarshal(user_ids, List[str]),
         )
 
         req = self._build_request(
@@ -2061,7 +2133,7 @@ class Users(BaseSDK):
     async def bulk_ban_async(
         self,
         *,
-        user_ids: List[str],
+        user_ids: Iterable[str],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -2088,7 +2160,7 @@ class Users(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.UsersBanRequestBody(
-            user_ids=user_ids,
+            user_ids=utils.unmarshal(user_ids, List[str]),
         )
 
         req = self._build_request_async(
@@ -2154,7 +2226,7 @@ class Users(BaseSDK):
     def bulk_unban(
         self,
         *,
-        user_ids: List[str],
+        user_ids: Iterable[str],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -2181,7 +2253,7 @@ class Users(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.UsersUnbanRequestBody(
-            user_ids=user_ids,
+            user_ids=utils.unmarshal(user_ids, List[str]),
         )
 
         req = self._build_request(
@@ -2247,7 +2319,7 @@ class Users(BaseSDK):
     async def bulk_unban_async(
         self,
         *,
-        user_ids: List[str],
+        user_ids: Iterable[str],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -2274,7 +2346,7 @@ class Users(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.UsersUnbanRequestBody(
-            user_ids=user_ids,
+            user_ids=utils.unmarshal(user_ids, List[str]),
         )
 
         req = self._build_request_async(
@@ -3087,9 +3159,9 @@ class Users(BaseSDK):
         self,
         *,
         user_id: str,
-        public_metadata: Optional[Dict[str, Any]] = None,
-        private_metadata: Optional[Dict[str, Any]] = None,
-        unsafe_metadata: Optional[Dict[str, Any]] = None,
+        public_metadata: Optional[Mapping[str, Any]] = None,
+        private_metadata: Optional[Mapping[str, Any]] = None,
+        unsafe_metadata: Optional[Mapping[str, Any]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -3133,9 +3205,15 @@ class Users(BaseSDK):
         request = models.UpdateUserMetadataRequest(
             user_id=user_id,
             request_body=models.UpdateUserMetadataRequestBody(
-                public_metadata=public_metadata,
-                private_metadata=private_metadata,
-                unsafe_metadata=unsafe_metadata,
+                public_metadata=utils.unmarshal(
+                    public_metadata, Optional[Dict[str, Any]]
+                ),
+                private_metadata=utils.unmarshal(
+                    private_metadata, Optional[Dict[str, Any]]
+                ),
+                unsafe_metadata=utils.unmarshal(
+                    unsafe_metadata, Optional[Dict[str, Any]]
+                ),
             ),
         )
 
@@ -3209,9 +3287,9 @@ class Users(BaseSDK):
         self,
         *,
         user_id: str,
-        public_metadata: Optional[Dict[str, Any]] = None,
-        private_metadata: Optional[Dict[str, Any]] = None,
-        unsafe_metadata: Optional[Dict[str, Any]] = None,
+        public_metadata: Optional[Mapping[str, Any]] = None,
+        private_metadata: Optional[Mapping[str, Any]] = None,
+        unsafe_metadata: Optional[Mapping[str, Any]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -3255,9 +3333,15 @@ class Users(BaseSDK):
         request = models.UpdateUserMetadataRequest(
             user_id=user_id,
             request_body=models.UpdateUserMetadataRequestBody(
-                public_metadata=public_metadata,
-                private_metadata=private_metadata,
-                unsafe_metadata=unsafe_metadata,
+                public_metadata=utils.unmarshal(
+                    public_metadata, Optional[Dict[str, Any]]
+                ),
+                private_metadata=utils.unmarshal(
+                    private_metadata, Optional[Dict[str, Any]]
+                ),
+                unsafe_metadata=utils.unmarshal(
+                    unsafe_metadata, Optional[Dict[str, Any]]
+                ),
             ),
         )
 
@@ -3331,9 +3415,9 @@ class Users(BaseSDK):
         self,
         *,
         user_id: str,
-        public_metadata: Optional[Dict[str, Any]] = None,
-        private_metadata: Optional[Dict[str, Any]] = None,
-        unsafe_metadata: Optional[Dict[str, Any]] = None,
+        public_metadata: Optional[Mapping[str, Any]] = None,
+        private_metadata: Optional[Mapping[str, Any]] = None,
+        unsafe_metadata: Optional[Mapping[str, Any]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -3378,9 +3462,15 @@ class Users(BaseSDK):
         request = models.ReplaceUserMetadataRequest(
             user_id=user_id,
             request_body=models.ReplaceUserMetadataRequestBody(
-                public_metadata=public_metadata,
-                private_metadata=private_metadata,
-                unsafe_metadata=unsafe_metadata,
+                public_metadata=utils.unmarshal(
+                    public_metadata, Optional[Dict[str, Any]]
+                ),
+                private_metadata=utils.unmarshal(
+                    private_metadata, Optional[Dict[str, Any]]
+                ),
+                unsafe_metadata=utils.unmarshal(
+                    unsafe_metadata, Optional[Dict[str, Any]]
+                ),
             ),
         )
 
@@ -3454,9 +3544,9 @@ class Users(BaseSDK):
         self,
         *,
         user_id: str,
-        public_metadata: Optional[Dict[str, Any]] = None,
-        private_metadata: Optional[Dict[str, Any]] = None,
-        unsafe_metadata: Optional[Dict[str, Any]] = None,
+        public_metadata: Optional[Mapping[str, Any]] = None,
+        private_metadata: Optional[Mapping[str, Any]] = None,
+        unsafe_metadata: Optional[Mapping[str, Any]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -3501,9 +3591,15 @@ class Users(BaseSDK):
         request = models.ReplaceUserMetadataRequest(
             user_id=user_id,
             request_body=models.ReplaceUserMetadataRequestBody(
-                public_metadata=public_metadata,
-                private_metadata=private_metadata,
-                unsafe_metadata=unsafe_metadata,
+                public_metadata=utils.unmarshal(
+                    public_metadata, Optional[Dict[str, Any]]
+                ),
+                private_metadata=utils.unmarshal(
+                    private_metadata, Optional[Dict[str, Any]]
+                ),
+                unsafe_metadata=utils.unmarshal(
+                    unsafe_metadata, Optional[Dict[str, Any]]
+                ),
             ),
         )
 

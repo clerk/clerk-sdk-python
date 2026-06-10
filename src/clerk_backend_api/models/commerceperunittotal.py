@@ -12,19 +12,19 @@ from typing_extensions import TypedDict
 
 class CommercePerUnitTotalTypedDict(TypedDict):
     name: str
-    r"""Name of the billable unit (for example, seats)"""
+    r"""Name of the billable unit (for example, `seats`)."""
     block_size: int
-    r"""Number of units included in each pricing block"""
+    r"""Number of units included in each pricing block."""
     tiers: List[CommercePerUnitTotalTierTypedDict]
-    r"""Computed totals for each pricing tier"""
+    r"""Computed totals for each pricing tier."""
 
 
 class CommercePerUnitTotal(BaseModel):
     name: str
-    r"""Name of the billable unit (for example, seats)"""
+    r"""Name of the billable unit (for example, `seats`)."""
 
     block_size: int
-    r"""Number of units included in each pricing block"""
+    r"""Number of units included in each pricing block."""
 
     tiers: List[CommercePerUnitTotalTier]
-    r"""Computed totals for each pricing tier"""
+    r"""Computed totals for each pricing tier."""

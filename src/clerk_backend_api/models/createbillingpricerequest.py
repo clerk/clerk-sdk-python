@@ -8,9 +8,18 @@ from clerk_backend_api.types import (
     UNSET,
     UNSET_SENTINEL,
 )
+from enum import Enum
 from pydantic import model_serializer
 from typing import Optional
 from typing_extensions import NotRequired, TypedDict
+
+
+class CreateBillingPriceRequestSupportedBillingPeriods(str, Enum):
+    r"""Which billing periods this price supports. Inferred from amounts if omitted."""
+
+    MONTH = "month"
+    ANNUAL = "annual"
+    BOTH = "both"
 
 
 class CreateBillingPriceRequestTypedDict(TypedDict):
@@ -24,6 +33,10 @@ class CreateBillingPriceRequestTypedDict(TypedDict):
     r"""The monthly amount in cents when billed annually. Must be at least $1 (100 cents) if not null."""
     description: NotRequired[str]
     r"""An optional description for this custom price."""
+    supported_billing_periods: NotRequired[
+        CreateBillingPriceRequestSupportedBillingPeriods
+    ]
+    r"""Which billing periods this price supports. Inferred from amounts if omitted."""
 
 
 class CreateBillingPriceRequest(BaseModel):
@@ -42,9 +55,21 @@ class CreateBillingPriceRequest(BaseModel):
     description: Optional[str] = None
     r"""An optional description for this custom price."""
 
+    supported_billing_periods: Optional[
+        CreateBillingPriceRequestSupportedBillingPeriods
+    ] = None
+    r"""Which billing periods this price supports. Inferred from amounts if omitted."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["currency", "annual_monthly_amount", "description"])
+        optional_fields = set(
+            [
+                "currency",
+                "annual_monthly_amount",
+                "description",
+                "supported_billing_periods",
+            ]
+        )
         nullable_fields = set(["amount", "annual_monthly_amount"])
         serialized = handler(self)
         m = {}

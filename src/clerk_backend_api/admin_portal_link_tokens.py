@@ -5,7 +5,7 @@ from clerk_backend_api import models, utils
 from clerk_backend_api._hooks import HookContext
 from clerk_backend_api.types import OptionalNullable, UNSET
 from clerk_backend_api.utils.unmarshal_json_response import unmarshal_json_response
-from typing import Any, List, Mapping, Optional
+from typing import Any, Iterable, List, Mapping, Optional
 
 
 class AdminPortalLinkTokens(BaseSDK):
@@ -14,7 +14,7 @@ class AdminPortalLinkTokens(BaseSDK):
         *,
         organization_id: Optional[str] = None,
         it_contact_id: Optional[str] = None,
-        scopes: Optional[List[str]] = None,
+        scopes: Optional[Iterable[str]] = None,
         seconds_until_expiration: Optional[int] = 3600,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -45,7 +45,7 @@ class AdminPortalLinkTokens(BaseSDK):
         request = models.CreateAdminPortalLinkTokenRequestBody(
             organization_id=organization_id,
             it_contact_id=it_contact_id,
-            scopes=scopes,
+            scopes=utils.unmarshal(scopes, Optional[List[str]]),
             seconds_until_expiration=seconds_until_expiration,
         )
 
@@ -149,7 +149,7 @@ class AdminPortalLinkTokens(BaseSDK):
         *,
         organization_id: Optional[str] = None,
         it_contact_id: Optional[str] = None,
-        scopes: Optional[List[str]] = None,
+        scopes: Optional[Iterable[str]] = None,
         seconds_until_expiration: Optional[int] = 3600,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -180,7 +180,7 @@ class AdminPortalLinkTokens(BaseSDK):
         request = models.CreateAdminPortalLinkTokenRequestBody(
             organization_id=organization_id,
             it_contact_id=it_contact_id,
-            scopes=scopes,
+            scopes=utils.unmarshal(scopes, Optional[List[str]]),
             seconds_until_expiration=seconds_until_expiration,
         )
 

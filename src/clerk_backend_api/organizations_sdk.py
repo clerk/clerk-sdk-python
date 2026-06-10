@@ -5,7 +5,7 @@ from clerk_backend_api import models, utils
 from clerk_backend_api._hooks import HookContext
 from clerk_backend_api.types import BaseModel, OptionalNullable, UNSET
 from clerk_backend_api.utils.unmarshal_json_response import unmarshal_json_response
-from typing import Any, Dict, List, Mapping, Optional, Union, cast
+from typing import Any, Dict, Iterable, List, Mapping, Optional, Union, cast
 
 
 class OrganizationsSDK(BaseSDK):
@@ -15,8 +15,8 @@ class OrganizationsSDK(BaseSDK):
         include_members_count: Optional[bool] = None,
         include_missing_member_with_elevated_permissions: Optional[bool] = None,
         query: Optional[str] = None,
-        user_id: Optional[List[str]] = None,
-        organization_id: Optional[List[str]] = None,
+        user_id: Optional[Iterable[str]] = None,
+        organization_id: Optional[Iterable[str]] = None,
         order_by: Optional[str] = "-created_at",
         limit: Optional[int] = 10,
         offset: Optional[int] = 0,
@@ -73,8 +73,8 @@ class OrganizationsSDK(BaseSDK):
             include_members_count=include_members_count,
             include_missing_member_with_elevated_permissions=include_missing_member_with_elevated_permissions,
             query=query,
-            user_id=user_id,
-            organization_id=organization_id,
+            user_id=utils.unmarshal(user_id, Optional[List[str]]),
+            organization_id=utils.unmarshal(organization_id, Optional[List[str]]),
             order_by=order_by,
             limit=limit,
             offset=offset,
@@ -143,8 +143,8 @@ class OrganizationsSDK(BaseSDK):
         include_members_count: Optional[bool] = None,
         include_missing_member_with_elevated_permissions: Optional[bool] = None,
         query: Optional[str] = None,
-        user_id: Optional[List[str]] = None,
-        organization_id: Optional[List[str]] = None,
+        user_id: Optional[Iterable[str]] = None,
+        organization_id: Optional[Iterable[str]] = None,
         order_by: Optional[str] = "-created_at",
         limit: Optional[int] = 10,
         offset: Optional[int] = 0,
@@ -201,8 +201,8 @@ class OrganizationsSDK(BaseSDK):
             include_members_count=include_members_count,
             include_missing_member_with_elevated_permissions=include_missing_member_with_elevated_permissions,
             query=query,
-            user_id=user_id,
-            organization_id=organization_id,
+            user_id=utils.unmarshal(user_id, Optional[List[str]]),
+            organization_id=utils.unmarshal(organization_id, Optional[List[str]]),
             order_by=order_by,
             limit=limit,
             offset=offset,
@@ -691,8 +691,8 @@ class OrganizationsSDK(BaseSDK):
         self,
         *,
         organization_id: str,
-        public_metadata: OptionalNullable[Dict[str, Any]] = UNSET,
-        private_metadata: OptionalNullable[Dict[str, Any]] = UNSET,
+        public_metadata: OptionalNullable[Mapping[str, Any]] = UNSET,
+        private_metadata: OptionalNullable[Mapping[str, Any]] = UNSET,
         name: OptionalNullable[str] = UNSET,
         slug: OptionalNullable[str] = UNSET,
         max_allowed_memberships: OptionalNullable[int] = UNSET,
@@ -737,8 +737,12 @@ class OrganizationsSDK(BaseSDK):
         request = models.UpdateOrganizationRequest(
             organization_id=organization_id,
             request_body=models.UpdateOrganizationRequestBody(
-                public_metadata=public_metadata,
-                private_metadata=private_metadata,
+                public_metadata=utils.unmarshal(
+                    public_metadata, OptionalNullable[Dict[str, Any]]
+                ),
+                private_metadata=utils.unmarshal(
+                    private_metadata, OptionalNullable[Dict[str, Any]]
+                ),
                 name=name,
                 slug=slug,
                 max_allowed_memberships=max_allowed_memberships,
@@ -818,8 +822,8 @@ class OrganizationsSDK(BaseSDK):
         self,
         *,
         organization_id: str,
-        public_metadata: OptionalNullable[Dict[str, Any]] = UNSET,
-        private_metadata: OptionalNullable[Dict[str, Any]] = UNSET,
+        public_metadata: OptionalNullable[Mapping[str, Any]] = UNSET,
+        private_metadata: OptionalNullable[Mapping[str, Any]] = UNSET,
         name: OptionalNullable[str] = UNSET,
         slug: OptionalNullable[str] = UNSET,
         max_allowed_memberships: OptionalNullable[int] = UNSET,
@@ -864,8 +868,12 @@ class OrganizationsSDK(BaseSDK):
         request = models.UpdateOrganizationRequest(
             organization_id=organization_id,
             request_body=models.UpdateOrganizationRequestBody(
-                public_metadata=public_metadata,
-                private_metadata=private_metadata,
+                public_metadata=utils.unmarshal(
+                    public_metadata, OptionalNullable[Dict[str, Any]]
+                ),
+                private_metadata=utils.unmarshal(
+                    private_metadata, OptionalNullable[Dict[str, Any]]
+                ),
                 name=name,
                 slug=slug,
                 max_allowed_memberships=max_allowed_memberships,
@@ -1135,8 +1143,8 @@ class OrganizationsSDK(BaseSDK):
         self,
         *,
         organization_id: str,
-        public_metadata: Optional[Dict[str, Any]] = None,
-        private_metadata: Optional[Dict[str, Any]] = None,
+        public_metadata: Optional[Mapping[str, Any]] = None,
+        private_metadata: Optional[Mapping[str, Any]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1172,8 +1180,12 @@ class OrganizationsSDK(BaseSDK):
         request = models.MergeOrganizationMetadataRequest(
             organization_id=organization_id,
             request_body=models.MergeOrganizationMetadataRequestBody(
-                public_metadata=public_metadata,
-                private_metadata=private_metadata,
+                public_metadata=utils.unmarshal(
+                    public_metadata, Optional[Dict[str, Any]]
+                ),
+                private_metadata=utils.unmarshal(
+                    private_metadata, Optional[Dict[str, Any]]
+                ),
             ),
         )
 
@@ -1247,8 +1259,8 @@ class OrganizationsSDK(BaseSDK):
         self,
         *,
         organization_id: str,
-        public_metadata: Optional[Dict[str, Any]] = None,
-        private_metadata: Optional[Dict[str, Any]] = None,
+        public_metadata: Optional[Mapping[str, Any]] = None,
+        private_metadata: Optional[Mapping[str, Any]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1284,8 +1296,12 @@ class OrganizationsSDK(BaseSDK):
         request = models.MergeOrganizationMetadataRequest(
             organization_id=organization_id,
             request_body=models.MergeOrganizationMetadataRequestBody(
-                public_metadata=public_metadata,
-                private_metadata=private_metadata,
+                public_metadata=utils.unmarshal(
+                    public_metadata, Optional[Dict[str, Any]]
+                ),
+                private_metadata=utils.unmarshal(
+                    private_metadata, Optional[Dict[str, Any]]
+                ),
             ),
         )
 

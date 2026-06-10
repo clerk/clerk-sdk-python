@@ -9,6 +9,8 @@
 * [get](#get) - Retrieve an enterprise connection
 * [update](#update) - Update an enterprise connection
 * [delete](#delete) - Delete an enterprise connection
+* [list_test_runs](#list_test_runs) - List enterprise connection test runs
+* [create_test_run](#create_test_run) - Create an enterprise connection test run
 
 ## list
 
@@ -96,6 +98,7 @@ with Clerk(
                 "key": "<key>",
                 "sso_path": "<value>",
                 "scim_path": "<value>",
+                "multi_valued": True,
             },
         ],
     })
@@ -209,6 +212,7 @@ with Clerk(
             "key": "<key>",
             "sso_path": "<value>",
             "scim_path": "<value>",
+            "multi_valued": False,
         },
     ])
 
@@ -277,6 +281,92 @@ with Clerk(
 ### Response
 
 **[models.DeletedObject](../../models/deletedobject.md)**
+
+### Errors
+
+| Error Type         | Status Code        | Content Type       |
+| ------------------ | ------------------ | ------------------ |
+| models.ClerkErrors | 402, 403, 404      | application/json   |
+| models.SDKError    | 4XX, 5XX           | \*/\*              |
+
+## list_test_runs
+
+Returns a paginated list of SAML or OIDC debug test runs for an enterprise connection.
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="ListEnterpriseConnectionTestRuns" method="get" path="/enterprise_connections/{enterprise_connection_id}/test_runs" -->
+```python
+import clerk_backend_api
+from clerk_backend_api import Clerk
+
+
+with Clerk(
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+) as clerk:
+
+    res = clerk.enterprise_connections.list_test_runs(enterprise_connection_id="<id>", status=[
+        clerk_backend_api.ListEnterpriseConnectionTestRunsQueryParamStatus.FAILED,
+    ], limit=20, offset=10)
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                                                                                                 | Type                                                                                                                                      | Required                                                                                                                                  | Description                                                                                                                               | Example                                                                                                                                   |
+| ----------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| `enterprise_connection_id`                                                                                                                | *str*                                                                                                                                     | :heavy_check_mark:                                                                                                                        | The ID of the enterprise connection                                                                                                       |                                                                                                                                           |
+| `status`                                                                                                                                  | List[[models.ListEnterpriseConnectionTestRunsQueryParamStatus](../../models/listenterpriseconnectiontestrunsqueryparamstatus.md)]         | :heavy_minus_sign:                                                                                                                        | Filter test runs by status (may be repeated)                                                                                              |                                                                                                                                           |
+| `limit`                                                                                                                                   | *Optional[int]*                                                                                                                           | :heavy_minus_sign:                                                                                                                        | Applies a limit to the number of results returned.<br/>Can be used for paginating the results together with `offset`.                     | 20                                                                                                                                        |
+| `offset`                                                                                                                                  | *Optional[int]*                                                                                                                           | :heavy_minus_sign:                                                                                                                        | Skip the first `offset` results when paginating.<br/>Needs to be an integer greater or equal to zero.<br/>To be used in conjunction with `limit`. | 10                                                                                                                                        |
+| `retries`                                                                                                                                 | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                          | :heavy_minus_sign:                                                                                                                        | Configuration to override the default retry behavior of the client.                                                                       |                                                                                                                                           |
+
+### Response
+
+**[models.EnterpriseConnectionTestRuns](../../models/enterpriseconnectiontestruns.md)**
+
+### Errors
+
+| Error Type         | Status Code        | Content Type       |
+| ------------------ | ------------------ | ------------------ |
+| models.ClerkErrors | 402, 403, 404, 422 | application/json   |
+| models.SDKError    | 4XX, 5XX           | \*/\*              |
+
+## create_test_run
+
+Returns a short-lived URL that starts the IdP test flow for this connection.
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="CreateEnterpriseConnectionTestRun" method="post" path="/enterprise_connections/{enterprise_connection_id}/test_runs" -->
+```python
+from clerk_backend_api import Clerk
+
+
+with Clerk(
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+) as clerk:
+
+    res = clerk.enterprise_connections.create_test_run(enterprise_connection_id="<id>")
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `enterprise_connection_id`                                          | *str*                                                               | :heavy_check_mark:                                                  | The ID of the enterprise connection                                 |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+
+### Response
+
+**[models.EnterpriseConnectionTestRunResponse](../../models/enterpriseconnectiontestrunresponse.md)**
 
 ### Errors
 

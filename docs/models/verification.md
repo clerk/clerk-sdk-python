@@ -27,10 +27,10 @@ value: models.FromOAuth = /* values here */
 value: models.Ticket = /* values here */
 ```
 
-### `models.Saml`
+### `models.VerificationSAMLVerificationEmailAddressSAML`
 
 ```python
-value: models.Saml = /* values here */
+value: models.VerificationSAMLVerificationEmailAddressSAML = /* values here */
 ```
 
 ### `models.EmailLink`

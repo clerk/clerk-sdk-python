@@ -17,7 +17,7 @@ class CommercePerUnitTotalTierTypedDict(TypedDict):
     fee_per_block: CommerceMoneyResponseTypedDict
     total: CommerceMoneyResponseTypedDict
     quantity: NotRequired[Nullable[int]]
-    r"""Units billed in this tier; null means unlimited"""
+    r"""Units billed in this tier; null means unlimited."""
 
 
 class CommercePerUnitTotalTier(BaseModel):
@@ -26,7 +26,7 @@ class CommercePerUnitTotalTier(BaseModel):
     total: CommerceMoneyResponse
 
     quantity: OptionalNullable[int] = UNSET
-    r"""Units billed in this tier; null means unlimited"""
+    r"""Units billed in this tier; null means unlimited."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

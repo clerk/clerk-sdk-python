@@ -5,7 +5,7 @@ from clerk_backend_api import models, utils
 from clerk_backend_api._hooks import HookContext
 from clerk_backend_api.types import OptionalNullable, UNSET
 from clerk_backend_api.utils.unmarshal_json_response import unmarshal_json_response
-from typing import Any, Dict, List, Mapping, Optional
+from typing import Any, Dict, Iterable, List, Mapping, Optional
 
 
 class RoleSetsSDK(BaseSDK):
@@ -239,7 +239,7 @@ class RoleSetsSDK(BaseSDK):
         name: str,
         default_role_key: str,
         creator_role_key: str,
-        roles: List[str],
+        roles: Iterable[str],
         key: Optional[str] = None,
         description: OptionalNullable[str] = UNSET,
         type_: Optional[models.CreateRoleSetType] = None,
@@ -288,7 +288,7 @@ class RoleSetsSDK(BaseSDK):
             default_role_key=default_role_key,
             creator_role_key=creator_role_key,
             type=type_,
-            roles=roles,
+            roles=utils.unmarshal(roles, List[str]),
         )
 
         req = self._build_request(
@@ -359,7 +359,7 @@ class RoleSetsSDK(BaseSDK):
         name: str,
         default_role_key: str,
         creator_role_key: str,
-        roles: List[str],
+        roles: Iterable[str],
         key: Optional[str] = None,
         description: OptionalNullable[str] = UNSET,
         type_: Optional[models.CreateRoleSetType] = None,
@@ -408,7 +408,7 @@ class RoleSetsSDK(BaseSDK):
             default_role_key=default_role_key,
             creator_role_key=creator_role_key,
             type=type_,
-            roles=roles,
+            roles=utils.unmarshal(roles, List[str]),
         )
 
         req = self._build_request_async(
@@ -906,7 +906,7 @@ class RoleSetsSDK(BaseSDK):
         *,
         role_set_key_or_id: str,
         dest_role_set_key: str,
-        reassignment_mappings: Optional[Dict[str, str]] = None,
+        reassignment_mappings: Optional[Mapping[str, str]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -941,7 +941,9 @@ class RoleSetsSDK(BaseSDK):
             role_set_key_or_id=role_set_key_or_id,
             request_body=models.ReplaceRoleSetRequestBody(
                 dest_role_set_key=dest_role_set_key,
-                reassignment_mappings=reassignment_mappings,
+                reassignment_mappings=utils.unmarshal(
+                    reassignment_mappings, Optional[Dict[str, str]]
+                ),
             ),
         )
 
@@ -1016,7 +1018,7 @@ class RoleSetsSDK(BaseSDK):
         *,
         role_set_key_or_id: str,
         dest_role_set_key: str,
-        reassignment_mappings: Optional[Dict[str, str]] = None,
+        reassignment_mappings: Optional[Mapping[str, str]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1051,7 +1053,9 @@ class RoleSetsSDK(BaseSDK):
             role_set_key_or_id=role_set_key_or_id,
             request_body=models.ReplaceRoleSetRequestBody(
                 dest_role_set_key=dest_role_set_key,
-                reassignment_mappings=reassignment_mappings,
+                reassignment_mappings=utils.unmarshal(
+                    reassignment_mappings, Optional[Dict[str, str]]
+                ),
             ),
         )
 
@@ -1125,7 +1129,7 @@ class RoleSetsSDK(BaseSDK):
         self,
         *,
         role_set_key_or_id: str,
-        role_keys: List[str],
+        role_keys: Iterable[str],
         default_role_key: Optional[str] = None,
         creator_role_key: Optional[str] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -1161,7 +1165,7 @@ class RoleSetsSDK(BaseSDK):
         request = models.AddRolesToRoleSetRequest(
             role_set_key_or_id=role_set_key_or_id,
             request_body=models.AddRolesToRoleSetRequestBody(
-                role_keys=role_keys,
+                role_keys=utils.unmarshal(role_keys, List[str]),
                 default_role_key=default_role_key,
                 creator_role_key=creator_role_key,
             ),
@@ -1237,7 +1241,7 @@ class RoleSetsSDK(BaseSDK):
         self,
         *,
         role_set_key_or_id: str,
-        role_keys: List[str],
+        role_keys: Iterable[str],
         default_role_key: Optional[str] = None,
         creator_role_key: Optional[str] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -1273,7 +1277,7 @@ class RoleSetsSDK(BaseSDK):
         request = models.AddRolesToRoleSetRequest(
             role_set_key_or_id=role_set_key_or_id,
             request_body=models.AddRolesToRoleSetRequestBody(
-                role_keys=role_keys,
+                role_keys=utils.unmarshal(role_keys, List[str]),
                 default_role_key=default_role_key,
                 creator_role_key=creator_role_key,
             ),

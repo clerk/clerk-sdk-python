@@ -256,7 +256,7 @@ VerificationErrorTypedDict = VerificationSamlErrorClerkErrorTypedDict
 VerificationError = VerificationSamlErrorClerkError
 
 
-class SamlTypedDict(TypedDict):
+class VerificationSAMLVerificationEmailAddressSAMLTypedDict(TypedDict):
     status: VerificationSamlVerificationStatus
     strategy: VerificationSamlVerificationStrategy
     attempts: Nullable[int]
@@ -267,7 +267,7 @@ class SamlTypedDict(TypedDict):
     verified_at_client: NotRequired[Nullable[str]]
 
 
-class Saml(BaseModel):
+class VerificationSAMLVerificationEmailAddressSAML(BaseModel):
     status: VerificationSamlVerificationStatus
 
     strategy: VerificationSamlVerificationStrategy
@@ -546,6 +546,8 @@ class OtpTypedDict(TypedDict):
     attempts: Nullable[int]
     expire_at: Nullable[int]
     object: NotRequired[VerificationObject]
+    channel: NotRequired[Nullable[str]]
+    r"""The delivery channel of the code (phone codes only)."""
     verified_at_client: NotRequired[Nullable[str]]
 
 
@@ -560,6 +562,9 @@ class Otp(BaseModel):
 
     object: Optional[VerificationObject] = None
 
+    channel: OptionalNullable[str] = UNSET
+    r"""The delivery channel of the code (phone codes only)."""
+
     verified_at_client: OptionalNullable[str] = UNSET
 
     @field_serializer("strategy")
@@ -573,8 +578,10 @@ class Otp(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["object", "verified_at_client"])
-        nullable_fields = set(["attempts", "expire_at", "verified_at_client"])
+        optional_fields = set(["object", "channel", "verified_at_client"])
+        nullable_fields = set(
+            ["attempts", "expire_at", "channel", "verified_at_client"]
+        )
         serialized = handler(self)
         m = {}
 
@@ -601,12 +608,12 @@ VerificationTypedDict = TypeAliasType(
     "VerificationTypedDict",
     Union[
         VerificationSCIMTypedDict,
-        OtpTypedDict,
         AdminTypedDict,
         TicketTypedDict,
         EmailLinkTypedDict,
+        OtpTypedDict,
         FromOAuthTypedDict,
-        SamlTypedDict,
+        VerificationSAMLVerificationEmailAddressSAMLTypedDict,
     ],
 )
 
@@ -617,7 +624,9 @@ Verification = Annotated[
         Annotated[Admin, Tag("verification_admin")],
         Annotated[FromOAuth, Tag("verification_from_oauth")],
         Annotated[Ticket, Tag("verification_ticket")],
-        Annotated[Saml, Tag("verification_saml")],
+        Annotated[
+            VerificationSAMLVerificationEmailAddressSAML, Tag("verification_saml")
+        ],
         Annotated[EmailLink, Tag("verification_email_link")],
         Annotated[VerificationSCIM, Tag("verification_scim")],
     ],

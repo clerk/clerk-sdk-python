@@ -5,7 +5,7 @@ from clerk_backend_api import models, utils
 from clerk_backend_api._hooks import HookContext
 from clerk_backend_api.types import OptionalNullable, UNSET
 from clerk_backend_api.utils.unmarshal_json_response import unmarshal_json_response
-from typing import Any, List, Mapping, Optional
+from typing import Any, Iterable, List, Mapping, Optional
 
 
 class APIKeys(BaseSDK):
@@ -19,7 +19,7 @@ class APIKeys(BaseSDK):
         type_: Optional[str] = "api_key",
         description: OptionalNullable[str] = UNSET,
         claims: OptionalNullable[Any] = UNSET,
-        scopes: Optional[List[str]] = None,
+        scopes: Optional[Iterable[str]] = None,
         created_by: OptionalNullable[str] = UNSET,
         seconds_until_expiration: OptionalNullable[float] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -58,7 +58,7 @@ class APIKeys(BaseSDK):
             description=description,
             subject=subject,
             claims=claims,
-            scopes=scopes,
+            scopes=utils.unmarshal(scopes, Optional[List[str]]),
             created_by=created_by,
             seconds_until_expiration=seconds_until_expiration,
         )
@@ -140,7 +140,7 @@ class APIKeys(BaseSDK):
         type_: Optional[str] = "api_key",
         description: OptionalNullable[str] = UNSET,
         claims: OptionalNullable[Any] = UNSET,
-        scopes: Optional[List[str]] = None,
+        scopes: Optional[Iterable[str]] = None,
         created_by: OptionalNullable[str] = UNSET,
         seconds_until_expiration: OptionalNullable[float] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -179,7 +179,7 @@ class APIKeys(BaseSDK):
             description=description,
             subject=subject,
             claims=claims,
-            scopes=scopes,
+            scopes=utils.unmarshal(scopes, Optional[List[str]]),
             created_by=created_by,
             seconds_until_expiration=seconds_until_expiration,
         )
@@ -668,7 +668,7 @@ class APIKeys(BaseSDK):
         *,
         api_key_id: str,
         claims: OptionalNullable[Any] = UNSET,
-        scopes: Optional[List[str]] = None,
+        scopes: Optional[Iterable[str]] = None,
         description: OptionalNullable[str] = UNSET,
         subject: Optional[str] = None,
         seconds_until_expiration: OptionalNullable[float] = UNSET,
@@ -704,7 +704,7 @@ class APIKeys(BaseSDK):
             api_key_id=api_key_id,
             request_body=models.UpdateAPIKeyRequestBody(
                 claims=claims,
-                scopes=scopes,
+                scopes=utils.unmarshal(scopes, Optional[List[str]]),
                 description=description,
                 subject=subject,
                 seconds_until_expiration=seconds_until_expiration,
@@ -789,7 +789,7 @@ class APIKeys(BaseSDK):
         *,
         api_key_id: str,
         claims: OptionalNullable[Any] = UNSET,
-        scopes: Optional[List[str]] = None,
+        scopes: Optional[Iterable[str]] = None,
         description: OptionalNullable[str] = UNSET,
         subject: Optional[str] = None,
         seconds_until_expiration: OptionalNullable[float] = UNSET,
@@ -825,7 +825,7 @@ class APIKeys(BaseSDK):
             api_key_id=api_key_id,
             request_body=models.UpdateAPIKeyRequestBody(
                 claims=claims,
-                scopes=scopes,
+                scopes=utils.unmarshal(scopes, Optional[List[str]]),
                 description=description,
                 subject=subject,
                 seconds_until_expiration=seconds_until_expiration,

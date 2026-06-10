@@ -5,7 +5,7 @@ from clerk_backend_api import models, utils
 from clerk_backend_api._hooks import HookContext
 from clerk_backend_api.types import OptionalNullable, UNSET
 from clerk_backend_api.utils.unmarshal_json_response import unmarshal_json_response
-from typing import Any, List, Mapping, Optional
+from typing import Any, Iterable, List, Mapping, Optional
 
 
 class OrganizationDomainsSDK(BaseSDK):
@@ -1046,9 +1046,9 @@ class OrganizationDomainsSDK(BaseSDK):
         *,
         organization_id: Optional[str] = None,
         verified: Optional[models.Verified] = None,
-        enrollment_mode: Optional[List[models.QueryParamEnrollmentMode]] = None,
+        enrollment_mode: Optional[Iterable[models.QueryParamEnrollmentMode]] = None,
         query: Optional[str] = None,
-        domains: Optional[List[str]] = None,
+        domains: Optional[Iterable[str]] = None,
         order_by: Optional[str] = "-created_at",
         offset: Optional[int] = 0,
         limit: Optional[int] = 10,
@@ -1107,9 +1107,11 @@ class OrganizationDomainsSDK(BaseSDK):
         request = models.ListAllOrganizationDomainsRequest(
             organization_id=organization_id,
             verified=verified,
-            enrollment_mode=enrollment_mode,
+            enrollment_mode=utils.unmarshal(
+                enrollment_mode, Optional[List[models.QueryParamEnrollmentMode]]
+            ),
             query=query,
-            domains=domains,
+            domains=utils.unmarshal(domains, Optional[List[str]]),
             order_by=order_by,
             offset=offset,
             limit=limit,
@@ -1177,9 +1179,9 @@ class OrganizationDomainsSDK(BaseSDK):
         *,
         organization_id: Optional[str] = None,
         verified: Optional[models.Verified] = None,
-        enrollment_mode: Optional[List[models.QueryParamEnrollmentMode]] = None,
+        enrollment_mode: Optional[Iterable[models.QueryParamEnrollmentMode]] = None,
         query: Optional[str] = None,
-        domains: Optional[List[str]] = None,
+        domains: Optional[Iterable[str]] = None,
         order_by: Optional[str] = "-created_at",
         offset: Optional[int] = 0,
         limit: Optional[int] = 10,
@@ -1238,9 +1240,11 @@ class OrganizationDomainsSDK(BaseSDK):
         request = models.ListAllOrganizationDomainsRequest(
             organization_id=organization_id,
             verified=verified,
-            enrollment_mode=enrollment_mode,
+            enrollment_mode=utils.unmarshal(
+                enrollment_mode, Optional[List[models.QueryParamEnrollmentMode]]
+            ),
             query=query,
-            domains=domains,
+            domains=utils.unmarshal(domains, Optional[List[str]]),
             order_by=order_by,
             offset=offset,
             limit=limit,

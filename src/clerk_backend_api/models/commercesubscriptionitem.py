@@ -8,16 +8,20 @@ from .commercepaymentmethodresponse import (
     CommercePaymentMethodResponseTypedDict,
 )
 from .commerceperunittotal import CommercePerUnitTotal, CommercePerUnitTotalTypedDict
-from .commerceperunittotaltier import (
-    CommercePerUnitTotalTier,
-    CommercePerUnitTotalTierTypedDict,
-)
 from .commerceplanunitprice import CommercePlanUnitPrice, CommercePlanUnitPriceTypedDict
 from .commercesubscriptioncreditresponse import (
     CommerceSubscriptionCreditResponse,
     CommerceSubscriptionCreditResponseTypedDict,
 )
 from .featureresponse import FeatureResponse, FeatureResponseTypedDict
+from .schemas_commerceperunittotal import (
+    SchemasCommercePerUnitTotal,
+    SchemasCommercePerUnitTotalTypedDict,
+)
+from .schemas_commerceperunittotaltier import (
+    SchemasCommercePerUnitTotalTier,
+    SchemasCommercePerUnitTotalTierTypedDict,
+)
 from clerk_backend_api.types import (
     BaseModel,
     Nullable,
@@ -338,7 +342,7 @@ class PlanPeriod(str, Enum):
 
 
 class CommerceSubscriptionItemAmountTypedDict(TypedDict):
-    r"""Amount for the next payment."""
+    r"""Base plan fee for the next payment. Does not include per-unit (e.g. seat) charges; see `totals.grand_total` for the full amount."""
 
     amount: int
     r"""The amount in cents."""
@@ -351,7 +355,7 @@ class CommerceSubscriptionItemAmountTypedDict(TypedDict):
 
 
 class CommerceSubscriptionItemAmount(BaseModel):
-    r"""Amount for the next payment."""
+    r"""Base plan fee for the next payment. Does not include per-unit (e.g. seat) charges; see `totals.grand_total` for the full amount."""
 
     amount: int
     r"""The amount in cents."""
@@ -366,28 +370,191 @@ class CommerceSubscriptionItemAmount(BaseModel):
     r"""The currency symbol (e.g., \"$\")."""
 
 
+class CommerceSubscriptionItemNextPaymentTotalsProrationTypedDict(TypedDict):
+    amount: CommerceMoneyResponseTypedDict
+    cycle_days_remaining: int
+    cycle_days_total: int
+    cycle_remaining_percent: float
+
+
+class CommerceSubscriptionItemNextPaymentTotalsProration(BaseModel):
+    amount: CommerceMoneyResponse
+
+    cycle_days_remaining: int
+
+    cycle_days_total: int
+
+    cycle_remaining_percent: float
+
+
+class CommerceSubscriptionItemNextPaymentPayerTypedDict(TypedDict):
+    remaining_balance: CommerceMoneyResponseTypedDict
+    applied_amount: CommerceMoneyResponseTypedDict
+
+
+class CommerceSubscriptionItemNextPaymentPayer(BaseModel):
+    remaining_balance: CommerceMoneyResponse
+
+    applied_amount: CommerceMoneyResponse
+
+
+class CommerceSubscriptionItemNextPaymentCreditsTypedDict(TypedDict):
+    proration: Nullable[CommerceSubscriptionItemNextPaymentTotalsProrationTypedDict]
+    payer: Nullable[CommerceSubscriptionItemNextPaymentPayerTypedDict]
+    total: CommerceMoneyResponseTypedDict
+
+
+class CommerceSubscriptionItemNextPaymentCredits(BaseModel):
+    proration: Nullable[CommerceSubscriptionItemNextPaymentTotalsProration]
+
+    payer: Nullable[CommerceSubscriptionItemNextPaymentPayer]
+
+    total: CommerceMoneyResponse
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+
+            if val != UNSET_SENTINEL:
+                m[k] = val
+
+        return m
+
+
+class CommerceSubscriptionItemNextPaymentProrationTypedDict(TypedDict):
+    amount: CommerceMoneyResponseTypedDict
+    cycle_days_passed: int
+    cycle_days_total: int
+    cycle_passed_percent: float
+
+
+class CommerceSubscriptionItemNextPaymentProration(BaseModel):
+    amount: CommerceMoneyResponse
+
+    cycle_days_passed: int
+
+    cycle_days_total: int
+
+    cycle_passed_percent: float
+
+
+class CommerceSubscriptionItemDiscountsTypedDict(TypedDict):
+    proration: Nullable[CommerceSubscriptionItemNextPaymentProrationTypedDict]
+    total: CommerceMoneyResponseTypedDict
+
+
+class CommerceSubscriptionItemDiscounts(BaseModel):
+    proration: Nullable[CommerceSubscriptionItemNextPaymentProration]
+
+    total: CommerceMoneyResponse
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+
+            if val != UNSET_SENTINEL:
+                m[k] = val
+
+        return m
+
+
+class CommerceSubscriptionItemTotalsTypedDict(TypedDict):
+    r"""Breakdown of the recurring amount that will be billed at renewal (base fee + per-unit charges). Tax and credits are not previewed."""
+
+    subtotal: CommerceMoneyResponseTypedDict
+    base_fee: CommerceMoneyResponseTypedDict
+    tax_total: CommerceMoneyResponseTypedDict
+    grand_total: CommerceMoneyResponseTypedDict
+    per_unit_totals: NotRequired[List[CommercePerUnitTotalTypedDict]]
+    credits: NotRequired[Nullable[CommerceSubscriptionItemNextPaymentCreditsTypedDict]]
+    discounts: NotRequired[Nullable[CommerceSubscriptionItemDiscountsTypedDict]]
+
+
+class CommerceSubscriptionItemTotals(BaseModel):
+    r"""Breakdown of the recurring amount that will be billed at renewal (base fee + per-unit charges). Tax and credits are not previewed."""
+
+    subtotal: CommerceMoneyResponse
+
+    base_fee: CommerceMoneyResponse
+
+    tax_total: CommerceMoneyResponse
+
+    grand_total: CommerceMoneyResponse
+
+    per_unit_totals: Optional[List[CommercePerUnitTotal]] = None
+
+    credits: OptionalNullable[CommerceSubscriptionItemNextPaymentCredits] = UNSET
+
+    discounts: OptionalNullable[CommerceSubscriptionItemDiscounts] = UNSET
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["per_unit_totals", "credits", "discounts"])
+        nullable_fields = set(["credits", "discounts"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+            is_nullable_and_explicitly_set = (
+                k in nullable_fields
+                and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
+            )
+
+            if val != UNSET_SENTINEL:
+                if (
+                    val is not None
+                    or k not in optional_fields
+                    or is_nullable_and_explicitly_set
+                ):
+                    m[k] = val
+
+        return m
+
+
 class NextPaymentTypedDict(TypedDict):
     r"""Information about the next payment."""
 
     amount: NotRequired[Nullable[CommerceSubscriptionItemAmountTypedDict]]
-    r"""Amount for the next payment."""
+    r"""Base plan fee for the next payment. Does not include per-unit (e.g. seat) charges; see `totals.grand_total` for the full amount."""
     date_: NotRequired[Nullable[int]]
     r"""Unix timestamp (in milliseconds) for the next payment date."""
+    per_unit_totals: NotRequired[List[CommercePerUnitTotalTypedDict]]
+    r"""Per-unit total breakdown (for example, seats) for the next payment."""
+    totals: NotRequired[Nullable[CommerceSubscriptionItemTotalsTypedDict]]
+    r"""Breakdown of the recurring amount that will be billed at renewal (base fee + per-unit charges). Tax and credits are not previewed."""
 
 
 class NextPayment(BaseModel):
     r"""Information about the next payment."""
 
     amount: OptionalNullable[CommerceSubscriptionItemAmount] = UNSET
-    r"""Amount for the next payment."""
+    r"""Base plan fee for the next payment. Does not include per-unit (e.g. seat) charges; see `totals.grand_total` for the full amount."""
 
     date_: Annotated[OptionalNullable[int], pydantic.Field(alias="date")] = UNSET
     r"""Unix timestamp (in milliseconds) for the next payment date."""
 
+    per_unit_totals: Optional[List[CommercePerUnitTotal]] = None
+    r"""Per-unit total breakdown (for example, seats) for the next payment."""
+
+    totals: OptionalNullable[CommerceSubscriptionItemTotals] = UNSET
+    r"""Breakdown of the recurring amount that will be billed at renewal (base fee + per-unit charges). Tax and credits are not previewed."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["amount", "date"])
-        nullable_fields = set(["amount", "date"])
+        optional_fields = set(["amount", "date", "per_unit_totals", "totals"])
+        nullable_fields = set(["amount", "date", "totals"])
         serialized = handler(self)
         m = {}
 
@@ -415,7 +582,7 @@ class SeatsTypedDict(TypedDict):
 
     quantity: Nullable[int]
     r"""Seat quantity being billed; null means unlimited"""
-    tiers: NotRequired[List[CommercePerUnitTotalTierTypedDict]]
+    tiers: NotRequired[List[SchemasCommercePerUnitTotalTierTypedDict]]
     r"""Per-unit cost breakdown by pricing tier"""
 
 
@@ -425,7 +592,7 @@ class Seats(BaseModel):
     quantity: Nullable[int]
     r"""Seat quantity being billed; null means unlimited"""
 
-    tiers: Optional[List[CommercePerUnitTotalTier]] = None
+    tiers: Optional[List[SchemasCommercePerUnitTotalTier]] = None
     r"""Per-unit cost breakdown by pricing tier"""
 
     @model_serializer(mode="wrap")
@@ -510,6 +677,64 @@ class CommerceSubscriptionItemCredits(BaseModel):
         return m
 
 
+class CommerceSubscriptionItemTotalsProrationTypedDict(TypedDict):
+    r"""Proration details from passed subscription time"""
+
+    amount: CommerceMoneyResponseTypedDict
+    cycle_days_passed: int
+    r"""Number of days that have passed in the billing cycle"""
+    cycle_days_total: int
+    r"""Total number of days in the billing cycle"""
+    cycle_passed_percent: float
+    r"""Percentage of the billing cycle that has passed"""
+
+
+class CommerceSubscriptionItemTotalsProration(BaseModel):
+    r"""Proration details from passed subscription time"""
+
+    amount: CommerceMoneyResponse
+
+    cycle_days_passed: int
+    r"""Number of days that have passed in the billing cycle"""
+
+    cycle_days_total: int
+    r"""Total number of days in the billing cycle"""
+
+    cycle_passed_percent: float
+    r"""Percentage of the billing cycle that has passed"""
+
+
+class DiscountsTypedDict(TypedDict):
+    r"""Information about the discounts applied to the payment"""
+
+    proration: Nullable[CommerceSubscriptionItemTotalsProrationTypedDict]
+    r"""Proration details from passed subscription time"""
+    total: CommerceMoneyResponseTypedDict
+
+
+class Discounts(BaseModel):
+    r"""Information about the discounts applied to the payment"""
+
+    proration: Nullable[CommerceSubscriptionItemTotalsProration]
+    r"""Proration details from passed subscription time"""
+
+    total: CommerceMoneyResponse
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+
+            if val != UNSET_SENTINEL:
+                m[k] = val
+
+        return m
+
+
 class TotalsTypedDict(TypedDict):
     r"""Totals for this subscription item."""
 
@@ -517,8 +742,10 @@ class TotalsTypedDict(TypedDict):
     base_fee: CommerceMoneyResponseTypedDict
     tax_total: CommerceMoneyResponseTypedDict
     grand_total: CommerceMoneyResponseTypedDict
-    per_unit_totals: NotRequired[List[CommercePerUnitTotalTypedDict]]
+    per_unit_totals: NotRequired[List[SchemasCommercePerUnitTotalTypedDict]]
     credits: NotRequired[Nullable[CommerceSubscriptionItemCreditsTypedDict]]
+    discounts: NotRequired[Nullable[DiscountsTypedDict]]
+    r"""Information about the discounts applied to the payment"""
 
 
 class Totals(BaseModel):
@@ -532,14 +759,17 @@ class Totals(BaseModel):
 
     grand_total: CommerceMoneyResponse
 
-    per_unit_totals: Optional[List[CommercePerUnitTotal]] = None
+    per_unit_totals: Optional[List[SchemasCommercePerUnitTotal]] = None
 
     credits: OptionalNullable[CommerceSubscriptionItemCredits] = UNSET
 
+    discounts: OptionalNullable[Discounts] = UNSET
+    r"""Information about the discounts applied to the payment"""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["per_unit_totals", "credits"])
-        nullable_fields = set(["credits"])
+        optional_fields = set(["per_unit_totals", "credits", "discounts"])
+        nullable_fields = set(["credits", "discounts"])
         serialized = handler(self)
         m = {}
 

@@ -5,7 +5,7 @@ from clerk_backend_api import models, utils
 from clerk_backend_api._hooks import HookContext
 from clerk_backend_api.types import BaseModel, OptionalNullable, UNSET
 from clerk_backend_api.utils.unmarshal_json_response import unmarshal_json_response
-from typing import Any, List, Mapping, Optional, Union, cast
+from typing import Any, Iterable, List, Mapping, Optional, Union, cast
 from typing_extensions import deprecated
 
 
@@ -20,7 +20,7 @@ class SamlConnectionsSDK(BaseSDK):
         offset: Optional[int] = 0,
         query: Optional[str] = None,
         order_by: Optional[str] = None,
-        organization_id: Optional[List[str]] = None,
+        organization_id: Optional[Iterable[str]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -69,7 +69,7 @@ class SamlConnectionsSDK(BaseSDK):
             offset=offset,
             query=query,
             order_by=order_by,
-            organization_id=organization_id,
+            organization_id=utils.unmarshal(organization_id, Optional[List[str]]),
         )
 
         req = self._build_request(
@@ -139,7 +139,7 @@ class SamlConnectionsSDK(BaseSDK):
         offset: Optional[int] = 0,
         query: Optional[str] = None,
         order_by: Optional[str] = None,
-        organization_id: Optional[List[str]] = None,
+        organization_id: Optional[Iterable[str]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -188,7 +188,7 @@ class SamlConnectionsSDK(BaseSDK):
             offset=offset,
             query=query,
             order_by=order_by,
-            organization_id=organization_id,
+            organization_id=utils.unmarshal(organization_id, Optional[List[str]]),
         )
 
         req = self._build_request_async(
@@ -665,7 +665,7 @@ class SamlConnectionsSDK(BaseSDK):
         saml_connection_id: str,
         name: OptionalNullable[str] = UNSET,
         domain: OptionalNullable[str] = UNSET,
-        domains: OptionalNullable[List[str]] = UNSET,
+        domains: OptionalNullable[Iterable[str]] = UNSET,
         idp_entity_id: OptionalNullable[str] = UNSET,
         idp_sso_url: OptionalNullable[str] = UNSET,
         idp_certificate: OptionalNullable[str] = UNSET,
@@ -732,7 +732,7 @@ class SamlConnectionsSDK(BaseSDK):
             request_body=models.UpdateSAMLConnectionRequestBody(
                 name=name,
                 domain=domain,
-                domains=domains,
+                domains=utils.unmarshal(domains, OptionalNullable[List[str]]),
                 idp_entity_id=idp_entity_id,
                 idp_sso_url=idp_sso_url,
                 idp_certificate=idp_certificate,
@@ -828,7 +828,7 @@ class SamlConnectionsSDK(BaseSDK):
         saml_connection_id: str,
         name: OptionalNullable[str] = UNSET,
         domain: OptionalNullable[str] = UNSET,
-        domains: OptionalNullable[List[str]] = UNSET,
+        domains: OptionalNullable[Iterable[str]] = UNSET,
         idp_entity_id: OptionalNullable[str] = UNSET,
         idp_sso_url: OptionalNullable[str] = UNSET,
         idp_certificate: OptionalNullable[str] = UNSET,
@@ -895,7 +895,7 @@ class SamlConnectionsSDK(BaseSDK):
             request_body=models.UpdateSAMLConnectionRequestBody(
                 name=name,
                 domain=domain,
-                domains=domains,
+                domains=utils.unmarshal(domains, OptionalNullable[List[str]]),
                 idp_entity_id=idp_entity_id,
                 idp_sso_url=idp_sso_url,
                 idp_certificate=idp_certificate,
