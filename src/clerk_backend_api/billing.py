@@ -462,6 +462,9 @@ class Billing(BaseSDK):
         currency: Optional[str] = "USD",
         annual_monthly_amount: OptionalNullable[int] = UNSET,
         description: Optional[str] = None,
+        supported_billing_periods: Optional[
+            models.CreateBillingPriceRequestSupportedBillingPeriods
+        ] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -477,6 +480,7 @@ class Billing(BaseSDK):
         :param currency: The currency code (e.g., \"USD\"). Defaults to USD.
         :param annual_monthly_amount: The monthly amount in cents when billed annually. Must be at least $1 (100 cents) if not null.
         :param description: An optional description for this custom price.
+        :param supported_billing_periods: Which billing periods this price supports. Inferred from amounts if omitted.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -498,6 +502,7 @@ class Billing(BaseSDK):
             amount=amount,
             annual_monthly_amount=annual_monthly_amount,
             description=description,
+            supported_billing_periods=supported_billing_periods,
         )
 
         req = self._build_request(
@@ -573,6 +578,9 @@ class Billing(BaseSDK):
         currency: Optional[str] = "USD",
         annual_monthly_amount: OptionalNullable[int] = UNSET,
         description: Optional[str] = None,
+        supported_billing_periods: Optional[
+            models.CreateBillingPriceRequestSupportedBillingPeriods
+        ] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -588,6 +596,7 @@ class Billing(BaseSDK):
         :param currency: The currency code (e.g., \"USD\"). Defaults to USD.
         :param annual_monthly_amount: The monthly amount in cents when billed annually. Must be at least $1 (100 cents) if not null.
         :param description: An optional description for this custom price.
+        :param supported_billing_periods: Which billing periods this price supports. Inferred from amounts if omitted.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -609,6 +618,7 @@ class Billing(BaseSDK):
             amount=amount,
             annual_monthly_amount=annual_monthly_amount,
             description=description,
+            supported_billing_periods=supported_billing_periods,
         )
 
         req = self._build_request_async(

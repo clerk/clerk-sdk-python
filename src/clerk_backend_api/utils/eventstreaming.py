@@ -53,6 +53,9 @@ class EventStream(Generic[T]):
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
+        self.close()
+
+    def close(self):
         self._closed = True
         self.response.close()
 
@@ -92,6 +95,9 @@ class EventStreamAsync(Generic[T]):
         return self
 
     async def __aexit__(self, exc_type, exc_val, exc_tb):
+        await self.close()
+
+    async def close(self):
         self._closed = True
         await self.response.aclose()
 
@@ -124,52 +130,54 @@ async def stream_events_async(
     sentinel: Optional[str] = None,
     data_required: bool = True,
 ) -> AsyncGenerator[T, None]:
-    buffer = bytearray()
-    position = 0
-    event_id: Optional[str] = None
-    async for chunk in response.aiter_bytes():
-        if len(buffer) == 0 and chunk.startswith(UTF8_BOM):
-            chunk = chunk[len(UTF8_BOM) :]
-        buffer += chunk
-        for i in range(position, len(buffer)):
-            char = buffer[i : i + 1]
-            seq: Optional[bytes] = None
-            if char in [b"\r", b"\n"]:
-                for boundary in MESSAGE_BOUNDARIES:
-                    seq = _peek_sequence(i, buffer, boundary)
-                    if seq is not None:
-                        break
-            if seq is None:
-                continue
+    try:
+        buffer = bytearray()
+        position = 0
+        event_id: Optional[str] = None
+        async for chunk in response.aiter_bytes():
+            if len(buffer) == 0 and chunk.startswith(UTF8_BOM):
+                chunk = chunk[len(UTF8_BOM) :]
+            buffer += chunk
+            for i in range(position, len(buffer)):
+                char = buffer[i : i + 1]
+                seq: Optional[bytes] = None
+                if char in [b"\r", b"\n"]:
+                    for boundary in MESSAGE_BOUNDARIES:
+                        seq = _peek_sequence(i, buffer, boundary)
+                        if seq is not None:
+                            break
+                if seq is None:
+                    continue
 
-            block = buffer[position:i]
-            position = i + len(seq)
-            event, discard, event_id = _parse_event(
-                raw=block,
-                decoder=decoder,
-                sentinel=sentinel,
-                event_id=event_id,
-                data_required=data_required,
-            )
-            if event is not None:
-                yield event
-            if discard:
-                await response.aclose()
-                return
+                block = buffer[position:i]
+                position = i + len(seq)
+                event, discard, event_id = _parse_event(
+                    raw=block,
+                    decoder=decoder,
+                    sentinel=sentinel,
+                    event_id=event_id,
+                    data_required=data_required,
+                )
+                if event is not None:
+                    yield event
+                if discard:
+                    return
 
-        if position > 0:
-            buffer = buffer[position:]
-            position = 0
+            if position > 0:
+                buffer = buffer[position:]
+                position = 0
 
-    event, discard, _ = _parse_event(
-        raw=buffer,
-        decoder=decoder,
-        sentinel=sentinel,
-        event_id=event_id,
-        data_required=data_required,
-    )
-    if event is not None:
-        yield event
+        event, discard, _ = _parse_event(
+            raw=buffer,
+            decoder=decoder,
+            sentinel=sentinel,
+            event_id=event_id,
+            data_required=data_required,
+        )
+        if event is not None:
+            yield event
+    finally:
+        await response.aclose()
 
 
 def stream_events(
@@ -178,52 +186,54 @@ def stream_events(
     sentinel: Optional[str] = None,
     data_required: bool = True,
 ) -> Generator[T, None, None]:
-    buffer = bytearray()
-    position = 0
-    event_id: Optional[str] = None
-    for chunk in response.iter_bytes():
-        if len(buffer) == 0 and chunk.startswith(UTF8_BOM):
-            chunk = chunk[len(UTF8_BOM) :]
-        buffer += chunk
-        for i in range(position, len(buffer)):
-            char = buffer[i : i + 1]
-            seq: Optional[bytes] = None
-            if char in [b"\r", b"\n"]:
-                for boundary in MESSAGE_BOUNDARIES:
-                    seq = _peek_sequence(i, buffer, boundary)
-                    if seq is not None:
-                        break
-            if seq is None:
-                continue
+    try:
+        buffer = bytearray()
+        position = 0
+        event_id: Optional[str] = None
+        for chunk in response.iter_bytes():
+            if len(buffer) == 0 and chunk.startswith(UTF8_BOM):
+                chunk = chunk[len(UTF8_BOM) :]
+            buffer += chunk
+            for i in range(position, len(buffer)):
+                char = buffer[i : i + 1]
+                seq: Optional[bytes] = None
+                if char in [b"\r", b"\n"]:
+                    for boundary in MESSAGE_BOUNDARIES:
+                        seq = _peek_sequence(i, buffer, boundary)
+                        if seq is not None:
+                            break
+                if seq is None:
+                    continue
 
-            block = buffer[position:i]
-            position = i + len(seq)
-            event, discard, event_id = _parse_event(
-                raw=block,
-                decoder=decoder,
-                sentinel=sentinel,
-                event_id=event_id,
-                data_required=data_required,
-            )
-            if event is not None:
-                yield event
-            if discard:
-                response.close()
-                return
+                block = buffer[position:i]
+                position = i + len(seq)
+                event, discard, event_id = _parse_event(
+                    raw=block,
+                    decoder=decoder,
+                    sentinel=sentinel,
+                    event_id=event_id,
+                    data_required=data_required,
+                )
+                if event is not None:
+                    yield event
+                if discard:
+                    return
 
-        if position > 0:
-            buffer = buffer[position:]
-            position = 0
+            if position > 0:
+                buffer = buffer[position:]
+                position = 0
 
-    event, discard, _ = _parse_event(
-        raw=buffer,
-        decoder=decoder,
-        sentinel=sentinel,
-        event_id=event_id,
-        data_required=data_required,
-    )
-    if event is not None:
-        yield event
+        event, discard, _ = _parse_event(
+            raw=buffer,
+            decoder=decoder,
+            sentinel=sentinel,
+            event_id=event_id,
+            data_required=data_required,
+        )
+        if event is not None:
+            yield event
+    finally:
+        response.close()
 
 
 def _parse_event(

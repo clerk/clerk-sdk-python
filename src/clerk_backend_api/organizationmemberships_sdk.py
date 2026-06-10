@@ -5,7 +5,7 @@ from clerk_backend_api import models, utils
 from clerk_backend_api._hooks import HookContext
 from clerk_backend_api.types import OptionalNullable, UNSET
 from clerk_backend_api.utils.unmarshal_json_response import unmarshal_json_response
-from typing import Any, Dict, List, Mapping, Optional
+from typing import Any, Dict, Iterable, List, Mapping, Optional
 
 
 class OrganizationMembershipsSDK(BaseSDK):
@@ -15,8 +15,8 @@ class OrganizationMembershipsSDK(BaseSDK):
         organization_id: str,
         user_id: str,
         role: str,
-        public_metadata: OptionalNullable[Dict[str, Any]] = UNSET,
-        private_metadata: OptionalNullable[Dict[str, Any]] = UNSET,
+        public_metadata: OptionalNullable[Mapping[str, Any]] = UNSET,
+        private_metadata: OptionalNullable[Mapping[str, Any]] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -51,8 +51,12 @@ class OrganizationMembershipsSDK(BaseSDK):
             request_body=models.CreateOrganizationMembershipRequestBody(
                 user_id=user_id,
                 role=role,
-                public_metadata=public_metadata,
-                private_metadata=private_metadata,
+                public_metadata=utils.unmarshal(
+                    public_metadata, OptionalNullable[Dict[str, Any]]
+                ),
+                private_metadata=utils.unmarshal(
+                    private_metadata, OptionalNullable[Dict[str, Any]]
+                ),
             ),
         )
 
@@ -128,8 +132,8 @@ class OrganizationMembershipsSDK(BaseSDK):
         organization_id: str,
         user_id: str,
         role: str,
-        public_metadata: OptionalNullable[Dict[str, Any]] = UNSET,
-        private_metadata: OptionalNullable[Dict[str, Any]] = UNSET,
+        public_metadata: OptionalNullable[Mapping[str, Any]] = UNSET,
+        private_metadata: OptionalNullable[Mapping[str, Any]] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -164,8 +168,12 @@ class OrganizationMembershipsSDK(BaseSDK):
             request_body=models.CreateOrganizationMembershipRequestBody(
                 user_id=user_id,
                 role=role,
-                public_metadata=public_metadata,
-                private_metadata=private_metadata,
+                public_metadata=utils.unmarshal(
+                    public_metadata, OptionalNullable[Dict[str, Any]]
+                ),
+                private_metadata=utils.unmarshal(
+                    private_metadata, OptionalNullable[Dict[str, Any]]
+                ),
             ),
         )
 
@@ -240,12 +248,12 @@ class OrganizationMembershipsSDK(BaseSDK):
         *,
         organization_id: str,
         order_by: Optional[str] = None,
-        user_id: Optional[List[str]] = None,
-        email_address: Optional[List[str]] = None,
-        phone_number: Optional[List[str]] = None,
-        username: Optional[List[str]] = None,
-        web3_wallet: Optional[List[str]] = None,
-        role: Optional[List[str]] = None,
+        user_id: Optional[Iterable[str]] = None,
+        email_address: Optional[Iterable[str]] = None,
+        phone_number: Optional[Iterable[str]] = None,
+        username: Optional[Iterable[str]] = None,
+        web3_wallet: Optional[Iterable[str]] = None,
+        role: Optional[Iterable[str]] = None,
         query: Optional[str] = None,
         email_address_query: Optional[str] = None,
         phone_number_query: Optional[str] = None,
@@ -322,12 +330,12 @@ class OrganizationMembershipsSDK(BaseSDK):
         request = models.ListOrganizationMembershipsRequest(
             organization_id=organization_id,
             order_by=order_by,
-            user_id=user_id,
-            email_address=email_address,
-            phone_number=phone_number,
-            username=username,
-            web3_wallet=web3_wallet,
-            role=role,
+            user_id=utils.unmarshal(user_id, Optional[List[str]]),
+            email_address=utils.unmarshal(email_address, Optional[List[str]]),
+            phone_number=utils.unmarshal(phone_number, Optional[List[str]]),
+            username=utils.unmarshal(username, Optional[List[str]]),
+            web3_wallet=utils.unmarshal(web3_wallet, Optional[List[str]]),
+            role=utils.unmarshal(role, Optional[List[str]]),
             query=query,
             email_address_query=email_address_query,
             phone_number_query=phone_number_query,
@@ -403,12 +411,12 @@ class OrganizationMembershipsSDK(BaseSDK):
         *,
         organization_id: str,
         order_by: Optional[str] = None,
-        user_id: Optional[List[str]] = None,
-        email_address: Optional[List[str]] = None,
-        phone_number: Optional[List[str]] = None,
-        username: Optional[List[str]] = None,
-        web3_wallet: Optional[List[str]] = None,
-        role: Optional[List[str]] = None,
+        user_id: Optional[Iterable[str]] = None,
+        email_address: Optional[Iterable[str]] = None,
+        phone_number: Optional[Iterable[str]] = None,
+        username: Optional[Iterable[str]] = None,
+        web3_wallet: Optional[Iterable[str]] = None,
+        role: Optional[Iterable[str]] = None,
         query: Optional[str] = None,
         email_address_query: Optional[str] = None,
         phone_number_query: Optional[str] = None,
@@ -485,12 +493,12 @@ class OrganizationMembershipsSDK(BaseSDK):
         request = models.ListOrganizationMembershipsRequest(
             organization_id=organization_id,
             order_by=order_by,
-            user_id=user_id,
-            email_address=email_address,
-            phone_number=phone_number,
-            username=username,
-            web3_wallet=web3_wallet,
-            role=role,
+            user_id=utils.unmarshal(user_id, Optional[List[str]]),
+            email_address=utils.unmarshal(email_address, Optional[List[str]]),
+            phone_number=utils.unmarshal(phone_number, Optional[List[str]]),
+            username=utils.unmarshal(username, Optional[List[str]]),
+            web3_wallet=utils.unmarshal(web3_wallet, Optional[List[str]]),
+            role=utils.unmarshal(role, Optional[List[str]]),
             query=query,
             email_address_query=email_address_query,
             phone_number_query=phone_number_query,
@@ -962,8 +970,8 @@ class OrganizationMembershipsSDK(BaseSDK):
         *,
         organization_id: str,
         user_id: str,
-        public_metadata: Optional[Dict[str, Any]] = None,
-        private_metadata: Optional[Dict[str, Any]] = None,
+        public_metadata: Optional[Mapping[str, Any]] = None,
+        private_metadata: Optional[Mapping[str, Any]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1000,8 +1008,12 @@ class OrganizationMembershipsSDK(BaseSDK):
             organization_id=organization_id,
             user_id=user_id,
             request_body=models.UpdateOrganizationMembershipMetadataRequestBody(
-                public_metadata=public_metadata,
-                private_metadata=private_metadata,
+                public_metadata=utils.unmarshal(
+                    public_metadata, Optional[Dict[str, Any]]
+                ),
+                private_metadata=utils.unmarshal(
+                    private_metadata, Optional[Dict[str, Any]]
+                ),
             ),
         )
 
@@ -1074,8 +1086,8 @@ class OrganizationMembershipsSDK(BaseSDK):
         *,
         organization_id: str,
         user_id: str,
-        public_metadata: Optional[Dict[str, Any]] = None,
-        private_metadata: Optional[Dict[str, Any]] = None,
+        public_metadata: Optional[Mapping[str, Any]] = None,
+        private_metadata: Optional[Mapping[str, Any]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1112,8 +1124,12 @@ class OrganizationMembershipsSDK(BaseSDK):
             organization_id=organization_id,
             user_id=user_id,
             request_body=models.UpdateOrganizationMembershipMetadataRequestBody(
-                public_metadata=public_metadata,
-                private_metadata=private_metadata,
+                public_metadata=utils.unmarshal(
+                    public_metadata, Optional[Dict[str, Any]]
+                ),
+                private_metadata=utils.unmarshal(
+                    private_metadata, Optional[Dict[str, Any]]
+                ),
             ),
         )
 

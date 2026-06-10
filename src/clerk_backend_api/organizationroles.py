@@ -5,7 +5,7 @@ from clerk_backend_api import models, utils
 from clerk_backend_api._hooks import HookContext
 from clerk_backend_api.types import OptionalNullable, UNSET
 from clerk_backend_api.utils.unmarshal_json_response import unmarshal_json_response
-from typing import Any, List, Mapping, Optional
+from typing import Any, Iterable, List, Mapping, Optional
 
 
 class OrganizationRoles(BaseSDK):
@@ -241,7 +241,7 @@ class OrganizationRoles(BaseSDK):
         name: str,
         key: str,
         description: OptionalNullable[str] = UNSET,
-        permissions: OptionalNullable[List[str]] = UNSET,
+        permissions: OptionalNullable[Iterable[str]] = UNSET,
         include_in_initial_role_set: OptionalNullable[bool] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -279,7 +279,7 @@ class OrganizationRoles(BaseSDK):
             name=name,
             key=key,
             description=description,
-            permissions=permissions,
+            permissions=utils.unmarshal(permissions, OptionalNullable[List[str]]),
             include_in_initial_role_set=include_in_initial_role_set,
         )
 
@@ -351,7 +351,7 @@ class OrganizationRoles(BaseSDK):
         name: str,
         key: str,
         description: OptionalNullable[str] = UNSET,
-        permissions: OptionalNullable[List[str]] = UNSET,
+        permissions: OptionalNullable[Iterable[str]] = UNSET,
         include_in_initial_role_set: OptionalNullable[bool] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -389,7 +389,7 @@ class OrganizationRoles(BaseSDK):
             name=name,
             key=key,
             description=description,
-            permissions=permissions,
+            permissions=utils.unmarshal(permissions, OptionalNullable[List[str]]),
             include_in_initial_role_set=include_in_initial_role_set,
         )
 
@@ -642,7 +642,7 @@ class OrganizationRoles(BaseSDK):
         name: OptionalNullable[str] = UNSET,
         key: OptionalNullable[str] = UNSET,
         description: OptionalNullable[str] = UNSET,
-        permissions: OptionalNullable[List[str]] = UNSET,
+        permissions: OptionalNullable[Iterable[str]] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -681,7 +681,7 @@ class OrganizationRoles(BaseSDK):
                 name=name,
                 key=key,
                 description=description,
-                permissions=permissions,
+                permissions=utils.unmarshal(permissions, OptionalNullable[List[str]]),
             ),
         )
 
@@ -758,7 +758,7 @@ class OrganizationRoles(BaseSDK):
         name: OptionalNullable[str] = UNSET,
         key: OptionalNullable[str] = UNSET,
         description: OptionalNullable[str] = UNSET,
-        permissions: OptionalNullable[List[str]] = UNSET,
+        permissions: OptionalNullable[Iterable[str]] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -797,7 +797,7 @@ class OrganizationRoles(BaseSDK):
                 name=name,
                 key=key,
                 description=description,
-                permissions=permissions,
+                permissions=utils.unmarshal(permissions, OptionalNullable[List[str]]),
             ),
         )
 

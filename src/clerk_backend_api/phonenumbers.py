@@ -813,11 +813,450 @@ class PhoneNumbers(BaseSDK):
 
         raise models.SDKError("Unexpected response received", http_res)
 
+    def prepare_verification(
+        self,
+        *,
+        phone_number_id: str,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.VerificationResponse:
+        r"""Send a verification code to a phone number
+
+        Sends a one-time code to the given phone number so that a backend can
+        verify the user controls it (for example, in a custom, backend-driven
+        sign-in flow). The code is tracked on its own verification; confirm it
+        with attempt_verification.
+
+        :param phone_number_id: The ID of the phone number to send the verification code to
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.PreparePhoneNumberVerificationRequest(
+            phone_number_id=phone_number_id,
+        )
+
+        req = self._build_request(
+            method="POST",
+            path="/phone_numbers/{phone_number_id}/prepare_verification",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["5XX"])
+
+        http_res = self.do_request(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="PreparePhoneNumberVerification",
+                oauth2_scopes=None,
+                security_source=self.sdk_configuration.security,
+            ),
+            request=req,
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(models.VerificationResponse, http_res)
+        if utils.match_response(
+            http_res, ["400", "401", "403", "404", "429"], "application/json"
+        ):
+            response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
+            raise models.ClerkErrors(response_data, http_res)
+        if utils.match_response(http_res, "500", "application/json"):
+            response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
+            raise models.ClerkErrors(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError("API error occurred", http_res, http_res_text)
+
+        raise models.SDKError("Unexpected response received", http_res)
+
+    async def prepare_verification_async(
+        self,
+        *,
+        phone_number_id: str,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.VerificationResponse:
+        r"""Send a verification code to a phone number
+
+        Sends a one-time code to the given phone number so that a backend can
+        verify the user controls it (for example, in a custom, backend-driven
+        sign-in flow). The code is tracked on its own verification; confirm it
+        with attempt_verification.
+
+        :param phone_number_id: The ID of the phone number to send the verification code to
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.PreparePhoneNumberVerificationRequest(
+            phone_number_id=phone_number_id,
+        )
+
+        req = self._build_request_async(
+            method="POST",
+            path="/phone_numbers/{phone_number_id}/prepare_verification",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["5XX"])
+
+        http_res = await self.do_request_async(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="PreparePhoneNumberVerification",
+                oauth2_scopes=None,
+                security_source=self.sdk_configuration.security,
+            ),
+            request=req,
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(models.VerificationResponse, http_res)
+        if utils.match_response(
+            http_res, ["400", "401", "403", "404", "429"], "application/json"
+        ):
+            response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
+            raise models.ClerkErrors(response_data, http_res)
+        if utils.match_response(http_res, "500", "application/json"):
+            response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
+            raise models.ClerkErrors(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError("API error occurred", http_res, http_res_text)
+
+        raise models.SDKError("Unexpected response received", http_res)
+
+    def attempt_verification(
+        self,
+        *,
+        phone_number_id: str,
+        verification_id: str,
+        code: str,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.VerificationResponse:
+        r"""Verify a code sent to a phone number
+
+        Checks a one-time code against the verification identified by
+        verification_id, and returns the verification with its updated status
+        (`verified`, `unverified`, `expired`, or `failed`) and attempt count, so a
+        backend driving its own frontend can react on every attempt — an incorrect
+        or expired code is reported through the status, not as an error. Resubmitting
+        a verification whose code was already accepted is rejected with a
+        `verification_already_verified` error. If the code
+        is correct and the phone number is not already verified, it is also marked
+        as verified as a side effect (just as it would be in a frontend verification
+        flow); an already verified phone number is left unchanged. It never creates
+        a session; to sign the user in afterwards, mint a sign-in token.
+
+        :param phone_number_id: The ID of the phone number whose code is being verified
+        :param verification_id: The ID of the verification to check, such as one returned by prepare_verification
+        :param code: The verification code that was sent to the phone number
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.AttemptPhoneNumberVerificationRequest(
+            phone_number_id=phone_number_id,
+            request_body=models.AttemptPhoneNumberVerificationRequestBody(
+                verification_id=verification_id,
+                code=code,
+            ),
+        )
+
+        req = self._build_request(
+            method="POST",
+            path="/phone_numbers/{phone_number_id}/attempt_verification",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=True,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request.request_body,
+                False,
+                False,
+                "json",
+                models.AttemptPhoneNumberVerificationRequestBody,
+            ),
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["5XX"])
+
+        http_res = self.do_request(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="AttemptPhoneNumberVerification",
+                oauth2_scopes=None,
+                security_source=self.sdk_configuration.security,
+            ),
+            request=req,
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(models.VerificationResponse, http_res)
+        if utils.match_response(
+            http_res, ["400", "401", "403", "404"], "application/json"
+        ):
+            response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
+            raise models.ClerkErrors(response_data, http_res)
+        if utils.match_response(http_res, "500", "application/json"):
+            response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
+            raise models.ClerkErrors(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError("API error occurred", http_res, http_res_text)
+
+        raise models.SDKError("Unexpected response received", http_res)
+
+    async def attempt_verification_async(
+        self,
+        *,
+        phone_number_id: str,
+        verification_id: str,
+        code: str,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.VerificationResponse:
+        r"""Verify a code sent to a phone number
+
+        Checks a one-time code against the verification identified by
+        verification_id, and returns the verification with its updated status
+        (`verified`, `unverified`, `expired`, or `failed`) and attempt count, so a
+        backend driving its own frontend can react on every attempt — an incorrect
+        or expired code is reported through the status, not as an error. Resubmitting
+        a verification whose code was already accepted is rejected with a
+        `verification_already_verified` error. If the code
+        is correct and the phone number is not already verified, it is also marked
+        as verified as a side effect (just as it would be in a frontend verification
+        flow); an already verified phone number is left unchanged. It never creates
+        a session; to sign the user in afterwards, mint a sign-in token.
+
+        :param phone_number_id: The ID of the phone number whose code is being verified
+        :param verification_id: The ID of the verification to check, such as one returned by prepare_verification
+        :param code: The verification code that was sent to the phone number
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.AttemptPhoneNumberVerificationRequest(
+            phone_number_id=phone_number_id,
+            request_body=models.AttemptPhoneNumberVerificationRequestBody(
+                verification_id=verification_id,
+                code=code,
+            ),
+        )
+
+        req = self._build_request_async(
+            method="POST",
+            path="/phone_numbers/{phone_number_id}/attempt_verification",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=True,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request.request_body,
+                False,
+                False,
+                "json",
+                models.AttemptPhoneNumberVerificationRequestBody,
+            ),
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["5XX"])
+
+        http_res = await self.do_request_async(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="AttemptPhoneNumberVerification",
+                oauth2_scopes=None,
+                security_source=self.sdk_configuration.security,
+            ),
+            request=req,
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(models.VerificationResponse, http_res)
+        if utils.match_response(
+            http_res, ["400", "401", "403", "404"], "application/json"
+        ):
+            response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
+            raise models.ClerkErrors(response_data, http_res)
+        if utils.match_response(http_res, "500", "application/json"):
+            response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
+            raise models.ClerkErrors(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError("API error occurred", http_res, http_res_text)
+
+        raise models.SDKError("Unexpected response received", http_res)
+
     def replace_for_user(
         self,
         *,
         user_id: str,
         phone_number: str,
+        identification_status: Optional[
+            models.ReplaceUserPhoneNumberIdentificationStatus
+        ] = models.ReplaceUserPhoneNumberIdentificationStatus.VERIFIED,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -825,13 +1264,18 @@ class PhoneNumbers(BaseSDK):
     ) -> models.PhoneNumber:
         r"""Replace a user's phone number
 
-        Replaces all of the user's phone numbers with a single verified, primary phone number.
-        The new phone number is created with the admin verification strategy and is not reserved
-        for second factor. Any existing phone numbers are deleted; replacing a phone number that is
-        reserved for second factor disables the user's MFA.
+        Replaces all of the user's phone numbers with a single primary phone number.
+        By default the new phone number is created verified, with the admin verification strategy.
+        When `identification_status` is `reserved` it is created reserved instead: unverified but usable
+        for sign-in and locked so no other user can claim it. The new phone number is never reserved for
+        second factor. Any existing phone numbers are deleted; replacing a phone number that is reserved
+        for second factor disables the user's MFA.
 
         :param user_id: The ID of the user whose phone number to replace
         :param phone_number: The new phone number. Must adhere to the E.164 standard for phone number format.
+        :param identification_status: Controls the status of the replacement phone number. Defaults to `verified`. Set to
+            `reserved` to create it reserved (unverified but usable for sign-in and locked)
+            instead of verified.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -851,6 +1295,7 @@ class PhoneNumbers(BaseSDK):
             user_id=user_id,
             request_body=models.ReplaceUserPhoneNumberRequestBody(
                 phone_number=phone_number,
+                identification_status=identification_status,
             ),
         )
 
@@ -925,6 +1370,9 @@ class PhoneNumbers(BaseSDK):
         *,
         user_id: str,
         phone_number: str,
+        identification_status: Optional[
+            models.ReplaceUserPhoneNumberIdentificationStatus
+        ] = models.ReplaceUserPhoneNumberIdentificationStatus.VERIFIED,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -932,13 +1380,18 @@ class PhoneNumbers(BaseSDK):
     ) -> models.PhoneNumber:
         r"""Replace a user's phone number
 
-        Replaces all of the user's phone numbers with a single verified, primary phone number.
-        The new phone number is created with the admin verification strategy and is not reserved
-        for second factor. Any existing phone numbers are deleted; replacing a phone number that is
-        reserved for second factor disables the user's MFA.
+        Replaces all of the user's phone numbers with a single primary phone number.
+        By default the new phone number is created verified, with the admin verification strategy.
+        When `identification_status` is `reserved` it is created reserved instead: unverified but usable
+        for sign-in and locked so no other user can claim it. The new phone number is never reserved for
+        second factor. Any existing phone numbers are deleted; replacing a phone number that is reserved
+        for second factor disables the user's MFA.
 
         :param user_id: The ID of the user whose phone number to replace
         :param phone_number: The new phone number. Must adhere to the E.164 standard for phone number format.
+        :param identification_status: Controls the status of the replacement phone number. Defaults to `verified`. Set to
+            `reserved` to create it reserved (unverified but usable for sign-in and locked)
+            instead of verified.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -958,6 +1411,7 @@ class PhoneNumbers(BaseSDK):
             user_id=user_id,
             request_body=models.ReplaceUserPhoneNumberRequestBody(
                 phone_number=phone_number,
+                identification_status=identification_status,
             ),
         )
 

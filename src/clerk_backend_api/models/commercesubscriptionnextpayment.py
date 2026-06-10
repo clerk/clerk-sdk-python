@@ -2,15 +2,202 @@
 
 from __future__ import annotations
 from .commercemoneyresponse import CommerceMoneyResponse, CommerceMoneyResponseTypedDict
-from clerk_backend_api.types import BaseModel
+from .schemas_commerceperunittotal import (
+    SchemasCommercePerUnitTotal,
+    SchemasCommercePerUnitTotalTypedDict,
+)
+from clerk_backend_api.types import (
+    BaseModel,
+    Nullable,
+    OptionalNullable,
+    UNSET,
+    UNSET_SENTINEL,
+)
 import pydantic
-from typing_extensions import Annotated, TypedDict
+from pydantic import model_serializer
+from typing import List, Optional
+from typing_extensions import Annotated, NotRequired, TypedDict
+
+
+class CommerceSubscriptionNextPaymentProrationTypedDict(TypedDict):
+    amount: CommerceMoneyResponseTypedDict
+    cycle_days_remaining: int
+    cycle_days_total: int
+    cycle_remaining_percent: float
+
+
+class CommerceSubscriptionNextPaymentProration(BaseModel):
+    amount: CommerceMoneyResponse
+
+    cycle_days_remaining: int
+
+    cycle_days_total: int
+
+    cycle_remaining_percent: float
+
+
+class CommerceSubscriptionNextPaymentPayerTypedDict(TypedDict):
+    remaining_balance: CommerceMoneyResponseTypedDict
+    applied_amount: CommerceMoneyResponseTypedDict
+
+
+class CommerceSubscriptionNextPaymentPayer(BaseModel):
+    remaining_balance: CommerceMoneyResponse
+
+    applied_amount: CommerceMoneyResponse
+
+
+class CommerceSubscriptionNextPaymentCreditsTypedDict(TypedDict):
+    proration: Nullable[CommerceSubscriptionNextPaymentProrationTypedDict]
+    payer: Nullable[CommerceSubscriptionNextPaymentPayerTypedDict]
+    total: CommerceMoneyResponseTypedDict
+
+
+class CommerceSubscriptionNextPaymentCredits(BaseModel):
+    proration: Nullable[CommerceSubscriptionNextPaymentProration]
+
+    payer: Nullable[CommerceSubscriptionNextPaymentPayer]
+
+    total: CommerceMoneyResponse
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+
+            if val != UNSET_SENTINEL:
+                m[k] = val
+
+        return m
+
+
+class CommerceSubscriptionNextPaymentTotalsProrationTypedDict(TypedDict):
+    r"""Proration details from passed subscription time"""
+
+    amount: CommerceMoneyResponseTypedDict
+    cycle_days_passed: int
+    r"""Number of days that have passed in the billing cycle"""
+    cycle_days_total: int
+    r"""Total number of days in the billing cycle"""
+    cycle_passed_percent: float
+    r"""Percentage of the billing cycle that has passed"""
+
+
+class CommerceSubscriptionNextPaymentTotalsProration(BaseModel):
+    r"""Proration details from passed subscription time"""
+
+    amount: CommerceMoneyResponse
+
+    cycle_days_passed: int
+    r"""Number of days that have passed in the billing cycle"""
+
+    cycle_days_total: int
+    r"""Total number of days in the billing cycle"""
+
+    cycle_passed_percent: float
+    r"""Percentage of the billing cycle that has passed"""
+
+
+class CommerceSubscriptionNextPaymentDiscountsTypedDict(TypedDict):
+    r"""Information about the discounts applied to the payment"""
+
+    proration: Nullable[CommerceSubscriptionNextPaymentTotalsProrationTypedDict]
+    r"""Proration details from passed subscription time"""
+    total: CommerceMoneyResponseTypedDict
+
+
+class CommerceSubscriptionNextPaymentDiscounts(BaseModel):
+    r"""Information about the discounts applied to the payment"""
+
+    proration: Nullable[CommerceSubscriptionNextPaymentTotalsProration]
+    r"""Proration details from passed subscription time"""
+
+    total: CommerceMoneyResponse
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+
+            if val != UNSET_SENTINEL:
+                m[k] = val
+
+        return m
+
+
+class CommerceSubscriptionNextPaymentTotalsTypedDict(TypedDict):
+    r"""Breakdown of the recurring amount that will be billed at renewal (base fee + per-unit charges). Tax and credits are not previewed."""
+
+    subtotal: CommerceMoneyResponseTypedDict
+    base_fee: CommerceMoneyResponseTypedDict
+    tax_total: CommerceMoneyResponseTypedDict
+    grand_total: CommerceMoneyResponseTypedDict
+    per_unit_totals: NotRequired[List[SchemasCommercePerUnitTotalTypedDict]]
+    credits: NotRequired[Nullable[CommerceSubscriptionNextPaymentCreditsTypedDict]]
+    discounts: NotRequired[Nullable[CommerceSubscriptionNextPaymentDiscountsTypedDict]]
+    r"""Information about the discounts applied to the payment"""
+
+
+class CommerceSubscriptionNextPaymentTotals(BaseModel):
+    r"""Breakdown of the recurring amount that will be billed at renewal (base fee + per-unit charges). Tax and credits are not previewed."""
+
+    subtotal: CommerceMoneyResponse
+
+    base_fee: CommerceMoneyResponse
+
+    tax_total: CommerceMoneyResponse
+
+    grand_total: CommerceMoneyResponse
+
+    per_unit_totals: Optional[List[SchemasCommercePerUnitTotal]] = None
+
+    credits: OptionalNullable[CommerceSubscriptionNextPaymentCredits] = UNSET
+
+    discounts: OptionalNullable[CommerceSubscriptionNextPaymentDiscounts] = UNSET
+    r"""Information about the discounts applied to the payment"""
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["per_unit_totals", "credits", "discounts"])
+        nullable_fields = set(["credits", "discounts"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+            is_nullable_and_explicitly_set = (
+                k in nullable_fields
+                and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
+            )
+
+            if val != UNSET_SENTINEL:
+                if (
+                    val is not None
+                    or k not in optional_fields
+                    or is_nullable_and_explicitly_set
+                ):
+                    m[k] = val
+
+        return m
 
 
 class CommerceSubscriptionNextPaymentTypedDict(TypedDict):
     date_: int
     r"""Unix timestamp (milliseconds) of the next payment date."""
     amount: CommerceMoneyResponseTypedDict
+    per_unit_totals: NotRequired[List[SchemasCommercePerUnitTotalTypedDict]]
+    r"""Per-unit total breakdown (for example, seats) for the next payment."""
+    totals: NotRequired[Nullable[CommerceSubscriptionNextPaymentTotalsTypedDict]]
+    r"""Breakdown of the recurring amount that will be billed at renewal (base fee + per-unit charges). Tax and credits are not previewed."""
 
 
 class CommerceSubscriptionNextPayment(BaseModel):
@@ -18,6 +205,37 @@ class CommerceSubscriptionNextPayment(BaseModel):
     r"""Unix timestamp (milliseconds) of the next payment date."""
 
     amount: CommerceMoneyResponse
+
+    per_unit_totals: Optional[List[SchemasCommercePerUnitTotal]] = None
+    r"""Per-unit total breakdown (for example, seats) for the next payment."""
+
+    totals: OptionalNullable[CommerceSubscriptionNextPaymentTotals] = UNSET
+    r"""Breakdown of the recurring amount that will be billed at renewal (base fee + per-unit charges). Tax and credits are not previewed."""
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["per_unit_totals", "totals"])
+        nullable_fields = set(["totals"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+            is_nullable_and_explicitly_set = (
+                k in nullable_fields
+                and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
+            )
+
+            if val != UNSET_SENTINEL:
+                if (
+                    val is not None
+                    or k not in optional_fields
+                    or is_nullable_and_explicitly_set
+                ):
+                    m[k] = val
+
+        return m
 
 
 try:

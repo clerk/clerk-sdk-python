@@ -29,7 +29,7 @@ generation:
     generateNewTests: false
     skipResponseBodyAssertions: false
 python:
-  version: 5.0.7
+  version: 5.1.0
   additionalDependencies:
     dev:
       pytest: ^8.3.3
@@ -44,12 +44,16 @@ python:
   authors:
     - Clerk
   baseErrorName: ClerkBaseError
+  bodyVariantOverloads: false
   clientServerStatusCodesAsErrors: true
   constFieldCasing: upper
   defaultErrorName: SDKError
   description: Python Client SDK for clerk.dev
   enableCustomCodeRegions: true
   enumFormat: enum
+  eventStreamClassNames:
+    async: EventStreamAsync
+    sync: EventStream
   fixFlags:
     asyncPaginationSep2025: false
     conflictResistantModelImportsFeb2026: false
@@ -69,18 +73,23 @@ python:
       webhooks: ""
   inferUnionDiscriminators: true
   inputModelSuffix: input
+  inputTypedDictSuffix: TypedDict
   legacyPyright: true
   license: ""
   maxMethodParams: 20
   methodArguments: infer-optional-args
+  methodTimeoutArgument: timeout-ms
+  methodTimeoutUnits: milliseconds
   moduleName: ""
   multipartArrayFormat: legacy
+  optionalDependencies: {}
   outputModelSuffix: output
   packageManager: poetry
   packageName: clerk-backend-api
   preApplyUnionDiscriminators: false
   pytestFilterWarnings: []
   pytestTimeout: 0
+  rawResponseHelpers: false
   responseFormat: flat
   sseFlatResponse: false
   templateVersion: v2

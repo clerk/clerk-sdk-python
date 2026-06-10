@@ -115,6 +115,8 @@ class VerificationOTPTypedDict(TypedDict):
     attempts: Nullable[int]
     expire_at: Nullable[int]
     object: NotRequired[VerificationOtpVerificationObject]
+    channel: NotRequired[Nullable[str]]
+    r"""The delivery channel of the code (phone codes only)."""
     verified_at_client: NotRequired[Nullable[str]]
 
 
@@ -129,6 +131,9 @@ class VerificationOTP(BaseModel):
 
     object: Optional[VerificationOtpVerificationObject] = None
 
+    channel: OptionalNullable[str] = UNSET
+    r"""The delivery channel of the code (phone codes only)."""
+
     verified_at_client: OptionalNullable[str] = UNSET
 
     @field_serializer("strategy")
@@ -142,8 +147,10 @@ class VerificationOTP(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["object", "verified_at_client"])
-        nullable_fields = set(["attempts", "expire_at", "verified_at_client"])
+        optional_fields = set(["object", "channel", "verified_at_client"])
+        nullable_fields = set(
+            ["attempts", "expire_at", "channel", "verified_at_client"]
+        )
         serialized = handler(self)
         m = {}
 
@@ -168,7 +175,7 @@ class VerificationOTP(BaseModel):
 
 PhoneNumberVerificationTypedDict = TypeAliasType(
     "PhoneNumberVerificationTypedDict",
-    Union[VerificationOTPTypedDict, VerificationAdminTypedDict],
+    Union[VerificationAdminTypedDict, VerificationOTPTypedDict],
 )
 
 

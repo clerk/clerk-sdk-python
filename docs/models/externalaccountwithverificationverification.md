@@ -3,10 +3,10 @@
 
 ## Supported Types
 
-### `models.Oauth`
+### `models.VerificationOauthVerificationOauth`
 
 ```python
-value: models.Oauth = /* values here */
+value: models.VerificationOauthVerificationOauth = /* values here */
 ```
 
 ### `models.GoogleOneTap`

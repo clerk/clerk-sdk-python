@@ -69,6 +69,14 @@ class BillingPriceResponseAnnualMonthlyFee(BaseModel):
     r"""The currency symbol (e.g., \"$\")."""
 
 
+class SupportedBillingPeriods(str, Enum):
+    r"""Which billing periods this price supports."""
+
+    MONTH = "month"
+    ANNUAL = "annual"
+    BOTH = "both"
+
+
 class BillingPriceResponseTypedDict(TypedDict):
     object: BillingPriceResponseObject
     r"""String representing the object's type. Objects of the same type share the same value."""
@@ -92,6 +100,8 @@ class BillingPriceResponseTypedDict(TypedDict):
     r"""Whether this price is the default price for its plan."""
     created_at: int
     r"""Unix timestamp (milliseconds) of creation."""
+    supported_billing_periods: SupportedBillingPeriods
+    r"""Which billing periods this price supports."""
     description: NotRequired[Nullable[str]]
     r"""The description of the price."""
 
@@ -130,6 +140,9 @@ class BillingPriceResponse(BaseModel):
 
     created_at: int
     r"""Unix timestamp (milliseconds) of creation."""
+
+    supported_billing_periods: SupportedBillingPeriods
+    r"""Which billing periods this price supports."""
 
     description: OptionalNullable[str] = UNSET
     r"""The description of the price."""

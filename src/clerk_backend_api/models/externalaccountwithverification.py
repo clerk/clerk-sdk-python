@@ -203,7 +203,7 @@ VerificationOauthVerificationErrorTypedDict = VerificationOauthErrorClerkErrorTy
 VerificationOauthVerificationError = VerificationOauthErrorClerkError
 
 
-class OauthTypedDict(TypedDict):
+class VerificationOauthVerificationOauthTypedDict(TypedDict):
     status: VerificationOauthVerificationStatus
     strategy: str
     expire_at: int
@@ -214,7 +214,7 @@ class OauthTypedDict(TypedDict):
     verified_at_client: NotRequired[Nullable[str]]
 
 
-class Oauth(BaseModel):
+class VerificationOauthVerificationOauth(BaseModel):
     status: VerificationOauthVerificationStatus
 
     strategy: str
@@ -275,13 +275,13 @@ class Oauth(BaseModel):
 
 ExternalAccountWithVerificationVerificationTypedDict = TypeAliasType(
     "ExternalAccountWithVerificationVerificationTypedDict",
-    Union[GoogleOneTapTypedDict, OauthTypedDict],
+    Union[GoogleOneTapTypedDict, VerificationOauthVerificationOauthTypedDict],
 )
 
 
 ExternalAccountWithVerificationVerification = Annotated[
     Union[
-        Annotated[Oauth, Tag("verification_oauth")],
+        Annotated[VerificationOauthVerificationOauth, Tag("verification_oauth")],
         Annotated[GoogleOneTap, Tag("verification_google_one_tap")],
     ],
     Discriminator(lambda m: get_discriminator(m, "object", "object")),
