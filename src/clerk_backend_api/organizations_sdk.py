@@ -691,8 +691,6 @@ class OrganizationsSDK(BaseSDK):
         self,
         *,
         organization_id: str,
-        public_metadata: OptionalNullable[Mapping[str, Any]] = UNSET,
-        private_metadata: OptionalNullable[Mapping[str, Any]] = UNSET,
         name: OptionalNullable[str] = UNSET,
         slug: OptionalNullable[str] = UNSET,
         max_allowed_memberships: OptionalNullable[int] = UNSET,
@@ -706,11 +704,12 @@ class OrganizationsSDK(BaseSDK):
     ) -> models.Organization:
         r"""Update an organization
 
-        Updates an existing organization
+        Updates an existing organization.
+
+        As of API version 2026-05-12, this endpoint no longer accepts `public_metadata` or `private_metadata`.
+        Use `PATCH /v1/organizations/{organization_id}/metadata` to merge updates into existing metadata, or `PUT /v1/organizations/{organization_id}/metadata` to replace a metadata field entirely.
 
         :param organization_id: The ID of the organization to update
-        :param public_metadata: Metadata saved on the organization, that is visible to both your frontend and backend.
-        :param private_metadata: Metadata saved on the organization that is only visible to your backend.
         :param name: The new name of the organization.
             May not contain URLs or HTML.
             Max length: 256
@@ -737,12 +736,6 @@ class OrganizationsSDK(BaseSDK):
         request = models.UpdateOrganizationRequest(
             organization_id=organization_id,
             request_body=models.UpdateOrganizationRequestBody(
-                public_metadata=utils.unmarshal(
-                    public_metadata, OptionalNullable[Dict[str, Any]]
-                ),
-                private_metadata=utils.unmarshal(
-                    private_metadata, OptionalNullable[Dict[str, Any]]
-                ),
                 name=name,
                 slug=slug,
                 max_allowed_memberships=max_allowed_memberships,
@@ -822,8 +815,6 @@ class OrganizationsSDK(BaseSDK):
         self,
         *,
         organization_id: str,
-        public_metadata: OptionalNullable[Mapping[str, Any]] = UNSET,
-        private_metadata: OptionalNullable[Mapping[str, Any]] = UNSET,
         name: OptionalNullable[str] = UNSET,
         slug: OptionalNullable[str] = UNSET,
         max_allowed_memberships: OptionalNullable[int] = UNSET,
@@ -837,11 +828,12 @@ class OrganizationsSDK(BaseSDK):
     ) -> models.Organization:
         r"""Update an organization
 
-        Updates an existing organization
+        Updates an existing organization.
+
+        As of API version 2026-05-12, this endpoint no longer accepts `public_metadata` or `private_metadata`.
+        Use `PATCH /v1/organizations/{organization_id}/metadata` to merge updates into existing metadata, or `PUT /v1/organizations/{organization_id}/metadata` to replace a metadata field entirely.
 
         :param organization_id: The ID of the organization to update
-        :param public_metadata: Metadata saved on the organization, that is visible to both your frontend and backend.
-        :param private_metadata: Metadata saved on the organization that is only visible to your backend.
         :param name: The new name of the organization.
             May not contain URLs or HTML.
             Max length: 256
@@ -868,12 +860,6 @@ class OrganizationsSDK(BaseSDK):
         request = models.UpdateOrganizationRequest(
             organization_id=organization_id,
             request_body=models.UpdateOrganizationRequestBody(
-                public_metadata=utils.unmarshal(
-                    public_metadata, OptionalNullable[Dict[str, Any]]
-                ),
-                private_metadata=utils.unmarshal(
-                    private_metadata, OptionalNullable[Dict[str, Any]]
-                ),
                 name=name,
                 slug=slug,
                 max_allowed_memberships=max_allowed_memberships,
@@ -1346,6 +1332,242 @@ class OrganizationsSDK(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="MergeOrganizationMetadata",
+                oauth2_scopes=None,
+                security_source=self.sdk_configuration.security,
+            ),
+            request=req,
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(models.Organization, http_res)
+        if utils.match_response(
+            http_res, ["400", "401", "404", "422"], "application/json"
+        ):
+            response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
+            raise models.ClerkErrors(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError("API error occurred", http_res, http_res_text)
+
+        raise models.SDKError("Unexpected response received", http_res)
+
+    def replace_metadata(
+        self,
+        *,
+        organization_id: str,
+        public_metadata: Optional[Mapping[str, Any]] = None,
+        private_metadata: Optional[Mapping[str, Any]] = None,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.Organization:
+        r"""Replace metadata for an organization
+
+        Replace an organization's metadata attributes with the provided values.
+        Unlike `PATCH /v1/organizations/{organization_id}/metadata` (merge semantics), this
+        endpoint replaces the supplied metadata fields entirely — the prior contents of each
+        supplied field are discarded. Fields omitted from the request body are left unchanged.
+        Prefer the `PATCH` endpoint for partial updates. Use `PUT` only when you explicitly
+        intend to overwrite a metadata field wholesale.
+
+        :param organization_id: The ID of the organization whose metadata will be replaced
+        :param public_metadata: Metadata saved on the organization, that is visible to both your frontend and backend.
+            The existing value will be replaced entirely with the new object.
+        :param private_metadata: Metadata saved on the organization that is only visible to your backend.
+            The existing value will be replaced entirely with the new object.
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.ReplaceOrganizationMetadataRequest(
+            organization_id=organization_id,
+            request_body=models.ReplaceOrganizationMetadataRequestBody(
+                public_metadata=utils.unmarshal(
+                    public_metadata, Optional[Dict[str, Any]]
+                ),
+                private_metadata=utils.unmarshal(
+                    private_metadata, Optional[Dict[str, Any]]
+                ),
+            ),
+        )
+
+        req = self._build_request(
+            method="PUT",
+            path="/organizations/{organization_id}/metadata",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=True,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request.request_body,
+                False,
+                False,
+                "json",
+                models.ReplaceOrganizationMetadataRequestBody,
+            ),
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["5XX"])
+
+        http_res = self.do_request(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="ReplaceOrganizationMetadata",
+                oauth2_scopes=None,
+                security_source=self.sdk_configuration.security,
+            ),
+            request=req,
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(models.Organization, http_res)
+        if utils.match_response(
+            http_res, ["400", "401", "404", "422"], "application/json"
+        ):
+            response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
+            raise models.ClerkErrors(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError("API error occurred", http_res, http_res_text)
+
+        raise models.SDKError("Unexpected response received", http_res)
+
+    async def replace_metadata_async(
+        self,
+        *,
+        organization_id: str,
+        public_metadata: Optional[Mapping[str, Any]] = None,
+        private_metadata: Optional[Mapping[str, Any]] = None,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.Organization:
+        r"""Replace metadata for an organization
+
+        Replace an organization's metadata attributes with the provided values.
+        Unlike `PATCH /v1/organizations/{organization_id}/metadata` (merge semantics), this
+        endpoint replaces the supplied metadata fields entirely — the prior contents of each
+        supplied field are discarded. Fields omitted from the request body are left unchanged.
+        Prefer the `PATCH` endpoint for partial updates. Use `PUT` only when you explicitly
+        intend to overwrite a metadata field wholesale.
+
+        :param organization_id: The ID of the organization whose metadata will be replaced
+        :param public_metadata: Metadata saved on the organization, that is visible to both your frontend and backend.
+            The existing value will be replaced entirely with the new object.
+        :param private_metadata: Metadata saved on the organization that is only visible to your backend.
+            The existing value will be replaced entirely with the new object.
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.ReplaceOrganizationMetadataRequest(
+            organization_id=organization_id,
+            request_body=models.ReplaceOrganizationMetadataRequestBody(
+                public_metadata=utils.unmarshal(
+                    public_metadata, Optional[Dict[str, Any]]
+                ),
+                private_metadata=utils.unmarshal(
+                    private_metadata, Optional[Dict[str, Any]]
+                ),
+            ),
+        )
+
+        req = self._build_request_async(
+            method="PUT",
+            path="/organizations/{organization_id}/metadata",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=True,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request.request_body,
+                False,
+                False,
+                "json",
+                models.ReplaceOrganizationMetadataRequestBody,
+            ),
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["5XX"])
+
+        http_res = await self.do_request_async(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="ReplaceOrganizationMetadata",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
             ),

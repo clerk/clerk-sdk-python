@@ -10,7 +10,7 @@ from clerk_backend_api.types import (
 )
 from clerk_backend_api.utils import FieldMetadata, PathParamMetadata, RequestMetadata
 from pydantic import model_serializer
-from typing import Any, Dict, List, Optional
+from typing import List, Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
 
 
@@ -72,38 +72,21 @@ class UpdateUserRequestBodyTypedDict(TypedDict):
     sign_out_of_other_sessions: NotRequired[Nullable[bool]]
     r"""Set to `true` to sign out the user from all their active sessions once their password is updated. This parameter can only be used when providing a `password`."""
     totp_secret: NotRequired[Nullable[str]]
-    r"""In case TOTP is configured on the instance, you can provide the secret to enable it on the specific user without the need to reset it.
-    Please note that currently the supported options are:
-    * Period: 30 seconds
-    * Code length: 6 digits
-    * Algorithm: SHA1
-    """
+    r"""In case TOTP is configured on the instance, you can provide the secret to enable it on the specific user without the need to reset it."""
     backup_codes: NotRequired[List[str]]
-    r"""If Backup Codes are configured on the instance, you can provide them to enable it on the specific user without the need to reset them.
-    You must provide the backup codes in plain format or the corresponding bcrypt digest.
-    """
-    public_metadata: NotRequired[Nullable[Dict[str, Any]]]
-    r"""Metadata saved on the user, that is visible to both your Frontend and Backend APIs"""
-    private_metadata: NotRequired[Nullable[Dict[str, Any]]]
-    r"""Metadata saved on the user, that is only visible to your Backend API"""
-    unsafe_metadata: NotRequired[Nullable[Dict[str, Any]]]
-    r"""Metadata saved on the user, that can be updated from both the Frontend and Backend APIs.
-    Note: Since this data can be modified from the frontend, it is not guaranteed to be safe.
-    """
+    r"""If Backup Codes are configured on the instance, you can provide them to enable it on the specific user without the need to reset them."""
     delete_self_enabled: NotRequired[Nullable[bool]]
     r"""If true, the user can delete themselves with the Frontend API."""
     create_organization_enabled: NotRequired[Nullable[bool]]
     r"""If true, the user can create organizations with the Frontend API."""
     legal_accepted_at: NotRequired[Nullable[str]]
-    r"""A custom timestamp denoting _when_ the user accepted legal requirements, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`)."""
+    r"""A custom timestamp denoting _when_ the user accepted legal requirements, specified in RFC3339 format."""
     skip_legal_checks: NotRequired[Nullable[bool]]
-    r"""When set to `true` all legal checks are skipped.
-    It is not recommended to skip legal checks unless you are migrating a user to Clerk.
-    """
+    r"""When set to `true` all legal checks are skipped."""
     create_organizations_limit: NotRequired[Nullable[int]]
     r"""The maximum number of organizations the user can create. 0 means unlimited."""
     created_at: NotRequired[Nullable[str]]
-    r"""A custom date/time denoting _when_ the user signed up to the application, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`)."""
+    r"""A custom date/time denoting _when_ the user signed up to the application."""
     bypass_client_trust: NotRequired[Nullable[bool]]
     r"""When set to `true`, the user will bypass client trust checks during sign-in."""
 
@@ -181,28 +164,10 @@ class UpdateUserRequestBody(BaseModel):
     r"""Set to `true` to sign out the user from all their active sessions once their password is updated. This parameter can only be used when providing a `password`."""
 
     totp_secret: OptionalNullable[str] = UNSET
-    r"""In case TOTP is configured on the instance, you can provide the secret to enable it on the specific user without the need to reset it.
-    Please note that currently the supported options are:
-    * Period: 30 seconds
-    * Code length: 6 digits
-    * Algorithm: SHA1
-    """
+    r"""In case TOTP is configured on the instance, you can provide the secret to enable it on the specific user without the need to reset it."""
 
     backup_codes: Optional[List[str]] = None
-    r"""If Backup Codes are configured on the instance, you can provide them to enable it on the specific user without the need to reset them.
-    You must provide the backup codes in plain format or the corresponding bcrypt digest.
-    """
-
-    public_metadata: OptionalNullable[Dict[str, Any]] = UNSET
-    r"""Metadata saved on the user, that is visible to both your Frontend and Backend APIs"""
-
-    private_metadata: OptionalNullable[Dict[str, Any]] = UNSET
-    r"""Metadata saved on the user, that is only visible to your Backend API"""
-
-    unsafe_metadata: OptionalNullable[Dict[str, Any]] = UNSET
-    r"""Metadata saved on the user, that can be updated from both the Frontend and Backend APIs.
-    Note: Since this data can be modified from the frontend, it is not guaranteed to be safe.
-    """
+    r"""If Backup Codes are configured on the instance, you can provide them to enable it on the specific user without the need to reset them."""
 
     delete_self_enabled: OptionalNullable[bool] = UNSET
     r"""If true, the user can delete themselves with the Frontend API."""
@@ -211,18 +176,16 @@ class UpdateUserRequestBody(BaseModel):
     r"""If true, the user can create organizations with the Frontend API."""
 
     legal_accepted_at: OptionalNullable[str] = UNSET
-    r"""A custom timestamp denoting _when_ the user accepted legal requirements, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`)."""
+    r"""A custom timestamp denoting _when_ the user accepted legal requirements, specified in RFC3339 format."""
 
     skip_legal_checks: OptionalNullable[bool] = UNSET
-    r"""When set to `true` all legal checks are skipped.
-    It is not recommended to skip legal checks unless you are migrating a user to Clerk.
-    """
+    r"""When set to `true` all legal checks are skipped."""
 
     create_organizations_limit: OptionalNullable[int] = UNSET
     r"""The maximum number of organizations the user can create. 0 means unlimited."""
 
     created_at: OptionalNullable[str] = UNSET
-    r"""A custom date/time denoting _when_ the user signed up to the application, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`)."""
+    r"""A custom date/time denoting _when_ the user signed up to the application."""
 
     bypass_client_trust: OptionalNullable[bool] = UNSET
     r"""When set to `true`, the user will bypass client trust checks during sign-in."""
@@ -248,9 +211,6 @@ class UpdateUserRequestBody(BaseModel):
                 "sign_out_of_other_sessions",
                 "totp_secret",
                 "backup_codes",
-                "public_metadata",
-                "private_metadata",
-                "unsafe_metadata",
                 "delete_self_enabled",
                 "create_organization_enabled",
                 "legal_accepted_at",
@@ -276,9 +236,6 @@ class UpdateUserRequestBody(BaseModel):
                 "skip_password_checks",
                 "sign_out_of_other_sessions",
                 "totp_secret",
-                "public_metadata",
-                "private_metadata",
-                "unsafe_metadata",
                 "delete_self_enabled",
                 "create_organization_enabled",
                 "legal_accepted_at",

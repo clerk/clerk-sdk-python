@@ -1080,9 +1080,6 @@ class Users(BaseSDK):
         sign_out_of_other_sessions: OptionalNullable[bool] = UNSET,
         totp_secret: OptionalNullable[str] = UNSET,
         backup_codes: Optional[Iterable[str]] = None,
-        public_metadata: OptionalNullable[Mapping[str, Any]] = UNSET,
-        private_metadata: OptionalNullable[Mapping[str, Any]] = UNSET,
-        unsafe_metadata: OptionalNullable[Mapping[str, Any]] = UNSET,
         delete_self_enabled: OptionalNullable[bool] = UNSET,
         create_organization_enabled: OptionalNullable[bool] = UNSET,
         legal_accepted_at: OptionalNullable[str] = UNSET,
@@ -1103,12 +1100,9 @@ class Users(BaseSDK):
         Both IDs should correspond to verified identifications that belong to the user.
 
         You can remove a user's username by setting the username attribute to null or the blank string \"\".
-        This is a destructive action; the identification will be deleted forever.
-        Usernames can be removed only if they are optional in your instance settings and there's at least one other identifier which can be used for authentication.
 
-        This endpoint allows changing a user's password. When passing the `password` parameter directly you have two further options.
-        You can ignore the password policy checks for your instance by setting the `skip_password_checks` parameter to `true`.
-        You can also choose to sign the user out of all their active sessions on any device once the password is updated. Just set `sign_out_of_other_sessions` to `true`.
+        As of API version 2026-05-12, this endpoint no longer accepts `public_metadata`, `private_metadata`, or `unsafe_metadata`.
+        Use `PATCH /v1/users/{user_id}/metadata` to merge updates into existing metadata, or `PUT /v1/users/{user_id}/metadata` to replace a metadata field entirely.
 
         :param user_id: The ID of the user to update
         :param external_id: The ID of the user as used in your external systems or your previous authentication solution.
@@ -1144,23 +1138,13 @@ class Users(BaseSDK):
         :param skip_password_checks: Set it to `true` if you're updating the user's password and want to skip any password policy settings check. This parameter can only be used when providing a `password`.
         :param sign_out_of_other_sessions: Set to `true` to sign out the user from all their active sessions once their password is updated. This parameter can only be used when providing a `password`.
         :param totp_secret: In case TOTP is configured on the instance, you can provide the secret to enable it on the specific user without the need to reset it.
-            Please note that currently the supported options are:
-            * Period: 30 seconds
-            * Code length: 6 digits
-            * Algorithm: SHA1
         :param backup_codes: If Backup Codes are configured on the instance, you can provide them to enable it on the specific user without the need to reset them.
-            You must provide the backup codes in plain format or the corresponding bcrypt digest.
-        :param public_metadata: Metadata saved on the user, that is visible to both your Frontend and Backend APIs
-        :param private_metadata: Metadata saved on the user, that is only visible to your Backend API
-        :param unsafe_metadata: Metadata saved on the user, that can be updated from both the Frontend and Backend APIs.
-            Note: Since this data can be modified from the frontend, it is not guaranteed to be safe.
         :param delete_self_enabled: If true, the user can delete themselves with the Frontend API.
         :param create_organization_enabled: If true, the user can create organizations with the Frontend API.
-        :param legal_accepted_at: A custom timestamp denoting _when_ the user accepted legal requirements, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`).
+        :param legal_accepted_at: A custom timestamp denoting _when_ the user accepted legal requirements, specified in RFC3339 format.
         :param skip_legal_checks: When set to `true` all legal checks are skipped.
-            It is not recommended to skip legal checks unless you are migrating a user to Clerk.
         :param create_organizations_limit: The maximum number of organizations the user can create. 0 means unlimited.
-        :param created_at: A custom date/time denoting _when_ the user signed up to the application, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`).
+        :param created_at: A custom date/time denoting _when_ the user signed up to the application.
         :param bypass_client_trust: When set to `true`, the user will bypass client trust checks during sign-in.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -1197,15 +1181,6 @@ class Users(BaseSDK):
                 sign_out_of_other_sessions=sign_out_of_other_sessions,
                 totp_secret=totp_secret,
                 backup_codes=utils.unmarshal(backup_codes, Optional[List[str]]),
-                public_metadata=utils.unmarshal(
-                    public_metadata, OptionalNullable[Dict[str, Any]]
-                ),
-                private_metadata=utils.unmarshal(
-                    private_metadata, OptionalNullable[Dict[str, Any]]
-                ),
-                unsafe_metadata=utils.unmarshal(
-                    unsafe_metadata, OptionalNullable[Dict[str, Any]]
-                ),
                 delete_self_enabled=delete_self_enabled,
                 create_organization_enabled=create_organization_enabled,
                 legal_accepted_at=legal_accepted_at,
@@ -1299,9 +1274,6 @@ class Users(BaseSDK):
         sign_out_of_other_sessions: OptionalNullable[bool] = UNSET,
         totp_secret: OptionalNullable[str] = UNSET,
         backup_codes: Optional[Iterable[str]] = None,
-        public_metadata: OptionalNullable[Mapping[str, Any]] = UNSET,
-        private_metadata: OptionalNullable[Mapping[str, Any]] = UNSET,
-        unsafe_metadata: OptionalNullable[Mapping[str, Any]] = UNSET,
         delete_self_enabled: OptionalNullable[bool] = UNSET,
         create_organization_enabled: OptionalNullable[bool] = UNSET,
         legal_accepted_at: OptionalNullable[str] = UNSET,
@@ -1322,12 +1294,9 @@ class Users(BaseSDK):
         Both IDs should correspond to verified identifications that belong to the user.
 
         You can remove a user's username by setting the username attribute to null or the blank string \"\".
-        This is a destructive action; the identification will be deleted forever.
-        Usernames can be removed only if they are optional in your instance settings and there's at least one other identifier which can be used for authentication.
 
-        This endpoint allows changing a user's password. When passing the `password` parameter directly you have two further options.
-        You can ignore the password policy checks for your instance by setting the `skip_password_checks` parameter to `true`.
-        You can also choose to sign the user out of all their active sessions on any device once the password is updated. Just set `sign_out_of_other_sessions` to `true`.
+        As of API version 2026-05-12, this endpoint no longer accepts `public_metadata`, `private_metadata`, or `unsafe_metadata`.
+        Use `PATCH /v1/users/{user_id}/metadata` to merge updates into existing metadata, or `PUT /v1/users/{user_id}/metadata` to replace a metadata field entirely.
 
         :param user_id: The ID of the user to update
         :param external_id: The ID of the user as used in your external systems or your previous authentication solution.
@@ -1363,23 +1332,13 @@ class Users(BaseSDK):
         :param skip_password_checks: Set it to `true` if you're updating the user's password and want to skip any password policy settings check. This parameter can only be used when providing a `password`.
         :param sign_out_of_other_sessions: Set to `true` to sign out the user from all their active sessions once their password is updated. This parameter can only be used when providing a `password`.
         :param totp_secret: In case TOTP is configured on the instance, you can provide the secret to enable it on the specific user without the need to reset it.
-            Please note that currently the supported options are:
-            * Period: 30 seconds
-            * Code length: 6 digits
-            * Algorithm: SHA1
         :param backup_codes: If Backup Codes are configured on the instance, you can provide them to enable it on the specific user without the need to reset them.
-            You must provide the backup codes in plain format or the corresponding bcrypt digest.
-        :param public_metadata: Metadata saved on the user, that is visible to both your Frontend and Backend APIs
-        :param private_metadata: Metadata saved on the user, that is only visible to your Backend API
-        :param unsafe_metadata: Metadata saved on the user, that can be updated from both the Frontend and Backend APIs.
-            Note: Since this data can be modified from the frontend, it is not guaranteed to be safe.
         :param delete_self_enabled: If true, the user can delete themselves with the Frontend API.
         :param create_organization_enabled: If true, the user can create organizations with the Frontend API.
-        :param legal_accepted_at: A custom timestamp denoting _when_ the user accepted legal requirements, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`).
+        :param legal_accepted_at: A custom timestamp denoting _when_ the user accepted legal requirements, specified in RFC3339 format.
         :param skip_legal_checks: When set to `true` all legal checks are skipped.
-            It is not recommended to skip legal checks unless you are migrating a user to Clerk.
         :param create_organizations_limit: The maximum number of organizations the user can create. 0 means unlimited.
-        :param created_at: A custom date/time denoting _when_ the user signed up to the application, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`).
+        :param created_at: A custom date/time denoting _when_ the user signed up to the application.
         :param bypass_client_trust: When set to `true`, the user will bypass client trust checks during sign-in.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -1416,15 +1375,6 @@ class Users(BaseSDK):
                 sign_out_of_other_sessions=sign_out_of_other_sessions,
                 totp_secret=totp_secret,
                 backup_codes=utils.unmarshal(backup_codes, Optional[List[str]]),
-                public_metadata=utils.unmarshal(
-                    public_metadata, OptionalNullable[Dict[str, Any]]
-                ),
-                private_metadata=utils.unmarshal(
-                    private_metadata, OptionalNullable[Dict[str, Any]]
-                ),
-                unsafe_metadata=utils.unmarshal(
-                    unsafe_metadata, OptionalNullable[Dict[str, Any]]
-                ),
                 delete_self_enabled=delete_self_enabled,
                 create_organization_enabled=create_organization_enabled,
                 legal_accepted_at=legal_accepted_at,
@@ -3428,12 +3378,12 @@ class Users(BaseSDK):
         Replace a user's metadata attributes with the provided values.
 
         Unlike `PATCH /v1/users/{user_id}/metadata` (merge semantics), this endpoint
-        replaces the supplied metadata columns entirely — the prior contents of each
-        supplied column are discarded. Columns omitted from the request body are
+        replaces the supplied metadata fields entirely — the prior contents of each
+        supplied field are discarded. Fields omitted from the request body are
         left unchanged.
 
         Prefer the `PATCH` endpoint for partial updates. Use `PUT` only when you
-        explicitly intend to overwrite a metadata column wholesale.
+        explicitly intend to overwrite a metadata field wholesale.
 
         :param user_id: The ID of the user whose metadata will be replaced
         :param public_metadata: Metadata saved on the user, that is visible to both your frontend and backend.
@@ -3557,12 +3507,12 @@ class Users(BaseSDK):
         Replace a user's metadata attributes with the provided values.
 
         Unlike `PATCH /v1/users/{user_id}/metadata` (merge semantics), this endpoint
-        replaces the supplied metadata columns entirely — the prior contents of each
-        supplied column are discarded. Columns omitted from the request body are
+        replaces the supplied metadata fields entirely — the prior contents of each
+        supplied field are discarded. Fields omitted from the request body are
         left unchanged.
 
         Prefer the `PATCH` endpoint for partial updates. Use `PUT` only when you
-        explicitly intend to overwrite a metadata column wholesale.
+        explicitly intend to overwrite a metadata field wholesale.
 
         :param user_id: The ID of the user whose metadata will be replaced
         :param public_metadata: Metadata saved on the user, that is visible to both your frontend and backend.
