@@ -10,15 +10,10 @@ from clerk_backend_api.types import (
 )
 from clerk_backend_api.utils import FieldMetadata, PathParamMetadata, RequestMetadata
 from pydantic import model_serializer
-from typing import Any, Dict
 from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class UpdateOrganizationRequestBodyTypedDict(TypedDict):
-    public_metadata: NotRequired[Nullable[Dict[str, Any]]]
-    r"""Metadata saved on the organization, that is visible to both your frontend and backend."""
-    private_metadata: NotRequired[Nullable[Dict[str, Any]]]
-    r"""Metadata saved on the organization that is only visible to your backend."""
     name: NotRequired[Nullable[str]]
     r"""The new name of the organization.
     May not contain URLs or HTML.
@@ -37,12 +32,6 @@ class UpdateOrganizationRequestBodyTypedDict(TypedDict):
 
 
 class UpdateOrganizationRequestBody(BaseModel):
-    public_metadata: OptionalNullable[Dict[str, Any]] = UNSET
-    r"""Metadata saved on the organization, that is visible to both your frontend and backend."""
-
-    private_metadata: OptionalNullable[Dict[str, Any]] = UNSET
-    r"""Metadata saved on the organization that is only visible to your backend."""
-
     name: OptionalNullable[str] = UNSET
     r"""The new name of the organization.
     May not contain URLs or HTML.
@@ -68,8 +57,6 @@ class UpdateOrganizationRequestBody(BaseModel):
     def serialize_model(self, handler):
         optional_fields = set(
             [
-                "public_metadata",
-                "private_metadata",
                 "name",
                 "slug",
                 "max_allowed_memberships",
@@ -80,8 +67,6 @@ class UpdateOrganizationRequestBody(BaseModel):
         )
         nullable_fields = set(
             [
-                "public_metadata",
-                "private_metadata",
                 "name",
                 "slug",
                 "max_allowed_memberships",

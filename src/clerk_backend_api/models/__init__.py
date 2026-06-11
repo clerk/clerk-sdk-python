@@ -1335,6 +1335,12 @@ if TYPE_CHECKING:
         RemovePermissionFromOrganizationRoleRequest,
         RemovePermissionFromOrganizationRoleRequestTypedDict,
     )
+    from .replaceorganizationmetadataop import (
+        ReplaceOrganizationMetadataRequest,
+        ReplaceOrganizationMetadataRequestBody,
+        ReplaceOrganizationMetadataRequestBodyTypedDict,
+        ReplaceOrganizationMetadataRequestTypedDict,
+    )
     from .replaceroleinrolesetop import (
         ReplaceRoleInRoleSetRequest,
         ReplaceRoleInRoleSetRequestBody,
@@ -2933,6 +2939,10 @@ __all__ = [
     "RejectWaitlistEntryRequestTypedDict",
     "RemovePermissionFromOrganizationRoleRequest",
     "RemovePermissionFromOrganizationRoleRequestTypedDict",
+    "ReplaceOrganizationMetadataRequest",
+    "ReplaceOrganizationMetadataRequestBody",
+    "ReplaceOrganizationMetadataRequestBodyTypedDict",
+    "ReplaceOrganizationMetadataRequestTypedDict",
     "ReplaceRoleInRoleSetRequest",
     "ReplaceRoleInRoleSetRequestBody",
     "ReplaceRoleInRoleSetRequestBodyTypedDict",
@@ -4556,6 +4566,10 @@ _dynamic_imports: dict[str, str] = {
     "RejectWaitlistEntryRequestTypedDict": ".rejectwaitlistentryop",
     "RemovePermissionFromOrganizationRoleRequest": ".removepermissionfromorganizationroleop",
     "RemovePermissionFromOrganizationRoleRequestTypedDict": ".removepermissionfromorganizationroleop",
+    "ReplaceOrganizationMetadataRequest": ".replaceorganizationmetadataop",
+    "ReplaceOrganizationMetadataRequestBody": ".replaceorganizationmetadataop",
+    "ReplaceOrganizationMetadataRequestBodyTypedDict": ".replaceorganizationmetadataop",
+    "ReplaceOrganizationMetadataRequestTypedDict": ".replaceorganizationmetadataop",
     "ReplaceRoleInRoleSetRequest": ".replaceroleinrolesetop",
     "ReplaceRoleInRoleSetRequestBody": ".replaceroleinrolesetop",
     "ReplaceRoleInRoleSetRequestBodyTypedDict": ".replaceroleinrolesetop",
