@@ -41,7 +41,7 @@ def test_before_request_adds_api_version_header(hook, before_request_context):
     
     # Assert that the Clerk-API-Version header is added with the correct value
     assert "Clerk-API-Version" in modified_request.headers
-    assert modified_request.headers["Clerk-API-Version"] == "2025-04-10"
+    assert modified_request.headers["Clerk-API-Version"] == "2025-11-10"
     
     # Assert that the original request is modified, not a new one created
     assert modified_request is request
@@ -64,7 +64,7 @@ def test_before_request_preserves_existing_headers(hook, before_request_context)
     assert modified_request.headers["Content-Type"] == "application/json"
     
     # Assert that the Clerk-API-Version header is added
-    assert modified_request.headers["Clerk-API-Version"] == "2025-04-10"
+    assert modified_request.headers["Clerk-API-Version"] == "2025-11-10"
 
 
 def test_before_request_overwrites_existing_api_version_header(hook, before_request_context):
@@ -80,4 +80,4 @@ def test_before_request_overwrites_existing_api_version_header(hook, before_requ
     modified_request = hook.before_request(before_request_context, request)
     
     # Assert that the Clerk-API-Version header is overwritten
-    assert modified_request.headers["Clerk-API-Version"] == "2025-04-10"
+    assert modified_request.headers["Clerk-API-Version"] == "2025-11-10"
