@@ -3,23 +3,23 @@ id: bfe29c99-6e67-43fe-b928-64d6a5ed6aa8
 management:
   docChecksum: 19c77225c9b398357c88fdd1aa813ac8
   docVersion: "2026-05-12"
-  speakeasyVersion: 1.777.0
-  generationVersion: 2.903.0
-  releaseVersion: 6.0.0
-  configChecksum: f4493cec9d35c10e1e14e11b19fb97fa
+  speakeasyVersion: 1.778.0
+  generationVersion: 2.904.2
+  releaseVersion: 6.0.1
+  configChecksum: fe6acfe1dc4dfb910fe15cfba7ac3323
   repoURL: https://github.com/clerk/clerk-sdk-python.git
   installationURL: https://github.com/clerk/clerk-sdk-python.git
   published: true
 persistentEdits:
-  generation_id: e99a451b-1b27-4453-b868-bbd2634f4fe9
-  pristine_commit_hash: 16354aeb0a107d99542ca582c4c681ec3a832e2b
-  pristine_tree_hash: f217ca5f913479c35f98eb095e503d5b24ed05f6
+  generation_id: cb1a1ed6-b00f-48d0-90f4-aea52ac0ec8c
+  pristine_commit_hash: dc94cac3747b68145eb85f47788a4bcf3a68121b
+  pristine_tree_hash: 9e23f0cfde7ee622871907fa6cdc356c9bf0e996
 features:
   python:
     additionalDependencies: 1.1.0
     additionalProperties: 1.0.1
     constsAndDefaults: 1.0.7
-    core: 6.0.29
+    core: 6.0.30
     customCodeRegions: 0.1.2
     defaultEnabledRetries: 0.2.0
     deprecations: 3.0.2
@@ -41,8 +41,8 @@ features:
     responseFormat: 1.1.0
     retries: 3.0.5
     sdkHooks: 1.2.1
-    unions: 3.1.5
-    uploadStreams: 1.0.2
+    unions: 3.1.6
+    uploadStreams: 1.0.3
 trackedFiles:
   .gitattributes:
     id: 24139dae6567
@@ -1154,8 +1154,8 @@ trackedFiles:
     pristine_git_object: e5da68e2ee83734d902fab7a56afaf858f4e391c
   docs/models/file.md:
     id: 4ad31355bd1c
-    last_write_checksum: sha1:ade4d3c908c664a07a3c333cc24bc1bfb43ab88b
-    pristine_git_object: 37cc418f9e5189c18f312c42060fd702e2963765
+    last_write_checksum: sha1:3e65f2007c5f8611f830db1406f2bf41a998064b
+    pristine_git_object: b8713ed6e335b8aa2d39d77a5d56819ee7be12a7
   docs/models/format_.md:
     id: a17c22228eda
     last_write_checksum: sha1:288a9da7611daaeb670789dfe06d96abf37e283d
@@ -3030,8 +3030,8 @@ trackedFiles:
     pristine_git_object: e2abc5097a243d968821b7ba658888e8800d0044
   docs/models/uploadoauthapplicationlogofile.md:
     id: fa299eb49b9c
-    last_write_checksum: sha1:21496c30b3896ca2e069a7e3f74808ce2a794a56
-    pristine_git_object: 964d14837c7b12df04b6d0168d6348bf87ee45d8
+    last_write_checksum: sha1:9c8404fcaf30e79a13ac83e7ac6722c75a077b1b
+    pristine_git_object: 27606ce22469c5f6f05866116b7ff8af5803fe90
   docs/models/uploadoauthapplicationlogorequest.md:
     id: 1405525dce59
     last_write_checksum: sha1:66e132b0f37db51f2b12bab9d3c88f9fb8a054a0
@@ -3042,8 +3042,8 @@ trackedFiles:
     pristine_git_object: d975a762c84993f94862caae3cf1c8502b5267c8
   docs/models/uploadorganizationlogofile.md:
     id: 579ad4c6aa57
-    last_write_checksum: sha1:5023c31bf55680ee52432ded6d8cda3c12297962
-    pristine_git_object: 76226b10527a2081a28f2cab4bf5e5d7d19d2d21
+    last_write_checksum: sha1:3c4a7bea8edb4ba68699c8a7b11d8717633d0722
+    pristine_git_object: b28c5752f1b1dcf14018e69e94e5332b5eb5a65f
   docs/models/uploadorganizationlogorequest.md:
     id: b4a79a221a4a
     last_write_checksum: sha1:ad91232b78996328b3cb90818d0493a571f6c53b
@@ -3766,8 +3766,8 @@ trackedFiles:
     pristine_git_object: 7fd8db13ad9399ab075a5fb70e6da17525ad3ed0
   pyproject.toml:
     id: 5d07e7d72637
-    last_write_checksum: sha1:235e8f9e6ac0d4de4e7b29097f3554aaaa98e531
-    pristine_git_object: 5656986124c398c80109a85bdae6689d5fc3efd1
+    last_write_checksum: sha1:75412ea1d36bcab69bf5f1c60af01f9dc38ca15f
+    pristine_git_object: 0677a7544bd71fb62a10f7285ae5aace2e76ec66
   scripts/prepare_readme.py:
     id: e0c5957a6035
     last_write_checksum: sha1:419f10ccc385a29136e599315b61a0aa7a1c3e15
@@ -3794,8 +3794,8 @@ trackedFiles:
     pristine_git_object: 4926429d3dfb2c34589715971acb070ed3756559
   src/clerk_backend_api/_version.py:
     id: 9bcb16a88e08
-    last_write_checksum: sha1:91588260ccfbe16316b112bb34aad5ae81f34085
-    pristine_git_object: 755a7752b99070aa7d88d63c625488f278b5da61
+    last_write_checksum: sha1:3610187b4306de73e4c11f2e3bdeb35d51122bff
+    pristine_git_object: c5e9e88a7e402d16746577e5d9940633c311fc64
   src/clerk_backend_api/actortokens.py:
     id: 3b3f89863233
     last_write_checksum: sha1:3b904736e9137a0802a031e590dcb505f9ed0ba6
@@ -5010,8 +5010,8 @@ trackedFiles:
     pristine_git_object: 9e2391ffe977982bfdf2ef18a6984e5041c33e74
   src/clerk_backend_api/models/setuserprofileimageop.py:
     id: 03a938d0a33c
-    last_write_checksum: sha1:13bb526f838236916a07a5ec3582cb214d0fe796
-    pristine_git_object: cca96e4ad7e554207907e6b6ae1e37c4f7208911
+    last_write_checksum: sha1:3da4226ddf1888a92d6ec88887c0228e69fe8dc8
+    pristine_git_object: b9b0f83ad9670d98a01ef5a36f2336f628ab324b
   src/clerk_backend_api/models/signintoken.py:
     id: 0de4cbb3f8d4
     last_write_checksum: sha1:61213c24f6dcef4ea435c8d31953d506acb0ba7f
@@ -5174,12 +5174,12 @@ trackedFiles:
     pristine_git_object: 3d4b370cb4348a11000090d6a17cc03d31e55935
   src/clerk_backend_api/models/uploadoauthapplicationlogoop.py:
     id: 1d89c357970b
-    last_write_checksum: sha1:59b35b984dcacc9882280e9884b6abcfa6f85969
-    pristine_git_object: a913f5d73cb73d6764754004d3009e04e4a41e0a
+    last_write_checksum: sha1:2edbc236bdac53e7787b36df26ff12fac4e9104e
+    pristine_git_object: ae0c2f23ad399760c7f993da9415ad8af8e88d70
   src/clerk_backend_api/models/uploadorganizationlogoop.py:
     id: b1d30098ca9c
-    last_write_checksum: sha1:f0fd1abd572ecde4fa27394d0ae9bd38aac58b5c
-    pristine_git_object: 0b6a720fc6d96a6705b1eedba60f80a58ad9e076
+    last_write_checksum: sha1:770fa7ab352c05d35fc6fb1189558ef5bce2082e
+    pristine_git_object: ad7fe71fe90447303e2ae0dfa95cb5898853458d
   src/clerk_backend_api/models/upserttemplateop.py:
     id: 01e18aa27ef2
     last_write_checksum: sha1:42a6db50309823630b702e5fc35eb4fcfe3659d1
@@ -5346,8 +5346,8 @@ trackedFiles:
     pristine_git_object: faa268137bc01c9d08cfadc4797017db48747a96
   src/clerk_backend_api/types/base64fileinput.py:
     id: 2bf502a9b849
-    last_write_checksum: sha1:4780e893d3853b5a6e28d9a6ca3ee102ce0f502d
-    pristine_git_object: 25fc53989ed497649363f983219fc58705c8bf87
+    last_write_checksum: sha1:1522687ae3398374c35710cad993a6e82b5ab99d
+    pristine_git_object: 862566fe2b1db830276b390e136e65090e5963d2
   src/clerk_backend_api/types/basemodel.py:
     id: c78de8390613
     last_write_checksum: sha1:10d84aedeb9d35edfdadf2c3020caa1d24d8b584
@@ -5378,12 +5378,12 @@ trackedFiles:
     pristine_git_object: 3324e1bc2668c54c4d5f5a1a845675319757a828
   src/clerk_backend_api/utils/eventstreaming.py:
     id: f5882f2ad74b
-    last_write_checksum: sha1:cad7e4feff4f1b2824afd0d30f2b1964a604f4dd
-    pristine_git_object: 1c189bf6fcad7ba90e0ec6d2f36ca7329d33bb99
+    last_write_checksum: sha1:7d1dc68f8b48486ab646653aa05cc38752e1f912
+    pristine_git_object: a8d4fe5cc88d3c7337339e1b36a61bbf7ca8c4eb
   src/clerk_backend_api/utils/forms.py:
     id: a9a6994ddf0b
-    last_write_checksum: sha1:15fa7e9ab1611e062a9984cf06cb20969713d295
-    pristine_git_object: f961e76beaf0a8b1fe0dda44754a74eebd3608e7
+    last_write_checksum: sha1:a971cdb120ad3d416d296d5d0ad89e4808350a7f
+    pristine_git_object: fdf0dc9b2a67bca773eefe6b471498cccaa83424
   src/clerk_backend_api/utils/headers.py:
     id: 9ea7929738bd
     last_write_checksum: sha1:7c6df233ee006332b566a8afa9ce9a245941d935
@@ -8219,11 +8219,6 @@ examples:
           application/json: {"errors": [{"message": "Invalid input", "long_message": "The input provided does not meet the requirements.", "code": "400_bad_request", "meta": {}}], "meta": {}}
 examplesVersion: 1.0.2
 generatedTests: {}
-releaseNotes: |
-  ## Python SDK Changes:
-  * `clerk.users.update()`:  `request` **Changed** (Breaking ⚠️)
-  * `clerk.organizations.update()`:  `request` **Changed** (Breaking ⚠️)
-  * `clerk.organizations.replace_metadata()`: **Added**
 generatedFiles:
   - .gitattributes
   - .vscode/settings.json
