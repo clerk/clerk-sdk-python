@@ -11,6 +11,7 @@
 * [delete](#delete) - Delete an OAuth application
 * [upload_logo](#upload_logo) - Upload a logo for the OAuth application
 * [rotate_secret](#rotate_secret) - Rotate the client secret of the given OAuth application
+* [revoke_token](#revoke_token) - Revoke an OAuth application token
 
 ## list
 
@@ -322,4 +323,42 @@ with Clerk(
 | Error Type         | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
 | models.ClerkErrors | 403, 404           | application/json   |
+| models.SDKError    | 4XX, 5XX           | \*/\*              |
+
+## revoke_token
+
+Revoke both OAuth access token and refresh token for the associated grant for the given OAuth application.
+The request may specify either token.
+JWT access tokens cannot be revoked.
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="RevokeOAuthApplicationToken" method="post" path="/oauth_applications/{oauth_application_id}/revoke_token" -->
+```python
+from clerk_backend_api import Clerk
+
+
+with Clerk(
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+) as clerk:
+
+    clerk.oauth_applications.revoke_token(oauth_application_id="<id>", token="<value>")
+
+    # Use the SDK ...
+
+```
+
+### Parameters
+
+| Parameter                                                                                                                   | Type                                                                                                                        | Required                                                                                                                    | Description                                                                                                                 |
+| --------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| `oauth_application_id`                                                                                                      | *str*                                                                                                                       | :heavy_check_mark:                                                                                                          | The ID of the OAuth application for which to revoke the token                                                               |
+| `token`                                                                                                                     | *str*                                                                                                                       | :heavy_check_mark:                                                                                                          | The opaque OAuth access token or refresh token to revoke. All tokens associated with the same OAuth grant are also revoked. |
+| `retries`                                                                                                                   | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                            | :heavy_minus_sign:                                                                                                          | Configuration to override the default retry behavior of the client.                                                         |
+
+### Errors
+
+| Error Type         | Status Code        | Content Type       |
+| ------------------ | ------------------ | ------------------ |
+| models.ClerkErrors | 400, 403, 404, 422 | application/json   |
 | models.SDKError    | 4XX, 5XX           | \*/\*              |

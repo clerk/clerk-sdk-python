@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 from .billingpriceresponse import BillingPriceResponse, BillingPriceResponseTypedDict
-from .schemas_commerceplan import SchemasCommercePlan, SchemasCommercePlanTypedDict
+from .commerceplan_2 import CommercePlan2, CommercePlan2TypedDict
 from clerk_backend_api.types import (
     BaseModel,
     Nullable,
@@ -60,7 +60,7 @@ class PreviousSubscriptionItemStatus(str, Enum):
 
 
 class CommercePriceTransitionDetailsTypedDict(TypedDict):
-    previous_plan: SchemasCommercePlanTypedDict
+    previous_plan: CommercePlan2TypedDict
     previous_price: BillingPriceResponseTypedDict
     effective_at: int
     r"""Unix timestamp (milliseconds) when the new price takes effect."""
@@ -79,7 +79,7 @@ class CommercePriceTransitionDetailsTypedDict(TypedDict):
 
 
 class CommercePriceTransitionDetails(BaseModel):
-    previous_plan: SchemasCommercePlan
+    previous_plan: CommercePlan2
 
     previous_price: BillingPriceResponse
 

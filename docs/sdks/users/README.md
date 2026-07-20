@@ -1550,6 +1550,8 @@ with Clerk(
 
 Sets the given user's password as no longer compromised. The user will no longer be prompted to reset their password on their next sign-in.
 
+If the user is in reserved-email password quarantine, the quarantine is preserved and the returned user will still have `requires_password_reset` set to `true`. Reserved-email password quarantine can only be cleared by completing a password reset or changing/removing the password.
+
 ### Example Usage
 
 <!-- UsageSnippet language="python" operationID="UnsetUserPasswordCompromised" method="post" path="/users/{user_id}/password/unset_compromised" -->

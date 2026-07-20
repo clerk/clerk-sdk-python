@@ -14,7 +14,9 @@ class ListOrganizationDomainsRequestTypedDict(TypedDict):
     verified: NotRequired[str]
     r"""Filter domains by their verification status. `true` or `false`"""
     enrollment_mode: NotRequired[str]
-    r"""Filter domains by their enrollment mode"""
+    r"""Filter domains by their enrollment mode. Accepts `automatic_invitation`, `automatic_suggestion`, `manual_invitation` or `enterprise_sso`.
+    Prefix a value with `-` to exclude it instead (e.g. `-enterprise_sso`). Include and exclude filters can be combined and compose as AND.
+    """
     limit: NotRequired[int]
     r"""Applies a limit to the number of results returned.
     Can be used for paginating the results together with `offset`.
@@ -42,7 +44,9 @@ class ListOrganizationDomainsRequest(BaseModel):
         Optional[str],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = None
-    r"""Filter domains by their enrollment mode"""
+    r"""Filter domains by their enrollment mode. Accepts `automatic_invitation`, `automatic_suggestion`, `manual_invitation` or `enterprise_sso`.
+    Prefix a value with `-` to exclude it instead (e.g. `-enterprise_sso`). Include and exclude filters can be combined and compose as AND.
+    """
 
     limit: Annotated[
         Optional[int],

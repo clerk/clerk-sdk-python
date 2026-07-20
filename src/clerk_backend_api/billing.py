@@ -94,6 +94,8 @@ class Billing(BaseSDK):
                 operation_id="GetCommercePlanList",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Billing"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -204,6 +206,8 @@ class Billing(BaseSDK):
                 operation_id="GetCommercePlanList",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Billing"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -314,6 +318,8 @@ class Billing(BaseSDK):
                 operation_id="GetBillingPriceList",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Billing"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -426,6 +432,8 @@ class Billing(BaseSDK):
                 operation_id="GetBillingPriceList",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Billing"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -544,6 +552,8 @@ class Billing(BaseSDK):
                 operation_id="CreateBillingPrice",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Billing"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -660,6 +670,8 @@ class Billing(BaseSDK):
                 operation_id="CreateBillingPrice",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Billing"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -782,6 +794,8 @@ class Billing(BaseSDK):
                 operation_id="GetCommerceSubscriptionItemList",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Billing"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -904,6 +918,8 @@ class Billing(BaseSDK):
                 operation_id="GetCommerceSubscriptionItemList",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Billing"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1002,6 +1018,8 @@ class Billing(BaseSDK):
                 operation_id="CancelCommerceSubscriptionItem",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Billing"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1100,6 +1118,8 @@ class Billing(BaseSDK):
                 operation_id="CancelCommerceSubscriptionItem",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Billing"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1135,7 +1155,7 @@ class Billing(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.SchemasCommerceSubscriptionItem:
+    ) -> models.CommerceSubscriptionItem2:
         r"""Extend free trial for a subscription item
 
         Extends the free trial period for a specific subscription item to the specified timestamp.
@@ -1211,6 +1231,8 @@ class Billing(BaseSDK):
                 operation_id="ExtendBillingSubscriptionItemFreeTrial",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Billing"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1219,9 +1241,7 @@ class Billing(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                models.SchemasCommerceSubscriptionItem, http_res
-            )
+            return unmarshal_json_response(models.CommerceSubscriptionItem2, http_res)
         if utils.match_response(
             http_res, ["400", "401", "403", "404", "422"], "application/json"
         ):
@@ -1248,7 +1268,7 @@ class Billing(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.SchemasCommerceSubscriptionItem:
+    ) -> models.CommerceSubscriptionItem2:
         r"""Extend free trial for a subscription item
 
         Extends the free trial period for a specific subscription item to the specified timestamp.
@@ -1324,6 +1344,8 @@ class Billing(BaseSDK):
                 operation_id="ExtendBillingSubscriptionItemFreeTrial",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Billing"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1332,9 +1354,7 @@ class Billing(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(
-                models.SchemasCommerceSubscriptionItem, http_res
-            )
+            return unmarshal_json_response(models.CommerceSubscriptionItem2, http_res)
         if utils.match_response(
             http_res, ["400", "401", "403", "404", "422"], "application/json"
         ):
@@ -1437,6 +1457,8 @@ class Billing(BaseSDK):
                 operation_id="CreateBillingPriceTransition",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Billing"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1550,6 +1572,8 @@ class Billing(BaseSDK):
                 operation_id="CreateBillingPriceTransition",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Billing"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1659,6 +1683,8 @@ class Billing(BaseSDK):
                 operation_id="GetBillingStatementList",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Billing"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1766,6 +1792,8 @@ class Billing(BaseSDK):
                 operation_id="GetBillingStatementList",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Billing"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1861,6 +1889,8 @@ class Billing(BaseSDK):
                 operation_id="GetBillingStatement",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Billing"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1956,6 +1986,8 @@ class Billing(BaseSDK):
                 operation_id="GetBillingStatement",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Billing"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -2066,6 +2098,8 @@ class Billing(BaseSDK):
                 operation_id="GetBillingStatementPaymentAttempts",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Billing"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -2178,6 +2212,8 @@ class Billing(BaseSDK):
                 operation_id="GetBillingStatementPaymentAttempts",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Billing"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
