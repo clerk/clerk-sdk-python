@@ -2,11 +2,20 @@ import os
 import pytest
 from typing import Optional, Union, List
 from clerk_backend_api import Clerk
+from clerk_backend_api.security import verifytoken
 from clerk_backend_api.security.types import AuthenticateRequestOptions, VerifyTokenOptions
 
 
 def has_env_vars(env_vars: List[str]) -> bool:
     return all(os.getenv(var, "").strip() for var in env_vars)
+
+
+@pytest.fixture(autouse=True)
+def clear_jwk_cache():
+    """The module-global JWKS cache in verifytoken is keyed only by kid, so a
+    key cached by one test lets later tests skip the network fetch entirely,
+    making error-path tests order-dependent. Start every test with a cold cache."""
+    getattr(verifytoken, '__jwkcache').cache.clear()
 
 
 @pytest.fixture
