@@ -34,7 +34,7 @@ python:
     dev:
       pytest: ^8.3.3
     main:
-      cryptography: '>=45.0.0,<51.0.0'
+      cryptography: '>=50.0.0,<51.0.0'
       pyjwt: ^2.9.0
   allowedRedefinedBuiltins:
     - id
