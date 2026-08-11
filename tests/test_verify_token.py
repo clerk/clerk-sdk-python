@@ -1,10 +1,18 @@
+import json
 from unittest.mock import patch, MagicMock, AsyncMock
 
 import jwt
 import pytest
+from cryptography.hazmat.primitives.asymmetric import rsa
+from jwt.algorithms import RSAAlgorithm
 from warnings import warn
 
-from clerk_backend_api.security.verifytoken import verify_token, verify_token_async
+from clerk_backend_api.security.verifytoken import (
+    verify_token,
+    verify_token_async,
+    _get_remote_jwt_key,
+    _get_remote_jwt_key_async,
+)
 from clerk_backend_api.security.types import TokenVerificationError, TokenVerificationErrorReason, VerifyTokenOptions, TokenType
 
 from .conftest import has_env_vars
@@ -573,3 +581,75 @@ class TestVerifyTokenAsync:
         assert exc_info.value.reason == TokenVerificationErrorReason.TOKEN_INVALID_SIGNATURE
         assert mock_get_remote_jwt_key.call_count == 2
         assert mock_jwt_decode.call_count == 2
+
+
+class TestJwksCacheInstanceScoping:
+    """Regression tests for AISEC-82.
+
+    The JWKS cache was keyed on the bare `kid`. Since a Clerk `kid` is the
+    instance id, a key cached for one instance was a direct hit for another
+    instance's verification in the same process, so a token minted by
+    instance B authenticated against instance A.
+    """
+
+    @staticmethod
+    def _tenant(kid):
+        key = rsa.generate_private_key(public_exponent=65537, key_size=2048)
+        jwk = json.loads(RSAAlgorithm.to_jwk(key.public_key()))
+        jwk.update({'kid': kid, 'alg': 'RS256', 'use': 'sig'})
+        token = jwt.encode({'sub': f'user_{kid}'}, key, algorithm='RS256', headers={'kid': kid})
+        return jwk, token
+
+    def _fixtures(self, suffix):
+        # The module-level cache outlives each test, so kids must be unique.
+        jwk_a, _ = self._tenant(f'ins_a_{suffix}')
+        jwk_b, token_b = self._tenant(f'ins_b_{suffix}')
+        jwks = {'sk_test_a': {'keys': [jwk_a]}, 'sk_test_b': {'keys': [jwk_b]}}
+        fetched = []
+
+        def fetch(options):
+            fetched.append(options.secret_key)
+            return jwks[options.secret_key]
+
+        return token_b, fetched, fetch
+
+    def test_cached_key_is_not_served_to_another_instance(self):
+        token_b, fetched, fetch = self._fixtures('sync')
+        opts_a = VerifyTokenOptions(secret_key='sk_test_a')
+        opts_b = VerifyTokenOptions(secret_key='sk_test_b')
+
+        with patch('clerk_backend_api.security.verifytoken._fetch_jwks', side_effect=fetch):
+            pem_b = _get_remote_jwt_key(token_b, opts_b)
+            assert fetched == ['sk_test_b']
+
+            # Instance A must miss the cache and fetch its own JWKS, which
+            # has no such kid.
+            with pytest.raises(TokenVerificationError) as exc_info:
+                _get_remote_jwt_key(token_b, opts_a)
+            assert exc_info.value.reason == TokenVerificationErrorReason.JWK_KID_MISMATCH
+            assert fetched == ['sk_test_b', 'sk_test_a']
+
+            # Instance B's own entry is still cached.
+            assert _get_remote_jwt_key(token_b, opts_b) == pem_b
+            assert fetched == ['sk_test_b', 'sk_test_a']
+
+    @pytest.mark.asyncio
+    async def test_cached_key_is_not_served_to_another_instance_async(self):
+        token_b, fetched, fetch = self._fixtures('async')
+        opts_a = VerifyTokenOptions(secret_key='sk_test_a')
+        opts_b = VerifyTokenOptions(secret_key='sk_test_b')
+
+        async def fetch_async(options):
+            return fetch(options)
+
+        with patch('clerk_backend_api.security.verifytoken._fetch_jwks_async', side_effect=fetch_async):
+            pem_b = await _get_remote_jwt_key_async(token_b, opts_b)
+            assert fetched == ['sk_test_b']
+
+            with pytest.raises(TokenVerificationError) as exc_info:
+                await _get_remote_jwt_key_async(token_b, opts_a)
+            assert exc_info.value.reason == TokenVerificationErrorReason.JWK_KID_MISMATCH
+            assert fetched == ['sk_test_b', 'sk_test_a']
+
+            assert await _get_remote_jwt_key_async(token_b, opts_b) == pem_b
+            assert fetched == ['sk_test_b', 'sk_test_a']

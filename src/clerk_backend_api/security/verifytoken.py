@@ -1,6 +1,7 @@
+import hashlib
 import re
 from datetime import timedelta
-from typing import Any, Dict, cast
+from typing import Any, Dict, Optional, cast
 
 import httpx
 import jwt
@@ -13,6 +14,24 @@ from .machine import get_token_type
 from .types import TokenType, VerifyTokenOptions, TokenVerificationError, TokenVerificationErrorReason
 
 __jwkcache = Cache()
+
+
+def _jwk_cache_key(options: VerifyTokenOptions, kid: Optional[str]) -> Optional[str]:
+    """ Scope a kid to the Clerk instance whose credentials fetched it.
+
+    A Clerk kid is the instance id, so a cache keyed on kid alone serves one
+    instance's signing key to another instance's verification in the same
+    process, letting a token minted by instance B authenticate against
+    instance A (AISEC-82).
+    """
+    if kid is None:
+        return None
+
+    scope = hashlib.sha256(
+        f'{options.api_url}\0{options.secret_key}'.encode('utf-8')
+    ).hexdigest()
+    return f'{scope}:{kid}'
+
 
 verification_apis = {
     TokenType.MACHINE_TOKEN : '/m2m_tokens/verify',
@@ -80,7 +99,7 @@ def _verify_session_token(token: str, options: VerifyTokenOptions) -> Dict[str, 
 
         # Key rotation: evict stale cached key, re-fetch, and retry once
         kid = jwt.get_unverified_header(token).get('kid')
-        __jwkcache.delete(kid)
+        __jwkcache.delete(_jwk_cache_key(options, kid))
         jwt_key = _get_remote_jwt_key(token, options)
 
         try:
@@ -157,7 +176,8 @@ def _get_remote_jwt_key(token: str, options: VerifyTokenOptions) -> str:
     except jwt.InvalidTokenError as e:
         raise TokenVerificationError(TokenVerificationErrorReason.TOKEN_INVALID) from e
 
-    decoded_pem = __jwkcache.get(kid)
+    cache_key = _jwk_cache_key(options, kid)
+    decoded_pem = __jwkcache.get(cache_key)
     if decoded_pem is not None:
         return decoded_pem
 
@@ -175,7 +195,7 @@ def _get_remote_jwt_key(token: str, options: VerifyTokenOptions) -> str:
                     format=serialization.PublicFormat.SubjectPublicKeyInfo
                 )
                 decoded_pem = pem.decode('utf-8')
-                __jwkcache.set(kid, decoded_pem)
+                __jwkcache.set(cache_key, decoded_pem)
                 return decoded_pem
 
     raise TokenVerificationError(TokenVerificationErrorReason.JWK_KID_MISMATCH)
@@ -216,7 +236,7 @@ async def _verify_session_token_async(token: str, options: VerifyTokenOptions) -
 
         # Key rotation: evict stale cached key, re-fetch, and retry once
         kid = jwt.get_unverified_header(token).get('kid')
-        __jwkcache.delete(kid)
+        __jwkcache.delete(_jwk_cache_key(options, kid))
         jwt_key = await _get_remote_jwt_key_async(token, options)
 
         try:
@@ -291,7 +311,8 @@ async def _get_remote_jwt_key_async(token: str, options: VerifyTokenOptions) -> 
     except jwt.InvalidTokenError as e:
         raise TokenVerificationError(TokenVerificationErrorReason.TOKEN_INVALID) from e
 
-    decoded_pem = __jwkcache.get(kid)
+    cache_key = _jwk_cache_key(options, kid)
+    decoded_pem = __jwkcache.get(cache_key)
     if decoded_pem is not None:
         return decoded_pem
 
@@ -309,7 +330,7 @@ async def _get_remote_jwt_key_async(token: str, options: VerifyTokenOptions) -> 
                     format=serialization.PublicFormat.SubjectPublicKeyInfo
                 )
                 decoded_pem = pem.decode('utf-8')
-                __jwkcache.set(kid, decoded_pem)
+                __jwkcache.set(cache_key, decoded_pem)
                 return decoded_pem
 
     raise TokenVerificationError(TokenVerificationErrorReason.JWK_KID_MISMATCH)
