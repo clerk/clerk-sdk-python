@@ -1,0 +1,11 @@
+# CreateSCIMDirectoryRequestBody
+
+
+## Fields
+
+| Field                                                                           | Type                                                                            | Required                                                                        | Description                                                                     |
+| ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| `enterprise_connection_id`                                                      | *str*                                                                           | :heavy_check_mark:                                                              | The ID of the enterprise connection to associate with this SCIM directory.      |
+| `name`                                                                          | *Optional[str]*                                                                 | :heavy_minus_sign:                                                              | A human-friendly name for the SCIM directory.                                   |
+| `provider`                                                                      | *str*                                                                           | :heavy_check_mark:                                                              | The identity provider for this SCIM directory.                                  |
+| `group_role_mappings`                                                           | List[[models.GroupRoleMappings](../models/grouprolemappings.md)]                | :heavy_minus_sign:                                                              | Optional SCIM group to organization role mappings to create with the directory. |

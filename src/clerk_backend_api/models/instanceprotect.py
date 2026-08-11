@@ -16,6 +16,8 @@ class InstanceProtectTypedDict(TypedDict):
     object: InstanceProtectObject
     rules_enabled: bool
     specter_enabled: bool
+    checks_bypassed: bool
+    r"""Whether the instance has opted out of the Protect prerequisite checks, asserting its setup already meets the requirements."""
 
 
 class InstanceProtect(BaseModel):
@@ -26,3 +28,6 @@ class InstanceProtect(BaseModel):
     rules_enabled: bool
 
     specter_enabled: bool
+
+    checks_bypassed: bool
+    r"""Whether the instance has opted out of the Protect prerequisite checks, asserting its setup already meets the requirements."""

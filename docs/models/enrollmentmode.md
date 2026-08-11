@@ -18,3 +18,4 @@ value = EnrollmentMode.MANUAL_INVITATION
 | `MANUAL_INVITATION`    | manual_invitation      |
 | `AUTOMATIC_INVITATION` | automatic_invitation   |
 | `AUTOMATIC_SUGGESTION` | automatic_suggestion   |
+| `ENTERPRISE_SSO`       | enterprise_sso         |

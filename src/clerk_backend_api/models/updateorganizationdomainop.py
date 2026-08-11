@@ -15,14 +15,14 @@ from typing_extensions import Annotated, NotRequired, TypedDict
 
 class UpdateOrganizationDomainRequestBodyTypedDict(TypedDict):
     enrollment_mode: NotRequired[Nullable[str]]
-    r"""The enrollment_mode for the new domain. This can be `automatic_invitation`, `automatic_suggestion` or `manual_invitation`"""
+    r"""The enrollment_mode for the new domain. This can be `automatic_invitation`, `automatic_suggestion`, `manual_invitation` or `enterprise_sso`"""
     verified: NotRequired[Nullable[bool]]
     r"""The status of the domain's verification"""
 
 
 class UpdateOrganizationDomainRequestBody(BaseModel):
     enrollment_mode: OptionalNullable[str] = UNSET
-    r"""The enrollment_mode for the new domain. This can be `automatic_invitation`, `automatic_suggestion` or `manual_invitation`"""
+    r"""The enrollment_mode for the new domain. This can be `automatic_invitation`, `automatic_suggestion`, `manual_invitation` or `enterprise_sso`"""
 
     verified: OptionalNullable[bool] = UNSET
     r"""The status of the domain's verification"""

@@ -92,6 +92,8 @@ class EmailAddresses(BaseSDK):
                 operation_id="CreateEmailAddress",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Email Addresses"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -198,6 +200,8 @@ class EmailAddresses(BaseSDK):
                 operation_id="CreateEmailAddress",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Email Addresses"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -290,6 +294,8 @@ class EmailAddresses(BaseSDK):
                 operation_id="GetEmailAddress",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Email Addresses"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -382,6 +388,8 @@ class EmailAddresses(BaseSDK):
                 operation_id="GetEmailAddress",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Email Addresses"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -474,6 +482,8 @@ class EmailAddresses(BaseSDK):
                 operation_id="DeleteEmailAddress",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Email Addresses"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -566,6 +576,8 @@ class EmailAddresses(BaseSDK):
                 operation_id="DeleteEmailAddress",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Email Addresses"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -595,6 +607,7 @@ class EmailAddresses(BaseSDK):
         email_address_id: str,
         verified: OptionalNullable[bool] = UNSET,
         primary: OptionalNullable[bool] = UNSET,
+        notify_primary_email_address_changed: OptionalNullable[bool] = False,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -607,6 +620,9 @@ class EmailAddresses(BaseSDK):
         :param email_address_id: The ID of the email address to update
         :param verified: The email address will be marked as verified.
         :param primary: Set this email address as the primary email address for the user.
+        :param notify_primary_email_address_changed: If set to `true` and this update makes the email address the user's new primary,
+            the previous primary email address is notified of the change.
+            By default, no notification is sent.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -627,6 +643,7 @@ class EmailAddresses(BaseSDK):
             request_body=models.UpdateEmailAddressRequestBody(
                 verified=verified,
                 primary=primary,
+                notify_primary_email_address_changed=notify_primary_email_address_changed,
             ),
         )
 
@@ -673,6 +690,8 @@ class EmailAddresses(BaseSDK):
                 operation_id="UpdateEmailAddress",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Email Addresses"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -702,6 +721,7 @@ class EmailAddresses(BaseSDK):
         email_address_id: str,
         verified: OptionalNullable[bool] = UNSET,
         primary: OptionalNullable[bool] = UNSET,
+        notify_primary_email_address_changed: OptionalNullable[bool] = False,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -714,6 +734,9 @@ class EmailAddresses(BaseSDK):
         :param email_address_id: The ID of the email address to update
         :param verified: The email address will be marked as verified.
         :param primary: Set this email address as the primary email address for the user.
+        :param notify_primary_email_address_changed: If set to `true` and this update makes the email address the user's new primary,
+            the previous primary email address is notified of the change.
+            By default, no notification is sent.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -734,6 +757,7 @@ class EmailAddresses(BaseSDK):
             request_body=models.UpdateEmailAddressRequestBody(
                 verified=verified,
                 primary=primary,
+                notify_primary_email_address_changed=notify_primary_email_address_changed,
             ),
         )
 
@@ -780,6 +804,8 @@ class EmailAddresses(BaseSDK):
                 operation_id="UpdateEmailAddress",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Email Addresses"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -875,6 +901,8 @@ class EmailAddresses(BaseSDK):
                 operation_id="PrepareEmailAddressVerification",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Email Addresses"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -973,6 +1001,8 @@ class EmailAddresses(BaseSDK):
                 operation_id="PrepareEmailAddressVerification",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Email Addresses"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1093,6 +1123,8 @@ class EmailAddresses(BaseSDK):
                 operation_id="AttemptEmailAddressVerification",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Email Addresses"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1213,6 +1245,8 @@ class EmailAddresses(BaseSDK):
                 operation_id="AttemptEmailAddressVerification",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Email Addresses"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1247,6 +1281,7 @@ class EmailAddresses(BaseSDK):
         identification_status: Optional[
             models.IdentificationStatus
         ] = models.IdentificationStatus.VERIFIED,
+        notify_primary_email_address_changed: OptionalNullable[bool] = False,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1257,15 +1292,32 @@ class EmailAddresses(BaseSDK):
         Replaces all of the user's email addresses with a single primary email address.
         By default the new email address is created verified, with the admin verification strategy.
         When `identification_status` is `reserved` it is created reserved instead: unverified but usable
-        for sign-in and locked so no other user can claim it. Any existing email addresses are deleted.
+        for sign-in and locked so no other user can claim it. When it is `unverified` the address is
+        neither usable for sign-in nor locked. Any existing email addresses are deleted.
         If an existing email address is linked to a connected account, the request is rejected; remove
         the connected account first.
+
+        **Warning:** `identification_status: unverified` can lock the user out of their account. An
+        unverified email address cannot be used to sign in, so if the user has no other verified or
+        reserved identifier, deleting their existing email addresses leaves them unable to
+        authenticate — and unable to verify the new address, since that requires signing in. Recovery
+        then requires another admin API call.
 
         :param user_id: The ID of the user whose email address to replace
         :param email_address: The new email address. Must adhere to the RFC 5322 specification for email address format.
         :param identification_status: Controls the status of the replacement email address. Defaults to `verified`. Set to
-            `reserved` to create it reserved (unverified but usable for sign-in and locked)
-            instead of verified.
+            `reserved` to create it reserved (unverified but usable for sign-in and locked so no
+            other user can claim it), or to `unverified` to create it neither usable for sign-in
+            nor locked.
+
+            **Warning:** `unverified` can lock the user out of their account. An unverified email
+            address cannot be used to sign in, so if the user has no other verified or reserved
+            identifier, they will be unable to authenticate and unable to verify this address.
+            Prefer `reserved` unless you specifically need the address left unclaimed — for
+            example so that another user can also hold it until one of them verifies it.
+        :param notify_primary_email_address_changed: If set to `true`, the user's previous primary email address is notified that the
+            primary email address has changed. No notification is sent when the replacement
+            is the user's current primary email address. By default, no notification is sent.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1286,6 +1338,7 @@ class EmailAddresses(BaseSDK):
             request_body=models.ReplaceUserEmailAddressRequestBody(
                 email_address=email_address,
                 identification_status=identification_status,
+                notify_primary_email_address_changed=notify_primary_email_address_changed,
             ),
         )
 
@@ -1332,6 +1385,8 @@ class EmailAddresses(BaseSDK):
                 operation_id="ReplaceUserEmailAddress",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Email Addresses"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1363,6 +1418,7 @@ class EmailAddresses(BaseSDK):
         identification_status: Optional[
             models.IdentificationStatus
         ] = models.IdentificationStatus.VERIFIED,
+        notify_primary_email_address_changed: OptionalNullable[bool] = False,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1373,15 +1429,32 @@ class EmailAddresses(BaseSDK):
         Replaces all of the user's email addresses with a single primary email address.
         By default the new email address is created verified, with the admin verification strategy.
         When `identification_status` is `reserved` it is created reserved instead: unverified but usable
-        for sign-in and locked so no other user can claim it. Any existing email addresses are deleted.
+        for sign-in and locked so no other user can claim it. When it is `unverified` the address is
+        neither usable for sign-in nor locked. Any existing email addresses are deleted.
         If an existing email address is linked to a connected account, the request is rejected; remove
         the connected account first.
+
+        **Warning:** `identification_status: unverified` can lock the user out of their account. An
+        unverified email address cannot be used to sign in, so if the user has no other verified or
+        reserved identifier, deleting their existing email addresses leaves them unable to
+        authenticate — and unable to verify the new address, since that requires signing in. Recovery
+        then requires another admin API call.
 
         :param user_id: The ID of the user whose email address to replace
         :param email_address: The new email address. Must adhere to the RFC 5322 specification for email address format.
         :param identification_status: Controls the status of the replacement email address. Defaults to `verified`. Set to
-            `reserved` to create it reserved (unverified but usable for sign-in and locked)
-            instead of verified.
+            `reserved` to create it reserved (unverified but usable for sign-in and locked so no
+            other user can claim it), or to `unverified` to create it neither usable for sign-in
+            nor locked.
+
+            **Warning:** `unverified` can lock the user out of their account. An unverified email
+            address cannot be used to sign in, so if the user has no other verified or reserved
+            identifier, they will be unable to authenticate and unable to verify this address.
+            Prefer `reserved` unless you specifically need the address left unclaimed — for
+            example so that another user can also hold it until one of them verifies it.
+        :param notify_primary_email_address_changed: If set to `true`, the user's previous primary email address is notified that the
+            primary email address has changed. No notification is sent when the replacement
+            is the user's current primary email address. By default, no notification is sent.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1402,6 +1475,7 @@ class EmailAddresses(BaseSDK):
             request_body=models.ReplaceUserEmailAddressRequestBody(
                 email_address=email_address,
                 identification_status=identification_status,
+                notify_primary_email_address_changed=notify_primary_email_address_changed,
             ),
         )
 
@@ -1448,6 +1522,8 @@ class EmailAddresses(BaseSDK):
                 operation_id="ReplaceUserEmailAddress",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Email Addresses"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),

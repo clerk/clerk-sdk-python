@@ -18,7 +18,7 @@ class CreateOrganizationDomainRequestBodyTypedDict(TypedDict):
     name: NotRequired[str]
     r"""The name of the new domain"""
     enrollment_mode: NotRequired[str]
-    r"""The enrollment_mode for the new domain. This can be `automatic_invitation`, `automatic_suggestion` or `manual_invitation`"""
+    r"""The enrollment_mode for the new domain. This can be `automatic_invitation`, `automatic_suggestion`, `manual_invitation` or `enterprise_sso`"""
     verified: NotRequired[Nullable[bool]]
     r"""The status of domain's verification. Defaults to true"""
 
@@ -28,7 +28,7 @@ class CreateOrganizationDomainRequestBody(BaseModel):
     r"""The name of the new domain"""
 
     enrollment_mode: Optional[str] = None
-    r"""The enrollment_mode for the new domain. This can be `automatic_invitation`, `automatic_suggestion` or `manual_invitation`"""
+    r"""The enrollment_mode for the new domain. This can be `automatic_invitation`, `automatic_suggestion`, `manual_invitation` or `enterprise_sso`"""
 
     verified: OptionalNullable[bool] = UNSET
     r"""The status of domain's verification. Defaults to true"""

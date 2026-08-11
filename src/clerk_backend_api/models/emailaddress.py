@@ -13,7 +13,7 @@ from clerk_backend_api.types import (
 from clerk_backend_api.utils import get_discriminator
 from enum import Enum
 from pydantic import Discriminator, Tag, field_serializer, model_serializer
-from typing import List, Optional, Union
+from typing import Any, Dict, List, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 
@@ -159,19 +159,11 @@ class VerificationSamlVerificationStrategy(str, Enum):
     SAML = "saml"
 
 
-class ClerkErrorErrorMetaTypedDict(TypedDict):
-    pass
-
-
-class ClerkErrorErrorMeta(BaseModel):
-    pass
-
-
 class VerificationSamlErrorClerkErrorTypedDict(TypedDict):
     message: str
     long_message: str
     code: str
-    meta: NotRequired[ClerkErrorErrorMetaTypedDict]
+    meta: NotRequired[Dict[str, Any]]
 
 
 class VerificationSamlErrorClerkError(BaseModel):
@@ -181,57 +173,7 @@ class VerificationSamlErrorClerkError(BaseModel):
 
     code: str
 
-    meta: Optional[ClerkErrorErrorMeta] = None
-
-    @model_serializer(mode="wrap")
-    def serialize_model(self, handler):
-        optional_fields = set(["meta"])
-        serialized = handler(self)
-        m = {}
-
-        for n, f in type(self).model_fields.items():
-            k = f.alias or n
-            val = serialized.get(k, serialized.get(n))
-
-            if val != UNSET_SENTINEL:
-                if val is not None or k not in optional_fields:
-                    m[k] = val
-
-        return m
-
-
-class VerificationFromOauthVerificationObject(str, Enum):
-    VERIFICATION_FROM_OAUTH = "verification_from_oauth"
-
-
-class VerificationFromOauthVerificationStatus(str, Enum):
-    UNVERIFIED = "unverified"
-    VERIFIED = "verified"
-
-
-class ErrorMetaTypedDict(TypedDict):
-    pass
-
-
-class ErrorMeta(BaseModel):
-    pass
-
-
-class ErrorClerkErrorTypedDict(TypedDict):
-    message: str
-    long_message: str
-    code: str
-    meta: NotRequired[ErrorMetaTypedDict]
-
-
-class ErrorClerkError(BaseModel):
-    message: str
-
-    long_message: str
-
-    code: str
-
-    meta: Optional[ErrorMeta] = None
+    meta: Optional[Dict[str, Any]] = None
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
@@ -392,6 +334,48 @@ class Ticket(BaseModel):
                     or k not in optional_fields
                     or is_nullable_and_explicitly_set
                 ):
+                    m[k] = val
+
+        return m
+
+
+class VerificationFromOauthVerificationObject(str, Enum):
+    VERIFICATION_FROM_OAUTH = "verification_from_oauth"
+
+
+class VerificationFromOauthVerificationStatus(str, Enum):
+    UNVERIFIED = "unverified"
+    VERIFIED = "verified"
+
+
+class ErrorClerkErrorTypedDict(TypedDict):
+    message: str
+    long_message: str
+    code: str
+    meta: NotRequired[Dict[str, Any]]
+
+
+class ErrorClerkError(BaseModel):
+    message: str
+
+    long_message: str
+
+    code: str
+
+    meta: Optional[Dict[str, Any]] = None
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["meta"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
                     m[k] = val
 
         return m

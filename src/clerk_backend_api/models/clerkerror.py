@@ -3,23 +3,15 @@
 from __future__ import annotations
 from clerk_backend_api.types import BaseModel, UNSET_SENTINEL
 from pydantic import model_serializer
-from typing import Optional
+from typing import Any, Dict, Optional
 from typing_extensions import NotRequired, TypedDict
-
-
-class MetaTypedDict(TypedDict):
-    pass
-
-
-class Meta(BaseModel):
-    pass
 
 
 class ClerkErrorTypedDict(TypedDict):
     message: str
     long_message: str
     code: str
-    meta: NotRequired[MetaTypedDict]
+    meta: NotRequired[Dict[str, Any]]
 
 
 class ClerkError(BaseModel):
@@ -29,7 +21,7 @@ class ClerkError(BaseModel):
 
     code: str
 
-    meta: Optional[Meta] = None
+    meta: Optional[Dict[str, Any]] = None
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

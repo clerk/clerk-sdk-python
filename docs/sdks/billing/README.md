@@ -282,7 +282,7 @@ with Clerk(
 
 ### Response
 
-**[models.SchemasCommerceSubscriptionItem](../../models/schemascommercesubscriptionitem.md)**
+**[models.CommerceSubscriptionItem2](../../models/commercesubscriptionitem2.md)**
 
 ### Errors
 

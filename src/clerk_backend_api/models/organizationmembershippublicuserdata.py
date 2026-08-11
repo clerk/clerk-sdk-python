@@ -26,6 +26,7 @@ class OrganizationMembershipPublicUserDataTypedDict(TypedDict):
     identifier: NotRequired[Nullable[str]]
     username: NotRequired[Nullable[str]]
     banned: NotRequired[bool]
+    deprovisioned: NotRequired[bool]
 
 
 class OrganizationMembershipPublicUserData(BaseModel):
@@ -54,9 +55,11 @@ class OrganizationMembershipPublicUserData(BaseModel):
 
     banned: Optional[bool] = None
 
+    deprovisioned: Optional[bool] = None
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["identifier", "username", "banned"])
+        optional_fields = set(["identifier", "username", "banned", "deprovisioned"])
         nullable_fields = set(
             ["first_name", "last_name", "profile_image_url", "identifier", "username"]
         )

@@ -23,6 +23,11 @@ class CreateEmailAddressRequestBodyTypedDict(TypedDict):
     r"""Create this email address as the primary email address for the user.
     Default: false, unless it is the first email address.
     """
+    notify_primary_email_address_changed: NotRequired[Nullable[bool]]
+    r"""If set to `true` and the email address is created as the user's new primary,
+    the previous primary email address is notified of the change.
+    By default, no notification is sent.
+    """
 
 
 class CreateEmailAddressRequestBody(BaseModel):
@@ -40,10 +45,20 @@ class CreateEmailAddressRequestBody(BaseModel):
     Default: false, unless it is the first email address.
     """
 
+    notify_primary_email_address_changed: OptionalNullable[bool] = False
+    r"""If set to `true` and the email address is created as the user's new primary,
+    the previous primary email address is notified of the change.
+    By default, no notification is sent.
+    """
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["verified", "primary"])
-        nullable_fields = set(["verified", "primary"])
+        optional_fields = set(
+            ["verified", "primary", "notify_primary_email_address_changed"]
+        )
+        nullable_fields = set(
+            ["verified", "primary", "notify_primary_email_address_changed"]
+        )
         serialized = handler(self)
         m = {}
 

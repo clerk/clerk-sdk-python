@@ -9,30 +9,73 @@ from clerk_backend_api.types import (
     UNSET_SENTINEL,
 )
 from pydantic import model_serializer
+from typing import List
 from typing_extensions import NotRequired, TypedDict
 
 
 class UpdateInstanceOAuthApplicationSettingsRequestBodyTypedDict(TypedDict):
     dynamic_oauth_client_registration: NotRequired[Nullable[bool]]
     r"""Whether dynamic OAuth client registration is enabled for the instance (RFC 7591)."""
+    default_scopes: NotRequired[Nullable[List[str]]]
+    r"""Default scopes. Set to null to reset to Clerk-provided defaults."""
     oauth_jwt_access_tokens: NotRequired[Nullable[bool]]
     r"""Whether OAuth JWT access tokens are enabled for the instance (disabled indicates opaque access tokens)."""
+    client_id_metadata_documents_advertised: NotRequired[Nullable[bool]]
+    r"""Whether the instance advertises support for Client ID Metadata Documents in its OAuth authorization server metadata."""
+    client_id_metadata_documents_only_allow_pre_registered_clients: NotRequired[
+        Nullable[bool]
+    ]
+    r"""When true, new unknown CIMD clients are rejected. Previously auto-connected and pre-registered clients remain admitted; deleting a client makes it unknown again."""
+    client_id_metadata_documents_block_implicitly_allowed_clients: NotRequired[
+        Nullable[bool]
+    ]
+    r"""When true, recorded implicitly allowed CIMD clients are rejected on future client lookups. Explicitly allowed clients remain accepted. This does not revoke previously issued access tokens."""
 
 
 class UpdateInstanceOAuthApplicationSettingsRequestBody(BaseModel):
     dynamic_oauth_client_registration: OptionalNullable[bool] = UNSET
     r"""Whether dynamic OAuth client registration is enabled for the instance (RFC 7591)."""
 
+    default_scopes: OptionalNullable[List[str]] = UNSET
+    r"""Default scopes. Set to null to reset to Clerk-provided defaults."""
+
     oauth_jwt_access_tokens: OptionalNullable[bool] = UNSET
     r"""Whether OAuth JWT access tokens are enabled for the instance (disabled indicates opaque access tokens)."""
+
+    client_id_metadata_documents_advertised: OptionalNullable[bool] = UNSET
+    r"""Whether the instance advertises support for Client ID Metadata Documents in its OAuth authorization server metadata."""
+
+    client_id_metadata_documents_only_allow_pre_registered_clients: OptionalNullable[
+        bool
+    ] = UNSET
+    r"""When true, new unknown CIMD clients are rejected. Previously auto-connected and pre-registered clients remain admitted; deleting a client makes it unknown again."""
+
+    client_id_metadata_documents_block_implicitly_allowed_clients: OptionalNullable[
+        bool
+    ] = UNSET
+    r"""When true, recorded implicitly allowed CIMD clients are rejected on future client lookups. Explicitly allowed clients remain accepted. This does not revoke previously issued access tokens."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
-            ["dynamic_oauth_client_registration", "oauth_jwt_access_tokens"]
+            [
+                "dynamic_oauth_client_registration",
+                "default_scopes",
+                "oauth_jwt_access_tokens",
+                "client_id_metadata_documents_advertised",
+                "client_id_metadata_documents_only_allow_pre_registered_clients",
+                "client_id_metadata_documents_block_implicitly_allowed_clients",
+            ]
         )
         nullable_fields = set(
-            ["dynamic_oauth_client_registration", "oauth_jwt_access_tokens"]
+            [
+                "dynamic_oauth_client_registration",
+                "default_scopes",
+                "oauth_jwt_access_tokens",
+                "client_id_metadata_documents_advertised",
+                "client_id_metadata_documents_only_allow_pre_registered_clients",
+                "client_id_metadata_documents_block_implicitly_allowed_clients",
+            ]
         )
         serialized = handler(self)
         m = {}

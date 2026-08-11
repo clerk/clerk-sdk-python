@@ -1,0 +1,10 @@
+# CommerceSubscriptionItem2Credits
+
+
+## Fields
+
+| Field                                                                                                  | Type                                                                                                   | Required                                                                                               | Description                                                                                            |
+| ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ |
+| `proration`                                                                                            | [Nullable[models.CommerceSubscriptionItem2Proration]](../models/commercesubscriptionitem2proration.md) | :heavy_check_mark:                                                                                     | N/A                                                                                                    |
+| `payer`                                                                                                | [Nullable[models.CommerceSubscriptionItem2Payer]](../models/commercesubscriptionitem2payer.md)         | :heavy_check_mark:                                                                                     | N/A                                                                                                    |
+| `total`                                                                                                | [models.CommerceMoneyResponse](../models/commercemoneyresponse.md)                                     | :heavy_check_mark:                                                                                     | N/A                                                                                                    |

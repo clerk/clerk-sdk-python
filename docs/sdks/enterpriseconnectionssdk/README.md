@@ -175,6 +175,7 @@ When enabling the connection (setting `active` to true), any existing verified o
 
 <!-- UsageSnippet language="python" operationID="UpdateEnterpriseConnection" method="patch" path="/enterprise_connections/{enterprise_connection_id}" -->
 ```python
+import clerk_backend_api
 from clerk_backend_api import Clerk
 
 
@@ -198,6 +199,10 @@ with Clerk(
         "allow_subdomains": False,
         "allow_idp_initiated": False,
         "force_authn": False,
+        "login_hint": {
+            "mode": clerk_backend_api.UpdateEnterpriseConnectionMode.EMAIL_ADDRESS,
+            "source": "<value>",
+        },
     }, oidc={
         "client_id": "<id>",
         "client_secret": "<value>",

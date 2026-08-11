@@ -27,7 +27,7 @@ class OrganizationDomainsSDK(BaseSDK):
 
         :param organization_id: The ID of the organization where the new domain will be created.
         :param name: The name of the new domain
-        :param enrollment_mode: The enrollment_mode for the new domain. This can be `automatic_invitation`, `automatic_suggestion` or `manual_invitation`
+        :param enrollment_mode: The enrollment_mode for the new domain. This can be `automatic_invitation`, `automatic_suggestion`, `manual_invitation` or `enterprise_sso`
         :param verified: The status of domain's verification. Defaults to true
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -96,6 +96,8 @@ class OrganizationDomainsSDK(BaseSDK):
                 operation_id="CreateOrganizationDomain",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Organization Domains"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -137,7 +139,7 @@ class OrganizationDomainsSDK(BaseSDK):
 
         :param organization_id: The ID of the organization where the new domain will be created.
         :param name: The name of the new domain
-        :param enrollment_mode: The enrollment_mode for the new domain. This can be `automatic_invitation`, `automatic_suggestion` or `manual_invitation`
+        :param enrollment_mode: The enrollment_mode for the new domain. This can be `automatic_invitation`, `automatic_suggestion`, `manual_invitation` or `enterprise_sso`
         :param verified: The status of domain's verification. Defaults to true
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -206,6 +208,8 @@ class OrganizationDomainsSDK(BaseSDK):
                 operation_id="CreateOrganizationDomain",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Organization Domains"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -248,7 +252,8 @@ class OrganizationDomainsSDK(BaseSDK):
 
         :param organization_id: The organization ID.
         :param verified: Filter domains by their verification status. `true` or `false`
-        :param enrollment_mode: Filter domains by their enrollment mode
+        :param enrollment_mode: Filter domains by their enrollment mode. Accepts `automatic_invitation`, `automatic_suggestion`, `manual_invitation` or `enterprise_sso`.
+            Prefix a value with `-` to exclude it instead (e.g. `-enterprise_sso`). Include and exclude filters can be combined and compose as AND.
         :param limit: Applies a limit to the number of results returned.
             Can be used for paginating the results together with `offset`.
         :param offset: Skip the first `offset` results when paginating.
@@ -313,6 +318,8 @@ class OrganizationDomainsSDK(BaseSDK):
                 operation_id="ListOrganizationDomains",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Organization Domains"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -353,7 +360,8 @@ class OrganizationDomainsSDK(BaseSDK):
 
         :param organization_id: The organization ID.
         :param verified: Filter domains by their verification status. `true` or `false`
-        :param enrollment_mode: Filter domains by their enrollment mode
+        :param enrollment_mode: Filter domains by their enrollment mode. Accepts `automatic_invitation`, `automatic_suggestion`, `manual_invitation` or `enterprise_sso`.
+            Prefix a value with `-` to exclude it instead (e.g. `-enterprise_sso`). Include and exclude filters can be combined and compose as AND.
         :param limit: Applies a limit to the number of results returned.
             Can be used for paginating the results together with `offset`.
         :param offset: Skip the first `offset` results when paginating.
@@ -418,6 +426,8 @@ class OrganizationDomainsSDK(BaseSDK):
                 operation_id="ListOrganizationDomains",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Organization Domains"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -457,7 +467,7 @@ class OrganizationDomainsSDK(BaseSDK):
 
         :param organization_id: The ID of the organization to which the domain belongs
         :param domain_id: The ID of the domain
-        :param enrollment_mode: The enrollment_mode for the new domain. This can be `automatic_invitation`, `automatic_suggestion` or `manual_invitation`
+        :param enrollment_mode: The enrollment_mode for the new domain. This can be `automatic_invitation`, `automatic_suggestion`, `manual_invitation` or `enterprise_sso`
         :param verified: The status of the domain's verification
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -526,6 +536,8 @@ class OrganizationDomainsSDK(BaseSDK):
                 operation_id="UpdateOrganizationDomain",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Organization Domains"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -535,7 +547,9 @@ class OrganizationDomainsSDK(BaseSDK):
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(models.OrganizationDomain, http_res)
-        if utils.match_response(http_res, ["400", "404", "422"], "application/json"):
+        if utils.match_response(
+            http_res, ["400", "403", "404", "422"], "application/json"
+        ):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
@@ -565,7 +579,7 @@ class OrganizationDomainsSDK(BaseSDK):
 
         :param organization_id: The ID of the organization to which the domain belongs
         :param domain_id: The ID of the domain
-        :param enrollment_mode: The enrollment_mode for the new domain. This can be `automatic_invitation`, `automatic_suggestion` or `manual_invitation`
+        :param enrollment_mode: The enrollment_mode for the new domain. This can be `automatic_invitation`, `automatic_suggestion`, `manual_invitation` or `enterprise_sso`
         :param verified: The status of the domain's verification
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -634,6 +648,8 @@ class OrganizationDomainsSDK(BaseSDK):
                 operation_id="UpdateOrganizationDomain",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Organization Domains"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -643,7 +659,9 @@ class OrganizationDomainsSDK(BaseSDK):
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(models.OrganizationDomain, http_res)
-        if utils.match_response(http_res, ["400", "404", "422"], "application/json"):
+        if utils.match_response(
+            http_res, ["400", "403", "404", "422"], "application/json"
+        ):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
@@ -727,6 +745,8 @@ class OrganizationDomainsSDK(BaseSDK):
                 operation_id="DeleteOrganizationDomain",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Organization Domains"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -736,7 +756,9 @@ class OrganizationDomainsSDK(BaseSDK):
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(models.DeletedObject, http_res)
-        if utils.match_response(http_res, ["400", "401", "404"], "application/json"):
+        if utils.match_response(
+            http_res, ["400", "401", "403", "404"], "application/json"
+        ):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
@@ -820,6 +842,8 @@ class OrganizationDomainsSDK(BaseSDK):
                 operation_id="DeleteOrganizationDomain",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Organization Domains"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -829,7 +853,9 @@ class OrganizationDomainsSDK(BaseSDK):
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(models.DeletedObject, http_res)
-        if utils.match_response(http_res, ["400", "401", "404"], "application/json"):
+        if utils.match_response(
+            http_res, ["400", "401", "403", "404"], "application/json"
+        ):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
@@ -920,6 +946,8 @@ class OrganizationDomainsSDK(BaseSDK):
                 operation_id="VerifyOrganizationDomainOwnership",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Organization Domains"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1020,6 +1048,8 @@ class OrganizationDomainsSDK(BaseSDK):
                 operation_id="VerifyOrganizationDomainOwnership",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Organization Domains"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1069,7 +1099,8 @@ class OrganizationDomainsSDK(BaseSDK):
 
         :param organization_id: The ID of the organization to filter domains by
         :param verified: Filter by verification status
-        :param enrollment_mode: Filter by enrollment mode
+        :param enrollment_mode: Filter by enrollment mode. Prefix a value with `-` to exclude it instead
+            (e.g. `-enterprise_sso`). Include and exclude filters can be combined and compose as AND.
         :param query: Search domains by name or organization ID.
             If the query starts with \"org_\", it will search by exact organization ID match.
             Otherwise, it performs a case-insensitive partial match on the domain name.
@@ -1153,6 +1184,8 @@ class OrganizationDomainsSDK(BaseSDK):
                 operation_id="ListAllOrganizationDomains",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Organization Domains"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1202,7 +1235,8 @@ class OrganizationDomainsSDK(BaseSDK):
 
         :param organization_id: The ID of the organization to filter domains by
         :param verified: Filter by verification status
-        :param enrollment_mode: Filter by enrollment mode
+        :param enrollment_mode: Filter by enrollment mode. Prefix a value with `-` to exclude it instead
+            (e.g. `-enterprise_sso`). Include and exclude filters can be combined and compose as AND.
         :param query: Search domains by name or organization ID.
             If the query starts with \"org_\", it will search by exact organization ID match.
             Otherwise, it performs a case-insensitive partial match on the domain name.
@@ -1286,6 +1320,8 @@ class OrganizationDomainsSDK(BaseSDK):
                 operation_id="ListAllOrganizationDomains",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Organization Domains"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),

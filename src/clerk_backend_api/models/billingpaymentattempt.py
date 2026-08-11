@@ -7,9 +7,9 @@ from .commercepaymentmethodresponse import (
     CommercePaymentMethodResponse,
     CommercePaymentMethodResponseTypedDict,
 )
-from .schemas_commerceperunittotal import (
-    SchemasCommercePerUnitTotal,
-    SchemasCommercePerUnitTotalTypedDict,
+from .commerceperunittotal_2 import (
+    CommercePerUnitTotal2,
+    CommercePerUnitTotal2TypedDict,
 )
 from clerk_backend_api.types import (
     BaseModel,
@@ -167,7 +167,7 @@ class BillingPaymentAttemptTotalsTypedDict(TypedDict):
     base_fee: CommerceMoneyResponseTypedDict
     tax_total: CommerceMoneyResponseTypedDict
     grand_total: CommerceMoneyResponseTypedDict
-    per_unit_totals: NotRequired[List[SchemasCommercePerUnitTotalTypedDict]]
+    per_unit_totals: NotRequired[List[CommercePerUnitTotal2TypedDict]]
     credits: NotRequired[Nullable[BillingPaymentAttemptCreditsTypedDict]]
     discounts: NotRequired[Nullable[BillingPaymentAttemptDiscountsTypedDict]]
     r"""Information about the discounts applied to the payment"""
@@ -184,7 +184,7 @@ class BillingPaymentAttemptTotals(BaseModel):
 
     grand_total: CommerceMoneyResponse
 
-    per_unit_totals: Optional[List[SchemasCommercePerUnitTotal]] = None
+    per_unit_totals: Optional[List[CommercePerUnitTotal2]] = None
 
     credits: OptionalNullable[BillingPaymentAttemptCredits] = UNSET
 

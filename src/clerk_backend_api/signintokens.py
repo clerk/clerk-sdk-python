@@ -94,6 +94,8 @@ class SignInTokens(BaseSDK):
                 operation_id="CreateSignInToken",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Sign-in Tokens"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -103,7 +105,7 @@ class SignInTokens(BaseSDK):
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(models.SignInToken, http_res)
-        if utils.match_response(http_res, ["404", "422"], "application/json"):
+        if utils.match_response(http_res, ["403", "404", "422"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
@@ -200,6 +202,8 @@ class SignInTokens(BaseSDK):
                 operation_id="CreateSignInToken",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Sign-in Tokens"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -209,7 +213,7 @@ class SignInTokens(BaseSDK):
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(models.SignInToken, http_res)
-        if utils.match_response(http_res, ["404", "422"], "application/json"):
+        if utils.match_response(http_res, ["403", "404", "422"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
@@ -290,6 +294,8 @@ class SignInTokens(BaseSDK):
                 operation_id="RevokeSignInToken",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Sign-in Tokens"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -380,6 +386,8 @@ class SignInTokens(BaseSDK):
                 operation_id="RevokeSignInToken",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Sign-in Tokens"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),

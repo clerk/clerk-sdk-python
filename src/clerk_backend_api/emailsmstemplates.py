@@ -97,6 +97,8 @@ class EmailSMSTemplates(BaseSDK):
                 operation_id="GetTemplateList",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Email & SMS Templates"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -205,6 +207,8 @@ class EmailSMSTemplates(BaseSDK):
                 operation_id="GetTemplateList",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Email & SMS Templates"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -301,6 +305,8 @@ class EmailSMSTemplates(BaseSDK):
                 operation_id="GetTemplate",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Email & SMS Templates"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -397,6 +403,8 @@ class EmailSMSTemplates(BaseSDK):
                 operation_id="GetTemplate",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Email & SMS Templates"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -493,6 +501,8 @@ class EmailSMSTemplates(BaseSDK):
                 operation_id="RevertTemplate",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Email & SMS Templates"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -591,6 +601,8 @@ class EmailSMSTemplates(BaseSDK):
                 operation_id="RevertTemplate",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Email & SMS Templates"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -703,6 +715,8 @@ class EmailSMSTemplates(BaseSDK):
                 operation_id="ToggleTemplateDelivery",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Email & SMS Templates"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -712,7 +726,9 @@ class EmailSMSTemplates(BaseSDK):
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(models.Template, http_res)
-        if utils.match_response(http_res, ["400", "401", "404"], "application/json"):
+        if utils.match_response(
+            http_res, ["400", "401", "404", "423", "429"], "application/json"
+        ):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
@@ -813,6 +829,8 @@ class EmailSMSTemplates(BaseSDK):
                 operation_id="ToggleTemplateDelivery",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Email & SMS Templates"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -822,7 +840,9 @@ class EmailSMSTemplates(BaseSDK):
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(models.Template, http_res)
-        if utils.match_response(http_res, ["400", "401", "404"], "application/json"):
+        if utils.match_response(
+            http_res, ["400", "401", "404", "423", "429"], "application/json"
+        ):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):

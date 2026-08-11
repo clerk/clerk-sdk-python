@@ -9,6 +9,7 @@ from clerk_backend_api.types import (
     UNSET_SENTINEL,
 )
 from clerk_backend_api.utils import FieldMetadata, PathParamMetadata, RequestMetadata
+from enum import Enum
 import pydantic
 from pydantic import model_serializer
 from typing import List, Optional
@@ -38,6 +39,49 @@ class AttributeMapping(BaseModel):
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(["user_id", "email_address", "first_name", "last_name"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m
+
+
+class UpdateSAMLConnectionMode(str, Enum):
+    r"""Controls the login_hint sent to the IdP on SSO sign-in"""
+
+    EMAIL_ADDRESS = "email_address"
+    CUSTOM_ATTRIBUTE = "custom_attribute"
+    OFF = "off"
+
+
+class UpdateSAMLConnectionLoginHintTypedDict(TypedDict):
+    r"""Configuration for the login_hint sent to the IdP on SSO sign-in"""
+
+    mode: UpdateSAMLConnectionMode
+    r"""Controls the login_hint sent to the IdP on SSO sign-in"""
+    source: NotRequired[str]
+    r"""The user public_metadata key whose value is sent as the login_hint when mode is custom_attribute"""
+
+
+class UpdateSAMLConnectionLoginHint(BaseModel):
+    r"""Configuration for the login_hint sent to the IdP on SSO sign-in"""
+
+    mode: UpdateSAMLConnectionMode
+    r"""Controls the login_hint sent to the IdP on SSO sign-in"""
+
+    source: Optional[str] = None
+    r"""The user public_metadata key whose value is sent as the login_hint when mode is custom_attribute"""
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["source"])
         serialized = handler(self)
         m = {}
 
@@ -87,6 +131,8 @@ class UpdateSAMLConnectionRequestBodyTypedDict(TypedDict):
     r"""Whether this connection supports account linking via organization membership"""
     force_authn: NotRequired[bool]
     r"""Enable or deactivate ForceAuthn"""
+    login_hint: NotRequired[Nullable[UpdateSAMLConnectionLoginHintTypedDict]]
+    r"""Configuration for the login_hint sent to the IdP on SSO sign-in"""
     consent_verified_domains_deletion: NotRequired[Nullable[bool]]
     r"""When enabling the connection, controls behavior when verified domains used for enrollment modes like automatic invitation or automatic suggestion already exist for the same domain. If true, those verified domains are removed and the connection is enabled. If false or omitted, the request fails when any such verified domain exists."""
 
@@ -148,6 +194,9 @@ class UpdateSAMLConnectionRequestBody(BaseModel):
     force_authn: Optional[bool] = None
     r"""Enable or deactivate ForceAuthn"""
 
+    login_hint: OptionalNullable[UpdateSAMLConnectionLoginHint] = UNSET
+    r"""Configuration for the login_hint sent to the IdP on SSO sign-in"""
+
     consent_verified_domains_deletion: OptionalNullable[bool] = UNSET
     r"""When enabling the connection, controls behavior when verified domains used for enrollment modes like automatic invitation or automatic suggestion already exist for the same domain. If true, those verified domains are removed and the connection is enabled. If false or omitted, the request fails when any such verified domain exists."""
 
@@ -172,6 +221,7 @@ class UpdateSAMLConnectionRequestBody(BaseModel):
                 "disable_additional_identifications",
                 "allow_organization_account_linking",
                 "force_authn",
+                "login_hint",
                 "consent_verified_domains_deletion",
             ]
         )
@@ -193,6 +243,7 @@ class UpdateSAMLConnectionRequestBody(BaseModel):
                 "allow_idp_initiated",
                 "disable_additional_identifications",
                 "allow_organization_account_linking",
+                "login_hint",
                 "consent_verified_domains_deletion",
             ]
         )

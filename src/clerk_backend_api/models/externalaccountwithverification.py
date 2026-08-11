@@ -38,23 +38,11 @@ class VerificationGoogleOneTapVerificationStrategy(str, Enum):
     GOOGLE_ONE_TAP = "google_one_tap"
 
 
-class ClerkErrorErrorExternalAccountWithVerificationVerificationMetaTypedDict(
-    TypedDict
-):
-    pass
-
-
-class ClerkErrorErrorExternalAccountWithVerificationVerificationMeta(BaseModel):
-    pass
-
-
 class VerificationGoogleOneTapErrorClerkErrorTypedDict(TypedDict):
     message: str
     long_message: str
     code: str
-    meta: NotRequired[
-        ClerkErrorErrorExternalAccountWithVerificationVerificationMetaTypedDict
-    ]
+    meta: NotRequired[Dict[str, Any]]
 
 
 class VerificationGoogleOneTapErrorClerkError(BaseModel):
@@ -64,9 +52,7 @@ class VerificationGoogleOneTapErrorClerkError(BaseModel):
 
     code: str
 
-    meta: Optional[ClerkErrorErrorExternalAccountWithVerificationVerificationMeta] = (
-        None
-    )
+    meta: Optional[Dict[str, Any]] = None
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
@@ -156,19 +142,11 @@ class VerificationOauthVerificationStatus(str, Enum, metaclass=utils.OpenEnumMet
     TRANSFERABLE = "transferable"
 
 
-class ClerkErrorErrorExternalAccountWithVerificationMetaTypedDict(TypedDict):
-    pass
-
-
-class ClerkErrorErrorExternalAccountWithVerificationMeta(BaseModel):
-    pass
-
-
 class VerificationOauthErrorClerkErrorTypedDict(TypedDict):
     message: str
     long_message: str
     code: str
-    meta: NotRequired[ClerkErrorErrorExternalAccountWithVerificationMetaTypedDict]
+    meta: NotRequired[Dict[str, Any]]
 
 
 class VerificationOauthErrorClerkError(BaseModel):
@@ -178,7 +156,7 @@ class VerificationOauthErrorClerkError(BaseModel):
 
     code: str
 
-    meta: Optional[ClerkErrorErrorExternalAccountWithVerificationMeta] = None
+    meta: Optional[Dict[str, Any]] = None
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

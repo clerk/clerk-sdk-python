@@ -6,21 +6,12 @@ from clerk_backend_api.models import ClerkBaseError
 from clerk_backend_api.types import BaseModel
 from dataclasses import dataclass, field
 import httpx
-from typing import List, Optional
-from typing_extensions import TypedDict
-
-
-class ClerkErrorsMetaTypedDict(TypedDict):
-    pass
-
-
-class ClerkErrorsMeta(BaseModel):
-    pass
+from typing import Any, Dict, List, Optional
 
 
 class ClerkErrorsData(BaseModel):
     errors: List[ClerkError]
-    meta: Optional[ClerkErrorsMeta] = None
+    meta: Optional[Dict[str, Any]] = None
 
 
 @dataclass(unsafe_hash=True)

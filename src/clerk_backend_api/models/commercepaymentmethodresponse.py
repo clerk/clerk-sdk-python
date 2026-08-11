@@ -25,6 +25,7 @@ class PaymentType(str, Enum):
 
     CARD = "card"
     LINK = "link"
+    PAYER_CREDITS = "payer-credits"
 
 
 class CommercePaymentMethodResponseStatus(str, Enum):

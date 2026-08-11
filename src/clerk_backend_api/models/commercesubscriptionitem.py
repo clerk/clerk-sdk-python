@@ -8,20 +8,20 @@ from .commercepaymentmethodresponse import (
     CommercePaymentMethodResponseTypedDict,
 )
 from .commerceperunittotal import CommercePerUnitTotal, CommercePerUnitTotalTypedDict
+from .commerceperunittotal_2 import (
+    CommercePerUnitTotal2,
+    CommercePerUnitTotal2TypedDict,
+)
+from .commerceperunittotaltier_2 import (
+    CommercePerUnitTotalTier2,
+    CommercePerUnitTotalTier2TypedDict,
+)
 from .commerceplanunitprice import CommercePlanUnitPrice, CommercePlanUnitPriceTypedDict
 from .commercesubscriptioncreditresponse import (
     CommerceSubscriptionCreditResponse,
     CommerceSubscriptionCreditResponseTypedDict,
 )
 from .featureresponse import FeatureResponse, FeatureResponseTypedDict
-from .schemas_commerceperunittotal import (
-    SchemasCommercePerUnitTotal,
-    SchemasCommercePerUnitTotalTypedDict,
-)
-from .schemas_commerceperunittotaltier import (
-    SchemasCommercePerUnitTotalTier,
-    SchemasCommercePerUnitTotalTierTypedDict,
-)
 from clerk_backend_api.types import (
     BaseModel,
     Nullable,
@@ -582,7 +582,7 @@ class SeatsTypedDict(TypedDict):
 
     quantity: Nullable[int]
     r"""Seat quantity being billed; null means unlimited"""
-    tiers: NotRequired[List[SchemasCommercePerUnitTotalTierTypedDict]]
+    tiers: NotRequired[List[CommercePerUnitTotalTier2TypedDict]]
     r"""Per-unit cost breakdown by pricing tier"""
 
 
@@ -592,7 +592,7 @@ class Seats(BaseModel):
     quantity: Nullable[int]
     r"""Seat quantity being billed; null means unlimited"""
 
-    tiers: Optional[List[SchemasCommercePerUnitTotalTier]] = None
+    tiers: Optional[List[CommercePerUnitTotalTier2]] = None
     r"""Per-unit cost breakdown by pricing tier"""
 
     @model_serializer(mode="wrap")
@@ -742,7 +742,7 @@ class TotalsTypedDict(TypedDict):
     base_fee: CommerceMoneyResponseTypedDict
     tax_total: CommerceMoneyResponseTypedDict
     grand_total: CommerceMoneyResponseTypedDict
-    per_unit_totals: NotRequired[List[SchemasCommercePerUnitTotalTypedDict]]
+    per_unit_totals: NotRequired[List[CommercePerUnitTotal2TypedDict]]
     credits: NotRequired[Nullable[CommerceSubscriptionItemCreditsTypedDict]]
     discounts: NotRequired[Nullable[DiscountsTypedDict]]
     r"""Information about the discounts applied to the payment"""
@@ -759,7 +759,7 @@ class Totals(BaseModel):
 
     grand_total: CommerceMoneyResponse
 
-    per_unit_totals: Optional[List[SchemasCommercePerUnitTotal]] = None
+    per_unit_totals: Optional[List[CommercePerUnitTotal2]] = None
 
     credits: OptionalNullable[CommerceSubscriptionItemCredits] = UNSET
 
