@@ -112,19 +112,11 @@ class VerificationSAMLVerificationSAMLAccountStrategy(str, Enum):
     SAML = "saml"
 
 
-class ClerkErrorErrorSAMLAccountMetaTypedDict(TypedDict):
-    pass
-
-
-class ClerkErrorErrorSAMLAccountMeta(BaseModel):
-    pass
-
-
 class VerificationSAMLErrorSAMLAccountClerkErrorTypedDict(TypedDict):
     message: str
     long_message: str
     code: str
-    meta: NotRequired[ClerkErrorErrorSAMLAccountMetaTypedDict]
+    meta: NotRequired[Dict[str, Any]]
 
 
 class VerificationSAMLErrorSAMLAccountClerkError(BaseModel):
@@ -134,7 +126,7 @@ class VerificationSAMLErrorSAMLAccountClerkError(BaseModel):
 
     code: str
 
-    meta: Optional[ClerkErrorErrorSAMLAccountMeta] = None
+    meta: Optional[Dict[str, Any]] = None
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

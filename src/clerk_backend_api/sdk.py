@@ -59,6 +59,7 @@ if TYPE_CHECKING:
     from clerk_backend_api.redirecturls import RedirectUrls
     from clerk_backend_api.rolesets_sdk import RoleSetsSDK
     from clerk_backend_api.samlconnections_sdk import SamlConnectionsSDK
+    from clerk_backend_api.scimdirectories import ScimDirectories
     from clerk_backend_api.sessions import Sessions
     from clerk_backend_api.signintokens import SignInTokens
     from clerk_backend_api.signups import SignUps
@@ -120,6 +121,7 @@ class Clerk(BaseSDK):
     billing: "Billing"
     organization_permissions: "OrganizationPermissions"
     role_sets: "RoleSetsSDK"
+    scim_directories: "ScimDirectories"
     admin_portal_link_tokens: "AdminPortalLinkTokens"
     api_keys: "APIKeys"
     r"""Endpoints for managing API Keys"""
@@ -206,6 +208,7 @@ class Clerk(BaseSDK):
             "OrganizationPermissions",
         ),
         "role_sets": ("clerk_backend_api.rolesets_sdk", "RoleSetsSDK"),
+        "scim_directories": ("clerk_backend_api.scimdirectories", "ScimDirectories"),
         "admin_portal_link_tokens": (
             "clerk_backend_api.admin_portal_link_tokens",
             "AdminPortalLinkTokens",

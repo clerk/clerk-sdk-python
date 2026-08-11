@@ -13,7 +13,8 @@ value = PaymentType.CARD
 
 ## Values
 
-| Name   | Value  |
-| ------ | ------ |
-| `CARD` | card   |
-| `LINK` | link   |
+| Name            | Value           |
+| --------------- | --------------- |
+| `CARD`          | card            |
+| `LINK`          | link            |
+| `PAYER_CREDITS` | payer-credits   |

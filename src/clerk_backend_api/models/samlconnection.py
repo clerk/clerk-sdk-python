@@ -5,6 +5,10 @@ from .samlconnectionattributemapping import (
     SAMLConnectionAttributeMapping,
     SAMLConnectionAttributeMappingTypedDict,
 )
+from .samlconnectionloginhint import (
+    SAMLConnectionLoginHint,
+    SAMLConnectionLoginHintTypedDict,
+)
 from clerk_backend_api.types import (
     BaseModel,
     Nullable,
@@ -31,6 +35,14 @@ class TwoTypedDict(TypedDict):
     idp_entity_id: Nullable[str]
     idp_sso_url: Nullable[str]
     idp_certificate: Nullable[str]
+    idp_certificate_issued_at: Nullable[int]
+    r"""Unix timestamp (milliseconds) of the start of the IdP certificate validity window (X.509 NotBefore). Null when no certificate is configured.
+
+    """
+    idp_certificate_expires_at: Nullable[int]
+    r"""Unix timestamp (milliseconds) of the end of the IdP certificate validity window (X.509 NotAfter). Null when no certificate is configured.
+
+    """
     acs_url: str
     sp_entity_id: str
     sp_metadata_url: str
@@ -44,6 +56,8 @@ class TwoTypedDict(TypedDict):
     allow_organization_account_linking: bool
     force_authn: bool
     r"""Enable or deactivate ForceAuthn"""
+    login_hint: SAMLConnectionLoginHintTypedDict
+    r"""Configuration for the login_hint sent to the IdP on SSO sign-in"""
     created_at: int
     r"""Unix timestamp of creation.
 
@@ -75,6 +89,16 @@ class Two(BaseModel):
 
     idp_certificate: Nullable[str]
 
+    idp_certificate_issued_at: Nullable[int]
+    r"""Unix timestamp (milliseconds) of the start of the IdP certificate validity window (X.509 NotBefore). Null when no certificate is configured.
+
+    """
+
+    idp_certificate_expires_at: Nullable[int]
+    r"""Unix timestamp (milliseconds) of the end of the IdP certificate validity window (X.509 NotAfter). Null when no certificate is configured.
+
+    """
+
     acs_url: str
 
     sp_entity_id: str
@@ -99,6 +123,9 @@ class Two(BaseModel):
 
     force_authn: bool
     r"""Enable or deactivate ForceAuthn"""
+
+    login_hint: SAMLConnectionLoginHint
+    r"""Configuration for the login_hint sent to the IdP on SSO sign-in"""
 
     created_at: int
     r"""Unix timestamp of creation.
@@ -144,6 +171,8 @@ class Two(BaseModel):
                 "idp_entity_id",
                 "idp_sso_url",
                 "idp_certificate",
+                "idp_certificate_issued_at",
+                "idp_certificate_expires_at",
                 "idp_metadata_url",
                 "idp_metadata",
                 "organization_id",
@@ -184,6 +213,14 @@ class OneTypedDict(TypedDict):
     idp_entity_id: Nullable[str]
     idp_sso_url: Nullable[str]
     idp_certificate: Nullable[str]
+    idp_certificate_issued_at: Nullable[int]
+    r"""Unix timestamp (milliseconds) of the start of the IdP certificate validity window (X.509 NotBefore). Null when no certificate is configured.
+
+    """
+    idp_certificate_expires_at: Nullable[int]
+    r"""Unix timestamp (milliseconds) of the end of the IdP certificate validity window (X.509 NotAfter). Null when no certificate is configured.
+
+    """
     acs_url: str
     sp_entity_id: str
     sp_metadata_url: str
@@ -197,6 +234,8 @@ class OneTypedDict(TypedDict):
     allow_organization_account_linking: bool
     force_authn: bool
     r"""Enable or deactivate ForceAuthn"""
+    login_hint: SAMLConnectionLoginHintTypedDict
+    r"""Configuration for the login_hint sent to the IdP on SSO sign-in"""
     created_at: int
     r"""Unix timestamp of creation.
 
@@ -233,6 +272,16 @@ class One(BaseModel):
 
     idp_certificate: Nullable[str]
 
+    idp_certificate_issued_at: Nullable[int]
+    r"""Unix timestamp (milliseconds) of the start of the IdP certificate validity window (X.509 NotBefore). Null when no certificate is configured.
+
+    """
+
+    idp_certificate_expires_at: Nullable[int]
+    r"""Unix timestamp (milliseconds) of the end of the IdP certificate validity window (X.509 NotAfter). Null when no certificate is configured.
+
+    """
+
     acs_url: str
 
     sp_entity_id: str
@@ -257,6 +306,9 @@ class One(BaseModel):
 
     force_authn: bool
     r"""Enable or deactivate ForceAuthn"""
+
+    login_hint: SAMLConnectionLoginHint
+    r"""Configuration for the login_hint sent to the IdP on SSO sign-in"""
 
     created_at: int
     r"""Unix timestamp of creation.
@@ -297,6 +349,8 @@ class One(BaseModel):
                 "idp_entity_id",
                 "idp_sso_url",
                 "idp_certificate",
+                "idp_certificate_issued_at",
+                "idp_certificate_expires_at",
                 "idp_metadata_url",
                 "idp_metadata",
                 "organization_id",

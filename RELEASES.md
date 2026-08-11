@@ -639,3 +639,13 @@ Based on:
 - [python v6.0.1] .
 ### Releases
 - [PyPI v6.0.1] https://pypi.org/project/clerk-backend-api/6.0.1 - .
+
+## 2026-08-11 13:37:53
+### Changes
+Based on:
+- OpenAPI Doc  
+- Speakeasy CLI 1.793.0 (2.928.0) https://github.com/speakeasy-api/speakeasy
+### Generated
+- [python v7.0.0] .
+### Releases
+- [PyPI v7.0.0] https://pypi.org/project/clerk-backend-api/7.0.0 - .

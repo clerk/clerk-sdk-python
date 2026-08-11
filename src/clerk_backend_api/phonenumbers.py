@@ -92,6 +92,8 @@ class PhoneNumbers(BaseSDK):
                 operation_id="CreatePhoneNumber",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Phone Numbers"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -198,6 +200,8 @@ class PhoneNumbers(BaseSDK):
                 operation_id="CreatePhoneNumber",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Phone Numbers"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -290,6 +294,8 @@ class PhoneNumbers(BaseSDK):
                 operation_id="GetPhoneNumber",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Phone Numbers"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -382,6 +388,8 @@ class PhoneNumbers(BaseSDK):
                 operation_id="GetPhoneNumber",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Phone Numbers"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -474,6 +482,8 @@ class PhoneNumbers(BaseSDK):
                 operation_id="DeletePhoneNumber",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Phone Numbers"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -566,6 +576,8 @@ class PhoneNumbers(BaseSDK):
                 operation_id="DeletePhoneNumber",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Phone Numbers"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -678,6 +690,8 @@ class PhoneNumbers(BaseSDK):
                 operation_id="UpdatePhoneNumber",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Phone Numbers"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -790,6 +804,8 @@ class PhoneNumbers(BaseSDK):
                 operation_id="UpdatePhoneNumber",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Phone Numbers"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -885,6 +901,8 @@ class PhoneNumbers(BaseSDK):
                 operation_id="PreparePhoneNumberVerification",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Phone Numbers"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -983,6 +1001,8 @@ class PhoneNumbers(BaseSDK):
                 operation_id="PreparePhoneNumberVerification",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Phone Numbers"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1103,6 +1123,8 @@ class PhoneNumbers(BaseSDK):
                 operation_id="AttemptPhoneNumberVerification",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Phone Numbers"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1223,6 +1245,8 @@ class PhoneNumbers(BaseSDK):
                 operation_id="AttemptPhoneNumberVerification",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Phone Numbers"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1267,15 +1291,29 @@ class PhoneNumbers(BaseSDK):
         Replaces all of the user's phone numbers with a single primary phone number.
         By default the new phone number is created verified, with the admin verification strategy.
         When `identification_status` is `reserved` it is created reserved instead: unverified but usable
-        for sign-in and locked so no other user can claim it. The new phone number is never reserved for
+        for sign-in and locked so no other user can claim it. When it is `unverified` the phone number is
+        neither usable for sign-in nor locked. The new phone number is never reserved for
         second factor. Any existing phone numbers are deleted; replacing a phone number that is reserved
         for second factor disables the user's MFA.
+
+        **Warning:** `identification_status: unverified` can lock the user out of their account. An
+        unverified phone number cannot be used to sign in, so if the user has no other verified or
+        reserved identifier, deleting their existing phone numbers leaves them unable to authenticate —
+        and unable to verify the new number, since that requires signing in. Recovery then requires
+        another admin API call.
 
         :param user_id: The ID of the user whose phone number to replace
         :param phone_number: The new phone number. Must adhere to the E.164 standard for phone number format.
         :param identification_status: Controls the status of the replacement phone number. Defaults to `verified`. Set to
-            `reserved` to create it reserved (unverified but usable for sign-in and locked)
-            instead of verified.
+            `reserved` to create it reserved (unverified but usable for sign-in and locked so no
+            other user can claim it), or to `unverified` to create it neither usable for sign-in
+            nor locked.
+
+            **Warning:** `unverified` can lock the user out of their account. An unverified phone
+            number cannot be used to sign in, so if the user has no other verified or reserved
+            identifier, they will be unable to authenticate and unable to verify this number.
+            Prefer `reserved` unless you specifically need the number left unclaimed — for
+            example so that another user can also hold it until one of them verifies it.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1342,6 +1380,8 @@ class PhoneNumbers(BaseSDK):
                 operation_id="ReplaceUserPhoneNumber",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Phone Numbers"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1383,15 +1423,29 @@ class PhoneNumbers(BaseSDK):
         Replaces all of the user's phone numbers with a single primary phone number.
         By default the new phone number is created verified, with the admin verification strategy.
         When `identification_status` is `reserved` it is created reserved instead: unverified but usable
-        for sign-in and locked so no other user can claim it. The new phone number is never reserved for
+        for sign-in and locked so no other user can claim it. When it is `unverified` the phone number is
+        neither usable for sign-in nor locked. The new phone number is never reserved for
         second factor. Any existing phone numbers are deleted; replacing a phone number that is reserved
         for second factor disables the user's MFA.
+
+        **Warning:** `identification_status: unverified` can lock the user out of their account. An
+        unverified phone number cannot be used to sign in, so if the user has no other verified or
+        reserved identifier, deleting their existing phone numbers leaves them unable to authenticate —
+        and unable to verify the new number, since that requires signing in. Recovery then requires
+        another admin API call.
 
         :param user_id: The ID of the user whose phone number to replace
         :param phone_number: The new phone number. Must adhere to the E.164 standard for phone number format.
         :param identification_status: Controls the status of the replacement phone number. Defaults to `verified`. Set to
-            `reserved` to create it reserved (unverified but usable for sign-in and locked)
-            instead of verified.
+            `reserved` to create it reserved (unverified but usable for sign-in and locked so no
+            other user can claim it), or to `unverified` to create it neither usable for sign-in
+            nor locked.
+
+            **Warning:** `unverified` can lock the user out of their account. An unverified phone
+            number cannot be used to sign in, so if the user has no other verified or reserved
+            identifier, they will be unable to authenticate and unable to verify this number.
+            Prefer `reserved` unless you specifically need the number left unclaimed — for
+            example so that another user can also hold it until one of them verifies it.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1458,6 +1512,8 @@ class PhoneNumbers(BaseSDK):
                 operation_id="ReplaceUserPhoneNumber",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Phone Numbers"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),

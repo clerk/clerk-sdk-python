@@ -1,0 +1,18 @@
+# TrustedDevice
+
+
+## Fields
+
+| Field                                                          | Type                                                           | Required                                                       | Description                                                    |
+| -------------------------------------------------------------- | -------------------------------------------------------------- | -------------------------------------------------------------- | -------------------------------------------------------------- |
+| `object`                                                       | [models.TrustedDeviceObject](../models/trusteddeviceobject.md) | :heavy_check_mark:                                             | String representing the object's type.                         |
+| `id`                                                           | *str*                                                          | :heavy_check_mark:                                             | N/A                                                            |
+| `platform`                                                     | [models.Platform](../models/platform.md)                       | :heavy_check_mark:                                             | N/A                                                            |
+| `app_identifier`                                               | *str*                                                          | :heavy_check_mark:                                             | N/A                                                            |
+| `name`                                                         | *OptionalNullable[str]*                                        | :heavy_minus_sign:                                             | N/A                                                            |
+| `algorithm`                                                    | [models.Algorithm](../models/algorithm.md)                     | :heavy_check_mark:                                             | N/A                                                            |
+| `status`                                                       | [models.TrustedDeviceStatus](../models/trusteddevicestatus.md) | :heavy_check_mark:                                             | N/A                                                            |
+| `created_at`                                                   | *int*                                                          | :heavy_check_mark:                                             | Unix timestamp of creation in milliseconds.                    |
+| `updated_at`                                                   | *int*                                                          | :heavy_check_mark:                                             | Unix timestamp of the last update in milliseconds.             |
+| `last_used_at`                                                 | *OptionalNullable[int]*                                        | :heavy_minus_sign:                                             | Unix timestamp of the last use in milliseconds.                |
+| `revoked_at`                                                   | *OptionalNullable[int]*                                        | :heavy_minus_sign:                                             | Unix timestamp of revocation in milliseconds.                  |

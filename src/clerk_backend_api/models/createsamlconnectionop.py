@@ -61,6 +61,49 @@ class RequestBodyAttributeMapping(BaseModel):
         return m
 
 
+class CreateSAMLConnectionRequestBodyMode(str, Enum):
+    r"""Controls the login_hint sent to the IdP on SSO sign-in"""
+
+    EMAIL_ADDRESS = "email_address"
+    CUSTOM_ATTRIBUTE = "custom_attribute"
+    OFF = "off"
+
+
+class RequestBodyLoginHintTypedDict(TypedDict):
+    r"""Configuration for the login_hint sent to the IdP on SSO sign-in"""
+
+    mode: CreateSAMLConnectionRequestBodyMode
+    r"""Controls the login_hint sent to the IdP on SSO sign-in"""
+    source: NotRequired[str]
+    r"""The user public_metadata key whose value is sent as the login_hint when mode is custom_attribute"""
+
+
+class RequestBodyLoginHint(BaseModel):
+    r"""Configuration for the login_hint sent to the IdP on SSO sign-in"""
+
+    mode: CreateSAMLConnectionRequestBodyMode
+    r"""Controls the login_hint sent to the IdP on SSO sign-in"""
+
+    source: Optional[str] = None
+    r"""The user public_metadata key whose value is sent as the login_hint when mode is custom_attribute"""
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["source"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m
+
+
 class RequestBody2TypedDict(TypedDict):
     name: str
     r"""The name to use as a label for this SAML Connection"""
@@ -86,6 +129,8 @@ class RequestBody2TypedDict(TypedDict):
     r"""Define the attribute name mapping between Identity Provider and Clerk's user properties"""
     force_authn: NotRequired[bool]
     r"""Enable or deactivate ForceAuthn"""
+    login_hint: NotRequired[Nullable[RequestBodyLoginHintTypedDict]]
+    r"""Configuration for the login_hint sent to the IdP on SSO sign-in"""
 
 
 class RequestBody2(BaseModel):
@@ -130,6 +175,9 @@ class RequestBody2(BaseModel):
     force_authn: Optional[bool] = None
     r"""Enable or deactivate ForceAuthn"""
 
+    login_hint: OptionalNullable[RequestBodyLoginHint] = UNSET
+    r"""Configuration for the login_hint sent to the IdP on SSO sign-in"""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
@@ -143,6 +191,7 @@ class RequestBody2(BaseModel):
                 "organization_id",
                 "attribute_mapping",
                 "force_authn",
+                "login_hint",
             ]
         )
         nullable_fields = set(
@@ -154,6 +203,7 @@ class RequestBody2(BaseModel):
                 "idp_metadata",
                 "organization_id",
                 "attribute_mapping",
+                "login_hint",
             ]
         )
         serialized = handler(self)
@@ -224,6 +274,49 @@ class CreateSAMLConnectionRequestBodyAttributeMapping(BaseModel):
         return m
 
 
+class RequestBodyMode(str, Enum):
+    r"""Controls the login_hint sent to the IdP on SSO sign-in"""
+
+    EMAIL_ADDRESS = "email_address"
+    CUSTOM_ATTRIBUTE = "custom_attribute"
+    OFF = "off"
+
+
+class CreateSAMLConnectionRequestBodyLoginHintTypedDict(TypedDict):
+    r"""Configuration for the login_hint sent to the IdP on SSO sign-in"""
+
+    mode: RequestBodyMode
+    r"""Controls the login_hint sent to the IdP on SSO sign-in"""
+    source: NotRequired[str]
+    r"""The user public_metadata key whose value is sent as the login_hint when mode is custom_attribute"""
+
+
+class CreateSAMLConnectionRequestBodyLoginHint(BaseModel):
+    r"""Configuration for the login_hint sent to the IdP on SSO sign-in"""
+
+    mode: RequestBodyMode
+    r"""Controls the login_hint sent to the IdP on SSO sign-in"""
+
+    source: Optional[str] = None
+    r"""The user public_metadata key whose value is sent as the login_hint when mode is custom_attribute"""
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["source"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m
+
+
 class RequestBody1TypedDict(TypedDict):
     name: str
     r"""The name to use as a label for this SAML Connection"""
@@ -251,6 +344,8 @@ class RequestBody1TypedDict(TypedDict):
     r"""Define the attribute name mapping between Identity Provider and Clerk's user properties"""
     force_authn: NotRequired[bool]
     r"""Enable or deactivate ForceAuthn"""
+    login_hint: NotRequired[Nullable[CreateSAMLConnectionRequestBodyLoginHintTypedDict]]
+    r"""Configuration for the login_hint sent to the IdP on SSO sign-in"""
 
 
 class RequestBody1(BaseModel):
@@ -297,6 +392,9 @@ class RequestBody1(BaseModel):
     force_authn: Optional[bool] = None
     r"""Enable or deactivate ForceAuthn"""
 
+    login_hint: OptionalNullable[CreateSAMLConnectionRequestBodyLoginHint] = UNSET
+    r"""Configuration for the login_hint sent to the IdP on SSO sign-in"""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
@@ -310,6 +408,7 @@ class RequestBody1(BaseModel):
                 "organization_id",
                 "attribute_mapping",
                 "force_authn",
+                "login_hint",
             ]
         )
         nullable_fields = set(
@@ -321,6 +420,7 @@ class RequestBody1(BaseModel):
                 "idp_metadata",
                 "organization_id",
                 "attribute_mapping",
+                "login_hint",
             ]
         )
         serialized = handler(self)

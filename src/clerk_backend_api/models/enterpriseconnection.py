@@ -8,9 +8,14 @@ from clerk_backend_api.types import (
     UNSET,
     UNSET_SENTINEL,
 )
+from enum import Enum
 from pydantic import model_serializer
 from typing import List, Optional
 from typing_extensions import NotRequired, TypedDict
+
+
+class EnterpriseConnectionObject(str, Enum):
+    ENTERPRISE_CONNECTION = "enterprise_connection"
 
 
 class CustomAttributesTypedDict(TypedDict):
@@ -59,6 +64,49 @@ class CustomAttributes(BaseModel):
         return m
 
 
+class EnterpriseConnectionMode(str, Enum):
+    r"""Controls the login_hint sent to the IdP on SSO sign-in"""
+
+    EMAIL_ADDRESS = "email_address"
+    CUSTOM_ATTRIBUTE = "custom_attribute"
+    OFF = "off"
+
+
+class LoginHintTypedDict(TypedDict):
+    r"""Configuration for the login_hint sent to the IdP on SSO sign-in"""
+
+    mode: EnterpriseConnectionMode
+    r"""Controls the login_hint sent to the IdP on SSO sign-in"""
+    source: NotRequired[str]
+    r"""The user public_metadata key whose value is sent as the login_hint when mode is custom_attribute"""
+
+
+class LoginHint(BaseModel):
+    r"""Configuration for the login_hint sent to the IdP on SSO sign-in"""
+
+    mode: EnterpriseConnectionMode
+    r"""Controls the login_hint sent to the IdP on SSO sign-in"""
+
+    source: Optional[str] = None
+    r"""The user public_metadata key whose value is sent as the login_hint when mode is custom_attribute"""
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["source"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m
+
+
 class EnterpriseConnectionSamlConnectionTypedDict(TypedDict):
     r"""Present when the enterprise connection uses SAML"""
 
@@ -86,6 +134,8 @@ class EnterpriseConnectionSamlConnectionTypedDict(TypedDict):
     r"""Whether subdomains are allowed for domain matching"""
     force_authn: NotRequired[bool]
     r"""Whether to force re-authentication"""
+    login_hint: NotRequired[LoginHintTypedDict]
+    r"""Configuration for the login_hint sent to the IdP on SSO sign-in"""
 
 
 class EnterpriseConnectionSamlConnection(BaseModel):
@@ -127,6 +177,9 @@ class EnterpriseConnectionSamlConnection(BaseModel):
     force_authn: Optional[bool] = None
     r"""Whether to force re-authentication"""
 
+    login_hint: Optional[LoginHint] = None
+    r"""Configuration for the login_hint sent to the IdP on SSO sign-in"""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
@@ -143,6 +196,7 @@ class EnterpriseConnectionSamlConnection(BaseModel):
                 "allow_idp_initiated",
                 "allow_subdomains",
                 "force_authn",
+                "login_hint",
             ]
         )
         nullable_fields = set(
@@ -296,6 +350,7 @@ class OauthConfig(BaseModel):
 
 
 class EnterpriseConnectionTypedDict(TypedDict):
+    object: EnterpriseConnectionObject
     id: str
     r"""The enterprise connection ID"""
     name: str
@@ -327,6 +382,8 @@ class EnterpriseConnectionTypedDict(TypedDict):
 
 
 class EnterpriseConnection(BaseModel):
+    object: EnterpriseConnectionObject
+
     id: str
     r"""The enterprise connection ID"""
 

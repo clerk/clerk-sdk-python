@@ -44,19 +44,11 @@ class VerificationOauthVerificationEnterpriseAccountStatus(
     TRANSFERABLE = "transferable"
 
 
-class ClerkErrorErrorEnterpriseAccountVerificationMetaTypedDict(TypedDict):
-    pass
-
-
-class ClerkErrorErrorEnterpriseAccountVerificationMeta(BaseModel):
-    pass
-
-
 class VerificationOauthErrorEnterpriseAccountClerkErrorTypedDict(TypedDict):
     message: str
     long_message: str
     code: str
-    meta: NotRequired[ClerkErrorErrorEnterpriseAccountVerificationMetaTypedDict]
+    meta: NotRequired[Dict[str, Any]]
 
 
 class VerificationOauthErrorEnterpriseAccountClerkError(BaseModel):
@@ -66,7 +58,7 @@ class VerificationOauthErrorEnterpriseAccountClerkError(BaseModel):
 
     code: str
 
-    meta: Optional[ClerkErrorErrorEnterpriseAccountVerificationMeta] = None
+    meta: Optional[Dict[str, Any]] = None
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
@@ -185,19 +177,11 @@ class VerificationSamlVerificationEnterpriseAccountStrategy(str, Enum):
     SAML = "saml"
 
 
-class ClerkErrorErrorEnterpriseAccountMetaTypedDict(TypedDict):
-    pass
-
-
-class ClerkErrorErrorEnterpriseAccountMeta(BaseModel):
-    pass
-
-
 class VerificationSamlErrorEnterpriseAccountClerkErrorTypedDict(TypedDict):
     message: str
     long_message: str
     code: str
-    meta: NotRequired[ClerkErrorErrorEnterpriseAccountMetaTypedDict]
+    meta: NotRequired[Dict[str, Any]]
 
 
 class VerificationSamlErrorEnterpriseAccountClerkError(BaseModel):
@@ -207,7 +191,7 @@ class VerificationSamlErrorEnterpriseAccountClerkError(BaseModel):
 
     code: str
 
-    meta: Optional[ClerkErrorErrorEnterpriseAccountMeta] = None
+    meta: Optional[Dict[str, Any]] = None
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

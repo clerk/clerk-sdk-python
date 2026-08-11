@@ -294,7 +294,15 @@ with Clerk(
 
     res = clerk.instance_settings.update_o_auth_application_settings(request={
         "dynamic_oauth_client_registration": False,
+        "default_scopes": [
+            "<value 1>",
+            "<value 2>",
+            "<value 3>",
+        ],
         "oauth_jwt_access_tokens": True,
+        "client_id_metadata_documents_advertised": True,
+        "client_id_metadata_documents_only_allow_pre_registered_clients": False,
+        "client_id_metadata_documents_block_implicitly_allowed_clients": False,
     })
 
     # Handle response

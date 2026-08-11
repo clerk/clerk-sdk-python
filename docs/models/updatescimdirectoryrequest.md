@@ -1,0 +1,9 @@
+# UpdateSCIMDirectoryRequest
+
+
+## Fields
+
+| Field                                                                                          | Type                                                                                           | Required                                                                                       | Description                                                                                    |
+| ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| `scim_directory_id`                                                                            | *str*                                                                                          | :heavy_check_mark:                                                                             | The ID of the SCIM directory to update                                                         |
+| `request_body`                                                                                 | [Optional[models.UpdateSCIMDirectoryRequestBody]](../models/updatescimdirectoryrequestbody.md) | :heavy_minus_sign:                                                                             | N/A                                                                                            |

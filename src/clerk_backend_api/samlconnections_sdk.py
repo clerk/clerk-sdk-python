@@ -108,6 +108,8 @@ class SamlConnectionsSDK(BaseSDK):
                 operation_id="ListSAMLConnections",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["SAML Connections"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -227,6 +229,8 @@ class SamlConnectionsSDK(BaseSDK):
                 operation_id="ListSAMLConnections",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["SAML Connections"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -335,6 +339,8 @@ class SamlConnectionsSDK(BaseSDK):
                 operation_id="CreateSAMLConnection",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["SAML Connections"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -445,6 +451,8 @@ class SamlConnectionsSDK(BaseSDK):
                 operation_id="CreateSAMLConnection",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["SAML Connections"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -541,6 +549,8 @@ class SamlConnectionsSDK(BaseSDK):
                 operation_id="GetSAMLConnection",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["SAML Connections"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -635,6 +645,8 @@ class SamlConnectionsSDK(BaseSDK):
                 operation_id="GetSAMLConnection",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["SAML Connections"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -682,6 +694,12 @@ class SamlConnectionsSDK(BaseSDK):
         disable_additional_identifications: OptionalNullable[bool] = UNSET,
         allow_organization_account_linking: OptionalNullable[bool] = UNSET,
         force_authn: Optional[bool] = None,
+        login_hint: OptionalNullable[
+            Union[
+                models.UpdateSAMLConnectionLoginHint,
+                models.UpdateSAMLConnectionLoginHintTypedDict,
+            ]
+        ] = UNSET,
         consent_verified_domains_deletion: OptionalNullable[bool] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -711,6 +729,7 @@ class SamlConnectionsSDK(BaseSDK):
         :param disable_additional_identifications: Enable or deactivate additional identifications
         :param allow_organization_account_linking: Whether this connection supports account linking via organization membership
         :param force_authn: Enable or deactivate ForceAuthn
+        :param login_hint: Configuration for the login_hint sent to the IdP on SSO sign-in
         :param consent_verified_domains_deletion: When enabling the connection, controls behavior when verified domains used for enrollment modes like automatic invitation or automatic suggestion already exist for the same domain. If true, those verified domains are removed and the connection is enabled. If false or omitted, the request fails when any such verified domain exists.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -749,6 +768,9 @@ class SamlConnectionsSDK(BaseSDK):
                 disable_additional_identifications=disable_additional_identifications,
                 allow_organization_account_linking=allow_organization_account_linking,
                 force_authn=force_authn,
+                login_hint=utils.get_pydantic_model(
+                    login_hint, OptionalNullable[models.UpdateSAMLConnectionLoginHint]
+                ),
                 consent_verified_domains_deletion=consent_verified_domains_deletion,
             ),
         )
@@ -796,6 +818,8 @@ class SamlConnectionsSDK(BaseSDK):
                 operation_id="UpdateSAMLConnection",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["SAML Connections"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -845,6 +869,12 @@ class SamlConnectionsSDK(BaseSDK):
         disable_additional_identifications: OptionalNullable[bool] = UNSET,
         allow_organization_account_linking: OptionalNullable[bool] = UNSET,
         force_authn: Optional[bool] = None,
+        login_hint: OptionalNullable[
+            Union[
+                models.UpdateSAMLConnectionLoginHint,
+                models.UpdateSAMLConnectionLoginHintTypedDict,
+            ]
+        ] = UNSET,
         consent_verified_domains_deletion: OptionalNullable[bool] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -874,6 +904,7 @@ class SamlConnectionsSDK(BaseSDK):
         :param disable_additional_identifications: Enable or deactivate additional identifications
         :param allow_organization_account_linking: Whether this connection supports account linking via organization membership
         :param force_authn: Enable or deactivate ForceAuthn
+        :param login_hint: Configuration for the login_hint sent to the IdP on SSO sign-in
         :param consent_verified_domains_deletion: When enabling the connection, controls behavior when verified domains used for enrollment modes like automatic invitation or automatic suggestion already exist for the same domain. If true, those verified domains are removed and the connection is enabled. If false or omitted, the request fails when any such verified domain exists.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -912,6 +943,9 @@ class SamlConnectionsSDK(BaseSDK):
                 disable_additional_identifications=disable_additional_identifications,
                 allow_organization_account_linking=allow_organization_account_linking,
                 force_authn=force_authn,
+                login_hint=utils.get_pydantic_model(
+                    login_hint, OptionalNullable[models.UpdateSAMLConnectionLoginHint]
+                ),
                 consent_verified_domains_deletion=consent_verified_domains_deletion,
             ),
         )
@@ -959,6 +993,8 @@ class SamlConnectionsSDK(BaseSDK):
                 operation_id="UpdateSAMLConnection",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["SAML Connections"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1055,6 +1091,8 @@ class SamlConnectionsSDK(BaseSDK):
                 operation_id="DeleteSAMLConnection",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["SAML Connections"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1149,6 +1187,8 @@ class SamlConnectionsSDK(BaseSDK):
                 operation_id="DeleteSAMLConnection",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["SAML Connections"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),

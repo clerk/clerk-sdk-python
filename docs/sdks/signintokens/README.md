@@ -26,6 +26,7 @@ with Clerk(
 
     res = clerk.sign_in_tokens.create(request={
         "user_id": "user_12345",
+        "org_id": "<id>",
     })
 
     # Handle response
@@ -48,7 +49,7 @@ with Clerk(
 
 | Error Type         | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
-| models.ClerkErrors | 404, 422           | application/json   |
+| models.ClerkErrors | 403, 404, 422      | application/json   |
 | models.SDKError    | 4XX, 5XX           | \*/\*              |
 
 ## revoke

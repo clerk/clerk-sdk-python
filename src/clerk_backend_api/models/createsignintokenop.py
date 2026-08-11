@@ -5,6 +5,7 @@ from clerk_backend_api.types import (
     BaseModel,
     Nullable,
     OptionalNullable,
+    UNSET,
     UNSET_SENTINEL,
 )
 from pydantic import model_serializer
@@ -14,6 +15,10 @@ from typing_extensions import NotRequired, TypedDict
 class CreateSignInTokenRequestBodyTypedDict(TypedDict):
     user_id: str
     r"""The ID of the user that can use the newly created sign in token"""
+    org_id: NotRequired[Nullable[str]]
+    r"""The ID of the organization to activate when the user signs in.
+    Organizations must be enabled for the instance, and the user must be a member of the organization.
+    """
     expires_in_seconds: NotRequired[Nullable[int]]
     r"""Optional parameter to specify the life duration of the sign in token in seconds.
     By default, the duration is 30 days.
@@ -24,6 +29,11 @@ class CreateSignInTokenRequestBody(BaseModel):
     user_id: str
     r"""The ID of the user that can use the newly created sign in token"""
 
+    org_id: OptionalNullable[str] = UNSET
+    r"""The ID of the organization to activate when the user signs in.
+    Organizations must be enabled for the instance, and the user must be a member of the organization.
+    """
+
     expires_in_seconds: OptionalNullable[int] = 2592000
     r"""Optional parameter to specify the life duration of the sign in token in seconds.
     By default, the duration is 30 days.
@@ -31,8 +41,8 @@ class CreateSignInTokenRequestBody(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["expires_in_seconds"])
-        nullable_fields = set(["expires_in_seconds"])
+        optional_fields = set(["org_id", "expires_in_seconds"])
+        nullable_fields = set(["org_id", "expires_in_seconds"])
         serialized = handler(self)
         m = {}
 

@@ -20,6 +20,11 @@ class QueryParamEnrollmentMode(str, Enum):
     MANUAL_INVITATION = "manual_invitation"
     AUTOMATIC_INVITATION = "automatic_invitation"
     AUTOMATIC_SUGGESTION = "automatic_suggestion"
+    ENTERPRISE_SSO = "enterprise_sso"
+    MINUS_MANUAL_INVITATION = "-manual_invitation"
+    MINUS_AUTOMATIC_INVITATION = "-automatic_invitation"
+    MINUS_AUTOMATIC_SUGGESTION = "-automatic_suggestion"
+    MINUS_ENTERPRISE_SSO = "-enterprise_sso"
 
 
 class ListAllOrganizationDomainsRequestTypedDict(TypedDict):
@@ -28,7 +33,9 @@ class ListAllOrganizationDomainsRequestTypedDict(TypedDict):
     verified: NotRequired[Verified]
     r"""Filter by verification status"""
     enrollment_mode: NotRequired[List[QueryParamEnrollmentMode]]
-    r"""Filter by enrollment mode"""
+    r"""Filter by enrollment mode. Prefix a value with `-` to exclude it instead
+    (e.g. `-enterprise_sso`). Include and exclude filters can be combined and compose as AND.
+    """
     query: NotRequired[str]
     r"""Search domains by name or organization ID.
     If the query starts with \"org_\", it will search by exact organization ID match.
@@ -76,7 +83,9 @@ class ListAllOrganizationDomainsRequest(BaseModel):
         Optional[List[QueryParamEnrollmentMode]],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=False)),
     ] = None
-    r"""Filter by enrollment mode"""
+    r"""Filter by enrollment mode. Prefix a value with `-` to exclude it instead
+    (e.g. `-enterprise_sso`). Include and exclude filters can be combined and compose as AND.
+    """
 
     query: Annotated[
         Optional[str],

@@ -5,9 +5,9 @@ from .commercepricetransitiondetails import (
     CommercePriceTransitionDetails,
     CommercePriceTransitionDetailsTypedDict,
 )
-from .schemas_commercesubscriptionitem import (
-    SchemasCommerceSubscriptionItem,
-    SchemasCommerceSubscriptionItemTypedDict,
+from .commercesubscriptionitem_2 import (
+    CommerceSubscriptionItem2,
+    CommerceSubscriptionItem2TypedDict,
 )
 from clerk_backend_api.types import BaseModel
 from enum import Enum
@@ -25,7 +25,7 @@ class CommercePriceTransitionResponseTypedDict(TypedDict):
 
     object: CommercePriceTransitionResponseObject
     r"""String representing the object's type. Objects of the same type share the same value."""
-    subscription_item: SchemasCommerceSubscriptionItemTypedDict
+    subscription_item: CommerceSubscriptionItem2TypedDict
     transition: CommercePriceTransitionDetailsTypedDict
 
 
@@ -35,6 +35,6 @@ class CommercePriceTransitionResponse(BaseModel):
     object: CommercePriceTransitionResponseObject
     r"""String representing the object's type. Objects of the same type share the same value."""
 
-    subscription_item: SchemasCommerceSubscriptionItem
+    subscription_item: CommerceSubscriptionItem2
 
     transition: CommercePriceTransitionDetails

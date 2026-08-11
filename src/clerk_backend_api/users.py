@@ -81,6 +81,8 @@ class Users(BaseSDK):
                 operation_id="GetUserList",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Users"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -174,6 +176,8 @@ class Users(BaseSDK):
                 operation_id="GetUserList",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Users"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -422,6 +426,8 @@ class Users(BaseSDK):
                 operation_id="CreateUser",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Users"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -672,6 +678,8 @@ class Users(BaseSDK):
                 operation_id="CreateUser",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Users"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -766,6 +774,8 @@ class Users(BaseSDK):
                 operation_id="GetUsersCount",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Users"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -858,6 +868,8 @@ class Users(BaseSDK):
                 operation_id="GetUsersCount",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Users"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -948,6 +960,8 @@ class Users(BaseSDK):
                 operation_id="GetUser",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Users"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1038,6 +1052,8 @@ class Users(BaseSDK):
                 operation_id="GetUser",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Users"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1230,6 +1246,8 @@ class Users(BaseSDK):
                 operation_id="UpdateUser",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Users"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1424,6 +1442,8 @@ class Users(BaseSDK):
                 operation_id="UpdateUser",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Users"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1516,6 +1536,8 @@ class Users(BaseSDK):
                 operation_id="DeleteUser",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Users"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1606,6 +1628,8 @@ class Users(BaseSDK):
                 operation_id="DeleteUser",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Users"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1696,6 +1720,8 @@ class Users(BaseSDK):
                 operation_id="BanUser",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Users"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1786,6 +1812,8 @@ class Users(BaseSDK):
                 operation_id="BanUser",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Users"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1876,6 +1904,8 @@ class Users(BaseSDK):
                 operation_id="UnbanUser",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Users"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -1966,6 +1996,8 @@ class Users(BaseSDK):
                 operation_id="UnbanUser",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Users"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -2059,6 +2091,8 @@ class Users(BaseSDK):
                 operation_id="UsersBan",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Users"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -2152,6 +2186,8 @@ class Users(BaseSDK):
                 operation_id="UsersBan",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Users"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -2245,6 +2281,8 @@ class Users(BaseSDK):
                 operation_id="UsersUnban",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Users"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -2338,6 +2376,8 @@ class Users(BaseSDK):
                 operation_id="UsersUnban",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Users"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -2429,6 +2469,8 @@ class Users(BaseSDK):
                 operation_id="LockUser",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Users"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -2520,6 +2562,8 @@ class Users(BaseSDK):
                 operation_id="LockUser",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Users"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -2610,6 +2654,8 @@ class Users(BaseSDK):
                 operation_id="UnlockUser",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Users"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -2700,6 +2746,8 @@ class Users(BaseSDK):
                 operation_id="UnlockUser",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Users"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -2802,6 +2850,8 @@ class Users(BaseSDK):
                 operation_id="SetUserProfileImage",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Users"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -2904,6 +2954,8 @@ class Users(BaseSDK):
                 operation_id="SetUserProfileImage",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Users"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -2994,6 +3046,8 @@ class Users(BaseSDK):
                 operation_id="DeleteUserProfileImage",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Users"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -3084,6 +3138,8 @@ class Users(BaseSDK):
                 operation_id="DeleteUserProfileImage",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Users"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -3210,6 +3266,8 @@ class Users(BaseSDK):
                 operation_id="UpdateUserMetadata",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Users"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -3338,6 +3396,8 @@ class Users(BaseSDK):
                 operation_id="UpdateUserMetadata",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Users"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -3467,6 +3527,8 @@ class Users(BaseSDK):
                 operation_id="ReplaceUserMetadata",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Users"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -3596,6 +3658,8 @@ class Users(BaseSDK):
                 operation_id="ReplaceUserMetadata",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Users"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -3690,6 +3754,8 @@ class Users(BaseSDK):
                 operation_id="GetUserBillingSubscription",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Users", "Billing"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -3787,6 +3853,8 @@ class Users(BaseSDK):
                 operation_id="GetUserBillingSubscription",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Users", "Billing"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -3883,6 +3951,8 @@ class Users(BaseSDK):
                 operation_id="GetUserBillingCreditBalance",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Users", "Billing"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -3981,6 +4051,8 @@ class Users(BaseSDK):
                 operation_id="GetUserBillingCreditBalance",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Users", "Billing"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -4104,6 +4176,8 @@ class Users(BaseSDK):
                 operation_id="AdjustUserBillingCreditBalance",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Users", "Billing"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -4227,6 +4301,8 @@ class Users(BaseSDK):
                 operation_id="AdjustUserBillingCreditBalance",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Users", "Billing"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -4342,6 +4418,8 @@ class Users(BaseSDK):
                 operation_id="GetOAuthAccessToken",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Users"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -4450,6 +4528,8 @@ class Users(BaseSDK):
                 operation_id="GetOAuthAccessToken",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Users"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -4549,6 +4629,8 @@ class Users(BaseSDK):
                 operation_id="UsersGetOrganizationMemberships",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Users"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -4648,6 +4730,8 @@ class Users(BaseSDK):
                 operation_id="UsersGetOrganizationMemberships",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Users"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -4750,6 +4834,8 @@ class Users(BaseSDK):
                 operation_id="UsersGetOrganizationInvitations",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Users"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -4854,6 +4940,8 @@ class Users(BaseSDK):
                 operation_id="UsersGetOrganizationInvitations",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Users"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -4866,6 +4954,228 @@ class Users(BaseSDK):
                 models.OrganizationInvitationsWithPublicOrganizationData, http_res
             )
         if utils.match_response(http_res, ["400", "403", "404"], "application/json"):
+            response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
+            raise models.ClerkErrors(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError("API error occurred", http_res, http_res_text)
+
+        raise models.SDKError("Unexpected response received", http_res)
+
+    def remove_password(
+        self,
+        *,
+        user_id: str,
+        sign_out_of_other_sessions: Optional[bool] = False,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.User:
+        r"""Remove a user's password
+
+        Removes the password credential from the given user. This is a privileged operation and does not require the user's current password. Password removal is allowed even when the user has no other sign-in method configured.
+
+        If the user does not have a password, the user is returned unchanged and no password-deletion or user-update event is emitted. By default, existing sessions remain active. Set `sign_out_of_other_sessions` to `true` to revoke sessions active when the request is processed.
+
+        :param user_id: The ID of the user whose password to remove
+        :param sign_out_of_other_sessions: Set to `true` to revoke all of the user's active sessions after removing the password.
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.RemoveUserPasswordRequest(
+            user_id=user_id,
+            request_body=models.RemoveUserPasswordRequestBody(
+                sign_out_of_other_sessions=sign_out_of_other_sessions,
+            ),
+        )
+
+        req = self._build_request(
+            method="POST",
+            path="/users/{user_id}/remove_password",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request.request_body if request is not None else None,
+                False,
+                True,
+                "json",
+                Optional[models.RemoveUserPasswordRequestBody],
+            ),
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["5XX"])
+
+        http_res = self.do_request(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="RemoveUserPassword",
+                oauth2_scopes=None,
+                security_source=self.sdk_configuration.security,
+                tags=["Users"],
+                extensions=None,
+            ),
+            request=req,
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(models.User, http_res)
+        if utils.match_response(
+            http_res, ["400", "401", "403", "404"], "application/json"
+        ):
+            response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
+            raise models.ClerkErrors(response_data, http_res)
+        if utils.match_response(http_res, "500", "application/json"):
+            response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
+            raise models.ClerkErrors(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError("API error occurred", http_res, http_res_text)
+
+        raise models.SDKError("Unexpected response received", http_res)
+
+    async def remove_password_async(
+        self,
+        *,
+        user_id: str,
+        sign_out_of_other_sessions: Optional[bool] = False,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.User:
+        r"""Remove a user's password
+
+        Removes the password credential from the given user. This is a privileged operation and does not require the user's current password. Password removal is allowed even when the user has no other sign-in method configured.
+
+        If the user does not have a password, the user is returned unchanged and no password-deletion or user-update event is emitted. By default, existing sessions remain active. Set `sign_out_of_other_sessions` to `true` to revoke sessions active when the request is processed.
+
+        :param user_id: The ID of the user whose password to remove
+        :param sign_out_of_other_sessions: Set to `true` to revoke all of the user's active sessions after removing the password.
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.RemoveUserPasswordRequest(
+            user_id=user_id,
+            request_body=models.RemoveUserPasswordRequestBody(
+                sign_out_of_other_sessions=sign_out_of_other_sessions,
+            ),
+        )
+
+        req = self._build_request_async(
+            method="POST",
+            path="/users/{user_id}/remove_password",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request.request_body if request is not None else None,
+                False,
+                True,
+                "json",
+                Optional[models.RemoveUserPasswordRequestBody],
+            ),
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["5XX"])
+
+        http_res = await self.do_request_async(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="RemoveUserPassword",
+                oauth2_scopes=None,
+                security_source=self.sdk_configuration.security,
+                tags=["Users"],
+                extensions=None,
+            ),
+            request=req,
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(models.User, http_res)
+        if utils.match_response(
+            http_res, ["400", "401", "403", "404"], "application/json"
+        ):
+            response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
+            raise models.ClerkErrors(response_data, http_res)
+        if utils.match_response(http_res, "500", "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
@@ -4959,6 +5269,8 @@ class Users(BaseSDK):
                 operation_id="VerifyPassword",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Users"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -5062,6 +5374,8 @@ class Users(BaseSDK):
                 operation_id="VerifyPassword",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Users"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -5167,6 +5481,8 @@ class Users(BaseSDK):
                 operation_id="VerifyTOTP",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Users"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -5272,6 +5588,8 @@ class Users(BaseSDK):
                 operation_id="VerifyTOTP",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Users"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -5362,6 +5680,8 @@ class Users(BaseSDK):
                 operation_id="DisableMFA",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Users"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -5455,6 +5775,8 @@ class Users(BaseSDK):
                 operation_id="DisableMFA",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Users"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -5548,6 +5870,8 @@ class Users(BaseSDK):
                 operation_id="DeleteBackupCode",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Users"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -5643,6 +5967,8 @@ class Users(BaseSDK):
                 operation_id="DeleteBackupCode",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Users"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -5741,6 +6067,8 @@ class Users(BaseSDK):
                 operation_id="UserPasskeyDelete",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Users"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -5837,6 +6165,8 @@ class Users(BaseSDK):
                 operation_id="UserPasskeyDelete",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Users"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -5846,6 +6176,392 @@ class Users(BaseSDK):
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(models.DeletedObject, http_res)
+        if utils.match_response(http_res, ["403", "404"], "application/json"):
+            response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
+            raise models.ClerkErrors(response_data, http_res)
+        if utils.match_response(http_res, "500", "application/json"):
+            response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
+            raise models.ClerkErrors(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError("API error occurred", http_res, http_res_text)
+
+        raise models.SDKError("Unexpected response received", http_res)
+
+    def list_trusted_devices(
+        self,
+        *,
+        user_id: str,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.TrustedDeviceList:
+        r"""List a user's trusted devices
+
+        Returns the active trusted devices enrolled by the user.
+
+        :param user_id: The ID of the user whose trusted devices are returned
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.ListUserTrustedDevicesRequest(
+            user_id=user_id,
+        )
+
+        req = self._build_request(
+            method="GET",
+            path="/users/{user_id}/trusted_devices",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["5XX"])
+
+        http_res = self.do_request(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="ListUserTrustedDevices",
+                oauth2_scopes=None,
+                security_source=self.sdk_configuration.security,
+                tags=["Users"],
+                extensions=None,
+            ),
+            request=req,
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(models.TrustedDeviceList, http_res)
+        if utils.match_response(http_res, ["403", "404"], "application/json"):
+            response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
+            raise models.ClerkErrors(response_data, http_res)
+        if utils.match_response(http_res, "500", "application/json"):
+            response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
+            raise models.ClerkErrors(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError("API error occurred", http_res, http_res_text)
+
+        raise models.SDKError("Unexpected response received", http_res)
+
+    async def list_trusted_devices_async(
+        self,
+        *,
+        user_id: str,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.TrustedDeviceList:
+        r"""List a user's trusted devices
+
+        Returns the active trusted devices enrolled by the user.
+
+        :param user_id: The ID of the user whose trusted devices are returned
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.ListUserTrustedDevicesRequest(
+            user_id=user_id,
+        )
+
+        req = self._build_request_async(
+            method="GET",
+            path="/users/{user_id}/trusted_devices",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["5XX"])
+
+        http_res = await self.do_request_async(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="ListUserTrustedDevices",
+                oauth2_scopes=None,
+                security_source=self.sdk_configuration.security,
+                tags=["Users"],
+                extensions=None,
+            ),
+            request=req,
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(models.TrustedDeviceList, http_res)
+        if utils.match_response(http_res, ["403", "404"], "application/json"):
+            response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
+            raise models.ClerkErrors(response_data, http_res)
+        if utils.match_response(http_res, "500", "application/json"):
+            response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
+            raise models.ClerkErrors(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError("API error occurred", http_res, http_res_text)
+
+        raise models.SDKError("Unexpected response received", http_res)
+
+    def revoke_trusted_device(
+        self,
+        *,
+        user_id: str,
+        trusted_device_id: str,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.TrustedDevice:
+        r"""Revoke a user's trusted device
+
+        Revokes an active trusted device enrolled by the user.
+
+        :param user_id: The ID of the user that owns the trusted device
+        :param trusted_device_id: The ID of the trusted device to revoke
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.RevokeUserTrustedDeviceRequest(
+            user_id=user_id,
+            trusted_device_id=trusted_device_id,
+        )
+
+        req = self._build_request(
+            method="DELETE",
+            path="/users/{user_id}/trusted_devices/{trusted_device_id}",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["5XX"])
+
+        http_res = self.do_request(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="RevokeUserTrustedDevice",
+                oauth2_scopes=None,
+                security_source=self.sdk_configuration.security,
+                tags=["Users"],
+                extensions=None,
+            ),
+            request=req,
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(models.TrustedDevice, http_res)
+        if utils.match_response(http_res, ["403", "404"], "application/json"):
+            response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
+            raise models.ClerkErrors(response_data, http_res)
+        if utils.match_response(http_res, "500", "application/json"):
+            response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
+            raise models.ClerkErrors(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError("API error occurred", http_res, http_res_text)
+
+        raise models.SDKError("Unexpected response received", http_res)
+
+    async def revoke_trusted_device_async(
+        self,
+        *,
+        user_id: str,
+        trusted_device_id: str,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.TrustedDevice:
+        r"""Revoke a user's trusted device
+
+        Revokes an active trusted device enrolled by the user.
+
+        :param user_id: The ID of the user that owns the trusted device
+        :param trusted_device_id: The ID of the trusted device to revoke
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.RevokeUserTrustedDeviceRequest(
+            user_id=user_id,
+            trusted_device_id=trusted_device_id,
+        )
+
+        req = self._build_request_async(
+            method="DELETE",
+            path="/users/{user_id}/trusted_devices/{trusted_device_id}",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["5XX"])
+
+        http_res = await self.do_request_async(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="RevokeUserTrustedDevice",
+                oauth2_scopes=None,
+                security_source=self.sdk_configuration.security,
+                tags=["Users"],
+                extensions=None,
+            ),
+            request=req,
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(models.TrustedDevice, http_res)
         if utils.match_response(http_res, ["403", "404"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -5933,6 +6649,8 @@ class Users(BaseSDK):
                 operation_id="UserWeb3WalletDelete",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Users"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -6029,6 +6747,8 @@ class Users(BaseSDK):
                 operation_id="UserWeb3WalletDelete",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Users"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -6122,6 +6842,8 @@ class Users(BaseSDK):
                 operation_id="DeleteTOTP",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Users"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -6215,6 +6937,8 @@ class Users(BaseSDK):
                 operation_id="DeleteTOTP",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Users"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -6311,6 +7035,8 @@ class Users(BaseSDK):
                 operation_id="DeleteExternalAccount",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Users"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -6407,6 +7133,8 @@ class Users(BaseSDK):
                 operation_id="DeleteExternalAccount",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Users"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -6512,6 +7240,8 @@ class Users(BaseSDK):
                 operation_id="SetUserPasswordCompromised",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Users"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -6616,6 +7346,8 @@ class Users(BaseSDK):
                 operation_id="SetUserPasswordCompromised",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Users"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -6651,6 +7383,8 @@ class Users(BaseSDK):
         r"""Unset a user's password as compromised
 
         Sets the given user's password as no longer compromised. The user will no longer be prompted to reset their password on their next sign-in.
+
+        If the user is in reserved-email password quarantine, the quarantine is preserved and the returned user will still have `requires_password_reset` set to `true`. Reserved-email password quarantine can only be cleared by completing a password reset or changing/removing the password.
 
         :param user_id: The ID of the user to unset the compromised status for
         :param retries: Override the default retry configuration for this method
@@ -6708,6 +7442,8 @@ class Users(BaseSDK):
                 operation_id="UnsetUserPasswordCompromised",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Users"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -6743,6 +7479,8 @@ class Users(BaseSDK):
         r"""Unset a user's password as compromised
 
         Sets the given user's password as no longer compromised. The user will no longer be prompted to reset their password on their next sign-in.
+
+        If the user is in reserved-email password quarantine, the quarantine is preserved and the returned user will still have `requires_password_reset` set to `true`. Reserved-email password quarantine can only be cleared by completing a password reset or changing/removing the password.
 
         :param user_id: The ID of the user to unset the compromised status for
         :param retries: Override the default retry configuration for this method
@@ -6800,6 +7538,8 @@ class Users(BaseSDK):
                 operation_id="UnsetUserPasswordCompromised",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Users"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -6903,6 +7643,8 @@ class Users(BaseSDK):
                 operation_id="InstanceGetOrganizationMemberships",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Organization Memberships"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
@@ -7007,6 +7749,8 @@ class Users(BaseSDK):
                 operation_id="InstanceGetOrganizationMemberships",
                 oauth2_scopes=None,
                 security_source=self.sdk_configuration.security,
+                tags=["Organization Memberships"],
+                extensions=None,
             ),
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),

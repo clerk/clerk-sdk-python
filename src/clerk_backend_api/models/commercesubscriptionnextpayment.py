@@ -2,9 +2,9 @@
 
 from __future__ import annotations
 from .commercemoneyresponse import CommerceMoneyResponse, CommerceMoneyResponseTypedDict
-from .schemas_commerceperunittotal import (
-    SchemasCommercePerUnitTotal,
-    SchemasCommercePerUnitTotalTypedDict,
+from .commerceperunittotal_2 import (
+    CommercePerUnitTotal2,
+    CommercePerUnitTotal2TypedDict,
 )
 from clerk_backend_api.types import (
     BaseModel,
@@ -140,7 +140,7 @@ class CommerceSubscriptionNextPaymentTotalsTypedDict(TypedDict):
     base_fee: CommerceMoneyResponseTypedDict
     tax_total: CommerceMoneyResponseTypedDict
     grand_total: CommerceMoneyResponseTypedDict
-    per_unit_totals: NotRequired[List[SchemasCommercePerUnitTotalTypedDict]]
+    per_unit_totals: NotRequired[List[CommercePerUnitTotal2TypedDict]]
     credits: NotRequired[Nullable[CommerceSubscriptionNextPaymentCreditsTypedDict]]
     discounts: NotRequired[Nullable[CommerceSubscriptionNextPaymentDiscountsTypedDict]]
     r"""Information about the discounts applied to the payment"""
@@ -157,7 +157,7 @@ class CommerceSubscriptionNextPaymentTotals(BaseModel):
 
     grand_total: CommerceMoneyResponse
 
-    per_unit_totals: Optional[List[SchemasCommercePerUnitTotal]] = None
+    per_unit_totals: Optional[List[CommercePerUnitTotal2]] = None
 
     credits: OptionalNullable[CommerceSubscriptionNextPaymentCredits] = UNSET
 
@@ -194,7 +194,7 @@ class CommerceSubscriptionNextPaymentTypedDict(TypedDict):
     date_: int
     r"""Unix timestamp (milliseconds) of the next payment date."""
     amount: CommerceMoneyResponseTypedDict
-    per_unit_totals: NotRequired[List[SchemasCommercePerUnitTotalTypedDict]]
+    per_unit_totals: NotRequired[List[CommercePerUnitTotal2TypedDict]]
     r"""Per-unit total breakdown (for example, seats) for the next payment."""
     totals: NotRequired[Nullable[CommerceSubscriptionNextPaymentTotalsTypedDict]]
     r"""Breakdown of the recurring amount that will be billed at renewal (base fee + per-unit charges). Tax and credits are not previewed."""
@@ -206,7 +206,7 @@ class CommerceSubscriptionNextPayment(BaseModel):
 
     amount: CommerceMoneyResponse
 
-    per_unit_totals: Optional[List[SchemasCommercePerUnitTotal]] = None
+    per_unit_totals: Optional[List[CommercePerUnitTotal2]] = None
     r"""Per-unit total breakdown (for example, seats) for the next payment."""
 
     totals: OptionalNullable[CommerceSubscriptionNextPaymentTotals] = UNSET

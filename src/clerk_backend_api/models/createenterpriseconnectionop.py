@@ -72,6 +72,49 @@ class CreateEnterpriseConnectionAttributeMapping(BaseModel):
         return m
 
 
+class CreateEnterpriseConnectionMode(str, Enum):
+    r"""Controls the login_hint sent to the IdP on SSO sign-in"""
+
+    EMAIL_ADDRESS = "email_address"
+    CUSTOM_ATTRIBUTE = "custom_attribute"
+    OFF = "off"
+
+
+class CreateEnterpriseConnectionLoginHintTypedDict(TypedDict):
+    r"""Configuration for the login_hint sent to the IdP on SSO sign-in"""
+
+    mode: CreateEnterpriseConnectionMode
+    r"""Controls the login_hint sent to the IdP on SSO sign-in"""
+    source: NotRequired[str]
+    r"""The user public_metadata key whose value is sent as the login_hint when mode is custom_attribute"""
+
+
+class CreateEnterpriseConnectionLoginHint(BaseModel):
+    r"""Configuration for the login_hint sent to the IdP on SSO sign-in"""
+
+    mode: CreateEnterpriseConnectionMode
+    r"""Controls the login_hint sent to the IdP on SSO sign-in"""
+
+    source: Optional[str] = None
+    r"""The user public_metadata key whose value is sent as the login_hint when mode is custom_attribute"""
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["source"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m
+
+
 class CreateEnterpriseConnectionSamlTypedDict(TypedDict):
     r"""SAML connection-specific properties. Only applied when the enterprise connection uses SAML (e.g. provider is saml_custom).
     Use this to set IdP configuration, attribute mapping, and other SAML-specific settings at creation time.
@@ -94,6 +137,8 @@ class CreateEnterpriseConnectionSamlTypedDict(TypedDict):
     allow_subdomains: NotRequired[Nullable[bool]]
     allow_idp_initiated: NotRequired[Nullable[bool]]
     force_authn: NotRequired[Nullable[bool]]
+    login_hint: NotRequired[Nullable[CreateEnterpriseConnectionLoginHintTypedDict]]
+    r"""Configuration for the login_hint sent to the IdP on SSO sign-in"""
 
 
 class CreateEnterpriseConnectionSaml(BaseModel):
@@ -127,6 +172,9 @@ class CreateEnterpriseConnectionSaml(BaseModel):
 
     force_authn: OptionalNullable[bool] = UNSET
 
+    login_hint: OptionalNullable[CreateEnterpriseConnectionLoginHint] = UNSET
+    r"""Configuration for the login_hint sent to the IdP on SSO sign-in"""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
@@ -140,6 +188,7 @@ class CreateEnterpriseConnectionSaml(BaseModel):
                 "allow_subdomains",
                 "allow_idp_initiated",
                 "force_authn",
+                "login_hint",
             ]
         )
         nullable_fields = set(
@@ -153,6 +202,7 @@ class CreateEnterpriseConnectionSaml(BaseModel):
                 "allow_subdomains",
                 "allow_idp_initiated",
                 "force_authn",
+                "login_hint",
             ]
         )
         serialized = handler(self)

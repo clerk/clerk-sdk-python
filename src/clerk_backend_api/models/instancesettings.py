@@ -3,9 +3,10 @@
 from __future__ import annotations
 from clerk_backend_api.types import BaseModel, UNSET_SENTINEL
 from enum import Enum
+import pydantic
 from pydantic import model_serializer
 from typing import Optional
-from typing_extensions import NotRequired, TypedDict
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class InstanceSettingsObject(str, Enum):
@@ -24,6 +25,9 @@ class InstanceSettingsTypedDict(TypedDict):
     from_email_address: NotRequired[str]
     progressive_sign_up: NotRequired[bool]
     enhanced_email_deliverability: NotRequired[bool]
+    r"""Deprecated. When enabled, production authentication emails for this instance are sent through Clerk's legacy managed email delivery path. This setting is being retired; use the instance's configured email sending domain instead.
+
+    """
 
 
 class InstanceSettings(BaseModel):
@@ -40,7 +44,15 @@ class InstanceSettings(BaseModel):
 
     progressive_sign_up: Optional[bool] = None
 
-    enhanced_email_deliverability: Optional[bool] = None
+    enhanced_email_deliverability: Annotated[
+        Optional[bool],
+        pydantic.Field(
+            deprecated="warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
+        ),
+    ] = None
+    r"""Deprecated. When enabled, production authentication emails for this instance are sent through Clerk's legacy managed email delivery path. This setting is being retired; use the instance's configured email sending domain instead.
+
+    """
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

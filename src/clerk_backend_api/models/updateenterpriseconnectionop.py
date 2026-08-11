@@ -9,6 +9,7 @@ from clerk_backend_api.types import (
     UNSET_SENTINEL,
 )
 from clerk_backend_api.utils import FieldMetadata, PathParamMetadata, RequestMetadata
+from enum import Enum
 from pydantic import model_serializer
 from typing import List, Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
@@ -60,6 +61,49 @@ class UpdateEnterpriseConnectionAttributeMapping(BaseModel):
         return m
 
 
+class UpdateEnterpriseConnectionMode(str, Enum):
+    r"""Controls the login_hint sent to the IdP on SSO sign-in"""
+
+    EMAIL_ADDRESS = "email_address"
+    CUSTOM_ATTRIBUTE = "custom_attribute"
+    OFF = "off"
+
+
+class UpdateEnterpriseConnectionLoginHintTypedDict(TypedDict):
+    r"""Configuration for the login_hint sent to the IdP on SSO sign-in"""
+
+    mode: UpdateEnterpriseConnectionMode
+    r"""Controls the login_hint sent to the IdP on SSO sign-in"""
+    source: NotRequired[str]
+    r"""The user public_metadata key whose value is sent as the login_hint when mode is custom_attribute"""
+
+
+class UpdateEnterpriseConnectionLoginHint(BaseModel):
+    r"""Configuration for the login_hint sent to the IdP on SSO sign-in"""
+
+    mode: UpdateEnterpriseConnectionMode
+    r"""Controls the login_hint sent to the IdP on SSO sign-in"""
+
+    source: Optional[str] = None
+    r"""The user public_metadata key whose value is sent as the login_hint when mode is custom_attribute"""
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["source"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m
+
+
 class UpdateEnterpriseConnectionSamlTypedDict(TypedDict):
     r"""SAML connection-specific properties. Only applied when the enterprise connection uses SAML.
     Use this to update IdP configuration, attribute mapping, and other SAML-specific settings.
@@ -84,6 +128,8 @@ class UpdateEnterpriseConnectionSamlTypedDict(TypedDict):
     allow_subdomains: NotRequired[Nullable[bool]]
     allow_idp_initiated: NotRequired[Nullable[bool]]
     force_authn: NotRequired[Nullable[bool]]
+    login_hint: NotRequired[Nullable[UpdateEnterpriseConnectionLoginHintTypedDict]]
+    r"""Configuration for the login_hint sent to the IdP on SSO sign-in"""
 
 
 class UpdateEnterpriseConnectionSaml(BaseModel):
@@ -120,6 +166,9 @@ class UpdateEnterpriseConnectionSaml(BaseModel):
 
     force_authn: OptionalNullable[bool] = UNSET
 
+    login_hint: OptionalNullable[UpdateEnterpriseConnectionLoginHint] = UNSET
+    r"""Configuration for the login_hint sent to the IdP on SSO sign-in"""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
@@ -134,6 +183,7 @@ class UpdateEnterpriseConnectionSaml(BaseModel):
                 "allow_subdomains",
                 "allow_idp_initiated",
                 "force_authn",
+                "login_hint",
             ]
         )
         nullable_fields = set(
@@ -148,6 +198,7 @@ class UpdateEnterpriseConnectionSaml(BaseModel):
                 "allow_subdomains",
                 "allow_idp_initiated",
                 "force_authn",
+                "login_hint",
             ]
         )
         serialized = handler(self)

@@ -19,6 +19,11 @@ class UpdateEmailAddressRequestBodyTypedDict(TypedDict):
     r"""The email address will be marked as verified."""
     primary: NotRequired[Nullable[bool]]
     r"""Set this email address as the primary email address for the user."""
+    notify_primary_email_address_changed: NotRequired[Nullable[bool]]
+    r"""If set to `true` and this update makes the email address the user's new primary,
+    the previous primary email address is notified of the change.
+    By default, no notification is sent.
+    """
 
 
 class UpdateEmailAddressRequestBody(BaseModel):
@@ -28,10 +33,20 @@ class UpdateEmailAddressRequestBody(BaseModel):
     primary: OptionalNullable[bool] = UNSET
     r"""Set this email address as the primary email address for the user."""
 
+    notify_primary_email_address_changed: OptionalNullable[bool] = False
+    r"""If set to `true` and this update makes the email address the user's new primary,
+    the previous primary email address is notified of the change.
+    By default, no notification is sent.
+    """
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["verified", "primary"])
-        nullable_fields = set(["verified", "primary"])
+        optional_fields = set(
+            ["verified", "primary", "notify_primary_email_address_changed"]
+        )
+        nullable_fields = set(
+            ["verified", "primary", "notify_primary_email_address_changed"]
+        )
         serialized = handler(self)
         m = {}
 
