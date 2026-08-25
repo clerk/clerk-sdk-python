@@ -1,3 +1,4 @@
+import re
 from http.cookies import SimpleCookie
 from typing import Any, Dict, List, Optional
 
@@ -9,6 +10,11 @@ from .verifytoken import (
     verify_token,
     verify_token_async,
 )
+
+
+# ASCII digits only: str.isdigit() and the regex \d class both accept other
+# Unicode digit forms, which are not valid in a JWT claim.
+_DECIMAL_MASK = re.compile(r"[0-9]+")
 
 
 def _compute_org_permissions(claims: Dict[str, Any]) -> List[str]:
@@ -40,10 +46,16 @@ def _compute_org_permissions(claims: Dict[str, Any]) -> List[str]:
         if "o" not in scope:
             continue
 
-        try:
-            binary = bin(int(mapping))[2:].lstrip("0")
-        except ValueError:
+        # Only a non-negative decimal integer is a valid mask. A negative value
+        # means the issuer overflowed a signed integer while encoding, and
+        # bin() renders it as "-0b111...", so the [2:] slice would leave a
+        # stray "b" and the remaining digits would grant the magnitude's bits --
+        # permissions that were never assigned. Reject rather than guess,
+        # mirroring decimalToBinaryBits in @clerk/shared.
+        if _DECIMAL_MASK.fullmatch(mapping) is None:
             continue
+
+        binary = bin(int(mapping))[2:].lstrip("0")
 
         reversed_binary = binary[::-1]
 
