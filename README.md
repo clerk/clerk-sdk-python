@@ -222,6 +222,16 @@ def is_signed_in(request: httpx.Request):
 
 If the request is correctly authenticated, the token's payload is made available in `request_state.payload`. Otherwise the reason for the token verification failure is given by `request_state.reason`.
 
+
+> [!NOTE]
+> **Backward Compatibility:** If you are using an older version of the SDK (v1.x or v2.x), the `AuthenticateRequestOptions` class and the `authenticate_request` method are located in a different module. 
+>
+> You should import them like this:
+> ```python
+> from clerk_backend_api.jwks_helpers import authenticate_request, AuthenticateRequestOptions
+> ```
+
+
 ### Authenticating Machine Tokens
 
 If you need to authenticate a machine token rather than a session token, this can be done using the `accepts_token` param as such:
