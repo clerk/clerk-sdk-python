@@ -25,6 +25,11 @@ class Users(BaseSDK):
         Returns a list of all users.
         The users are returned sorted by creation date, with the newest users appearing first.
 
+        To walk more than a few pages, paginate with `starting_after` rather than `offset`.
+        A cursor page costs the same no matter how far into the list it sits, while a large `offset`
+        has to walk and discard every row before it, so it gets progressively slower and eventually
+        times out. Cursor pagination requires the `created_at` ordering, which is the default.
+
         :param request: The request object to send.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -119,6 +124,11 @@ class Users(BaseSDK):
 
         Returns a list of all users.
         The users are returned sorted by creation date, with the newest users appearing first.
+
+        To walk more than a few pages, paginate with `starting_after` rather than `offset`.
+        A cursor page costs the same no matter how far into the list it sits, while a large `offset`
+        has to walk and discard every row before it, so it gets progressively slower and eventually
+        times out. Cursor pagination requires the `created_at` ordering, which is the default.
 
         :param request: The request object to send.
         :param retries: Override the default retry configuration for this method
@@ -326,7 +336,7 @@ class Users(BaseSDK):
         :param create_organizations_limit: The maximum number of organizations the user can create. 0 means unlimited.
 
         :param created_at: A custom date/time denoting _when_ the user signed up to the application, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`).
-        :param bypass_client_trust: When set to `true`, the user will bypass client trust checks during sign-in.
+        :param bypass_client_trust: When set to `true`, the user will bypass Device Trust checks during sign-in.
         :param banned: When set to `true`, the user is created already banned and cannot sign in.
             Requires the same plan support as the ban user endpoint.
         :param locked: When set to `true`, the user is created already locked.
@@ -578,7 +588,7 @@ class Users(BaseSDK):
         :param create_organizations_limit: The maximum number of organizations the user can create. 0 means unlimited.
 
         :param created_at: A custom date/time denoting _when_ the user signed up to the application, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`).
-        :param bypass_client_trust: When set to `true`, the user will bypass client trust checks during sign-in.
+        :param bypass_client_trust: When set to `true`, the user will bypass Device Trust checks during sign-in.
         :param banned: When set to `true`, the user is created already banned and cannot sign in.
             Requires the same plan support as the ban user endpoint.
         :param locked: When set to `true`, the user is created already locked.
@@ -1161,7 +1171,7 @@ class Users(BaseSDK):
         :param skip_legal_checks: When set to `true` all legal checks are skipped.
         :param create_organizations_limit: The maximum number of organizations the user can create. 0 means unlimited.
         :param created_at: A custom date/time denoting _when_ the user signed up to the application.
-        :param bypass_client_trust: When set to `true`, the user will bypass client trust checks during sign-in.
+        :param bypass_client_trust: When set to `true`, the user will bypass Device Trust checks during sign-in.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1357,7 +1367,7 @@ class Users(BaseSDK):
         :param skip_legal_checks: When set to `true` all legal checks are skipped.
         :param create_organizations_limit: The maximum number of organizations the user can create. 0 means unlimited.
         :param created_at: A custom date/time denoting _when_ the user signed up to the application.
-        :param bypass_client_trust: When set to `true`, the user will bypass client trust checks during sign-in.
+        :param bypass_client_trust: When set to `true`, the user will bypass Device Trust checks during sign-in.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds

@@ -45,6 +45,14 @@ if TYPE_CHECKING:
         AllowlistIdentifierTypedDict,
         IdentifierType,
     )
+    from .applybillingsubscriptionitemdiscountop import (
+        ApplyBillingSubscriptionItemDiscountRequest,
+        ApplyBillingSubscriptionItemDiscountRequestTypedDict,
+    )
+    from .applycommercediscountrequest import (
+        ApplyCommerceDiscountRequest,
+        ApplyCommerceDiscountRequestTypedDict,
+    )
     from .assignpermissiontoorganizationroleop import (
         AssignPermissionToOrganizationRoleRequest,
         AssignPermissionToOrganizationRoleRequestTypedDict,
@@ -136,6 +144,18 @@ if TYPE_CHECKING:
     from .commercecreditledgerresponse import (
         CommerceCreditLedgerResponse,
         CommerceCreditLedgerResponseTypedDict,
+    )
+    from .commercediscountredemptionresponse import (
+        AmountOff,
+        AmountOffTypedDict,
+        CommerceDiscountRedemptionResponse,
+        CommerceDiscountRedemptionResponseAmount,
+        CommerceDiscountRedemptionResponseAmountTypedDict,
+        CommerceDiscountRedemptionResponseObject,
+        CommerceDiscountRedemptionResponseStatus,
+        CommerceDiscountRedemptionResponseTypedDict,
+        Effect,
+        Source,
     )
     from .commercemoneyresponse import (
         CommerceMoneyResponse,
@@ -434,6 +454,18 @@ if TYPE_CHECKING:
         CreateBulkWaitlistEntriesRequestBody,
         CreateBulkWaitlistEntriesRequestBodyTypedDict,
     )
+    from .createdirectorygrouprolemappingop import (
+        CreateDirectoryGroupRoleMappingRequest,
+        CreateDirectoryGroupRoleMappingRequestBody,
+        CreateDirectoryGroupRoleMappingRequestBodyTypedDict,
+        CreateDirectoryGroupRoleMappingRequestTypedDict,
+    )
+    from .createdirectoryop import (
+        CreateDirectoryGroupRoleMappings,
+        CreateDirectoryGroupRoleMappingsTypedDict,
+        CreateDirectoryRequestBody,
+        CreateDirectoryRequestBodyTypedDict,
+    )
     from .createemailaddressop import (
         CreateEmailAddressRequestBody,
         CreateEmailAddressRequestBodyTypedDict,
@@ -645,6 +677,14 @@ if TYPE_CHECKING:
         DeleteBlocklistIdentifierRequest,
         DeleteBlocklistIdentifierRequestTypedDict,
     )
+    from .deletedirectorygrouprolemappingop import (
+        DeleteDirectoryGroupRoleMappingRequest,
+        DeleteDirectoryGroupRoleMappingRequestTypedDict,
+    )
+    from .deletedirectoryop import (
+        DeleteDirectoryRequest,
+        DeleteDirectoryRequestTypedDict,
+    )
     from .deletedobject import DeletedObject, DeletedObjectTypedDict
     from .deletedomainop import DeleteDomainRequest, DeleteDomainRequestTypedDict
     from .deleteemailaddressop import (
@@ -730,6 +770,28 @@ if TYPE_CHECKING:
     from .deletewaitlistentryop import (
         DeleteWaitlistEntryRequest,
         DeleteWaitlistEntryRequestTypedDict,
+    )
+    from .directory import (
+        Directory,
+        DirectoryCustomAttributes,
+        DirectoryCustomAttributesTypedDict,
+        DirectoryObject,
+        DirectoryTypedDict,
+    )
+    from .directory_list import DirectoryList, DirectoryListTypedDict
+    from .directorygrouprolemapping import (
+        DirectoryGroupRoleMapping,
+        DirectoryGroupRoleMappingObject,
+        DirectoryGroupRoleMappingTypedDict,
+    )
+    from .directorygrouprolemapping_deleted import (
+        DirectoryGroupRoleMappingDeleted,
+        DirectoryGroupRoleMappingDeletedObject,
+        DirectoryGroupRoleMappingDeletedTypedDict,
+    )
+    from .directorygrouprolemapping_list import (
+        DirectoryGroupRoleMappingList,
+        DirectoryGroupRoleMappingListTypedDict,
     )
     from .disablemfaop import (
         DisableMFARequest,
@@ -984,6 +1046,7 @@ if TYPE_CHECKING:
         GetCommerceSubscriptionItemListRequestTypedDict,
         QueryParamPayerType,
     )
+    from .getdirectoryop import GetDirectoryRequest, GetDirectoryRequestTypedDict
     from .getemailaddressop import (
         GetEmailAddressRequest,
         GetEmailAddressRequestTypedDict,
@@ -1155,6 +1218,14 @@ if TYPE_CHECKING:
     from .listallowlistidentifiersop import (
         ListAllowlistIdentifiersRequest,
         ListAllowlistIdentifiersRequestTypedDict,
+    )
+    from .listdirectoriesop import (
+        ListDirectoriesRequest,
+        ListDirectoriesRequestTypedDict,
+    )
+    from .listdirectorygrouprolemappingsop import (
+        ListDirectoryGroupRoleMappingsRequest,
+        ListDirectoryGroupRoleMappingsRequestTypedDict,
     )
     from .listenterpriseconnectionsop import (
         ListEnterpriseConnectionsRequest,
@@ -1451,6 +1522,10 @@ if TYPE_CHECKING:
         RejectWaitlistEntryRequest,
         RejectWaitlistEntryRequestTypedDict,
     )
+    from .removebillingsubscriptionitemdiscountop import (
+        RemoveBillingSubscriptionItemDiscountRequest,
+        RemoveBillingSubscriptionItemDiscountRequestTypedDict,
+    )
     from .removepermissionfromorganizationroleop import (
         RemovePermissionFromOrganizationRoleRequest,
         RemovePermissionFromOrganizationRoleRequestTypedDict,
@@ -1460,6 +1535,14 @@ if TYPE_CHECKING:
         RemoveUserPasswordRequestBody,
         RemoveUserPasswordRequestBodyTypedDict,
         RemoveUserPasswordRequestTypedDict,
+    )
+    from .replacedirectorygrouprolemappingsop import (
+        ReplaceDirectoryGroupRoleMappingsMappings,
+        ReplaceDirectoryGroupRoleMappingsMappingsTypedDict,
+        ReplaceDirectoryGroupRoleMappingsRequest,
+        ReplaceDirectoryGroupRoleMappingsRequestBody,
+        ReplaceDirectoryGroupRoleMappingsRequestBodyTypedDict,
+        ReplaceDirectoryGroupRoleMappingsRequestTypedDict,
     )
     from .replaceorganizationmetadataop import (
         ReplaceOrganizationMetadataRequest,
@@ -1624,6 +1707,10 @@ if TYPE_CHECKING:
     )
     from .rolesetitem import RoleSetItem, RoleSetItemObject, RoleSetItemTypedDict
     from .rolesets import RoleSets, RoleSetsTypedDict
+    from .rotatedirectoryapikeyop import (
+        RotateDirectoryAPIKeyRequest,
+        RotateDirectoryAPIKeyRequestTypedDict,
+    )
     from .rotatemachinesecretkeyop import (
         RotateMachineSecretKeyRequest,
         RotateMachineSecretKeyRequestBody,
@@ -1807,6 +1894,12 @@ if TYPE_CHECKING:
         UpdateAPIKeyRequestTypedDict,
         UpdateAPIKeyResponseBody,
         UpdateAPIKeyResponseBodyTypedDict,
+    )
+    from .updatedirectoryop import (
+        UpdateDirectoryRequest,
+        UpdateDirectoryRequestBody,
+        UpdateDirectoryRequestBodyTypedDict,
+        UpdateDirectoryRequestTypedDict,
     )
     from .updatedomainop import (
         UpdateDomainRequest,
@@ -2158,11 +2251,17 @@ __all__ = [
     "AllowlistIdentifierObject",
     "AllowlistIdentifierTypedDict",
     "Amount",
+    "AmountOff",
+    "AmountOffTypedDict",
     "AmountTypedDict",
     "AnnualFee",
     "AnnualFeeTypedDict",
     "AnnualMonthlyFee",
     "AnnualMonthlyFeeTypedDict",
+    "ApplyBillingSubscriptionItemDiscountRequest",
+    "ApplyBillingSubscriptionItemDiscountRequestTypedDict",
+    "ApplyCommerceDiscountRequest",
+    "ApplyCommerceDiscountRequestTypedDict",
     "AssignPermissionToOrganizationRoleRequest",
     "AssignPermissionToOrganizationRoleRequestTypedDict",
     "AttemptEmailAddressVerificationRequest",
@@ -2235,6 +2334,12 @@ __all__ = [
     "CommerceCreditBalanceResponseTypedDict",
     "CommerceCreditLedgerResponse",
     "CommerceCreditLedgerResponseTypedDict",
+    "CommerceDiscountRedemptionResponse",
+    "CommerceDiscountRedemptionResponseAmount",
+    "CommerceDiscountRedemptionResponseAmountTypedDict",
+    "CommerceDiscountRedemptionResponseObject",
+    "CommerceDiscountRedemptionResponseStatus",
+    "CommerceDiscountRedemptionResponseTypedDict",
     "CommerceMoneyResponse",
     "CommerceMoneyResponseTypedDict",
     "CommercePayerResponse",
@@ -2434,6 +2539,14 @@ __all__ = [
     "CreateBulkInvitationsTemplateSlug",
     "CreateBulkWaitlistEntriesRequestBody",
     "CreateBulkWaitlistEntriesRequestBodyTypedDict",
+    "CreateDirectoryGroupRoleMappingRequest",
+    "CreateDirectoryGroupRoleMappingRequestBody",
+    "CreateDirectoryGroupRoleMappingRequestBodyTypedDict",
+    "CreateDirectoryGroupRoleMappingRequestTypedDict",
+    "CreateDirectoryGroupRoleMappings",
+    "CreateDirectoryGroupRoleMappingsTypedDict",
+    "CreateDirectoryRequestBody",
+    "CreateDirectoryRequestBodyTypedDict",
     "CreateEmailAddressRequestBody",
     "CreateEmailAddressRequestBodyTypedDict",
     "CreateEnterpriseConnectionAttributeMapping",
@@ -2574,6 +2687,10 @@ __all__ = [
     "DeleteBackupCodeResponseBodyTypedDict",
     "DeleteBlocklistIdentifierRequest",
     "DeleteBlocklistIdentifierRequestTypedDict",
+    "DeleteDirectoryGroupRoleMappingRequest",
+    "DeleteDirectoryGroupRoleMappingRequestTypedDict",
+    "DeleteDirectoryRequest",
+    "DeleteDirectoryRequestTypedDict",
     "DeleteDomainRequest",
     "DeleteDomainRequestTypedDict",
     "DeleteEmailAddressRequest",
@@ -2624,6 +2741,21 @@ __all__ = [
     "DeleteWaitlistEntryRequestTypedDict",
     "DeletedObject",
     "DeletedObjectTypedDict",
+    "Directory",
+    "DirectoryCustomAttributes",
+    "DirectoryCustomAttributesTypedDict",
+    "DirectoryGroupRoleMapping",
+    "DirectoryGroupRoleMappingDeleted",
+    "DirectoryGroupRoleMappingDeletedObject",
+    "DirectoryGroupRoleMappingDeletedTypedDict",
+    "DirectoryGroupRoleMappingList",
+    "DirectoryGroupRoleMappingListTypedDict",
+    "DirectoryGroupRoleMappingObject",
+    "DirectoryGroupRoleMappingTypedDict",
+    "DirectoryList",
+    "DirectoryListTypedDict",
+    "DirectoryObject",
+    "DirectoryTypedDict",
     "DisableMFARequest",
     "DisableMFARequestTypedDict",
     "DisableMFAResponseBody",
@@ -2636,6 +2768,7 @@ __all__ = [
     "Domains",
     "DomainsEnrollmentModes",
     "DomainsTypedDict",
+    "Effect",
     "EffectiveMode",
     "EmailAddress",
     "EmailAddressIdentificationStatus",
@@ -2757,6 +2890,8 @@ __all__ = [
     "GetCommerceSubscriptionItemListQueryParamStatus",
     "GetCommerceSubscriptionItemListRequest",
     "GetCommerceSubscriptionItemListRequestTypedDict",
+    "GetDirectoryRequest",
+    "GetDirectoryRequestTypedDict",
     "GetEmailAddressRequest",
     "GetEmailAddressRequestTypedDict",
     "GetEnterpriseConnectionRequest",
@@ -2887,6 +3022,10 @@ __all__ = [
     "ListAllOrganizationDomainsRequestTypedDict",
     "ListAllowlistIdentifiersRequest",
     "ListAllowlistIdentifiersRequestTypedDict",
+    "ListDirectoriesRequest",
+    "ListDirectoriesRequestTypedDict",
+    "ListDirectoryGroupRoleMappingsRequest",
+    "ListDirectoryGroupRoleMappingsRequestTypedDict",
     "ListEnterpriseConnectionTestRunsQueryParamStatus",
     "ListEnterpriseConnectionTestRunsRequest",
     "ListEnterpriseConnectionTestRunsRequestTypedDict",
@@ -3127,12 +3266,20 @@ __all__ = [
     "RefreshSessionRequestTypedDict",
     "RejectWaitlistEntryRequest",
     "RejectWaitlistEntryRequestTypedDict",
+    "RemoveBillingSubscriptionItemDiscountRequest",
+    "RemoveBillingSubscriptionItemDiscountRequestTypedDict",
     "RemovePermissionFromOrganizationRoleRequest",
     "RemovePermissionFromOrganizationRoleRequestTypedDict",
     "RemoveUserPasswordRequest",
     "RemoveUserPasswordRequestBody",
     "RemoveUserPasswordRequestBodyTypedDict",
     "RemoveUserPasswordRequestTypedDict",
+    "ReplaceDirectoryGroupRoleMappingsMappings",
+    "ReplaceDirectoryGroupRoleMappingsMappingsTypedDict",
+    "ReplaceDirectoryGroupRoleMappingsRequest",
+    "ReplaceDirectoryGroupRoleMappingsRequestBody",
+    "ReplaceDirectoryGroupRoleMappingsRequestBodyTypedDict",
+    "ReplaceDirectoryGroupRoleMappingsRequestTypedDict",
     "ReplaceOrganizationMetadataRequest",
     "ReplaceOrganizationMetadataRequestBody",
     "ReplaceOrganizationMetadataRequestBodyTypedDict",
@@ -3274,6 +3421,8 @@ __all__ = [
     "RoleTypedDict",
     "Roles",
     "RolesTypedDict",
+    "RotateDirectoryAPIKeyRequest",
+    "RotateDirectoryAPIKeyRequestTypedDict",
     "RotateMachineSecretKeyRequest",
     "RotateMachineSecretKeyRequestBody",
     "RotateMachineSecretKeyRequestBodyTypedDict",
@@ -3360,6 +3509,7 @@ __all__ = [
     "SignUpVerificationTypedDict",
     "SignUpVerifications",
     "SignUpVerificationsTypedDict",
+    "Source",
     "Status",
     "Strategy",
     "SubscriptionItem",
@@ -3421,6 +3571,10 @@ __all__ = [
     "UpdateAPIKeyRequestTypedDict",
     "UpdateAPIKeyResponseBody",
     "UpdateAPIKeyResponseBodyTypedDict",
+    "UpdateDirectoryRequest",
+    "UpdateDirectoryRequestBody",
+    "UpdateDirectoryRequestBodyTypedDict",
+    "UpdateDirectoryRequestTypedDict",
     "UpdateDomainRequest",
     "UpdateDomainRequestBody",
     "UpdateDomainRequestBodyTypedDict",
@@ -3773,6 +3927,10 @@ _dynamic_imports: dict[str, str] = {
     "AllowlistIdentifierObject": ".allowlistidentifier",
     "AllowlistIdentifierTypedDict": ".allowlistidentifier",
     "IdentifierType": ".allowlistidentifier",
+    "ApplyBillingSubscriptionItemDiscountRequest": ".applybillingsubscriptionitemdiscountop",
+    "ApplyBillingSubscriptionItemDiscountRequestTypedDict": ".applybillingsubscriptionitemdiscountop",
+    "ApplyCommerceDiscountRequest": ".applycommercediscountrequest",
+    "ApplyCommerceDiscountRequestTypedDict": ".applycommercediscountrequest",
     "AssignPermissionToOrganizationRoleRequest": ".assignpermissiontoorganizationroleop",
     "AssignPermissionToOrganizationRoleRequestTypedDict": ".assignpermissiontoorganizationroleop",
     "AttemptEmailAddressVerificationRequest": ".attemptemailaddressverificationop",
@@ -3847,6 +4005,16 @@ _dynamic_imports: dict[str, str] = {
     "CommerceCreditBalanceResponseTypedDict": ".commercecreditbalanceresponse",
     "CommerceCreditLedgerResponse": ".commercecreditledgerresponse",
     "CommerceCreditLedgerResponseTypedDict": ".commercecreditledgerresponse",
+    "AmountOff": ".commercediscountredemptionresponse",
+    "AmountOffTypedDict": ".commercediscountredemptionresponse",
+    "CommerceDiscountRedemptionResponse": ".commercediscountredemptionresponse",
+    "CommerceDiscountRedemptionResponseAmount": ".commercediscountredemptionresponse",
+    "CommerceDiscountRedemptionResponseAmountTypedDict": ".commercediscountredemptionresponse",
+    "CommerceDiscountRedemptionResponseObject": ".commercediscountredemptionresponse",
+    "CommerceDiscountRedemptionResponseStatus": ".commercediscountredemptionresponse",
+    "CommerceDiscountRedemptionResponseTypedDict": ".commercediscountredemptionresponse",
+    "Effect": ".commercediscountredemptionresponse",
+    "Source": ".commercediscountredemptionresponse",
     "CommerceMoneyResponse": ".commercemoneyresponse",
     "CommerceMoneyResponseTypedDict": ".commercemoneyresponse",
     "CommercePayerResponse": ".commercepayerresponse",
@@ -4090,6 +4258,14 @@ _dynamic_imports: dict[str, str] = {
     "RequestBodyTypedDict": ".createbulkinvitationsop",
     "CreateBulkWaitlistEntriesRequestBody": ".createbulkwaitlistentriesop",
     "CreateBulkWaitlistEntriesRequestBodyTypedDict": ".createbulkwaitlistentriesop",
+    "CreateDirectoryGroupRoleMappingRequest": ".createdirectorygrouprolemappingop",
+    "CreateDirectoryGroupRoleMappingRequestBody": ".createdirectorygrouprolemappingop",
+    "CreateDirectoryGroupRoleMappingRequestBodyTypedDict": ".createdirectorygrouprolemappingop",
+    "CreateDirectoryGroupRoleMappingRequestTypedDict": ".createdirectorygrouprolemappingop",
+    "CreateDirectoryGroupRoleMappings": ".createdirectoryop",
+    "CreateDirectoryGroupRoleMappingsTypedDict": ".createdirectoryop",
+    "CreateDirectoryRequestBody": ".createdirectoryop",
+    "CreateDirectoryRequestBodyTypedDict": ".createdirectoryop",
     "CreateEmailAddressRequestBody": ".createemailaddressop",
     "CreateEmailAddressRequestBodyTypedDict": ".createemailaddressop",
     "CreateEnterpriseConnectionAttributeMapping": ".createenterpriseconnectionop",
@@ -4237,6 +4413,10 @@ _dynamic_imports: dict[str, str] = {
     "DeleteBackupCodeResponseBodyTypedDict": ".deletebackupcodeop",
     "DeleteBlocklistIdentifierRequest": ".deleteblocklistidentifierop",
     "DeleteBlocklistIdentifierRequestTypedDict": ".deleteblocklistidentifierop",
+    "DeleteDirectoryGroupRoleMappingRequest": ".deletedirectorygrouprolemappingop",
+    "DeleteDirectoryGroupRoleMappingRequestTypedDict": ".deletedirectorygrouprolemappingop",
+    "DeleteDirectoryRequest": ".deletedirectoryop",
+    "DeleteDirectoryRequestTypedDict": ".deletedirectoryop",
     "DeletedObject": ".deletedobject",
     "DeletedObjectTypedDict": ".deletedobject",
     "DeleteDomainRequest": ".deletedomainop",
@@ -4287,6 +4467,21 @@ _dynamic_imports: dict[str, str] = {
     "DeleteUserProfileImageRequestTypedDict": ".deleteuserprofileimageop",
     "DeleteWaitlistEntryRequest": ".deletewaitlistentryop",
     "DeleteWaitlistEntryRequestTypedDict": ".deletewaitlistentryop",
+    "Directory": ".directory",
+    "DirectoryCustomAttributes": ".directory",
+    "DirectoryCustomAttributesTypedDict": ".directory",
+    "DirectoryObject": ".directory",
+    "DirectoryTypedDict": ".directory",
+    "DirectoryList": ".directory_list",
+    "DirectoryListTypedDict": ".directory_list",
+    "DirectoryGroupRoleMapping": ".directorygrouprolemapping",
+    "DirectoryGroupRoleMappingObject": ".directorygrouprolemapping",
+    "DirectoryGroupRoleMappingTypedDict": ".directorygrouprolemapping",
+    "DirectoryGroupRoleMappingDeleted": ".directorygrouprolemapping_deleted",
+    "DirectoryGroupRoleMappingDeletedObject": ".directorygrouprolemapping_deleted",
+    "DirectoryGroupRoleMappingDeletedTypedDict": ".directorygrouprolemapping_deleted",
+    "DirectoryGroupRoleMappingList": ".directorygrouprolemapping_list",
+    "DirectoryGroupRoleMappingListTypedDict": ".directorygrouprolemapping_list",
     "DisableMFARequest": ".disablemfaop",
     "DisableMFARequestTypedDict": ".disablemfaop",
     "DisableMFAResponseBody": ".disablemfaop",
@@ -4501,6 +4696,8 @@ _dynamic_imports: dict[str, str] = {
     "GetCommerceSubscriptionItemListRequest": ".getcommercesubscriptionitemlistop",
     "GetCommerceSubscriptionItemListRequestTypedDict": ".getcommercesubscriptionitemlistop",
     "QueryParamPayerType": ".getcommercesubscriptionitemlistop",
+    "GetDirectoryRequest": ".getdirectoryop",
+    "GetDirectoryRequestTypedDict": ".getdirectoryop",
     "GetEmailAddressRequest": ".getemailaddressop",
     "GetEmailAddressRequestTypedDict": ".getemailaddressop",
     "GetEnterpriseConnectionRequest": ".getenterpriseconnectionop",
@@ -4627,6 +4824,10 @@ _dynamic_imports: dict[str, str] = {
     "Verified": ".listallorganizationdomainsop",
     "ListAllowlistIdentifiersRequest": ".listallowlistidentifiersop",
     "ListAllowlistIdentifiersRequestTypedDict": ".listallowlistidentifiersop",
+    "ListDirectoriesRequest": ".listdirectoriesop",
+    "ListDirectoriesRequestTypedDict": ".listdirectoriesop",
+    "ListDirectoryGroupRoleMappingsRequest": ".listdirectorygrouprolemappingsop",
+    "ListDirectoryGroupRoleMappingsRequestTypedDict": ".listdirectorygrouprolemappingsop",
     "ListEnterpriseConnectionsRequest": ".listenterpriseconnectionsop",
     "ListEnterpriseConnectionsRequestTypedDict": ".listenterpriseconnectionsop",
     "ListEnterpriseConnectionTestRunsQueryParamStatus": ".listenterpriseconnectiontestrunsop",
@@ -4834,12 +5035,20 @@ _dynamic_imports: dict[str, str] = {
     "RefreshSessionRequestTypedDict": ".refreshsessionop",
     "RejectWaitlistEntryRequest": ".rejectwaitlistentryop",
     "RejectWaitlistEntryRequestTypedDict": ".rejectwaitlistentryop",
+    "RemoveBillingSubscriptionItemDiscountRequest": ".removebillingsubscriptionitemdiscountop",
+    "RemoveBillingSubscriptionItemDiscountRequestTypedDict": ".removebillingsubscriptionitemdiscountop",
     "RemovePermissionFromOrganizationRoleRequest": ".removepermissionfromorganizationroleop",
     "RemovePermissionFromOrganizationRoleRequestTypedDict": ".removepermissionfromorganizationroleop",
     "RemoveUserPasswordRequest": ".removeuserpasswordop",
     "RemoveUserPasswordRequestBody": ".removeuserpasswordop",
     "RemoveUserPasswordRequestBodyTypedDict": ".removeuserpasswordop",
     "RemoveUserPasswordRequestTypedDict": ".removeuserpasswordop",
+    "ReplaceDirectoryGroupRoleMappingsMappings": ".replacedirectorygrouprolemappingsop",
+    "ReplaceDirectoryGroupRoleMappingsMappingsTypedDict": ".replacedirectorygrouprolemappingsop",
+    "ReplaceDirectoryGroupRoleMappingsRequest": ".replacedirectorygrouprolemappingsop",
+    "ReplaceDirectoryGroupRoleMappingsRequestBody": ".replacedirectorygrouprolemappingsop",
+    "ReplaceDirectoryGroupRoleMappingsRequestBodyTypedDict": ".replacedirectorygrouprolemappingsop",
+    "ReplaceDirectoryGroupRoleMappingsRequestTypedDict": ".replacedirectorygrouprolemappingsop",
     "ReplaceOrganizationMetadataRequest": ".replaceorganizationmetadataop",
     "ReplaceOrganizationMetadataRequestBody": ".replaceorganizationmetadataop",
     "ReplaceOrganizationMetadataRequestBodyTypedDict": ".replaceorganizationmetadataop",
@@ -4972,6 +5181,8 @@ _dynamic_imports: dict[str, str] = {
     "RoleSetItemTypedDict": ".rolesetitem",
     "RoleSets": ".rolesets",
     "RoleSetsTypedDict": ".rolesets",
+    "RotateDirectoryAPIKeyRequest": ".rotatedirectoryapikeyop",
+    "RotateDirectoryAPIKeyRequestTypedDict": ".rotatedirectoryapikeyop",
     "RotateMachineSecretKeyRequest": ".rotatemachinesecretkeyop",
     "RotateMachineSecretKeyRequestBody": ".rotatemachinesecretkeyop",
     "RotateMachineSecretKeyRequestBodyTypedDict": ".rotatemachinesecretkeyop",
@@ -5127,6 +5338,10 @@ _dynamic_imports: dict[str, str] = {
     "UpdateAPIKeyRequestTypedDict": ".updateapikeyop",
     "UpdateAPIKeyResponseBody": ".updateapikeyop",
     "UpdateAPIKeyResponseBodyTypedDict": ".updateapikeyop",
+    "UpdateDirectoryRequest": ".updatedirectoryop",
+    "UpdateDirectoryRequestBody": ".updatedirectoryop",
+    "UpdateDirectoryRequestBodyTypedDict": ".updatedirectoryop",
+    "UpdateDirectoryRequestTypedDict": ".updatedirectoryop",
     "UpdateDomainRequest": ".updatedomainop",
     "UpdateDomainRequestBody": ".updatedomainop",
     "UpdateDomainRequestBodyTypedDict": ".updatedomainop",

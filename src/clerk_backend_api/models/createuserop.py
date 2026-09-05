@@ -152,7 +152,7 @@ class CreateUserRequestBodyTypedDict(TypedDict):
     created_at: NotRequired[Nullable[str]]
     r"""A custom date/time denoting _when_ the user signed up to the application, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`)."""
     bypass_client_trust: NotRequired[Nullable[bool]]
-    r"""When set to `true`, the user will bypass client trust checks during sign-in."""
+    r"""When set to `true`, the user will bypass Device Trust checks during sign-in."""
     banned: NotRequired[Nullable[bool]]
     r"""When set to `true`, the user is created already banned and cannot sign in.
     Requires the same plan support as the ban user endpoint.
@@ -318,7 +318,7 @@ class CreateUserRequestBody(BaseModel):
     r"""A custom date/time denoting _when_ the user signed up to the application, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`)."""
 
     bypass_client_trust: OptionalNullable[bool] = UNSET
-    r"""When set to `true`, the user will bypass client trust checks during sign-in."""
+    r"""When set to `true`, the user will bypass Device Trust checks during sign-in."""
 
     banned: OptionalNullable[bool] = UNSET
     r"""When set to `true`, the user is created already banned and cannot sign in.

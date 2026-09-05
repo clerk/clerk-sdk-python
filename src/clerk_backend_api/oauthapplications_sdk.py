@@ -40,6 +40,8 @@ class OauthApplicationsSDK(BaseSDK):
             If you don't use `+` or `-`, then `+` is implied. We only support one `order_by` parameter, and if multiple `order_by` parameters are provided, we will only keep the first one. For example,
             if you pass `order_by=name&order_by=created_at`, we will consider only the first `order_by` parameter, which is `name`. The `created_at` parameter will be ignored in this case.
         :param name_query: Returns OAuth applications with names that match the given query, via case-insensitive partial match.
+            Also returns the OAuth application whose `client_id` is exactly the given query, which is useful for
+            resolving a `client_id` to the OAuth application `id` required by the read, update and delete endpoints.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -152,6 +154,8 @@ class OauthApplicationsSDK(BaseSDK):
             If you don't use `+` or `-`, then `+` is implied. We only support one `order_by` parameter, and if multiple `order_by` parameters are provided, we will only keep the first one. For example,
             if you pass `order_by=name&order_by=created_at`, we will consider only the first `order_by` parameter, which is `name`. The `created_at` parameter will be ignored in this case.
         :param name_query: Returns OAuth applications with names that match the given query, via case-insensitive partial match.
+            Also returns the OAuth application whose `client_id` is exactly the given query, which is useful for
+            resolving a `client_id` to the OAuth application `id` required by the read, update and delete endpoints.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds

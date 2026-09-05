@@ -11,6 +11,8 @@
 * [cancel_subscription_item](#cancel_subscription_item) - Cancel a subscription item
 * [extend_subscription_item_free_trial](#extend_subscription_item_free_trial) - Extend free trial for a subscription item
 * [create_price_transition](#create_price_transition) - Create a price transition for a subscription item
+* [apply_subscription_item_discount](#apply_subscription_item_discount) - Apply a discount to a subscription item
+* [remove_subscription_item_discount](#remove_subscription_item_discount) - Remove a discount from a subscription item
 * [list_statements](#list_statements) - List all billing statements
 * [get_statement](#get_statement) - Retrieve a billing statement
 * [get_statement_payment_attempts](#get_statement_payment_attempts) - List payment attempts for a billing statement
@@ -132,15 +134,15 @@ with Clerk(
 
 ### Parameters
 
-| Parameter                                                                                                                             | Type                                                                                                                                  | Required                                                                                                                              | Description                                                                                                                           |
-| ------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| `plan_id`                                                                                                                             | *str*                                                                                                                                 | :heavy_check_mark:                                                                                                                    | The ID of the plan this price belongs to.                                                                                             |
-| `amount`                                                                                                                              | *Nullable[int]*                                                                                                                       | :heavy_check_mark:                                                                                                                    | The monthly amount in cents. Must be at least $1 (100 cents) if not null.                                                             |
-| `currency`                                                                                                                            | *Optional[str]*                                                                                                                       | :heavy_minus_sign:                                                                                                                    | The currency code (e.g., "USD"). Defaults to USD.                                                                                     |
-| `annual_monthly_amount`                                                                                                               | *OptionalNullable[int]*                                                                                                               | :heavy_minus_sign:                                                                                                                    | The monthly amount in cents when billed annually. Must be at least $1 (100 cents) if not null.                                        |
-| `description`                                                                                                                         | *Optional[str]*                                                                                                                       | :heavy_minus_sign:                                                                                                                    | An optional description for this custom price.                                                                                        |
-| `supported_billing_periods`                                                                                                           | [Optional[models.CreateBillingPriceRequestSupportedBillingPeriods]](../../models/createbillingpricerequestsupportedbillingperiods.md) | :heavy_minus_sign:                                                                                                                    | Which billing periods this price supports. Inferred from amounts if omitted.                                                          |
-| `retries`                                                                                                                             | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                      | :heavy_minus_sign:                                                                                                                    | Configuration to override the default retry behavior of the client.                                                                   |
+| Parameter                                                                                                                              | Type                                                                                                                                   | Required                                                                                                                               | Description                                                                                                                            |
+| -------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| `plan_id`                                                                                                                              | *str*                                                                                                                                  | :heavy_check_mark:                                                                                                                     | The ID of the plan this price belongs to.                                                                                              |
+| `amount`                                                                                                                               | *Nullable[int]*                                                                                                                        | :heavy_check_mark:                                                                                                                     | The monthly amount in cents. Use `0` for a complimentary price. Positive amounts must be at least $1 (100 cents).                      |
+| `currency`                                                                                                                             | *Optional[str]*                                                                                                                        | :heavy_minus_sign:                                                                                                                     | The currency code (e.g., "USD"). Defaults to USD.                                                                                      |
+| `annual_monthly_amount`                                                                                                                | *OptionalNullable[int]*                                                                                                                | :heavy_minus_sign:                                                                                                                     | The monthly amount in cents when billed annually. Use `0` for a complimentary price. Positive amounts must be at least $1 (100 cents). |
+| `description`                                                                                                                          | *Optional[str]*                                                                                                                        | :heavy_minus_sign:                                                                                                                     | An optional description for this custom price.                                                                                         |
+| `supported_billing_periods`                                                                                                            | [Optional[models.CreateBillingPriceRequestSupportedBillingPeriods]](../../models/createbillingpricerequestsupportedbillingperiods.md)  | :heavy_minus_sign:                                                                                                                     | Which billing periods this price supports. Inferred from amounts if omitted.                                                           |
+| `retries`                                                                                                                              | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                       | :heavy_minus_sign:                                                                                                                     | Configuration to override the default retry behavior of the client.                                                                    |
 
 ### Response
 
@@ -327,6 +329,94 @@ with Clerk(
 ### Response
 
 **[models.CommercePriceTransitionResponse](../../models/commercepricetransitionresponse.md)**
+
+### Errors
+
+| Error Type                   | Status Code                  | Content Type                 |
+| ---------------------------- | ---------------------------- | ---------------------------- |
+| models.ClerkErrors           | 400, 401, 403, 404, 409, 422 | application/json             |
+| models.ClerkErrors           | 500                          | application/json             |
+| models.SDKError              | 4XX, 5XX                     | \*/\*                        |
+
+## apply_subscription_item_discount
+
+Applies an existing discount to a subscription item.
+Manual application is an override path: self-serve distribution rules are not enforced.
+At most one active discount is allowed per subscription item; applying a different
+discount replaces the currently active one. Re-applying the same active discount returns a conflict.
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="ApplyBillingSubscriptionItemDiscount" method="post" path="/billing/subscription_items/{subscription_item_id}/discounts" -->
+```python
+from clerk_backend_api import Clerk
+
+
+with Clerk(
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+) as clerk:
+
+    res = clerk.billing.apply_subscription_item_discount(subscription_item_id="<id>", discount_id="<id>")
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `subscription_item_id`                                              | *str*                                                               | :heavy_check_mark:                                                  | The ID of the subscription item to apply the discount to            |
+| `discount_id`                                                       | *str*                                                               | :heavy_check_mark:                                                  | The ID of the discount to apply to the subscription item.           |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+
+### Response
+
+**[models.CommerceDiscountRedemptionResponse](../../models/commercediscountredemptionresponse.md)**
+
+### Errors
+
+| Error Type                   | Status Code                  | Content Type                 |
+| ---------------------------- | ---------------------------- | ---------------------------- |
+| models.ClerkErrors           | 400, 401, 403, 404, 409, 422 | application/json             |
+| models.ClerkErrors           | 500                          | application/json             |
+| models.SDKError              | 4XX, 5XX                     | \*/\*                        |
+
+## remove_subscription_item_discount
+
+Removes the active discount from a subscription item.
+The discount_id must match the subscription item's currently active discount.
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="RemoveBillingSubscriptionItemDiscount" method="delete" path="/billing/subscription_items/{subscription_item_id}/discounts/{discount_id}" -->
+```python
+from clerk_backend_api import Clerk
+
+
+with Clerk(
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+) as clerk:
+
+    res = clerk.billing.remove_subscription_item_discount(subscription_item_id="<id>", discount_id="<id>")
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `subscription_item_id`                                              | *str*                                                               | :heavy_check_mark:                                                  | The ID of the subscription item to remove the discount from         |
+| `discount_id`                                                       | *str*                                                               | :heavy_check_mark:                                                  | The ID of the discount to remove                                    |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+
+### Response
+
+**[models.CommerceDiscountRedemptionResponse](../../models/commercediscountredemptionresponse.md)**
 
 ### Errors
 

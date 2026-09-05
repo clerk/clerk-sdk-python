@@ -4,12 +4,12 @@
 
 ### Available Operations
 
-* [list](#list) - List all SCIM directories
-* [create](#create) - Create a SCIM directory
-* [get](#get) - Retrieve a SCIM directory
-* [update](#update) - Update a SCIM directory
-* [delete](#delete) - Delete a SCIM directory
-* [rotate_api_key](#rotate_api_key) - Rotate a SCIM directory's API key
+* [list](#list) - List all directories
+* [create](#create) - Create a directory
+* [get](#get) - Retrieve a directory
+* [update](#update) - Update a directory
+* [delete](#delete) - Delete a directory
+* [rotate_api_key](#rotate_api_key) - Rotate a directory's API key
 * [list_group_role_mappings](#list_group_role_mappings) - List SCIM group role mappings
 * [create_group_role_mapping](#create_group_role_mapping) - Create a SCIM group role mapping
 * [replace_group_role_mappings](#replace_group_role_mappings) - Replace SCIM group role mappings
@@ -17,7 +17,7 @@
 
 ## list
 
-Returns a list of all SCIM directories for the instance.
+Returns a list of all directories for the instance.
 
 ### Example Usage
 
@@ -58,7 +58,7 @@ with Clerk(
 
 ## create
 
-Create a new SCIM directory for the instance.
+Create a new directory for the instance.
 
 ### Example Usage
 
@@ -110,7 +110,7 @@ with Clerk(
 
 ## get
 
-Returns the details of a SCIM directory.
+Returns the details of a directory.
 
 ### Example Usage
 
@@ -134,7 +134,7 @@ with Clerk(
 
 | Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
 | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| `scim_directory_id`                                                 | *str*                                                               | :heavy_check_mark:                                                  | The ID of the SCIM directory to retrieve                            |
+| `scim_directory_id`                                                 | *str*                                                               | :heavy_check_mark:                                                  | The ID of the directory to retrieve                                 |
 | `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
 ### Response
@@ -150,7 +150,7 @@ with Clerk(
 
 ## update
 
-Updates a SCIM directory.
+Updates a directory.
 
 ### Example Usage
 
@@ -178,12 +178,12 @@ with Clerk(
 
 | Parameter                                                                                                                          | Type                                                                                                                               | Required                                                                                                                           | Description                                                                                                                        |
 | ---------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
-| `scim_directory_id`                                                                                                                | *str*                                                                                                                              | :heavy_check_mark:                                                                                                                 | The ID of the SCIM directory to update                                                                                             |
-| `name`                                                                                                                             | *Optional[str]*                                                                                                                    | :heavy_minus_sign:                                                                                                                 | A human-friendly name for the SCIM directory.                                                                                      |
-| `enabled`                                                                                                                          | *Optional[bool]*                                                                                                                   | :heavy_minus_sign:                                                                                                                 | Whether the SCIM directory is enabled.                                                                                             |
-| `provider`                                                                                                                         | *Optional[str]*                                                                                                                    | :heavy_minus_sign:                                                                                                                 | The identity provider for this SCIM directory.                                                                                     |
+| `scim_directory_id`                                                                                                                | *str*                                                                                                                              | :heavy_check_mark:                                                                                                                 | The ID of the directory to update                                                                                                  |
+| `name`                                                                                                                             | *Optional[str]*                                                                                                                    | :heavy_minus_sign:                                                                                                                 | A human-friendly name for the directory.                                                                                           |
+| `enabled`                                                                                                                          | *Optional[bool]*                                                                                                                   | :heavy_minus_sign:                                                                                                                 | Whether the directory is enabled.                                                                                                  |
+| `provider`                                                                                                                         | *Optional[str]*                                                                                                                    | :heavy_minus_sign:                                                                                                                 | The identity provider for this directory.                                                                                          |
 | `attribute_mapping`                                                                                                                | Dict[str, *Nullable[str]*]                                                                                                         | :heavy_minus_sign:                                                                                                                 | Attribute-to-SCIM-path entries to merge into the directory's attribute mapping.<br/>Set a key to `null` to remove it from the mapping. |
-| `group_role_mapping_enabled`                                                                                                       | *Optional[bool]*                                                                                                                   | :heavy_minus_sign:                                                                                                                 | Whether group-to-role mapping is enabled for this SCIM directory.                                                                  |
+| `group_role_mapping_enabled`                                                                                                       | *Optional[bool]*                                                                                                                   | :heavy_minus_sign:                                                                                                                 | Whether group-to-role mapping is enabled for this directory.                                                                       |
 | `retries`                                                                                                                          | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                   | :heavy_minus_sign:                                                                                                                 | Configuration to override the default retry behavior of the client.                                                                |
 
 ### Response
@@ -199,7 +199,7 @@ with Clerk(
 
 ## delete
 
-Deletes a SCIM directory and stops provisioning for it. SCIM requests authenticated
+Deletes a directory and stops provisioning for it. SCIM requests authenticated
 with the directory's API key are rejected afterwards.
 
 ### Example Usage
@@ -224,7 +224,7 @@ with Clerk(
 
 | Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
 | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| `scim_directory_id`                                                 | *str*                                                               | :heavy_check_mark:                                                  | The ID of the SCIM directory to delete                              |
+| `scim_directory_id`                                                 | *str*                                                               | :heavy_check_mark:                                                  | The ID of the directory to delete                                   |
 | `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
 ### Response
@@ -240,7 +240,7 @@ with Clerk(
 
 ## rotate_api_key
 
-Generates a new API key for the SCIM directory and returns it in the `api_key` field.
+Generates a new API key for the directory and returns it in the `api_key` field.
 This is the only way to obtain the key after creation, so make sure to update it in
 your identity provider. The previous key remains valid for a short grace period before
 it expires.
@@ -267,7 +267,7 @@ with Clerk(
 
 | Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
 | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| `scim_directory_id`                                                 | *str*                                                               | :heavy_check_mark:                                                  | The ID of the SCIM directory whose API key to rotate                |
+| `scim_directory_id`                                                 | *str*                                                               | :heavy_check_mark:                                                  | The ID of the directory whose API key to rotate                     |
 | `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
 ### Response
@@ -283,7 +283,7 @@ with Clerk(
 
 ## list_group_role_mappings
 
-Returns the list of SCIM group to organization role mappings for a SCIM directory, ordered by precedence.
+Returns the list of SCIM group to organization role mappings for a directory, ordered by precedence.
 
 ### Example Usage
 
@@ -307,7 +307,7 @@ with Clerk(
 
 | Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
 | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| `scim_directory_id`                                                 | *str*                                                               | :heavy_check_mark:                                                  | The ID of the SCIM directory.                                       |
+| `scim_directory_id`                                                 | *str*                                                               | :heavy_check_mark:                                                  | The ID of the directory.                                            |
 | `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
 ### Response
@@ -323,7 +323,7 @@ with Clerk(
 
 ## create_group_role_mapping
 
-Creates a new SCIM group to organization role mapping for a SCIM directory.
+Creates a new SCIM group to organization role mapping for a directory.
 Group role mapping must be enabled on the directory.
 
 ### Example Usage
@@ -348,7 +348,7 @@ with Clerk(
 
 | Parameter                                                                                                                                                                        | Type                                                                                                                                                                             | Required                                                                                                                                                                         | Description                                                                                                                                                                      |
 | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `scim_directory_id`                                                                                                                                                              | *str*                                                                                                                                                                            | :heavy_check_mark:                                                                                                                                                               | The ID of the SCIM directory.                                                                                                                                                    |
+| `scim_directory_id`                                                                                                                                                              | *str*                                                                                                                                                                            | :heavy_check_mark:                                                                                                                                                               | The ID of the directory.                                                                                                                                                         |
 | `scim_group_id`                                                                                                                                                                  | *str*                                                                                                                                                                            | :heavy_check_mark:                                                                                                                                                               | The SCIM group ID from the identity provider.                                                                                                                                    |
 | `role_id`                                                                                                                                                                        | *str*                                                                                                                                                                            | :heavy_check_mark:                                                                                                                                                               | The ID of the organization role to assign to members of the SCIM group.                                                                                                          |
 | `precedence`                                                                                                                                                                     | *Optional[int]*                                                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                               | The precedence for this mapping. Lower values take priority when a user belongs<br/>to multiple mapped groups. If omitted, the mapping is appended with the<br/>next-highest precedence. |
@@ -394,7 +394,7 @@ with Clerk(
 
 | Parameter                                                                                                 | Type                                                                                                      | Required                                                                                                  | Description                                                                                               |
 | --------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
-| `scim_directory_id`                                                                                       | *str*                                                                                                     | :heavy_check_mark:                                                                                        | The ID of the SCIM directory.                                                                             |
+| `scim_directory_id`                                                                                       | *str*                                                                                                     | :heavy_check_mark:                                                                                        | The ID of the directory.                                                                                  |
 | `mappings`                                                                                                | List[[models.Mappings](../../models/mappings.md)]                                                         | :heavy_check_mark:                                                                                        | The desired set of mappings. Array order sets precedence (1-indexed). An empty array clears all mappings. |
 | `retries`                                                                                                 | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                          | :heavy_minus_sign:                                                                                        | Configuration to override the default retry behavior of the client.                                       |
 
@@ -436,7 +436,7 @@ with Clerk(
 
 | Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
 | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| `scim_directory_id`                                                 | *str*                                                               | :heavy_check_mark:                                                  | The ID of the SCIM directory.                                       |
+| `scim_directory_id`                                                 | *str*                                                               | :heavy_check_mark:                                                  | The ID of the directory.                                            |
 | `mapping_id`                                                        | *str*                                                               | :heavy_check_mark:                                                  | The ID of the SCIM group role mapping to delete.                    |
 | `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
