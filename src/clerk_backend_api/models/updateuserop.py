@@ -88,7 +88,7 @@ class UpdateUserRequestBodyTypedDict(TypedDict):
     created_at: NotRequired[Nullable[str]]
     r"""A custom date/time denoting _when_ the user signed up to the application."""
     bypass_client_trust: NotRequired[Nullable[bool]]
-    r"""When set to `true`, the user will bypass client trust checks during sign-in."""
+    r"""When set to `true`, the user will bypass Device Trust checks during sign-in."""
 
 
 class UpdateUserRequestBody(BaseModel):
@@ -188,7 +188,7 @@ class UpdateUserRequestBody(BaseModel):
     r"""A custom date/time denoting _when_ the user signed up to the application."""
 
     bypass_client_trust: OptionalNullable[bool] = UNSET
-    r"""When set to `true`, the user will bypass client trust checks during sign-in."""
+    r"""When set to `true`, the user will bypass Device Trust checks during sign-in."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

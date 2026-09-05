@@ -10,28 +10,28 @@ from typing_extensions import Annotated, NotRequired, TypedDict
 
 class UpdateSCIMDirectoryRequestBodyTypedDict(TypedDict):
     name: NotRequired[str]
-    r"""A human-friendly name for the SCIM directory."""
+    r"""A human-friendly name for the directory."""
     enabled: NotRequired[bool]
-    r"""Whether the SCIM directory is enabled."""
+    r"""Whether the directory is enabled."""
     provider: NotRequired[str]
-    r"""The identity provider for this SCIM directory."""
+    r"""The identity provider for this directory."""
     attribute_mapping: NotRequired[Dict[str, Nullable[str]]]
     r"""Attribute-to-SCIM-path entries to merge into the directory's attribute mapping.
     Set a key to `null` to remove it from the mapping.
     """
     group_role_mapping_enabled: NotRequired[bool]
-    r"""Whether group-to-role mapping is enabled for this SCIM directory."""
+    r"""Whether group-to-role mapping is enabled for this directory."""
 
 
 class UpdateSCIMDirectoryRequestBody(BaseModel):
     name: Optional[str] = None
-    r"""A human-friendly name for the SCIM directory."""
+    r"""A human-friendly name for the directory."""
 
     enabled: Optional[bool] = None
-    r"""Whether the SCIM directory is enabled."""
+    r"""Whether the directory is enabled."""
 
     provider: Optional[str] = None
-    r"""The identity provider for this SCIM directory."""
+    r"""The identity provider for this directory."""
 
     attribute_mapping: Optional[Dict[str, Nullable[str]]] = None
     r"""Attribute-to-SCIM-path entries to merge into the directory's attribute mapping.
@@ -39,7 +39,7 @@ class UpdateSCIMDirectoryRequestBody(BaseModel):
     """
 
     group_role_mapping_enabled: Optional[bool] = None
-    r"""Whether group-to-role mapping is enabled for this SCIM directory."""
+    r"""Whether group-to-role mapping is enabled for this directory."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
@@ -68,7 +68,7 @@ class UpdateSCIMDirectoryRequestBody(BaseModel):
 
 class UpdateSCIMDirectoryRequestTypedDict(TypedDict):
     scim_directory_id: str
-    r"""The ID of the SCIM directory to update"""
+    r"""The ID of the directory to update"""
     request_body: NotRequired[UpdateSCIMDirectoryRequestBodyTypedDict]
 
 
@@ -76,7 +76,7 @@ class UpdateSCIMDirectoryRequest(BaseModel):
     scim_directory_id: Annotated[
         str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))
     ]
-    r"""The ID of the SCIM directory to update"""
+    r"""The ID of the directory to update"""
 
     request_body: Annotated[
         Optional[UpdateSCIMDirectoryRequestBody],

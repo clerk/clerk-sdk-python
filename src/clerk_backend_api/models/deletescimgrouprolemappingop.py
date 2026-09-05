@@ -8,7 +8,7 @@ from typing_extensions import Annotated, TypedDict
 
 class DeleteSCIMGroupRoleMappingRequestTypedDict(TypedDict):
     scim_directory_id: str
-    r"""The ID of the SCIM directory."""
+    r"""The ID of the directory."""
     mapping_id: str
     r"""The ID of the SCIM group role mapping to delete."""
 
@@ -17,7 +17,7 @@ class DeleteSCIMGroupRoleMappingRequest(BaseModel):
     scim_directory_id: Annotated[
         str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))
     ]
-    r"""The ID of the SCIM directory."""
+    r"""The ID of the directory."""
 
     mapping_id: Annotated[
         str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))

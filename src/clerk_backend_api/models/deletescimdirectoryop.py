@@ -8,11 +8,11 @@ from typing_extensions import Annotated, TypedDict
 
 class DeleteSCIMDirectoryRequestTypedDict(TypedDict):
     scim_directory_id: str
-    r"""The ID of the SCIM directory to delete"""
+    r"""The ID of the directory to delete"""
 
 
 class DeleteSCIMDirectoryRequest(BaseModel):
     scim_directory_id: Annotated[
         str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))
     ]
-    r"""The ID of the SCIM directory to delete"""
+    r"""The ID of the directory to delete"""
