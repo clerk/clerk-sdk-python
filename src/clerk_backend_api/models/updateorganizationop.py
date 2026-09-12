@@ -25,6 +25,10 @@ class UpdateOrganizationRequestBodyTypedDict(TypedDict):
     r"""The maximum number of memberships allowed for this organization"""
     admin_delete_enabled: NotRequired[Nullable[bool]]
     r"""If true, an admin can delete this organization with the Frontend API."""
+    self_serve_sso_enabled: NotRequired[Nullable[bool]]
+    r"""Whether this organization can configure self-serve enterprise SSO.
+    Requires the instance to have the self-serve SSO entitlement enabled.
+    """
     created_at: NotRequired[Nullable[str]]
     r"""A custom date/time denoting _when_ the organization was created, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`)."""
     role_set_key: NotRequired[Nullable[str]]
@@ -47,6 +51,11 @@ class UpdateOrganizationRequestBody(BaseModel):
     admin_delete_enabled: OptionalNullable[bool] = UNSET
     r"""If true, an admin can delete this organization with the Frontend API."""
 
+    self_serve_sso_enabled: OptionalNullable[bool] = UNSET
+    r"""Whether this organization can configure self-serve enterprise SSO.
+    Requires the instance to have the self-serve SSO entitlement enabled.
+    """
+
     created_at: OptionalNullable[str] = UNSET
     r"""A custom date/time denoting _when_ the organization was created, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`)."""
 
@@ -61,6 +70,7 @@ class UpdateOrganizationRequestBody(BaseModel):
                 "slug",
                 "max_allowed_memberships",
                 "admin_delete_enabled",
+                "self_serve_sso_enabled",
                 "created_at",
                 "role_set_key",
             ]
@@ -71,6 +81,7 @@ class UpdateOrganizationRequestBody(BaseModel):
                 "slug",
                 "max_allowed_memberships",
                 "admin_delete_enabled",
+                "self_serve_sso_enabled",
                 "created_at",
                 "role_set_key",
             ]

@@ -19,9 +19,9 @@ class ScimDirectories(BaseSDK):
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
     ) -> models.SCIMDirectoryList:
-        r"""List all SCIM directories
+        r"""List all directories
 
-        Returns a list of all SCIM directories for the instance.
+        Returns a list of all directories for the instance.
 
         :param limit: Applies a limit to the number of results returned.
             Can be used for paginating the results together with `offset`.
@@ -117,9 +117,9 @@ class ScimDirectories(BaseSDK):
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
     ) -> models.SCIMDirectoryList:
-        r"""List all SCIM directories
+        r"""List all directories
 
-        Returns a list of all SCIM directories for the instance.
+        Returns a list of all directories for the instance.
 
         :param limit: Applies a limit to the number of results returned.
             Can be used for paginating the results together with `offset`.
@@ -219,9 +219,9 @@ class ScimDirectories(BaseSDK):
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
     ) -> models.SCIMDirectory:
-        r"""Create a SCIM directory
+        r"""Create a directory
 
-        Create a new SCIM directory for the instance.
+        Create a new directory for the instance.
 
         :param request: The request object to send.
         :param retries: Override the default retry configuration for this method
@@ -327,9 +327,9 @@ class ScimDirectories(BaseSDK):
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
     ) -> models.SCIMDirectory:
-        r"""Create a SCIM directory
+        r"""Create a directory
 
-        Create a new SCIM directory for the instance.
+        Create a new directory for the instance.
 
         :param request: The request object to send.
         :param retries: Override the default retry configuration for this method
@@ -430,11 +430,11 @@ class ScimDirectories(BaseSDK):
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
     ) -> models.SCIMDirectory:
-        r"""Retrieve a SCIM directory
+        r"""Retrieve a directory
 
-        Returns the details of a SCIM directory.
+        Returns the details of a directory.
 
-        :param scim_directory_id: The ID of the SCIM directory to retrieve
+        :param scim_directory_id: The ID of the directory to retrieve
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -522,11 +522,11 @@ class ScimDirectories(BaseSDK):
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
     ) -> models.SCIMDirectory:
-        r"""Retrieve a SCIM directory
+        r"""Retrieve a directory
 
-        Returns the details of a SCIM directory.
+        Returns the details of a directory.
 
-        :param scim_directory_id: The ID of the SCIM directory to retrieve
+        :param scim_directory_id: The ID of the directory to retrieve
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -619,17 +619,17 @@ class ScimDirectories(BaseSDK):
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
     ) -> models.SCIMDirectory:
-        r"""Update a SCIM directory
+        r"""Update a directory
 
-        Updates a SCIM directory.
+        Updates a directory.
 
-        :param scim_directory_id: The ID of the SCIM directory to update
-        :param name: A human-friendly name for the SCIM directory.
-        :param enabled: Whether the SCIM directory is enabled.
-        :param provider: The identity provider for this SCIM directory.
+        :param scim_directory_id: The ID of the directory to update
+        :param name: A human-friendly name for the directory.
+        :param enabled: Whether the directory is enabled.
+        :param provider: The identity provider for this directory.
         :param attribute_mapping: Attribute-to-SCIM-path entries to merge into the directory's attribute mapping.
             Set a key to `null` to remove it from the mapping.
-        :param group_role_mapping_enabled: Whether group-to-role mapping is enabled for this SCIM directory.
+        :param group_role_mapping_enabled: Whether group-to-role mapping is enabled for this directory.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -740,17 +740,17 @@ class ScimDirectories(BaseSDK):
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
     ) -> models.SCIMDirectory:
-        r"""Update a SCIM directory
+        r"""Update a directory
 
-        Updates a SCIM directory.
+        Updates a directory.
 
-        :param scim_directory_id: The ID of the SCIM directory to update
-        :param name: A human-friendly name for the SCIM directory.
-        :param enabled: Whether the SCIM directory is enabled.
-        :param provider: The identity provider for this SCIM directory.
+        :param scim_directory_id: The ID of the directory to update
+        :param name: A human-friendly name for the directory.
+        :param enabled: Whether the directory is enabled.
+        :param provider: The identity provider for this directory.
         :param attribute_mapping: Attribute-to-SCIM-path entries to merge into the directory's attribute mapping.
             Set a key to `null` to remove it from the mapping.
-        :param group_role_mapping_enabled: Whether group-to-role mapping is enabled for this SCIM directory.
+        :param group_role_mapping_enabled: Whether group-to-role mapping is enabled for this directory.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -856,12 +856,12 @@ class ScimDirectories(BaseSDK):
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
     ) -> models.DeletedObject:
-        r"""Delete a SCIM directory
+        r"""Delete a directory
 
-        Deletes a SCIM directory and stops provisioning for it. SCIM requests authenticated
+        Deletes a directory and stops provisioning for it. SCIM requests authenticated
         with the directory's API key are rejected afterwards.
 
-        :param scim_directory_id: The ID of the SCIM directory to delete
+        :param scim_directory_id: The ID of the directory to delete
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -949,12 +949,12 @@ class ScimDirectories(BaseSDK):
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
     ) -> models.DeletedObject:
-        r"""Delete a SCIM directory
+        r"""Delete a directory
 
-        Deletes a SCIM directory and stops provisioning for it. SCIM requests authenticated
+        Deletes a directory and stops provisioning for it. SCIM requests authenticated
         with the directory's API key are rejected afterwards.
 
-        :param scim_directory_id: The ID of the SCIM directory to delete
+        :param scim_directory_id: The ID of the directory to delete
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1042,14 +1042,14 @@ class ScimDirectories(BaseSDK):
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
     ) -> models.SCIMDirectory:
-        r"""Rotate a SCIM directory's API key
+        r"""Rotate a directory's API key
 
-        Generates a new API key for the SCIM directory and returns it in the `api_key` field.
+        Generates a new API key for the directory and returns it in the `api_key` field.
         This is the only way to obtain the key after creation, so make sure to update it in
         your identity provider. The previous key remains valid for a short grace period before
         it expires.
 
-        :param scim_directory_id: The ID of the SCIM directory whose API key to rotate
+        :param scim_directory_id: The ID of the directory whose API key to rotate
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1116,7 +1116,9 @@ class ScimDirectories(BaseSDK):
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(models.SCIMDirectory, http_res)
-        if utils.match_response(http_res, ["401", "403", "404"], "application/json"):
+        if utils.match_response(
+            http_res, ["401", "403", "404", "422"], "application/json"
+        ):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
@@ -1137,14 +1139,14 @@ class ScimDirectories(BaseSDK):
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
     ) -> models.SCIMDirectory:
-        r"""Rotate a SCIM directory's API key
+        r"""Rotate a directory's API key
 
-        Generates a new API key for the SCIM directory and returns it in the `api_key` field.
+        Generates a new API key for the directory and returns it in the `api_key` field.
         This is the only way to obtain the key after creation, so make sure to update it in
         your identity provider. The previous key remains valid for a short grace period before
         it expires.
 
-        :param scim_directory_id: The ID of the SCIM directory whose API key to rotate
+        :param scim_directory_id: The ID of the directory whose API key to rotate
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1211,7 +1213,9 @@ class ScimDirectories(BaseSDK):
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(models.SCIMDirectory, http_res)
-        if utils.match_response(http_res, ["401", "403", "404"], "application/json"):
+        if utils.match_response(
+            http_res, ["401", "403", "404", "422"], "application/json"
+        ):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
@@ -1234,9 +1238,9 @@ class ScimDirectories(BaseSDK):
     ) -> models.SCIMGroupRoleMappingList:
         r"""List SCIM group role mappings
 
-        Returns the list of SCIM group to organization role mappings for a SCIM directory, ordered by precedence.
+        Returns the list of SCIM group to organization role mappings for a directory, ordered by precedence.
 
-        :param scim_directory_id: The ID of the SCIM directory.
+        :param scim_directory_id: The ID of the directory.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1326,9 +1330,9 @@ class ScimDirectories(BaseSDK):
     ) -> models.SCIMGroupRoleMappingList:
         r"""List SCIM group role mappings
 
-        Returns the list of SCIM group to organization role mappings for a SCIM directory, ordered by precedence.
+        Returns the list of SCIM group to organization role mappings for a directory, ordered by precedence.
 
-        :param scim_directory_id: The ID of the SCIM directory.
+        :param scim_directory_id: The ID of the directory.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1421,10 +1425,11 @@ class ScimDirectories(BaseSDK):
     ) -> models.SCIMGroupRoleMapping:
         r"""Create a SCIM group role mapping
 
-        Creates a new SCIM group to organization role mapping for a SCIM directory.
-        Group role mapping must be enabled on the directory.
+        Creates a new SCIM group to organization role mapping for a directory.
+        Mappings can be created while group role mapping is disabled on the
+        directory, but they only take effect once it is enabled.
 
-        :param scim_directory_id: The ID of the SCIM directory.
+        :param scim_directory_id: The ID of the directory.
         :param scim_group_id: The SCIM group ID from the identity provider.
         :param role_id: The ID of the organization role to assign to members of the SCIM group.
         :param precedence: The precedence for this mapping. Lower values take priority when a user belongs
@@ -1536,10 +1541,11 @@ class ScimDirectories(BaseSDK):
     ) -> models.SCIMGroupRoleMapping:
         r"""Create a SCIM group role mapping
 
-        Creates a new SCIM group to organization role mapping for a SCIM directory.
-        Group role mapping must be enabled on the directory.
+        Creates a new SCIM group to organization role mapping for a directory.
+        Mappings can be created while group role mapping is disabled on the
+        directory, but they only take effect once it is enabled.
 
-        :param scim_directory_id: The ID of the SCIM directory.
+        :param scim_directory_id: The ID of the directory.
         :param scim_group_id: The SCIM group ID from the identity provider.
         :param role_id: The ID of the organization role to assign to members of the SCIM group.
         :param precedence: The precedence for this mapping. Lower values take priority when a user belongs
@@ -1651,10 +1657,11 @@ class ScimDirectories(BaseSDK):
 
         Replaces the entire set of SCIM group role mappings for a directory. The position of
         each item in the `mappings` array determines its precedence (the first item gets
-        precedence 1). Passing an empty array removes all mappings. Group role mapping must be
-        enabled on the directory.
+        precedence 1). Passing an empty array removes all mappings. Mappings can be replaced
+        while group role mapping is disabled on the directory, but they only take effect once
+        it is enabled.
 
-        :param scim_directory_id: The ID of the SCIM directory.
+        :param scim_directory_id: The ID of the directory.
         :param mappings: The desired set of mappings. Array order sets precedence (1-indexed). An empty array clears all mappings.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -1760,10 +1767,11 @@ class ScimDirectories(BaseSDK):
 
         Replaces the entire set of SCIM group role mappings for a directory. The position of
         each item in the `mappings` array determines its precedence (the first item gets
-        precedence 1). Passing an empty array removes all mappings. Group role mapping must be
-        enabled on the directory.
+        precedence 1). Passing an empty array removes all mappings. Mappings can be replaced
+        while group role mapping is disabled on the directory, but they only take effect once
+        it is enabled.
 
-        :param scim_directory_id: The ID of the SCIM directory.
+        :param scim_directory_id: The ID of the directory.
         :param mappings: The desired set of mappings. Array order sets precedence (1-indexed). An empty array clears all mappings.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -1867,10 +1875,11 @@ class ScimDirectories(BaseSDK):
     ) -> models.SCIMGroupRoleMappingDeleted:
         r"""Delete a SCIM group role mapping
 
-        Deletes a single SCIM group role mapping. Group role mapping must be enabled on the
-        directory.
+        Deletes a single SCIM group role mapping. Mappings can be deleted while group role
+        mapping is disabled on the directory, but the change only takes effect once it is
+        enabled.
 
-        :param scim_directory_id: The ID of the SCIM directory.
+        :param scim_directory_id: The ID of the directory.
         :param mapping_id: The ID of the SCIM group role mapping to delete.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -1965,10 +1974,11 @@ class ScimDirectories(BaseSDK):
     ) -> models.SCIMGroupRoleMappingDeleted:
         r"""Delete a SCIM group role mapping
 
-        Deletes a single SCIM group role mapping. Group role mapping must be enabled on the
-        directory.
+        Deletes a single SCIM group role mapping. Mappings can be deleted while group role
+        mapping is disabled on the directory, but the change only takes effect once it is
+        enabled.
 
-        :param scim_directory_id: The ID of the SCIM directory.
+        :param scim_directory_id: The ID of the directory.
         :param mapping_id: The ID of the SCIM group role mapping to delete.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method

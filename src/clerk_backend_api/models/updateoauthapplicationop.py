@@ -25,11 +25,13 @@ class UpdateOAuthApplicationRequestBodyTypedDict(TypedDict):
     callback_url: NotRequired[Nullable[str]]
     r"""The new callback URL of the OAuth application"""
     scopes: NotRequired[Nullable[str]]
-    r"""Define the allowed scopes for the new OAuth applications that dictate the user payload of the OAuth user info endpoint. Available scopes are `profile`, `email`, `public_metadata`, `private_metadata`. Provide the requested scopes as a string, separated by spaces."""
+    r"""Replace the application's complete built-in and custom scope ceiling. Provide scope keys as a space-delimited string. Custom keys must exist in the instance OAuth scope catalog. Required built-in scopes, such as `offline_access`, must be included in the replacement set, otherwise the request is rejected. Omit this field to leave all scope assignments unchanged."""
     consent_screen_enabled: NotRequired[Nullable[bool]]
     r"""True to enable a consent screen to display in the authentication flow. This cannot be disabled for dynamically registered OAuth Applications."""
     pkce_required: NotRequired[Nullable[bool]]
     r"""True to require the Proof Key of Code Exchange (PKCE) flow."""
+    device_authorization_grant_enabled: NotRequired[Nullable[bool]]
+    r"""True to enable the OAuth Device Authorization Grant for this application. Enabling requires the OAuth Device Authorization Grant feature to be enabled for the instance. Omit this field to leave the setting unchanged."""
     public: NotRequired[Nullable[bool]]
     r"""If true, this client is public and you can use the Proof Key of Code Exchange (PKCE) flow."""
 
@@ -51,14 +53,17 @@ class UpdateOAuthApplicationRequestBody(BaseModel):
     ] = UNSET
     r"""The new callback URL of the OAuth application"""
 
-    scopes: OptionalNullable[str] = "profile email"
-    r"""Define the allowed scopes for the new OAuth applications that dictate the user payload of the OAuth user info endpoint. Available scopes are `profile`, `email`, `public_metadata`, `private_metadata`. Provide the requested scopes as a string, separated by spaces."""
+    scopes: OptionalNullable[str] = UNSET
+    r"""Replace the application's complete built-in and custom scope ceiling. Provide scope keys as a space-delimited string. Custom keys must exist in the instance OAuth scope catalog. Required built-in scopes, such as `offline_access`, must be included in the replacement set, otherwise the request is rejected. Omit this field to leave all scope assignments unchanged."""
 
     consent_screen_enabled: OptionalNullable[bool] = UNSET
     r"""True to enable a consent screen to display in the authentication flow. This cannot be disabled for dynamically registered OAuth Applications."""
 
     pkce_required: OptionalNullable[bool] = UNSET
     r"""True to require the Proof Key of Code Exchange (PKCE) flow."""
+
+    device_authorization_grant_enabled: OptionalNullable[bool] = UNSET
+    r"""True to enable the OAuth Device Authorization Grant for this application. Enabling requires the OAuth Device Authorization Grant feature to be enabled for the instance. Omit this field to leave the setting unchanged."""
 
     public: OptionalNullable[bool] = UNSET
     r"""If true, this client is public and you can use the Proof Key of Code Exchange (PKCE) flow."""
@@ -73,6 +78,7 @@ class UpdateOAuthApplicationRequestBody(BaseModel):
                 "scopes",
                 "consent_screen_enabled",
                 "pkce_required",
+                "device_authorization_grant_enabled",
                 "public",
             ]
         )
@@ -84,6 +90,7 @@ class UpdateOAuthApplicationRequestBody(BaseModel):
                 "scopes",
                 "consent_screen_enabled",
                 "pkce_required",
+                "device_authorization_grant_enabled",
                 "public",
             ]
         )

@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 from .cnametarget import CNameTarget, CNameTargetTypedDict
+from .dnstarget import DNSTarget, DNSTargetTypedDict
 from clerk_backend_api.types import (
     BaseModel,
     Nullable,
@@ -32,6 +33,11 @@ class DomainTypedDict(TypedDict):
     """
     proxy_url: NotRequired[Nullable[str]]
     cname_targets: NotRequired[Nullable[List[CNameTargetTypedDict]]]
+    r"""Legacy CNAME-only DNS targets. Prefer `dns_targets` when present."""
+    dns_targets: NotRequired[Nullable[List[DNSTargetTypedDict]]]
+    r"""The complete typed DNS contract. Consumers should use this field instead of merging it with `cname_targets`.
+
+    """
 
 
 class Domain(BaseModel):
@@ -55,11 +61,21 @@ class Domain(BaseModel):
     proxy_url: OptionalNullable[str] = UNSET
 
     cname_targets: OptionalNullable[List[CNameTarget]] = UNSET
+    r"""Legacy CNAME-only DNS targets. Prefer `dns_targets` when present."""
+
+    dns_targets: OptionalNullable[List[DNSTarget]] = UNSET
+    r"""The complete typed DNS contract. Consumers should use this field instead of merging it with `cname_targets`.
+
+    """
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["accounts_portal_url", "proxy_url", "cname_targets"])
-        nullable_fields = set(["accounts_portal_url", "proxy_url", "cname_targets"])
+        optional_fields = set(
+            ["accounts_portal_url", "proxy_url", "cname_targets", "dns_targets"]
+        )
+        nullable_fields = set(
+            ["accounts_portal_url", "proxy_url", "cname_targets", "dns_targets"]
+        )
         serialized = handler(self)
         m = {}
 

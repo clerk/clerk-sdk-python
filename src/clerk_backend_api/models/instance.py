@@ -22,6 +22,12 @@ class InstanceTypedDict(TypedDict):
     id: str
     environment_type: str
     allowed_origins: Nullable[List[str]]
+    allowed_subdomains: List[str]
+    r"""Subdomains of the instance's own domains that may originate requests, when the subdomain allowlist is enabled. Production instances only; always empty on a development instance."""
+    subdomain_allowlist_enabled: bool
+    r"""Whether requests from subdomains of the instance's own domains are restricted to `allowed_subdomains`. When false, every subdomain of the instance's domain is accepted. Production instances only; always false on a development instance."""
+    workspace_id: Nullable[str]
+    r"""The ID of the Clerk workspace that owns the instance's application. It is null when the application has no owner."""
 
 
 class Instance(BaseModel):
@@ -35,6 +41,15 @@ class Instance(BaseModel):
     environment_type: str
 
     allowed_origins: Nullable[List[str]]
+
+    allowed_subdomains: List[str]
+    r"""Subdomains of the instance's own domains that may originate requests, when the subdomain allowlist is enabled. Production instances only; always empty on a development instance."""
+
+    subdomain_allowlist_enabled: bool
+    r"""Whether requests from subdomains of the instance's own domains are restricted to `allowed_subdomains`. When false, every subdomain of the instance's domain is accepted. Production instances only; always false on a development instance."""
+
+    workspace_id: Nullable[str]
+    r"""The ID of the Clerk workspace that owns the instance's application. It is null when the application has no owner."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

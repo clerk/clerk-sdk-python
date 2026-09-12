@@ -484,9 +484,9 @@ class Billing(BaseSDK):
         to specific customers while maintaining the same plan structure.
 
         :param plan_id: The ID of the plan this price belongs to.
-        :param amount: The monthly amount in cents. Must be at least $1 (100 cents) if not null.
+        :param amount: The monthly amount in cents. Use `0` for a complimentary price. Positive amounts must be at least $1 (100 cents).
         :param currency: The currency code (e.g., \"USD\"). Defaults to USD.
-        :param annual_monthly_amount: The monthly amount in cents when billed annually. Must be at least $1 (100 cents) if not null.
+        :param annual_monthly_amount: The monthly amount in cents when billed annually. Use `0` for a complimentary price. Positive amounts must be at least $1 (100 cents).
         :param description: An optional description for this custom price.
         :param supported_billing_periods: Which billing periods this price supports. Inferred from amounts if omitted.
         :param retries: Override the default retry configuration for this method
@@ -602,9 +602,9 @@ class Billing(BaseSDK):
         to specific customers while maintaining the same plan structure.
 
         :param plan_id: The ID of the plan this price belongs to.
-        :param amount: The monthly amount in cents. Must be at least $1 (100 cents) if not null.
+        :param amount: The monthly amount in cents. Use `0` for a complimentary price. Positive amounts must be at least $1 (100 cents).
         :param currency: The currency code (e.g., \"USD\"). Defaults to USD.
-        :param annual_monthly_amount: The monthly amount in cents when billed annually. Must be at least $1 (100 cents) if not null.
+        :param annual_monthly_amount: The monthly amount in cents when billed annually. Use `0` for a complimentary price. Positive amounts must be at least $1 (100 cents).
         :param description: An optional description for this custom price.
         :param supported_billing_periods: Which billing periods this price supports. Inferred from amounts if omitted.
         :param retries: Override the default retry configuration for this method
@@ -1584,6 +1584,440 @@ class Billing(BaseSDK):
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(
                 models.CommercePriceTransitionResponse, http_res
+            )
+        if utils.match_response(
+            http_res, ["400", "401", "403", "404", "409", "422"], "application/json"
+        ):
+            response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
+            raise models.ClerkErrors(response_data, http_res)
+        if utils.match_response(http_res, "500", "application/json"):
+            response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
+            raise models.ClerkErrors(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError("API error occurred", http_res, http_res_text)
+
+        raise models.SDKError("Unexpected response received", http_res)
+
+    def apply_subscription_item_discount(
+        self,
+        *,
+        subscription_item_id: str,
+        discount_id: str,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.CommerceDiscountRedemptionResponse:
+        r"""Apply a discount to a subscription item
+
+        Applies an existing discount to a subscription item.
+        Manual application is an override path: self-serve distribution rules are not enforced.
+        At most one active discount is allowed per subscription item; applying a different
+        discount replaces the currently active one. Re-applying the same active discount returns a conflict.
+
+        :param subscription_item_id: The ID of the subscription item to apply the discount to
+        :param discount_id: The ID of the discount to apply to the subscription item.
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.ApplyBillingSubscriptionItemDiscountRequest(
+            subscription_item_id=subscription_item_id,
+            apply_commerce_discount_request=models.ApplyCommerceDiscountRequest(
+                discount_id=discount_id,
+            ),
+        )
+
+        req = self._build_request(
+            method="POST",
+            path="/billing/subscription_items/{subscription_item_id}/discounts",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=True,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request.apply_commerce_discount_request,
+                False,
+                False,
+                "json",
+                models.ApplyCommerceDiscountRequest,
+            ),
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["5XX"])
+
+        http_res = self.do_request(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="ApplyBillingSubscriptionItemDiscount",
+                oauth2_scopes=None,
+                security_source=self.sdk_configuration.security,
+                tags=["Billing"],
+                extensions=None,
+            ),
+            request=req,
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(
+                models.CommerceDiscountRedemptionResponse, http_res
+            )
+        if utils.match_response(
+            http_res, ["400", "401", "403", "404", "409", "422"], "application/json"
+        ):
+            response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
+            raise models.ClerkErrors(response_data, http_res)
+        if utils.match_response(http_res, "500", "application/json"):
+            response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
+            raise models.ClerkErrors(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError("API error occurred", http_res, http_res_text)
+
+        raise models.SDKError("Unexpected response received", http_res)
+
+    async def apply_subscription_item_discount_async(
+        self,
+        *,
+        subscription_item_id: str,
+        discount_id: str,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.CommerceDiscountRedemptionResponse:
+        r"""Apply a discount to a subscription item
+
+        Applies an existing discount to a subscription item.
+        Manual application is an override path: self-serve distribution rules are not enforced.
+        At most one active discount is allowed per subscription item; applying a different
+        discount replaces the currently active one. Re-applying the same active discount returns a conflict.
+
+        :param subscription_item_id: The ID of the subscription item to apply the discount to
+        :param discount_id: The ID of the discount to apply to the subscription item.
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.ApplyBillingSubscriptionItemDiscountRequest(
+            subscription_item_id=subscription_item_id,
+            apply_commerce_discount_request=models.ApplyCommerceDiscountRequest(
+                discount_id=discount_id,
+            ),
+        )
+
+        req = self._build_request_async(
+            method="POST",
+            path="/billing/subscription_items/{subscription_item_id}/discounts",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=True,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request.apply_commerce_discount_request,
+                False,
+                False,
+                "json",
+                models.ApplyCommerceDiscountRequest,
+            ),
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["5XX"])
+
+        http_res = await self.do_request_async(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="ApplyBillingSubscriptionItemDiscount",
+                oauth2_scopes=None,
+                security_source=self.sdk_configuration.security,
+                tags=["Billing"],
+                extensions=None,
+            ),
+            request=req,
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(
+                models.CommerceDiscountRedemptionResponse, http_res
+            )
+        if utils.match_response(
+            http_res, ["400", "401", "403", "404", "409", "422"], "application/json"
+        ):
+            response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
+            raise models.ClerkErrors(response_data, http_res)
+        if utils.match_response(http_res, "500", "application/json"):
+            response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
+            raise models.ClerkErrors(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError("API error occurred", http_res, http_res_text)
+
+        raise models.SDKError("Unexpected response received", http_res)
+
+    def remove_subscription_item_discount(
+        self,
+        *,
+        subscription_item_id: str,
+        discount_id: str,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.CommerceDiscountRedemptionResponse:
+        r"""Remove a discount from a subscription item
+
+        Removes the active discount from a subscription item.
+        The discount_id must match the subscription item's currently active discount.
+
+        :param subscription_item_id: The ID of the subscription item to remove the discount from
+        :param discount_id: The ID of the discount to remove
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.RemoveBillingSubscriptionItemDiscountRequest(
+            subscription_item_id=subscription_item_id,
+            discount_id=discount_id,
+        )
+
+        req = self._build_request(
+            method="DELETE",
+            path="/billing/subscription_items/{subscription_item_id}/discounts/{discount_id}",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["5XX"])
+
+        http_res = self.do_request(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="RemoveBillingSubscriptionItemDiscount",
+                oauth2_scopes=None,
+                security_source=self.sdk_configuration.security,
+                tags=["Billing"],
+                extensions=None,
+            ),
+            request=req,
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(
+                models.CommerceDiscountRedemptionResponse, http_res
+            )
+        if utils.match_response(
+            http_res, ["400", "401", "403", "404", "409", "422"], "application/json"
+        ):
+            response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
+            raise models.ClerkErrors(response_data, http_res)
+        if utils.match_response(http_res, "500", "application/json"):
+            response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
+            raise models.ClerkErrors(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError("API error occurred", http_res, http_res_text)
+
+        raise models.SDKError("Unexpected response received", http_res)
+
+    async def remove_subscription_item_discount_async(
+        self,
+        *,
+        subscription_item_id: str,
+        discount_id: str,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.CommerceDiscountRedemptionResponse:
+        r"""Remove a discount from a subscription item
+
+        Removes the active discount from a subscription item.
+        The discount_id must match the subscription item's currently active discount.
+
+        :param subscription_item_id: The ID of the subscription item to remove the discount from
+        :param discount_id: The ID of the discount to remove
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.RemoveBillingSubscriptionItemDiscountRequest(
+            subscription_item_id=subscription_item_id,
+            discount_id=discount_id,
+        )
+
+        req = self._build_request_async(
+            method="DELETE",
+            path="/billing/subscription_items/{subscription_item_id}/discounts/{discount_id}",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["5XX"])
+
+        http_res = await self.do_request_async(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="RemoveBillingSubscriptionItemDiscount",
+                oauth2_scopes=None,
+                security_source=self.sdk_configuration.security,
+                tags=["Billing"],
+                extensions=None,
+            ),
+            request=req,
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(
+                models.CommerceDiscountRedemptionResponse, http_res
             )
         if utils.match_response(
             http_res, ["400", "401", "403", "404", "409", "422"], "application/json"

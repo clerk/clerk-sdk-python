@@ -50,24 +50,24 @@ class GroupRoleMappings(BaseModel):
 
 class CreateSCIMDirectoryRequestBodyTypedDict(TypedDict):
     enterprise_connection_id: str
-    r"""The ID of the enterprise connection to associate with this SCIM directory."""
+    r"""The ID of the enterprise connection to associate with this directory."""
     provider: str
-    r"""The identity provider for this SCIM directory."""
+    r"""The identity provider for this directory."""
     name: NotRequired[str]
-    r"""A human-friendly name for the SCIM directory."""
+    r"""A human-friendly name for the directory."""
     group_role_mappings: NotRequired[List[GroupRoleMappingsTypedDict]]
     r"""Optional SCIM group to organization role mappings to create with the directory."""
 
 
 class CreateSCIMDirectoryRequestBody(BaseModel):
     enterprise_connection_id: str
-    r"""The ID of the enterprise connection to associate with this SCIM directory."""
+    r"""The ID of the enterprise connection to associate with this directory."""
 
     provider: str
-    r"""The identity provider for this SCIM directory."""
+    r"""The identity provider for this directory."""
 
     name: Optional[str] = None
-    r"""A human-friendly name for the SCIM directory."""
+    r"""A human-friendly name for the directory."""
 
     group_role_mappings: Optional[List[GroupRoleMappings]] = None
     r"""Optional SCIM group to organization role mappings to create with the directory."""

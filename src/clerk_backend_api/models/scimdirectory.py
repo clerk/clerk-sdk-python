@@ -29,6 +29,8 @@ class SCIMDirectoryCustomAttributesTypedDict(TypedDict):
     r"""Path to extract the attribute value from SSO claims (SAML assertions or OIDC claims)"""
     scim_path: NotRequired[str]
     r"""GJSON path to extract the attribute value from SCIM user resources"""
+    directory_path: NotRequired[str]
+    r"""GJSON path to extract the attribute value from directory sync user resources. Same value as `scim_path`."""
     multi_valued: NotRequired[bool]
     r"""When true, the attribute supports multiple values; values from the IdP are written to public_metadata as an array. Defaults to false."""
 
@@ -46,12 +48,17 @@ class SCIMDirectoryCustomAttributes(BaseModel):
     scim_path: Optional[str] = None
     r"""GJSON path to extract the attribute value from SCIM user resources"""
 
+    directory_path: Optional[str] = None
+    r"""GJSON path to extract the attribute value from directory sync user resources. Same value as `scim_path`."""
+
     multi_valued: Optional[bool] = None
     r"""When true, the attribute supports multiple values; values from the IdP are written to public_metadata as an array. Defaults to false."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["name", "key", "sso_path", "scim_path", "multi_valued"])
+        optional_fields = set(
+            ["name", "key", "sso_path", "scim_path", "directory_path", "multi_valued"]
+        )
         serialized = handler(self)
         m = {}
 
@@ -67,28 +74,28 @@ class SCIMDirectoryCustomAttributes(BaseModel):
 
 
 class SCIMDirectoryTypedDict(TypedDict):
-    r"""A SCIM directory configuration for provisioning users via SCIM protocol."""
+    r"""A directory configuration for provisioning users via SCIM protocol."""
 
     object: SCIMDirectoryObject
     r"""String representing the object's type. Always \"scim_directory\"."""
     id: str
-    r"""Unique identifier for the SCIM directory."""
+    r"""Unique identifier for the directory."""
     name: str
-    r"""A human-friendly name for the SCIM directory."""
+    r"""A human-friendly name for the directory."""
     endpoint_url: str
     r"""The SCIM endpoint URL for this directory."""
     provider: str
-    r"""The identity provider for this SCIM directory."""
+    r"""The identity provider for this directory."""
     enabled: bool
-    r"""Whether the SCIM directory is enabled."""
+    r"""Whether the directory is enabled."""
     group_role_mapping_enabled: bool
-    r"""Whether group-to-role mapping is enabled for this SCIM directory."""
+    r"""Whether group-to-role mapping is enabled for this directory."""
     attribute_mapping: Dict[str, str]
     r"""Mapping of user attributes to the SCIM attribute paths they are extracted from."""
     created_at: int
-    r"""Unix timestamp when the SCIM directory was created."""
+    r"""Unix timestamp when the directory was created."""
     updated_at: int
-    r"""Unix timestamp when the SCIM directory was last updated."""
+    r"""Unix timestamp when the directory was last updated."""
     enterprise_connection_id: NotRequired[Nullable[str]]
     r"""The ID of the associated enterprise connection."""
     custom_attributes: NotRequired[List[SCIMDirectoryCustomAttributesTypedDict]]
@@ -98,37 +105,37 @@ class SCIMDirectoryTypedDict(TypedDict):
 
 
 class SCIMDirectory(BaseModel):
-    r"""A SCIM directory configuration for provisioning users via SCIM protocol."""
+    r"""A directory configuration for provisioning users via SCIM protocol."""
 
     object: SCIMDirectoryObject
     r"""String representing the object's type. Always \"scim_directory\"."""
 
     id: str
-    r"""Unique identifier for the SCIM directory."""
+    r"""Unique identifier for the directory."""
 
     name: str
-    r"""A human-friendly name for the SCIM directory."""
+    r"""A human-friendly name for the directory."""
 
     endpoint_url: str
     r"""The SCIM endpoint URL for this directory."""
 
     provider: str
-    r"""The identity provider for this SCIM directory."""
+    r"""The identity provider for this directory."""
 
     enabled: bool
-    r"""Whether the SCIM directory is enabled."""
+    r"""Whether the directory is enabled."""
 
     group_role_mapping_enabled: bool
-    r"""Whether group-to-role mapping is enabled for this SCIM directory."""
+    r"""Whether group-to-role mapping is enabled for this directory."""
 
     attribute_mapping: Dict[str, str]
     r"""Mapping of user attributes to the SCIM attribute paths they are extracted from."""
 
     created_at: int
-    r"""Unix timestamp when the SCIM directory was created."""
+    r"""Unix timestamp when the directory was created."""
 
     updated_at: int
-    r"""Unix timestamp when the SCIM directory was last updated."""
+    r"""Unix timestamp when the directory was last updated."""
 
     enterprise_connection_id: OptionalNullable[str] = UNSET
     r"""The ID of the associated enterprise connection."""
