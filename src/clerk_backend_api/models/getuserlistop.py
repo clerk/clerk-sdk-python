@@ -128,6 +128,16 @@ class GetUserListRequestTypedDict(TypedDict):
     Needs to be an integer greater or equal to zero.
     To be used in conjunction with `limit`.
     """
+    starting_after: NotRequired[str]
+    r"""A cursor for pagination: the `id` of the last user on the previous page. Returns the users that follow it.
+
+    **Requires ordering by `created_at`** — that is, `order_by` omitted, or set to `created_at`, `+created_at`
+    or `-created_at`. Any other `order_by` value is rejected with a 422: the other orderings sort by a value
+    that is neither unique per user nor immutable, so a cursor over them would skip or repeat users.
+
+    Cannot be combined with a non-zero `offset`, which is also a 422. Keep every other parameter identical
+    across requests, and stop when a page returns fewer than `limit` users.
+    """
     order_by: NotRequired[str]
     r"""Allows to return users in a particular order.
     At the moment, you can order the returned users by their `created_at`,`updated_at`,`email_address`,`web3wallet`,`first_name`,`last_name`,`phone_number`,`username`,`last_active_at`,`last_sign_in_at`.
@@ -135,6 +145,7 @@ class GetUserListRequestTypedDict(TypedDict):
     For example, if you want users to be returned in descending order according to their `created_at` property, you can use `-created_at`.
     If you don't use `+` or `-`, then `+` is implied. We only support one `order_by` parameter, and if multiple `order_by` parameters are provided, we will only keep the first one. For example,
     if you pass `order_by=username&order_by=created_at`, we will consider only the first `order_by` parameter, which is `username`. The `created_at` parameter will be ignored in this case.
+    Only the `created_at` orderings can be combined with `starting_after` cursor pagination; see that parameter.
     """
 
 
@@ -356,6 +367,20 @@ class GetUserListRequest(BaseModel):
     To be used in conjunction with `limit`.
     """
 
+    starting_after: Annotated[
+        Optional[str],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""A cursor for pagination: the `id` of the last user on the previous page. Returns the users that follow it.
+
+    **Requires ordering by `created_at`** — that is, `order_by` omitted, or set to `created_at`, `+created_at`
+    or `-created_at`. Any other `order_by` value is rejected with a 422: the other orderings sort by a value
+    that is neither unique per user nor immutable, so a cursor over them would skip or repeat users.
+
+    Cannot be combined with a non-zero `offset`, which is also a 422. Keep every other parameter identical
+    across requests, and stop when a page returns fewer than `limit` users.
+    """
+
     order_by: Annotated[
         Optional[str],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
@@ -366,6 +391,7 @@ class GetUserListRequest(BaseModel):
     For example, if you want users to be returned in descending order according to their `created_at` property, you can use `-created_at`.
     If you don't use `+` or `-`, then `+` is implied. We only support one `order_by` parameter, and if multiple `order_by` parameters are provided, we will only keep the first one. For example,
     if you pass `order_by=username&order_by=created_at`, we will consider only the first `order_by` parameter, which is `username`. The `created_at` parameter will be ignored in this case.
+    Only the `created_at` orderings can be combined with `starting_after` cursor pagination; see that parameter.
     """
 
     @model_serializer(mode="wrap")
@@ -396,6 +422,7 @@ class GetUserListRequest(BaseModel):
                 "provider_user_id",
                 "limit",
                 "offset",
+                "starting_after",
                 "order_by",
             ]
         )

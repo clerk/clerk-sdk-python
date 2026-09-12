@@ -40,6 +40,8 @@ class OauthApplicationsSDK(BaseSDK):
             If you don't use `+` or `-`, then `+` is implied. We only support one `order_by` parameter, and if multiple `order_by` parameters are provided, we will only keep the first one. For example,
             if you pass `order_by=name&order_by=created_at`, we will consider only the first `order_by` parameter, which is `name`. The `created_at` parameter will be ignored in this case.
         :param name_query: Returns OAuth applications with names that match the given query, via case-insensitive partial match.
+            Also returns the OAuth application whose `client_id` is exactly the given query, which is useful for
+            resolving a `client_id` to the OAuth application `id` required by the read, update and delete endpoints.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -152,6 +154,8 @@ class OauthApplicationsSDK(BaseSDK):
             If you don't use `+` or `-`, then `+` is implied. We only support one `order_by` parameter, and if multiple `order_by` parameters are provided, we will only keep the first one. For example,
             if you pass `order_by=name&order_by=created_at`, we will consider only the first `order_by` parameter, which is `name`. The `created_at` parameter will be ignored in this case.
         :param name_query: Returns OAuth applications with names that match the given query, via case-insensitive partial match.
+            Also returns the OAuth application whose `client_id` is exactly the given query, which is useful for
+            resolving a `client_id` to the OAuth application `id` required by the read, update and delete endpoints.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -640,9 +644,10 @@ class OauthApplicationsSDK(BaseSDK):
         name: OptionalNullable[str] = UNSET,
         redirect_uris: OptionalNullable[Iterable[str]] = UNSET,
         callback_url: OptionalNullable[str] = UNSET,
-        scopes: OptionalNullable[str] = "profile email",
+        scopes: OptionalNullable[str] = UNSET,
         consent_screen_enabled: OptionalNullable[bool] = UNSET,
         pkce_required: OptionalNullable[bool] = UNSET,
+        device_authorization_grant_enabled: OptionalNullable[bool] = UNSET,
         public: OptionalNullable[bool] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -658,9 +663,10 @@ class OauthApplicationsSDK(BaseSDK):
             Max length: 256
         :param redirect_uris: An array of redirect URIs of the new OAuth application
         :param callback_url: The new callback URL of the OAuth application
-        :param scopes: Define the allowed scopes for the new OAuth applications that dictate the user payload of the OAuth user info endpoint. Available scopes are `profile`, `email`, `public_metadata`, `private_metadata`. Provide the requested scopes as a string, separated by spaces.
+        :param scopes: Replace the application's complete built-in and custom scope ceiling. Provide scope keys as a space-delimited string. Custom keys must exist in the instance OAuth scope catalog. Required built-in scopes, such as `offline_access`, must be included in the replacement set, otherwise the request is rejected. Omit this field to leave all scope assignments unchanged.
         :param consent_screen_enabled: True to enable a consent screen to display in the authentication flow. This cannot be disabled for dynamically registered OAuth Applications.
         :param pkce_required: True to require the Proof Key of Code Exchange (PKCE) flow.
+        :param device_authorization_grant_enabled: True to enable the OAuth Device Authorization Grant for this application. Enabling requires the OAuth Device Authorization Grant feature to be enabled for the instance. Omit this field to leave the setting unchanged.
         :param public: If true, this client is public and you can use the Proof Key of Code Exchange (PKCE) flow.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -688,6 +694,7 @@ class OauthApplicationsSDK(BaseSDK):
                 scopes=scopes,
                 consent_screen_enabled=consent_screen_enabled,
                 pkce_required=pkce_required,
+                device_authorization_grant_enabled=device_authorization_grant_enabled,
                 public=public,
             ),
         )
@@ -767,9 +774,10 @@ class OauthApplicationsSDK(BaseSDK):
         name: OptionalNullable[str] = UNSET,
         redirect_uris: OptionalNullable[Iterable[str]] = UNSET,
         callback_url: OptionalNullable[str] = UNSET,
-        scopes: OptionalNullable[str] = "profile email",
+        scopes: OptionalNullable[str] = UNSET,
         consent_screen_enabled: OptionalNullable[bool] = UNSET,
         pkce_required: OptionalNullable[bool] = UNSET,
+        device_authorization_grant_enabled: OptionalNullable[bool] = UNSET,
         public: OptionalNullable[bool] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -785,9 +793,10 @@ class OauthApplicationsSDK(BaseSDK):
             Max length: 256
         :param redirect_uris: An array of redirect URIs of the new OAuth application
         :param callback_url: The new callback URL of the OAuth application
-        :param scopes: Define the allowed scopes for the new OAuth applications that dictate the user payload of the OAuth user info endpoint. Available scopes are `profile`, `email`, `public_metadata`, `private_metadata`. Provide the requested scopes as a string, separated by spaces.
+        :param scopes: Replace the application's complete built-in and custom scope ceiling. Provide scope keys as a space-delimited string. Custom keys must exist in the instance OAuth scope catalog. Required built-in scopes, such as `offline_access`, must be included in the replacement set, otherwise the request is rejected. Omit this field to leave all scope assignments unchanged.
         :param consent_screen_enabled: True to enable a consent screen to display in the authentication flow. This cannot be disabled for dynamically registered OAuth Applications.
         :param pkce_required: True to require the Proof Key of Code Exchange (PKCE) flow.
+        :param device_authorization_grant_enabled: True to enable the OAuth Device Authorization Grant for this application. Enabling requires the OAuth Device Authorization Grant feature to be enabled for the instance. Omit this field to leave the setting unchanged.
         :param public: If true, this client is public and you can use the Proof Key of Code Exchange (PKCE) flow.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -815,6 +824,7 @@ class OauthApplicationsSDK(BaseSDK):
                 scopes=scopes,
                 consent_screen_enabled=consent_screen_enabled,
                 pkce_required=pkce_required,
+                device_authorization_grant_enabled=device_authorization_grant_enabled,
                 public=public,
             ),
         )

@@ -34,6 +34,7 @@ if TYPE_CHECKING:
     from clerk_backend_api.billing import Billing
     from clerk_backend_api.blocklistidentifiers_sdk import BlocklistIdentifiersSDK
     from clerk_backend_api.clients import Clients
+    from clerk_backend_api.directories import Directories
     from clerk_backend_api.domains_sdk import DomainsSDK
     from clerk_backend_api.emailaddresses import EmailAddresses
     from clerk_backend_api.emailandsmstemplates import EmailAndSmsTemplates
@@ -122,6 +123,7 @@ class Clerk(BaseSDK):
     organization_permissions: "OrganizationPermissions"
     role_sets: "RoleSetsSDK"
     scim_directories: "ScimDirectories"
+    directories: "Directories"
     admin_portal_link_tokens: "AdminPortalLinkTokens"
     api_keys: "APIKeys"
     r"""Endpoints for managing API Keys"""
@@ -209,6 +211,7 @@ class Clerk(BaseSDK):
         ),
         "role_sets": ("clerk_backend_api.rolesets_sdk", "RoleSetsSDK"),
         "scim_directories": ("clerk_backend_api.scimdirectories", "ScimDirectories"),
+        "directories": ("clerk_backend_api.directories", "Directories"),
         "admin_portal_link_tokens": (
             "clerk_backend_api.admin_portal_link_tokens",
             "AdminPortalLinkTokens",

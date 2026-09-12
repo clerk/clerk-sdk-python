@@ -321,6 +321,8 @@ class UpdateEnterpriseConnectionCustomAttributesTypedDict(TypedDict):
     r"""Path to extract the attribute value from SSO claims"""
     scim_path: NotRequired[str]
     r"""GJSON path to extract the attribute value from SCIM user resources"""
+    directory_path: NotRequired[str]
+    r"""The new name for `scim_path`. Send either one, or both with the same value; sending both with different values is rejected."""
     multi_valued: NotRequired[bool]
     r"""When true, the attribute supports multiple values; values from the IdP are written to public_metadata as an array. Defaults to false."""
 
@@ -338,12 +340,17 @@ class UpdateEnterpriseConnectionCustomAttributes(BaseModel):
     scim_path: Optional[str] = None
     r"""GJSON path to extract the attribute value from SCIM user resources"""
 
+    directory_path: Optional[str] = None
+    r"""The new name for `scim_path`. Send either one, or both with the same value; sending both with different values is rejected."""
+
     multi_valued: Optional[bool] = None
     r"""When true, the attribute supports multiple values; values from the IdP are written to public_metadata as an array. Defaults to false."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["sso_path", "scim_path", "multi_valued"])
+        optional_fields = set(
+            ["sso_path", "scim_path", "directory_path", "multi_valued"]
+        )
         serialized = handler(self)
         m = {}
 

@@ -8,11 +8,11 @@ from typing_extensions import Annotated, TypedDict
 
 class GetSCIMDirectoryRequestTypedDict(TypedDict):
     scim_directory_id: str
-    r"""The ID of the SCIM directory to retrieve"""
+    r"""The ID of the directory to retrieve"""
 
 
 class GetSCIMDirectoryRequest(BaseModel):
     scim_directory_id: Annotated[
         str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))
     ]
-    r"""The ID of the SCIM directory to retrieve"""
+    r"""The ID of the directory to retrieve"""
