@@ -8,11 +8,11 @@ from typing_extensions import Annotated, TypedDict
 
 class RotateSCIMDirectoryAPIKeyRequestTypedDict(TypedDict):
     scim_directory_id: str
-    r"""The ID of the SCIM directory whose API key to rotate"""
+    r"""The ID of the directory whose API key to rotate"""
 
 
 class RotateSCIMDirectoryAPIKeyRequest(BaseModel):
     scim_directory_id: Annotated[
         str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))
     ]
-    r"""The ID of the SCIM directory whose API key to rotate"""
+    r"""The ID of the directory whose API key to rotate"""
