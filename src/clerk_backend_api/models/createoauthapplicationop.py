@@ -24,11 +24,13 @@ class CreateOAuthApplicationRequestBodyTypedDict(TypedDict):
     callback_url: NotRequired[Nullable[str]]
     r"""The callback URL of the new OAuth application"""
     scopes: NotRequired[Nullable[str]]
-    r"""Define the allowed scopes for the new OAuth applications that dictate the user payload of the OAuth user info endpoint. Available scopes are `profile`, `email`, `public_metadata`, `private_metadata`. Provide the requested scopes as a string, separated by spaces."""
+    r"""Define the application's built-in and custom scope ceiling. Provide scope keys as a space-delimited string. Custom keys must exist in the instance OAuth scope catalog."""
     consent_screen_enabled: NotRequired[Nullable[bool]]
     r"""True to enable a consent screen to display in the authentication flow."""
     pkce_required: NotRequired[Nullable[bool]]
     r"""True to require the Proof Key of Code Exchange (PKCE) flow."""
+    device_authorization_grant_enabled: NotRequired[Nullable[bool]]
+    r"""True to enable the OAuth Device Authorization Grant for this application. Enabling requires the OAuth Device Authorization Grant feature to be enabled for the instance."""
     public: NotRequired[Nullable[bool]]
     r"""If true, this client is public and you can use the Proof Key of Code Exchange (PKCE) flow."""
 
@@ -51,13 +53,16 @@ class CreateOAuthApplicationRequestBody(BaseModel):
     r"""The callback URL of the new OAuth application"""
 
     scopes: OptionalNullable[str] = "profile email"
-    r"""Define the allowed scopes for the new OAuth applications that dictate the user payload of the OAuth user info endpoint. Available scopes are `profile`, `email`, `public_metadata`, `private_metadata`. Provide the requested scopes as a string, separated by spaces."""
+    r"""Define the application's built-in and custom scope ceiling. Provide scope keys as a space-delimited string. Custom keys must exist in the instance OAuth scope catalog."""
 
     consent_screen_enabled: OptionalNullable[bool] = True
     r"""True to enable a consent screen to display in the authentication flow."""
 
     pkce_required: OptionalNullable[bool] = False
     r"""True to require the Proof Key of Code Exchange (PKCE) flow."""
+
+    device_authorization_grant_enabled: OptionalNullable[bool] = False
+    r"""True to enable the OAuth Device Authorization Grant for this application. Enabling requires the OAuth Device Authorization Grant feature to be enabled for the instance."""
 
     public: OptionalNullable[bool] = UNSET
     r"""If true, this client is public and you can use the Proof Key of Code Exchange (PKCE) flow."""
@@ -71,6 +76,7 @@ class CreateOAuthApplicationRequestBody(BaseModel):
                 "scopes",
                 "consent_screen_enabled",
                 "pkce_required",
+                "device_authorization_grant_enabled",
                 "public",
             ]
         )
@@ -81,6 +87,7 @@ class CreateOAuthApplicationRequestBody(BaseModel):
                 "scopes",
                 "consent_screen_enabled",
                 "pkce_required",
+                "device_authorization_grant_enabled",
                 "public",
             ]
         )

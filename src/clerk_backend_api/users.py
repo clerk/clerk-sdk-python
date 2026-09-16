@@ -6,6 +6,7 @@ from clerk_backend_api._hooks import HookContext
 from clerk_backend_api.types import BaseModel, OptionalNullable, UNSET
 from clerk_backend_api.utils.unmarshal_json_response import unmarshal_json_response
 from typing import Any, Dict, Iterable, List, Mapping, Optional, Union, cast
+from typing_extensions import deprecated
 
 
 class Users(BaseSDK):
@@ -24,6 +25,11 @@ class Users(BaseSDK):
 
         Returns a list of all users.
         The users are returned sorted by creation date, with the newest users appearing first.
+
+        To walk more than a few pages, paginate with `starting_after` rather than `offset`.
+        A cursor page costs the same no matter how far into the list it sits, while a large `offset`
+        has to walk and discard every row before it, so it gets progressively slower and eventually
+        times out. Cursor pagination requires the `created_at` ordering, which is the default.
 
         :param request: The request object to send.
         :param retries: Override the default retry configuration for this method
@@ -119,6 +125,11 @@ class Users(BaseSDK):
 
         Returns a list of all users.
         The users are returned sorted by creation date, with the newest users appearing first.
+
+        To walk more than a few pages, paginate with `starting_after` rather than `offset`.
+        A cursor page costs the same no matter how far into the list it sits, while a large `offset`
+        has to walk and discard every row before it, so it gets progressively slower and eventually
+        times out. Cursor pagination requires the `created_at` ordering, which is the default.
 
         :param request: The request object to send.
         :param retries: Override the default retry configuration for this method
@@ -221,6 +232,7 @@ class Users(BaseSDK):
         password_hasher: Optional[str] = None,
         skip_password_checks: OptionalNullable[bool] = UNSET,
         skip_password_requirement: OptionalNullable[bool] = UNSET,
+        skip_restriction_checks: OptionalNullable[bool] = UNSET,
         totp_secret: OptionalNullable[str] = UNSET,
         backup_codes: Optional[Iterable[str]] = None,
         public_metadata: Optional[Mapping[str, Any]] = None,
@@ -301,6 +313,9 @@ class Users(BaseSDK):
         :param skip_password_requirement: When set to `true`, `password` is not required anymore when creating the user and can be omitted.
             This is useful when you are trying to create a user that doesn't have a password, in an instance that is using passwords.
             Please note that you cannot use this flag if password is the only way for a user to sign into your instance.
+        :param skip_restriction_checks: When set to `true`, the instance's restrictions are not applied to this user.
+            Those settings are the allowlist, the blocklist, blocked disposable email domains and blocked email subaddresses, and they normally reject a matching identifier here just as they do at sign-up.
+            Use this when your backend is creating a user it already trusts, such as during a migration or from an admin tool.
         :param totp_secret: In case TOTP is configured on the instance, you can provide the secret to enable it on the newly created user without the need to reset it.
             Please note that currently the supported options are:
             * Period: 30 seconds
@@ -326,7 +341,7 @@ class Users(BaseSDK):
         :param create_organizations_limit: The maximum number of organizations the user can create. 0 means unlimited.
 
         :param created_at: A custom date/time denoting _when_ the user signed up to the application, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`).
-        :param bypass_client_trust: When set to `true`, the user will bypass client trust checks during sign-in.
+        :param bypass_client_trust: When set to `true`, the user will bypass Device Trust checks during sign-in.
         :param banned: When set to `true`, the user is created already banned and cannot sign in.
             Requires the same plan support as the ban user endpoint.
         :param locked: When set to `true`, the user is created already locked.
@@ -368,6 +383,7 @@ class Users(BaseSDK):
             password_hasher=password_hasher,
             skip_password_checks=skip_password_checks,
             skip_password_requirement=skip_password_requirement,
+            skip_restriction_checks=skip_restriction_checks,
             totp_secret=totp_secret,
             backup_codes=utils.unmarshal(backup_codes, Optional[List[str]]),
             public_metadata=utils.unmarshal(public_metadata, Optional[Dict[str, Any]]),
@@ -473,6 +489,7 @@ class Users(BaseSDK):
         password_hasher: Optional[str] = None,
         skip_password_checks: OptionalNullable[bool] = UNSET,
         skip_password_requirement: OptionalNullable[bool] = UNSET,
+        skip_restriction_checks: OptionalNullable[bool] = UNSET,
         totp_secret: OptionalNullable[str] = UNSET,
         backup_codes: Optional[Iterable[str]] = None,
         public_metadata: Optional[Mapping[str, Any]] = None,
@@ -553,6 +570,9 @@ class Users(BaseSDK):
         :param skip_password_requirement: When set to `true`, `password` is not required anymore when creating the user and can be omitted.
             This is useful when you are trying to create a user that doesn't have a password, in an instance that is using passwords.
             Please note that you cannot use this flag if password is the only way for a user to sign into your instance.
+        :param skip_restriction_checks: When set to `true`, the instance's restrictions are not applied to this user.
+            Those settings are the allowlist, the blocklist, blocked disposable email domains and blocked email subaddresses, and they normally reject a matching identifier here just as they do at sign-up.
+            Use this when your backend is creating a user it already trusts, such as during a migration or from an admin tool.
         :param totp_secret: In case TOTP is configured on the instance, you can provide the secret to enable it on the newly created user without the need to reset it.
             Please note that currently the supported options are:
             * Period: 30 seconds
@@ -578,7 +598,7 @@ class Users(BaseSDK):
         :param create_organizations_limit: The maximum number of organizations the user can create. 0 means unlimited.
 
         :param created_at: A custom date/time denoting _when_ the user signed up to the application, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`).
-        :param bypass_client_trust: When set to `true`, the user will bypass client trust checks during sign-in.
+        :param bypass_client_trust: When set to `true`, the user will bypass Device Trust checks during sign-in.
         :param banned: When set to `true`, the user is created already banned and cannot sign in.
             Requires the same plan support as the ban user endpoint.
         :param locked: When set to `true`, the user is created already locked.
@@ -620,6 +640,7 @@ class Users(BaseSDK):
             password_hasher=password_hasher,
             skip_password_checks=skip_password_checks,
             skip_password_requirement=skip_password_requirement,
+            skip_restriction_checks=skip_restriction_checks,
             totp_secret=totp_secret,
             backup_codes=utils.unmarshal(backup_codes, Optional[List[str]]),
             public_metadata=utils.unmarshal(public_metadata, Optional[Dict[str, Any]]),
@@ -1161,7 +1182,7 @@ class Users(BaseSDK):
         :param skip_legal_checks: When set to `true` all legal checks are skipped.
         :param create_organizations_limit: The maximum number of organizations the user can create. 0 means unlimited.
         :param created_at: A custom date/time denoting _when_ the user signed up to the application.
-        :param bypass_client_trust: When set to `true`, the user will bypass client trust checks during sign-in.
+        :param bypass_client_trust: When set to `true`, the user will bypass Device Trust checks during sign-in.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1357,7 +1378,7 @@ class Users(BaseSDK):
         :param skip_legal_checks: When set to `true` all legal checks are skipped.
         :param create_organizations_limit: The maximum number of organizations the user can create. 0 means unlimited.
         :param created_at: A custom date/time denoting _when_ the user signed up to the application.
-        :param bypass_client_trust: When set to `true`, the user will bypass client trust checks during sign-in.
+        :param bypass_client_trust: When set to `true`, the user will bypass Device Trust checks during sign-in.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -6191,6 +6212,9 @@ class Users(BaseSDK):
 
         raise models.SDKError("Unexpected response received", http_res)
 
+    @deprecated(
+        "warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
+    )
     def list_trusted_devices(
         self,
         *,
@@ -6286,6 +6310,9 @@ class Users(BaseSDK):
 
         raise models.SDKError("Unexpected response received", http_res)
 
+    @deprecated(
+        "warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
+    )
     async def list_trusted_devices_async(
         self,
         *,
@@ -6381,6 +6408,9 @@ class Users(BaseSDK):
 
         raise models.SDKError("Unexpected response received", http_res)
 
+    @deprecated(
+        "warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
+    )
     def revoke_trusted_device(
         self,
         *,
@@ -6479,6 +6509,9 @@ class Users(BaseSDK):
 
         raise models.SDKError("Unexpected response received", http_res)
 
+    @deprecated(
+        "warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
+    )
     async def revoke_trusted_device_async(
         self,
         *,
@@ -6562,6 +6595,392 @@ class Users(BaseSDK):
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(models.TrustedDevice, http_res)
+        if utils.match_response(http_res, ["403", "404"], "application/json"):
+            response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
+            raise models.ClerkErrors(response_data, http_res)
+        if utils.match_response(http_res, "500", "application/json"):
+            response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
+            raise models.ClerkErrors(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError("API error occurred", http_res, http_res_text)
+
+        raise models.SDKError("Unexpected response received", http_res)
+
+    def list_biometric_credentials(
+        self,
+        *,
+        user_id: str,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.BiometricCredentialList:
+        r"""List a user's biometric credentials
+
+        Returns the active biometric credentials enrolled by the user.
+
+        :param user_id: The ID of the user whose biometric credentials are returned
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.ListUserBiometricCredentialsRequest(
+            user_id=user_id,
+        )
+
+        req = self._build_request(
+            method="GET",
+            path="/users/{user_id}/biometric_credentials",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["5XX"])
+
+        http_res = self.do_request(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="ListUserBiometricCredentials",
+                oauth2_scopes=None,
+                security_source=self.sdk_configuration.security,
+                tags=["Users"],
+                extensions=None,
+            ),
+            request=req,
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(models.BiometricCredentialList, http_res)
+        if utils.match_response(http_res, ["403", "404"], "application/json"):
+            response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
+            raise models.ClerkErrors(response_data, http_res)
+        if utils.match_response(http_res, "500", "application/json"):
+            response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
+            raise models.ClerkErrors(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError("API error occurred", http_res, http_res_text)
+
+        raise models.SDKError("Unexpected response received", http_res)
+
+    async def list_biometric_credentials_async(
+        self,
+        *,
+        user_id: str,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.BiometricCredentialList:
+        r"""List a user's biometric credentials
+
+        Returns the active biometric credentials enrolled by the user.
+
+        :param user_id: The ID of the user whose biometric credentials are returned
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.ListUserBiometricCredentialsRequest(
+            user_id=user_id,
+        )
+
+        req = self._build_request_async(
+            method="GET",
+            path="/users/{user_id}/biometric_credentials",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["5XX"])
+
+        http_res = await self.do_request_async(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="ListUserBiometricCredentials",
+                oauth2_scopes=None,
+                security_source=self.sdk_configuration.security,
+                tags=["Users"],
+                extensions=None,
+            ),
+            request=req,
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(models.BiometricCredentialList, http_res)
+        if utils.match_response(http_res, ["403", "404"], "application/json"):
+            response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
+            raise models.ClerkErrors(response_data, http_res)
+        if utils.match_response(http_res, "500", "application/json"):
+            response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
+            raise models.ClerkErrors(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError("API error occurred", http_res, http_res_text)
+
+        raise models.SDKError("Unexpected response received", http_res)
+
+    def revoke_biometric_credential(
+        self,
+        *,
+        user_id: str,
+        biometric_credential_id: str,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.BiometricCredential:
+        r"""Revoke a user's biometric credential
+
+        Revokes an active biometric credential enrolled by the user.
+
+        :param user_id: The ID of the user that owns the biometric credential
+        :param biometric_credential_id: The ID of the biometric credential to revoke
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.RevokeUserBiometricCredentialRequest(
+            user_id=user_id,
+            biometric_credential_id=biometric_credential_id,
+        )
+
+        req = self._build_request(
+            method="DELETE",
+            path="/users/{user_id}/biometric_credentials/{biometric_credential_id}",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["5XX"])
+
+        http_res = self.do_request(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="RevokeUserBiometricCredential",
+                oauth2_scopes=None,
+                security_source=self.sdk_configuration.security,
+                tags=["Users"],
+                extensions=None,
+            ),
+            request=req,
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(models.BiometricCredential, http_res)
+        if utils.match_response(http_res, ["403", "404"], "application/json"):
+            response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
+            raise models.ClerkErrors(response_data, http_res)
+        if utils.match_response(http_res, "500", "application/json"):
+            response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
+            raise models.ClerkErrors(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError("API error occurred", http_res, http_res_text)
+
+        raise models.SDKError("Unexpected response received", http_res)
+
+    async def revoke_biometric_credential_async(
+        self,
+        *,
+        user_id: str,
+        biometric_credential_id: str,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.BiometricCredential:
+        r"""Revoke a user's biometric credential
+
+        Revokes an active biometric credential enrolled by the user.
+
+        :param user_id: The ID of the user that owns the biometric credential
+        :param biometric_credential_id: The ID of the biometric credential to revoke
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.RevokeUserBiometricCredentialRequest(
+            user_id=user_id,
+            biometric_credential_id=biometric_credential_id,
+        )
+
+        req = self._build_request_async(
+            method="DELETE",
+            path="/users/{user_id}/biometric_credentials/{biometric_credential_id}",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["5XX"])
+
+        http_res = await self.do_request_async(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="RevokeUserBiometricCredential",
+                oauth2_scopes=None,
+                security_source=self.sdk_configuration.security,
+                tags=["Users"],
+                extensions=None,
+            ),
+            request=req,
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(models.BiometricCredential, http_res)
         if utils.match_response(http_res, ["403", "404"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)

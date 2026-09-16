@@ -36,37 +36,37 @@ class UserObject(str, Enum):
 
 
 class ScimTypedDict(TypedDict):
-    r"""Metadata describing a user's linkage to a SCIM directory. This object is only delivered on `user.created` and `user.updated` webhook events, and only when the user is provisioned through a SCIM directory. Its absence does not necessarily mean the user is not SCIM-managed."""
+    r"""Metadata describing a user's linkage to a directory. This object is only delivered on `user.created` and `user.updated` webhook events, and only when the user is provisioned through a directory. Its absence does not necessarily mean the user is not managed by a directory."""
 
     directory_id: str
-    r"""The ID of the SCIM directory the user is provisioned from.
+    r"""The ID of the directory the user is provisioned from.
 
     """
     external_id: Nullable[str]
-    r"""The user's external ID as reported by the SCIM directory, if any.
+    r"""The user's external ID as reported by the directory, if any.
 
     """
     directory_enabled: NotRequired[bool]
-    r"""Whether the SCIM directory is currently enabled. Omitted when false.
+    r"""Whether the directory is currently enabled. Omitted when false.
 
     """
 
 
 class Scim(BaseModel):
-    r"""Metadata describing a user's linkage to a SCIM directory. This object is only delivered on `user.created` and `user.updated` webhook events, and only when the user is provisioned through a SCIM directory. Its absence does not necessarily mean the user is not SCIM-managed."""
+    r"""Metadata describing a user's linkage to a directory. This object is only delivered on `user.created` and `user.updated` webhook events, and only when the user is provisioned through a directory. Its absence does not necessarily mean the user is not managed by a directory."""
 
     directory_id: str
-    r"""The ID of the SCIM directory the user is provisioned from.
+    r"""The ID of the directory the user is provisioned from.
 
     """
 
     external_id: Nullable[str]
-    r"""The user's external ID as reported by the SCIM directory, if any.
+    r"""The user's external ID as reported by the directory, if any.
 
     """
 
     directory_enabled: Optional[bool] = None
-    r"""Whether the SCIM directory is currently enabled. Omitted when false.
+    r"""Whether the directory is currently enabled. Omitted when false.
 
     """
 
@@ -195,7 +195,7 @@ class UserTypedDict(TypedDict):
 
     """
     bypass_client_trust: NotRequired[bool]
-    r"""When set to `true`, the user will bypass client trust checks during sign-in."""
+    r"""When set to `true`, the user will bypass Device Trust checks during sign-in."""
     scim: NotRequired[Nullable[ScimTypedDict]]
 
 
@@ -347,7 +347,7 @@ class User(BaseModel):
     """
 
     bypass_client_trust: Optional[bool] = False
-    r"""When set to `true`, the user will bypass client trust checks during sign-in."""
+    r"""When set to `true`, the user will bypass Device Trust checks during sign-in."""
 
     scim: OptionalNullable[Scim] = UNSET
 
