@@ -233,7 +233,15 @@ verification_id, and returns the verification with its updated status
 backend driving its own frontend can react on every attempt — an incorrect
 or expired code is reported through the status, not as an error. Resubmitting
 a verification whose code was already accepted is rejected with a
-`verification_already_verified` error. If the code
+`verification_already_verified` error. If the code for this verification
+could not be sent (the SMS provider refused or failed the send after
+prepare_verification had returned), the attempt is rejected with a
+`verification_code_not_sent` error and no attempt is counted; call
+prepare_verification again to send a new code. If too many codes have been
+checked for this phone number recently, the attempt is rejected with a
+`verification_code_too_many_attempts` error and no attempt is counted; the
+limit is per phone number, so wait for the `Retry-After` period rather than
+sending a new code. If the code
 is correct and the phone number is not already verified, it is also marked
 as verified as a side effect (just as it would be in a frontend verification
 flow); an already verified phone number is left unchanged. It never creates
@@ -272,11 +280,11 @@ with Clerk(
 
 ### Errors
 
-| Error Type         | Status Code        | Content Type       |
-| ------------------ | ------------------ | ------------------ |
-| models.ClerkErrors | 400, 401, 403, 404 | application/json   |
-| models.ClerkErrors | 500                | application/json   |
-| models.SDKError    | 4XX, 5XX           | \*/\*              |
+| Error Type                   | Status Code                  | Content Type                 |
+| ---------------------------- | ---------------------------- | ---------------------------- |
+| models.ClerkErrors           | 400, 401, 403, 404, 422, 429 | application/json             |
+| models.ClerkErrors           | 500                          | application/json             |
+| models.SDKError              | 4XX, 5XX                     | \*/\*                        |
 
 ## replace_for_user
 

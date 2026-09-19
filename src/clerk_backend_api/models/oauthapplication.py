@@ -24,8 +24,12 @@ class OAuthApplicationTypedDict(TypedDict):
     dynamically_registered: bool
     consent_screen_enabled: bool
     pkce_required: bool
+    device_authorization_grant_enabled: bool
     public: bool
     scopes: str
+    r"""The complete scope ceiling for the OAuth application, as a space-delimited list of built-in and assigned custom scope keys.
+
+    """
     redirect_uris: List[str]
     callback_url: str
     r"""Deprecated: Use redirect_uris instead.
@@ -67,9 +71,14 @@ class OAuthApplication(BaseModel):
 
     pkce_required: bool
 
+    device_authorization_grant_enabled: bool
+
     public: bool
 
     scopes: str
+    r"""The complete scope ceiling for the OAuth application, as a space-delimited list of built-in and assigned custom scope keys.
+
+    """
 
     redirect_uris: List[str]
 
