@@ -84,6 +84,10 @@ with Clerk(
             "chrome-extension://extension_uiid",
             "capacitor://localhost",
         ],
+        "allowed_subdomains": [
+            "<value 1>",
+        ],
+        "subdomain_allowlist_enabled": True,
         "url_based_session_syncing": True,
         "preferred_sign_in_strategy_when_password_required": clerk_backend_api.PreferredSignInStrategyWhenPasswordRequired.PASSWORD,
     })
@@ -300,6 +304,8 @@ with Clerk(
             "<value 3>",
         ],
         "oauth_jwt_access_tokens": True,
+        "aud_claim_enabled": False,
+        "pkce_required": True,
         "client_id_metadata_documents_advertised": True,
         "client_id_metadata_documents_only_allow_pre_registered_clients": False,
         "client_id_metadata_documents_block_implicitly_allowed_clients": False,

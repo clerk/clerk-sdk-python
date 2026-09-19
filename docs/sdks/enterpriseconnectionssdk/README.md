@@ -98,6 +98,7 @@ with Clerk(
                 "key": "<key>",
                 "sso_path": "<value>",
                 "scim_path": "<value>",
+                "directory_path": "<value>",
                 "multi_valued": True,
             },
         ],
@@ -217,6 +218,7 @@ with Clerk(
             "key": "<key>",
             "sso_path": "<value>",
             "scim_path": "<value>",
+            "directory_path": "<value>",
             "multi_valued": False,
         },
     ])
