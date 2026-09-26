@@ -14,6 +14,7 @@ from .organizationmembership import (
 from .passkey import Passkey, PasskeyTypedDict
 from .phonenumber import PhoneNumber, PhoneNumberTypedDict
 from .samlaccount import SAMLAccount, SAMLAccountTypedDict
+from .scimusermetadata import SCIMUserMetadata, SCIMUserMetadataTypedDict
 from .web3wallet import Web3Wallet, Web3WalletTypedDict
 from clerk_backend_api.types import (
     BaseModel,
@@ -26,7 +27,7 @@ from enum import Enum
 import pydantic
 from pydantic import model_serializer
 from typing import Any, Dict, List, Optional
-from typing_extensions import Annotated, NotRequired, TypedDict
+from typing_extensions import Annotated, NotRequired, TypedDict, deprecated
 
 
 class UserObject(str, Enum):
@@ -35,45 +36,178 @@ class UserObject(str, Enum):
     USER = "user"
 
 
-class ScimTypedDict(TypedDict):
-    r"""Metadata describing a user's linkage to a SCIM directory. This object is only delivered on `user.created` and `user.updated` webhook events, and only when the user is provisioned through a SCIM directory. Its absence does not necessarily mean the user is not SCIM-managed."""
+class UserGroupsTypedDict(TypedDict):
+    id: str
+    display_name: str
 
+
+class UserGroups(BaseModel):
+    id: str
+
+    display_name: str
+
+
+@deprecated(
+    "warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
+)
+class UserDirectoryTypedDict(TypedDict):
+    r"""The most recently updated directory link. Use directories for all links."""
+
+    id: str
+    r"""The user's resource ID in this directory."""
+    directory_name: str
+    provider: str
+    enterprise_connection_id: Nullable[str]
     directory_id: str
-    r"""The ID of the SCIM directory the user is provisioned from.
+    r"""The ID of the directory the user is provisioned from.
+
+    """
+    directory_enabled: bool
+    r"""Whether the directory is currently enabled.
 
     """
     external_id: Nullable[str]
-    r"""The user's external ID as reported by the SCIM directory, if any.
+    r"""The user's external ID as reported by the directory, if any.
 
     """
-    directory_enabled: NotRequired[bool]
-    r"""Whether the SCIM directory is currently enabled. Omitted when false.
-
-    """
+    groups: NotRequired[List[UserGroupsTypedDict]]
+    r"""Omitted when groups were not loaded; an empty array means no group memberships."""
 
 
-class Scim(BaseModel):
-    r"""Metadata describing a user's linkage to a SCIM directory. This object is only delivered on `user.created` and `user.updated` webhook events, and only when the user is provisioned through a SCIM directory. Its absence does not necessarily mean the user is not SCIM-managed."""
+@deprecated(
+    "warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
+)
+class UserDirectory(BaseModel):
+    r"""The most recently updated directory link. Use directories for all links."""
+
+    id: str
+    r"""The user's resource ID in this directory."""
+
+    directory_name: str
+
+    provider: str
+
+    enterprise_connection_id: Nullable[str]
 
     directory_id: str
-    r"""The ID of the SCIM directory the user is provisioned from.
+    r"""The ID of the directory the user is provisioned from.
+
+    """
+
+    directory_enabled: bool
+    r"""Whether the directory is currently enabled.
 
     """
 
     external_id: Nullable[str]
-    r"""The user's external ID as reported by the SCIM directory, if any.
+    r"""The user's external ID as reported by the directory, if any.
 
     """
 
-    directory_enabled: Optional[bool] = None
-    r"""Whether the SCIM directory is currently enabled. Omitted when false.
-
-    """
+    groups: Optional[List[UserGroups]] = None
+    r"""Omitted when groups were not loaded; an empty array means no group memberships."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["directory_enabled"])
-        nullable_fields = set(["external_id"])
+        optional_fields = set(["groups"])
+        nullable_fields = set(["enterprise_connection_id", "external_id"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+            is_nullable_and_explicitly_set = (
+                k in nullable_fields
+                and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
+            )
+
+            if val != UNSET_SENTINEL:
+                if (
+                    val is not None
+                    or k not in optional_fields
+                    or is_nullable_and_explicitly_set
+                ):
+                    m[k] = val
+
+        return m
+
+
+class UserScimGroupsTypedDict(TypedDict):
+    id: str
+    display_name: str
+
+
+class UserScimGroups(BaseModel):
+    id: str
+
+    display_name: str
+
+
+@deprecated(
+    "warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
+)
+class ScimTypedDict(TypedDict):
+    r"""Alias of directory. Use directories for all links."""
+
+    id: str
+    r"""The user's resource ID in this directory."""
+    directory_name: str
+    provider: str
+    enterprise_connection_id: Nullable[str]
+    directory_id: str
+    r"""The ID of the directory the user is provisioned from.
+
+    """
+    directory_enabled: bool
+    r"""Whether the directory is currently enabled.
+
+    """
+    external_id: Nullable[str]
+    r"""The user's external ID as reported by the directory, if any.
+
+    """
+    groups: NotRequired[List[UserScimGroupsTypedDict]]
+    r"""Omitted when groups were not loaded; an empty array means no group memberships."""
+
+
+@deprecated(
+    "warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
+)
+class Scim(BaseModel):
+    r"""Alias of directory. Use directories for all links."""
+
+    id: str
+    r"""The user's resource ID in this directory."""
+
+    directory_name: str
+
+    provider: str
+
+    enterprise_connection_id: Nullable[str]
+
+    directory_id: str
+    r"""The ID of the directory the user is provisioned from.
+
+    """
+
+    directory_enabled: bool
+    r"""Whether the directory is currently enabled.
+
+    """
+
+    external_id: Nullable[str]
+    r"""The user's external ID as reported by the directory, if any.
+
+    """
+
+    groups: Optional[List[UserScimGroups]] = None
+    r"""Omitted when groups were not loaded; an empty array means no group memberships."""
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["groups"])
+        nullable_fields = set(["enterprise_connection_id", "external_id"])
         serialized = handler(self)
         m = {}
 
@@ -195,8 +329,15 @@ class UserTypedDict(TypedDict):
 
     """
     bypass_client_trust: NotRequired[bool]
-    r"""When set to `true`, the user will bypass client trust checks during sign-in."""
+    r"""When set to `true`, the user will bypass Device Trust checks during sign-in."""
+    directories: NotRequired[List[SCIMUserMetadataTypedDict]]
+    r"""All loaded directory links. Omitted when links were not loaded; an empty array means the user has no directory links.
+
+    """
+    directory: NotRequired[UserDirectoryTypedDict]
+    r"""The most recently updated directory link. Use directories for all links."""
     scim: NotRequired[Nullable[ScimTypedDict]]
+    r"""Alias of directory. Use directories for all links."""
 
 
 class User(BaseModel):
@@ -347,9 +488,28 @@ class User(BaseModel):
     """
 
     bypass_client_trust: Optional[bool] = False
-    r"""When set to `true`, the user will bypass client trust checks during sign-in."""
+    r"""When set to `true`, the user will bypass Device Trust checks during sign-in."""
 
-    scim: OptionalNullable[Scim] = UNSET
+    directories: Optional[List[SCIMUserMetadata]] = None
+    r"""All loaded directory links. Omitted when links were not loaded; an empty array means the user has no directory links.
+
+    """
+
+    directory: Annotated[
+        Optional[UserDirectory],
+        pydantic.Field(
+            deprecated="warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
+        ),
+    ] = None
+    r"""The most recently updated directory link. Use directories for all links."""
+
+    scim: Annotated[
+        OptionalNullable[Scim],
+        pydantic.Field(
+            deprecated="warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
+        ),
+    ] = UNSET
+    r"""Alias of directory. Use directories for all links."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
@@ -365,6 +525,8 @@ class User(BaseModel):
                 "deprovisioned",
                 "create_organizations_limit",
                 "bypass_client_trust",
+                "directories",
+                "directory",
                 "scim",
             ]
         )

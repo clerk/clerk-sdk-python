@@ -1,0 +1,9 @@
+# CreateDirectoryGroupRoleMappingRequest
+
+
+## Fields
+
+| Field                                                                                                        | Type                                                                                                         | Required                                                                                                     | Description                                                                                                  |
+| ------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------ |
+| `directory_id`                                                                                               | *str*                                                                                                        | :heavy_check_mark:                                                                                           | The ID of the directory.                                                                                     |
+| `request_body`                                                                                               | [models.CreateDirectoryGroupRoleMappingRequestBody](../models/createdirectorygrouprolemappingrequestbody.md) | :heavy_check_mark:                                                                                           | N/A                                                                                                          |
