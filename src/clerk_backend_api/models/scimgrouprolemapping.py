@@ -23,11 +23,17 @@ class SCIMGroupRoleMappingTypedDict(TypedDict):
     id: str
     r"""Unique identifier for the SCIM group role mapping."""
     scim_directory_id: str
-    r"""The ID of the SCIM directory this mapping belongs to."""
+    r"""The ID of the directory this mapping belongs to."""
+    directory_id: str
+    r"""The ID of the directory this mapping belongs to. Same value as `scim_directory_id`."""
     scim_group_id: str
     r"""The SCIM group ID from the identity provider."""
+    directory_group_id: str
+    r"""The group ID from the identity provider. Same value as `scim_group_id`."""
     scim_group_display_name: str
     r"""The display name of the SCIM group, as reported by the identity provider."""
+    directory_group_display_name: str
+    r"""The display name of the group, as reported by the identity provider. Same value as `scim_group_display_name`."""
     precedence: int
     r"""Mapping precedence, starting at 1. Lower values take priority when a user belongs to multiple mapped groups."""
     created_at: int
@@ -47,13 +53,22 @@ class SCIMGroupRoleMapping(BaseModel):
     r"""Unique identifier for the SCIM group role mapping."""
 
     scim_directory_id: str
-    r"""The ID of the SCIM directory this mapping belongs to."""
+    r"""The ID of the directory this mapping belongs to."""
+
+    directory_id: str
+    r"""The ID of the directory this mapping belongs to. Same value as `scim_directory_id`."""
 
     scim_group_id: str
     r"""The SCIM group ID from the identity provider."""
 
+    directory_group_id: str
+    r"""The group ID from the identity provider. Same value as `scim_group_id`."""
+
     scim_group_display_name: str
     r"""The display name of the SCIM group, as reported by the identity provider."""
+
+    directory_group_display_name: str
+    r"""The display name of the group, as reported by the identity provider. Same value as `scim_group_display_name`."""
 
     precedence: int
     r"""Mapping precedence, starting at 1. Lower values take priority when a user belongs to multiple mapped groups."""

@@ -52,7 +52,7 @@ class CreateSCIMGroupRoleMappingRequestBody(BaseModel):
 
 class CreateSCIMGroupRoleMappingRequestTypedDict(TypedDict):
     scim_directory_id: str
-    r"""The ID of the SCIM directory."""
+    r"""The ID of the directory."""
     request_body: CreateSCIMGroupRoleMappingRequestBodyTypedDict
 
 
@@ -60,7 +60,7 @@ class CreateSCIMGroupRoleMappingRequest(BaseModel):
     scim_directory_id: Annotated[
         str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))
     ]
-    r"""The ID of the SCIM directory."""
+    r"""The ID of the directory."""
 
     request_body: Annotated[
         CreateSCIMGroupRoleMappingRequestBody,

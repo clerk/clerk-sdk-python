@@ -22,9 +22,15 @@ class OAuthApplicationSettingsTypedDict(TypedDict):
     dynamic_oauth_client_registration: bool
     r"""Whether dynamic OAuth client registration is enabled for the instance (RFC 7591)."""
     default_scopes: Nullable[List[str]]
-    r"""Default scopes."""
+    r"""Default scopes assigned when a dynamically registered or first-contact CIMD client omits `scope`. Contains built-in keys and custom catalog keys. Null means Clerk-provided defaults. `advertised` does not affect eligibility. An empty input array is stored and returned as null.
+
+    """
     oauth_jwt_access_tokens: bool
     r"""Whether OAuth JWT access tokens are enabled for the instance (disabled indicates opaque access tokens)."""
+    aud_claim_enabled: bool
+    r"""Whether OAuth access tokens can include an aud claim derived from the RFC 8707 resource parameter."""
+    pkce_required: bool
+    r"""Whether all new OAuth authorization-code requests must use PKCE with the S256 challenge method."""
     client_id_metadata_documents_advertised: bool
     r"""Whether the instance advertises support for Client ID Metadata Documents in its OAuth authorization server metadata."""
     client_id_metadata_documents_only_allow_pre_registered_clients: bool
@@ -43,10 +49,18 @@ class OAuthApplicationSettings(BaseModel):
     r"""Whether dynamic OAuth client registration is enabled for the instance (RFC 7591)."""
 
     default_scopes: Nullable[List[str]]
-    r"""Default scopes."""
+    r"""Default scopes assigned when a dynamically registered or first-contact CIMD client omits `scope`. Contains built-in keys and custom catalog keys. Null means Clerk-provided defaults. `advertised` does not affect eligibility. An empty input array is stored and returned as null.
+
+    """
 
     oauth_jwt_access_tokens: bool
     r"""Whether OAuth JWT access tokens are enabled for the instance (disabled indicates opaque access tokens)."""
+
+    aud_claim_enabled: bool
+    r"""Whether OAuth access tokens can include an aud claim derived from the RFC 8707 resource parameter."""
+
+    pkce_required: bool
+    r"""Whether all new OAuth authorization-code requests must use PKCE with the S256 challenge method."""
 
     client_id_metadata_documents_advertised: bool
     r"""Whether the instance advertises support for Client ID Metadata Documents in its OAuth authorization server metadata."""
