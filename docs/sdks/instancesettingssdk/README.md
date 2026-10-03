@@ -84,6 +84,10 @@ with Clerk(
             "chrome-extension://extension_uiid",
             "capacitor://localhost",
         ],
+        "allowed_subdomains": [
+            "<value 1>",
+        ],
+        "subdomain_allowlist_enabled": True,
         "url_based_session_syncing": True,
         "preferred_sign_in_strategy_when_password_required": clerk_backend_api.PreferredSignInStrategyWhenPasswordRequired.PASSWORD,
     })
@@ -300,6 +304,8 @@ with Clerk(
             "<value 3>",
         ],
         "oauth_jwt_access_tokens": True,
+        "aud_claim_enabled": False,
+        "pkce_required": True,
         "client_id_metadata_documents_advertised": True,
         "client_id_metadata_documents_only_allow_pre_registered_clients": False,
         "client_id_metadata_documents_block_implicitly_allowed_clients": False,
@@ -336,6 +342,8 @@ Changing the domain requires updating the [DNS records](https://clerk.com/docs/d
 
 WARNING: Changing your domain will invalidate all current user sessions (i.e. users will be logged out). Also, while your application is being deployed, a small downtime is expected to occur.
 
+Returns 403 `domain_managed_by_integration` for applications in a Vercel-managed workspace; change the domain from the Vercel integration instead.
+
 ### Example Usage
 
 <!-- UsageSnippet language="python" operationID="ChangeProductionInstanceDomain" method="post" path="/instance/change_domain" -->
@@ -367,7 +375,7 @@ with Clerk(
 
 | Error Type         | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
-| models.ClerkErrors | 400, 422           | application/json   |
+| models.ClerkErrors | 400, 403, 422      | application/json   |
 | models.SDKError    | 4XX, 5XX           | \*/\*              |
 
 ## get_organization_settings

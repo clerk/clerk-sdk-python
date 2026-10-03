@@ -108,7 +108,9 @@ class UpdateSAMLConnectionRequestBodyTypedDict(TypedDict):
     idp_sso_url: NotRequired[Nullable[str]]
     r"""The SSO URL as provided by the IdP"""
     idp_certificate: NotRequired[Nullable[str]]
-    r"""The x509 certificated as provided by the IdP"""
+    r"""Deprecated, use idp_certificates. One X.509 certificate, PEM or bare base64, or several concatenated PEM certificates; replaces the connection's whole certificate set"""
+    idp_certificates: NotRequired[List[str]]
+    r"""The IdP X.509 signing certificates the connection trusts, one per entry, in PEM or bare base64. Replaces the connection's whole certificate set and takes precedence over idp_certificate"""
     idp_metadata_url: NotRequired[Nullable[str]]
     r"""The URL which serves the IdP metadata. If present, it takes priority over the corresponding individual properties and replaces them"""
     idp_metadata: NotRequired[Nullable[str]]
@@ -158,8 +160,16 @@ class UpdateSAMLConnectionRequestBody(BaseModel):
     idp_sso_url: OptionalNullable[str] = UNSET
     r"""The SSO URL as provided by the IdP"""
 
-    idp_certificate: OptionalNullable[str] = UNSET
-    r"""The x509 certificated as provided by the IdP"""
+    idp_certificate: Annotated[
+        OptionalNullable[str],
+        pydantic.Field(
+            deprecated="warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
+        ),
+    ] = UNSET
+    r"""Deprecated, use idp_certificates. One X.509 certificate, PEM or bare base64, or several concatenated PEM certificates; replaces the connection's whole certificate set"""
+
+    idp_certificates: Optional[List[str]] = None
+    r"""The IdP X.509 signing certificates the connection trusts, one per entry, in PEM or bare base64. Replaces the connection's whole certificate set and takes precedence over idp_certificate"""
 
     idp_metadata_url: OptionalNullable[str] = UNSET
     r"""The URL which serves the IdP metadata. If present, it takes priority over the corresponding individual properties and replaces them"""
@@ -210,6 +220,7 @@ class UpdateSAMLConnectionRequestBody(BaseModel):
                 "idp_entity_id",
                 "idp_sso_url",
                 "idp_certificate",
+                "idp_certificates",
                 "idp_metadata_url",
                 "idp_metadata",
                 "organization_id",

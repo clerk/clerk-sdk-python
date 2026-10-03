@@ -9,9 +9,10 @@ from clerk_backend_api.types import (
     UNSET_SENTINEL,
 )
 from enum import Enum
+import pydantic
 from pydantic import model_serializer
 from typing import List, Optional
-from typing_extensions import NotRequired, TypedDict
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class Provider(str, Enum):
@@ -125,7 +126,9 @@ class CreateEnterpriseConnectionSamlTypedDict(TypedDict):
     idp_sso_url: NotRequired[Nullable[str]]
     r"""IdP SSO URL"""
     idp_certificate: NotRequired[Nullable[str]]
-    r"""IdP certificate (PEM)"""
+    r"""Deprecated, use idp_certificates. One X.509 certificate, PEM or bare base64, or several concatenated PEM certificates; replaces the connection's whole certificate set"""
+    idp_certificates: NotRequired[List[str]]
+    r"""The IdP X.509 signing certificates the connection trusts, one per entry, in PEM or bare base64. Replaces the connection's whole certificate set and takes precedence over idp_certificate"""
     idp_metadata_url: NotRequired[Nullable[str]]
     r"""URL to IdP metadata"""
     idp_metadata: NotRequired[Nullable[str]]
@@ -152,8 +155,16 @@ class CreateEnterpriseConnectionSaml(BaseModel):
     idp_sso_url: OptionalNullable[str] = UNSET
     r"""IdP SSO URL"""
 
-    idp_certificate: OptionalNullable[str] = UNSET
-    r"""IdP certificate (PEM)"""
+    idp_certificate: Annotated[
+        OptionalNullable[str],
+        pydantic.Field(
+            deprecated="warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
+        ),
+    ] = UNSET
+    r"""Deprecated, use idp_certificates. One X.509 certificate, PEM or bare base64, or several concatenated PEM certificates; replaces the connection's whole certificate set"""
+
+    idp_certificates: Optional[List[str]] = None
+    r"""The IdP X.509 signing certificates the connection trusts, one per entry, in PEM or bare base64. Replaces the connection's whole certificate set and takes precedence over idp_certificate"""
 
     idp_metadata_url: OptionalNullable[str] = UNSET
     r"""URL to IdP metadata"""
@@ -182,6 +193,7 @@ class CreateEnterpriseConnectionSaml(BaseModel):
                 "idp_entity_id",
                 "idp_sso_url",
                 "idp_certificate",
+                "idp_certificates",
                 "idp_metadata_url",
                 "idp_metadata",
                 "attribute_mapping",
@@ -325,6 +337,8 @@ class CreateEnterpriseConnectionCustomAttributesTypedDict(TypedDict):
     r"""Path to extract the attribute value from SSO claims"""
     scim_path: NotRequired[str]
     r"""GJSON path to extract the attribute value from SCIM user resources"""
+    directory_path: NotRequired[str]
+    r"""The new name for `scim_path`. Send either one, or both with the same value; sending both with different values is rejected."""
     multi_valued: NotRequired[bool]
     r"""When true, the attribute supports multiple values; values from the IdP are written to public_metadata as an array. Defaults to false."""
 
@@ -342,12 +356,17 @@ class CreateEnterpriseConnectionCustomAttributes(BaseModel):
     scim_path: Optional[str] = None
     r"""GJSON path to extract the attribute value from SCIM user resources"""
 
+    directory_path: Optional[str] = None
+    r"""The new name for `scim_path`. Send either one, or both with the same value; sending both with different values is rejected."""
+
     multi_valued: Optional[bool] = None
     r"""When true, the attribute supports multiple values; values from the IdP are written to public_metadata as an array. Defaults to false."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["sso_path", "scim_path", "multi_valued"])
+        optional_fields = set(
+            ["sso_path", "scim_path", "directory_path", "multi_valued"]
+        )
         serialized = handler(self)
         m = {}
 

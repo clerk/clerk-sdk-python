@@ -707,8 +707,10 @@ class OrganizationsSDK(BaseSDK):
         slug: OptionalNullable[str] = UNSET,
         max_allowed_memberships: OptionalNullable[int] = UNSET,
         admin_delete_enabled: OptionalNullable[bool] = UNSET,
+        self_serve_sso_enabled: OptionalNullable[bool] = UNSET,
         created_at: OptionalNullable[str] = UNSET,
         role_set_key: OptionalNullable[str] = UNSET,
+        reassignment_mappings: OptionalNullable[Mapping[str, str]] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -728,8 +730,14 @@ class OrganizationsSDK(BaseSDK):
         :param slug: The new slug of the organization, which needs to be unique in the instance
         :param max_allowed_memberships: The maximum number of memberships allowed for this organization
         :param admin_delete_enabled: If true, an admin can delete this organization with the Frontend API.
+        :param self_serve_sso_enabled: Whether this organization can configure self-serve enterprise SSO.
+            Requires the instance to have the self-serve SSO entitlement enabled.
         :param created_at: A custom date/time denoting _when_ the organization was created, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`).
         :param role_set_key: The key of the [role set](https://clerk.com/docs/guides/organizations/control-access/role-sets) to assign to this organization.
+        :param reassignment_mappings: Maps role keys in the organization's current role set to role keys in the new role set. Only applies when `role_set_key` changes the role set.
+            Every role that a member holds and that the new role set does not include must be mapped, otherwise the request fails with a 422.
+            Mapping a role that both role sets include moves its members to the destination role.
+            Memberships are reassigned asynchronously after the response.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -752,8 +760,12 @@ class OrganizationsSDK(BaseSDK):
                 slug=slug,
                 max_allowed_memberships=max_allowed_memberships,
                 admin_delete_enabled=admin_delete_enabled,
+                self_serve_sso_enabled=self_serve_sso_enabled,
                 created_at=created_at,
                 role_set_key=role_set_key,
+                reassignment_mappings=utils.unmarshal(
+                    reassignment_mappings, OptionalNullable[Dict[str, str]]
+                ),
             ),
         )
 
@@ -833,8 +845,10 @@ class OrganizationsSDK(BaseSDK):
         slug: OptionalNullable[str] = UNSET,
         max_allowed_memberships: OptionalNullable[int] = UNSET,
         admin_delete_enabled: OptionalNullable[bool] = UNSET,
+        self_serve_sso_enabled: OptionalNullable[bool] = UNSET,
         created_at: OptionalNullable[str] = UNSET,
         role_set_key: OptionalNullable[str] = UNSET,
+        reassignment_mappings: OptionalNullable[Mapping[str, str]] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -854,8 +868,14 @@ class OrganizationsSDK(BaseSDK):
         :param slug: The new slug of the organization, which needs to be unique in the instance
         :param max_allowed_memberships: The maximum number of memberships allowed for this organization
         :param admin_delete_enabled: If true, an admin can delete this organization with the Frontend API.
+        :param self_serve_sso_enabled: Whether this organization can configure self-serve enterprise SSO.
+            Requires the instance to have the self-serve SSO entitlement enabled.
         :param created_at: A custom date/time denoting _when_ the organization was created, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`).
         :param role_set_key: The key of the [role set](https://clerk.com/docs/guides/organizations/control-access/role-sets) to assign to this organization.
+        :param reassignment_mappings: Maps role keys in the organization's current role set to role keys in the new role set. Only applies when `role_set_key` changes the role set.
+            Every role that a member holds and that the new role set does not include must be mapped, otherwise the request fails with a 422.
+            Mapping a role that both role sets include moves its members to the destination role.
+            Memberships are reassigned asynchronously after the response.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -878,8 +898,12 @@ class OrganizationsSDK(BaseSDK):
                 slug=slug,
                 max_allowed_memberships=max_allowed_memberships,
                 admin_delete_enabled=admin_delete_enabled,
+                self_serve_sso_enabled=self_serve_sso_enabled,
                 created_at=created_at,
                 role_set_key=role_set_key,
+                reassignment_mappings=utils.unmarshal(
+                    reassignment_mappings, OptionalNullable[Dict[str, str]]
+                ),
             ),
         )
 
