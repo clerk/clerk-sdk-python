@@ -8,11 +8,11 @@ from typing_extensions import Annotated, TypedDict
 
 class DeleteDomainRequestTypedDict(TypedDict):
     domain_id: str
-    r"""The ID of the domain that will be deleted. Must be a satellite domain."""
+    r"""The ID of the domain that will be deleted."""
 
 
 class DeleteDomainRequest(BaseModel):
     domain_id: Annotated[
         str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))
     ]
-    r"""The ID of the domain that will be deleted. Must be a satellite domain."""
+    r"""The ID of the domain that will be deleted."""

@@ -83,7 +83,7 @@ with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 ) as clerk:
 
-    res = clerk.api_keys.get_api_keys(subject="<value>", type_="api_key", include_invalid=clerk_backend_api.IncludeInvalid.FALSE, limit=10, offset=0, query="<value>")
+    res = clerk.api_keys.get_api_keys(subject="<value>", type_="api_key", include_invalid=clerk_backend_api.IncludeInvalid.FALSE, limit=10.0, offset=0.0, query="<value>")
 
     # Handle response
     print(res)

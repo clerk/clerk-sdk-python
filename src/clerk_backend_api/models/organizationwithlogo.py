@@ -40,6 +40,10 @@ class OrganizationWithLogoTypedDict(TypedDict):
     members_count: NotRequired[int]
     missing_member_with_elevated_permissions: NotRequired[bool]
     pending_invitations_count: NotRequired[int]
+    self_serve_sso_enabled: NotRequired[Nullable[bool]]
+    r"""Whether this organization can configure self-serve enterprise SSO.
+
+    """
     private_metadata: NotRequired[Dict[str, Any]]
     created_by: NotRequired[str]
     last_active_at: NotRequired[int]
@@ -88,6 +92,11 @@ class OrganizationWithLogo(BaseModel):
 
     pending_invitations_count: Optional[int] = None
 
+    self_serve_sso_enabled: OptionalNullable[bool] = UNSET
+    r"""Whether this organization can configure self-serve enterprise SSO.
+
+    """
+
     private_metadata: Optional[Dict[str, Any]] = None
 
     created_by: Optional[str] = None
@@ -116,6 +125,7 @@ class OrganizationWithLogo(BaseModel):
                 "members_count",
                 "missing_member_with_elevated_permissions",
                 "pending_invitations_count",
+                "self_serve_sso_enabled",
                 "private_metadata",
                 "created_by",
                 "last_active_at",
@@ -123,7 +133,7 @@ class OrganizationWithLogo(BaseModel):
                 "logo_url",
             ]
         )
-        nullable_fields = set(["role_set_key"])
+        nullable_fields = set(["self_serve_sso_enabled", "role_set_key"])
         serialized = handler(self)
         m = {}
 
