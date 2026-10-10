@@ -25,6 +25,8 @@ class UpdateUserRequestBodyTypedDict(TypedDict):
     r"""The last name to assign to the user"""
     locale: NotRequired[Nullable[str]]
     r"""The locale to assign to the user (e.g., \"en-US\", \"fr-FR\")"""
+    timezone: NotRequired[Nullable[str]]
+    r"""The IANA timezone to assign to the user (e.g., \"America/New_York\", \"Europe/Paris\"). Set to null to clear it and allow automatic capture on a later trusted sign-in."""
     primary_email_address_id: NotRequired[Nullable[str]]
     r"""The ID of the email address to set as primary.
     It must be verified, and present on the current user.
@@ -88,7 +90,7 @@ class UpdateUserRequestBodyTypedDict(TypedDict):
     created_at: NotRequired[Nullable[str]]
     r"""A custom date/time denoting _when_ the user signed up to the application."""
     bypass_client_trust: NotRequired[Nullable[bool]]
-    r"""When set to `true`, the user will bypass client trust checks during sign-in."""
+    r"""When set to `true`, the user will bypass Device Trust checks during sign-in."""
 
 
 class UpdateUserRequestBody(BaseModel):
@@ -105,6 +107,9 @@ class UpdateUserRequestBody(BaseModel):
 
     locale: OptionalNullable[str] = UNSET
     r"""The locale to assign to the user (e.g., \"en-US\", \"fr-FR\")"""
+
+    timezone: OptionalNullable[str] = UNSET
+    r"""The IANA timezone to assign to the user (e.g., \"America/New_York\", \"Europe/Paris\"). Set to null to clear it and allow automatic capture on a later trusted sign-in."""
 
     primary_email_address_id: OptionalNullable[str] = UNSET
     r"""The ID of the email address to set as primary.
@@ -188,7 +193,7 @@ class UpdateUserRequestBody(BaseModel):
     r"""A custom date/time denoting _when_ the user signed up to the application."""
 
     bypass_client_trust: OptionalNullable[bool] = UNSET
-    r"""When set to `true`, the user will bypass client trust checks during sign-in."""
+    r"""When set to `true`, the user will bypass Device Trust checks during sign-in."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
@@ -198,6 +203,7 @@ class UpdateUserRequestBody(BaseModel):
                 "first_name",
                 "last_name",
                 "locale",
+                "timezone",
                 "primary_email_address_id",
                 "notify_primary_email_address_changed",
                 "primary_phone_number_id",
@@ -226,6 +232,7 @@ class UpdateUserRequestBody(BaseModel):
                 "first_name",
                 "last_name",
                 "locale",
+                "timezone",
                 "primary_email_address_id",
                 "notify_primary_email_address_changed",
                 "primary_phone_number_id",

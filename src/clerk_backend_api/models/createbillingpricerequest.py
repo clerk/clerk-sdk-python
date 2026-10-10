@@ -26,11 +26,11 @@ class CreateBillingPriceRequestTypedDict(TypedDict):
     plan_id: str
     r"""The ID of the plan this price belongs to."""
     amount: Nullable[int]
-    r"""The monthly amount in cents. Must be at least $1 (100 cents) if not null."""
+    r"""The monthly amount in cents. Use `0` for a complimentary price. Positive amounts must be at least $1 (100 cents)."""
     currency: NotRequired[str]
     r"""The currency code (e.g., \"USD\"). Defaults to USD."""
     annual_monthly_amount: NotRequired[Nullable[int]]
-    r"""The monthly amount in cents when billed annually. Must be at least $1 (100 cents) if not null."""
+    r"""The monthly amount in cents when billed annually. Use `0` for a complimentary price. Positive amounts must be at least $1 (100 cents)."""
     description: NotRequired[str]
     r"""An optional description for this custom price."""
     supported_billing_periods: NotRequired[
@@ -44,13 +44,13 @@ class CreateBillingPriceRequest(BaseModel):
     r"""The ID of the plan this price belongs to."""
 
     amount: Nullable[int]
-    r"""The monthly amount in cents. Must be at least $1 (100 cents) if not null."""
+    r"""The monthly amount in cents. Use `0` for a complimentary price. Positive amounts must be at least $1 (100 cents)."""
 
     currency: Optional[str] = "USD"
     r"""The currency code (e.g., \"USD\"). Defaults to USD."""
 
     annual_monthly_amount: OptionalNullable[int] = UNSET
-    r"""The monthly amount in cents when billed annually. Must be at least $1 (100 cents) if not null."""
+    r"""The monthly amount in cents when billed annually. Use `0` for a complimentary price. Positive amounts must be at least $1 (100 cents)."""
 
     description: Optional[str] = None
     r"""An optional description for this custom price."""

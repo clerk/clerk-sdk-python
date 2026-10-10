@@ -27,7 +27,10 @@ class ListOAuthApplicationsRequestTypedDict(TypedDict):
     if you pass `order_by=name&order_by=created_at`, we will consider only the first `order_by` parameter, which is `name`. The `created_at` parameter will be ignored in this case.
     """
     name_query: NotRequired[str]
-    r"""Returns OAuth applications with names that match the given query, via case-insensitive partial match."""
+    r"""Returns OAuth applications with names that match the given query, via case-insensitive partial match.
+    Also returns the OAuth application whose `client_id` is exactly the given query, which is useful for
+    resolving a `client_id` to the OAuth application `id` required by the read, update and delete endpoints.
+    """
 
 
 class ListOAuthApplicationsRequest(BaseModel):
@@ -64,7 +67,10 @@ class ListOAuthApplicationsRequest(BaseModel):
         Optional[str],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = None
-    r"""Returns OAuth applications with names that match the given query, via case-insensitive partial match."""
+    r"""Returns OAuth applications with names that match the given query, via case-insensitive partial match.
+    Also returns the OAuth application whose `client_id` is exactly the given query, which is useful for
+    resolving a `client_id` to the OAuth application `id` required by the read, update and delete endpoints.
+    """
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

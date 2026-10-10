@@ -15,9 +15,14 @@ class InstanceProtectTypedDict(TypedDict):
 
     object: InstanceProtectObject
     rules_enabled: bool
+    r"""Whether Protect rules are enforced on this instance. False does not mean the instance is outside Protect — by default it is still evaluated in shadow, where rules are scored and recorded but never block."""
     specter_enabled: bool
     checks_bypassed: bool
     r"""Whether the instance has opted out of the Protect prerequisite checks, asserting its setup already meets the requirements."""
+    checks_verified: bool
+    r"""Whether the Protect system has verified the instance's prerequisite checks. Protect rules are gated on checks being verified, bypassed or exempt."""
+    checks_exempt: bool
+    r"""Whether the instance was created into Protect and so was never subject to the prerequisite checks at all."""
 
 
 class InstanceProtect(BaseModel):
@@ -26,8 +31,15 @@ class InstanceProtect(BaseModel):
     object: InstanceProtectObject
 
     rules_enabled: bool
+    r"""Whether Protect rules are enforced on this instance. False does not mean the instance is outside Protect — by default it is still evaluated in shadow, where rules are scored and recorded but never block."""
 
     specter_enabled: bool
 
     checks_bypassed: bool
     r"""Whether the instance has opted out of the Protect prerequisite checks, asserting its setup already meets the requirements."""
+
+    checks_verified: bool
+    r"""Whether the Protect system has verified the instance's prerequisite checks. Protect rules are gated on checks being verified, bypassed or exempt."""
+
+    checks_exempt: bool
+    r"""Whether the instance was created into Protect and so was never subject to the prerequisite checks at all."""
