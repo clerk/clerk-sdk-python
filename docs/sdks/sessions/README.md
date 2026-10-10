@@ -8,6 +8,7 @@
 * [create](#create) - Create a new active session
 * [get](#get) - Retrieve a session
 * [refresh](#refresh) - Refresh a session
+* [get_reverification](#get_reverification) - Retrieve a reverification
 * [revoke](#revoke) - Revoke a session
 * [create_token](#create_token) - Create a session token
 * [create_token_from_template](#create_token_from_template) - Create a session token from a JWT template
@@ -200,6 +201,48 @@ with Clerk(
 | Error Type         | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
 | models.ClerkErrors | 400, 401           | application/json   |
+| models.SDKError    | 4XX, 5XX           | \*/\*              |
+
+## get_reverification
+
+Retrieve a reverification scoped to a session. A resource server can use this to validate a reverification id it received from its client: confirm it is real, scoped to the expected session, completed, and how fresh each factor is. Single-use / replay detection is the caller's responsibility (the id is stable, so the caller dedups consumed ids).
+
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="GetReverification" method="get" path="/sessions/{session_id}/reverifications/{reverification_id}" -->
+```python
+from clerk_backend_api import Clerk
+
+
+with Clerk(
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+) as clerk:
+
+    res = clerk.sessions.get_reverification(session_id="<id>", reverification_id="<id>")
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `session_id`                                                        | *str*                                                               | :heavy_check_mark:                                                  | The ID of the session the reverification belongs to                 |
+| `reverification_id`                                                 | *str*                                                               | :heavy_check_mark:                                                  | The ID of the reverification                                        |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+
+### Response
+
+**[models.Reverification](../../models/reverification.md)**
+
+### Errors
+
+| Error Type         | Status Code        | Content Type       |
+| ------------------ | ------------------ | ------------------ |
+| models.ClerkErrors | 400, 401, 404      | application/json   |
 | models.SDKError    | 4XX, 5XX           | \*/\*              |
 
 ## revoke

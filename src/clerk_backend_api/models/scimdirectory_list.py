@@ -8,17 +8,17 @@ from typing_extensions import TypedDict
 
 
 class SCIMDirectoryListTypedDict(TypedDict):
-    r"""A list of SCIM directories"""
+    r"""A list of directories"""
 
     data: List[SCIMDirectoryTypedDict]
     total_count: int
-    r"""Total number of SCIM directories."""
+    r"""Total number of directories."""
 
 
 class SCIMDirectoryList(BaseModel):
-    r"""A list of SCIM directories"""
+    r"""A list of directories"""
 
     data: List[SCIMDirectory]
 
     total_count: int
-    r"""Total number of SCIM directories."""
+    r"""Total number of directories."""

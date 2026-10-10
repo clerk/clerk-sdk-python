@@ -50,7 +50,7 @@ class BillingStatementGroupsObject(str, Enum):
     COMMERCE_STATEMENT_GROUP = "commerce_statement_group"
 
 
-class GroupsTypedDict(TypedDict):
+class BillingStatementGroupsTypedDict(TypedDict):
     r"""A statement group."""
 
     object: BillingStatementGroupsObject
@@ -61,7 +61,7 @@ class GroupsTypedDict(TypedDict):
     r"""The payment attempts included in the group"""
 
 
-class Groups(BaseModel):
+class BillingStatementGroups(BaseModel):
     r"""A statement group."""
 
     object: BillingStatementGroupsObject
@@ -88,7 +88,7 @@ class BillingStatementTypedDict(TypedDict):
     r"""The current status of the statement."""
     totals: BillingStatementTotalsTypedDict
     r"""Totals for the statement."""
-    groups: List[GroupsTypedDict]
+    groups: List[BillingStatementGroupsTypedDict]
     r"""Array of statement groups."""
 
 
@@ -113,5 +113,5 @@ class BillingStatement(BaseModel):
     totals: BillingStatementTotals
     r"""Totals for the statement."""
 
-    groups: List[Groups]
+    groups: List[BillingStatementGroups]
     r"""Array of statement groups."""

@@ -27,6 +27,40 @@ class SAMLConnection2Object(str, Enum):
     SAML_CONNECTION = "saml_connection"
 
 
+class SAMLConnectionIdpCertificatesTypedDict(TypedDict):
+    certificate: str
+    r"""The X.509 certificate, base64 DER without PEM armor"""
+    issued_at: Nullable[int]
+    r"""Unix timestamp (milliseconds) of the X.509 NotBefore"""
+    expires_at: Nullable[int]
+    r"""Unix timestamp (milliseconds) of the X.509 NotAfter"""
+
+
+class SAMLConnectionIdpCertificates(BaseModel):
+    certificate: str
+    r"""The X.509 certificate, base64 DER without PEM armor"""
+
+    issued_at: Nullable[int]
+    r"""Unix timestamp (milliseconds) of the X.509 NotBefore"""
+
+    expires_at: Nullable[int]
+    r"""Unix timestamp (milliseconds) of the X.509 NotAfter"""
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+
+            if val != UNSET_SENTINEL:
+                m[k] = val
+
+        return m
+
+
 class TwoTypedDict(TypedDict):
     object: SAMLConnection2Object
     id: str
@@ -41,6 +75,10 @@ class TwoTypedDict(TypedDict):
     """
     idp_certificate_expires_at: Nullable[int]
     r"""Unix timestamp (milliseconds) of the end of the IdP certificate validity window (X.509 NotAfter). Null when no certificate is configured.
+
+    """
+    idp_certificates: List[SAMLConnectionIdpCertificatesTypedDict]
+    r"""Every IdP signing certificate the connection trusts, primary first. A SAML response verifies against any of them.
 
     """
     acs_url: str
@@ -96,6 +134,11 @@ class Two(BaseModel):
 
     idp_certificate_expires_at: Nullable[int]
     r"""Unix timestamp (milliseconds) of the end of the IdP certificate validity window (X.509 NotAfter). Null when no certificate is configured.
+
+    """
+
+    idp_certificates: List[SAMLConnectionIdpCertificates]
+    r"""Every IdP signing certificate the connection trusts, primary first. A SAML response verifies against any of them.
 
     """
 
@@ -205,6 +248,40 @@ class SAMLConnectionObject(str, Enum):
     SAML_CONNECTION = "saml_connection"
 
 
+class SAMLConnection1IdpCertificatesTypedDict(TypedDict):
+    certificate: str
+    r"""The X.509 certificate, base64 DER without PEM armor"""
+    issued_at: Nullable[int]
+    r"""Unix timestamp (milliseconds) of the X.509 NotBefore"""
+    expires_at: Nullable[int]
+    r"""Unix timestamp (milliseconds) of the X.509 NotAfter"""
+
+
+class SAMLConnection1IdpCertificates(BaseModel):
+    certificate: str
+    r"""The X.509 certificate, base64 DER without PEM armor"""
+
+    issued_at: Nullable[int]
+    r"""Unix timestamp (milliseconds) of the X.509 NotBefore"""
+
+    expires_at: Nullable[int]
+    r"""Unix timestamp (milliseconds) of the X.509 NotAfter"""
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+
+            if val != UNSET_SENTINEL:
+                m[k] = val
+
+        return m
+
+
 class OneTypedDict(TypedDict):
     object: SAMLConnectionObject
     id: str
@@ -219,6 +296,10 @@ class OneTypedDict(TypedDict):
     """
     idp_certificate_expires_at: Nullable[int]
     r"""Unix timestamp (milliseconds) of the end of the IdP certificate validity window (X.509 NotAfter). Null when no certificate is configured.
+
+    """
+    idp_certificates: List[SAMLConnection1IdpCertificatesTypedDict]
+    r"""Every IdP signing certificate the connection trusts, primary first. A SAML response verifies against any of them.
 
     """
     acs_url: str
@@ -279,6 +360,11 @@ class One(BaseModel):
 
     idp_certificate_expires_at: Nullable[int]
     r"""Unix timestamp (milliseconds) of the end of the IdP certificate validity window (X.509 NotAfter). Null when no certificate is configured.
+
+    """
+
+    idp_certificates: List[SAMLConnection1IdpCertificates]
+    r"""Every IdP signing certificate the connection trusts, primary first. A SAML response verifies against any of them.
 
     """
 

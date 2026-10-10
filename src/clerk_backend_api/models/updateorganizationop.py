@@ -10,6 +10,7 @@ from clerk_backend_api.types import (
 )
 from clerk_backend_api.utils import FieldMetadata, PathParamMetadata, RequestMetadata
 from pydantic import model_serializer
+from typing import Dict
 from typing_extensions import Annotated, NotRequired, TypedDict
 
 
@@ -25,10 +26,20 @@ class UpdateOrganizationRequestBodyTypedDict(TypedDict):
     r"""The maximum number of memberships allowed for this organization"""
     admin_delete_enabled: NotRequired[Nullable[bool]]
     r"""If true, an admin can delete this organization with the Frontend API."""
+    self_serve_sso_enabled: NotRequired[Nullable[bool]]
+    r"""Whether this organization can configure self-serve enterprise SSO.
+    Requires the instance to have the self-serve SSO entitlement enabled.
+    """
     created_at: NotRequired[Nullable[str]]
     r"""A custom date/time denoting _when_ the organization was created, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`)."""
     role_set_key: NotRequired[Nullable[str]]
     r"""The key of the [role set](https://clerk.com/docs/guides/organizations/control-access/role-sets) to assign to this organization."""
+    reassignment_mappings: NotRequired[Nullable[Dict[str, str]]]
+    r"""Maps role keys in the organization's current role set to role keys in the new role set. Only applies when `role_set_key` changes the role set.
+    Every role that a member holds and that the new role set does not include must be mapped, otherwise the request fails with a 422.
+    Mapping a role that both role sets include moves its members to the destination role.
+    Memberships are reassigned asynchronously after the response.
+    """
 
 
 class UpdateOrganizationRequestBody(BaseModel):
@@ -47,11 +58,23 @@ class UpdateOrganizationRequestBody(BaseModel):
     admin_delete_enabled: OptionalNullable[bool] = UNSET
     r"""If true, an admin can delete this organization with the Frontend API."""
 
+    self_serve_sso_enabled: OptionalNullable[bool] = UNSET
+    r"""Whether this organization can configure self-serve enterprise SSO.
+    Requires the instance to have the self-serve SSO entitlement enabled.
+    """
+
     created_at: OptionalNullable[str] = UNSET
     r"""A custom date/time denoting _when_ the organization was created, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`)."""
 
     role_set_key: OptionalNullable[str] = UNSET
     r"""The key of the [role set](https://clerk.com/docs/guides/organizations/control-access/role-sets) to assign to this organization."""
+
+    reassignment_mappings: OptionalNullable[Dict[str, str]] = UNSET
+    r"""Maps role keys in the organization's current role set to role keys in the new role set. Only applies when `role_set_key` changes the role set.
+    Every role that a member holds and that the new role set does not include must be mapped, otherwise the request fails with a 422.
+    Mapping a role that both role sets include moves its members to the destination role.
+    Memberships are reassigned asynchronously after the response.
+    """
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
@@ -61,8 +84,10 @@ class UpdateOrganizationRequestBody(BaseModel):
                 "slug",
                 "max_allowed_memberships",
                 "admin_delete_enabled",
+                "self_serve_sso_enabled",
                 "created_at",
                 "role_set_key",
+                "reassignment_mappings",
             ]
         )
         nullable_fields = set(
@@ -71,8 +96,10 @@ class UpdateOrganizationRequestBody(BaseModel):
                 "slug",
                 "max_allowed_memberships",
                 "admin_delete_enabled",
+                "self_serve_sso_enabled",
                 "created_at",
                 "role_set_key",
+                "reassignment_mappings",
             ]
         )
         serialized = handler(self)
