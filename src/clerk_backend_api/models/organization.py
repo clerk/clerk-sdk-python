@@ -39,6 +39,14 @@ class OrganizationTypedDict(TypedDict):
     members_count: NotRequired[int]
     missing_member_with_elevated_permissions: NotRequired[bool]
     pending_invitations_count: NotRequired[int]
+    self_serve_sso_enabled: NotRequired[bool]
+    r"""Whether this organization can configure self-serve enterprise SSO.
+
+    """
+    self_serve_directory_sync_enabled: NotRequired[bool]
+    r"""Whether this organization can configure self-serve Directory Sync (SCIM).
+
+    """
     private_metadata: NotRequired[Dict[str, Any]]
     created_by: NotRequired[str]
     last_active_at: NotRequired[int]
@@ -86,6 +94,16 @@ class Organization(BaseModel):
 
     pending_invitations_count: Optional[int] = None
 
+    self_serve_sso_enabled: Optional[bool] = None
+    r"""Whether this organization can configure self-serve enterprise SSO.
+
+    """
+
+    self_serve_directory_sync_enabled: Optional[bool] = None
+    r"""Whether this organization can configure self-serve Directory Sync (SCIM).
+
+    """
+
     private_metadata: Optional[Dict[str, Any]] = None
 
     created_by: Optional[str] = None
@@ -108,6 +126,8 @@ class Organization(BaseModel):
                 "members_count",
                 "missing_member_with_elevated_permissions",
                 "pending_invitations_count",
+                "self_serve_sso_enabled",
+                "self_serve_directory_sync_enabled",
                 "private_metadata",
                 "created_by",
                 "last_active_at",
