@@ -16,10 +16,20 @@ from typing_extensions import NotRequired, TypedDict
 class UpdateInstanceOAuthApplicationSettingsRequestBodyTypedDict(TypedDict):
     dynamic_oauth_client_registration: NotRequired[Nullable[bool]]
     r"""Whether dynamic OAuth client registration is enabled for the instance (RFC 7591)."""
+    dynamic_client_allowed_scopes: NotRequired[Nullable[List[str]]]
+    r"""Administrator-selected scope ceiling for dynamically registered and automatically admitted CIMD clients. Null preserves registered client limits; defaults must be a subset. Fresh user consent is required for expansion."""
     default_scopes: NotRequired[Nullable[List[str]]]
-    r"""Default scopes. Set to null to reset to Clerk-provided defaults."""
+    r"""Default scopes assigned when a dynamically registered or first-contact CIMD client omits `scope`. Accepts built-in keys and current custom catalog keys. `advertised` does not affect eligibility. Duplicate keys, unknown keys, and `offline_access` are rejected. An empty array or null resets to Clerk-provided defaults.
+
+    """
     oauth_jwt_access_tokens: NotRequired[Nullable[bool]]
     r"""Whether OAuth JWT access tokens are enabled for the instance (disabled indicates opaque access tokens)."""
+    aud_claim_enabled: NotRequired[Nullable[bool]]
+    r"""Whether OAuth access tokens can include an aud claim derived from the RFC 8707 resource parameter."""
+    aud_claim_refresh_backfill_enabled: NotRequired[Nullable[bool]]
+    r"""Whether refresh grants without a resource can adopt the requested resource when audience claims are enabled."""
+    pkce_required: NotRequired[Nullable[bool]]
+    r"""Whether all new OAuth authorization-code requests must use PKCE with the S256 challenge method."""
     client_id_metadata_documents_advertised: NotRequired[Nullable[bool]]
     r"""Whether the instance advertises support for Client ID Metadata Documents in its OAuth authorization server metadata."""
     client_id_metadata_documents_only_allow_pre_registered_clients: NotRequired[
@@ -36,11 +46,25 @@ class UpdateInstanceOAuthApplicationSettingsRequestBody(BaseModel):
     dynamic_oauth_client_registration: OptionalNullable[bool] = UNSET
     r"""Whether dynamic OAuth client registration is enabled for the instance (RFC 7591)."""
 
+    dynamic_client_allowed_scopes: OptionalNullable[List[str]] = UNSET
+    r"""Administrator-selected scope ceiling for dynamically registered and automatically admitted CIMD clients. Null preserves registered client limits; defaults must be a subset. Fresh user consent is required for expansion."""
+
     default_scopes: OptionalNullable[List[str]] = UNSET
-    r"""Default scopes. Set to null to reset to Clerk-provided defaults."""
+    r"""Default scopes assigned when a dynamically registered or first-contact CIMD client omits `scope`. Accepts built-in keys and current custom catalog keys. `advertised` does not affect eligibility. Duplicate keys, unknown keys, and `offline_access` are rejected. An empty array or null resets to Clerk-provided defaults.
+
+    """
 
     oauth_jwt_access_tokens: OptionalNullable[bool] = UNSET
     r"""Whether OAuth JWT access tokens are enabled for the instance (disabled indicates opaque access tokens)."""
+
+    aud_claim_enabled: OptionalNullable[bool] = UNSET
+    r"""Whether OAuth access tokens can include an aud claim derived from the RFC 8707 resource parameter."""
+
+    aud_claim_refresh_backfill_enabled: OptionalNullable[bool] = UNSET
+    r"""Whether refresh grants without a resource can adopt the requested resource when audience claims are enabled."""
+
+    pkce_required: OptionalNullable[bool] = UNSET
+    r"""Whether all new OAuth authorization-code requests must use PKCE with the S256 challenge method."""
 
     client_id_metadata_documents_advertised: OptionalNullable[bool] = UNSET
     r"""Whether the instance advertises support for Client ID Metadata Documents in its OAuth authorization server metadata."""
@@ -60,8 +84,12 @@ class UpdateInstanceOAuthApplicationSettingsRequestBody(BaseModel):
         optional_fields = set(
             [
                 "dynamic_oauth_client_registration",
+                "dynamic_client_allowed_scopes",
                 "default_scopes",
                 "oauth_jwt_access_tokens",
+                "aud_claim_enabled",
+                "aud_claim_refresh_backfill_enabled",
+                "pkce_required",
                 "client_id_metadata_documents_advertised",
                 "client_id_metadata_documents_only_allow_pre_registered_clients",
                 "client_id_metadata_documents_block_implicitly_allowed_clients",
@@ -70,8 +98,12 @@ class UpdateInstanceOAuthApplicationSettingsRequestBody(BaseModel):
         nullable_fields = set(
             [
                 "dynamic_oauth_client_registration",
+                "dynamic_client_allowed_scopes",
                 "default_scopes",
                 "oauth_jwt_access_tokens",
+                "aud_claim_enabled",
+                "aud_claim_refresh_backfill_enabled",
+                "pkce_required",
                 "client_id_metadata_documents_advertised",
                 "client_id_metadata_documents_only_allow_pre_registered_clients",
                 "client_id_metadata_documents_block_implicitly_allowed_clients",

@@ -14,18 +14,17 @@ from typing_extensions import NotRequired, TypedDict
 
 class UpdateInstanceProtectRequestBodyTypedDict(TypedDict):
     rules_enabled: NotRequired[Nullable[bool]]
-    specter_enabled: NotRequired[Nullable[bool]]
+    r"""Set true to enforce Protect rules on this instance. Set false to stop enforcing and return the instance to its default posture, where traffic is still evaluated in shadow but nothing is blocked. This does not remove the instance from Protect."""
 
 
 class UpdateInstanceProtectRequestBody(BaseModel):
     rules_enabled: OptionalNullable[bool] = UNSET
-
-    specter_enabled: OptionalNullable[bool] = UNSET
+    r"""Set true to enforce Protect rules on this instance. Set false to stop enforcing and return the instance to its default posture, where traffic is still evaluated in shadow but nothing is blocked. This does not remove the instance from Protect."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["rules_enabled", "specter_enabled"])
-        nullable_fields = set(["rules_enabled", "specter_enabled"])
+        optional_fields = set(["rules_enabled"])
+        nullable_fields = set(["rules_enabled"])
         serialized = handler(self)
         m = {}
 
