@@ -50,12 +50,12 @@ class GetAPIKeysRequest(BaseModel):
     limit: Annotated[
         Optional[float],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
-    ] = 10
+    ] = 10.0
 
     offset: Annotated[
         OptionalNullable[float],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
-    ] = 0
+    ] = 0.0
 
     query: Annotated[
         Optional[str],

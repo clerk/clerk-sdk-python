@@ -139,6 +139,67 @@ class ResponseBodyObject(str, Enum):
     CLERK_IDP_OAUTH_ACCESS_TOKEN = "clerk_idp_oauth_access_token"
 
 
+class ResponseBodyActTypedDict(TypedDict):
+    sub: str
+    iss: NotRequired[str]
+
+
+class ResponseBodyAct(BaseModel):
+    sub: str
+
+    iss: Optional[str] = None
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["iss"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m
+
+
+class ActTypedDict(TypedDict):
+    r"""The actor chain of an access token issued by an OAuth 2.0 Token Exchange (RFC 8693 section 4.1). Omitted for other access tokens."""
+
+    sub: str
+    iss: NotRequired[str]
+    act: NotRequired[ResponseBodyActTypedDict]
+
+
+class Act(BaseModel):
+    r"""The actor chain of an access token issued by an OAuth 2.0 Token Exchange (RFC 8693 section 4.1). Omitted for other access tokens."""
+
+    sub: str
+
+    iss: Optional[str] = None
+
+    act: Optional[ResponseBodyAct] = None
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["iss", "act"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m
+
+
 class ResponseBody1TypedDict(TypedDict):
     object: ResponseBodyObject
     id: str
@@ -151,6 +212,10 @@ class ResponseBody1TypedDict(TypedDict):
     expiration: Nullable[float]
     created_at: float
     updated_at: float
+    aud: NotRequired[List[str]]
+    r"""The audiences of the access token. Omitted when no audience is set."""
+    act: NotRequired[ActTypedDict]
+    r"""The actor chain of an access token issued by an OAuth 2.0 Token Exchange (RFC 8693 section 4.1). Omitted for other access tokens."""
 
 
 class ResponseBody1(BaseModel):
@@ -176,17 +241,34 @@ class ResponseBody1(BaseModel):
 
     updated_at: float
 
+    aud: Optional[List[str]] = None
+    r"""The audiences of the access token. Omitted when no audience is set."""
+
+    act: Optional[Act] = None
+    r"""The actor chain of an access token issued by an OAuth 2.0 Token Exchange (RFC 8693 section 4.1). Omitted for other access tokens."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
+        optional_fields = set(["aud", "act"])
+        nullable_fields = set(["revocation_reason", "expiration"])
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
             k = f.alias or n
             val = serialized.get(k, serialized.get(n))
+            is_nullable_and_explicitly_set = (
+                k in nullable_fields
+                and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
+            )
 
             if val != UNSET_SENTINEL:
-                m[k] = val
+                if (
+                    val is not None
+                    or k not in optional_fields
+                    or is_nullable_and_explicitly_set
+                ):
+                    m[k] = val
 
         return m
 

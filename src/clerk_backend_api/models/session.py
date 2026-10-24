@@ -55,11 +55,11 @@ class SessionTypedDict(TypedDict):
     status: Status
     last_active_at: int
     expire_at: int
-    r"""Unix timestamp of expiration.
+    r"""Unix timestamp in milliseconds of expiration. Zero means no maximum lifetime.
 
     """
     abandon_at: int
-    r"""Unix timestamp of abandonment.
+    r"""Unix timestamp in milliseconds of abandonment. Zero means no abandonment deadline.
 
     """
     updated_at: int
@@ -93,12 +93,12 @@ class Session(BaseModel):
     last_active_at: int
 
     expire_at: int
-    r"""Unix timestamp of expiration.
+    r"""Unix timestamp in milliseconds of expiration. Zero means no maximum lifetime.
 
     """
 
     abandon_at: int
-    r"""Unix timestamp of abandonment.
+    r"""Unix timestamp in milliseconds of abandonment. Zero means no abandonment deadline.
 
     """
 

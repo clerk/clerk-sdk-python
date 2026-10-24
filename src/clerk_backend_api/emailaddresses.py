@@ -913,7 +913,7 @@ class EmailAddresses(BaseSDK):
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(models.VerificationResponse, http_res)
         if utils.match_response(
-            http_res, ["400", "401", "403", "404"], "application/json"
+            http_res, ["400", "401", "403", "404", "429"], "application/json"
         ):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -1013,7 +1013,7 @@ class EmailAddresses(BaseSDK):
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(models.VerificationResponse, http_res)
         if utils.match_response(
-            http_res, ["400", "401", "403", "404"], "application/json"
+            http_res, ["400", "401", "403", "404", "429"], "application/json"
         ):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
