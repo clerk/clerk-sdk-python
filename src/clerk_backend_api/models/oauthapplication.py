@@ -24,8 +24,16 @@ class OAuthApplicationTypedDict(TypedDict):
     dynamically_registered: bool
     consent_screen_enabled: bool
     pkce_required: bool
+    audience_uri: Nullable[str]
+    r"""The active application audience URI, whose registry identity is permanently reserved to this application."""
+    token_exchange_enabled: bool
+    r"""Whether this confidential application accepts token exchanges from its active audience."""
+    device_authorization_grant_enabled: bool
     public: bool
     scopes: str
+    r"""The complete scope ceiling for the OAuth application, as a space-delimited list of built-in and assigned custom scope keys.
+
+    """
     redirect_uris: List[str]
     callback_url: str
     r"""Deprecated: Use redirect_uris instead.
@@ -67,9 +75,20 @@ class OAuthApplication(BaseModel):
 
     pkce_required: bool
 
+    audience_uri: Nullable[str]
+    r"""The active application audience URI, whose registry identity is permanently reserved to this application."""
+
+    token_exchange_enabled: bool
+    r"""Whether this confidential application accepts token exchanges from its active audience."""
+
+    device_authorization_grant_enabled: bool
+
     public: bool
 
     scopes: str
+    r"""The complete scope ceiling for the OAuth application, as a space-delimited list of built-in and assigned custom scope keys.
+
+    """
 
     redirect_uris: List[str]
 

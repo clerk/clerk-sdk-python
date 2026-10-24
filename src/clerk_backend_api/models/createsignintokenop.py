@@ -8,8 +8,22 @@ from clerk_backend_api.types import (
     UNSET,
     UNSET_SENTINEL,
 )
+from enum import Enum
 from pydantic import model_serializer
 from typing_extensions import NotRequired, TypedDict
+
+
+class SecondFactorVerification(str, Enum):
+    r"""Optional parameter that lets a user with a second factor enabled complete the sign in without being prompted for it.
+    When omitted, redeeming the token completes only the first factor, and the user must still complete their second factor.
+    `fresh`: the second factor is treated as verified at sign in. The session token's `fva` claim reports a second factor age of 0.
+    `stale`: the second factor is treated as unverified. The session token's `fva` claim reports the maximum second factor age of 99999, so any reverification that requires a second factor prompts the user to complete one.
+    Has no effect for users without a second factor enabled.
+    A token created with this parameter signs in a user with a second factor enabled without prompting for it, so `expires_in_seconds` defaults to 10 minutes. We recommend keeping it short.
+    """
+
+    FRESH = "fresh"
+    STALE = "stale"
 
 
 class CreateSignInTokenRequestBodyTypedDict(TypedDict):
@@ -21,7 +35,15 @@ class CreateSignInTokenRequestBodyTypedDict(TypedDict):
     """
     expires_in_seconds: NotRequired[Nullable[int]]
     r"""Optional parameter to specify the life duration of the sign in token in seconds.
-    By default, the duration is 30 days.
+    By default, the duration is 30 days, or 10 minutes when `second_factor_verification` is set.
+    """
+    second_factor_verification: NotRequired[Nullable[SecondFactorVerification]]
+    r"""Optional parameter that lets a user with a second factor enabled complete the sign in without being prompted for it.
+    When omitted, redeeming the token completes only the first factor, and the user must still complete their second factor.
+    `fresh`: the second factor is treated as verified at sign in. The session token's `fva` claim reports a second factor age of 0.
+    `stale`: the second factor is treated as unverified. The session token's `fva` claim reports the maximum second factor age of 99999, so any reverification that requires a second factor prompts the user to complete one.
+    Has no effect for users without a second factor enabled.
+    A token created with this parameter signs in a user with a second factor enabled without prompting for it, so `expires_in_seconds` defaults to 10 minutes. We recommend keeping it short.
     """
 
 
@@ -34,15 +56,28 @@ class CreateSignInTokenRequestBody(BaseModel):
     Organizations must be enabled for the instance, and the user must be a member of the organization.
     """
 
-    expires_in_seconds: OptionalNullable[int] = 2592000
+    expires_in_seconds: OptionalNullable[int] = UNSET
     r"""Optional parameter to specify the life duration of the sign in token in seconds.
-    By default, the duration is 30 days.
+    By default, the duration is 30 days, or 10 minutes when `second_factor_verification` is set.
+    """
+
+    second_factor_verification: OptionalNullable[SecondFactorVerification] = UNSET
+    r"""Optional parameter that lets a user with a second factor enabled complete the sign in without being prompted for it.
+    When omitted, redeeming the token completes only the first factor, and the user must still complete their second factor.
+    `fresh`: the second factor is treated as verified at sign in. The session token's `fva` claim reports a second factor age of 0.
+    `stale`: the second factor is treated as unverified. The session token's `fva` claim reports the maximum second factor age of 99999, so any reverification that requires a second factor prompts the user to complete one.
+    Has no effect for users without a second factor enabled.
+    A token created with this parameter signs in a user with a second factor enabled without prompting for it, so `expires_in_seconds` defaults to 10 minutes. We recommend keeping it short.
     """
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["org_id", "expires_in_seconds"])
-        nullable_fields = set(["org_id", "expires_in_seconds"])
+        optional_fields = set(
+            ["org_id", "expires_in_seconds", "second_factor_verification"]
+        )
+        nullable_fields = set(
+            ["org_id", "expires_in_seconds", "second_factor_verification"]
+        )
         serialized = handler(self)
         m = {}
 

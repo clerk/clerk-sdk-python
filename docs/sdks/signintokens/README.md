@@ -17,6 +17,7 @@ You can optionally supply a different duration in seconds using the `expires_in_
 
 <!-- UsageSnippet language="python" operationID="CreateSignInToken" method="post" path="/sign_in_tokens" -->
 ```python
+import clerk_backend_api
 from clerk_backend_api import Clerk
 
 
@@ -27,6 +28,8 @@ with Clerk(
     res = clerk.sign_in_tokens.create(request={
         "user_id": "user_12345",
         "org_id": "<id>",
+        "expires_in_seconds": 2592000,
+        "second_factor_verification": clerk_backend_api.SecondFactorVerification.STALE,
     })
 
     # Handle response

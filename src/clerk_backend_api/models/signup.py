@@ -72,6 +72,8 @@ class SignUpTypedDict(TypedDict):
     """
     unsafe_metadata: NotRequired[Dict[str, Any]]
     public_metadata: NotRequired[Dict[str, Any]]
+    timezone: NotRequired[Nullable[str]]
+    r"""The IANA timezone associated with the sign-up attempt."""
     locale: NotRequired[Nullable[str]]
     r"""The user locale preference for the sign-up specified as a BCP-47 language tag."""
     external_account: NotRequired[SignUpExternalAccountTypedDict]
@@ -132,6 +134,9 @@ class SignUp(BaseModel):
 
     public_metadata: Optional[Dict[str, Any]] = None
 
+    timezone: OptionalNullable[str] = UNSET
+    r"""The IANA timezone associated with the sign-up attempt."""
+
     locale: OptionalNullable[str] = UNSET
     r"""The user locale preference for the sign-up specified as a BCP-47 language tag."""
 
@@ -145,7 +150,13 @@ class SignUp(BaseModel):
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
-            ["unsafe_metadata", "public_metadata", "locale", "external_account"]
+            [
+                "unsafe_metadata",
+                "public_metadata",
+                "timezone",
+                "locale",
+                "external_account",
+            ]
         )
         nullable_fields = set(
             [
@@ -159,6 +170,7 @@ class SignUp(BaseModel):
                 "created_session_id",
                 "created_user_id",
                 "legal_accepted_at",
+                "timezone",
                 "locale",
             ]
         )
