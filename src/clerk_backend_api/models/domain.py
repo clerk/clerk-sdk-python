@@ -2,12 +2,15 @@
 
 from __future__ import annotations
 from .cnametarget import CNameTarget, CNameTargetTypedDict
+from .dnstarget import DNSTarget, DNSTargetTypedDict
 from clerk_backend_api.types import (
     BaseModel,
     Nullable,
     OptionalNullable,
     UNSET,
     UNSET_SENTINEL,
+    current_exclude_none,
+    serialize_with_info,
 )
 from enum import Enum
 from pydantic import model_serializer
@@ -32,6 +35,11 @@ class DomainTypedDict(TypedDict):
     """
     proxy_url: NotRequired[Nullable[str]]
     cname_targets: NotRequired[Nullable[List[CNameTargetTypedDict]]]
+    r"""Legacy CNAME-only DNS targets. Prefer `dns_targets` when present."""
+    dns_targets: NotRequired[Nullable[List[DNSTargetTypedDict]]]
+    r"""The complete typed DNS contract. Consumers should use this field instead of merging it with `cname_targets`.
+
+    """
 
 
 class Domain(BaseModel):
@@ -55,16 +63,32 @@ class Domain(BaseModel):
     proxy_url: OptionalNullable[str] = UNSET
 
     cname_targets: OptionalNullable[List[CNameTarget]] = UNSET
+    r"""Legacy CNAME-only DNS targets. Prefer `dns_targets` when present."""
+
+    dns_targets: OptionalNullable[List[DNSTarget]] = UNSET
+    r"""The complete typed DNS contract. Consumers should use this field instead of merging it with `cname_targets`.
+
+    """
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
-        optional_fields = set(["accounts_portal_url", "proxy_url", "cname_targets"])
-        nullable_fields = set(["accounts_portal_url", "proxy_url", "cname_targets"])
+        optional_fields = set(
+            ["accounts_portal_url", "proxy_url", "cname_targets", "dns_targets"]
+        )
+        nullable_fields = set(
+            ["accounts_portal_url", "proxy_url", "cname_targets", "dns_targets"]
+        )
+        exclude_none = current_exclude_none()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and exclude_none is False:
+                continue
             val = serialized.get(k, serialized.get(n))
             is_nullable_and_explicitly_set = (
                 k in nullable_fields

@@ -7,6 +7,8 @@ from clerk_backend_api.types import (
     OptionalNullable,
     UNSET,
     UNSET_SENTINEL,
+    current_exclude_none,
+    serialize_with_info,
 )
 from clerk_backend_api.utils import FieldMetadata, PathParamMetadata, RequestMetadata
 from pydantic import model_serializer
@@ -25,6 +27,8 @@ class UpdateUserRequestBodyTypedDict(TypedDict):
     r"""The last name to assign to the user"""
     locale: NotRequired[Nullable[str]]
     r"""The locale to assign to the user (e.g., \"en-US\", \"fr-FR\")"""
+    timezone: NotRequired[Nullable[str]]
+    r"""The IANA timezone to assign to the user (e.g., \"America/New_York\", \"Europe/Paris\"). Set to null to clear it and allow automatic capture on a later trusted sign-in."""
     primary_email_address_id: NotRequired[Nullable[str]]
     r"""The ID of the email address to set as primary.
     It must be verified, and present on the current user.
@@ -88,7 +92,7 @@ class UpdateUserRequestBodyTypedDict(TypedDict):
     created_at: NotRequired[Nullable[str]]
     r"""A custom date/time denoting _when_ the user signed up to the application."""
     bypass_client_trust: NotRequired[Nullable[bool]]
-    r"""When set to `true`, the user will bypass client trust checks during sign-in."""
+    r"""When set to `true`, the user will bypass Device Trust checks during sign-in."""
 
 
 class UpdateUserRequestBody(BaseModel):
@@ -105,6 +109,9 @@ class UpdateUserRequestBody(BaseModel):
 
     locale: OptionalNullable[str] = UNSET
     r"""The locale to assign to the user (e.g., \"en-US\", \"fr-FR\")"""
+
+    timezone: OptionalNullable[str] = UNSET
+    r"""The IANA timezone to assign to the user (e.g., \"America/New_York\", \"Europe/Paris\"). Set to null to clear it and allow automatic capture on a later trusted sign-in."""
 
     primary_email_address_id: OptionalNullable[str] = UNSET
     r"""The ID of the email address to set as primary.
@@ -188,9 +195,12 @@ class UpdateUserRequestBody(BaseModel):
     r"""A custom date/time denoting _when_ the user signed up to the application."""
 
     bypass_client_trust: OptionalNullable[bool] = UNSET
-    r"""When set to `true`, the user will bypass client trust checks during sign-in."""
+    r"""When set to `true`, the user will bypass Device Trust checks during sign-in."""
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
         optional_fields = set(
             [
@@ -198,6 +208,7 @@ class UpdateUserRequestBody(BaseModel):
                 "first_name",
                 "last_name",
                 "locale",
+                "timezone",
                 "primary_email_address_id",
                 "notify_primary_email_address_changed",
                 "primary_phone_number_id",
@@ -226,6 +237,7 @@ class UpdateUserRequestBody(BaseModel):
                 "first_name",
                 "last_name",
                 "locale",
+                "timezone",
                 "primary_email_address_id",
                 "notify_primary_email_address_changed",
                 "primary_phone_number_id",
@@ -245,11 +257,14 @@ class UpdateUserRequestBody(BaseModel):
                 "bypass_client_trust",
             ]
         )
+        exclude_none = current_exclude_none()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and exclude_none is False:
+                continue
             val = serialized.get(k, serialized.get(n))
             is_nullable_and_explicitly_set = (
                 k in nullable_fields

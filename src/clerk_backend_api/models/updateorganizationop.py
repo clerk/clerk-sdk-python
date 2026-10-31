@@ -7,9 +7,12 @@ from clerk_backend_api.types import (
     OptionalNullable,
     UNSET,
     UNSET_SENTINEL,
+    current_exclude_none,
+    serialize_with_info,
 )
 from clerk_backend_api.utils import FieldMetadata, PathParamMetadata, RequestMetadata
 from pydantic import model_serializer
+from typing import Dict
 from typing_extensions import Annotated, NotRequired, TypedDict
 
 
@@ -25,10 +28,20 @@ class UpdateOrganizationRequestBodyTypedDict(TypedDict):
     r"""The maximum number of memberships allowed for this organization"""
     admin_delete_enabled: NotRequired[Nullable[bool]]
     r"""If true, an admin can delete this organization with the Frontend API."""
+    self_serve_sso_enabled: NotRequired[Nullable[bool]]
+    r"""Whether this organization can configure self-serve enterprise SSO."""
+    self_serve_directory_sync_enabled: NotRequired[Nullable[bool]]
+    r"""Whether this organization can configure self-serve Directory Sync (SCIM)."""
     created_at: NotRequired[Nullable[str]]
     r"""A custom date/time denoting _when_ the organization was created, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`)."""
     role_set_key: NotRequired[Nullable[str]]
     r"""The key of the [role set](https://clerk.com/docs/guides/organizations/control-access/role-sets) to assign to this organization."""
+    reassignment_mappings: NotRequired[Nullable[Dict[str, str]]]
+    r"""Maps role keys in the organization's current role set to role keys in the new role set. Only applies when `role_set_key` changes the role set.
+    Every role that a member holds and that the new role set does not include must be mapped, otherwise the request fails with a 422.
+    Mapping a role that both role sets include moves its members to the destination role.
+    Memberships are reassigned asynchronously after the response.
+    """
 
 
 class UpdateOrganizationRequestBody(BaseModel):
@@ -47,13 +60,29 @@ class UpdateOrganizationRequestBody(BaseModel):
     admin_delete_enabled: OptionalNullable[bool] = UNSET
     r"""If true, an admin can delete this organization with the Frontend API."""
 
+    self_serve_sso_enabled: OptionalNullable[bool] = UNSET
+    r"""Whether this organization can configure self-serve enterprise SSO."""
+
+    self_serve_directory_sync_enabled: OptionalNullable[bool] = UNSET
+    r"""Whether this organization can configure self-serve Directory Sync (SCIM)."""
+
     created_at: OptionalNullable[str] = UNSET
     r"""A custom date/time denoting _when_ the organization was created, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`)."""
 
     role_set_key: OptionalNullable[str] = UNSET
     r"""The key of the [role set](https://clerk.com/docs/guides/organizations/control-access/role-sets) to assign to this organization."""
 
+    reassignment_mappings: OptionalNullable[Dict[str, str]] = UNSET
+    r"""Maps role keys in the organization's current role set to role keys in the new role set. Only applies when `role_set_key` changes the role set.
+    Every role that a member holds and that the new role set does not include must be mapped, otherwise the request fails with a 422.
+    Mapping a role that both role sets include moves its members to the destination role.
+    Memberships are reassigned asynchronously after the response.
+    """
+
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
         optional_fields = set(
             [
@@ -61,8 +90,11 @@ class UpdateOrganizationRequestBody(BaseModel):
                 "slug",
                 "max_allowed_memberships",
                 "admin_delete_enabled",
+                "self_serve_sso_enabled",
+                "self_serve_directory_sync_enabled",
                 "created_at",
                 "role_set_key",
+                "reassignment_mappings",
             ]
         )
         nullable_fields = set(
@@ -71,15 +103,21 @@ class UpdateOrganizationRequestBody(BaseModel):
                 "slug",
                 "max_allowed_memberships",
                 "admin_delete_enabled",
+                "self_serve_sso_enabled",
+                "self_serve_directory_sync_enabled",
                 "created_at",
                 "role_set_key",
+                "reassignment_mappings",
             ]
         )
+        exclude_none = current_exclude_none()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and exclude_none is False:
+                continue
             val = serialized.get(k, serialized.get(n))
             is_nullable_and_explicitly_set = (
                 k in nullable_fields

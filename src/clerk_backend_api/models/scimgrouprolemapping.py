@@ -2,7 +2,12 @@
 
 from __future__ import annotations
 from .role import Role, RoleTypedDict
-from clerk_backend_api.types import BaseModel, UNSET_SENTINEL
+from clerk_backend_api.types import (
+    BaseModel,
+    UNSET_SENTINEL,
+    current_exclude_none,
+    serialize_with_info,
+)
 from enum import Enum
 from pydantic import model_serializer
 from typing import Optional
@@ -23,11 +28,17 @@ class SCIMGroupRoleMappingTypedDict(TypedDict):
     id: str
     r"""Unique identifier for the SCIM group role mapping."""
     scim_directory_id: str
-    r"""The ID of the SCIM directory this mapping belongs to."""
+    r"""The ID of the directory this mapping belongs to."""
+    directory_id: str
+    r"""The ID of the directory this mapping belongs to. Same value as `scim_directory_id`."""
     scim_group_id: str
     r"""The SCIM group ID from the identity provider."""
+    directory_group_id: str
+    r"""The group ID from the identity provider. Same value as `scim_group_id`."""
     scim_group_display_name: str
     r"""The display name of the SCIM group, as reported by the identity provider."""
+    directory_group_display_name: str
+    r"""The display name of the group, as reported by the identity provider. Same value as `scim_group_display_name`."""
     precedence: int
     r"""Mapping precedence, starting at 1. Lower values take priority when a user belongs to multiple mapped groups."""
     created_at: int
@@ -47,13 +58,22 @@ class SCIMGroupRoleMapping(BaseModel):
     r"""Unique identifier for the SCIM group role mapping."""
 
     scim_directory_id: str
-    r"""The ID of the SCIM directory this mapping belongs to."""
+    r"""The ID of the directory this mapping belongs to."""
+
+    directory_id: str
+    r"""The ID of the directory this mapping belongs to. Same value as `scim_directory_id`."""
 
     scim_group_id: str
     r"""The SCIM group ID from the identity provider."""
 
+    directory_group_id: str
+    r"""The group ID from the identity provider. Same value as `scim_group_id`."""
+
     scim_group_display_name: str
     r"""The display name of the SCIM group, as reported by the identity provider."""
+
+    directory_group_display_name: str
+    r"""The display name of the group, as reported by the identity provider. Same value as `scim_group_display_name`."""
 
     precedence: int
     r"""Mapping precedence, starting at 1. Lower values take priority when a user belongs to multiple mapped groups."""
@@ -67,13 +87,19 @@ class SCIMGroupRoleMapping(BaseModel):
     role: Optional[Role] = None
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
         optional_fields = set(["role"])
+        exclude_none = current_exclude_none()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and exclude_none is False:
+                continue
             val = serialized.get(k, serialized.get(n))
 
             if val != UNSET_SENTINEL:

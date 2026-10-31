@@ -47,7 +47,7 @@ with Clerk(
 | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
 | `name`                                                              | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
 | `subject`                                                           | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
-| `type`                                                              | *Optional[str]*                                                     | :heavy_minus_sign:                                                  | N/A                                                                 |
+| `type_`                                                             | *Optional[str]*                                                     | :heavy_minus_sign:                                                  | N/A                                                                 |
 | `description`                                                       | *OptionalNullable[str]*                                             | :heavy_minus_sign:                                                  | N/A                                                                 |
 | `claims`                                                            | *OptionalNullable[Any]*                                             | :heavy_minus_sign:                                                  | N/A                                                                 |
 | `scopes`                                                            | List[*str*]                                                         | :heavy_minus_sign:                                                  | N/A                                                                 |
@@ -83,7 +83,7 @@ with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 ) as clerk:
 
-    res = clerk.api_keys.get_api_keys(subject="<value>", type_="api_key", include_invalid=clerk_backend_api.IncludeInvalid.FALSE, limit=10, offset=0, query="<value>")
+    res = clerk.api_keys.get_api_keys(subject="<value>", type_="api_key", include_invalid=clerk_backend_api.IncludeInvalid.FALSE, limit=10.0, offset=0.0, query="<value>")
 
     # Handle response
     print(res)
@@ -95,7 +95,7 @@ with Clerk(
 | Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
 | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
 | `subject`                                                           | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
-| `type`                                                              | *Optional[str]*                                                     | :heavy_minus_sign:                                                  | N/A                                                                 |
+| `type_`                                                             | *Optional[str]*                                                     | :heavy_minus_sign:                                                  | N/A                                                                 |
 | `include_invalid`                                                   | [Optional[models.IncludeInvalid]](../../models/includeinvalid.md)   | :heavy_minus_sign:                                                  | N/A                                                                 |
 | `limit`                                                             | *Optional[float]*                                                   | :heavy_minus_sign:                                                  | N/A                                                                 |
 | `offset`                                                            | *OptionalNullable[float]*                                           | :heavy_minus_sign:                                                  | N/A                                                                 |

@@ -7,6 +7,8 @@ from clerk_backend_api.types import (
     OptionalNullable,
     UNSET,
     UNSET_SENTINEL,
+    current_exclude_none,
+    serialize_with_info,
 )
 from enum import Enum
 from pydantic import model_serializer
@@ -26,11 +28,11 @@ class CreateBillingPriceRequestTypedDict(TypedDict):
     plan_id: str
     r"""The ID of the plan this price belongs to."""
     amount: Nullable[int]
-    r"""The monthly amount in cents. Must be at least $1 (100 cents) if not null."""
+    r"""The monthly amount in cents. Use `0` for a complimentary price. Positive amounts must be at least $1 (100 cents)."""
     currency: NotRequired[str]
     r"""The currency code (e.g., \"USD\"). Defaults to USD."""
     annual_monthly_amount: NotRequired[Nullable[int]]
-    r"""The monthly amount in cents when billed annually. Must be at least $1 (100 cents) if not null."""
+    r"""The monthly amount in cents when billed annually. Use `0` for a complimentary price. Positive amounts must be at least $1 (100 cents)."""
     description: NotRequired[str]
     r"""An optional description for this custom price."""
     supported_billing_periods: NotRequired[
@@ -44,13 +46,13 @@ class CreateBillingPriceRequest(BaseModel):
     r"""The ID of the plan this price belongs to."""
 
     amount: Nullable[int]
-    r"""The monthly amount in cents. Must be at least $1 (100 cents) if not null."""
+    r"""The monthly amount in cents. Use `0` for a complimentary price. Positive amounts must be at least $1 (100 cents)."""
 
     currency: Optional[str] = "USD"
     r"""The currency code (e.g., \"USD\"). Defaults to USD."""
 
     annual_monthly_amount: OptionalNullable[int] = UNSET
-    r"""The monthly amount in cents when billed annually. Must be at least $1 (100 cents) if not null."""
+    r"""The monthly amount in cents when billed annually. Use `0` for a complimentary price. Positive amounts must be at least $1 (100 cents)."""
 
     description: Optional[str] = None
     r"""An optional description for this custom price."""
@@ -61,6 +63,9 @@ class CreateBillingPriceRequest(BaseModel):
     r"""Which billing periods this price supports. Inferred from amounts if omitted."""
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
         optional_fields = set(
             [
@@ -71,11 +76,14 @@ class CreateBillingPriceRequest(BaseModel):
             ]
         )
         nullable_fields = set(["amount", "annual_monthly_amount"])
+        exclude_none = current_exclude_none()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and exclude_none is False:
+                continue
             val = serialized.get(k, serialized.get(n))
             is_nullable_and_explicitly_set = (
                 k in nullable_fields
