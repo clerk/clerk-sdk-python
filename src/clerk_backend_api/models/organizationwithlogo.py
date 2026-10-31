@@ -7,6 +7,8 @@ from clerk_backend_api.types import (
     OptionalNullable,
     UNSET,
     UNSET_SENTINEL,
+    current_exclude_none,
+    serialize_with_info,
 )
 from enum import Enum
 import pydantic
@@ -40,6 +42,14 @@ class OrganizationWithLogoTypedDict(TypedDict):
     members_count: NotRequired[int]
     missing_member_with_elevated_permissions: NotRequired[bool]
     pending_invitations_count: NotRequired[int]
+    self_serve_sso_enabled: NotRequired[bool]
+    r"""Whether this organization can configure self-serve enterprise SSO.
+
+    """
+    self_serve_directory_sync_enabled: NotRequired[bool]
+    r"""Whether this organization can configure self-serve Directory Sync (SCIM).
+
+    """
     private_metadata: NotRequired[Dict[str, Any]]
     created_by: NotRequired[str]
     last_active_at: NotRequired[int]
@@ -88,6 +98,16 @@ class OrganizationWithLogo(BaseModel):
 
     pending_invitations_count: Optional[int] = None
 
+    self_serve_sso_enabled: Optional[bool] = None
+    r"""Whether this organization can configure self-serve enterprise SSO.
+
+    """
+
+    self_serve_directory_sync_enabled: Optional[bool] = None
+    r"""Whether this organization can configure self-serve Directory Sync (SCIM).
+
+    """
+
     private_metadata: Optional[Dict[str, Any]] = None
 
     created_by: Optional[str] = None
@@ -110,12 +130,17 @@ class OrganizationWithLogo(BaseModel):
     ] = None
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
         optional_fields = set(
             [
                 "members_count",
                 "missing_member_with_elevated_permissions",
                 "pending_invitations_count",
+                "self_serve_sso_enabled",
+                "self_serve_directory_sync_enabled",
                 "private_metadata",
                 "created_by",
                 "last_active_at",
@@ -124,11 +149,14 @@ class OrganizationWithLogo(BaseModel):
             ]
         )
         nullable_fields = set(["role_set_key"])
+        exclude_none = current_exclude_none()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and exclude_none is False:
+                continue
             val = serialized.get(k, serialized.get(n))
             is_nullable_and_explicitly_set = (
                 k in nullable_fields

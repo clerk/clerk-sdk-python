@@ -98,6 +98,7 @@ with Clerk(
                 "key": "<key>",
                 "sso_path": "<value>",
                 "scim_path": "<value>",
+                "directory_path": "<value>",
                 "multi_valued": True,
             },
         ],
@@ -187,7 +188,10 @@ with Clerk(
         "name": "<value>",
         "idp_entity_id": "<id>",
         "idp_sso_url": "https://animated-experience.name/",
-        "idp_certificate": "<value>",
+        "idp_certificates": [
+            "<value 1>",
+            "<value 2>",
+        ],
         "idp_metadata_url": "https://alert-atrium.com/",
         "idp_metadata": "<value>",
         "attribute_mapping": {
@@ -217,6 +221,7 @@ with Clerk(
             "key": "<key>",
             "sso_path": "<value>",
             "scim_path": "<value>",
+            "directory_path": "<value>",
             "multi_valued": False,
         },
     ])

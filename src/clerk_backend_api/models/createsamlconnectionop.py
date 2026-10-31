@@ -7,6 +7,8 @@ from clerk_backend_api.types import (
     OptionalNullable,
     UNSET,
     UNSET_SENTINEL,
+    current_exclude_none,
+    serialize_with_info,
 )
 from enum import Enum
 import pydantic
@@ -45,13 +47,19 @@ class RequestBodyAttributeMapping(BaseModel):
     last_name: Optional[str] = None
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
         optional_fields = set(["user_id", "email_address", "first_name", "last_name"])
+        exclude_none = current_exclude_none()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and exclude_none is False:
+                continue
             val = serialized.get(k, serialized.get(n))
 
             if val != UNSET_SENTINEL:
@@ -88,13 +96,19 @@ class RequestBodyLoginHint(BaseModel):
     r"""The user public_metadata key whose value is sent as the login_hint when mode is custom_attribute"""
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
         optional_fields = set(["source"])
+        exclude_none = current_exclude_none()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and exclude_none is False:
+                continue
             val = serialized.get(k, serialized.get(n))
 
             if val != UNSET_SENTINEL:
@@ -118,7 +132,9 @@ class RequestBody2TypedDict(TypedDict):
     idp_sso_url: NotRequired[Nullable[str]]
     r"""The Single-Sign On URL as provided by the IdP"""
     idp_certificate: NotRequired[Nullable[str]]
-    r"""The X.509 certificate as provided by the IdP"""
+    r"""Deprecated, use idp_certificates. One X.509 certificate, PEM or bare base64, or several concatenated PEM certificates; replaces the connection's whole certificate set"""
+    idp_certificates: NotRequired[List[str]]
+    r"""The IdP X.509 signing certificates the connection trusts, one per entry, in PEM or bare base64. Replaces the connection's whole certificate set and takes precedence over idp_certificate"""
     idp_metadata_url: NotRequired[Nullable[str]]
     r"""The URL which serves the IdP metadata. If present, it takes priority over the corresponding individual properties"""
     idp_metadata: NotRequired[Nullable[str]]
@@ -157,8 +173,16 @@ class RequestBody2(BaseModel):
     idp_sso_url: OptionalNullable[str] = UNSET
     r"""The Single-Sign On URL as provided by the IdP"""
 
-    idp_certificate: OptionalNullable[str] = UNSET
-    r"""The X.509 certificate as provided by the IdP"""
+    idp_certificate: Annotated[
+        OptionalNullable[str],
+        pydantic.Field(
+            deprecated="warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
+        ),
+    ] = UNSET
+    r"""Deprecated, use idp_certificates. One X.509 certificate, PEM or bare base64, or several concatenated PEM certificates; replaces the connection's whole certificate set"""
+
+    idp_certificates: Optional[List[str]] = None
+    r"""The IdP X.509 signing certificates the connection trusts, one per entry, in PEM or bare base64. Replaces the connection's whole certificate set and takes precedence over idp_certificate"""
 
     idp_metadata_url: OptionalNullable[str] = UNSET
     r"""The URL which serves the IdP metadata. If present, it takes priority over the corresponding individual properties"""
@@ -179,6 +203,9 @@ class RequestBody2(BaseModel):
     r"""Configuration for the login_hint sent to the IdP on SSO sign-in"""
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
         optional_fields = set(
             [
@@ -186,6 +213,7 @@ class RequestBody2(BaseModel):
                 "idp_entity_id",
                 "idp_sso_url",
                 "idp_certificate",
+                "idp_certificates",
                 "idp_metadata_url",
                 "idp_metadata",
                 "organization_id",
@@ -206,11 +234,14 @@ class RequestBody2(BaseModel):
                 "login_hint",
             ]
         )
+        exclude_none = current_exclude_none()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and exclude_none is False:
+                continue
             val = serialized.get(k, serialized.get(n))
             is_nullable_and_explicitly_set = (
                 k in nullable_fields
@@ -258,13 +289,19 @@ class CreateSAMLConnectionRequestBodyAttributeMapping(BaseModel):
     last_name: Optional[str] = None
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
         optional_fields = set(["user_id", "email_address", "first_name", "last_name"])
+        exclude_none = current_exclude_none()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and exclude_none is False:
+                continue
             val = serialized.get(k, serialized.get(n))
 
             if val != UNSET_SENTINEL:
@@ -301,13 +338,19 @@ class CreateSAMLConnectionRequestBodyLoginHint(BaseModel):
     r"""The user public_metadata key whose value is sent as the login_hint when mode is custom_attribute"""
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
         optional_fields = set(["source"])
+        exclude_none = current_exclude_none()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and exclude_none is False:
+                continue
             val = serialized.get(k, serialized.get(n))
 
             if val != UNSET_SENTINEL:
@@ -331,7 +374,9 @@ class RequestBody1TypedDict(TypedDict):
     idp_sso_url: NotRequired[Nullable[str]]
     r"""The Single-Sign On URL as provided by the IdP"""
     idp_certificate: NotRequired[Nullable[str]]
-    r"""The X.509 certificate as provided by the IdP"""
+    r"""Deprecated, use idp_certificates. One X.509 certificate, PEM or bare base64, or several concatenated PEM certificates; replaces the connection's whole certificate set"""
+    idp_certificates: NotRequired[List[str]]
+    r"""The IdP X.509 signing certificates the connection trusts, one per entry, in PEM or bare base64. Replaces the connection's whole certificate set and takes precedence over idp_certificate"""
     idp_metadata_url: NotRequired[Nullable[str]]
     r"""The URL which serves the IdP metadata. If present, it takes priority over the corresponding individual properties"""
     idp_metadata: NotRequired[Nullable[str]]
@@ -372,8 +417,16 @@ class RequestBody1(BaseModel):
     idp_sso_url: OptionalNullable[str] = UNSET
     r"""The Single-Sign On URL as provided by the IdP"""
 
-    idp_certificate: OptionalNullable[str] = UNSET
-    r"""The X.509 certificate as provided by the IdP"""
+    idp_certificate: Annotated[
+        OptionalNullable[str],
+        pydantic.Field(
+            deprecated="warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
+        ),
+    ] = UNSET
+    r"""Deprecated, use idp_certificates. One X.509 certificate, PEM or bare base64, or several concatenated PEM certificates; replaces the connection's whole certificate set"""
+
+    idp_certificates: Optional[List[str]] = None
+    r"""The IdP X.509 signing certificates the connection trusts, one per entry, in PEM or bare base64. Replaces the connection's whole certificate set and takes precedence over idp_certificate"""
 
     idp_metadata_url: OptionalNullable[str] = UNSET
     r"""The URL which serves the IdP metadata. If present, it takes priority over the corresponding individual properties"""
@@ -396,6 +449,9 @@ class RequestBody1(BaseModel):
     r"""Configuration for the login_hint sent to the IdP on SSO sign-in"""
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
         optional_fields = set(
             [
@@ -403,6 +459,7 @@ class RequestBody1(BaseModel):
                 "idp_entity_id",
                 "idp_sso_url",
                 "idp_certificate",
+                "idp_certificates",
                 "idp_metadata_url",
                 "idp_metadata",
                 "organization_id",
@@ -423,11 +480,14 @@ class RequestBody1(BaseModel):
                 "login_hint",
             ]
         )
+        exclude_none = current_exclude_none()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and exclude_none is False:
+                continue
             val = serialized.get(k, serialized.get(n))
             is_nullable_and_explicitly_set = (
                 k in nullable_fields

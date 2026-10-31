@@ -7,11 +7,13 @@ from clerk_backend_api.types import (
     OptionalNullable,
     UNSET,
     UNSET_SENTINEL,
+    current_exclude_none,
+    serialize_with_info,
 )
 from enum import Enum
 import pydantic
 from pydantic import model_serializer
-from typing import List, Optional
+from typing import List
 from typing_extensions import Annotated, NotRequired, TypedDict
 
 
@@ -33,8 +35,16 @@ class UpdateInstanceRequestBodyTypedDict(TypedDict):
     support_email: NotRequired[Nullable[str]]
     clerk_js_version: NotRequired[Nullable[str]]
     development_origin: NotRequired[Nullable[str]]
-    allowed_origins: NotRequired[List[str]]
-    r"""For browser-like stacks such as browser extensions, Electron (not officially supported), or Capacitor.js (not officially supported), the instance allowed origins need to be updated with the request origin value. For Chrome extensions popup, background, or service worker pages, the origin is chrome-extension://extension_uuid. For Electron apps the default origin is http://localhost:3000. For Capacitor, the origin is capacitor://localhost."""
+    allowed_origins: NotRequired[Nullable[List[str]]]
+    r"""For browser-like stacks such as browser extensions, Electron, or Capacitor.js (not officially supported), the instance allowed origins need to be updated with the request origin value. For Chrome extensions popup, background, or service worker pages, the origin is chrome-extension://extension_uuid. For Electron apps using `@clerk/electron`, the origins are the custom renderer scheme registered with `createClerkBridge()`, for example `my-app://renderer`, and, during development, the renderer's dev server origin, for example `http://localhost:5173`. For Capacitor, the origin is capacitor://localhost.
+    Send an empty array to remove all allowed origins. A null value leaves the current list unchanged.
+    """
+    allowed_subdomains: NotRequired[Nullable[List[str]]]
+    r"""Subdomains of the instance's own domains that may originate requests while `subdomain_allowlist_enabled` is true. Each entry is either an exact host (`app.example.com`) or a wildcard anchored on a host beneath one of the instance's domains (`*.preview.example.com`), which covers every host under that anchor but not the anchor itself.
+    Entries are stored folded to lower case with any trailing dot removed, the form the origin check compares against, so entries differing only in those respects are one entry. Entries already stored are not validated again, so a list read back from the instance can always be written again unchanged. Send an empty array to remove all entries. A null value leaves the current list unchanged. Production instances only.
+    """
+    subdomain_allowlist_enabled: NotRequired[Nullable[bool]]
+    r"""Whether requests from subdomains of the instance's own domains are restricted to `allowed_subdomains`. When false, every subdomain of the instance's domain is accepted. Production instances only."""
     cookieless_dev: NotRequired[Nullable[bool]]
     r"""Whether the instance should operate in cookieless development mode (i.e. without third-party cookies).
     Deprecated: Please use `url_based_session_syncing` instead.
@@ -62,8 +72,18 @@ class UpdateInstanceRequestBody(BaseModel):
 
     development_origin: OptionalNullable[str] = UNSET
 
-    allowed_origins: Optional[List[str]] = None
-    r"""For browser-like stacks such as browser extensions, Electron (not officially supported), or Capacitor.js (not officially supported), the instance allowed origins need to be updated with the request origin value. For Chrome extensions popup, background, or service worker pages, the origin is chrome-extension://extension_uuid. For Electron apps the default origin is http://localhost:3000. For Capacitor, the origin is capacitor://localhost."""
+    allowed_origins: OptionalNullable[List[str]] = UNSET
+    r"""For browser-like stacks such as browser extensions, Electron, or Capacitor.js (not officially supported), the instance allowed origins need to be updated with the request origin value. For Chrome extensions popup, background, or service worker pages, the origin is chrome-extension://extension_uuid. For Electron apps using `@clerk/electron`, the origins are the custom renderer scheme registered with `createClerkBridge()`, for example `my-app://renderer`, and, during development, the renderer's dev server origin, for example `http://localhost:5173`. For Capacitor, the origin is capacitor://localhost.
+    Send an empty array to remove all allowed origins. A null value leaves the current list unchanged.
+    """
+
+    allowed_subdomains: OptionalNullable[List[str]] = UNSET
+    r"""Subdomains of the instance's own domains that may originate requests while `subdomain_allowlist_enabled` is true. Each entry is either an exact host (`app.example.com`) or a wildcard anchored on a host beneath one of the instance's domains (`*.preview.example.com`), which covers every host under that anchor but not the anchor itself.
+    Entries are stored folded to lower case with any trailing dot removed, the form the origin check compares against, so entries differing only in those respects are one entry. Entries already stored are not validated again, so a list read back from the instance can always be written again unchanged. Send an empty array to remove all entries. A null value leaves the current list unchanged. Production instances only.
+    """
+
+    subdomain_allowlist_enabled: OptionalNullable[bool] = UNSET
+    r"""Whether requests from subdomains of the instance's own domains are restricted to `allowed_subdomains`. When false, every subdomain of the instance's domain is accepted. Production instances only."""
 
     cookieless_dev: Annotated[
         OptionalNullable[bool],
@@ -84,6 +104,9 @@ class UpdateInstanceRequestBody(BaseModel):
     r"""When password is required at the instance level, sets the preferred sign-in strategy surfaced to Clerk components. Has no effect when password is not required. Defaults to `password`. Set to an empty string to clear the override."""
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
         optional_fields = set(
             [
@@ -93,6 +116,8 @@ class UpdateInstanceRequestBody(BaseModel):
                 "clerk_js_version",
                 "development_origin",
                 "allowed_origins",
+                "allowed_subdomains",
+                "subdomain_allowlist_enabled",
                 "cookieless_dev",
                 "url_based_session_syncing",
                 "preferred_sign_in_strategy_when_password_required",
@@ -105,16 +130,22 @@ class UpdateInstanceRequestBody(BaseModel):
                 "support_email",
                 "clerk_js_version",
                 "development_origin",
+                "allowed_origins",
+                "allowed_subdomains",
+                "subdomain_allowlist_enabled",
                 "cookieless_dev",
                 "url_based_session_syncing",
                 "preferred_sign_in_strategy_when_password_required",
             ]
         )
+        exclude_none = current_exclude_none()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and exclude_none is False:
+                continue
             val = serialized.get(k, serialized.get(n))
             is_nullable_and_explicitly_set = (
                 k in nullable_fields

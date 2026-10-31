@@ -31,7 +31,7 @@ class APIKeys(BaseSDK):
 
         :param name:
         :param subject:
-        :param type:
+        :param type_:
         :param description:
         :param claims:
         :param scopes:
@@ -154,7 +154,7 @@ class APIKeys(BaseSDK):
 
         :param name:
         :param subject:
-        :param type:
+        :param type_:
         :param description:
         :param claims:
         :param scopes:
@@ -263,8 +263,8 @@ class APIKeys(BaseSDK):
         subject: str,
         type_: Optional[str] = "api_key",
         include_invalid: Optional[models.IncludeInvalid] = models.IncludeInvalid.FALSE,
-        limit: Optional[float] = 10,
-        offset: OptionalNullable[float] = 0,
+        limit: Optional[float] = 10.0,
+        offset: OptionalNullable[float] = 0.0,
         query: Optional[str] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -274,7 +274,7 @@ class APIKeys(BaseSDK):
         r"""Get API Keys
 
         :param subject:
-        :param type:
+        :param type_:
         :param include_invalid:
         :param limit:
         :param offset:
@@ -375,8 +375,8 @@ class APIKeys(BaseSDK):
         subject: str,
         type_: Optional[str] = "api_key",
         include_invalid: Optional[models.IncludeInvalid] = models.IncludeInvalid.FALSE,
-        limit: Optional[float] = 10,
-        offset: OptionalNullable[float] = 0,
+        limit: Optional[float] = 10.0,
+        offset: OptionalNullable[float] = 0.0,
         query: Optional[str] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -386,7 +386,7 @@ class APIKeys(BaseSDK):
         r"""Get API Keys
 
         :param subject:
-        :param type:
+        :param type_:
         :param include_invalid:
         :param limit:
         :param offset:

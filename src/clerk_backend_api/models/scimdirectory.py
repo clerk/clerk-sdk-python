@@ -7,6 +7,8 @@ from clerk_backend_api.types import (
     OptionalNullable,
     UNSET,
     UNSET_SENTINEL,
+    current_exclude_none,
+    serialize_with_info,
 )
 from enum import Enum
 from pydantic import model_serializer
@@ -29,6 +31,8 @@ class SCIMDirectoryCustomAttributesTypedDict(TypedDict):
     r"""Path to extract the attribute value from SSO claims (SAML assertions or OIDC claims)"""
     scim_path: NotRequired[str]
     r"""GJSON path to extract the attribute value from SCIM user resources"""
+    directory_path: NotRequired[str]
+    r"""GJSON path to extract the attribute value from directory sync user resources. Same value as `scim_path`."""
     multi_valued: NotRequired[bool]
     r"""When true, the attribute supports multiple values; values from the IdP are written to public_metadata as an array. Defaults to false."""
 
@@ -46,17 +50,28 @@ class SCIMDirectoryCustomAttributes(BaseModel):
     scim_path: Optional[str] = None
     r"""GJSON path to extract the attribute value from SCIM user resources"""
 
+    directory_path: Optional[str] = None
+    r"""GJSON path to extract the attribute value from directory sync user resources. Same value as `scim_path`."""
+
     multi_valued: Optional[bool] = None
     r"""When true, the attribute supports multiple values; values from the IdP are written to public_metadata as an array. Defaults to false."""
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
-        optional_fields = set(["name", "key", "sso_path", "scim_path", "multi_valued"])
+        optional_fields = set(
+            ["name", "key", "sso_path", "scim_path", "directory_path", "multi_valued"]
+        )
+        exclude_none = current_exclude_none()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and exclude_none is False:
+                continue
             val = serialized.get(k, serialized.get(n))
 
             if val != UNSET_SENTINEL:
@@ -67,28 +82,33 @@ class SCIMDirectoryCustomAttributes(BaseModel):
 
 
 class SCIMDirectoryTypedDict(TypedDict):
-    r"""A SCIM directory configuration for provisioning users via SCIM protocol."""
+    r"""A directory configuration for provisioning users via SCIM protocol."""
 
     object: SCIMDirectoryObject
     r"""String representing the object's type. Always \"scim_directory\"."""
     id: str
-    r"""Unique identifier for the SCIM directory."""
+    r"""Unique identifier for the directory."""
     name: str
-    r"""A human-friendly name for the SCIM directory."""
+    r"""A human-friendly name for the directory."""
     endpoint_url: str
     r"""The SCIM endpoint URL for this directory."""
     provider: str
-    r"""The identity provider for this SCIM directory."""
+    r"""The identity provider for this directory."""
     enabled: bool
-    r"""Whether the SCIM directory is enabled."""
+    r"""Whether the directory is enabled."""
+    paused: bool
+    r"""Whether syncing is paused. A paused directory rejects SCIM requests and skips
+    scheduled syncs, but keeps the organization memberships it granted. Disabling a directory
+    removes them instead.
+    """
     group_role_mapping_enabled: bool
-    r"""Whether group-to-role mapping is enabled for this SCIM directory."""
+    r"""Whether group-to-role mapping is enabled for this directory."""
     attribute_mapping: Dict[str, str]
     r"""Mapping of user attributes to the SCIM attribute paths they are extracted from."""
     created_at: int
-    r"""Unix timestamp when the SCIM directory was created."""
+    r"""Unix timestamp when the directory was created."""
     updated_at: int
-    r"""Unix timestamp when the SCIM directory was last updated."""
+    r"""Unix timestamp when the directory was last updated."""
     enterprise_connection_id: NotRequired[Nullable[str]]
     r"""The ID of the associated enterprise connection."""
     custom_attributes: NotRequired[List[SCIMDirectoryCustomAttributesTypedDict]]
@@ -98,37 +118,43 @@ class SCIMDirectoryTypedDict(TypedDict):
 
 
 class SCIMDirectory(BaseModel):
-    r"""A SCIM directory configuration for provisioning users via SCIM protocol."""
+    r"""A directory configuration for provisioning users via SCIM protocol."""
 
     object: SCIMDirectoryObject
     r"""String representing the object's type. Always \"scim_directory\"."""
 
     id: str
-    r"""Unique identifier for the SCIM directory."""
+    r"""Unique identifier for the directory."""
 
     name: str
-    r"""A human-friendly name for the SCIM directory."""
+    r"""A human-friendly name for the directory."""
 
     endpoint_url: str
     r"""The SCIM endpoint URL for this directory."""
 
     provider: str
-    r"""The identity provider for this SCIM directory."""
+    r"""The identity provider for this directory."""
 
     enabled: bool
-    r"""Whether the SCIM directory is enabled."""
+    r"""Whether the directory is enabled."""
+
+    paused: bool
+    r"""Whether syncing is paused. A paused directory rejects SCIM requests and skips
+    scheduled syncs, but keeps the organization memberships it granted. Disabling a directory
+    removes them instead.
+    """
 
     group_role_mapping_enabled: bool
-    r"""Whether group-to-role mapping is enabled for this SCIM directory."""
+    r"""Whether group-to-role mapping is enabled for this directory."""
 
     attribute_mapping: Dict[str, str]
     r"""Mapping of user attributes to the SCIM attribute paths they are extracted from."""
 
     created_at: int
-    r"""Unix timestamp when the SCIM directory was created."""
+    r"""Unix timestamp when the directory was created."""
 
     updated_at: int
-    r"""Unix timestamp when the SCIM directory was last updated."""
+    r"""Unix timestamp when the directory was last updated."""
 
     enterprise_connection_id: OptionalNullable[str] = UNSET
     r"""The ID of the associated enterprise connection."""
@@ -140,16 +166,22 @@ class SCIMDirectory(BaseModel):
     r"""The API key for authenticating SCIM requests. Only returned when the directory is created or the key is rotated."""
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
         optional_fields = set(
             ["enterprise_connection_id", "custom_attributes", "api_key"]
         )
         nullable_fields = set(["enterprise_connection_id", "api_key"])
+        exclude_none = current_exclude_none()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and exclude_none is False:
+                continue
             val = serialized.get(k, serialized.get(n))
             is_nullable_and_explicitly_set = (
                 k in nullable_fields

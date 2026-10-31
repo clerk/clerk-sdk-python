@@ -34,6 +34,7 @@ if TYPE_CHECKING:
     from clerk_backend_api.billing import Billing
     from clerk_backend_api.blocklistidentifiers_sdk import BlocklistIdentifiersSDK
     from clerk_backend_api.clients import Clients
+    from clerk_backend_api.directories import Directories
     from clerk_backend_api.domains_sdk import DomainsSDK
     from clerk_backend_api.emailaddresses import EmailAddresses
     from clerk_backend_api.emailandsmstemplates import EmailAndSmsTemplates
@@ -43,6 +44,7 @@ if TYPE_CHECKING:
     from clerk_backend_api.invitations import Invitations
     from clerk_backend_api.jwks_sdk import JwksSDK
     from clerk_backend_api.jwttemplates import JwtTemplates
+    from clerk_backend_api.logs import Logs
     from clerk_backend_api.m2m import M2m
     from clerk_backend_api.machines import Machines
     from clerk_backend_api.miscellaneous import Miscellaneous
@@ -63,6 +65,7 @@ if TYPE_CHECKING:
     from clerk_backend_api.sessions import Sessions
     from clerk_backend_api.signintokens import SignInTokens
     from clerk_backend_api.signups import SignUps
+    from clerk_backend_api.ssobypassallowlistusers import SsoBypassAllowlistUsers
     from clerk_backend_api.templates import Templates
     from clerk_backend_api.testingtokens import TestingTokens
     from clerk_backend_api.users import Users
@@ -115,13 +118,16 @@ class Clerk(BaseSDK):
     oauth_applications: "OauthApplicationsSDK"
     saml_connections: "SamlConnectionsSDK"
     enterprise_connections: "EnterpriseConnectionsSDK"
+    sso_bypass_allowlist_users: "SsoBypassAllowlistUsers"
     testing_tokens: "TestingTokens"
     agent_tasks: "AgentTasks"
     waitlist_entries: "WaitlistEntriesSDK"
     billing: "Billing"
     organization_permissions: "OrganizationPermissions"
     role_sets: "RoleSetsSDK"
+    logs: "Logs"
     scim_directories: "ScimDirectories"
+    directories: "Directories"
     admin_portal_link_tokens: "AdminPortalLinkTokens"
     api_keys: "APIKeys"
     r"""Endpoints for managing API Keys"""
@@ -196,6 +202,10 @@ class Clerk(BaseSDK):
             "clerk_backend_api.enterpriseconnections_sdk",
             "EnterpriseConnectionsSDK",
         ),
+        "sso_bypass_allowlist_users": (
+            "clerk_backend_api.ssobypassallowlistusers",
+            "SsoBypassAllowlistUsers",
+        ),
         "testing_tokens": ("clerk_backend_api.testingtokens", "TestingTokens"),
         "agent_tasks": ("clerk_backend_api.agenttasks", "AgentTasks"),
         "waitlist_entries": (
@@ -208,7 +218,9 @@ class Clerk(BaseSDK):
             "OrganizationPermissions",
         ),
         "role_sets": ("clerk_backend_api.rolesets_sdk", "RoleSetsSDK"),
+        "logs": ("clerk_backend_api.logs", "Logs"),
         "scim_directories": ("clerk_backend_api.scimdirectories", "ScimDirectories"),
+        "directories": ("clerk_backend_api.directories", "Directories"),
         "admin_portal_link_tokens": (
             "clerk_backend_api.admin_portal_link_tokens",
             "AdminPortalLinkTokens",

@@ -76,7 +76,7 @@ with Clerk(
     bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
 ) as clerk:
 
-    res = clerk.m2m.list_tokens(subject="<value>", revoked=False, expired=False, limit=10, offset=0)
+    res = clerk.m2m.list_tokens(subject="<value>", revoked=False, expired=False, limit=10.0, offset=0.0)
 
     # Handle response
     print(res)

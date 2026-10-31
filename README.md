@@ -296,6 +296,8 @@ def verify_machine_token(request: httpx.Request):
 * [cancel_subscription_item](docs/sdks/billing/README.md#cancel_subscription_item) - Cancel a subscription item
 * [extend_subscription_item_free_trial](docs/sdks/billing/README.md#extend_subscription_item_free_trial) - Extend free trial for a subscription item
 * [create_price_transition](docs/sdks/billing/README.md#create_price_transition) - Create a price transition for a subscription item
+* [apply_subscription_item_discount](docs/sdks/billing/README.md#apply_subscription_item_discount) - Apply a discount to a subscription item
+* [remove_subscription_item_discount](docs/sdks/billing/README.md#remove_subscription_item_discount) - Remove a discount from a subscription item
 * [list_statements](docs/sdks/billing/README.md#list_statements) - List all billing statements
 * [get_statement](docs/sdks/billing/README.md#get_statement) - Retrieve a billing statement
 * [get_statement_payment_attempts](docs/sdks/billing/README.md#get_statement_payment_attempts) - List payment attempts for a billing statement
@@ -312,11 +314,26 @@ def verify_machine_token(request: httpx.Request):
 * [verify](docs/sdks/clients/README.md#verify) - Verify a client
 * [get](docs/sdks/clients/README.md#get) - Get a client
 
+### [Directories](docs/sdks/directories/README.md)
+
+* [list](docs/sdks/directories/README.md#list) - List all directories
+* [create](docs/sdks/directories/README.md#create) - Create a directory
+* [get](docs/sdks/directories/README.md#get) - Retrieve a directory
+* [update](docs/sdks/directories/README.md#update) - Update a directory
+* [delete](docs/sdks/directories/README.md#delete) - Delete a directory
+* [rotate_api_key](docs/sdks/directories/README.md#rotate_api_key) - Rotate a directory's API key
+* [get_group](docs/sdks/directories/README.md#get_group) - Retrieve a directory group
+* [list_group_members](docs/sdks/directories/README.md#list_group_members) - List directory group members
+* [list_group_role_mappings](docs/sdks/directories/README.md#list_group_role_mappings) - List directory group role mappings
+* [create_group_role_mapping](docs/sdks/directories/README.md#create_group_role_mapping) - Create a directory group role mapping
+* [replace_group_role_mappings](docs/sdks/directories/README.md#replace_group_role_mappings) - Replace directory group role mappings
+* [delete_group_role_mapping](docs/sdks/directories/README.md#delete_group_role_mapping) - Delete a directory group role mapping
+
 ### [Domains](docs/sdks/domainssdk/README.md)
 
 * [list](docs/sdks/domainssdk/README.md#list) - List all instance domains
 * [add](docs/sdks/domainssdk/README.md#add) - Add a domain
-* [delete](docs/sdks/domainssdk/README.md#delete) - Delete a satellite domain
+* [delete](docs/sdks/domainssdk/README.md#delete) - Delete a domain
 * [update](docs/sdks/domainssdk/README.md#update) - Update a domain
 
 ### [EmailAddresses](docs/sdks/emailaddresses/README.md)
@@ -370,6 +387,7 @@ def verify_machine_token(request: httpx.Request):
 * [create](docs/sdks/invitations/README.md#create) - Create an invitation
 * [list](docs/sdks/invitations/README.md#list) - List all invitations
 * [bulk_create](docs/sdks/invitations/README.md#bulk_create) - Create multiple invitations
+* [delete](docs/sdks/invitations/README.md#delete) - Delete an invitation
 * [revoke](docs/sdks/invitations/README.md#revoke) - Revokes an invitation
 
 ### [Jwks](docs/sdks/jwkssdk/README.md)
@@ -383,6 +401,13 @@ def verify_machine_token(request: httpx.Request):
 * [get](docs/sdks/jwttemplates/README.md#get) - Retrieve a template
 * [update](docs/sdks/jwttemplates/README.md#update) - Update a JWT template
 * [delete](docs/sdks/jwttemplates/README.md#delete) - Delete a Template
+
+### [Logs](docs/sdks/logs/README.md)
+
+* [list](docs/sdks/logs/README.md#list) - List all logs
+* [get_schema](docs/sdks/logs/README.md#get_schema) - Retrieve the payload schema of a log event type
+* [list_group_events](docs/sdks/logs/README.md#list_group_events) - List an event group's logs
+* [get](docs/sdks/logs/README.md#get) - Retrieve a single log
 
 ### [M2m](docs/sdks/m2m/README.md)
 
@@ -523,12 +548,12 @@ def verify_machine_token(request: httpx.Request):
 
 ### [ScimDirectories](docs/sdks/scimdirectories/README.md)
 
-* [list](docs/sdks/scimdirectories/README.md#list) - List all SCIM directories
-* [create](docs/sdks/scimdirectories/README.md#create) - Create a SCIM directory
-* [get](docs/sdks/scimdirectories/README.md#get) - Retrieve a SCIM directory
-* [update](docs/sdks/scimdirectories/README.md#update) - Update a SCIM directory
-* [delete](docs/sdks/scimdirectories/README.md#delete) - Delete a SCIM directory
-* [rotate_api_key](docs/sdks/scimdirectories/README.md#rotate_api_key) - Rotate a SCIM directory's API key
+* [list](docs/sdks/scimdirectories/README.md#list) - List all directories
+* [create](docs/sdks/scimdirectories/README.md#create) - Create a directory
+* [get](docs/sdks/scimdirectories/README.md#get) - Retrieve a directory
+* [update](docs/sdks/scimdirectories/README.md#update) - Update a directory
+* [delete](docs/sdks/scimdirectories/README.md#delete) - Delete a directory
+* [rotate_api_key](docs/sdks/scimdirectories/README.md#rotate_api_key) - Rotate a directory's API key
 * [list_group_role_mappings](docs/sdks/scimdirectories/README.md#list_group_role_mappings) - List SCIM group role mappings
 * [create_group_role_mapping](docs/sdks/scimdirectories/README.md#create_group_role_mapping) - Create a SCIM group role mapping
 * [replace_group_role_mappings](docs/sdks/scimdirectories/README.md#replace_group_role_mappings) - Replace SCIM group role mappings
@@ -540,6 +565,7 @@ def verify_machine_token(request: httpx.Request):
 * [create](docs/sdks/sessions/README.md#create) - Create a new active session
 * [get](docs/sdks/sessions/README.md#get) - Retrieve a session
 * [refresh](docs/sdks/sessions/README.md#refresh) - Refresh a session
+* [get_reverification](docs/sdks/sessions/README.md#get_reverification) - Retrieve a reverification
 * [revoke](docs/sdks/sessions/README.md#revoke) - Revoke a session
 * [create_token](docs/sdks/sessions/README.md#create_token) - Create a session token
 * [create_token_from_template](docs/sdks/sessions/README.md#create_token_from_template) - Create a session token from a JWT template
@@ -553,6 +579,12 @@ def verify_machine_token(request: httpx.Request):
 
 * [get](docs/sdks/signups/README.md#get) - Retrieve a sign-up by ID
 * [update](docs/sdks/signups/README.md#update) - Update a sign-up
+
+### [SsoBypassAllowlistUsers](docs/sdks/ssobypassallowlistusers/README.md)
+
+* [list](docs/sdks/ssobypassallowlistusers/README.md#list) - List the SSO bypass allowlist
+* [create](docs/sdks/ssobypassallowlistusers/README.md#create) - Add a user to the SSO bypass allowlist
+* [delete](docs/sdks/ssobypassallowlistusers/README.md#delete) - Remove a user from the SSO bypass allowlist
 
 ### [~~Templates~~](docs/sdks/templates/README.md)
 
@@ -576,6 +608,7 @@ def verify_machine_token(request: httpx.Request):
 * [bulk_unban](docs/sdks/users/README.md#bulk_unban) - Unban multiple users
 * [lock](docs/sdks/users/README.md#lock) - Lock a user
 * [unlock](docs/sdks/users/README.md#unlock) - Unlock a user
+* [merge](docs/sdks/users/README.md#merge) - Merge another user into this user
 * [set_profile_image](docs/sdks/users/README.md#set_profile_image) - Set user profile image
 * [delete_profile_image](docs/sdks/users/README.md#delete_profile_image) - Delete user profile image
 * [update_metadata](docs/sdks/users/README.md#update_metadata) - Merge and update a user's metadata
@@ -592,8 +625,10 @@ def verify_machine_token(request: httpx.Request):
 * [disable_mfa](docs/sdks/users/README.md#disable_mfa) - Disable a user's MFA methods
 * [delete_backup_codes](docs/sdks/users/README.md#delete_backup_codes) - Disable all user's Backup codes
 * [delete_passkey](docs/sdks/users/README.md#delete_passkey) - Delete a user passkey
-* [list_trusted_devices](docs/sdks/users/README.md#list_trusted_devices) - List a user's trusted devices
-* [revoke_trusted_device](docs/sdks/users/README.md#revoke_trusted_device) - Revoke a user's trusted device
+* [~~list_trusted_devices~~](docs/sdks/users/README.md#list_trusted_devices) - List a user's trusted devices :warning: **Deprecated**
+* [~~revoke_trusted_device~~](docs/sdks/users/README.md#revoke_trusted_device) - Revoke a user's trusted device :warning: **Deprecated**
+* [list_biometric_credentials](docs/sdks/users/README.md#list_biometric_credentials) - List a user's biometric credentials
+* [revoke_biometric_credential](docs/sdks/users/README.md#revoke_biometric_credential) - Revoke a user's biometric credential
 * [delete_web3_wallet](docs/sdks/users/README.md#delete_web3_wallet) - Delete a user web3 wallet
 * [delete_totp](docs/sdks/users/README.md#delete_totp) - Delete all the user's TOTPs
 * [delete_external_account](docs/sdks/users/README.md#delete_external_account) - Delete External Account
@@ -749,41 +784,41 @@ with Clerk(
 
 
 **Inherit from [`ClerkBaseError`](./src/clerk_backend_api/models/clerkbaseerror.py)**:
-* [`CreateAdminPortalLinkTokenAdminPortalLinkTokensResponseBody`](./src/clerk_backend_api/models/createadminportallinktokenadminportallinktokensresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 237 methods.*
-* [`RevokeAdminPortalLinkTokenAdminPortalLinkTokensResponseBody`](./src/clerk_backend_api/models/revokeadminportallinktokenadminportallinktokensresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 237 methods.*
-* [`CreateAPIKeyAPIKeysResponseBody`](./src/clerk_backend_api/models/createapikeyapikeysresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 237 methods.*
-* [`GetAPIKeysAPIKeysResponseBody`](./src/clerk_backend_api/models/getapikeysapikeysresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 237 methods.*
-* [`GetAPIKeyAPIKeysResponseBody`](./src/clerk_backend_api/models/getapikeyapikeysresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 237 methods.*
-* [`UpdateAPIKeyAPIKeysResponseBody`](./src/clerk_backend_api/models/updateapikeyapikeysresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 237 methods.*
-* [`DeleteAPIKeyAPIKeysResponseBody`](./src/clerk_backend_api/models/deleteapikeyapikeysresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 237 methods.*
-* [`GetAPIKeySecretAPIKeysResponseBody`](./src/clerk_backend_api/models/getapikeysecretapikeysresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 237 methods.*
-* [`RevokeAPIKeyAPIKeysResponseBody`](./src/clerk_backend_api/models/revokeapikeyapikeysresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 237 methods.*
-* [`VerifyAPIKeyAPIKeysResponseBody`](./src/clerk_backend_api/models/verifyapikeyapikeysresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 237 methods.*
-* [`CreateM2MTokenM2mResponseBody`](./src/clerk_backend_api/models/createm2mtokenm2mresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 237 methods.*
-* [`GetM2MTokensM2mResponseBody`](./src/clerk_backend_api/models/getm2mtokensm2mresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 237 methods.*
-* [`RevokeM2MTokenM2mResponseBody`](./src/clerk_backend_api/models/revokem2mtokenm2mresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 237 methods.*
-* [`VerifyM2MTokenM2mResponseBody`](./src/clerk_backend_api/models/verifym2mtokenm2mresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 237 methods.*
-* [`VerifyOAuthAccessTokenOauthAccessTokensResponseBody`](./src/clerk_backend_api/models/verifyoauthaccesstokenoauthaccesstokensresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 237 methods.*
-* [`CreateAdminPortalLinkTokenAdminPortalLinkTokensResponseResponseBody`](./src/clerk_backend_api/models/createadminportallinktokenadminportallinktokensresponseresponsebody.py): 401 Unauthorized. Status code `401`. Applicable to 1 of 237 methods.*
-* [`RevokeAdminPortalLinkTokenAdminPortalLinkTokensResponseResponseBody`](./src/clerk_backend_api/models/revokeadminportallinktokenadminportallinktokensresponseresponsebody.py): 401 Unauthorized. Status code `401`. Applicable to 1 of 237 methods.*
-* [`CreateAdminPortalLinkTokenAdminPortalLinkTokensResponse403ResponseBody`](./src/clerk_backend_api/models/createadminportallinktokenadminportallinktokensresponse403responsebody.py): 403 Forbidden. Status code `403`. Applicable to 1 of 237 methods.*
-* [`RevokeAdminPortalLinkTokenAdminPortalLinkTokensResponse403ResponseBody`](./src/clerk_backend_api/models/revokeadminportallinktokenadminportallinktokensresponse403responsebody.py): 403 Forbidden. Status code `403`. Applicable to 1 of 237 methods.*
-* [`GetM2MTokensM2mResponseResponseBody`](./src/clerk_backend_api/models/getm2mtokensm2mresponseresponsebody.py): 403 Forbidden. Status code `403`. Applicable to 1 of 237 methods.*
-* [`RevokeAdminPortalLinkTokenAdminPortalLinkTokensResponse404ResponseBody`](./src/clerk_backend_api/models/revokeadminportallinktokenadminportallinktokensresponse404responsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 237 methods.*
-* [`GetAPIKeysAPIKeysResponseResponseBody`](./src/clerk_backend_api/models/getapikeysapikeysresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 237 methods.*
-* [`GetAPIKeyAPIKeysResponseResponseBody`](./src/clerk_backend_api/models/getapikeyapikeysresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 237 methods.*
-* [`UpdateAPIKeyAPIKeysResponseResponseBody`](./src/clerk_backend_api/models/updateapikeyapikeysresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 237 methods.*
-* [`DeleteAPIKeyAPIKeysResponseResponseBody`](./src/clerk_backend_api/models/deleteapikeyapikeysresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 237 methods.*
-* [`GetAPIKeySecretAPIKeysResponseResponseBody`](./src/clerk_backend_api/models/getapikeysecretapikeysresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 237 methods.*
-* [`RevokeAPIKeyAPIKeysResponseResponseBody`](./src/clerk_backend_api/models/revokeapikeyapikeysresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 237 methods.*
-* [`VerifyAPIKeyAPIKeysResponseResponseBody`](./src/clerk_backend_api/models/verifyapikeyapikeysresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 237 methods.*
-* [`GetM2MTokensM2mResponse404ResponseBody`](./src/clerk_backend_api/models/getm2mtokensm2mresponse404responsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 237 methods.*
-* [`RevokeM2MTokenM2mResponseResponseBody`](./src/clerk_backend_api/models/revokem2mtokenm2mresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 237 methods.*
-* [`VerifyM2MTokenM2mResponseResponseBody`](./src/clerk_backend_api/models/verifym2mtokenm2mresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 237 methods.*
-* [`VerifyOAuthAccessTokenOauthAccessTokensResponseResponseBody`](./src/clerk_backend_api/models/verifyoauthaccesstokenoauthaccesstokensresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 237 methods.*
-* [`CreateAdminPortalLinkTokenAdminPortalLinkTokensResponse409ResponseBody`](./src/clerk_backend_api/models/createadminportallinktokenadminportallinktokensresponse409responsebody.py): 409 Conflict. Status code `409`. Applicable to 1 of 237 methods.*
-* [`CreateAPIKeyAPIKeysResponseResponseBody`](./src/clerk_backend_api/models/createapikeyapikeysresponseresponsebody.py): 409 Conflict. Status code `409`. Applicable to 1 of 237 methods.*
-* [`CreateM2MTokenM2mResponseResponseBody`](./src/clerk_backend_api/models/createm2mtokenm2mresponseresponsebody.py): 409 Conflict. Status code `409`. Applicable to 1 of 237 methods.*
+* [`CreateAdminPortalLinkTokenAdminPortalLinkTokensResponseBody`](./src/clerk_backend_api/models/createadminportallinktokenadminportallinktokensresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 263 methods.*
+* [`RevokeAdminPortalLinkTokenAdminPortalLinkTokensResponseBody`](./src/clerk_backend_api/models/revokeadminportallinktokenadminportallinktokensresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 263 methods.*
+* [`CreateAPIKeyAPIKeysResponseBody`](./src/clerk_backend_api/models/createapikeyapikeysresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 263 methods.*
+* [`GetAPIKeysAPIKeysResponseBody`](./src/clerk_backend_api/models/getapikeysapikeysresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 263 methods.*
+* [`GetAPIKeyAPIKeysResponseBody`](./src/clerk_backend_api/models/getapikeyapikeysresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 263 methods.*
+* [`UpdateAPIKeyAPIKeysResponseBody`](./src/clerk_backend_api/models/updateapikeyapikeysresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 263 methods.*
+* [`DeleteAPIKeyAPIKeysResponseBody`](./src/clerk_backend_api/models/deleteapikeyapikeysresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 263 methods.*
+* [`GetAPIKeySecretAPIKeysResponseBody`](./src/clerk_backend_api/models/getapikeysecretapikeysresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 263 methods.*
+* [`RevokeAPIKeyAPIKeysResponseBody`](./src/clerk_backend_api/models/revokeapikeyapikeysresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 263 methods.*
+* [`VerifyAPIKeyAPIKeysResponseBody`](./src/clerk_backend_api/models/verifyapikeyapikeysresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 263 methods.*
+* [`CreateM2MTokenM2mResponseBody`](./src/clerk_backend_api/models/createm2mtokenm2mresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 263 methods.*
+* [`GetM2MTokensM2mResponseBody`](./src/clerk_backend_api/models/getm2mtokensm2mresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 263 methods.*
+* [`RevokeM2MTokenM2mResponseBody`](./src/clerk_backend_api/models/revokem2mtokenm2mresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 263 methods.*
+* [`VerifyM2MTokenM2mResponseBody`](./src/clerk_backend_api/models/verifym2mtokenm2mresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 263 methods.*
+* [`VerifyOAuthAccessTokenOauthAccessTokensResponseBody`](./src/clerk_backend_api/models/verifyoauthaccesstokenoauthaccesstokensresponsebody.py): 400 Bad Request. Status code `400`. Applicable to 1 of 263 methods.*
+* [`CreateAdminPortalLinkTokenAdminPortalLinkTokensResponseResponseBody`](./src/clerk_backend_api/models/createadminportallinktokenadminportallinktokensresponseresponsebody.py): 401 Unauthorized. Status code `401`. Applicable to 1 of 263 methods.*
+* [`RevokeAdminPortalLinkTokenAdminPortalLinkTokensResponseResponseBody`](./src/clerk_backend_api/models/revokeadminportallinktokenadminportallinktokensresponseresponsebody.py): 401 Unauthorized. Status code `401`. Applicable to 1 of 263 methods.*
+* [`CreateAdminPortalLinkTokenAdminPortalLinkTokensResponse403ResponseBody`](./src/clerk_backend_api/models/createadminportallinktokenadminportallinktokensresponse403responsebody.py): 403 Forbidden. Status code `403`. Applicable to 1 of 263 methods.*
+* [`RevokeAdminPortalLinkTokenAdminPortalLinkTokensResponse403ResponseBody`](./src/clerk_backend_api/models/revokeadminportallinktokenadminportallinktokensresponse403responsebody.py): 403 Forbidden. Status code `403`. Applicable to 1 of 263 methods.*
+* [`GetM2MTokensM2mResponseResponseBody`](./src/clerk_backend_api/models/getm2mtokensm2mresponseresponsebody.py): 403 Forbidden. Status code `403`. Applicable to 1 of 263 methods.*
+* [`RevokeAdminPortalLinkTokenAdminPortalLinkTokensResponse404ResponseBody`](./src/clerk_backend_api/models/revokeadminportallinktokenadminportallinktokensresponse404responsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 263 methods.*
+* [`GetAPIKeysAPIKeysResponseResponseBody`](./src/clerk_backend_api/models/getapikeysapikeysresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 263 methods.*
+* [`GetAPIKeyAPIKeysResponseResponseBody`](./src/clerk_backend_api/models/getapikeyapikeysresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 263 methods.*
+* [`UpdateAPIKeyAPIKeysResponseResponseBody`](./src/clerk_backend_api/models/updateapikeyapikeysresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 263 methods.*
+* [`DeleteAPIKeyAPIKeysResponseResponseBody`](./src/clerk_backend_api/models/deleteapikeyapikeysresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 263 methods.*
+* [`GetAPIKeySecretAPIKeysResponseResponseBody`](./src/clerk_backend_api/models/getapikeysecretapikeysresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 263 methods.*
+* [`RevokeAPIKeyAPIKeysResponseResponseBody`](./src/clerk_backend_api/models/revokeapikeyapikeysresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 263 methods.*
+* [`VerifyAPIKeyAPIKeysResponseResponseBody`](./src/clerk_backend_api/models/verifyapikeyapikeysresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 263 methods.*
+* [`GetM2MTokensM2mResponse404ResponseBody`](./src/clerk_backend_api/models/getm2mtokensm2mresponse404responsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 263 methods.*
+* [`RevokeM2MTokenM2mResponseResponseBody`](./src/clerk_backend_api/models/revokem2mtokenm2mresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 263 methods.*
+* [`VerifyM2MTokenM2mResponseResponseBody`](./src/clerk_backend_api/models/verifym2mtokenm2mresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 263 methods.*
+* [`VerifyOAuthAccessTokenOauthAccessTokensResponseResponseBody`](./src/clerk_backend_api/models/verifyoauthaccesstokenoauthaccesstokensresponseresponsebody.py): 404 Not Found. Status code `404`. Applicable to 1 of 263 methods.*
+* [`CreateAdminPortalLinkTokenAdminPortalLinkTokensResponse409ResponseBody`](./src/clerk_backend_api/models/createadminportallinktokenadminportallinktokensresponse409responsebody.py): 409 Conflict. Status code `409`. Applicable to 1 of 263 methods.*
+* [`CreateAPIKeyAPIKeysResponseResponseBody`](./src/clerk_backend_api/models/createapikeyapikeysresponseresponsebody.py): 409 Conflict. Status code `409`. Applicable to 1 of 263 methods.*
+* [`CreateM2MTokenM2mResponseResponseBody`](./src/clerk_backend_api/models/createm2mtokenm2mresponseresponsebody.py): 409 Conflict. Status code `409`. Applicable to 1 of 263 methods.*
 * [`ResponseValidationError`](./src/clerk_backend_api/models/responsevalidationerror.py): Type mismatch between the response data and the expected Pydantic model. Provides access to the Pydantic validation error via the `cause` attribute.
 
 </details>
@@ -891,6 +926,20 @@ class CustomClient(AsyncHttpClient):
 
 s = Clerk(async_client=CustomClient(httpx.AsyncClient()))
 ```
+### httpx2 (Pydantic's httpx fork)
+
+[httpx2](https://httpx2.pydantic.dev/) is Pydantic's maintained fork of `httpx`. To run this SDK on httpx2, call `alias_httpx()` at your program's entry point, before importing the SDK, so every `import httpx` — including the ones inside the SDK — resolves to `httpx2`:
+```python
+import httpx2
+
+httpx2.alias_httpx()
+
+from clerk_backend_api import Clerk
+
+s = Clerk()
+```
+
+An SDK can also be generated against httpx2 directly, so it depends on the fork instead of `httpx`, by setting `python.httpClientLibrary: httpx2` in `gen.yaml`.
 <!-- End Custom HTTP Client [http-client] -->
 
 <!-- Start Resource Management [resource-management] -->
@@ -908,6 +957,7 @@ def main():
         bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
     ) as clerk:
         # Rest of application here...
+        pass
 
 
 # Or when using async:
@@ -917,6 +967,7 @@ async def amain():
         bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
     ) as clerk:
         # Rest of application here...
+        pass
 ```
 <!-- End Resource Management [resource-management] -->
 
