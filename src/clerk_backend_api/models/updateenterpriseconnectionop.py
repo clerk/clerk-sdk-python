@@ -7,9 +7,12 @@ from clerk_backend_api.types import (
     OptionalNullable,
     UNSET,
     UNSET_SENTINEL,
+    current_exclude_none,
+    serialize_with_info,
 )
 from clerk_backend_api.utils import FieldMetadata, PathParamMetadata, RequestMetadata
 from enum import Enum
+import pydantic
 from pydantic import model_serializer
 from typing import List, Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
@@ -36,14 +39,20 @@ class UpdateEnterpriseConnectionAttributeMapping(BaseModel):
     last_name: OptionalNullable[str] = UNSET
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
         optional_fields = set(["user_id", "email_address", "first_name", "last_name"])
         nullable_fields = set(["user_id", "email_address", "first_name", "last_name"])
+        exclude_none = current_exclude_none()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and exclude_none is False:
+                continue
             val = serialized.get(k, serialized.get(n))
             is_nullable_and_explicitly_set = (
                 k in nullable_fields
@@ -88,13 +97,19 @@ class UpdateEnterpriseConnectionLoginHint(BaseModel):
     r"""The user public_metadata key whose value is sent as the login_hint when mode is custom_attribute"""
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
         optional_fields = set(["source"])
+        exclude_none = current_exclude_none()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and exclude_none is False:
+                continue
             val = serialized.get(k, serialized.get(n))
 
             if val != UNSET_SENTINEL:
@@ -116,7 +131,9 @@ class UpdateEnterpriseConnectionSamlTypedDict(TypedDict):
     idp_sso_url: NotRequired[Nullable[str]]
     r"""IdP SSO URL"""
     idp_certificate: NotRequired[Nullable[str]]
-    r"""IdP certificate (PEM)"""
+    r"""Deprecated, use idp_certificates. One X.509 certificate, PEM or bare base64, or several concatenated PEM certificates; replaces the connection's whole certificate set"""
+    idp_certificates: NotRequired[List[str]]
+    r"""The IdP X.509 signing certificates the connection trusts, one per entry, in PEM or bare base64. Replaces the connection's whole certificate set and takes precedence over idp_certificate"""
     idp_metadata_url: NotRequired[Nullable[str]]
     r"""URL to IdP metadata"""
     idp_metadata: NotRequired[Nullable[str]]
@@ -146,8 +163,16 @@ class UpdateEnterpriseConnectionSaml(BaseModel):
     idp_sso_url: OptionalNullable[str] = UNSET
     r"""IdP SSO URL"""
 
-    idp_certificate: OptionalNullable[str] = UNSET
-    r"""IdP certificate (PEM)"""
+    idp_certificate: Annotated[
+        OptionalNullable[str],
+        pydantic.Field(
+            deprecated="warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
+        ),
+    ] = UNSET
+    r"""Deprecated, use idp_certificates. One X.509 certificate, PEM or bare base64, or several concatenated PEM certificates; replaces the connection's whole certificate set"""
+
+    idp_certificates: Optional[List[str]] = None
+    r"""The IdP X.509 signing certificates the connection trusts, one per entry, in PEM or bare base64. Replaces the connection's whole certificate set and takes precedence over idp_certificate"""
 
     idp_metadata_url: OptionalNullable[str] = UNSET
     r"""URL to IdP metadata"""
@@ -170,6 +195,9 @@ class UpdateEnterpriseConnectionSaml(BaseModel):
     r"""Configuration for the login_hint sent to the IdP on SSO sign-in"""
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
         optional_fields = set(
             [
@@ -177,6 +205,7 @@ class UpdateEnterpriseConnectionSaml(BaseModel):
                 "idp_entity_id",
                 "idp_sso_url",
                 "idp_certificate",
+                "idp_certificates",
                 "idp_metadata_url",
                 "idp_metadata",
                 "attribute_mapping",
@@ -201,11 +230,14 @@ class UpdateEnterpriseConnectionSaml(BaseModel):
                 "login_hint",
             ]
         )
+        exclude_none = current_exclude_none()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and exclude_none is False:
+                continue
             val = serialized.get(k, serialized.get(n))
             is_nullable_and_explicitly_set = (
                 k in nullable_fields
@@ -267,6 +299,9 @@ class UpdateEnterpriseConnectionOidc(BaseModel):
     r"""Whether PKCE is required (must be true for public clients with no client secret)"""
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
         optional_fields = set(
             [
@@ -290,11 +325,14 @@ class UpdateEnterpriseConnectionOidc(BaseModel):
                 "requires_pkce",
             ]
         )
+        exclude_none = current_exclude_none()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and exclude_none is False:
+                continue
             val = serialized.get(k, serialized.get(n))
             is_nullable_and_explicitly_set = (
                 k in nullable_fields
@@ -321,6 +359,8 @@ class UpdateEnterpriseConnectionCustomAttributesTypedDict(TypedDict):
     r"""Path to extract the attribute value from SSO claims"""
     scim_path: NotRequired[str]
     r"""GJSON path to extract the attribute value from SCIM user resources"""
+    directory_path: NotRequired[str]
+    r"""The new name for `scim_path`. Send either one, or both with the same value; sending both with different values is rejected."""
     multi_valued: NotRequired[bool]
     r"""When true, the attribute supports multiple values; values from the IdP are written to public_metadata as an array. Defaults to false."""
 
@@ -338,17 +378,28 @@ class UpdateEnterpriseConnectionCustomAttributes(BaseModel):
     scim_path: Optional[str] = None
     r"""GJSON path to extract the attribute value from SCIM user resources"""
 
+    directory_path: Optional[str] = None
+    r"""The new name for `scim_path`. Send either one, or both with the same value; sending both with different values is rejected."""
+
     multi_valued: Optional[bool] = None
     r"""When true, the attribute supports multiple values; values from the IdP are written to public_metadata as an array. Defaults to false."""
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
-        optional_fields = set(["sso_path", "scim_path", "multi_valued"])
+        optional_fields = set(
+            ["sso_path", "scim_path", "directory_path", "multi_valued"]
+        )
+        exclude_none = current_exclude_none()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and exclude_none is False:
+                continue
             val = serialized.get(k, serialized.get(n))
 
             if val != UNSET_SENTINEL:
@@ -425,6 +476,9 @@ class UpdateEnterpriseConnectionRequestBody(BaseModel):
     r"""Custom attributes to map from the IdP to the user's profile via SSO or SCIM provisioning. Requires the custom attributes feature to be enabled for the instance."""
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
         optional_fields = set(
             [
@@ -454,11 +508,14 @@ class UpdateEnterpriseConnectionRequestBody(BaseModel):
                 "custom_attributes",
             ]
         )
+        exclude_none = current_exclude_none()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and exclude_none is False:
+                continue
             val = serialized.get(k, serialized.get(n))
             is_nullable_and_explicitly_set = (
                 k in nullable_fields

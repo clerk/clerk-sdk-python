@@ -8,6 +8,8 @@ from clerk_backend_api.types import (
     OptionalNullable,
     UNSET,
     UNSET_SENTINEL,
+    current_exclude_none,
+    serialize_with_info,
 )
 from enum import Enum
 import pydantic
@@ -72,6 +74,8 @@ class SignUpTypedDict(TypedDict):
     """
     unsafe_metadata: NotRequired[Dict[str, Any]]
     public_metadata: NotRequired[Dict[str, Any]]
+    timezone: NotRequired[Nullable[str]]
+    r"""The IANA timezone associated with the sign-up attempt."""
     locale: NotRequired[Nullable[str]]
     r"""The user locale preference for the sign-up specified as a BCP-47 language tag."""
     external_account: NotRequired[SignUpExternalAccountTypedDict]
@@ -132,6 +136,9 @@ class SignUp(BaseModel):
 
     public_metadata: Optional[Dict[str, Any]] = None
 
+    timezone: OptionalNullable[str] = UNSET
+    r"""The IANA timezone associated with the sign-up attempt."""
+
     locale: OptionalNullable[str] = UNSET
     r"""The user locale preference for the sign-up specified as a BCP-47 language tag."""
 
@@ -143,9 +150,18 @@ class SignUp(BaseModel):
     ] = None
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
         optional_fields = set(
-            ["unsafe_metadata", "public_metadata", "locale", "external_account"]
+            [
+                "unsafe_metadata",
+                "public_metadata",
+                "timezone",
+                "locale",
+                "external_account",
+            ]
         )
         nullable_fields = set(
             [
@@ -159,14 +175,18 @@ class SignUp(BaseModel):
                 "created_session_id",
                 "created_user_id",
                 "legal_accepted_at",
+                "timezone",
                 "locale",
             ]
         )
+        exclude_none = current_exclude_none()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and exclude_none is False:
+                continue
             val = serialized.get(k, serialized.get(n))
             is_nullable_and_explicitly_set = (
                 k in nullable_fields

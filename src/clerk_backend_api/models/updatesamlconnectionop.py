@@ -7,6 +7,8 @@ from clerk_backend_api.types import (
     OptionalNullable,
     UNSET,
     UNSET_SENTINEL,
+    current_exclude_none,
+    serialize_with_info,
 )
 from clerk_backend_api.utils import FieldMetadata, PathParamMetadata, RequestMetadata
 from enum import Enum
@@ -37,13 +39,19 @@ class AttributeMapping(BaseModel):
     last_name: Optional[str] = None
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
         optional_fields = set(["user_id", "email_address", "first_name", "last_name"])
+        exclude_none = current_exclude_none()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and exclude_none is False:
+                continue
             val = serialized.get(k, serialized.get(n))
 
             if val != UNSET_SENTINEL:
@@ -80,13 +88,19 @@ class UpdateSAMLConnectionLoginHint(BaseModel):
     r"""The user public_metadata key whose value is sent as the login_hint when mode is custom_attribute"""
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
         optional_fields = set(["source"])
+        exclude_none = current_exclude_none()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and exclude_none is False:
+                continue
             val = serialized.get(k, serialized.get(n))
 
             if val != UNSET_SENTINEL:
@@ -108,7 +122,9 @@ class UpdateSAMLConnectionRequestBodyTypedDict(TypedDict):
     idp_sso_url: NotRequired[Nullable[str]]
     r"""The SSO URL as provided by the IdP"""
     idp_certificate: NotRequired[Nullable[str]]
-    r"""The x509 certificated as provided by the IdP"""
+    r"""Deprecated, use idp_certificates. One X.509 certificate, PEM or bare base64, or several concatenated PEM certificates; replaces the connection's whole certificate set"""
+    idp_certificates: NotRequired[List[str]]
+    r"""The IdP X.509 signing certificates the connection trusts, one per entry, in PEM or bare base64. Replaces the connection's whole certificate set and takes precedence over idp_certificate"""
     idp_metadata_url: NotRequired[Nullable[str]]
     r"""The URL which serves the IdP metadata. If present, it takes priority over the corresponding individual properties and replaces them"""
     idp_metadata: NotRequired[Nullable[str]]
@@ -158,8 +174,16 @@ class UpdateSAMLConnectionRequestBody(BaseModel):
     idp_sso_url: OptionalNullable[str] = UNSET
     r"""The SSO URL as provided by the IdP"""
 
-    idp_certificate: OptionalNullable[str] = UNSET
-    r"""The x509 certificated as provided by the IdP"""
+    idp_certificate: Annotated[
+        OptionalNullable[str],
+        pydantic.Field(
+            deprecated="warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
+        ),
+    ] = UNSET
+    r"""Deprecated, use idp_certificates. One X.509 certificate, PEM or bare base64, or several concatenated PEM certificates; replaces the connection's whole certificate set"""
+
+    idp_certificates: Optional[List[str]] = None
+    r"""The IdP X.509 signing certificates the connection trusts, one per entry, in PEM or bare base64. Replaces the connection's whole certificate set and takes precedence over idp_certificate"""
 
     idp_metadata_url: OptionalNullable[str] = UNSET
     r"""The URL which serves the IdP metadata. If present, it takes priority over the corresponding individual properties and replaces them"""
@@ -201,6 +225,9 @@ class UpdateSAMLConnectionRequestBody(BaseModel):
     r"""When enabling the connection, controls behavior when verified domains used for enrollment modes like automatic invitation or automatic suggestion already exist for the same domain. If true, those verified domains are removed and the connection is enabled. If false or omitted, the request fails when any such verified domain exists."""
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
         optional_fields = set(
             [
@@ -210,6 +237,7 @@ class UpdateSAMLConnectionRequestBody(BaseModel):
                 "idp_entity_id",
                 "idp_sso_url",
                 "idp_certificate",
+                "idp_certificates",
                 "idp_metadata_url",
                 "idp_metadata",
                 "organization_id",
@@ -247,11 +275,14 @@ class UpdateSAMLConnectionRequestBody(BaseModel):
                 "consent_verified_domains_deletion",
             ]
         )
+        exclude_none = current_exclude_none()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and exclude_none is False:
+                continue
             val = serialized.get(k, serialized.get(n))
             is_nullable_and_explicitly_set = (
                 k in nullable_fields

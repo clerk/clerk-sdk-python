@@ -7,6 +7,8 @@ from clerk_backend_api.types import (
     OptionalNullable,
     UNSET,
     UNSET_SENTINEL,
+    current_exclude_none,
+    serialize_with_info,
 )
 from enum import Enum
 from pydantic import model_serializer
@@ -50,13 +52,19 @@ class ParsedUserInfo(BaseModel):
     user_id: Optional[str] = None
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
         optional_fields = set(["email_address", "first_name", "last_name", "user_id"])
+        exclude_none = current_exclude_none()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and exclude_none is False:
+                continue
             val = serialized.get(k, serialized.get(n))
 
             if val != UNSET_SENTINEL:
@@ -66,14 +74,14 @@ class ParsedUserInfo(BaseModel):
         return m
 
 
-class LogsTypedDict(TypedDict):
+class LogsModelTypedDict(TypedDict):
     level: str
     message: str
     code: NotRequired[str]
     short_message: NotRequired[str]
 
 
-class Logs(BaseModel):
+class LogsModel(BaseModel):
     level: str
 
     message: str
@@ -83,13 +91,19 @@ class Logs(BaseModel):
     short_message: Optional[str] = None
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
         optional_fields = set(["code", "short_message"])
+        exclude_none = current_exclude_none()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and exclude_none is False:
+                continue
             val = serialized.get(k, serialized.get(n))
 
             if val != UNSET_SENTINEL:
@@ -117,13 +131,19 @@ class Saml(BaseModel):
     relay_state: Optional[str] = None
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
         optional_fields = set(["saml_request", "saml_response", "relay_state"])
+        exclude_none = current_exclude_none()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and exclude_none is False:
+                continue
             val = serialized.get(k, serialized.get(n))
 
             if val != UNSET_SENTINEL:
@@ -151,13 +171,19 @@ class Oauth(BaseModel):
     user_info: Optional[str] = None
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
         optional_fields = set(["id_token", "access_token", "user_info"])
+        exclude_none = current_exclude_none()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and exclude_none is False:
+                continue
             val = serialized.get(k, serialized.get(n))
 
             if val != UNSET_SENTINEL:
@@ -178,7 +204,7 @@ class EnterpriseConnectionTestRunTypedDict(TypedDict):
     r"""Unix timestamp in milliseconds when the test run was created"""
     parsed_user_info: NotRequired[Nullable[ParsedUserInfoTypedDict]]
     r"""The user information parsed from the IdP response"""
-    logs: NotRequired[List[LogsTypedDict]]
+    logs: NotRequired[List[LogsModelTypedDict]]
     r"""Log entries captured during the test run"""
     saml: NotRequired[Nullable[SamlTypedDict]]
     r"""SAML-specific metadata, present for SAML connections"""
@@ -202,7 +228,7 @@ class EnterpriseConnectionTestRun(BaseModel):
     parsed_user_info: OptionalNullable[ParsedUserInfo] = UNSET
     r"""The user information parsed from the IdP response"""
 
-    logs: Optional[List[Logs]] = None
+    logs: Optional[List[LogsModel]] = None
     r"""Log entries captured during the test run"""
 
     saml: OptionalNullable[Saml] = UNSET
@@ -212,14 +238,20 @@ class EnterpriseConnectionTestRun(BaseModel):
     r"""OAuth-specific metadata, present for OIDC connections"""
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
         optional_fields = set(["parsed_user_info", "logs", "saml", "oauth"])
         nullable_fields = set(["parsed_user_info", "saml", "oauth"])
+        exclude_none = current_exclude_none()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and exclude_none is False:
+                continue
             val = serialized.get(k, serialized.get(n))
             is_nullable_and_explicitly_set = (
                 k in nullable_fields

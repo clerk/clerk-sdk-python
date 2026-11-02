@@ -681,6 +681,7 @@ class SamlConnectionsSDK(BaseSDK):
         idp_entity_id: OptionalNullable[str] = UNSET,
         idp_sso_url: OptionalNullable[str] = UNSET,
         idp_certificate: OptionalNullable[str] = UNSET,
+        idp_certificates: Optional[Iterable[str]] = None,
         idp_metadata_url: OptionalNullable[str] = UNSET,
         idp_metadata: OptionalNullable[str] = UNSET,
         organization_id: OptionalNullable[str] = UNSET,
@@ -717,7 +718,8 @@ class SamlConnectionsSDK(BaseSDK):
         :param domains: A list of the domains on use for the SAML connection
         :param idp_entity_id: The Entity ID as provided by the IdP
         :param idp_sso_url: The SSO URL as provided by the IdP
-        :param idp_certificate: The x509 certificated as provided by the IdP
+        :param idp_certificate: Deprecated, use idp_certificates. One X.509 certificate, PEM or bare base64, or several concatenated PEM certificates; replaces the connection's whole certificate set
+        :param idp_certificates: The IdP X.509 signing certificates the connection trusts, one per entry, in PEM or bare base64. Replaces the connection's whole certificate set and takes precedence over idp_certificate
         :param idp_metadata_url: The URL which serves the IdP metadata. If present, it takes priority over the corresponding individual properties and replaces them
         :param idp_metadata: The XML content of the IdP metadata file. If present, it takes priority over the corresponding individual properties
         :param organization_id: The ID of the organization to which users of this SAML Connection will be added
@@ -755,6 +757,7 @@ class SamlConnectionsSDK(BaseSDK):
                 idp_entity_id=idp_entity_id,
                 idp_sso_url=idp_sso_url,
                 idp_certificate=idp_certificate,
+                idp_certificates=utils.unmarshal(idp_certificates, Optional[List[str]]),
                 idp_metadata_url=idp_metadata_url,
                 idp_metadata=idp_metadata,
                 organization_id=organization_id,
@@ -856,6 +859,7 @@ class SamlConnectionsSDK(BaseSDK):
         idp_entity_id: OptionalNullable[str] = UNSET,
         idp_sso_url: OptionalNullable[str] = UNSET,
         idp_certificate: OptionalNullable[str] = UNSET,
+        idp_certificates: Optional[Iterable[str]] = None,
         idp_metadata_url: OptionalNullable[str] = UNSET,
         idp_metadata: OptionalNullable[str] = UNSET,
         organization_id: OptionalNullable[str] = UNSET,
@@ -892,7 +896,8 @@ class SamlConnectionsSDK(BaseSDK):
         :param domains: A list of the domains on use for the SAML connection
         :param idp_entity_id: The Entity ID as provided by the IdP
         :param idp_sso_url: The SSO URL as provided by the IdP
-        :param idp_certificate: The x509 certificated as provided by the IdP
+        :param idp_certificate: Deprecated, use idp_certificates. One X.509 certificate, PEM or bare base64, or several concatenated PEM certificates; replaces the connection's whole certificate set
+        :param idp_certificates: The IdP X.509 signing certificates the connection trusts, one per entry, in PEM or bare base64. Replaces the connection's whole certificate set and takes precedence over idp_certificate
         :param idp_metadata_url: The URL which serves the IdP metadata. If present, it takes priority over the corresponding individual properties and replaces them
         :param idp_metadata: The XML content of the IdP metadata file. If present, it takes priority over the corresponding individual properties
         :param organization_id: The ID of the organization to which users of this SAML Connection will be added
@@ -930,6 +935,7 @@ class SamlConnectionsSDK(BaseSDK):
                 idp_entity_id=idp_entity_id,
                 idp_sso_url=idp_sso_url,
                 idp_certificate=idp_certificate,
+                idp_certificates=utils.unmarshal(idp_certificates, Optional[List[str]]),
                 idp_metadata_url=idp_metadata_url,
                 idp_metadata=idp_metadata,
                 organization_id=organization_id,

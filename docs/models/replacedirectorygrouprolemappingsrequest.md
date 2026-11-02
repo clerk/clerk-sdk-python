@@ -1,0 +1,9 @@
+# ReplaceDirectoryGroupRoleMappingsRequest
+
+
+## Fields
+
+| Field                                                                                                            | Type                                                                                                             | Required                                                                                                         | Description                                                                                                      |
+| ---------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| `directory_id`                                                                                                   | *str*                                                                                                            | :heavy_check_mark:                                                                                               | The ID of the directory.                                                                                         |
+| `request_body`                                                                                                   | [models.ReplaceDirectoryGroupRoleMappingsRequestBody](../models/replacedirectorygrouprolemappingsrequestbody.md) | :heavy_check_mark:                                                                                               | N/A                                                                                                              |

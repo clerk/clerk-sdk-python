@@ -7,20 +7,18 @@ from clerk_backend_api.types import (
     OptionalNullable,
     UNSET,
     UNSET_SENTINEL,
+    current_exclude_none,
+    serialize_with_info,
 )
-from clerk_backend_api.utils import validate_const
-import pydantic
 from pydantic import model_serializer
-from pydantic.functional_validators import AfterValidator
-from typing import Literal
-from typing_extensions import Annotated, NotRequired, TypedDict
+from typing_extensions import NotRequired, TypedDict
 
 
 class AddDomainRequestBodyTypedDict(TypedDict):
     name: str
     r"""The new domain name. Can contain the port for development instances."""
-    is_satellite: Literal[True]
-    r"""Marks the new domain as satellite. Only `true` is accepted at the moment."""
+    is_satellite: bool
+    r"""Marks the new domain as satellite. Set to `false` only when migrating a production instance from an active provider domain to a custom domain."""
     proxy_url: NotRequired[Nullable[str]]
     r"""The full URL of the proxy which will forward requests to the Clerk Frontend API for this domain. Applicable only to production instances."""
 
@@ -29,24 +27,27 @@ class AddDomainRequestBody(BaseModel):
     name: str
     r"""The new domain name. Can contain the port for development instances."""
 
-    IS_SATELLITE: Annotated[
-        Annotated[Literal[True], AfterValidator(validate_const(True))],
-        pydantic.Field(alias="is_satellite"),
-    ] = True
-    r"""Marks the new domain as satellite. Only `true` is accepted at the moment."""
+    is_satellite: bool
+    r"""Marks the new domain as satellite. Set to `false` only when migrating a production instance from an active provider domain to a custom domain."""
 
     proxy_url: OptionalNullable[str] = UNSET
     r"""The full URL of the proxy which will forward requests to the Clerk Frontend API for this domain. Applicable only to production instances."""
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
         optional_fields = set(["proxy_url"])
         nullable_fields = set(["proxy_url"])
+        exclude_none = current_exclude_none()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and exclude_none is False:
+                continue
             val = serialized.get(k, serialized.get(n))
             is_nullable_and_explicitly_set = (
                 k in nullable_fields
@@ -62,9 +63,3 @@ class AddDomainRequestBody(BaseModel):
                     m[k] = val
 
         return m
-
-
-try:
-    AddDomainRequestBody.model_rebuild()
-except NameError:
-    pass
