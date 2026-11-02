@@ -268,7 +268,7 @@ class RoleSetsSDK(BaseSDK):
         :param key: A unique key for the role set. Must start with 'role_set:' and contain only lowercase alphanumeric characters and underscores.
             If not provided, a key will be generated from the name.
         :param description: Optional description for the role set
-        :param type: The type of the role set. \"initial\" role sets are the default for new organizations.
+        :param type_: The type of the role set. \"initial\" role sets are the default for new organizations.
             Only one role set can be \"initial\" per instance.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -390,7 +390,7 @@ class RoleSetsSDK(BaseSDK):
         :param key: A unique key for the role set. Must start with 'role_set:' and contain only lowercase alphanumeric characters and underscores.
             If not provided, a key will be generated from the name.
         :param description: Optional description for the role set
-        :param type: The type of the role set. \"initial\" role sets are the default for new organizations.
+        :param type_: The type of the role set. \"initial\" role sets are the default for new organizations.
             Only one role set can be \"initial\" per instance.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -690,7 +690,7 @@ class RoleSetsSDK(BaseSDK):
         :param name: The new name for the role set
         :param key: A unique key for the role set. Must start with 'role_set:' and contain only lowercase alphanumeric characters and underscores.
         :param description: Optional description for the role set
-        :param type: Set to \"initial\" to make this the default role set for new organizations.
+        :param type_: Set to \"initial\" to make this the default role set for new organizations.
             Only one role set can be \"initial\" per instance; setting this will change any existing initial role set to \"custom\".
         :param default_role_key: The key of the role to use as the default role for new organization members.
             Must be an existing role in the role set.
@@ -816,7 +816,7 @@ class RoleSetsSDK(BaseSDK):
         :param name: The new name for the role set
         :param key: A unique key for the role set. Must start with 'role_set:' and contain only lowercase alphanumeric characters and underscores.
         :param description: Optional description for the role set
-        :param type: Set to \"initial\" to make this the default role set for new organizations.
+        :param type_: Set to \"initial\" to make this the default role set for new organizations.
             Only one role set can be \"initial\" per instance; setting this will change any existing initial role set to \"custom\".
         :param default_role_key: The key of the role to use as the default role for new organization members.
             Must be an existing role in the role set.

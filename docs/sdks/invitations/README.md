@@ -7,6 +7,7 @@
 * [create](#create) - Create an invitation
 * [list](#list) - List all invitations
 * [bulk_create](#bulk_create) - Create multiple invitations
+* [delete](#delete) - Delete an invitation
 * [revoke](#revoke) - Revokes an invitation
 
 ## create
@@ -165,6 +166,49 @@ with Clerk(
 | Error Type         | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
 | models.ClerkErrors | 400, 422           | application/json   |
+| models.SDKError    | 4XX, 5XX           | \*/\*              |
+
+## delete
+
+Permanently deletes the given invitation and the copies of the invitation email Clerk stored for its recipient.
+Unlike revoking, deleting removes the invitation record itself, which helps honor a data erasure request from someone who was invited but never signed up.
+Other records that contain the same email address, such as users or organization invitations, are not affected.
+Invitations of any status can be deleted.
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="DeleteInvitation" method="delete" path="/invitations/{invitation_id}" -->
+```python
+from clerk_backend_api import Clerk
+
+
+with Clerk(
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+) as clerk:
+
+    res = clerk.invitations.delete(invitation_id="<id>")
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `invitation_id`                                                     | *str*                                                               | :heavy_check_mark:                                                  | The ID of the invitation to delete                                  |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+
+### Response
+
+**[models.DeletedObject](../../models/deletedobject.md)**
+
+### Errors
+
+| Error Type         | Status Code        | Content Type       |
+| ------------------ | ------------------ | ------------------ |
+| models.ClerkErrors | 404                | application/json   |
 | models.SDKError    | 4XX, 5XX           | \*/\*              |
 
 ## revoke

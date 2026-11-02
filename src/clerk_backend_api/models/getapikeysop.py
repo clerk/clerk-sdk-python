@@ -8,6 +8,8 @@ from clerk_backend_api.types import (
     OptionalNullable,
     UNSET,
     UNSET_SENTINEL,
+    current_exclude_none,
+    serialize_with_info,
 )
 from clerk_backend_api.utils import FieldMetadata, QueryParamMetadata
 from dataclasses import dataclass, field
@@ -50,12 +52,12 @@ class GetAPIKeysRequest(BaseModel):
     limit: Annotated[
         Optional[float],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
-    ] = 10
+    ] = 10.0
 
     offset: Annotated[
         OptionalNullable[float],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
-    ] = 0
+    ] = 0.0
 
     query: Annotated[
         Optional[str],
@@ -63,14 +65,20 @@ class GetAPIKeysRequest(BaseModel):
     ] = None
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
         optional_fields = set(["type", "include_invalid", "limit", "offset", "query"])
         nullable_fields = set(["offset"])
+        exclude_none = current_exclude_none()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and exclude_none is False:
+                continue
             val = serialized.get(k, serialized.get(n))
             is_nullable_and_explicitly_set = (
                 k in nullable_fields
@@ -162,7 +170,7 @@ class GetAPIKeysObject(str, Enum):
     API_KEY = "api_key"
 
 
-class DataTypedDict(TypedDict):
+class GetAPIKeysDataTypedDict(TypedDict):
     object: GetAPIKeysObject
     id: str
     type: str
@@ -185,7 +193,7 @@ class DataTypedDict(TypedDict):
     description: NotRequired[Nullable[str]]
 
 
-class Data(BaseModel):
+class GetAPIKeysData(BaseModel):
     object: GetAPIKeysObject
 
     id: str
@@ -223,6 +231,9 @@ class Data(BaseModel):
     description: OptionalNullable[str] = UNSET
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
         optional_fields = set(["description"])
         nullable_fields = set(
@@ -235,11 +246,14 @@ class Data(BaseModel):
                 "last_used_at",
             ]
         )
+        exclude_none = current_exclude_none()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and exclude_none is False:
+                continue
             val = serialized.get(k, serialized.get(n))
             is_nullable_and_explicitly_set = (
                 k in nullable_fields
@@ -260,13 +274,13 @@ class Data(BaseModel):
 class GetAPIKeysResponseBodyTypedDict(TypedDict):
     r"""200 OK"""
 
-    data: List[DataTypedDict]
+    data: List[GetAPIKeysDataTypedDict]
     total_count: float
 
 
 class GetAPIKeysResponseBody(BaseModel):
     r"""200 OK"""
 
-    data: List[Data]
+    data: List[GetAPIKeysData]
 
     total_count: float

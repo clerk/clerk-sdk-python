@@ -189,8 +189,12 @@ class DomainsSDK(BaseSDK):
         Add a new domain for your instance.
         Useful in the case of multi-domain instances, allows adding satellite domains to an instance.
         The new domain must have a `name`. The domain name can contain the port for development instances, like `localhost:3000`.
-        At the moment, instances can have only one primary domain, so the `is_satellite` parameter must be set to `true`.
+        Set `is_satellite` to `true` to add a satellite domain.
+        To migrate a production instance from an active provider domain to its first custom primary domain,
+        set `is_satellite` to `false`. The custom domain becomes active and the provider domain stays attached.
+        Additional custom primary domains are not supported.
         If you're planning to configure the new satellite domain to run behind a proxy, pass the `proxy_url` parameter accordingly.
+        Adding a custom primary domain returns 403 `domain_managed_by_integration` for applications in a Vercel-managed workspace; change the domain from the Vercel integration instead.
 
         :param request: The request object to send.
         :param retries: Override the default retry configuration for this method
@@ -262,7 +266,9 @@ class DomainsSDK(BaseSDK):
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(models.Domain, http_res)
-        if utils.match_response(http_res, ["400", "402", "422"], "application/json"):
+        if utils.match_response(
+            http_res, ["400", "402", "403", "422"], "application/json"
+        ):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
@@ -290,8 +296,12 @@ class DomainsSDK(BaseSDK):
         Add a new domain for your instance.
         Useful in the case of multi-domain instances, allows adding satellite domains to an instance.
         The new domain must have a `name`. The domain name can contain the port for development instances, like `localhost:3000`.
-        At the moment, instances can have only one primary domain, so the `is_satellite` parameter must be set to `true`.
+        Set `is_satellite` to `true` to add a satellite domain.
+        To migrate a production instance from an active provider domain to its first custom primary domain,
+        set `is_satellite` to `false`. The custom domain becomes active and the provider domain stays attached.
+        Additional custom primary domains are not supported.
         If you're planning to configure the new satellite domain to run behind a proxy, pass the `proxy_url` parameter accordingly.
+        Adding a custom primary domain returns 403 `domain_managed_by_integration` for applications in a Vercel-managed workspace; change the domain from the Vercel integration instead.
 
         :param request: The request object to send.
         :param retries: Override the default retry configuration for this method
@@ -363,7 +373,9 @@ class DomainsSDK(BaseSDK):
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(models.Domain, http_res)
-        if utils.match_response(http_res, ["400", "402", "422"], "application/json"):
+        if utils.match_response(
+            http_res, ["400", "402", "403", "422"], "application/json"
+        ):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
@@ -384,12 +396,13 @@ class DomainsSDK(BaseSDK):
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
     ) -> models.DeletedObject:
-        r"""Delete a satellite domain
+        r"""Delete a domain
 
-        Deletes a satellite domain for the instance.
-        It is currently not possible to delete the instance's primary domain.
+        Deletes a domain for the instance.
+        The instance's active domain cannot be deleted.
+        Deleting a non-satellite domain returns 403 `domain_managed_by_integration` for applications in a Vercel-managed workspace; change the domain from the Vercel integration instead.
 
-        :param domain_id: The ID of the domain that will be deleted. Must be a satellite domain.
+        :param domain_id: The ID of the domain that will be deleted.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -477,12 +490,13 @@ class DomainsSDK(BaseSDK):
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
     ) -> models.DeletedObject:
-        r"""Delete a satellite domain
+        r"""Delete a domain
 
-        Deletes a satellite domain for the instance.
-        It is currently not possible to delete the instance's primary domain.
+        Deletes a domain for the instance.
+        The instance's active domain cannot be deleted.
+        Deleting a non-satellite domain returns 403 `domain_managed_by_integration` for applications in a Vercel-managed workspace; change the domain from the Vercel integration instead.
 
-        :param domain_id: The ID of the domain that will be deleted. Must be a satellite domain.
+        :param domain_id: The ID of the domain that will be deleted.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -583,6 +597,7 @@ class DomainsSDK(BaseSDK):
         you have to make sure that you've completed all the necessary setup steps for DNS and
         emails to work. Expect downtime otherwise. Updating a primary domain's name will also
         update the instance's home origin, affecting the default application paths.
+        Updating the `name` or `is_secondary` of a primary domain returns 403 `domain_managed_by_integration` for applications in a Vercel-managed workspace; change the domain from the Vercel integration instead.
 
         :param domain_id: The ID of the domain that will be updated.
         :param name: The new domain name. For development instances, can contain the port,
@@ -671,7 +686,9 @@ class DomainsSDK(BaseSDK):
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(models.Domain, http_res)
-        if utils.match_response(http_res, ["400", "404", "422"], "application/json"):
+        if utils.match_response(
+            http_res, ["400", "403", "404", "422"], "application/json"
+        ):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
@@ -705,6 +722,7 @@ class DomainsSDK(BaseSDK):
         you have to make sure that you've completed all the necessary setup steps for DNS and
         emails to work. Expect downtime otherwise. Updating a primary domain's name will also
         update the instance's home origin, affecting the default application paths.
+        Updating the `name` or `is_secondary` of a primary domain returns 403 `domain_managed_by_integration` for applications in a Vercel-managed workspace; change the domain from the Vercel integration instead.
 
         :param domain_id: The ID of the domain that will be updated.
         :param name: The new domain name. For development instances, can contain the port,
@@ -793,7 +811,9 @@ class DomainsSDK(BaseSDK):
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(models.Domain, http_res)
-        if utils.match_response(http_res, ["400", "404", "422"], "application/json"):
+        if utils.match_response(
+            http_res, ["400", "403", "404", "422"], "application/json"
+        ):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):

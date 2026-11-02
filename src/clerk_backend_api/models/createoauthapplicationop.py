@@ -7,10 +7,12 @@ from clerk_backend_api.types import (
     OptionalNullable,
     UNSET,
     UNSET_SENTINEL,
+    current_exclude_none,
+    serialize_with_info,
 )
 import pydantic
 from pydantic import model_serializer
-from typing import List
+from typing import List, Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
 
 
@@ -24,11 +26,19 @@ class CreateOAuthApplicationRequestBodyTypedDict(TypedDict):
     callback_url: NotRequired[Nullable[str]]
     r"""The callback URL of the new OAuth application"""
     scopes: NotRequired[Nullable[str]]
-    r"""Define the allowed scopes for the new OAuth applications that dictate the user payload of the OAuth user info endpoint. Available scopes are `profile`, `email`, `public_metadata`, `private_metadata`. Provide the requested scopes as a string, separated by spaces."""
+    r"""Define the application's built-in and custom scope ceiling. Provide scope keys as a space-delimited string. Custom keys must exist in the instance OAuth scope catalog."""
     consent_screen_enabled: NotRequired[Nullable[bool]]
     r"""True to enable a consent screen to display in the authentication flow."""
     pkce_required: NotRequired[Nullable[bool]]
     r"""True to require the Proof Key of Code Exchange (PKCE) flow."""
+    audience_uri: NotRequired[Nullable[str]]
+    r"""An absolute resource URI for a confidential application (RFC 8707 section 2). Registers a resource with no accepted scopes, or adopts an unowned resource with confirmation. Every claimed URI remains permanently reserved to this app, including retirement and deletion, and counts toward the instance resource quota. Changing it stops new exchanges from the old audience immediately. Already-issued tokens retain their lifetime. Clearing requires exchange disabled in an earlier update."""
+    token_exchange_enabled: NotRequired[bool]
+    r"""Enable exchanges from the active audience. Requires an audience URI. Disabling preserves target configuration."""
+    adopt_audience_resource: NotRequired[bool]
+    r"""Confirm adoption of an existing unowned resource, preserving its accepted scopes and target references. Does not override another application's reservation."""
+    device_authorization_grant_enabled: NotRequired[Nullable[bool]]
+    r"""True to enable the OAuth Device Authorization Grant for this application. Enabling requires the new OAuth IdP and a reachable device verification page."""
     public: NotRequired[Nullable[bool]]
     r"""If true, this client is public and you can use the Proof Key of Code Exchange (PKCE) flow."""
 
@@ -51,7 +61,7 @@ class CreateOAuthApplicationRequestBody(BaseModel):
     r"""The callback URL of the new OAuth application"""
 
     scopes: OptionalNullable[str] = "profile email"
-    r"""Define the allowed scopes for the new OAuth applications that dictate the user payload of the OAuth user info endpoint. Available scopes are `profile`, `email`, `public_metadata`, `private_metadata`. Provide the requested scopes as a string, separated by spaces."""
+    r"""Define the application's built-in and custom scope ceiling. Provide scope keys as a space-delimited string. Custom keys must exist in the instance OAuth scope catalog."""
 
     consent_screen_enabled: OptionalNullable[bool] = True
     r"""True to enable a consent screen to display in the authentication flow."""
@@ -59,10 +69,25 @@ class CreateOAuthApplicationRequestBody(BaseModel):
     pkce_required: OptionalNullable[bool] = False
     r"""True to require the Proof Key of Code Exchange (PKCE) flow."""
 
+    audience_uri: OptionalNullable[str] = UNSET
+    r"""An absolute resource URI for a confidential application (RFC 8707 section 2). Registers a resource with no accepted scopes, or adopts an unowned resource with confirmation. Every claimed URI remains permanently reserved to this app, including retirement and deletion, and counts toward the instance resource quota. Changing it stops new exchanges from the old audience immediately. Already-issued tokens retain their lifetime. Clearing requires exchange disabled in an earlier update."""
+
+    token_exchange_enabled: Optional[bool] = None
+    r"""Enable exchanges from the active audience. Requires an audience URI. Disabling preserves target configuration."""
+
+    adopt_audience_resource: Optional[bool] = None
+    r"""Confirm adoption of an existing unowned resource, preserving its accepted scopes and target references. Does not override another application's reservation."""
+
+    device_authorization_grant_enabled: OptionalNullable[bool] = False
+    r"""True to enable the OAuth Device Authorization Grant for this application. Enabling requires the new OAuth IdP and a reachable device verification page."""
+
     public: OptionalNullable[bool] = UNSET
     r"""If true, this client is public and you can use the Proof Key of Code Exchange (PKCE) flow."""
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
         optional_fields = set(
             [
@@ -71,6 +96,10 @@ class CreateOAuthApplicationRequestBody(BaseModel):
                 "scopes",
                 "consent_screen_enabled",
                 "pkce_required",
+                "audience_uri",
+                "token_exchange_enabled",
+                "adopt_audience_resource",
+                "device_authorization_grant_enabled",
                 "public",
             ]
         )
@@ -81,14 +110,19 @@ class CreateOAuthApplicationRequestBody(BaseModel):
                 "scopes",
                 "consent_screen_enabled",
                 "pkce_required",
+                "audience_uri",
+                "device_authorization_grant_enabled",
                 "public",
             ]
         )
+        exclude_none = current_exclude_none()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and exclude_none is False:
+                continue
             val = serialized.get(k, serialized.get(n))
             is_nullable_and_explicitly_set = (
                 k in nullable_fields

@@ -15,6 +15,8 @@ from clerk_backend_api.types import (
     OptionalNullable,
     UNSET,
     UNSET_SENTINEL,
+    current_exclude_none,
+    serialize_with_info,
 )
 from enum import Enum
 import pydantic
@@ -25,6 +27,46 @@ from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 class SAMLConnection2Object(str, Enum):
     SAML_CONNECTION = "saml_connection"
+
+
+class SAMLConnectionIdpCertificatesTypedDict(TypedDict):
+    certificate: str
+    r"""The X.509 certificate, base64 DER without PEM armor"""
+    issued_at: Nullable[int]
+    r"""Unix timestamp (milliseconds) of the X.509 NotBefore"""
+    expires_at: Nullable[int]
+    r"""Unix timestamp (milliseconds) of the X.509 NotAfter"""
+
+
+class SAMLConnectionIdpCertificates(BaseModel):
+    certificate: str
+    r"""The X.509 certificate, base64 DER without PEM armor"""
+
+    issued_at: Nullable[int]
+    r"""Unix timestamp (milliseconds) of the X.509 NotBefore"""
+
+    expires_at: Nullable[int]
+    r"""Unix timestamp (milliseconds) of the X.509 NotAfter"""
+
+    @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
+    def serialize_model(self, handler):
+        exclude_none = current_exclude_none()
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and exclude_none is False:
+                continue
+            val = serialized.get(k, serialized.get(n))
+
+            if val != UNSET_SENTINEL:
+                m[k] = val
+
+        return m
 
 
 class TwoTypedDict(TypedDict):
@@ -41,6 +83,10 @@ class TwoTypedDict(TypedDict):
     """
     idp_certificate_expires_at: Nullable[int]
     r"""Unix timestamp (milliseconds) of the end of the IdP certificate validity window (X.509 NotAfter). Null when no certificate is configured.
+
+    """
+    idp_certificates: List[SAMLConnectionIdpCertificatesTypedDict]
+    r"""Every IdP signing certificate the connection trusts, primary first. A SAML response verifies against any of them.
 
     """
     acs_url: str
@@ -96,6 +142,11 @@ class Two(BaseModel):
 
     idp_certificate_expires_at: Nullable[int]
     r"""Unix timestamp (milliseconds) of the end of the IdP certificate validity window (X.509 NotAfter). Null when no certificate is configured.
+
+    """
+
+    idp_certificates: List[SAMLConnectionIdpCertificates]
+    r"""Every IdP signing certificate the connection trusts, primary first. A SAML response verifies against any of them.
 
     """
 
@@ -155,6 +206,9 @@ class Two(BaseModel):
     enterprise_connection_id: OptionalNullable[str] = UNSET
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
         optional_fields = set(
             [
@@ -179,11 +233,14 @@ class Two(BaseModel):
                 "enterprise_connection_id",
             ]
         )
+        exclude_none = current_exclude_none()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and exclude_none is False:
+                continue
             val = serialized.get(k, serialized.get(n))
             is_nullable_and_explicitly_set = (
                 k in nullable_fields
@@ -205,6 +262,46 @@ class SAMLConnectionObject(str, Enum):
     SAML_CONNECTION = "saml_connection"
 
 
+class SAMLConnection1IdpCertificatesTypedDict(TypedDict):
+    certificate: str
+    r"""The X.509 certificate, base64 DER without PEM armor"""
+    issued_at: Nullable[int]
+    r"""Unix timestamp (milliseconds) of the X.509 NotBefore"""
+    expires_at: Nullable[int]
+    r"""Unix timestamp (milliseconds) of the X.509 NotAfter"""
+
+
+class SAMLConnection1IdpCertificates(BaseModel):
+    certificate: str
+    r"""The X.509 certificate, base64 DER without PEM armor"""
+
+    issued_at: Nullable[int]
+    r"""Unix timestamp (milliseconds) of the X.509 NotBefore"""
+
+    expires_at: Nullable[int]
+    r"""Unix timestamp (milliseconds) of the X.509 NotAfter"""
+
+    @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
+    def serialize_model(self, handler):
+        exclude_none = current_exclude_none()
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and exclude_none is False:
+                continue
+            val = serialized.get(k, serialized.get(n))
+
+            if val != UNSET_SENTINEL:
+                m[k] = val
+
+        return m
+
+
 class OneTypedDict(TypedDict):
     object: SAMLConnectionObject
     id: str
@@ -219,6 +316,10 @@ class OneTypedDict(TypedDict):
     """
     idp_certificate_expires_at: Nullable[int]
     r"""Unix timestamp (milliseconds) of the end of the IdP certificate validity window (X.509 NotAfter). Null when no certificate is configured.
+
+    """
+    idp_certificates: List[SAMLConnection1IdpCertificatesTypedDict]
+    r"""Every IdP signing certificate the connection trusts, primary first. A SAML response verifies against any of them.
 
     """
     acs_url: str
@@ -282,6 +383,11 @@ class One(BaseModel):
 
     """
 
+    idp_certificates: List[SAMLConnection1IdpCertificates]
+    r"""Every IdP signing certificate the connection trusts, primary first. A SAML response verifies against any of them.
+
+    """
+
     acs_url: str
 
     sp_entity_id: str
@@ -333,6 +439,9 @@ class One(BaseModel):
     enterprise_connection_id: OptionalNullable[str] = UNSET
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
         optional_fields = set(
             [
@@ -357,11 +466,14 @@ class One(BaseModel):
                 "enterprise_connection_id",
             ]
         )
+        exclude_none = current_exclude_none()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and exclude_none is False:
+                continue
             val = serialized.get(k, serialized.get(n))
             is_nullable_and_explicitly_set = (
                 k in nullable_fields

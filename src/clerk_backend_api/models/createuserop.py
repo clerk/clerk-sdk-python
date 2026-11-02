@@ -7,6 +7,8 @@ from clerk_backend_api.types import (
     OptionalNullable,
     UNSET,
     UNSET_SENTINEL,
+    current_exclude_none,
+    serialize_with_info,
 )
 from enum import Enum
 from pydantic import model_serializer
@@ -35,6 +37,8 @@ class CreateUserRequestBodyTypedDict(TypedDict):
     r"""The last name to assign to the user"""
     locale: NotRequired[Nullable[str]]
     r"""The locale to assign to the user (e.g., \"en-US\", \"fr-FR\")"""
+    timezone: NotRequired[Nullable[str]]
+    r"""The IANA timezone to assign to the user (e.g., \"America/New_York\", \"Europe/Paris\"). Set to null to clear it and allow automatic capture on a later trusted sign-in."""
     email_address: NotRequired[List[str]]
     r"""Email addresses to add to the user.
     Must be unique across your instance.
@@ -106,6 +110,11 @@ class CreateUserRequestBodyTypedDict(TypedDict):
     This is useful when you are trying to create a user that doesn't have a password, in an instance that is using passwords.
     Please note that you cannot use this flag if password is the only way for a user to sign into your instance.
     """
+    skip_restriction_checks: NotRequired[Nullable[bool]]
+    r"""When set to `true`, the instance's restrictions are not applied to this user.
+    Those settings are the allowlist, the blocklist, blocked disposable email domains and blocked email subaddresses, and they normally reject a matching identifier here just as they do at sign-up.
+    Use this when your backend is creating a user it already trusts, such as during a migration or from an admin tool.
+    """
     totp_secret: NotRequired[Nullable[str]]
     r"""In case TOTP is configured on the instance, you can provide the secret to enable it on the newly created user without the need to reset it.
     Please note that currently the supported options are:
@@ -152,7 +161,7 @@ class CreateUserRequestBodyTypedDict(TypedDict):
     created_at: NotRequired[Nullable[str]]
     r"""A custom date/time denoting _when_ the user signed up to the application, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`)."""
     bypass_client_trust: NotRequired[Nullable[bool]]
-    r"""When set to `true`, the user will bypass client trust checks during sign-in."""
+    r"""When set to `true`, the user will bypass Device Trust checks during sign-in."""
     banned: NotRequired[Nullable[bool]]
     r"""When set to `true`, the user is created already banned and cannot sign in.
     Requires the same plan support as the ban user endpoint.
@@ -177,6 +186,9 @@ class CreateUserRequestBody(BaseModel):
 
     locale: OptionalNullable[str] = UNSET
     r"""The locale to assign to the user (e.g., \"en-US\", \"fr-FR\")"""
+
+    timezone: OptionalNullable[str] = UNSET
+    r"""The IANA timezone to assign to the user (e.g., \"America/New_York\", \"Europe/Paris\"). Set to null to clear it and allow automatic capture on a later trusted sign-in."""
 
     email_address: Optional[List[str]] = None
     r"""Email addresses to add to the user.
@@ -260,6 +272,12 @@ class CreateUserRequestBody(BaseModel):
     Please note that you cannot use this flag if password is the only way for a user to sign into your instance.
     """
 
+    skip_restriction_checks: OptionalNullable[bool] = UNSET
+    r"""When set to `true`, the instance's restrictions are not applied to this user.
+    Those settings are the allowlist, the blocklist, blocked disposable email domains and blocked email subaddresses, and they normally reject a matching identifier here just as they do at sign-up.
+    Use this when your backend is creating a user it already trusts, such as during a migration or from an admin tool.
+    """
+
     totp_secret: OptionalNullable[str] = UNSET
     r"""In case TOTP is configured on the instance, you can provide the secret to enable it on the newly created user without the need to reset it.
     Please note that currently the supported options are:
@@ -318,7 +336,7 @@ class CreateUserRequestBody(BaseModel):
     r"""A custom date/time denoting _when_ the user signed up to the application, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`)."""
 
     bypass_client_trust: OptionalNullable[bool] = UNSET
-    r"""When set to `true`, the user will bypass client trust checks during sign-in."""
+    r"""When set to `true`, the user will bypass Device Trust checks during sign-in."""
 
     banned: OptionalNullable[bool] = UNSET
     r"""When set to `true`, the user is created already banned and cannot sign in.
@@ -331,6 +349,9 @@ class CreateUserRequestBody(BaseModel):
     """
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
         optional_fields = set(
             [
@@ -338,6 +359,7 @@ class CreateUserRequestBody(BaseModel):
                 "first_name",
                 "last_name",
                 "locale",
+                "timezone",
                 "email_address",
                 "email_address_identification_status",
                 "phone_number",
@@ -349,6 +371,7 @@ class CreateUserRequestBody(BaseModel):
                 "password_hasher",
                 "skip_password_checks",
                 "skip_password_requirement",
+                "skip_restriction_checks",
                 "totp_secret",
                 "backup_codes",
                 "public_metadata",
@@ -372,11 +395,13 @@ class CreateUserRequestBody(BaseModel):
                 "first_name",
                 "last_name",
                 "locale",
+                "timezone",
                 "username",
                 "password",
                 "password_digest",
                 "skip_password_checks",
                 "skip_password_requirement",
+                "skip_restriction_checks",
                 "totp_secret",
                 "delete_self_enabled",
                 "legal_accepted_at",
@@ -390,11 +415,14 @@ class CreateUserRequestBody(BaseModel):
                 "locked",
             ]
         )
+        exclude_none = current_exclude_none()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and exclude_none is False:
+                continue
             val = serialized.get(k, serialized.get(n))
             is_nullable_and_explicitly_set = (
                 k in nullable_fields
