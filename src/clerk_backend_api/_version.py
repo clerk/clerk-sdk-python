@@ -3,10 +3,10 @@
 import importlib.metadata
 
 __title__: str = "clerk-backend-api"
-__version__: str = "7.1.0"
+__version__: str = "7.1.1"
 __openapi_doc_version__: str = "2026-05-12"
-__gen_version__: str = "2.954.8"
-__user_agent__: str = "speakeasy-sdk/python 7.1.0 2.954.8 2026-05-12 clerk-backend-api"
+__gen_version__: str = "2.956.1"
+__user_agent__: str = "speakeasy-sdk/python 7.1.1 2.956.1 2026-05-12 clerk-backend-api"
 
 try:
     if __package__ is not None:
