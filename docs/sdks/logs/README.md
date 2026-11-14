@@ -96,6 +96,7 @@ with Clerk(
 | Error Type         | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
 | models.ClerkErrors | 401, 403, 422, 429 | application/json   |
+| models.ClerkErrors | 503                | application/json   |
 | models.SDKError    | 4XX, 5XX           | \*/\*              |
 
 ## get_schema
@@ -195,6 +196,7 @@ with Clerk(
 | Error Type         | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
 | models.ClerkErrors | 401, 403, 422, 429 | application/json   |
+| models.ClerkErrors | 503                | application/json   |
 | models.SDKError    | 4XX, 5XX           | \*/\*              |
 
 ## get

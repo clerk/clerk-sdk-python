@@ -39,21 +39,34 @@ else:
 
 
 _exclude_none: ContextVar[Optional[bool]] = ContextVar("exclude_none", default=None)
+_filtered_dump: ContextVar[bool] = ContextVar("filtered_dump", default=False)
 
 
 def serialize_with_info(
     serialize: Callable[[Any], Any], handler: Any, info: core_schema.SerializationInfo
 ) -> Any:
     token = _exclude_none.set(info.exclude_none)
+    filtered_dump_token = _filtered_dump.set(
+        info.include is not None
+        or bool(info.exclude)
+        or info.exclude_unset
+        or info.exclude_defaults
+    )
     try:
         return serialize(handler)
     finally:
+        _filtered_dump.reset(filtered_dump_token)
         _exclude_none.reset(token)
 
 
 def current_exclude_none() -> Optional[bool]:
     """Return the exclude_none option of the enclosing serialize_with_info call, or None outside of one."""
     return _exclude_none.get()
+
+
+def current_filtered_dump() -> bool:
+    """Return whether the enclosing serialize_with_info call applies include, exclude, exclude_unset or exclude_defaults."""
+    return _filtered_dump.get()
 
 
 def _unrecognized_serialization(cls: Type[Union[str, int]]) -> core_schema.PlainSerializerFunctionSerSchema:

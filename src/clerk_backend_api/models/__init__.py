@@ -1814,7 +1814,12 @@ if TYPE_CHECKING:
         RevokeOrganizationInvitationRequestBodyTypedDict,
         RevokeOrganizationInvitationRequestTypedDict,
     )
-    from .revokesessionop import RevokeSessionRequest, RevokeSessionRequestTypedDict
+    from .revokesessionop import (
+        RevokeSessionRequest,
+        RevokeSessionRequestBody,
+        RevokeSessionRequestBodyTypedDict,
+        RevokeSessionRequestTypedDict,
+    )
     from .revokesignintokenop import (
         RevokeSignInTokenRequest,
         RevokeSignInTokenRequestTypedDict,
@@ -2206,6 +2211,12 @@ if TYPE_CHECKING:
         UpdateSCIMDirectoryRequestBody,
         UpdateSCIMDirectoryRequestBodyTypedDict,
         UpdateSCIMDirectoryRequestTypedDict,
+    )
+    from .updatesessionop import (
+        UpdateSessionRequest,
+        UpdateSessionRequestBody,
+        UpdateSessionRequestBodyTypedDict,
+        UpdateSessionRequestTypedDict,
     )
     from .updatesignupop import (
         UpdateSignUpRequest,
@@ -3679,6 +3690,8 @@ __all__ = [
     "RevokeOrganizationInvitationRequestBodyTypedDict",
     "RevokeOrganizationInvitationRequestTypedDict",
     "RevokeSessionRequest",
+    "RevokeSessionRequestBody",
+    "RevokeSessionRequestBodyTypedDict",
     "RevokeSessionRequestTypedDict",
     "RevokeSignInTokenRequest",
     "RevokeSignInTokenRequestTypedDict",
@@ -3967,6 +3980,10 @@ __all__ = [
     "UpdateSCIMDirectoryRequestBody",
     "UpdateSCIMDirectoryRequestBodyTypedDict",
     "UpdateSCIMDirectoryRequestTypedDict",
+    "UpdateSessionRequest",
+    "UpdateSessionRequestBody",
+    "UpdateSessionRequestBodyTypedDict",
+    "UpdateSessionRequestTypedDict",
     "UpdateSignUpRequest",
     "UpdateSignUpRequestBody",
     "UpdateSignUpRequestBodyTypedDict",
@@ -5558,6 +5575,8 @@ _dynamic_imports: dict[str, str] = {
     "RevokeOrganizationInvitationRequestBodyTypedDict": ".revokeorganizationinvitationop",
     "RevokeOrganizationInvitationRequestTypedDict": ".revokeorganizationinvitationop",
     "RevokeSessionRequest": ".revokesessionop",
+    "RevokeSessionRequestBody": ".revokesessionop",
+    "RevokeSessionRequestBodyTypedDict": ".revokesessionop",
     "RevokeSessionRequestTypedDict": ".revokesessionop",
     "RevokeSignInTokenRequest": ".revokesignintokenop",
     "RevokeSignInTokenRequestTypedDict": ".revokesignintokenop",
@@ -5862,6 +5881,10 @@ _dynamic_imports: dict[str, str] = {
     "UpdateSCIMDirectoryRequestBody": ".updatescimdirectoryop",
     "UpdateSCIMDirectoryRequestBodyTypedDict": ".updatescimdirectoryop",
     "UpdateSCIMDirectoryRequestTypedDict": ".updatescimdirectoryop",
+    "UpdateSessionRequest": ".updatesessionop",
+    "UpdateSessionRequestBody": ".updatesessionop",
+    "UpdateSessionRequestBodyTypedDict": ".updatesessionop",
+    "UpdateSessionRequestTypedDict": ".updatesessionop",
     "UpdateSignUpRequest": ".updatesignupop",
     "UpdateSignUpRequestBody": ".updatesignupop",
     "UpdateSignUpRequestBodyTypedDict": ".updatesignupop",

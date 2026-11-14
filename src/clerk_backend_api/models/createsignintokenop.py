@@ -10,8 +10,10 @@ from clerk_backend_api.types import (
     current_exclude_none,
     serialize_with_info,
 )
+from clerk_backend_api.types.basemodel import current_filtered_dump
 from enum import Enum
 from pydantic import model_serializer
+from typing import Optional
 from typing_extensions import NotRequired, TypedDict
 
 
@@ -47,6 +49,11 @@ class CreateSignInTokenRequestBodyTypedDict(TypedDict):
     Has no effect for users without a second factor enabled.
     A token created with this parameter signs in a user with a second factor enabled without prompting for it, so `expires_in_seconds` defaults to 10 minutes. We recommend keeping it short.
     """
+    honor_lockout: NotRequired[bool]
+    r"""When `true`, creating the token is rejected with a `user_locked` error if the user is locked, and so is redeeming it. A token rejected on redemption stays pending and can be redeemed once the user is unlocked.
+    Has no effect on instances with user lockout disabled.
+    To enforce lockout across a password check and a sign-in token, set this parameter on both requests.
+    """
 
 
 class CreateSignInTokenRequestBody(BaseModel):
@@ -72,24 +79,36 @@ class CreateSignInTokenRequestBody(BaseModel):
     A token created with this parameter signs in a user with a second factor enabled without prompting for it, so `expires_in_seconds` defaults to 10 minutes. We recommend keeping it short.
     """
 
+    honor_lockout: Optional[bool] = False
+    r"""When `true`, creating the token is rejected with a `user_locked` error if the user is locked, and so is redeeming it. A token rejected on redemption stays pending and can be redeemed once the user is unlocked.
+    Has no effect on instances with user lockout disabled.
+    To enforce lockout across a password check and a sign-in token, set this parameter on both requests.
+    """
+
     @model_serializer(mode="wrap")
     def _serialize_model_with_info(self, handler, info):
         return serialize_with_info(self.serialize_model, handler, info)
 
     def serialize_model(self, handler):
         optional_fields = set(
-            ["org_id", "expires_in_seconds", "second_factor_verification"]
+            [
+                "org_id",
+                "expires_in_seconds",
+                "second_factor_verification",
+                "honor_lockout",
+            ]
         )
         nullable_fields = set(
             ["org_id", "expires_in_seconds", "second_factor_verification"]
         )
         exclude_none = current_exclude_none()
+        skip_filtered = exclude_none is False or current_filtered_dump()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
             k = f.alias if f.alias is not None else n
-            if k not in serialized and n not in serialized and exclude_none is False:
+            if k not in serialized and n not in serialized and skip_filtered:
                 continue
             val = serialized.get(k, serialized.get(n))
             is_nullable_and_explicitly_set = (
