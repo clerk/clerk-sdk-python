@@ -10,6 +10,7 @@ from clerk_backend_api.types import (
     current_exclude_none,
     serialize_with_info,
 )
+from clerk_backend_api.types.basemodel import current_filtered_dump
 from enum import Enum
 from pydantic import model_serializer
 from typing import Any, Dict, Optional
@@ -98,12 +99,13 @@ class WaitlistEntryInvitation(BaseModel):
         optional_fields = set(["revoked", "url", "expires_at"])
         nullable_fields = set(["expires_at"])
         exclude_none = current_exclude_none()
+        skip_filtered = exclude_none is False or current_filtered_dump()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
             k = f.alias if f.alias is not None else n
-            if k not in serialized and n not in serialized and exclude_none is False:
+            if k not in serialized and n not in serialized and skip_filtered:
                 continue
             val = serialized.get(k, serialized.get(n))
             is_nullable_and_explicitly_set = (
@@ -176,12 +178,13 @@ class WaitlistEntry(BaseModel):
         optional_fields = set(["is_locked", "invitation"])
         nullable_fields = set(["invitation"])
         exclude_none = current_exclude_none()
+        skip_filtered = exclude_none is False or current_filtered_dump()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
             k = f.alias if f.alias is not None else n
-            if k not in serialized and n not in serialized and exclude_none is False:
+            if k not in serialized and n not in serialized and skip_filtered:
                 continue
             val = serialized.get(k, serialized.get(n))
             is_nullable_and_explicitly_set = (

@@ -4649,6 +4649,7 @@ class Users(BaseSDK):
 
         Fetch the corresponding OAuth access token for a user that has previously authenticated with a particular OAuth provider.
         For OAuth 2.0, if the access token has expired and we have a corresponding refresh token, the access token will be refreshed transparently the new one will be returned.
+        If another request is still refreshing the token, this endpoint may return HTTP 409 with the `resource_locked` error code. Retry the request after a short delay.
 
         :param user_id: The ID of the user for which to retrieve the OAuth access token
         :param provider: The ID of the OAuth provider (e.g. `oauth_google`)
@@ -4730,7 +4731,9 @@ class Users(BaseSDK):
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(List[models.OAuthAccessToken], http_res)
-        if utils.match_response(http_res, ["400", "404", "422"], "application/json"):
+        if utils.match_response(
+            http_res, ["400", "404", "409", "422"], "application/json"
+        ):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
@@ -4759,6 +4762,7 @@ class Users(BaseSDK):
 
         Fetch the corresponding OAuth access token for a user that has previously authenticated with a particular OAuth provider.
         For OAuth 2.0, if the access token has expired and we have a corresponding refresh token, the access token will be refreshed transparently the new one will be returned.
+        If another request is still refreshing the token, this endpoint may return HTTP 409 with the `resource_locked` error code. Retry the request after a short delay.
 
         :param user_id: The ID of the user for which to retrieve the OAuth access token
         :param provider: The ID of the OAuth provider (e.g. `oauth_google`)
@@ -4840,7 +4844,9 @@ class Users(BaseSDK):
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(List[models.OAuthAccessToken], http_res)
-        if utils.match_response(http_res, ["400", "404", "422"], "application/json"):
+        if utils.match_response(
+            http_res, ["400", "404", "409", "422"], "application/json"
+        ):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
@@ -5493,6 +5499,7 @@ class Users(BaseSDK):
         *,
         user_id: str,
         password: str,
+        honor_lockout: Optional[bool] = False,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -5505,6 +5512,9 @@ class Users(BaseSDK):
 
         :param user_id: The ID of the user for whom to verify the password
         :param password: The user password to verify
+        :param honor_lockout: When `true`, a wrong password counts toward the user's lockout, and a locked user is rejected with a `user_locked` error before the password is checked.
+            Has no effect on instances with user lockout disabled.
+            To enforce lockout across a password check and a sign-in token, set this parameter on both requests.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -5524,6 +5534,7 @@ class Users(BaseSDK):
             user_id=user_id,
             request_body=models.VerifyPasswordRequestBody(
                 password=password,
+                honor_lockout=honor_lockout,
             ),
         )
 
@@ -5584,7 +5595,7 @@ class Users(BaseSDK):
         if utils.match_response(http_res, "500", "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
-        if utils.match_response(http_res, ["400", "404", "422", "4XX"], "*"):
+        if utils.match_response(http_res, ["400", "403", "404", "422", "4XX"], "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
@@ -5598,6 +5609,7 @@ class Users(BaseSDK):
         *,
         user_id: str,
         password: str,
+        honor_lockout: Optional[bool] = False,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -5610,6 +5622,9 @@ class Users(BaseSDK):
 
         :param user_id: The ID of the user for whom to verify the password
         :param password: The user password to verify
+        :param honor_lockout: When `true`, a wrong password counts toward the user's lockout, and a locked user is rejected with a `user_locked` error before the password is checked.
+            Has no effect on instances with user lockout disabled.
+            To enforce lockout across a password check and a sign-in token, set this parameter on both requests.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -5629,6 +5644,7 @@ class Users(BaseSDK):
             user_id=user_id,
             request_body=models.VerifyPasswordRequestBody(
                 password=password,
+                honor_lockout=honor_lockout,
             ),
         )
 
@@ -5689,7 +5705,7 @@ class Users(BaseSDK):
         if utils.match_response(http_res, "500", "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
-        if utils.match_response(http_res, ["400", "404", "422", "4XX"], "*"):
+        if utils.match_response(http_res, ["400", "403", "404", "422", "4XX"], "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
@@ -5703,6 +5719,7 @@ class Users(BaseSDK):
         *,
         user_id: str,
         code: str,
+        honor_lockout: Optional[bool] = False,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -5717,6 +5734,9 @@ class Users(BaseSDK):
 
         :param user_id: The ID of the user for whom to verify the TOTP
         :param code: The TOTP or backup code to verify
+        :param honor_lockout: When `true`, a wrong code counts toward the user's lockout, and a locked user is rejected with a `user_locked` error before the code is checked.
+            Has no effect on instances with user lockout disabled.
+            To enforce lockout across a password check and a sign-in token, set this parameter on both requests.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -5736,6 +5756,7 @@ class Users(BaseSDK):
             user_id=user_id,
             request_body=models.VerifyTOTPRequestBody(
                 code=code,
+                honor_lockout=honor_lockout,
             ),
         )
 
@@ -5796,7 +5817,7 @@ class Users(BaseSDK):
         if utils.match_response(http_res, "500", "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
-        if utils.match_response(http_res, ["400", "404", "422", "4XX"], "*"):
+        if utils.match_response(http_res, ["400", "403", "404", "422", "4XX"], "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
@@ -5810,6 +5831,7 @@ class Users(BaseSDK):
         *,
         user_id: str,
         code: str,
+        honor_lockout: Optional[bool] = False,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -5824,6 +5846,9 @@ class Users(BaseSDK):
 
         :param user_id: The ID of the user for whom to verify the TOTP
         :param code: The TOTP or backup code to verify
+        :param honor_lockout: When `true`, a wrong code counts toward the user's lockout, and a locked user is rejected with a `user_locked` error before the code is checked.
+            Has no effect on instances with user lockout disabled.
+            To enforce lockout across a password check and a sign-in token, set this parameter on both requests.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -5843,6 +5868,7 @@ class Users(BaseSDK):
             user_id=user_id,
             request_body=models.VerifyTOTPRequestBody(
                 code=code,
+                honor_lockout=honor_lockout,
             ),
         )
 
@@ -5903,7 +5929,7 @@ class Users(BaseSDK):
         if utils.match_response(http_res, "500", "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
-        if utils.match_response(http_res, ["400", "404", "422", "4XX"], "*"):
+        if utils.match_response(http_res, ["400", "403", "404", "422", "4XX"], "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):

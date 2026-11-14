@@ -5,6 +5,7 @@ from clerk_backend_api import models, utils
 from clerk_backend_api._hooks import HookContext
 from clerk_backend_api.types import BaseModel, OptionalNullable, UNSET
 from clerk_backend_api.utils.unmarshal_json_response import unmarshal_json_response
+from datetime import datetime
 from typing import Any, Dict, List, Mapping, Optional, Union, cast
 
 
@@ -643,6 +644,236 @@ class Sessions(BaseSDK):
 
         raise models.SDKError("Unexpected response received", http_res)
 
+    def update(
+        self,
+        *,
+        session_id: str,
+        expire_at: datetime,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.Session:
+        r"""Update a session
+
+        Changes when a session expires. Use this to give one session a longer or shorter lifetime than the one configured for your instance, for example to keep a user signed in on a device they chose to remember.
+
+        `expire_at` can exceed the instance's session lifetime. The change applies only to this session, so new sign-ins still start from the instance's session lifetime. If `expire_at` is later than the session's `abandon_at`, `abandon_at` moves to the same time. The inactivity timeout, if your instance has one, still applies.
+
+        Only active and pending sessions can be updated. Expired, revoked, and other ended sessions can't be revived, and sessions with an actor, such as impersonation and agent sessions, can't be updated. To end a session immediately, revoke it instead.
+
+        Take the session ID from the `sid` claim of a verified session token. Never take it from an unverified client request, or a user could change another user's session.
+
+        Requires a plan that includes custom session duration.
+
+        :param session_id: The ID of the session
+        :param expire_at: When the session should expire, as an RFC3339 datetime (for example `2030-10-20T10:00:27.645Z`).
+            Must be at least 5 minutes and at most 10 years from now.
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.UpdateSessionRequest(
+            session_id=session_id,
+            request_body=models.UpdateSessionRequestBody(
+                expire_at=expire_at,
+            ),
+        )
+
+        req = self._build_request(
+            method="PATCH",
+            path="/sessions/{session_id}",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=True,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request.request_body,
+                False,
+                False,
+                "json",
+                models.UpdateSessionRequestBody,
+            ),
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["5XX"])
+
+        http_res = self.do_request(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="UpdateSession",
+                oauth2_scopes=None,
+                security_source=self.sdk_configuration.security,
+                tags=["Sessions"],
+                extensions=None,
+            ),
+            request=req,
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(models.Session, http_res)
+        if utils.match_response(
+            http_res, ["400", "401", "402", "404", "422"], "application/json"
+        ):
+            response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
+            raise models.ClerkErrors(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError("API error occurred", http_res, http_res_text)
+
+        raise models.SDKError("Unexpected response received", http_res)
+
+    async def update_async(
+        self,
+        *,
+        session_id: str,
+        expire_at: datetime,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.Session:
+        r"""Update a session
+
+        Changes when a session expires. Use this to give one session a longer or shorter lifetime than the one configured for your instance, for example to keep a user signed in on a device they chose to remember.
+
+        `expire_at` can exceed the instance's session lifetime. The change applies only to this session, so new sign-ins still start from the instance's session lifetime. If `expire_at` is later than the session's `abandon_at`, `abandon_at` moves to the same time. The inactivity timeout, if your instance has one, still applies.
+
+        Only active and pending sessions can be updated. Expired, revoked, and other ended sessions can't be revived, and sessions with an actor, such as impersonation and agent sessions, can't be updated. To end a session immediately, revoke it instead.
+
+        Take the session ID from the `sid` claim of a verified session token. Never take it from an unverified client request, or a user could change another user's session.
+
+        Requires a plan that includes custom session duration.
+
+        :param session_id: The ID of the session
+        :param expire_at: When the session should expire, as an RFC3339 datetime (for example `2030-10-20T10:00:27.645Z`).
+            Must be at least 5 minutes and at most 10 years from now.
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.UpdateSessionRequest(
+            session_id=session_id,
+            request_body=models.UpdateSessionRequestBody(
+                expire_at=expire_at,
+            ),
+        )
+
+        req = self._build_request_async(
+            method="PATCH",
+            path="/sessions/{session_id}",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=True,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request.request_body,
+                False,
+                False,
+                "json",
+                models.UpdateSessionRequestBody,
+            ),
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["5XX"])
+
+        http_res = await self.do_request_async(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="UpdateSession",
+                oauth2_scopes=None,
+                security_source=self.sdk_configuration.security,
+                tags=["Sessions"],
+                extensions=None,
+            ),
+            request=req,
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(models.Session, http_res)
+        if utils.match_response(
+            http_res, ["400", "401", "402", "404", "422"], "application/json"
+        ):
+            response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
+            raise models.ClerkErrors(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError("API error occurred", http_res, http_res_text)
+
+        raise models.SDKError("Unexpected response received", http_res)
+
     def refresh(
         self,
         *,
@@ -754,7 +985,7 @@ class Sessions(BaseSDK):
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(models.SessionRefresh, http_res)
-        if utils.match_response(http_res, ["400", "401"], "application/json"):
+        if utils.match_response(http_res, ["400", "401", "403"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
@@ -877,7 +1108,7 @@ class Sessions(BaseSDK):
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(models.SessionRefresh, http_res)
-        if utils.match_response(http_res, ["400", "401"], "application/json"):
+        if utils.match_response(http_res, ["400", "401", "403"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
@@ -1085,6 +1316,7 @@ class Sessions(BaseSDK):
         self,
         *,
         session_id: str,
+        reset_client_trust: Optional[bool] = False,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1096,6 +1328,11 @@ class Sessions(BaseSDK):
         In multi-session mode, a revoked session will still be returned along with its client object, however the user will need to sign in again.
 
         :param session_id: The ID of the session
+        :param reset_client_trust: When set to `true`, also clears Device Trust for the session's user and client, including when the session is already revoked.
+            Trust belongs to the user and client rather than the session, so this applies to the whole device, including any other session the user has on that client. Other users on the same client are unaffected.
+            For a session a native application received through hosted auth, this also clears the browser client the user signed in on.
+            The next sign-in by this user on the client counts as a new device: it can require a Device Trust challenge and sends the new device email.
+            A value that is not a boolean returns a 422 and does not revoke the session.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1113,6 +1350,9 @@ class Sessions(BaseSDK):
 
         request = models.RevokeSessionRequest(
             session_id=session_id,
+            request_body=models.RevokeSessionRequestBody(
+                reset_client_trust=reset_client_trust,
+            ),
         )
 
         req = self._build_request(
@@ -1128,6 +1368,13 @@ class Sessions(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request.request_body if request is not None else None,
+                False,
+                True,
+                "json",
+                Optional[models.RevokeSessionRequestBody],
+            ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
@@ -1162,7 +1409,9 @@ class Sessions(BaseSDK):
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(models.Session, http_res)
-        if utils.match_response(http_res, ["400", "401", "404"], "application/json"):
+        if utils.match_response(
+            http_res, ["400", "401", "404", "422"], "application/json"
+        ):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
@@ -1178,6 +1427,7 @@ class Sessions(BaseSDK):
         self,
         *,
         session_id: str,
+        reset_client_trust: Optional[bool] = False,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1189,6 +1439,11 @@ class Sessions(BaseSDK):
         In multi-session mode, a revoked session will still be returned along with its client object, however the user will need to sign in again.
 
         :param session_id: The ID of the session
+        :param reset_client_trust: When set to `true`, also clears Device Trust for the session's user and client, including when the session is already revoked.
+            Trust belongs to the user and client rather than the session, so this applies to the whole device, including any other session the user has on that client. Other users on the same client are unaffected.
+            For a session a native application received through hosted auth, this also clears the browser client the user signed in on.
+            The next sign-in by this user on the client counts as a new device: it can require a Device Trust challenge and sends the new device email.
+            A value that is not a boolean returns a 422 and does not revoke the session.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1206,6 +1461,9 @@ class Sessions(BaseSDK):
 
         request = models.RevokeSessionRequest(
             session_id=session_id,
+            request_body=models.RevokeSessionRequestBody(
+                reset_client_trust=reset_client_trust,
+            ),
         )
 
         req = self._build_request_async(
@@ -1221,6 +1479,13 @@ class Sessions(BaseSDK):
             accept_header_value="application/json",
             http_headers=http_headers,
             security=self.sdk_configuration.security,
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request.request_body if request is not None else None,
+                False,
+                True,
+                "json",
+                Optional[models.RevokeSessionRequestBody],
+            ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
@@ -1255,7 +1520,9 @@ class Sessions(BaseSDK):
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(models.Session, http_res)
-        if utils.match_response(http_res, ["400", "401", "404"], "application/json"):
+        if utils.match_response(
+            http_res, ["400", "401", "404", "422"], "application/json"
+        ):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
@@ -1361,7 +1628,7 @@ class Sessions(BaseSDK):
             return unmarshal_json_response(
                 models.CreateSessionTokenResponseBody, http_res
             )
-        if utils.match_response(http_res, ["401", "404"], "application/json"):
+        if utils.match_response(http_res, ["401", "403", "404"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
@@ -1467,7 +1734,7 @@ class Sessions(BaseSDK):
             return unmarshal_json_response(
                 models.CreateSessionTokenResponseBody, http_res
             )
-        if utils.match_response(http_res, ["401", "404"], "application/json"):
+        if utils.match_response(http_res, ["401", "403", "404"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
@@ -1576,7 +1843,7 @@ class Sessions(BaseSDK):
             return unmarshal_json_response(
                 models.CreateSessionTokenFromTemplateResponseBody, http_res
             )
-        if utils.match_response(http_res, ["401", "404"], "application/json"):
+        if utils.match_response(http_res, ["401", "403", "404"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
@@ -1685,7 +1952,7 @@ class Sessions(BaseSDK):
             return unmarshal_json_response(
                 models.CreateSessionTokenFromTemplateResponseBody, http_res
             )
-        if utils.match_response(http_res, ["401", "404"], "application/json"):
+        if utils.match_response(http_res, ["401", "403", "404"], "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):

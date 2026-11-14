@@ -7,10 +7,11 @@ from clerk_backend_api.types import (
     current_exclude_none,
     serialize_with_info,
 )
+from clerk_backend_api.types.basemodel import current_filtered_dump
 from clerk_backend_api.utils import FieldMetadata, QueryParamMetadata
 from enum import Enum
 from pydantic import model_serializer
-from typing import Optional
+from typing import List, Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
 
 
@@ -28,6 +29,10 @@ class ListInvitationsRequestTypedDict(TypedDict):
     r"""Filter invitations based on their status"""
     query: NotRequired[str]
     r"""Filter invitations based on their `email_address` or `id`"""
+    email_address: NotRequired[List[str]]
+    r"""Returns invitations with the specified email addresses.
+    Accepts up to 100 email addresses.
+    """
     order_by: NotRequired[str]
     r"""Allows to return invitations in a particular order.
     At the moment, you can order the returned invitations either by their `created_at`, `email_address` or `expires_at`.
@@ -64,6 +69,14 @@ class ListInvitationsRequest(BaseModel):
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = None
     r"""Filter invitations based on their `email_address` or `id`"""
+
+    email_address: Annotated[
+        Optional[List[str]],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Returns invitations with the specified email addresses.
+    Accepts up to 100 email addresses.
+    """
 
     order_by: Annotated[
         Optional[str],
@@ -109,15 +122,24 @@ class ListInvitationsRequest(BaseModel):
 
     def serialize_model(self, handler):
         optional_fields = set(
-            ["status", "query", "order_by", "paginated", "limit", "offset"]
+            [
+                "status",
+                "query",
+                "email_address",
+                "order_by",
+                "paginated",
+                "limit",
+                "offset",
+            ]
         )
         exclude_none = current_exclude_none()
+        skip_filtered = exclude_none is False or current_filtered_dump()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
             k = f.alias if f.alias is not None else n
-            if k not in serialized and n not in serialized and exclude_none is False:
+            if k not in serialized and n not in serialized and skip_filtered:
                 continue
             val = serialized.get(k, serialized.get(n))
 

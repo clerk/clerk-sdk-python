@@ -12,6 +12,7 @@ from clerk_backend_api.types import (
     current_exclude_none,
     serialize_with_info,
 )
+from clerk_backend_api.types.basemodel import current_filtered_dump
 from enum import Enum
 from pydantic import model_serializer
 from typing import Any, Dict, List, Optional
@@ -45,12 +46,13 @@ class LogGroupImpersonator(BaseModel):
         optional_fields = set(["user_id"])
         nullable_fields = set(["user_id"])
         exclude_none = current_exclude_none()
+        skip_filtered = exclude_none is False or current_filtered_dump()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
             k = f.alias if f.alias is not None else n
-            if k not in serialized and n not in serialized and exclude_none is False:
+            if k not in serialized and n not in serialized and skip_filtered:
                 continue
             val = serialized.get(k, serialized.get(n))
             is_nullable_and_explicitly_set = (
@@ -233,12 +235,13 @@ class FirstEvent(BaseModel):
             ]
         )
         exclude_none = current_exclude_none()
+        skip_filtered = exclude_none is False or current_filtered_dump()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
             k = f.alias if f.alias is not None else n
-            if k not in serialized and n not in serialized and exclude_none is False:
+            if k not in serialized and n not in serialized and skip_filtered:
                 continue
             val = serialized.get(k, serialized.get(n))
             is_nullable_and_explicitly_set = (
@@ -279,6 +282,13 @@ class LogGroupTypedDict(TypedDict):
     """
     status_label: Nullable[str]
     r"""A display label for `status`. Null when `status` is."""
+    subject: str
+    r"""Who the flow is about: the user ID of the latest event in the
+    group whose subject is a user, or, when the flow never
+    identified a user, the first event's subject (usually the
+    instance ID). Unlike `first_event.subject`, it names the user
+    even when the flow started before the user was known.
+    """
     first_event: Nullable[FirstEventTypedDict]
     r"""The group's first log, even when event filters left it out of
     `events`, for showing how the flow started (subject, IP,
@@ -323,6 +333,14 @@ class LogGroup(BaseModel):
     status_label: Nullable[str]
     r"""A display label for `status`. Null when `status` is."""
 
+    subject: str
+    r"""Who the flow is about: the user ID of the latest event in the
+    group whose subject is a user, or, when the flow never
+    identified a user, the first event's subject (usually the
+    instance ID). Unlike `first_event.subject`, it names the user
+    even when the flow started before the user was known.
+    """
+
     first_event: Nullable[FirstEvent]
     r"""The group's first log, even when event filters left it out of
     `events`, for showing how the flow started (subject, IP,
@@ -351,12 +369,13 @@ class LogGroup(BaseModel):
             ["status", "status_label", "first_event", "events_cursor"]
         )
         exclude_none = current_exclude_none()
+        skip_filtered = exclude_none is False or current_filtered_dump()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
             k = f.alias if f.alias is not None else n
-            if k not in serialized and n not in serialized and exclude_none is False:
+            if k not in serialized and n not in serialized and skip_filtered:
                 continue
             val = serialized.get(k, serialized.get(n))
             is_nullable_and_explicitly_set = (
