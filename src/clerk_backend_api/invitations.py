@@ -230,6 +230,7 @@ class Invitations(BaseSDK):
         *,
         status: Optional[models.ListInvitationsQueryParamStatus] = None,
         query: Optional[str] = None,
+        email_address: Optional[Iterable[str]] = None,
         order_by: Optional[str] = "-created_at",
         paginated: Optional[bool] = None,
         limit: Optional[int] = 10,
@@ -241,10 +242,13 @@ class Invitations(BaseSDK):
     ) -> List[models.Invitation]:
         r"""List all invitations
 
-        Returns all non-revoked invitations for your application, sorted by creation date
+        Returns non-revoked invitations for your application, sorted by creation date.
+        Without `limit`, `offset` or `paginated=true`, returns at most 500 invitations.
 
         :param status: Filter invitations based on their status
         :param query: Filter invitations based on their `email_address` or `id`
+        :param email_address: Returns invitations with the specified email addresses.
+            Accepts up to 100 email addresses.
         :param order_by: Allows to return invitations in a particular order.
             At the moment, you can order the returned invitations either by their `created_at`, `email_address` or `expires_at`.
             In order to specify the direction, you can use the `+/-` symbols prepended in the property to order by.
@@ -277,6 +281,7 @@ class Invitations(BaseSDK):
         request = models.ListInvitationsRequest(
             status=status,
             query=query,
+            email_address=utils.unmarshal(email_address, Optional[List[str]]),
             order_by=order_by,
             paginated=paginated,
             limit=limit,
@@ -343,6 +348,7 @@ class Invitations(BaseSDK):
         *,
         status: Optional[models.ListInvitationsQueryParamStatus] = None,
         query: Optional[str] = None,
+        email_address: Optional[Iterable[str]] = None,
         order_by: Optional[str] = "-created_at",
         paginated: Optional[bool] = None,
         limit: Optional[int] = 10,
@@ -354,10 +360,13 @@ class Invitations(BaseSDK):
     ) -> List[models.Invitation]:
         r"""List all invitations
 
-        Returns all non-revoked invitations for your application, sorted by creation date
+        Returns non-revoked invitations for your application, sorted by creation date.
+        Without `limit`, `offset` or `paginated=true`, returns at most 500 invitations.
 
         :param status: Filter invitations based on their status
         :param query: Filter invitations based on their `email_address` or `id`
+        :param email_address: Returns invitations with the specified email addresses.
+            Accepts up to 100 email addresses.
         :param order_by: Allows to return invitations in a particular order.
             At the moment, you can order the returned invitations either by their `created_at`, `email_address` or `expires_at`.
             In order to specify the direction, you can use the `+/-` symbols prepended in the property to order by.
@@ -390,6 +399,7 @@ class Invitations(BaseSDK):
         request = models.ListInvitationsRequest(
             status=status,
             query=query,
+            email_address=utils.unmarshal(email_address, Optional[List[str]]),
             order_by=order_by,
             paginated=paginated,
             limit=limit,
