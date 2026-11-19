@@ -7,6 +7,7 @@ from clerk_backend_api.types import (
     current_exclude_none,
     serialize_with_info,
 )
+from clerk_backend_api.types.basemodel import current_filtered_dump
 from clerk_backend_api.utils import FieldMetadata, PathParamMetadata, RequestMetadata
 from pydantic import model_serializer
 from typing import Optional
@@ -16,11 +17,45 @@ from typing_extensions import Annotated, NotRequired, TypedDict
 class VerifyPasswordRequestBodyTypedDict(TypedDict):
     password: str
     r"""The user password to verify"""
+    honor_lockout: NotRequired[bool]
+    r"""When `true`, a wrong password counts toward the user's lockout, and a locked user is rejected with a `user_locked` error before the password is checked.
+    Has no effect on instances with user lockout disabled.
+    To enforce lockout across a password check and a sign-in token, set this parameter on both requests.
+    """
 
 
 class VerifyPasswordRequestBody(BaseModel):
     password: str
     r"""The user password to verify"""
+
+    honor_lockout: Optional[bool] = False
+    r"""When `true`, a wrong password counts toward the user's lockout, and a locked user is rejected with a `user_locked` error before the password is checked.
+    Has no effect on instances with user lockout disabled.
+    To enforce lockout across a password check and a sign-in token, set this parameter on both requests.
+    """
+
+    @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
+    def serialize_model(self, handler):
+        optional_fields = set(["honor_lockout"])
+        exclude_none = current_exclude_none()
+        skip_filtered = exclude_none is False or current_filtered_dump()
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and skip_filtered:
+                continue
+            val = serialized.get(k, serialized.get(n))
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m
 
 
 class VerifyPasswordRequestTypedDict(TypedDict):
@@ -47,12 +82,13 @@ class VerifyPasswordRequest(BaseModel):
     def serialize_model(self, handler):
         optional_fields = set(["RequestBody"])
         exclude_none = current_exclude_none()
+        skip_filtered = exclude_none is False or current_filtered_dump()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
             k = f.alias if f.alias is not None else n
-            if k not in serialized and n not in serialized and exclude_none is False:
+            if k not in serialized and n not in serialized and skip_filtered:
                 continue
             val = serialized.get(k, serialized.get(n))
 
@@ -81,12 +117,13 @@ class VerifyPasswordResponseBody(BaseModel):
     def serialize_model(self, handler):
         optional_fields = set(["verified"])
         exclude_none = current_exclude_none()
+        skip_filtered = exclude_none is False or current_filtered_dump()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
             k = f.alias if f.alias is not None else n
-            if k not in serialized and n not in serialized and exclude_none is False:
+            if k not in serialized and n not in serialized and skip_filtered:
                 continue
             val = serialized.get(k, serialized.get(n))
 

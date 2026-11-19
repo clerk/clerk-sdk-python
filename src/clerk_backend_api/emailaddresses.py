@@ -1035,6 +1035,7 @@ class EmailAddresses(BaseSDK):
         email_address_id: str,
         verification_id: str,
         code: str,
+        honor_lockout: Optional[bool] = False,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1057,6 +1058,9 @@ class EmailAddresses(BaseSDK):
         :param email_address_id: The ID of the email address whose code is being verified
         :param verification_id: The ID of the verification to check, such as one returned by prepare_verification
         :param code: The verification code that was sent to the email address
+        :param honor_lockout: When `true`, a wrong code counts toward the user's lockout, and a locked user is rejected with a `user_locked` error before the code is checked.
+            Has no effect on instances with user lockout disabled.
+            To enforce lockout across a password check and a sign-in token, set this parameter on both requests.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1077,6 +1081,7 @@ class EmailAddresses(BaseSDK):
             request_body=models.AttemptEmailAddressVerificationRequestBody(
                 verification_id=verification_id,
                 code=code,
+                honor_lockout=honor_lockout,
             ),
         )
 
@@ -1157,6 +1162,7 @@ class EmailAddresses(BaseSDK):
         email_address_id: str,
         verification_id: str,
         code: str,
+        honor_lockout: Optional[bool] = False,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1179,6 +1185,9 @@ class EmailAddresses(BaseSDK):
         :param email_address_id: The ID of the email address whose code is being verified
         :param verification_id: The ID of the verification to check, such as one returned by prepare_verification
         :param code: The verification code that was sent to the email address
+        :param honor_lockout: When `true`, a wrong code counts toward the user's lockout, and a locked user is rejected with a `user_locked` error before the code is checked.
+            Has no effect on instances with user lockout disabled.
+            To enforce lockout across a password check and a sign-in token, set this parameter on both requests.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1199,6 +1208,7 @@ class EmailAddresses(BaseSDK):
             request_body=models.AttemptEmailAddressVerificationRequestBody(
                 verification_id=verification_id,
                 code=code,
+                honor_lockout=honor_lockout,
             ),
         )
 
