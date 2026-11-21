@@ -146,6 +146,7 @@ if TYPE_CHECKING:
     from .clerkerror import ClerkError, ClerkErrorTypedDict
     from .clerkerrors import ClerkErrors, ClerkErrorsData
     from .client import Client, ClientTypedDict, Object
+    from .client_2 import Client2, Client2Object, Client2TypedDict
     from .cnametarget import CNameTarget, CNameTargetTypedDict
     from .commercecreditbalanceresponse import (
         Balance,
@@ -809,6 +810,12 @@ if TYPE_CHECKING:
         DirectoryGroupObject,
         DirectoryGroupTypedDict,
     )
+    from .directorygroup_list import (
+        DirectoryGroupList,
+        DirectoryGroupListCursor,
+        DirectoryGroupListCursorTypedDict,
+        DirectoryGroupListTypedDict,
+    )
     from .directorygroupmember import (
         DirectoryGroupMember,
         DirectoryGroupMemberObject,
@@ -1290,6 +1297,10 @@ if TYPE_CHECKING:
         ListDirectoryGroupRoleMappingsRequest,
         ListDirectoryGroupRoleMappingsRequestTypedDict,
     )
+    from .listdirectorygroupsop import (
+        ListDirectoryGroupsRequest,
+        ListDirectoryGroupsRequestTypedDict,
+    )
     from .listenterpriseconnectionsop import (
         ListEnterpriseConnectionsRequest,
         ListEnterpriseConnectionsRequestTypedDict,
@@ -1425,6 +1436,7 @@ if TYPE_CHECKING:
         LogSchemaFieldType,
         LogSchemaFieldTypedDict,
     )
+    from .logschemalist import LogSchemaList, LogSchemaListTypedDict
     from .logwithpayload import (
         LogWithPayload,
         LogWithPayloadImpersonator,
@@ -1781,6 +1793,7 @@ if TYPE_CHECKING:
         RevokeAPIKeyResponseBody,
         RevokeAPIKeyResponseBodyTypedDict,
     )
+    from .revokeclientop import RevokeClientRequest, RevokeClientRequestTypedDict
     from .revokeinvitationop import (
         RevokeInvitationRequest,
         RevokeInvitationRequestTypedDict,
@@ -1959,6 +1972,14 @@ if TYPE_CHECKING:
         SessionObject,
         SessionTypedDict,
         Status,
+    )
+    from .session_2 import (
+        Session2,
+        Session2Actor,
+        Session2ActorTypedDict,
+        Session2Object,
+        Session2Status,
+        Session2TypedDict,
     )
     from .sessionactivityresponse import (
         SessionActivityResponse,
@@ -2272,6 +2293,10 @@ if TYPE_CHECKING:
         UserScimGroupsTypedDict,
         UserTypedDict,
     )
+    from .user_listorcursorpage import (
+        UserListOrCursorPage,
+        UserListOrCursorPageTypedDict,
+    )
     from .userpasskeydeleteop import (
         UserPasskeyDeleteRequest,
         UserPasskeyDeleteRequestTypedDict,
@@ -2526,6 +2551,9 @@ __all__ = [
     "ClerkErrors",
     "ClerkErrorsData",
     "Client",
+    "Client2",
+    "Client2Object",
+    "Client2TypedDict",
     "ClientTypedDict",
     "CodeType",
     "CommerceCreditBalanceResponse",
@@ -2953,6 +2981,10 @@ __all__ = [
     "DirectoryCustomAttributes",
     "DirectoryCustomAttributesTypedDict",
     "DirectoryGroup",
+    "DirectoryGroupList",
+    "DirectoryGroupListCursor",
+    "DirectoryGroupListCursorTypedDict",
+    "DirectoryGroupListTypedDict",
     "DirectoryGroupMember",
     "DirectoryGroupMemberList",
     "DirectoryGroupMemberListCursor",
@@ -3264,6 +3296,8 @@ __all__ = [
     "ListDirectoryGroupMembersRequestTypedDict",
     "ListDirectoryGroupRoleMappingsRequest",
     "ListDirectoryGroupRoleMappingsRequestTypedDict",
+    "ListDirectoryGroupsRequest",
+    "ListDirectoryGroupsRequestTypedDict",
     "ListEnterpriseConnectionTestRunsQueryParamStatus",
     "ListEnterpriseConnectionTestRunsRequest",
     "ListEnterpriseConnectionTestRunsRequestTypedDict",
@@ -3347,6 +3381,8 @@ __all__ = [
     "LogSchemaField",
     "LogSchemaFieldType",
     "LogSchemaFieldTypedDict",
+    "LogSchemaList",
+    "LogSchemaListTypedDict",
     "LogSchemaTypedDict",
     "LogTypedDict",
     "LogWithPayload",
@@ -3664,6 +3700,8 @@ __all__ = [
     "RevokeAdminPortalLinkTokenResponseBodyTypedDict",
     "RevokeAgentTaskRequest",
     "RevokeAgentTaskRequestTypedDict",
+    "RevokeClientRequest",
+    "RevokeClientRequestTypedDict",
     "RevokeInvitationRequest",
     "RevokeInvitationRequestTypedDict",
     "RevokeM2MTokenErrors",
@@ -3787,6 +3825,12 @@ __all__ = [
     "Security",
     "SecurityTypedDict",
     "Session",
+    "Session2",
+    "Session2Actor",
+    "Session2ActorTypedDict",
+    "Session2Object",
+    "Session2Status",
+    "Session2TypedDict",
     "SessionActivityResponse",
     "SessionActivityResponseTypedDict",
     "SessionObject",
@@ -4018,6 +4062,8 @@ __all__ = [
     "UserDirectoryTypedDict",
     "UserGroups",
     "UserGroupsTypedDict",
+    "UserListOrCursorPage",
+    "UserListOrCursorPageTypedDict",
     "UserObject",
     "UserPasskeyDeleteRequest",
     "UserPasskeyDeleteRequestTypedDict",
@@ -4324,6 +4370,9 @@ _dynamic_imports: dict[str, str] = {
     "Client": ".client",
     "ClientTypedDict": ".client",
     "Object": ".client",
+    "Client2": ".client_2",
+    "Client2Object": ".client_2",
+    "Client2TypedDict": ".client_2",
     "CNameTarget": ".cnametarget",
     "CNameTargetTypedDict": ".cnametarget",
     "Balance": ".commercecreditbalanceresponse",
@@ -4811,6 +4860,10 @@ _dynamic_imports: dict[str, str] = {
     "DirectoryGroup": ".directorygroup",
     "DirectoryGroupObject": ".directorygroup",
     "DirectoryGroupTypedDict": ".directorygroup",
+    "DirectoryGroupList": ".directorygroup_list",
+    "DirectoryGroupListCursor": ".directorygroup_list",
+    "DirectoryGroupListCursorTypedDict": ".directorygroup_list",
+    "DirectoryGroupListTypedDict": ".directorygroup_list",
     "DirectoryGroupMember": ".directorygroupmember",
     "DirectoryGroupMemberObject": ".directorygroupmember",
     "DirectoryGroupMemberTypedDict": ".directorygroupmember",
@@ -5188,6 +5241,8 @@ _dynamic_imports: dict[str, str] = {
     "ListDirectoryGroupMembersRequestTypedDict": ".listdirectorygroupmembersop",
     "ListDirectoryGroupRoleMappingsRequest": ".listdirectorygrouprolemappingsop",
     "ListDirectoryGroupRoleMappingsRequestTypedDict": ".listdirectorygrouprolemappingsop",
+    "ListDirectoryGroupsRequest": ".listdirectorygroupsop",
+    "ListDirectoryGroupsRequestTypedDict": ".listdirectorygroupsop",
     "ListEnterpriseConnectionsRequest": ".listenterpriseconnectionsop",
     "ListEnterpriseConnectionsRequestTypedDict": ".listenterpriseconnectionsop",
     "ListEnterpriseConnectionTestRunsQueryParamStatus": ".listenterpriseconnectiontestrunsop",
@@ -5284,6 +5339,8 @@ _dynamic_imports: dict[str, str] = {
     "LogSchemaField": ".logschemafield",
     "LogSchemaFieldType": ".logschemafield",
     "LogSchemaFieldTypedDict": ".logschemafield",
+    "LogSchemaList": ".logschemalist",
+    "LogSchemaListTypedDict": ".logschemalist",
     "LogWithPayload": ".logwithpayload",
     "LogWithPayloadImpersonator": ".logwithpayload",
     "LogWithPayloadImpersonatorTypedDict": ".logwithpayload",
@@ -5549,6 +5606,8 @@ _dynamic_imports: dict[str, str] = {
     "RevokeAPIKeyRequestTypedDict": ".revokeapikeyop",
     "RevokeAPIKeyResponseBody": ".revokeapikeyop",
     "RevokeAPIKeyResponseBodyTypedDict": ".revokeapikeyop",
+    "RevokeClientRequest": ".revokeclientop",
+    "RevokeClientRequestTypedDict": ".revokeclientop",
     "RevokeInvitationRequest": ".revokeinvitationop",
     "RevokeInvitationRequestTypedDict": ".revokeinvitationop",
     "RevokeM2MTokenErrors": ".revokem2mtokenop",
@@ -5691,6 +5750,12 @@ _dynamic_imports: dict[str, str] = {
     "SessionObject": ".session",
     "SessionTypedDict": ".session",
     "Status": ".session",
+    "Session2": ".session_2",
+    "Session2Actor": ".session_2",
+    "Session2ActorTypedDict": ".session_2",
+    "Session2Object": ".session_2",
+    "Session2Status": ".session_2",
+    "Session2TypedDict": ".session_2",
     "SessionActivityResponse": ".sessionactivityresponse",
     "SessionActivityResponseTypedDict": ".sessionactivityresponse",
     "SessionRefresh": ".sessionrefresh",
@@ -5925,6 +5990,8 @@ _dynamic_imports: dict[str, str] = {
     "UserScimGroups": ".user",
     "UserScimGroupsTypedDict": ".user",
     "UserTypedDict": ".user",
+    "UserListOrCursorPage": ".user_listorcursorpage",
+    "UserListOrCursorPageTypedDict": ".user_listorcursorpage",
     "UserPasskeyDeleteRequest": ".userpasskeydeleteop",
     "UserPasskeyDeleteRequestTypedDict": ".userpasskeydeleteop",
     "UsersBanRequestBody": ".usersbanop",

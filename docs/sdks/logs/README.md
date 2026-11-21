@@ -6,6 +6,7 @@
 
 * [list](#list) - List all logs
 * [get_schema](#get_schema) - Retrieve the payload schema of a log event type
+* [list_types](#list_types) - List all log event types
 * [list_group_events](#list_group_events) - List an event group's logs
 * [get](#get) - Retrieve a single log
 
@@ -114,8 +115,6 @@ intersection across every matching event type, and `matched_event_types`
 lists what the intersection was computed over; per-type metadata
 (description, severity, docs_group) is present only for concrete types.
 
-The response is the same for every instance.
-
 ### Example Usage
 
 <!-- UsageSnippet language="python" operationID="GetLogSchema" method="get" path="/logs/schemas" -->
@@ -136,10 +135,10 @@ with Clerk(
 
 ### Parameters
 
-| Parameter                                                                                                                                                                                 | Type                                                                                                                                                                                      | Required                                                                                                                                                                                  | Description                                                                                                                                                                               | Example                                                                                                                                                                                   |
-| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `type_`                                                                                                                                                                                   | *str*                                                                                                                                                                                     | :heavy_check_mark:                                                                                                                                                                        | The event type to describe: concrete (`sign_in.completed`),<br/>trailing-`*` wildcard (`sign_in.*`), or bare family name<br/>(`sign_in`). Unknown types return a 422. A bare `*` is not<br/>accepted. | sign_in.*                                                                                                                                                                                 |
-| `retries`                                                                                                                                                                                 | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                                                                          | :heavy_minus_sign:                                                                                                                                                                        | Configuration to override the default retry behavior of the client.                                                                                                                       |                                                                                                                                                                                           |
+| Parameter                                                                                                                                                                                                                                  | Type                                                                                                                                                                                                                                       | Required                                                                                                                                                                                                                                   | Description                                                                                                                                                                                                                                | Example                                                                                                                                                                                                                                    |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `type_`                                                                                                                                                                                                                                    | *str*                                                                                                                                                                                                                                      | :heavy_check_mark:                                                                                                                                                                                                                         | The event type to describe: concrete (`sign_in.completed`),<br/>trailing-`*` wildcard (`sign_in.*`), or bare family name<br/>(`sign_in`). Unknown types return a 422. A bare `*` is not<br/>accepted; to list every event type, use `GET /logs/types`. | sign_in.*                                                                                                                                                                                                                                  |
+| `retries`                                                                                                                                                                                                                                  | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                                                                                                                           | :heavy_minus_sign:                                                                                                                                                                                                                         | Configuration to override the default retry behavior of the client.                                                                                                                                                                        |                                                                                                                                                                                                                                            |
 
 ### Response
 
@@ -150,6 +149,52 @@ with Clerk(
 | Error Type         | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
 | models.ClerkErrors | 401, 403, 422, 429 | application/json   |
+| models.SDKError    | 4XX, 5XX           | \*/\*              |
+
+## list_types
+
+Returns every event type the instance can see in its logs, each with
+its payload schema, sorted by `event_type`. Each entry is the same as
+the response of `GET /logs/schemas` for that type.
+
+Use it to discover the values that the `type` parameter of the list
+endpoint accepts, and the payload fields each one carries. The list is
+not paginated. Event types whose logs are enabled per instance (such as
+`sms.*` and `email.*`) are listed only once enabled.
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="ListLogTypes" method="get" path="/logs/types" -->
+```python
+from clerk_backend_api import Clerk
+
+
+with Clerk(
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+) as clerk:
+
+    res = clerk.logs.list_types()
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+
+### Response
+
+**[models.LogSchemaList](../../models/logschemalist.md)**
+
+### Errors
+
+| Error Type         | Status Code        | Content Type       |
+| ------------------ | ------------------ | ------------------ |
+| models.ClerkErrors | 401, 403, 429      | application/json   |
 | models.SDKError    | 4XX, 5XX           | \*/\*              |
 
 ## list_group_events
@@ -179,13 +224,13 @@ with Clerk(
 
 ### Parameters
 
-| Parameter                                                                                                                                       | Type                                                                                                                                            | Required                                                                                                                                        | Description                                                                                                                                     |
-| ----------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
-| `group_id`                                                                                                                                      | *str*                                                                                                                                           | :heavy_check_mark:                                                                                                                              | The ID of the event group, e.g. a sign-in ID.                                                                                                   |
-| `started_at`                                                                                                                                    | *int*                                                                                                                                           | :heavy_check_mark:                                                                                                                              | When the group started (Unix timestamp in milliseconds), the<br/>`started_at` of the group item. It bounds the time range searched.             |
-| `limit`                                                                                                                                         | *Optional[int]*                                                                                                                                 | :heavy_minus_sign:                                                                                                                              | Applies a limit to the number of results returned.                                                                                              |
-| `starting_after`                                                                                                                                | *Optional[str]*                                                                                                                                 | :heavy_minus_sign:                                                                                                                              | The group's `events_cursor` from the grouped view, or the<br/>`starting_after` cursor this endpoint returned. Only forward<br/>pagination is supported. |
-| `retries`                                                                                                                                       | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                                | :heavy_minus_sign:                                                                                                                              | Configuration to override the default retry behavior of the client.                                                                             |
+| Parameter                                                                                                                                                                                                                            | Type                                                                                                                                                                                                                                 | Required                                                                                                                                                                                                                             | Description                                                                                                                                                                                                                          |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `group_id`                                                                                                                                                                                                                           | *str*                                                                                                                                                                                                                                | :heavy_check_mark:                                                                                                                                                                                                                   | The ID of the event group, e.g. a sign-in ID.                                                                                                                                                                                        |
+| `started_at`                                                                                                                                                                                                                         | *Optional[int]*                                                                                                                                                                                                                      | :heavy_minus_sign:                                                                                                                                                                                                                   | When the group started (Unix timestamp in milliseconds), the<br/>`started_at` of the group item. Optional: when omitted, it is<br/>looked up from `group_id`, and a group that can't be found or is<br/>past the retention window returns a 404. |
+| `limit`                                                                                                                                                                                                                              | *Optional[int]*                                                                                                                                                                                                                      | :heavy_minus_sign:                                                                                                                                                                                                                   | Applies a limit to the number of results returned.                                                                                                                                                                                   |
+| `starting_after`                                                                                                                                                                                                                     | *Optional[str]*                                                                                                                                                                                                                      | :heavy_minus_sign:                                                                                                                                                                                                                   | The group's `events_cursor` from the grouped view, or the<br/>`starting_after` cursor this endpoint returned. Only forward<br/>pagination is supported.                                                                              |
+| `retries`                                                                                                                                                                                                                            | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                                                                                                                     | :heavy_minus_sign:                                                                                                                                                                                                                   | Configuration to override the default retry behavior of the client.                                                                                                                                                                  |
 
 ### Response
 
@@ -193,11 +238,11 @@ with Clerk(
 
 ### Errors
 
-| Error Type         | Status Code        | Content Type       |
-| ------------------ | ------------------ | ------------------ |
-| models.ClerkErrors | 401, 403, 422, 429 | application/json   |
-| models.ClerkErrors | 503                | application/json   |
-| models.SDKError    | 4XX, 5XX           | \*/\*              |
+| Error Type              | Status Code             | Content Type            |
+| ----------------------- | ----------------------- | ----------------------- |
+| models.ClerkErrors      | 401, 403, 404, 422, 429 | application/json        |
+| models.ClerkErrors      | 503                     | application/json        |
+| models.SDKError         | 4XX, 5XX                | \*/\*                   |
 
 ## get
 

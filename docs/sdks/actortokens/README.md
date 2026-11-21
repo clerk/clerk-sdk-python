@@ -28,6 +28,7 @@ with Clerk(
         user_id="user_1a2b3c",
         actor=clerk_backend_api.CreateActorTokenActor(
             sub="user_2OEpKhcCN1Lat9NQ0G6puh7q5Rb",
+            type="<value>",
         ),
     ))
 

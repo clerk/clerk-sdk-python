@@ -5,6 +5,8 @@ from .session import Session, SessionTypedDict
 from clerk_backend_api.types import (
     BaseModel,
     Nullable,
+    OptionalNullable,
+    UNSET,
     UNSET_SENTINEL,
     current_exclude_none,
     serialize_with_info,
@@ -13,7 +15,7 @@ from clerk_backend_api.types.basemodel import current_filtered_dump
 from enum import Enum
 from pydantic import model_serializer
 from typing import List
-from typing_extensions import TypedDict
+from typing_extensions import NotRequired, TypedDict
 
 
 class Object(str, Enum):
@@ -53,6 +55,8 @@ class ClientTypedDict(TypedDict):
     r"""Unix timestamp of creation.
 
     """
+    revoked_at: NotRequired[Nullable[int]]
+    r"""Unix timestamp in milliseconds when this client was revoked."""
 
 
 class Client(BaseModel):
@@ -96,11 +100,24 @@ class Client(BaseModel):
 
     """
 
+    revoked_at: OptionalNullable[int] = UNSET
+    r"""Unix timestamp in milliseconds when this client was revoked."""
+
     @model_serializer(mode="wrap")
     def _serialize_model_with_info(self, handler, info):
         return serialize_with_info(self.serialize_model, handler, info)
 
     def serialize_model(self, handler):
+        optional_fields = set(["revoked_at"])
+        nullable_fields = set(
+            [
+                "revoked_at",
+                "sign_in_id",
+                "sign_up_id",
+                "last_active_session_id",
+                "last_authentication_strategy",
+            ]
+        )
         exclude_none = current_exclude_none()
         skip_filtered = exclude_none is False or current_filtered_dump()
         serialized = handler(self)
@@ -111,8 +128,17 @@ class Client(BaseModel):
             if k not in serialized and n not in serialized and skip_filtered:
                 continue
             val = serialized.get(k, serialized.get(n))
+            is_nullable_and_explicitly_set = (
+                k in nullable_fields
+                and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
+            )
 
             if val != UNSET_SENTINEL:
-                m[k] = val
+                if (
+                    val is not None
+                    or k not in optional_fields
+                    or is_nullable_and_explicitly_set
+                ):
+                    m[k] = val
 
         return m
