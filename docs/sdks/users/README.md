@@ -123,13 +123,14 @@ with Clerk(
 
 ### Response
 
-**[List[models.User]](../../models/.md)**
+**[models.UserListOrCursorPage](../../models/userlistorcursorpage.md)**
 
 ### Errors
 
 | Error Type         | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
-| models.ClerkErrors | 400, 401, 422      | application/json   |
+| models.ClerkErrors | 400, 401, 403, 422 | application/json   |
+| models.ClerkErrors | 503                | application/json   |
 | models.SDKError    | 4XX, 5XX           | \*/\*              |
 
 ## create

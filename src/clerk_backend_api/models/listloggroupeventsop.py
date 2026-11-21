@@ -17,9 +17,11 @@ from typing_extensions import Annotated, NotRequired, TypedDict
 class ListLogGroupEventsRequestTypedDict(TypedDict):
     group_id: str
     r"""The ID of the event group, e.g. a sign-in ID."""
-    started_at: int
+    started_at: NotRequired[int]
     r"""When the group started (Unix timestamp in milliseconds), the
-    `started_at` of the group item. It bounds the time range searched.
+    `started_at` of the group item. Optional: when omitted, it is
+    looked up from `group_id`, and a group that can't be found or is
+    past the retention window returns a 404.
     """
     limit: NotRequired[int]
     r"""Applies a limit to the number of results returned."""
@@ -37,10 +39,13 @@ class ListLogGroupEventsRequest(BaseModel):
     r"""The ID of the event group, e.g. a sign-in ID."""
 
     started_at: Annotated[
-        int, FieldMetadata(query=QueryParamMetadata(style="form", explode=True))
-    ]
+        Optional[int],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
     r"""When the group started (Unix timestamp in milliseconds), the
-    `started_at` of the group item. It bounds the time range searched.
+    `started_at` of the group item. Optional: when omitted, it is
+    looked up from `group_id`, and a group that can't be found or is
+    past the retention window returns a 404.
     """
 
     limit: Annotated[
@@ -63,7 +68,7 @@ class ListLogGroupEventsRequest(BaseModel):
         return serialize_with_info(self.serialize_model, handler, info)
 
     def serialize_model(self, handler):
-        optional_fields = set(["limit", "starting_after"])
+        optional_fields = set(["started_at", "limit", "starting_after"])
         exclude_none = current_exclude_none()
         skip_filtered = exclude_none is False or current_filtered_dump()
         serialized = handler(self)

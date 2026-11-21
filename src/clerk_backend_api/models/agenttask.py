@@ -3,6 +3,9 @@
 from __future__ import annotations
 from clerk_backend_api.types import (
     BaseModel,
+    Nullable,
+    OptionalNullable,
+    UNSET,
     UNSET_SENTINEL,
     current_exclude_none,
     serialize_with_info,
@@ -33,6 +36,14 @@ class AgentTaskTypedDict(TypedDict):
     """
     task_id: str
     r"""A unique identifier for this agent task. Deprecated: use agent_task_id instead.
+
+    """
+    session_restricted: bool
+    r"""Whether the agent task session is restricted. When true, the session can refresh only its own session token and read. Clerk's Frontend API refuses every other write from a browser client that holds the session, including touch, sign-out, profile and organization writes, sign-in and sign-up, and OAuth approval. It also refuses changing the session's workspace (its active organization).
+
+    """
+    session_organization_id: NotRequired[Nullable[str]]
+    r"""The organization the agent task session starts in, and the only one a restricted session can use. Null means the personal workspace.
 
     """
     url: NotRequired[str]
@@ -66,6 +77,16 @@ class AgentTask(BaseModel):
 
     """
 
+    session_restricted: bool
+    r"""Whether the agent task session is restricted. When true, the session can refresh only its own session token and read. Clerk's Frontend API refuses every other write from a browser client that holds the session, including touch, sign-out, profile and organization writes, sign-in and sign-up, and OAuth approval. It also refuses changing the session's workspace (its active organization).
+
+    """
+
+    session_organization_id: OptionalNullable[str] = UNSET
+    r"""The organization the agent task session starts in, and the only one a restricted session can use. Null means the personal workspace.
+
+    """
+
     url: Optional[str] = None
     r"""The URL that, when visited, creates a session for the user. Only present in the response to a create request.
 
@@ -76,7 +97,8 @@ class AgentTask(BaseModel):
         return serialize_with_info(self.serialize_model, handler, info)
 
     def serialize_model(self, handler):
-        optional_fields = set(["url"])
+        optional_fields = set(["session_organization_id", "url"])
+        nullable_fields = set(["session_organization_id"])
         exclude_none = current_exclude_none()
         skip_filtered = exclude_none is False or current_filtered_dump()
         serialized = handler(self)
@@ -87,9 +109,17 @@ class AgentTask(BaseModel):
             if k not in serialized and n not in serialized and skip_filtered:
                 continue
             val = serialized.get(k, serialized.get(n))
+            is_nullable_and_explicitly_set = (
+                k in nullable_fields
+                and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
+            )
 
             if val != UNSET_SENTINEL:
-                if val is not None or k not in optional_fields:
+                if (
+                    val is not None
+                    or k not in optional_fields
+                    or is_nullable_and_explicitly_set
+                ):
                     m[k] = val
 
         return m

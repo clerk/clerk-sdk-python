@@ -10,6 +10,7 @@
 * [update](#update) - Update a directory
 * [delete](#delete) - Delete a directory
 * [rotate_api_key](#rotate_api_key) - Rotate a directory's API key
+* [list_groups](#list_groups) - List directory groups
 * [get_group](#get_group) - Retrieve a directory group
 * [list_group_members](#list_group_members) - List directory group members
 * [list_group_role_mappings](#list_group_role_mappings) - List directory group role mappings
@@ -283,6 +284,50 @@ with Clerk(
 | Error Type         | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
 | models.ClerkErrors | 401, 403, 404, 422 | application/json   |
+| models.SDKError    | 4XX, 5XX           | \*/\*              |
+
+## list_groups
+
+Returns the groups available in a directory, as reported by the identity provider,
+using cursor-based pagination.
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="ListDirectoryGroups" method="get" path="/directories/{directory_id}/groups" -->
+```python
+from clerk_backend_api import Clerk
+
+
+with Clerk(
+    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
+) as clerk:
+
+    res = clerk.directories.list_groups(directory_id="<id>", limit=10, starting_after="<value>", ending_before="<value>")
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                                                                                                    | Type                                                                                                                                         | Required                                                                                                                                     | Description                                                                                                                                  |
+| -------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| `directory_id`                                                                                                                               | *str*                                                                                                                                        | :heavy_check_mark:                                                                                                                           | The ID of the directory.                                                                                                                     |
+| `limit`                                                                                                                                      | *Optional[int]*                                                                                                                              | :heavy_minus_sign:                                                                                                                           | Applies a limit to the number of results returned.<br/>Can be used for paginating the results together with `starting_after` or `ending_before`. |
+| `starting_after`                                                                                                                             | *Optional[str]*                                                                                                                              | :heavy_minus_sign:                                                                                                                           | A cursor for pagination. Provide the `starting_after` cursor from a previous response to fetch the next page.                                |
+| `ending_before`                                                                                                                              | *Optional[str]*                                                                                                                              | :heavy_minus_sign:                                                                                                                           | A cursor for pagination. Provide the `ending_before` cursor from a previous response to fetch the previous page.                             |
+| `retries`                                                                                                                                    | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                             | :heavy_minus_sign:                                                                                                                           | Configuration to override the default retry behavior of the client.                                                                          |
+
+### Response
+
+**[models.DirectoryGroupList](../../models/directorygrouplist.md)**
+
+### Errors
+
+| Error Type         | Status Code        | Content Type       |
+| ------------------ | ------------------ | ------------------ |
+| models.ClerkErrors | 401, 403, 404      | application/json   |
 | models.SDKError    | 4XX, 5XX           | \*/\*              |
 
 ## get_group
