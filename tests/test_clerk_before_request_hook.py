@@ -20,7 +20,9 @@ def hook_context():
         base_url="https://api.clerk.dev",
         operation_id="test_operation",
         oauth2_scopes=None,
-        security_source=None
+        security_source=None,
+        tags=None,
+        extensions=None
     )
 
 @pytest.fixture
