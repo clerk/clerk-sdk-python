@@ -1,11 +1,11 @@
 from unittest.mock import patch, AsyncMock
 
 import pytest
-from clerk_backend_api.security.types import AuthenticateRequestOptions, AuthStatus, AuthErrorReason
+from clerk_backend_api.security.types import AuthenticateRequestOptions, AuthStatus, AuthErrorReason, RequestState
 from clerk_backend_api.security.verifytoken import TokenVerificationError, TokenVerificationErrorReason, \
     VerifyTokenOptions
 
-from clerk_backend_api import authenticate_request
+from clerk_backend_api import Clerk, authenticate_request
 from clerk_backend_api.security import authenticate_request_async
 
 
@@ -1070,3 +1070,32 @@ async def test_async_m2m_token_with_machine_secret_key(mock_verify_token):
     assert m2m_machine_auth_object.token_type.value == "machine_token"
     assert m2m_machine_auth_object.id == "mt_2xhFjEI5X2qWRvtV13BzSj8H6Dk"
     assert m2m_machine_auth_object.machine_id == "mch_2xhFjEI5X2qWRvtV13BzSj8H6Dk"
+
+
+@patch("clerk_backend_api.sdk.authenticate_request", autospec=True)
+def test_sdk_authenticate_request_uses_bearer_secret(mock_auth, session_token):
+    mock_auth.return_value = RequestState(status=AuthStatus.SIGNED_IN, token=session_token)
+    sdk = Clerk(bearer_auth="sdk-secret")
+    request = MockRequest(headers=make_headers(auth_token=session_token))
+    opts = AuthenticateRequestOptions(secret_key=None, jwt_key=None)
+
+    state = sdk.authenticate_request(request, opts)
+
+    assert state.is_signed_in
+    _, actual_opts = mock_auth.call_args.args
+    assert actual_opts.secret_key == "sdk-secret"
+
+
+@pytest.mark.asyncio
+@patch("clerk_backend_api.sdk.authenticate_request_async", new_callable=AsyncMock)
+async def test_sdk_authenticate_request_async_uses_bearer_secret(mock_auth, session_token):
+    mock_auth.return_value = RequestState(status=AuthStatus.SIGNED_IN, token=session_token)
+    sdk = Clerk(bearer_auth="sdk-secret")
+    request = MockRequest(headers=make_headers(auth_token=session_token))
+    opts = AuthenticateRequestOptions(secret_key=None, jwt_key=None)
+
+    state = await sdk.authenticate_request_async(request, opts)
+
+    assert state.is_signed_in
+    _, actual_opts = mock_auth.call_args.args
+    assert actual_opts.secret_key == "sdk-secret"
