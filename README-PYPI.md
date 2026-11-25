@@ -222,6 +222,27 @@ def is_signed_in(request: httpx.Request):
 
 If the request is correctly authenticated, the token's payload is made available in `request_state.payload`. Otherwise the reason for the token verification failure is given by `request_state.reason`.
 
+If your backend is async (FastAPI, Starlette, aiohttp, ...), use `authenticate_request_async` instead. It performs the JWKS fetch with an async HTTP client, so it does not block the event loop:
+
+```python
+import os
+import httpx
+from clerk_backend_api import Clerk
+from clerk_backend_api.security.types import AuthenticateRequestOptions
+
+async def is_signed_in(request: httpx.Request):
+    sdk = Clerk(bearer_auth=os.getenv('CLERK_SECRET_KEY'))
+    request_state = await sdk.authenticate_request_async(
+        request,
+        AuthenticateRequestOptions(
+            authorized_parties=['https://example.com']
+        )
+    )
+    return request_state.is_signed_in
+```
+
+The same applies to `verify_token`, which has an async counterpart `verify_token_async`.
+
 ### Authenticating Machine Tokens
 
 If you need to authenticate a machine token rather than a session token, this can be done using the `accepts_token` param as such:
