@@ -341,6 +341,21 @@ class TestVerifyToken:
         assert result == {"subject": "apikey_789"}
         mock_post.assert_called_once()
 
+    @patch("clerk_backend_api.security.verifytoken.httpx.Client")
+    def test_verify_machine_token_closes_client(self, mock_client_cls, options):
+        token = "mt_exampletoken"
+        response = MagicMock()
+        response.status_code = 200
+        response.json.return_value = {"subject": "machine_123"}
+        mock_client = mock_client_cls.return_value
+        mock_client.__enter__.return_value = mock_client
+        mock_client.post.return_value = response
+
+        result = verify_token(token, options)
+
+        assert result == {"subject": "machine_123"}
+        mock_client.__exit__.assert_called_once()
+
     @patch("httpx.Client.post")
     def test_verify_machine_token_http_error(self, mock_post, options):
         token = "mt_broken_token"

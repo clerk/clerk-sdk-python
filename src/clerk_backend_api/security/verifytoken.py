@@ -117,22 +117,23 @@ def _verify_machine_token(token: str, verify_token_options: VerifyTokenOptions, 
     payload = {
         'secret' : f"{token}"
     }
-    client = httpx.Client(base_url=verify_token_options.api_url)
     endpoint = verification_apis.get(token_type)
     if not endpoint:
         raise TokenVerificationError(TokenVerificationErrorReason.INVALID_TOKEN_TYPE)
     try:
-        response = client.post(
-            endpoint,
-            json=payload,
-            headers={
-                'Authorization': f'Bearer {verify_token_options.secret_key}' if verify_token_options.secret_key else f'Bearer {verify_token_options.machine_secret_key}',
-                'Content-Type': 'application/json'
-            }
-        )
-        if response.status_code != 200:
-            raise TokenVerificationError(TokenVerificationErrorReason.TOKEN_INVALID)
-        return response.json()
+        # Close the client after use so its connection pool is not leaked on every call
+        with httpx.Client(base_url=verify_token_options.api_url) as client:
+            response = client.post(
+                endpoint,
+                json=payload,
+                headers={
+                    'Authorization': f'Bearer {verify_token_options.secret_key}' if verify_token_options.secret_key else f'Bearer {verify_token_options.machine_secret_key}',
+                    'Content-Type': 'application/json'
+                }
+            )
+            if response.status_code != 200:
+                raise TokenVerificationError(TokenVerificationErrorReason.TOKEN_INVALID)
+            return response.json()
     except httpx.HTTPStatusError as e:
         raise TokenVerificationError(TokenVerificationErrorReason.TOKEN_INVALID) from e
     except httpx.RequestError as e:
