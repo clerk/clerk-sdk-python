@@ -34,6 +34,7 @@ with Clerk(
         "agent_name": "<value>",
         "task_description": "<value>",
         "redirect_url": "https://brilliant-typewriter.net",
+        "session_organization_id": "<id>",
     })
 
     # Handle response

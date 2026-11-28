@@ -91,6 +91,21 @@ class CreateAgentTaskRequestBodyTypedDict(TypedDict):
     r"""The maximum duration that the session which will be created by the generated agent task should last.
     By default, the duration of a session created via an agent task lasts 30 minutes.
     """
+    session_restricted: NotRequired[bool]
+    r"""When true, the session created by the agent task can refresh only its own session token and read.
+    Clerk's Frontend API refuses every other write from a browser client that holds the session,
+    including touch, sign-out through the API (the browser's cookie sign-out GET stays allowed), profile and organization writes, sign-in and sign-up, and OAuth approval.
+    It also refuses changing the session's workspace (its active organization).
+    Expect an app that relies on those calls, such as the clerk-js touch and sign-out, to receive 403 errors.
+    The session token's `agt` claim then carries `rst: true`; it omits `rst` for an unrestricted session.
+    """
+    session_organization_id: NotRequired[str]
+    r"""The organization the agent task session starts in. The user must be a member of it.
+    If omitted, the user's last active organization is used, or the personal workspace
+    when the user has none. When session_restricted is true, the session cannot use another
+    workspace and ends when this one is no longer available, and creation fails when
+    the result is the personal workspace but the user must choose an organization.
+    """
 
 
 class CreateAgentTaskRequestBody(BaseModel):
@@ -124,12 +139,35 @@ class CreateAgentTaskRequestBody(BaseModel):
     By default, the duration of a session created via an agent task lasts 30 minutes.
     """
 
+    session_restricted: Optional[bool] = False
+    r"""When true, the session created by the agent task can refresh only its own session token and read.
+    Clerk's Frontend API refuses every other write from a browser client that holds the session,
+    including touch, sign-out through the API (the browser's cookie sign-out GET stays allowed), profile and organization writes, sign-in and sign-up, and OAuth approval.
+    It also refuses changing the session's workspace (its active organization).
+    Expect an app that relies on those calls, such as the clerk-js touch and sign-out, to receive 403 errors.
+    The session token's `agt` claim then carries `rst: true`; it omits `rst` for an unrestricted session.
+    """
+
+    session_organization_id: Optional[str] = None
+    r"""The organization the agent task session starts in. The user must be a member of it.
+    If omitted, the user's last active organization is used, or the personal workspace
+    when the user has none. When session_restricted is true, the session cannot use another
+    workspace and ends when this one is no longer available, and creation fails when
+    the result is the personal workspace but the user must choose an organization.
+    """
+
     @model_serializer(mode="wrap")
     def _serialize_model_with_info(self, handler, info):
         return serialize_with_info(self.serialize_model, handler, info)
 
     def serialize_model(self, handler):
-        optional_fields = set(["session_max_duration_in_seconds"])
+        optional_fields = set(
+            [
+                "session_max_duration_in_seconds",
+                "session_restricted",
+                "session_organization_id",
+            ]
+        )
         exclude_none = current_exclude_none()
         skip_filtered = exclude_none is False or current_filtered_dump()
         serialized = handler(self)

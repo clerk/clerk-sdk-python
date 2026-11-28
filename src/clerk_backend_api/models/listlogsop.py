@@ -10,6 +10,7 @@ from clerk_backend_api.types import (
 from clerk_backend_api.types.basemodel import current_filtered_dump
 from clerk_backend_api.utils import FieldMetadata, QueryParamMetadata
 from enum import Enum
+import pydantic
 from pydantic import model_serializer
 from typing import Dict, List, Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
@@ -21,9 +22,8 @@ class FilterMatch(str, Enum):
     `ip_address`, and `payload_filter` entries
     are combined: `all` (default) requires every supplied filter to
     match; `any` returns events that match at least one of the
-    supplied filters. `event_time_after`, `event_time_before`, and
-    `end_user_facing_only` are always ANDed with the (possibly OR-ed)
-    string filter group.
+    supplied filters. `event_time_after` and `event_time_before` are
+    always ANDed with the (possibly OR-ed) string filter group.
     """
 
     ALL = "all"
@@ -69,9 +69,15 @@ class ListLogsRequestTypedDict(TypedDict):
     Only with `view=flat`, since the grouped view only pages forward.
     """
     subject: NotRequired[str]
-    r"""Filter logs by subject."""
+    r"""Filter logs by subject: the ID of the resource the event is about,
+    such as a user, an organization, or the instance when nothing more
+    specific applies.
+    """
     actor: NotRequired[str]
-    r"""Filter logs by actor"""
+    r"""Filter logs by actor: the ID of whoever triggered the event, such as
+    a user, a Clerk Dashboard user, an instance key, or an API key. In
+    an impersonated session, the actor is the impersonated user.
+    """
     user_id: NotRequired[str]
     r"""Filter logs to events involving one user, as either the actor or
     the subject. Takes the user's ID.
@@ -164,9 +170,8 @@ class ListLogsRequestTypedDict(TypedDict):
     `ip_address`, and `payload_filter` entries
     are combined: `all` (default) requires every supplied filter to
     match; `any` returns events that match at least one of the
-    supplied filters. `event_time_after`, `event_time_before`, and
-    `end_user_facing_only` are always ANDed with the (possibly OR-ed)
-    string filter group.
+    supplied filters. `event_time_after` and `event_time_before` are
+    always ANDed with the (possibly OR-ed) string filter group.
     """
     event_time_after: NotRequired[int]
     r"""Sets a lower time boundary for the query (Unix timestamp in milliseconds).
@@ -192,9 +197,7 @@ class ListLogsRequestTypedDict(TypedDict):
     can paginate through the full range.
     """
     end_user_facing_only: NotRequired[bool]
-    r"""When set to true, only returns events that are marked as end-user facing.
-    When set to false or omitted, returns all events.
-    """
+    r"""Deprecated. This parameter has no effect."""
     view: NotRequired[View]
     r"""`grouped`, the default, lists each event group (a flow such as a
     sign-in) as a single item, next to the logs that belong to no
@@ -224,9 +227,9 @@ class ListLogsRequestTypedDict(TypedDict):
     status: NotRequired[List[str]]
     r"""Not allowed with `view=flat`. Group statuses to keep, e.g. `failed`,
     repeated for several (`status=failed&status=completed`). Keeps only
-    groups that concluded that way and drops the logs outside any
-    group. A status is a conclusion (`completed`, `failed`), so groups
-    that haven't concluded never match.
+    groups with one of those statuses and drops the logs outside any
+    group. A status is `completed`, `failed` or `abandoned`. A group
+    that is still going has no status and never matches.
     """
 
 
@@ -258,13 +261,19 @@ class ListLogsRequest(BaseModel):
         Optional[str],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = None
-    r"""Filter logs by subject."""
+    r"""Filter logs by subject: the ID of the resource the event is about,
+    such as a user, an organization, or the instance when nothing more
+    specific applies.
+    """
 
     actor: Annotated[
         Optional[str],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = None
-    r"""Filter logs by actor"""
+    r"""Filter logs by actor: the ID of whoever triggered the event, such as
+    a user, a Clerk Dashboard user, an instance key, or an API key. In
+    an impersonated session, the actor is the impersonated user.
+    """
 
     user_id: Annotated[
         Optional[str],
@@ -401,9 +410,8 @@ class ListLogsRequest(BaseModel):
     `ip_address`, and `payload_filter` entries
     are combined: `all` (default) requires every supplied filter to
     match; `any` returns events that match at least one of the
-    supplied filters. `event_time_after`, `event_time_before`, and
-    `end_user_facing_only` are always ANDed with the (possibly OR-ed)
-    string filter group.
+    supplied filters. `event_time_after` and `event_time_before` are
+    always ANDed with the (possibly OR-ed) string filter group.
     """
 
     event_time_after: Annotated[
@@ -439,11 +447,12 @@ class ListLogsRequest(BaseModel):
 
     end_user_facing_only: Annotated[
         Optional[bool],
+        pydantic.Field(
+            deprecated="warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
+        ),
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = None
-    r"""When set to true, only returns events that are marked as end-user facing.
-    When set to false or omitted, returns all events.
-    """
+    r"""Deprecated. This parameter has no effect."""
 
     view: Annotated[
         Optional[View],
@@ -485,9 +494,9 @@ class ListLogsRequest(BaseModel):
     ] = None
     r"""Not allowed with `view=flat`. Group statuses to keep, e.g. `failed`,
     repeated for several (`status=failed&status=completed`). Keeps only
-    groups that concluded that way and drops the logs outside any
-    group. A status is a conclusion (`completed`, `failed`), so groups
-    that haven't concluded never match.
+    groups with one of those statuses and drops the logs outside any
+    group. A status is `completed`, `failed` or `abandoned`. A group
+    that is still going has no status and never matches.
     """
 
     @model_serializer(mode="wrap")

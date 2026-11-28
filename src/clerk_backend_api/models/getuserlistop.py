@@ -9,10 +9,57 @@ from clerk_backend_api.types import (
 )
 from clerk_backend_api.types.basemodel import current_filtered_dump
 from clerk_backend_api.utils import FieldMetadata, QueryParamMetadata
+from enum import Enum
 import pydantic
 from pydantic import model_serializer
 from typing import List, Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
+
+
+class Pagination(str, Enum):
+    r"""`cursor` pages by cursor, with any `order_by` and any filter, including `metadata`. The response is
+    then an object in place of the array of users: `data` holds the users, and `cursor` is
+    `{\"starting_after\": <string or null>, \"ending_before\": <string or null>, \"has_next_page\": <boolean>}`.
+    Pass its `starting_after` back as `starting_after` for the next page, or its `ending_before` back
+    as `ending_before` for the previous one, keeping every other parameter identical. Stop when
+    `has_next_page` is `false`; `ending_before` is null on the first page. In this mode
+    `starting_after` is that cursor, not a user ID; a cursor from a different `order_by` is rejected
+    with a 422, as is a non-zero `offset`.
+
+    Results in this mode are eventually consistent. A user created, updated or deleted a short time
+    ago may not yet be reflected in which users are returned, in their order, or in any count. To
+    read a user right after writing it, fetch it by ID.
+
+    Without this parameter the list pages by offset, and `starting_after` takes a user ID.
+    `offset` pages the same way, except that it does not accept `starting_after`.
+    """
+
+    OFFSET = "offset"
+    CURSOR = "cursor"
+
+
+class RemainingCount(str, Enum):
+    r"""With `pagination=cursor`, also counts the users from the start of this page onward, this page
+    included. On the first page that is every user the request matches.
+
+    A number counts up to that many. The response's `cursor` then carries one of two
+    fields: `remaining_count_exact` when there are fewer users than the number given, and otherwise
+    `remaining_count_at_least`, set to that number. Larger numbers make the request slower.
+
+    `exact` counts them all, with no ceiling, and the `cursor` carries `remaining_count_exact`. The
+    count takes longer the more users match, and a request whose count does not finish in time is
+    rejected with a 422 `users_exact_count_timed_out`; retry it with a number, or without this
+    parameter.
+
+    The count is computed separately from the page and is subject to the same delay. Treat it as a
+    close estimate: it can differ slightly from the number of users that paging through the results
+    returns.
+    """
+
+    ONE_HUNDRED = "100"
+    ONE_THOUSAND = "1000"
+    TEN_THOUSAND = "10000"
+    EXACT = "exact"
 
 
 class GetUserListRequestTypedDict(TypedDict):
@@ -125,6 +172,28 @@ class GetUserListRequestTypedDict(TypedDict):
     Accepts up to 100 provider user IDs.
     Any provider user IDs not found are ignored.
     """
+    metadata: NotRequired[List[str]]
+    r"""Returns users matching every one of the given metadata filters. Repeat it once per filter; each value
+    is a JSON object with these fields:
+
+    - `scope` (required): `public`, `private` or `unsafe`, the metadata to match against.
+    - `key` (required): a dot-separated path into the metadata, e.g. `settings.theme`. Escape a
+    literal dot in a key as `\.`.
+    - `match` (required): `exists` matches users holding the key, whether it holds a value or nested
+    keys. `equals` matches the whole value, case-insensitively.
+    - `value`: required for `equals`; not allowed for `exists`.
+    - `negate`: `true` inverts the filter. With `exists` it returns the users who do not hold the
+    key. With `equals` it returns the users who hold the key with a different value.
+
+    Other fields are rejected.
+
+    With `metadata`, `offset` plus `limit` cannot exceed 1000, and `starting_after` is not accepted.
+    `GET /v1/users/count` does not accept `metadata`.
+
+    Results are eventually consistent. A user created, updated or deleted a short time ago may not
+    yet be reflected in which users are returned or in their order. To read a user right after
+    writing it, fetch it by ID.
+    """
     limit: NotRequired[int]
     r"""Applies a limit to the number of results returned.
     Can be used for paginating the results together with `offset`.
@@ -143,6 +212,46 @@ class GetUserListRequestTypedDict(TypedDict):
 
     Cannot be combined with a non-zero `offset`, which is also a 422. Keep every other parameter identical
     across requests, and stop when a page returns fewer than `limit` users.
+    """
+    pagination: NotRequired[Pagination]
+    r"""`cursor` pages by cursor, with any `order_by` and any filter, including `metadata`. The response is
+    then an object in place of the array of users: `data` holds the users, and `cursor` is
+    `{\"starting_after\": <string or null>, \"ending_before\": <string or null>, \"has_next_page\": <boolean>}`.
+    Pass its `starting_after` back as `starting_after` for the next page, or its `ending_before` back
+    as `ending_before` for the previous one, keeping every other parameter identical. Stop when
+    `has_next_page` is `false`; `ending_before` is null on the first page. In this mode
+    `starting_after` is that cursor, not a user ID; a cursor from a different `order_by` is rejected
+    with a 422, as is a non-zero `offset`.
+
+    Results in this mode are eventually consistent. A user created, updated or deleted a short time
+    ago may not yet be reflected in which users are returned, in their order, or in any count. To
+    read a user right after writing it, fetch it by ID.
+
+    Without this parameter the list pages by offset, and `starting_after` takes a user ID.
+    `offset` pages the same way, except that it does not accept `starting_after`.
+    """
+    ending_before: NotRequired[str]
+    r"""With `pagination=cursor`, the `cursor.ending_before` of a previous response. Returns the page
+    before it, in the same order. Cannot be combined with `starting_after`, and a cursor from a
+    different `order_by` is rejected with a 422. A previous page can hold fewer than `limit` users
+    even when more precede it.
+    """
+    remaining_count: NotRequired[RemainingCount]
+    r"""With `pagination=cursor`, also counts the users from the start of this page onward, this page
+    included. On the first page that is every user the request matches.
+
+    A number counts up to that many. The response's `cursor` then carries one of two
+    fields: `remaining_count_exact` when there are fewer users than the number given, and otherwise
+    `remaining_count_at_least`, set to that number. Larger numbers make the request slower.
+
+    `exact` counts them all, with no ceiling, and the `cursor` carries `remaining_count_exact`. The
+    count takes longer the more users match, and a request whose count does not finish in time is
+    rejected with a 422 `users_exact_count_timed_out`; retry it with a number, or without this
+    parameter.
+
+    The count is computed separately from the page and is subject to the same delay. Treat it as a
+    close estimate: it can differ slightly from the number of users that paging through the results
+    returns.
     """
     order_by: NotRequired[str]
     r"""Allows to return users in a particular order.
@@ -356,6 +465,32 @@ class GetUserListRequest(BaseModel):
     Any provider user IDs not found are ignored.
     """
 
+    metadata: Annotated[
+        Optional[List[str]],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Returns users matching every one of the given metadata filters. Repeat it once per filter; each value
+    is a JSON object with these fields:
+
+    - `scope` (required): `public`, `private` or `unsafe`, the metadata to match against.
+    - `key` (required): a dot-separated path into the metadata, e.g. `settings.theme`. Escape a
+    literal dot in a key as `\.`.
+    - `match` (required): `exists` matches users holding the key, whether it holds a value or nested
+    keys. `equals` matches the whole value, case-insensitively.
+    - `value`: required for `equals`; not allowed for `exists`.
+    - `negate`: `true` inverts the filter. With `exists` it returns the users who do not hold the
+    key. With `equals` it returns the users who hold the key with a different value.
+
+    Other fields are rejected.
+
+    With `metadata`, `offset` plus `limit` cannot exceed 1000, and `starting_after` is not accepted.
+    `GET /v1/users/count` does not accept `metadata`.
+
+    Results are eventually consistent. A user created, updated or deleted a short time ago may not
+    yet be reflected in which users are returned or in their order. To read a user right after
+    writing it, fetch it by ID.
+    """
+
     limit: Annotated[
         Optional[int],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
@@ -385,6 +520,58 @@ class GetUserListRequest(BaseModel):
 
     Cannot be combined with a non-zero `offset`, which is also a 422. Keep every other parameter identical
     across requests, and stop when a page returns fewer than `limit` users.
+    """
+
+    pagination: Annotated[
+        Optional[Pagination],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""`cursor` pages by cursor, with any `order_by` and any filter, including `metadata`. The response is
+    then an object in place of the array of users: `data` holds the users, and `cursor` is
+    `{\"starting_after\": <string or null>, \"ending_before\": <string or null>, \"has_next_page\": <boolean>}`.
+    Pass its `starting_after` back as `starting_after` for the next page, or its `ending_before` back
+    as `ending_before` for the previous one, keeping every other parameter identical. Stop when
+    `has_next_page` is `false`; `ending_before` is null on the first page. In this mode
+    `starting_after` is that cursor, not a user ID; a cursor from a different `order_by` is rejected
+    with a 422, as is a non-zero `offset`.
+
+    Results in this mode are eventually consistent. A user created, updated or deleted a short time
+    ago may not yet be reflected in which users are returned, in their order, or in any count. To
+    read a user right after writing it, fetch it by ID.
+
+    Without this parameter the list pages by offset, and `starting_after` takes a user ID.
+    `offset` pages the same way, except that it does not accept `starting_after`.
+    """
+
+    ending_before: Annotated[
+        Optional[str],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""With `pagination=cursor`, the `cursor.ending_before` of a previous response. Returns the page
+    before it, in the same order. Cannot be combined with `starting_after`, and a cursor from a
+    different `order_by` is rejected with a 422. A previous page can hold fewer than `limit` users
+    even when more precede it.
+    """
+
+    remaining_count: Annotated[
+        Optional[RemainingCount],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""With `pagination=cursor`, also counts the users from the start of this page onward, this page
+    included. On the first page that is every user the request matches.
+
+    A number counts up to that many. The response's `cursor` then carries one of two
+    fields: `remaining_count_exact` when there are fewer users than the number given, and otherwise
+    `remaining_count_at_least`, set to that number. Larger numbers make the request slower.
+
+    `exact` counts them all, with no ceiling, and the `cursor` carries `remaining_count_exact`. The
+    count takes longer the more users match, and a request whose count does not finish in time is
+    rejected with a 422 `users_exact_count_timed_out`; retry it with a number, or without this
+    parameter.
+
+    The count is computed separately from the page and is subject to the same delay. Treat it as a
+    close estimate: it can differ slightly from the number of users that paging through the results
+    returns.
     """
 
     order_by: Annotated[
@@ -429,9 +616,13 @@ class GetUserListRequest(BaseModel):
                 "last_sign_in_at_after",
                 "provider",
                 "provider_user_id",
+                "metadata",
                 "limit",
                 "offset",
                 "starting_after",
+                "pagination",
+                "ending_before",
+                "remaining_count",
                 "order_by",
             ]
         )

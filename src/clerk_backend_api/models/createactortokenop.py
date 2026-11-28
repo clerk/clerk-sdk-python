@@ -21,6 +21,8 @@ class CreateActorTokenActorTypedDict(TypedDict):
 
     sub: str
     r"""The ID of the actor."""
+    type: NotRequired[str]
+    r"""Optional actor type. The value `agent` is reserved for agent task sessions and is rejected."""
 
 
 class CreateActorTokenActor(BaseModel):
@@ -36,6 +38,9 @@ class CreateActorTokenActor(BaseModel):
     sub: str
     r"""The ID of the actor."""
 
+    type: Optional[str] = None
+    r"""Optional actor type. The value `agent` is reserved for agent task sessions and is rejected."""
+
     @property
     def additional_properties(self):
         return self.__pydantic_extra__
@@ -43,6 +48,32 @@ class CreateActorTokenActor(BaseModel):
     @additional_properties.setter
     def additional_properties(self, value):
         self.__pydantic_extra__ = value  # pyright: ignore[reportIncompatibleVariableOverride]
+
+    @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
+    def serialize_model(self, handler):
+        optional_fields = set(["type"])
+        exclude_none = current_exclude_none()
+        skip_filtered = exclude_none is False or current_filtered_dump()
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and skip_filtered:
+                continue
+            val = serialized.get(k, serialized.get(n))
+            serialized.pop(k, serialized.pop(n, None))
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+        for k, v in serialized.items():
+            m[k] = v
+
+        return m
 
 
 class CreateActorTokenRequestBodyTypedDict(TypedDict):

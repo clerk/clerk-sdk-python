@@ -11,7 +11,7 @@ class GetLogSchemaRequestTypedDict(TypedDict):
     r"""The event type to describe: concrete (`sign_in.completed`),
     trailing-`*` wildcard (`sign_in.*`), or bare family name
     (`sign_in`). Unknown types return a 422. A bare `*` is not
-    accepted.
+    accepted; to list every event type, use `GET /logs/types`.
     """
 
 
@@ -22,5 +22,5 @@ class GetLogSchemaRequest(BaseModel):
     r"""The event type to describe: concrete (`sign_in.completed`),
     trailing-`*` wildcard (`sign_in.*`), or bare family name
     (`sign_in`). Unknown types return a 422. A bare `*` is not
-    accepted.
+    accepted; to list every event type, use `GET /logs/types`.
     """

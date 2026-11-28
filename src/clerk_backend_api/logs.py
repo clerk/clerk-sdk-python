@@ -275,12 +275,10 @@ class Logs(BaseSDK):
         lists what the intersection was computed over; per-type metadata
         (description, severity, docs_group) is present only for concrete types.
 
-        The response is the same for every instance.
-
         :param type_: The event type to describe: concrete (`sign_in.completed`),
             trailing-`*` wildcard (`sign_in.*`), or bare family name
             (`sign_in`). Unknown types return a 422. A bare `*` is not
-            accepted.
+            accepted; to list every event type, use `GET /logs/types`.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -385,12 +383,10 @@ class Logs(BaseSDK):
         lists what the intersection was computed over; per-type metadata
         (description, severity, docs_group) is present only for concrete types.
 
-        The response is the same for every instance.
-
         :param type_: The event type to describe: concrete (`sign_in.completed`),
             trailing-`*` wildcard (`sign_in.*`), or bare family name
             (`sign_in`). Unknown types return a 422. A bare `*` is not
-            accepted.
+            accepted; to list every event type, use `GET /logs/types`.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -471,11 +467,195 @@ class Logs(BaseSDK):
 
         raise models.SDKError("Unexpected response received", http_res)
 
+    def list_types(
+        self,
+        *,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.LogSchemaList:
+        r"""List all log event types
+
+        Returns every event type the instance can see in its logs, each with
+        its payload schema, sorted by `event_type`. Each entry is the same as
+        the response of `GET /logs/schemas` for that type.
+
+        Use it to discover the values that the `type` parameter of the list
+        endpoint accepts, and the payload fields each one carries. The list is
+        not paginated. Event types whose logs are enabled per instance (such as
+        `sms.*` and `email.*`) are listed only once enabled.
+
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+        req = self._build_request(
+            method="GET",
+            path="/logs/types",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=None,
+            request_body_required=False,
+            request_has_path_params=False,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["5XX"])
+
+        http_res = self.do_request(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="ListLogTypes",
+                oauth2_scopes=None,
+                security_source=self.sdk_configuration.security,
+                tags=["Logs"],
+                extensions=None,
+            ),
+            request=req,
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(models.LogSchemaList, http_res)
+        if utils.match_response(http_res, ["401", "403", "429"], "application/json"):
+            response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
+            raise models.ClerkErrors(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError("API error occurred", http_res, http_res_text)
+
+        raise models.SDKError("Unexpected response received", http_res)
+
+    async def list_types_async(
+        self,
+        *,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.LogSchemaList:
+        r"""List all log event types
+
+        Returns every event type the instance can see in its logs, each with
+        its payload schema, sorted by `event_type`. Each entry is the same as
+        the response of `GET /logs/schemas` for that type.
+
+        Use it to discover the values that the `type` parameter of the list
+        endpoint accepts, and the payload fields each one carries. The list is
+        not paginated. Event types whose logs are enabled per instance (such as
+        `sms.*` and `email.*`) are listed only once enabled.
+
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+        req = self._build_request_async(
+            method="GET",
+            path="/logs/types",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=None,
+            request_body_required=False,
+            request_has_path_params=False,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 60000, 1.5, 3600000), True
+                )
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["5XX"])
+
+        http_res = await self.do_request_async(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="ListLogTypes",
+                oauth2_scopes=None,
+                security_source=self.sdk_configuration.security,
+                tags=["Logs"],
+                extensions=None,
+            ),
+            request=req,
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(models.LogSchemaList, http_res)
+        if utils.match_response(http_res, ["401", "403", "429"], "application/json"):
+            response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
+            raise models.ClerkErrors(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError("API error occurred", http_res, http_res_text)
+
+        raise models.SDKError("Unexpected response received", http_res)
+
     def list_group_events(
         self,
         *,
         group_id: str,
-        started_at: int,
+        started_at: Optional[int] = None,
         limit: Optional[int] = 10,
         starting_after: Optional[str] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -492,7 +672,9 @@ class Logs(BaseSDK):
 
         :param group_id: The ID of the event group, e.g. a sign-in ID.
         :param started_at: When the group started (Unix timestamp in milliseconds), the
-            `started_at` of the group item. It bounds the time range searched.
+            `started_at` of the group item. Optional: when omitted, it is
+            looked up from `group_id`, and a group that can't be found or is
+            past the retention window returns a 404.
         :param limit: Applies a limit to the number of results returned.
         :param starting_after: The group's `events_cursor` from the grouped view, or the
             `starting_after` cursor this endpoint returned. Only forward
@@ -567,7 +749,7 @@ class Logs(BaseSDK):
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(models.LogList, http_res)
         if utils.match_response(
-            http_res, ["401", "403", "422", "429"], "application/json"
+            http_res, ["401", "403", "404", "422", "429"], "application/json"
         ):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
@@ -587,7 +769,7 @@ class Logs(BaseSDK):
         self,
         *,
         group_id: str,
-        started_at: int,
+        started_at: Optional[int] = None,
         limit: Optional[int] = 10,
         starting_after: Optional[str] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -604,7 +786,9 @@ class Logs(BaseSDK):
 
         :param group_id: The ID of the event group, e.g. a sign-in ID.
         :param started_at: When the group started (Unix timestamp in milliseconds), the
-            `started_at` of the group item. It bounds the time range searched.
+            `started_at` of the group item. Optional: when omitted, it is
+            looked up from `group_id`, and a group that can't be found or is
+            past the retention window returns a 404.
         :param limit: Applies a limit to the number of results returned.
         :param starting_after: The group's `events_cursor` from the grouped view, or the
             `starting_after` cursor this endpoint returned. Only forward
@@ -679,7 +863,7 @@ class Logs(BaseSDK):
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(models.LogList, http_res)
         if utils.match_response(
-            http_res, ["401", "403", "422", "429"], "application/json"
+            http_res, ["401", "403", "404", "422", "429"], "application/json"
         ):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)

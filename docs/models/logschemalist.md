@@ -1,0 +1,13 @@
+# LogSchemaList
+
+The schema of every log event type the instance can see, sorted by
+`event_type`. Not paginated.
+
+
+## Fields
+
+| Field                                                                                       | Type                                                                                        | Required                                                                                    | Description                                                                                 | Example                                                                                     |
+| ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| `object`                                                                                    | *str*                                                                                       | :heavy_check_mark:                                                                          | String representing the object's type. Always "list".                                       | list                                                                                        |
+| `data`                                                                                      | List[[models.LogSchema](../models/logschema.md)]                                            | :heavy_check_mark:                                                                          | One schema per concrete event type, each the same as the<br/>response to a lookup by that type. |                                                                                             |
+| `total_count`                                                                               | *int*                                                                                       | :heavy_check_mark:                                                                          | Total number of event type schemas in the list.                                             |                                                                                             |

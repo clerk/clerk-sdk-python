@@ -20,7 +20,7 @@ class Users(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> List[models.User]:
+    ) -> models.UserListOrCursorPage:
         r"""List all users
 
         Returns a list of all users.
@@ -97,8 +97,13 @@ class Users(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(List[models.User], http_res)
-        if utils.match_response(http_res, ["400", "401", "422"], "application/json"):
+            return unmarshal_json_response(models.UserListOrCursorPage, http_res)
+        if utils.match_response(
+            http_res, ["400", "401", "403", "422"], "application/json"
+        ):
+            response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
+            raise models.ClerkErrors(response_data, http_res)
+        if utils.match_response(http_res, "503", "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
@@ -120,7 +125,7 @@ class Users(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> List[models.User]:
+    ) -> models.UserListOrCursorPage:
         r"""List all users
 
         Returns a list of all users.
@@ -197,8 +202,13 @@ class Users(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(List[models.User], http_res)
-        if utils.match_response(http_res, ["400", "401", "422"], "application/json"):
+            return unmarshal_json_response(models.UserListOrCursorPage, http_res)
+        if utils.match_response(
+            http_res, ["400", "401", "403", "422"], "application/json"
+        ):
+            response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
+            raise models.ClerkErrors(response_data, http_res)
+        if utils.match_response(http_res, "503", "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
@@ -1122,6 +1132,7 @@ class Users(BaseSDK):
         password_hasher: Optional[str] = None,
         skip_password_checks: OptionalNullable[bool] = UNSET,
         sign_out_of_other_sessions: OptionalNullable[bool] = UNSET,
+        reset_client_trust: OptionalNullable[bool] = UNSET,
         totp_secret: OptionalNullable[str] = UNSET,
         backup_codes: Optional[Iterable[str]] = None,
         delete_self_enabled: OptionalNullable[bool] = UNSET,
@@ -1182,6 +1193,9 @@ class Users(BaseSDK):
             Each of the supported hashers expects the incoming digest to be in a particular format. See the [Clerk docs](https://clerk.com/docs/references/backend/user/create-user) for more information.
         :param skip_password_checks: Set it to `true` if you're updating the user's password and want to skip any password policy settings check. This parameter can only be used when providing a `password`.
         :param sign_out_of_other_sessions: Set to `true` to sign out the user from all their active sessions once their password is updated. This parameter can only be used when providing a `password`.
+        :param reset_client_trust: When set to `true`, also clears Device Trust for the user on every client, whether or not the instance has Device Trust enabled.
+            The next sign-in by this user on any client counts as a new device: it can require a Device Trust challenge and trigger the new device email.
+            This parameter can only be used when providing a `password` and setting `sign_out_of_other_sessions` to `true`, otherwise a 422 is returned and the user is not updated.
         :param totp_secret: In case TOTP is configured on the instance, you can provide the secret to enable it on the specific user without the need to reset it.
         :param backup_codes: If Backup Codes are configured on the instance, you can provide them to enable it on the specific user without the need to reset them.
         :param delete_self_enabled: If true, the user can delete themselves with the Frontend API.
@@ -1225,6 +1239,7 @@ class Users(BaseSDK):
                 password_hasher=password_hasher,
                 skip_password_checks=skip_password_checks,
                 sign_out_of_other_sessions=sign_out_of_other_sessions,
+                reset_client_trust=reset_client_trust,
                 totp_secret=totp_secret,
                 backup_codes=utils.unmarshal(backup_codes, Optional[List[str]]),
                 delete_self_enabled=delete_self_enabled,
@@ -1321,6 +1336,7 @@ class Users(BaseSDK):
         password_hasher: Optional[str] = None,
         skip_password_checks: OptionalNullable[bool] = UNSET,
         sign_out_of_other_sessions: OptionalNullable[bool] = UNSET,
+        reset_client_trust: OptionalNullable[bool] = UNSET,
         totp_secret: OptionalNullable[str] = UNSET,
         backup_codes: Optional[Iterable[str]] = None,
         delete_self_enabled: OptionalNullable[bool] = UNSET,
@@ -1381,6 +1397,9 @@ class Users(BaseSDK):
             Each of the supported hashers expects the incoming digest to be in a particular format. See the [Clerk docs](https://clerk.com/docs/references/backend/user/create-user) for more information.
         :param skip_password_checks: Set it to `true` if you're updating the user's password and want to skip any password policy settings check. This parameter can only be used when providing a `password`.
         :param sign_out_of_other_sessions: Set to `true` to sign out the user from all their active sessions once their password is updated. This parameter can only be used when providing a `password`.
+        :param reset_client_trust: When set to `true`, also clears Device Trust for the user on every client, whether or not the instance has Device Trust enabled.
+            The next sign-in by this user on any client counts as a new device: it can require a Device Trust challenge and trigger the new device email.
+            This parameter can only be used when providing a `password` and setting `sign_out_of_other_sessions` to `true`, otherwise a 422 is returned and the user is not updated.
         :param totp_secret: In case TOTP is configured on the instance, you can provide the secret to enable it on the specific user without the need to reset it.
         :param backup_codes: If Backup Codes are configured on the instance, you can provide them to enable it on the specific user without the need to reset them.
         :param delete_self_enabled: If true, the user can delete themselves with the Frontend API.
@@ -1424,6 +1443,7 @@ class Users(BaseSDK):
                 password_hasher=password_hasher,
                 skip_password_checks=skip_password_checks,
                 sign_out_of_other_sessions=sign_out_of_other_sessions,
+                reset_client_trust=reset_client_trust,
                 totp_secret=totp_secret,
                 backup_codes=utils.unmarshal(backup_codes, Optional[List[str]]),
                 delete_self_enabled=delete_self_enabled,
@@ -5595,7 +5615,9 @@ class Users(BaseSDK):
         if utils.match_response(http_res, "500", "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
-        if utils.match_response(http_res, ["400", "403", "404", "422", "4XX"], "*"):
+        if utils.match_response(
+            http_res, ["400", "403", "404", "422", "429", "4XX"], "*"
+        ):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
@@ -5705,7 +5727,9 @@ class Users(BaseSDK):
         if utils.match_response(http_res, "500", "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
-        if utils.match_response(http_res, ["400", "403", "404", "422", "4XX"], "*"):
+        if utils.match_response(
+            http_res, ["400", "403", "404", "422", "429", "4XX"], "*"
+        ):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
@@ -5817,7 +5841,9 @@ class Users(BaseSDK):
         if utils.match_response(http_res, "500", "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
-        if utils.match_response(http_res, ["400", "403", "404", "422", "4XX"], "*"):
+        if utils.match_response(
+            http_res, ["400", "403", "404", "422", "429", "4XX"], "*"
+        ):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
@@ -5929,7 +5955,9 @@ class Users(BaseSDK):
         if utils.match_response(http_res, "500", "application/json"):
             response_data = unmarshal_json_response(models.ClerkErrorsData, http_res)
             raise models.ClerkErrors(response_data, http_res)
-        if utils.match_response(http_res, ["400", "403", "404", "422", "4XX"], "*"):
+        if utils.match_response(
+            http_res, ["400", "403", "404", "422", "429", "4XX"], "*"
+        ):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
@@ -7897,6 +7925,8 @@ class Users(BaseSDK):
         r"""Set a user's password as compromised
 
         Sets the given user's password as compromised. The user will be prompted to reset their password on their next sign-in.
+        When the password was not already compromised, or when `revoke_all_sessions` is `true`, it also marks all of the user's devices as untrusted. On instances with Device Trust enabled, the next password sign-in on any of those devices can require a Device Trust challenge.
+        Calling it again on a password that is already compromised, without `revoke_all_sessions`, changes nothing.
 
         :param user_id: The ID of the user to set the password as compromised
         :param revoke_all_sessions:
@@ -8003,6 +8033,8 @@ class Users(BaseSDK):
         r"""Set a user's password as compromised
 
         Sets the given user's password as compromised. The user will be prompted to reset their password on their next sign-in.
+        When the password was not already compromised, or when `revoke_all_sessions` is `true`, it also marks all of the user's devices as untrusted. On instances with Device Trust enabled, the next password sign-in on any of those devices can require a Device Trust challenge.
+        Calling it again on a password that is already compromised, without `revoke_all_sessions`, changes nothing.
 
         :param user_id: The ID of the user to set the password as compromised
         :param revoke_all_sessions:

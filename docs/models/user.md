@@ -1,7 +1,5 @@
 # User
 
-Success
-
 
 ## Fields
 
