@@ -76,6 +76,11 @@ class UpdateUserRequestBodyTypedDict(TypedDict):
     r"""Set it to `true` if you're updating the user's password and want to skip any password policy settings check. This parameter can only be used when providing a `password`."""
     sign_out_of_other_sessions: NotRequired[Nullable[bool]]
     r"""Set to `true` to sign out the user from all their active sessions once their password is updated. This parameter can only be used when providing a `password`."""
+    reset_client_trust: NotRequired[Nullable[bool]]
+    r"""When set to `true`, also clears Device Trust for the user on every client, whether or not the instance has Device Trust enabled.
+    The next sign-in by this user on any client counts as a new device: it can require a Device Trust challenge and trigger the new device email.
+    This parameter can only be used when providing a `password` and setting `sign_out_of_other_sessions` to `true`, otherwise a 422 is returned and the user is not updated.
+    """
     totp_secret: NotRequired[Nullable[str]]
     r"""In case TOTP is configured on the instance, you can provide the secret to enable it on the specific user without the need to reset it."""
     backup_codes: NotRequired[List[str]]
@@ -171,6 +176,12 @@ class UpdateUserRequestBody(BaseModel):
     sign_out_of_other_sessions: OptionalNullable[bool] = UNSET
     r"""Set to `true` to sign out the user from all their active sessions once their password is updated. This parameter can only be used when providing a `password`."""
 
+    reset_client_trust: OptionalNullable[bool] = UNSET
+    r"""When set to `true`, also clears Device Trust for the user on every client, whether or not the instance has Device Trust enabled.
+    The next sign-in by this user on any client counts as a new device: it can require a Device Trust challenge and trigger the new device email.
+    This parameter can only be used when providing a `password` and setting `sign_out_of_other_sessions` to `true`, otherwise a 422 is returned and the user is not updated.
+    """
+
     totp_secret: OptionalNullable[str] = UNSET
     r"""In case TOTP is configured on the instance, you can provide the secret to enable it on the specific user without the need to reset it."""
 
@@ -221,6 +232,7 @@ class UpdateUserRequestBody(BaseModel):
                 "password_hasher",
                 "skip_password_checks",
                 "sign_out_of_other_sessions",
+                "reset_client_trust",
                 "totp_secret",
                 "backup_codes",
                 "delete_self_enabled",
@@ -248,6 +260,7 @@ class UpdateUserRequestBody(BaseModel):
                 "password",
                 "skip_password_checks",
                 "sign_out_of_other_sessions",
+                "reset_client_trust",
                 "totp_secret",
                 "delete_self_enabled",
                 "create_organization_enabled",

@@ -37,7 +37,7 @@ class NextPageStatus(str, Enum):
     UNKNOWN = "unknown"
 
 
-class CursorTypedDict(TypedDict):
+class LogListCursorTypedDict(TypedDict):
     r"""Cursor information for pagination."""
 
     starting_after: NotRequired[Nullable[str]]
@@ -71,7 +71,7 @@ class CursorTypedDict(TypedDict):
     """
 
 
-class Cursor(BaseModel):
+class LogListCursor(BaseModel):
     r"""Cursor information for pagination."""
 
     starting_after: OptionalNullable[str] = UNSET
@@ -166,7 +166,7 @@ class LogListTypedDict(TypedDict):
     group, told apart by `object`. With `view=flat`, every item
     is a log entry.
     """
-    cursor: NotRequired[CursorTypedDict]
+    cursor: NotRequired[LogListCursorTypedDict]
     r"""Cursor information for pagination."""
 
 
@@ -180,7 +180,7 @@ class LogList(BaseModel):
     is a log entry.
     """
 
-    cursor: Optional[Cursor] = None
+    cursor: Optional[LogListCursor] = None
     r"""Cursor information for pagination."""
 
     @model_serializer(mode="wrap")

@@ -248,8 +248,6 @@ class Scim(BaseModel):
 
 
 class UserTypedDict(TypedDict):
-    r"""Success"""
-
     id: str
     object: UserObject
     r"""String representing the object's type. Objects of the same type share the same value.
@@ -359,8 +357,6 @@ class UserTypedDict(TypedDict):
 
 
 class User(BaseModel):
-    r"""Success"""
-
     id: str
 
     object: UserObject
